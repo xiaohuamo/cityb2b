@@ -1,0 +1,318 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	  <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+    <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+    <script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='factory_2c/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				 <{include file='factory_2c/side_restaurant_info.htm'}>
+				<div class="colCurTit">
+					<{$pagename}> 
+				</div>
+
+
+
+  
+
+	<div class="search-row" style="padding: 20px 18px">
+				<{if $loginUser.id ==318951 || $loginUser.id ==318951}>
+					<form method="get" action="">
+							 <button type="button" class="btn btn-default btn-success" id="ButtonXML">
+                            导入品类及产品清单</button>
+
+						 <input type="file" id="inputXMl"  style="display: none;" onchange="importf(this)" value="导入xml" />
+						
+					</form>
+			
+				<{/if}>
+				
+				<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
+					<select class='chooseCustomer'>
+						<option>请选择管理的账户</option>
+						<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
+								<{$loginUser.displayName}>
+							</option>
+						<{foreach from=$authrise_manage_other_business_account item=d}>
+							
+							<option value="<{$d.customer_id}>" <{if $d.customer_id==$customer_id}>selected<{/if}>>
+								<{$d.displayName}>
+							</option>
+						<{/foreach}>
+					</select>
+
+               <{/if}>
+			</div>
+				    
+
+
+
+
+
+
+
+
+
+
+
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+								    <th>自动编号</th>
+									<th>类别编号</th>
+									<th>类别排序</th>
+									<th>品类中文名</th>
+									<th>是否热推</th>
+					                <th>品类英语名</th>
+									<{if in_array($gstType, [3,4])}>
+									<th>含税设置</th>
+									<{/if}>
+									
+									
+								</tr>
+							</thead>
+							<tbody>
+						  		<{foreach from=$data item=item name='dl'}>
+									<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										<td>
+											<input type="hidden" class="input-text" data-id='<{$item.id}>'  style="width:50px;" name="id" value="<{$item.id}>" >
+											<span class='promote-ajax'><{$item.id}></span>
+							  				<br>
+										</td>
+										<td>
+											<{$item.category_id}> 
+						  				</td>
+								   	     <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:50px;" name="category_sort_id" value="<{$item.category_sort_id}>" >
+											<span class='promote-ajax'></span>
+							  				<br>
+										</td>
+
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_cn_name" value="<{$item.category_cn_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="hot" value="<{$item.hot}>" >
+											<span class='promote-ajax'></span>
+										</td>
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_en_name" value="<{$item.category_en_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
+						  				<{if in_array($gstType, [3,4])}>
+						  				<td>
+											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">全部含税</button>
+											<span class='promote-ajax'></span>
+											/
+											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">全部不含税</button>
+											<span class='promote-ajax'></span>
+										</td>
+						  				<{/if}>
+									</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+					<{else}>
+						<{$lang->no_data}>
+						
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+    <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('.chooseCustomer').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>factory_2c/restaurant_edit?freshfood=1&customer_id=" + $(this).val();
+		});
+	})
+</script>
+
+<script type="text/javascript">
+
+
+
+	function updateCategory(){
+		var iconUpdate = new IconUpdate(this);
+
+		var id =$(this).data('id');
+		var value =	$(this).val();
+		var update_field=$(this).attr('name');
+
+		var updateData={};
+		updateData['id']=id;
+		updateData[update_field]=value;
+
+		var updateUrl = update_field === 'include_gst' ? 'update_category_gst' : 'update_category_item'
+		//alert(updateData);
+		$.ajax({
+			url: "<{$http_root_www}>factory_2c/" + updateUrl,
+			type: "POST",
+			data: updateData,
+			beforeSend:function(){
+				iconUpdate.iconUpdating();
+			}
+		}).done(function(data){
+			try{
+				data = JSON.parse(data);
+			}catch(err){
+				data['msg'] = data;
+			}
+
+			if(data.status==200){
+			   // alert(data.msg);
+				iconUpdate.iconUpdateSuccess();
+			}else if(data.status==500){
+				alert(data.msg);
+				iconUpdate.iconUpdateFail();
+			}else{
+				iconUpdate.iconUpdateFail();
+			}
+		}).fail(function(){
+			iconUpdate.iconUpdateFail();
+		});
+	}
+
+	function IconUpdate (obj) {
+		this.target = $(obj).next('.promote-ajax');
+	}
+
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+
+	$('input[name=category_cn_name],input[name=hot],input[name=category_en_name],input[name=category_sort_id]').on('change',updateCategory);
+	$('button[class=include_gst]').on('click',updateCategory);
+	
+	
+	
+	
+	   $("#ButtonXML").click(function () {
+            $("#inputXMl").click();
+        });
+
+        var wb; //读取
+        var rABS = false;
+
+        //开始导入
+        function importf(obj) {
+            if (!obj.files) {
+                return;
+            }
+            var f = obj.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                if (rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                /**
+                * wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                * wb.Sheets[Sheet名]获取第一个Sheet的数据
+                */
+                var excelJson = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                excelJson.pop();
+                console.log(excelJson);
+                InsertProduct(excelJson);
+                //document.getElementById("excelContent").innerHTML = JSON.stringify(excelJson);
+            };
+            if (rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+
+        //文件流转BinaryString
+        function fixdata(data) {
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        function InsertProduct(excelJson) {
+            var Jstring = JSON.stringify(excelJson);
+			
+            $.ajax({
+			
+                url: '<{$http_root_www}>company/import_menu_with_add_category_insert_newitem',      //异步方法
+                method: 'POST',
+                data: { ProductList: Jstring },                 //传入的那么参数
+                cache: false,
+                timeout: 0,                            //延迟5秒执行
+                error: function () {                        //返回失败后
+                    alert("导入失败");
+                },
+                success: function (result) {
+               result=jQuery.parseJSON( result );
+			     
+                    if (result.result) {
+					  alert(result.result);
+                       alert(result.message);
+                      //  location.reload();
+                    }
+                    else {
+                        alert('no result' + result.message);
+                    }
+                }
+            });
+        }
+
+	
+</script>
+
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<{include file='footer.htm'}>
+
+</body>
+</html>

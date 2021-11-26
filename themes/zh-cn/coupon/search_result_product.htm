@@ -1,0 +1,32 @@
+ <{extends file="coupon/search_result_tpl.htm"}>
+ 
+<{block name=result_display}>
+<div class="mbs-cont">
+    <ul class="ul-sev">
+
+        <{foreach from=$data item=item}>            
+        <li style="margin: 4px 1px 6px 2px;   height: 315px;">
+            <a href="<{if $item.business==1}>/coupon1/<{$item.id}><{else}>/restaurant/<{$item.createUserId}>?keyword=<{$item.id}><{/if}>">
+            <!--   <i class="type <{if $item.id==7265}> type-20 <{else}><{$item.typecss}><{/if}>"></i> -->
+                <div class="pic">
+                    <img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="<{$item.title}>" />
+                </div>
+                <div class="txt">
+                    <h2 style="font-size: 14px; font-weight:400;color: #4a4a4a; height: 40px;"><{$item.title|truncate_cn:120:'...'}></h2>
+                    <div class="tip">
+                        <div class="price">
+                            <em class="new"><{$item.price1}></em>
+                            <s><{$item.price2}></s>
+                        </div>
+                        <strong>
+                        <i></i><{$item.businessName}>
+                    </strong>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <{/foreach}>
+    </ul>
+</div>
+
+<{/block}>

@@ -1,0 +1,51 @@
+  <{if $coupon_list}>
+				<span class="label label-info positionPin" style="background-color: #fff;font-weight:600; font-size: 0.45rem;line-height: 1.5rem;color: #333;" data-target='abc'>团购套餐</span>
+
+
+					<{foreach from=$coupon_list item=couponitem name='dl'}>
+						<div id="coupon-<{$smarty.foreach.dl.index}>" class="coupon_option">
+
+						<div style="float:left; display: inline-block;width: 25%">
+	                            <p class="title" style="    font-size: 0.45rem;">
+	                            <a data-lightbox="roadtrip" href="<{$UPLOAD_PATH}><{$couponitem.pic|image:400:254:'cut'}>" data-title=" <{$couponitem.title|truncate_cn:50:'...'}>">	
+								 <img src="<{$UPLOAD_PATH}><{$couponitem.pic|image:100:100:'cut'}>"> 
+								</a>
+								</p>
+
+							</div>
+						
+						<div style="display: inline-block;width: 44% ; margin-top: -0.1rem;   height: 3.5rem;">
+                             <p class="title" style="   height: 2.8rem;       font-size: 0.45rem;    margin-left: 5px; ">
+	                            <{$couponitem.title|truncate_cn:40:'...'}>
+							</p>
+                          
+							<p class="price" style="    font-size: 0.4rem;    margin-left: 5px;">
+								<span>$ <{$couponitem.voucher_deal_amount}>  <s style="  font-size: 0.4rem;"><{$couponitem.voucher_original_amount}></s></span>
+							</p>	
+							
+						</div>
+						<div style="float:right;" class="quantity" >
+								<i class='fa fa-minus-square' <{if !$couponitem.qty}>style="display:none;"<{/if}>></i>
+								<input class="input-quantity" type="text" name="quantity[]" value="<{if $couponitem.qty}><{$couponitem.qty}><{/if}>" readonly
+								data-main_coupon_id='<{$couponitem.id}>' 
+								data-sub_coupon_id="<{$couponitem.sub_id}>"
+								data-type='voucher'
+								data-price='<{$couponitem.voucher_deal_amount}>' >
+								<i class="fa fa-plus-square"></i>
+								
+								<div class="stock" style="  color: #f23030;">
+									<{$couponitem.discount}>%OFF
+								</div>
+								
+								<p class="price"  style=" float:right;     margin-top: 1.2rem; font-size: 0.40rem;">
+								<span class="label label-info" style=" font-weight:400;   background-color: #FD5001; font-size: 100%;margin-right: -0.1rem;"><a href ="<{$http_root_www}>coupon1/<{$couponitem.id}>"> 详细></a></span>
+							</p>
+						</div>
+						<{if $couponitem.coupon_summery_description}>
+                   		<p class="description">
+							<{$couponitem.coupon_summery_description|truncate_cn:120:'..'}> 
+						</p>
+						<{/if}>
+					</div>
+                    <{/foreach}>
+				<{/if}>

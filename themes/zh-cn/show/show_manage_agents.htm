@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='show/show_management_menu.htm'}>
+				<div class="colCurTit"><{$pagename}>
+					<span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>show/show_manage_agents_edit" ><i class='fa fa-plus'></i>售票代理管理</a>
+					</span>
+				</div>
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th>简称</th>
+									<th>商家全名</th>
+									<th>联系人</th>
+									<th>电话</th>
+									<th>手机</th>
+									<th>地址</th>
+									<th>删除</th>
+								</tr>
+							</thead>
+							<tbody>
+						  <{foreach from=$data item=item name='dl'}>
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td><{if $item.createUserId}>
+									<a href="<{$http_root_www}>show/show_manage_agents_edit?id=<{$item.id}>" target="_blank"><{$item.name}></a>
+									<{else}>
+									<{$item.name}>
+									<{/if}>
+									</td>
+									 <td><{$item.company_name}></td>
+									  <td><{$item.contact_person}></td>
+									   <td><{$item.tel}></td>
+									    <td><{$item.mobile}></td>
+										 <td><{$item.address}></td>
+									
+									<td>
+									<{if $item.createUserId}><a href="<{$http_root_www}>show/show_manage_agents?id=<{$item.id}>" onClick="return window.confirm('确定要删除吗？');">删除</a><{/if}>
+																		</td>
+								</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<{if $pager}><div class="pager"><{$pager}></div>
+						<{/if}>
+					<{else}>
+						还没有相代理信息，<a href="<{$http_root_www}>show/show_manage_agents_edit" class="link2">点击这里添加代理</a>
+					<{/if}>
+				</div>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

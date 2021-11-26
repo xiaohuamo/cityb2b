@@ -1,0 +1,170 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class='box2'>
+				<select class='chooseDate'>
+					<option>请选择日期</option>
+					<{foreach from=$availableDates item=d}>
+						<option value="<{$d}>" <{if $d==$date}>selected<{/if}>>
+							<{$d}>
+						</option>
+					<{/foreach}>
+				</select>
+
+				<button style="padding: 10px 5px;background: #FD5001 ">
+					<a onclick='return confirm("确定将订单导入FreshX?");'	href="<{$http_root_www}>company/freshx_order_import?date=<{$date}>&task=freshx_import"> 同步至FreshX</a>
+				</button>
+			</div>
+
+			
+
+			<div class="main-form">
+				<div class='main-list'>
+					<{if $orders}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th>订单号</th>
+									<th>地址</th>
+									<!-- <th>姓名</th> -->
+									<!-- <th>电话</th> -->
+
+									<!-- <th >统配号</th>	 -->
+
+									<th >FreshX Order Id</th>	
+
+									<!-- <th style="background: #43d1af">Truck</th>	
+									<th style="background: #43d1af">Driver</th>
+									<th style="background: #43d1af">Stop</th>
+									<th style="background: #43d1af">ETA</th> -->
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$orders item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td>
+										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+									</td>
+									<td><{$item.address}></td>
+									<!-- <td><{$item.first_name}> <{$item.last_name}></td> -->
+									<!-- <td><{$item.phone}></td> -->
+
+									<!-- <td>
+										<{if $item.logistic_sequence_No == 0}>
+											-
+										<{else}>
+											<{$item.logistic_sequence_No}>
+										<{/if}>
+									</td> -->
+
+									<td>
+										<{if $item.freshx_order_id>0}>
+											<{$item.freshx_order_id}> （已同步）
+											<button class='freshx_order_update_ajax' data-freshx-order-id = '<{$item.freshx_order_id}>'>更新</button>
+										<{else}>
+											未同步
+										<{/if}>	
+									</td>
+									<!-- <td><{$item.logistic_truck_No}></td>
+									<td><{$item.logistic_driver_code}></td>
+									<td><{$item.logistic_stop_No}></td>
+									<td>
+										<{if $item.logisitic_schedule_time == 0}>
+											-
+										<{else}>
+											<{$item.logisitic_schedule_time|date_format:'%I:%M %p'}>
+										<{/if}>
+									</td> -->
+									
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+					<{/if}>
+				</div>
+
+
+				<div style="padding: 20px">
+					<p>FreshX 订单导入说明</p>
+					<p>Step 1:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;选择一个递送日期，系统会弹出当天需要递送的全部订单。目前只有个两个系统蔬菜商家可以使用该功能</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+	$(function(){
+		$('.chooseDate').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>company/freshx_order_import?date=" + $(this).val();
+		});
+	})
+</script>
+
+
+<script type="text/javascript">
+	$(function(){
+		$('.freshx_order_update_ajax').on('click', function(){
+			var freshx_order_id =  $(this).data('freshx-order-id');
+			var self = this;
+			$.ajax({
+				url:"/company/freshx_order_update_ajax",
+				type:"GET",
+				data:{"freshx_order_id":freshx_order_id},
+				beforeSend:function(){
+					$(self).html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+				}
+			}).done(function(d){
+			    $(self).html('已更新');
+			});
+		})
+	})
+</script>
+</body>
+
+</html>

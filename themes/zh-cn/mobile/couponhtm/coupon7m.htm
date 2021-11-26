@@ -1,0 +1,418 @@
+
+  <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title> Ubonus 美食生活</title>
+   <meta name="keywords" content="墨尔本 美食" />
+   <meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	 
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+		<script type="text/javascript" src="/static/unveil/jquery.unveil.js"></script>
+
+	
+	
+	<script type="text/javascript" src="/themes/zh-cn/mobile/js/lib.js"></script>
+
+	<link rel="stylesheet" type="text/css" href='/themes/zh-cn/css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='/themes/zh-cn/js/htmlAlert.js'></script>
+
+
+	
+   
+	<script type="text/javascript">
+	
+		urlinfo=window.location.href; //获取当前页面的url
+		len=urlinfo.length;//获取url的长度
+		offset=urlinfo.indexOf("?");//设置参数字符串开始的位置
+		newsidinfo=urlinfo.substr(offset,len)//取出参数字符串 这里会获得类似“id=1”这样的字符串
+		//by www.jbxue.com
+		newsids=newsidinfo.split("=");//对获得的参数字符串按照“=”进行分割
+		var newsid=newsids[1];//得到参数值
+		
+		
+        var num=newsid.indexOf('&');//返回4
+		//alert(num);
+		if(num >=2) {	
+			newsid =newsid.substr(0, num);
+		 }
+		//alert("您要传递的参数值是"+newsid);
+		 var is_pc=1;
+		 var  onloaded=0;
+		 goPAGE();	
+		function myfun()
+　　		{
+           if(onloaded==0) {
+ 		  load_business_info();
+		  onload=1;
+		  }
+　　		}
+ 	
+	function load_business_info(){
+	   
+          
+			$.ajax({
+				url:"/coupon/get_business_info?id="+newsid,
+				type:"GET",
+				
+				beforeSend:function(){
+				//	$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(d){
+			   data = JSON.parse(d);
+			 	if(data['google_address']=='0') {}else{
+					$('#coupon_business_googlemap').html(data['google_address']);
+				 }
+				var about_business = data['about_business'];
+					$('#about_business').html(about_business);
+					$('#f4').html(data['recommend_list']);
+					$('#f3').html(data['dianping_list']);
+					$('#cart_counts').html(data['order_count']);
+					
+					document.title = data['title']; ;
+					$("meta[name='keywords']").attr("content", data['keywords']);
+					$("meta[name='description']").attr("content", data['description']);
+					//alert(data['order_count']);
+					
+					$('img.lazyload').unveil();
+						
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+		
+
+
+		function goPAGE(){               
+
+			if((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+                    // window.location.href="移动端url";
+					//alert("判断当前为mobile gopage ")
+					 is_pc=0;
+					
+
+					$("<link>")
+						.attr({
+							rel: "stylesheet",
+						
+							href: "/themes/zh-cn/mobile/css/bootstrap_coupon718.min.css"
+						})
+						.appendTo("head");
+						
+							 $("<link>")
+						.attr({
+							rel: "stylesheet",
+							
+							href: "/themes/zh-cn/mobile/css/style_coupon718.css"
+						})
+						.appendTo("head");
+						//alert('set mobile css');
+                }
+                else {
+                    // window.location.href="pc端url"; 
+                   // alert("pc")
+					
+					$("<link>")
+						.attr({
+							rel: "stylesheet",
+						
+							href: "/themes/zh-cn/css/cui.css"
+						})
+						.appendTo("head");
+						
+							 $("<link>")
+						.attr({
+							rel: "stylesheet",
+							
+							href: "/themes/zh-cn/css/lib.css"
+						})
+						.appendTo("head");
+						
+						
+							 $("<link>")
+						.attr({
+							rel: "stylesheet",
+							
+							href: "/themes/zh-cn/css/luobo.css"
+						})
+						.appendTo("head");
+					 
+
+
+					 is_pc=1;
+                }
+            }
+         
+
+　　		/*用window.onload调用myfun()*/
+　		　window.onload = myfun;//不要括号
+
+		$(function(){
+			 var url_header ='';
+			  var url_top ='';
+			 
+			 if(is_pc) {
+			 
+			  // alert ('start loading.... pc header');
+			     url_header ='/themes/zh-cn/index_inc_header_static.htm';
+				 
+				 
+			$.ajax({
+				  url: url_header, //or your url
+				  success: function(data){
+					//alert(data);
+					$('#index_inc_header').load(url_header);
+						
+				  },
+				  error: function(data){
+				  
+				  },
+				})
+		
+				 
+				    url_top ='/themes/zh-cn/index_inc_top_static.htm';
+				 
+				 
+			$.ajax({
+				  url: url_top, //or your url
+				  success: function(data){
+					
+					$('#index_inc_top').load(url_top);
+						
+				  },
+				  error: function(data){
+				  
+				  },
+				})
+			 
+			 }
+		
+		 if(is_pc) {
+		   var url_coupon ='/data/upload/htm/restaurant/'+newsid+'_pc.htm';
+		  // alert('当前加载pc版');
+		 }else{
+		    var url_coupon ='/data/upload/htm/restaurant/'+newsid+'.htm';
+			//  alert('当前加载mobile版');
+		 }
+				
+				$.ajax({
+				  url: url_coupon, //or your url
+				  success: function(data){
+					//alert('load htm');
+					$('#bodycontent').html(data);
+					 
+   
+					//init_page();
+						
+				  },
+				  error: function(data){
+				    //alert('can not find htm');
+							$.ajax({
+								url:"/coupon/show_coupon_ajax?id="+newsid,
+								type:"GET",
+								beforeSend:function(){
+									$('body').append('<p class="form_response_loader"></p>');
+								},
+
+							}).done(function(data){
+					            $('.form_response_loader').remove();
+								$('#bodycontent').html(data);
+				
+				
+							//	init_page();
+							   
+						}).always(function(){
+							$('.form_response_loader').remove();
+						})
+				  },
+				})
+				
+
+		})
+		
+		
+       	 
+	</script>
+
+	<script>
+	    $(document).ready(function($) {
+	        $('.ul-evaluate li').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	       
+	    });
+	</script>
+	
+	<script type="text/javascript">
+	
+		
+		
+		function init_page() {
+		
+		
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+
+			$('.fa-plus-square').on('click',function(){
+				$target = $(this).prev('.input-quantity');
+				var qty = parseInt($target.val());
+				var stock =parseInt($target.data('stock'));
+				if(qty>=stock){htmlMessage('库存不足'); return;}
+
+				$target.val(qty+1);
+			})
+
+			$('.fa-minus-square').on('click',function(){
+				$target = $(this).next('.input-quantity');
+				var qty = parseInt($target.val());
+				if(qty>0)$target.val(qty-1);
+			})
+		
+		}
+	</script>
+
+	
+
+	
+</head>
+<body class="bg-1">
+	
+<!-- 头部 -->
+
+
+<!--
+<div id="index_inc_header"></div>
+
+<div id="index_inc_top"></div>
+
+ -->  
+
+<div  id="bodycontent" ></div>
+
+
+  
+
+	
+	
+
+	<script type="text/javascript">
+
+	function add_carts() { 
+
+		var code_str=[];
+
+		var main_coupon_id 	=newsid;
+
+		$target = $('.input-quantity');
+		
+		var totalQty=0;
+
+		$target.each(function(){
+			var qty= $(this).val();
+			var coupon_id = $(this).data('item-id');
+
+			if(qty>0)code_str.push(main_coupon_id+','+coupon_id+','+qty);
+
+			totalQty+=qty;
+		})
+
+		if(totalQty==0){
+			$('html, body').animate({
+		        scrollTop: $("#item-select").offset().top-50
+		    }, 1000);
+		    htmlMessage('请选择产品');
+			return false;
+		}
+		
+		code_str=code_str.join('#');
+
+		//console.log(code_str);
+
+
+	
+
+        $('body').append('<p class="form_response_loader"></p>');
+
+		$.post('/query?cmd=add_carts_batch', 
+			 	{code_str:code_str}, 
+				function(data){
+				  data = jQuery.parseJSON(data);
+				  if(data.msg=='0') {
+				  
+				  var u = "/member/login?returnUrl="+encodeURIComponent("/member/showcart?business_userid=<{$coupon.createUserId}>&code_str="+encodeURIComponent(code_str)+"#directCheckout");
+		          console.log(u);
+			      window.location.href = u;
+				  }else{
+					$('.form_response_loader').remove();
+					
+				  
+
+				  	if(data.status==200){
+				 		window.location.href = '/member/showcart?business_userid=<{$coupon.createUserId}>#directCheckout';
+		 		
+				  	}else{
+				  		htmlMessage(data.msg);
+				  	}
+					}
+				}
+	    );
+	
+		
+	}
+
+
+	</script>
+	<script type="text/javascript" src="/themes/zh-cn/ga.js"></script>
+    
+	<!-- sec float go top -->
+	<!-- 侧边按钮 -->
+<!--a target = '_blank' onclick="window.open
+('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<
+{$businessChatId}>','singleChat')"-->
+<div id="g-chat" onclick="chatUrl();"></div>
+
+
+<!--div id="g-top"></div-->
+<!-- 侧边按钮-end -->
+
+<script type="text/javascript">
+    function chatUrl() {
+        window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&couponid=<{$coupon.id}>');
+    }
+</script>
+
+ <link rel="stylesheet" href="/static/swiper/swiper.min.css">
+  <script src="/static/swiper/swiper.min.js"></script>
+	<script>
+       
+	</script>
+    <!--
+	
+    <script type="text/javascript">
+	    $('img.lazyload').unveil();
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+	
+
+    <{include file='wx_share_js.htm'}> 
+	
+   -->
+
+</body>
+</html>
+
+
+

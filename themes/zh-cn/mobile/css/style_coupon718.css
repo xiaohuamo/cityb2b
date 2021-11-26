@@ -1,0 +1,724 @@
+/*-----------------[初始化]--------------*/
+
+body{color: #333;line-height: 1.5;font-family:"微软雅黑","Microsoft Yahei";}
+
+html{font-size: 30px}
+
+a{color: #333;}
+
+a:hover{color: #f60;text-decoration: none;}
+
+img{max-width: 100%;}
+
+.g-ul,.g-ul li{list-style: none;margin: 0;padding: 0;}
+
+
+
+
+
+/*无选中效果*/
+
+
+
+/*布局*/
+
+.h2{height: 2rem;clear: both;overflow: hidden;margin: 0;}
+
+
+
+.g-ul,.g-ul li{list-style: none;margin: 0;padding: 0;}
+
+
+
+
+
+/*******************************
+
+  -------[=头部]-------
+
+********************************/
+
+#hd{left: 0;right: 0;top: 0;border-bottom: 1px solid #d1d1d1;
+
+    background-color: #FD5001 ;z-index: 999;position: fixed;
+
+}
+
+#hd .left{width: 1.5rem;height: 1.5rem;position: absolute;top: 0;left: 0;}
+
+#hd .right{height: 1.5rem;position: absolute;top: 0;right: 0;}
+
+
+
+
+
+
+
+/*******************************
+
+    -------[=正文]-------
+
+********************************/
+
+#bd{padding: 1.5rem 0 0;}
+
+.bg-1{background-color: #f3f4f6;}
+
+
+
+/*******************************
+
+    -------[=首页]-------
+
+********************************/
+
+*{outline: none;}
+
+a,img,input{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+
+/*banner*/
+
+
+
+/*合作伙伴*/
+
+
+
+/*团购*/
+
+
+
+/*转盘*/
+
+
+
+/*代购*/
+
+
+
+
+/*分类导航*/
+
+/*广告*/
+
+
+
+/*电影娱乐*/
+
+
+
+/*本地服务*/
+
+
+
+
+
+/*店主推荐*/
+
+
+
+/*爆款*/
+
+
+
+/*秒抢*/
+
+
+
+
+
+/*倒计时*/
+
+
+
+
+
+/*
+
+-----------------[购物车2]--------------*/
+
+
+
+/*加减*/
+
+
+
+
+
+/*
+
+-----------------[商家-消息-详情]--------------*/
+
+
+
+/*
+
+-----------------[商家-商品-发布]--------------*/
+
+
+
+/*城市选择*/
+
+
+
+
+
+
+
+
+
+/*页码*/
+
+
+
+/*搜索框*/
+
+
+
+
+
+
+
+/*******************************
+
+    -------[=帮助中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=店铺详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=订单详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=个人中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=好友]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=确认订单]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=发布中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=红包]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=我的收藏]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=我的钱包]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=我的订单]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=微奖社区]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=搜索]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=收货地址]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=社区营销]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-首页]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-投票详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家消息]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-资金]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-红包-发红包]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商品详情]-------
+
+********************************/
+
+.comm-pic{overflow: hidden;position: relative;;}
+
+.comm-pic img{width: 100%;display: block;}
+
+
+
+.comm-tit{background-color: #fff;padding: .35rem .5rem;border-bottom: 1px solid #e0e0e0;margin-bottom: .2rem;}
+
+.comm-tit h3{margin: 0;font-size: .52rem;line-height: .65rem;margin-bottom: .5rem;}
+
+.comm-tit p{margin-bottom: 0;font-size: .52rem;}
+
+.comm-tit s{ color: #a5928b;margin-left: .35rem;}
+
+
+
+.comm-express{border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;
+
+    background-color: #fff;padding: 0 .5rem;margin-bottom: .2rem;
+
+}
+
+.comm-express h3{margin: 0;font-size: .48rem;height: 1.6rem;line-height: 1.6rem; font-weight:600;
+
+    background: url(../images/ico-21.png) no-repeat right center;
+
+    -o-background-size: .24rem auto;
+
+    -ms-background-size: .24rem auto;
+
+    -moz-background-size: .24rem auto;
+
+    -webkit-background-size: .24rem auto;
+
+    background-size: .24rem auto;
+
+}
+
+.comm-express .txt{font-size: .48rem;padding-bottom: .4rem;}
+
+
+
+.comm-evaluate{background-color: #fff;margin-bottom: .1rem;}
+
+.comm-evaluate .tit{overflow: hidden;height: 1.6rem;line-height: 1.6rem;padding: 0 .5rem;border-bottom: 1px solid #e0e0e0;}
+
+.comm-evaluate .tit h3{margin: 0;font-size: .48rem;float: left;line-height: 1.6rem;font-weight:600}
+
+.js-roll{text-align: center;line-height: 1.5rem;}
+
+.js-roll span{display: inline-block;position: relative;padding: 0 .2rem;font-size: .37rem;color: #808080;}
+
+.js-roll span:after,.js-roll span:before{content: '';position: absolute;
+
+    height: 1px;width: 3.3rem;background-color: #e0e0e0;top: 50%;
+
+}
+
+.js-roll span:after{left: 100%;}
+
+.js-roll span:before{right: 100%;}
+
+
+
+.comm-btn{position: fixed;left: 0;right: 0;bottom: 0;border-top: 1px solid #e0e0e0;
+
+    background-color: #fff;z-index: 59;overflow: hidden;text-align: center;
+
+}
+
+.comm-btn .left{width: 50%;float: left;}
+
+.comm-btn .right{float: right;width: 50%;}
+
+.comm-btn a{display: block;float: left;width: 33%;}
+
+.comm-btn .left a{letter-spacing: .01rem;height: 1.98rem;padding-top: .2rem;font-size: .37rem;color: #808080;}
+
+.comm-btn .left i{display: block;height: 1rem;background-position: center center;
+
+    background-repeat: no-repeat;
+
+    -o-background-size: 1rem auto;
+
+    -ms-background-size: 1rem auto;
+
+    -moz-background-size: 1rem auto;
+
+    -webkit-background-size: 1rem auto;
+
+    background-size: 1rem auto;
+
+}
+
+.comm-btn .ico1 i{background-image: url(../images/fix-02.png);}
+
+.comm-btn .ico2 i{background-image: url(../images/fix-06.png);}
+
+.comm-btn .ico3 i{background-image: url(../images/fix-08.png);}
+
+.comm-btn .right a{font-size: .52rem;color: #fff;letter-spacing: .02rem;line-height: 1.98rem;}
+
+.comm-btn .a1{background-color: #FD5001 ;}
+
+
+
+/*******************************
+
+    -------[=发起投票]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=搜索弹窗]-------
+
+********************************/
+
+
+/*Pager css*/
+
+#g-chat{width: 1.2rem;height: 1.2rem;position: fixed;z-index: 999;border-radius: 50%;
+    right: .7rem;bottom: 2.2rem;
+    background: url(../images/ico-liao.png) no-repeat center center rgba(59,180,199,.6);
+    -o-background-size: .8rem auto;
+    -ms-background-size: .8rem auto;
+    -moz-background-size: .8rem auto;
+    -webkit-background-size: .8rem auto;
+    background-size: .8rem auto;
+}
+
+/*******************************
+    -------[=二期]-------
+********************************/
+/*.index-app #hd{background: #3bb4c7;}*/
+/*
+-----------------[代购app首页]--------------*/
+/*.box-supply .con{
+    overflow: hidden;
+}*/
+
+
+/*
+-----------------[商家店铺-商家]--------------*/
+
+
+/*
+-----------------[商家店铺-社区]--------------*/
+
+
+/*
+-----------------[商家店铺1]--------------*/
+
+
+/*
+-----------------[商家店铺-优惠1]--------------*/
+
+
+/*
+-----------------[微奖商城app]--------------*/
+/*.box-so .s-nav .s1{padding: .4rem 0;}*/
+#bd{
+    -webkit-transition: linear 0.25s; /* Safari */
+    transition: linear 0.25s;
+}
+
+.content-image-fullsize img{
+    width: 100%!important;
+    height: auto!important;
+}
+
+.more-box {
+    display: inline-block;
+    position: relative;
+}
+
+.more-box a.more {
+    display: block;
+    width: 1.4rem;
+    height: 1.5rem;
+    background: url(../images/more.png) no-repeat center center;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    position: relative;
+}
+
+.more-box a.more.on i {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    background-color: #F15353;
+    border-radius: 50%;
+}
+
+.more-box .box {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 5rem;
+    background-color: rgba(20, 19, 19, 0.58);
+    border-radius: 3px;
+}
+
+.more-box .box ul li {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    padding: 0 0.5rem;
+}
+
+.more-box .box ul a {
+    display: block;
+    font-size: 14px;
+    color: #f6f6f6;
+    border-bottom: 1px solid #4b4847;
+}
+
+.more-box .box ul a i.on {
+    position: relative;
+}
+.more-box .box ul a i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.9rem;
+    height: 0.9rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: 0.9rem auto;
+    background-size: 28px auto;
+    margin-right: 0.5rem;
+}
+
+.more-box .box ul a i.on em {
+    position: absolute;
+    right: -5px;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    background-color: #F15353;
+    border-radius: 50%;
+}
+
+.comm-btn .ico3 i .cartQty {
+    position: absolute;
+    font-style: normal;
+    top: 0px;
+    margin-left: 12px;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: 10px;
+    background: red;
+    color: white;
+    line-height: 17px;
+}
+
+
+
+
+/*
+-----------------[open screen]--------------*/
+
+
+
+
+/*index of newyear pages*/
+/*body.index2{background: url(../newyear/images/s-bg-m.jpg) repeat;}*/
+.coupon_option{
+			border: 1px solid #FD5001 ;
+			padding: 5px 5px;
+			margin: 0px 0px;
+		}
+
+		.coupon_option .title{
+			color: #000;
+    		font-size: 0.45rem;
+		}
+		.coupon_option .price{
+			
+		}
+
+		.coupon_option .quantity{
+
+		}
+
+		.coupon_option .quantity i{
+			color:#FD5001 ;
+			font-size: 20px;
+		}
+
+		.coupon_option .quantity .input-quantity{
+			width: 30px;
+			text-align: center;
+			border:none;
+			font-size: 15px;
+		}
+		.coupon_option .quantity .stock{
+			font-size: 10px;
+			color: #999;
+			text-align: right;
+		}
+		.h2, h2{
+		font-size: .45rem;  
+		text-align: center;  
+		line-height: 1.5rem; 
+		margin: 0;  
+		font-weight: normal;
+		
+		}	
+		#hd{
+		    background-color: rgba(251, 194, 61,0.75);
+			}
+		h1 {
+    font-size: 17px;
+	    margin-top: 5px;
+    margin-bottom: 5px;
+    }
+    .comm-pic {
+       margin-top: -1.5rem;
+   }
+
+   
+   
+.referral-share .share-btn{
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	background-color: rgba(255,191,0,0.7);
+	padding: 5px 15px;
+	z-index: 12;
+}
+
+.referral-share .share-display{
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width:100%;
+	height: 100%;
+	z-index: 999;
+	background-color: rgba(0,0,0,0.7);
+}
+
+.referral-share .share-display h2{
+    color: #fff;
+    padding: 30px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.referral-share .top{
+	height: 120px;
+}
+.referral-share .top img{
+	width: 170px;
+	position: absolute;
+	right: 0px;
+}
+.referral-share .qrcode{
+	text-align: center;
+	padding: 50px 0px;
+}
+.referral-share .qrcode img{
+	display: inline-block;
+	width: auto;
+}
+.referral-share .bottom{
+	text-align: center;
+	width: 100%;
+	height: 50px;
+}
+.referral-share .bottom .manage-share-link{
+	background-color: #FD5001 ;
+	padding: 10px 20px;
+}

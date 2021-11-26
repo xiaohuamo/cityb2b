@@ -1,0 +1,206 @@
+<{include file='email/inc/email_head.htm'}>
+
+<body>
+	<table class="body">
+		<tr>
+			<td class="center" align="center" valign="top">
+				<center>
+					<table class="row header" style="background: #fff;">
+						<tr>
+							<td class="center" align="center">
+								<center>
+									<table class="container">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td class="six sub-columns">
+															<img src="https://www.ubonus365.com/themes/zh-cn/images/logo.png">
+														</td>
+														<td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
+															<span class="template-label" style="color:#000">订单时间：<{$createTime}> </span>
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</center>
+							</td>
+						</tr>
+					</table>
+					<table class="container">
+						<tr>
+							<td>
+								<table class="row">
+									<tr>
+										<td class="wrapper last">
+											<table class="twelve columns">
+												<tr>
+													<td>
+														<img src="<{$redeemQRCode}>" width="75" height="75" style='float:right;'>
+														<h6>Hello <{$customerName}>:</h6>
+
+															<p class="lead"><{$message}> </p>
+															<p>兑换码：<{$redeemCode}></p>
+															<div class='panel' >
+															    <p class='panel'>抽奖项目:<{$title}></p>
+															 	<p class='panel'>支持商家:<{$businessName}></p>
+															  
+																<p class='panel'>奖品名称:<{$lottery_rec.lottery_name}></p>
+																
+																<p >编号：<{$order_id}></p>
+																
+																
+
+																
+															</div>
+															
+															<div class='panel'>
+															   
+																	<h5>奖品介绍 </h5>
+																	<p><strong><span style="background-color:rgb(255, 255, 0)"> <{$description}></span></strong></p>
+															
+																
+																
+																	<h5>活动说明 </h5>
+																	<p><strong><span style="background-color:rgb(255, 255, 0)"> <{$redeem}></span></strong></p>
+																
+
+																<{if $redeem_details}>
+																	<h5>详细兑奖说明:</h5>
+																	<p><strong><span style="background-color:rgb(255, 255, 0)"> <{$redeem_details}></span></strong></p>
+																<{/if}>
+															</div>
+															
+															
+															
+
+															<div class='panel'>
+																<P>商家信息</p>
+																<p >商家：<{$businessName}></p>
+																<p >电话：<{$business_tel}></p>
+																<p >手机：<{$business_phone}></p>
+																<p >地址：<{$business_address}></p>
+																<p ></p>
+															</div>
+															
+															
+
+
+																</td>
+																<td class="expander"></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<table class="row callout">
+												<tr>
+													<td class="wrapper last">
+														<table class="twelve columns">
+															<tr>
+																<td class="panel">
+																	<p>查看详细奖品，请点击此链接 <a href="www.ubonus365.com/lottery/user_records_management">登录 »</a>(如果是JUNK 邮件，可以将该邮件设为正常邮件)</p>
+																</td>
+																<td class="expander"></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<table class="row footer">
+												<tr>
+												
+													<td class="wrapper last">
+														<table class="twelve columns">
+															<tr>
+																<td class="last right-text-pad">
+																	<h5>联系Ubonus:</h5>
+																	<p>Email: support@ubonus365.com</p>
+																	<img src="https://www.ubonus365.com/themes/zh-cn/images/harry.png" width="100" height="100">
+
+																	<p>&nbsp;</p></td>
+																	<td class="expander"></td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+
+												<br><br>
+													<table class="row">
+														<tr>
+															<td class="wrapper last">
+																<table class="twelve columns">
+																	<tr>
+																		<td align="center">
+																			<center>
+																			<a href="https://www.ubonus365.com/business/index">
+																				<img src="<{$SKIN_PATH}>images/success_banner.png" style='width:580px!important'>
+																			</a>	
+																			</center>
+
+																		</td>
+																		<td class="expander"></td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+
+
+													<table class="row">
+														<tr>
+															<td class="wrapper last">
+																<table class="twelve columns">
+																	<tr>
+																		<td align="center">
+																			<center>
+																			<a href="https://www.ubonus365.com">
+																				<img src="<{$SKIN_PATH}>images/success_banner1.jpg"  style='width:580px!important'>
+																			</a>
+																			</center>
+
+																		</td>
+																		<td class="expander"></td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+													
+												<br><br>
+
+												<table class="row">
+													<tr>
+														<td class="wrapper last">
+															<table class="twelve columns">
+																<tr>
+																	<td align="center">
+																		<center>
+																			<p style="text-align:center;"><a href="https://www.ubonus365.com/our-policy">用户协议</a> | <a href="https://www.ubonus365.com/">Ubonus美食生活-Ubonus</a> | <a href="https://www.ubonus365.com/company/help?id=64">抽奖用户协议</a></p>
+																		</center>
+
+																	</td>
+																	<td class="six sub-columns">
+																		<img src="<{$SKIN_PATH}>images/logo.png">
+																	</td>
+																	<td class="expander"></td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+
+											</td>
+										</tr>
+									</table>
+								</center>
+							</td>
+						</tr>
+					</table>
+					<{include file='email/inc/footer_script.htm'}>
+				</body>
+				</html>

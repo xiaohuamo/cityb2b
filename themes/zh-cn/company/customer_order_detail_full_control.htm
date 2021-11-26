@@ -1,0 +1,815 @@
+		<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script type="text/javascript">
+　　function myfun()
+　　{
+ 　 
+     var target= $('#products_detail').offset().top;
+ 
+   $('body').animate({scrollTop:target}, 3000);
+
+　　}
+　　/*用window.onload调用myfun()*/
+　　window.onload = myfun;//不要括号
+</script>
+<style>
+	.main-form .input-box span label { width:125px; }
+
+	.moneyDetail span:nth-child(3){
+		display: inline-block;
+		width: 180px;
+	}
+
+	.address-validation {
+		position: fixed;
+	    width: 350px;
+	    margin: auto;
+	    top: 10%;
+	    background: #fff;
+	    z-index: 99;
+	    border: 2px solid;
+	    padding: 20px;
+	    display: none;
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		 	<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+
+				<div class="main-form form-style-green">
+
+					<div class="input-box input-submit clearfix">
+						
+						<a class='link' href="<{$http_root_www}>company/customer_orders">返回列表</a>
+						
+						<!-- 商家联系Ubonus -->
+						<a class='link' target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>','singleChat')"  >联系Ubonus</a>
+
+						<!-- 商家联系客户 -->
+						<a class='link' target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$data.userId}>','singleChat')"  >联系客户</a>
+
+						<button class='resend_btn' >重发邮件</button>
+
+						<script type="text/javascript">
+							$('.resend_btn').on('click',function(){
+								var couponId=$(this).data('id');
+								var context =$(this);
+
+								if(confirm('订单通知邮件将重新发送至<{$data.email}>')){
+									$.ajax({
+										url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>", 
+										beforeSend: function( xhr ) {
+											context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+										},
+										success: function(result){
+											context.html("已发送");
+											context.css('background-color','#FD5001 ');
+										}
+									})
+								}
+							})
+							
+						</script>
+						
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label>订单编号</label></span>
+						<{$data.orderId}>
+					</div>
+
+					<{if $userGroup}>
+						<div class="input-box clearfix">
+							<span><label>拼单状态</label></span>
+							<{if $userGroup.status==0}>
+								<span style="color:#FD5001 ">拼单还未完成</span>
+							<{elseif $userGroup.status==1}>
+								<span style="color:green">拼单已经完成</span>
+							<{elseif $userGroup.status==2}>
+								<span style="color:#f30">拼单已经过期</span>
+							<{/if}>
+							<small>(User Group Id : <{$userGroup.id}> <a href="<{$http_root_www}>group_pin/user_group_show?id=<{$userGroup.id}>">查看</a>)</small>
+							
+						</div>
+					<{/if}>
+					
+
+					<div class="input-box clearfix">
+						<span><label>订单状态</label></span>
+
+						<{if $data.coupon_status=='c01'}>
+							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='b01'}>
+							<span style="color:green"><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='d01'}>
+							<span style="color:red"><{$data.cn_coupon_status_name}></span>
+						<{/if}>
+
+						<{if $data.coupon_status=='c01' && $editAble == true}>
+								<a class='link' href="<{$http_root_www}>company/customer_coupon_approving?id=<{$data.orderId}>"    onClick="return window.confirm(<{if $data.status==0}>'订单还未支付!!!!!!,请收款后再点击确认[ok]按钮!!,否则点击取消[cancel]按钮!!'<{else}>'确定该订单已使用?'<{/if}>);">兑付</a>
+
+							<!-- cancel id is the id of the first item in an order -->
+								<a class='link' onclick='return confirm("确认取消订单?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
+						<{/if}>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label>下单时间</label></span>
+						<{date('Y-m-d H:i:s', $data.createTime)}>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label>付款方式</label></span>
+						<{$data.payment}></a>
+					</div>
+					<div class="input-box clearfix">
+						<span><label>是否支付</label></span>
+						<{if $data.status==0}>
+							<span style="color:red">未支付</span>
+
+							<button type="button">
+								<a onclick='return confirm("确认支付");'	href="<{$http_root_www}>company/update_order_status_paid?orderId=<{$data.orderId}>">手动确认支付</a>
+							</button>
+
+						<{elseif $data.status==1}>
+
+							<span style="color:green">已支付，支付时间：<{date("Y-m-d H:i:s", $data.paytime)}></span>
+						
+						<{elseif $data.status==2}>
+							
+							<span style="color:#FD5001 ">Pending (<{date("Y-m-d H:i:s", $data.paytime)}>)</span>
+
+						<{/if}>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label>申领码</label></span>
+						<{$data.redeem_code}>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label>订单名称</label></span>
+						<{$data.order_name}></a>
+					</div>
+					<div class="input-box clearfix">
+						<span><label>客户ID</label></span>
+				  		<{$data.userId}>
+					</div>
+					
+					<div class="input-box clearfix">
+						<span><label>交易总金额</label></span>
+						<{$data.money}></a>
+					</div>
+					
+					<{if $data.customer_delivery_option==2}>
+					<div class="input-box clearfix">
+						<span><label>递送方式</label></span>
+						客户自取
+					</div>
+					 <div class="input-box clearfix">
+					 	<span><label>取货点</label></span>
+						<{$pickupInfo.pickupname}>
+					</div>
+					 <div class="input-box clearfix">
+						<span><label>地址</label></span>
+						<{$pickupInfo.pickupaddress}>
+					</div>
+					 <div class="input-box clearfix">
+						<span><label>电话</label></span>
+						<{$pickupInfo.pickupphone}>
+					</div>
+
+					<{elseif $data.customer_delivery_option==1}>
+						<div class="input-box clearfix">
+						<span><label>递送方式</label></span>
+							商家递送
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>物流</label></span>
+							<input type="text" name="tracking_number" id='tracking_number' style="padding:10px;width: 350px" value='<{$data.tracking_id}>' <{if FourpxAPI::isFourpxTrackingOperator($data.tracking_operator)}>disabled<{/if}> >	
+								
+							<select name='tracking_operator' id='tracking_operator'>
+								<option value='fastway' <{if $data.tracking_operator=='fastway'}>selected<{/if}> >Fastway</option>
+								<option value='auspost' <{if $data.tracking_operator=='auspost'}>selected<{/if}> >Aus Post</option>
+								<{if $allowFourpx}>
+									<option
+									value='<{FourpxAPI::LOGISTICS_PRODUCT_MEL_DOMESTIC_DELIVERY}>' 
+									<{if $data.tracking_operator==FourpxAPI::LOGISTICS_PRODUCT_MEL_DOMESTIC_DELIVERY || $data.tracking_operator==FourpxAPI::LOGISTICS_PRODUCT_AUPARCEL}>selected<{/if}>
+									>四方墨尔本</option>
+								<{/if}>
+							</select>
+
+                            <{if $editAble == true}>
+							<button type="button" class='tracking_update'>
+								发货
+							</button>
+                            <{/if}>
+							<em></em>
+						</div>
+
+						<script type="text/javascript">
+							$('#tracking_operator').on('change', function(){
+								if($('#tracking_operator option:selected').val()=='fourpx') {
+									$('.tracking_update').text('一件云发货');
+									$("#tracking_number").prop('disabled', true);
+								}else {
+									$('.tracking_update').text('发货');
+									$("#tracking_number").prop('disabled', false);
+								}
+							})
+							$('.tracking_update').on('click',function(){
+								var trackingOperator =$('#tracking_operator option:selected').val();
+								if (trackingOperator == "<{FourpxAPI::LOGISTICS_PRODUCT_MEL_DOMESTIC_DELIVERY}>" ||trackingOperator == "<{FourpxAPI::LOGISTICS_PRODUCT_AUPARCEL}>") {
+									$(".address-validation .address").trigger("geocode");
+									$('.address-validation').show();
+								} else {
+									dispatch();
+								}
+							})
+
+							function dispatch() {
+								var trackingId =$('input#tracking_number').val();
+								var trackingOperator =$('#tracking_operator option:selected').val();
+
+								var address_components = {};
+				          		address_components['house_number'] = 
+				          			$(".address-validation input[name='house_number']").val();
+				          		address_components['street'] = 
+				          			$(".address-validation input[name='street']").val();
+				          		address_components['city'] = 
+				          			$(".address-validation input[name='city']").val();
+				          		address_components['state'] = 
+				          			$(".address-validation input[name='state']").val();
+				          		address_components['country'] = 
+				          			$(".address-validation input[name='country']").val();
+				          		address_components['post_code'] = 
+				          			$(".address-validation input[name='post_code']").val();
+
+								$.ajax({
+									url: "<{$http_root_www}>company/update_tracking_id?id=<{$data.orderId}>&trackingId="+trackingId+"&trackingOperator="+trackingOperator, 
+									data: address_components,
+									type: 'GET',
+									beforeSend: function( xhr ) {
+										$('.tracking_update').next('em').html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+									},
+									success: function(result){
+										var result = JSON.parse(result)
+										if (result.status =='success') {
+											$('.tracking_update').next('em').html(result.status);
+											$('#tracking_number').val(result.trackingId);
+										}else{
+											$('.tracking_update').next('em').html(result.msg);
+										}
+									}
+								})
+							}
+						</script>
+
+
+						<div class='address-validation'>
+							<div class="input-box clearfix">
+								<span>
+									地址：<{$data.address}>
+								</span>
+								<input type="hidden" value='<{$data.address}>' class='address'>
+							</div>
+							<hr>
+							<div class="input-box clearfix">
+								<span><label>House Number</label></span>
+								<input type="text" name="house_number">
+							</div>
+							<div class="input-box clearfix">
+								<span><label>Street</label></span>
+								<input type="text" name="street">
+							</div>
+							<div class="input-box clearfix">
+								<span><label>City</label></span>
+								<input type="text" name="city">
+							</div>
+							<div class="input-box clearfix">
+								<span><label>State</label></span>
+								<input type="text" name="state">
+							</div>
+							<div class="input-box clearfix">
+								<span><label>Country</label></span>
+								<input type="text" name="country">
+							</div>
+							<div class="input-box clearfix">
+								<span><label>Post Code</label></span>
+								<input type="text" name="post_code">
+							</div>
+							
+							<div class="input-box clearfix">
+								<button type="button" class='dispatch-btn' onClick="$('.address-validation').hide();dispatch()">
+									确认地址并发货
+								</button>
+								<button type="button" class='dispatch-cancel-btn' onClick="$('.address-validation').hide()">
+									取消
+								</button>
+							</div>
+						</div>
+
+						<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places"></script>
+				    	<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+
+				     <script type="text/javascript">
+				          $(function(){
+				            try {
+				                initGeocomplete();
+				            }
+				            catch(err) {
+				                console.log('google API not working.');
+				            }
+				          });
+
+				          function initGeocomplete(){
+				            $(".address-validation .address").geocomplete()
+				            .bind("geocode:result", function(event, result){
+				               geocodeResultDisplay(result);
+				            })
+				            .bind("geocode:error", function(event, status){
+				              console.log("ERROR: " + status);
+				            })
+				            .bind("geocode:multiple", function(event, results){
+				                // geocodeResultDisplay(results);
+				            });
+				          }
+
+				          function geocodeResultDisplay(result) {
+				          	console.log(result);
+				          	var parts = result.address_components;
+				          	
+				          	for (var i = parts.length - 1; i >= 0; i--) {
+				          		if (parts[i].types.includes('street_number')) {
+				          			$(".address-validation input[name='house_number']").val(parts[i].short_name);
+				          		}
+				          		if (parts[i].types.includes('route')) {
+				          			$(".address-validation input[name='street']").val(parts[i].short_name);
+				          		}
+				          		if (parts[i].types.includes('locality')) {
+				          			$(".address-validation input[name='city']").val(parts[i].short_name);
+				          		}
+				          		if (parts[i].types.includes('administrative_area_level_1')) {
+				          			$(".address-validation input[name='state']").val(parts[i].short_name);
+				          		}
+				          		if (parts[i].types.includes('country')) {
+				          			$(".address-validation input[name='country']").val(parts[i].short_name);
+				          		}
+				          		if (parts[i].types.includes('postal_code')) {
+				          			$(".address-validation input[name='post_code']").val(parts[i].short_name);
+				          		}
+				          	}
+				          }
+				      </script>
+
+					<{/if}>
+
+				
+				<{if $info.visibleForBusiness}>
+					<div style="background-color: #eee;border-radius: 5px;padding: 10px 20px;margin: 10px">
+						<div class="input-box clearfix">
+							<span><label>客户姓名</label></span>
+							<{$data.first_name}>&nbsp;<{$data.last_name}>
+						</div>
+
+						<{if $data.id_number}>
+							<div class="input-box clearfix">
+								<span><label>身份证号</label></span>
+								<{$data.id_number}>&nbsp;<{$data.id_number}>
+							</div>
+						<{/if}>
+						
+						<div class="input-box clearfix">
+							<span><label>地址</label></span>
+							<{$data.address}>
+						</div>
+
+                        <{if $editAble == true}>
+						<div class="input-box clearfix">
+							<span><label>地址</label></span>
+							<input type="text" name="address_update" id='address_update' style="padding:10px;width: 350px" value='<{$data.address}>'>
+							<button type="button" class='address_update'>
+								更新
+							</button>
+						</div>
+                        <{/if}>
+
+						<script type="text/javascript">
+							$('.address_update').on('click',function(){
+								var address_update =$('input#address_update').val();
+								var context =$(this);
+								var id ='<{$data.orderId}>';
+
+									$.ajax({
+										url: "<{$http_root_www}>company/update_order_address", 
+										data: {id: id, address: address_update},
+										beforeSend: function( xhr ) {
+											context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+										},
+										success: function(result){
+											context.html("已更新");
+											context.css('background-color','#FD5001 ');
+										}
+									})
+							})
+						</script>
+
+						<div class="input-box clearfix">
+							<span><label>电话</label></span>
+							<{$data.phone}>
+						</div>
+
+                        <{if $editAble == true}>
+						<div class="input-box clearfix">
+							<span><label>电话</label></span>
+							<input type="text" name="phone_update" id='phone_update' style="padding:10px;width: 350px" value='<{$data.phone}>'>
+							<button type="button" class='phone_update'>
+								更新
+							</button>
+						</div>
+                        <{/if}>
+
+
+						<script type="text/javascript">
+							$('.phone_update').on('click',function(){
+								var phone_update =$('input#phone_update').val();
+								var context =$(this);
+								var id ='<{$data.orderId}>';
+
+									$.ajax({
+										url: "<{$http_root_www}>company/update_order_phone", 
+										data: {id: id, phone: phone_update},
+										beforeSend: function( xhr ) {
+											context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+										},
+										success: function(result){
+											context.html("已更新");
+											context.css('background-color','#FD5001 ');
+										}
+									})
+							})
+						</script>
+
+						<div class="input-box clearfix">
+							<span><label>邮箱</label></span>
+							<{$data.email}>
+						</div>
+
+
+                        <{if $editAble == true}>
+						<div class="input-box clearfix">
+							<span><label>邮箱</label></span>
+							<input type="text" name="email_update" id='email_update' style="padding:10px;width: 350px" value='<{$data.email}>'>
+							<button type="button" class='email_update'>
+								更新
+							</button>
+						</div>
+						<{/if}>
+
+
+						<script type="text/javascript">
+							$('.email_update').on('click',function(){
+								var email_update =$('input#email_update').val();
+								var context =$(this);
+								var id ='<{$data.orderId}>';
+
+									$.ajax({
+										url: "<{$http_root_www}>company/update_order_email", 
+										data: {id: id, email: email_update},
+										beforeSend: function( xhr ) {
+											context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+										},
+										success: function(result){
+											context.html("已更新");
+											context.css('background-color','#FD5001 ');
+										}
+									})
+							})
+						</script>
+					</div>
+				<{/if}>
+				
+					<{if $data.message_to_business}>
+						<div class="input-box clearfix">
+							<span><label>客户留言</label></span>
+							<span style='color:green'><{$data.message_to_business}></span>
+						</div>
+					<{/if}>
+
+					<div class="main-list" name="products_detail" id="products_detail">		
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th>产品</th>		
+									<th>规格</th>	
+									<th>价格</th>	
+									<th>数量</th>
+									
+									<th>产品累计<br>（单价*数量）</th>
+									<th>调整后累计<br>（单价*数量） </th>		
+									<th>产品缺货</th>										
+									<th>报损分类 </th>	
+									<th>详细填写 </th>										
+								</tr>	
+								
+							</thead>		
+							<tbody>		
+								<{foreach from=$items item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>"><{$item.bonus_title}></a></td>
+									
+									<td><{$item.guige_des}></td>
+
+									<td>
+										<{$item.voucher_deal_amount}>
+									</td>
+
+									<td>X <{$item.customer_buying_quantity}></td>
+										
+									<td><{$item.voucher_deal_amount * $item.customer_buying_quantity}></td>
+
+									<td> <{if $days>21}>超21天 无法修改<{/if}><input type="text" <{if $days>21 || $editAble == false}> <{/if}> class="input-text 	"  data-id='<{$item.id}>' id="<{$item.id}>"  style="width:50px;" name="adjust_subtotal_amount" value="<{$item.adjust_subtotal_amount}>" >
+											<span class='promote-ajax'></span></td>
+											
+											<td><{if $days>21}><{else}><button type="button"           onClick="no_stock(<{$item.id}>);"  style="        background: blue;    padding: 5px 15px;    font-size: 18px;    margin: 0 auto;    color: #fff;    background: #00A1E9;    border: 0;    text-align: center;    cursor: pointer;">	设置缺货	</button><{/if}></td>
+								
+							       	<td>
+									
+									
+									<{if ($item.customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}>
+									<select name='reason_type' id='reason_type'>
+									   	<{foreach from=$order_amend_reson_type_list item=reason_type name='dl'}>		
+										<option value='<{$reason_type.id}>' <{if $reason_type.id==$item.reason_type}>selected<{/if}> >
+										
+										<{$reason_type.reason_type_desc}></option>
+										<{/foreach}>		
+									</select>
+									<{/if}>
+									</td>
+									
+									<td><{if ($item.customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}><a target='_blank' href="<{$http_root_www}>company/customer_order_amend_edit?item_buying_id=<{$item.id}>&return_link=details">详细填写</a><{/if}></td>
+									
+							</tr>			
+								<{/foreach}>	
+                               <script>
+							   function no_stock(id) {
+							   
+							    // alert($(this).next('.input').val());
+							         var o=$('#'+id);
+								
+								    var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+									var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+									var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+									
+								
+									var value =0;
+									var update_field_name=o.attr('name');
+									var updateData ={};
+
+                                    $('#'+id).val(0);
+									updateData['id']=id;
+									updateData[update_field_name]=value;
+									//alert(updateData[update_field_name]);
+									var ajax_result = o.next('.promote-ajax');
+									//alert(update_field_name);
+									$.ajax({
+									  url: "<{$http_root_www}>company/update_wj_customer_coupon_subtotal",
+									  type: "POST",
+									  data: updateData,
+									  beforeSend:function(){
+											$(ajax_result).html(iconLoading);
+									  }
+									}).done(function(data){
+										try{
+											data = JSON.parse(data);
+										}catch(err){
+											data['msg'] = data;
+										}
+
+										if(data.status==200){
+											   $(ajax_result).html(successIcon);
+											//alert('yes');
+										}else if(data.status==500){
+											alert(data.msg);
+												$(ajax_result).html(errorIcon);
+										}else{
+											   alert(data.msg);
+											  $(ajax_result).html(errorIcon);
+												
+										}
+									}).fail(function(){
+										iconupdate.iconUpdateFail();
+									});
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								 
+								 }
+							   
+							   </script>								
+							</tbody>		
+						</table>			
+					</div>	
+
+					<div class='moneyDetail' style="text-align: right;padding: 10px">
+						<{if $moneyDetail.goodsTotal}>
+							<div style="color: #f00;font-weight: bolder;">
+								<span>商品总价</span><span>:</span><span><{$moneyDetail.goodsTotal}>&nbsp;<{if ($moneyDetail.goodsTotal>$moneyDetail.goodsTotal_new)}>[调整后总价：<{$moneyDetail.goodsTotal_new}>]<{/if}></span>
+							</div>
+						<{/if}>
+						
+						<{if $moneyDetail.deliveryFee>0}>
+							<div>
+								<span>运费</span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
+							</div>
+						<{/if}>
+						<{if $moneyDetail.platformFee>0}>
+							<div>
+								<span>预订费</span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
+							</div>
+						<{/if}>
+						<{if $moneyDetail.transactionSurcharge>0}>
+							<div>
+								<span>第三方交易手续费</span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.promotionTotal>0}>
+							<div>
+								<span>使用折扣码</span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.useMoney>0}>
+							<div>
+								<span>钱包支付</span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.transactionBalance}>
+							<div style="color: #f00;font-weight: bolder;">
+								<span>交易总额</span><span>:</span><span><{$moneyDetail.transactionBalance}>&nbsp;<{if ($moneyDetail.transactionBalance>$moneyDetail.transactionBalance_new)}>[调整后总额：<{$moneyDetail.transactionBalance_new}>]<{/if}></span>
+							</div>
+						<{/if}>
+					</div>
+
+
+					<h2 style="padding-left:30px; font-size:16px;">操作日志</h2>
+						<div class="main-list">
+							<{if $log}>
+								<table cellspacing="0" cellpadding="0" width="100%">
+									<thead>
+										<tr>
+											
+
+											<th>操作者</th>
+
+											<th>动作描述</th>
+
+											<th>时间</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<{foreach from=$log item=item name='dl'}>
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+											<td><{$item.action_user_name}></td>
+
+											<td><{$item.cn_description}> <br><!-- (<{$item.en_description}>) --></td>
+
+											<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+
+										</tr>
+										<{/foreach}>
+									</tbody>
+								</table>
+							<{else}>
+								还没有记录
+							<{/if}>
+						</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	var loading=false;
+	
+	$('input[name=adjust_subtotal_amount]').on('change',function(){
+			
+  		    var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		    var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		    var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+			
+			var id =$(this).data('id');
+			var value =	$(this).val();
+			var update_field_name=$(this).attr('name');
+			var updateData ={};
+
+			updateData['id']=id;
+			updateData[update_field_name]=value;
+			//alert(updateData[update_field_name]);
+            var ajax_result = $(this).next('.promote-ajax');
+			//alert(update_field_name);
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/update_wj_customer_coupon_subtotal",
+			  type: "POST",
+			  data: updateData,
+			  beforeSend:function(){
+			  		$(ajax_result).html(iconLoading);
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					   $(ajax_result).html(successIcon);
+					//alert('yes');
+				}else if(data.status==500){
+					alert(data.msg);
+						$(ajax_result).html(errorIcon);
+				}else{
+				       alert(data.msg);
+					  $(ajax_result).html(errorIcon);
+						
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+		
+		
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+	    alert(this.target);
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+	
+
+	
+	
+</script>
+
+
+
+</body>
+</html>

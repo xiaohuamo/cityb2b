@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	
+	<script>
+		var php_root ='<{$http_root_www}>';
+	
+	</script>
+	
+</head>
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}>
+			<div class="main">
+				<div class="box2">
+					<{include file='company/company_distribution_manager.htm'}>
+					
+					<div class='coupon-template-list '>
+						<{foreach from=$categories item=item name='cl'}>
+						   <{if $type1==9}>
+						     <{if $item.id=='106105'}>
+							<div class='cate-line-break template-toggle'><span><{$item.name}></span><i class='fa fa-angle-double-down fa-lg '></i></div>
+								<!-- list of each cate will be loaded via ajax the first time it opens -->
+							<div class='template-toggle-list' style='display:none' data-category-id='<{$item.id}>'>
+							</div>
+							<{/if}>
+							<{else}>
+							 
+							<div class='cate-line-break template-toggle'><span><{$item.name}></span><i class='fa fa-angle-double-down fa-lg'></i></div>
+								<!-- list of each cate will be loaded via ajax the first time it opens -->
+							<div class='template-toggle-list' style='display:none' data-category-id='<{$item.id}>'>
+							</div>
+							
+							<{/if}>
+						<{/foreach}>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<{include file='footer.htm'}>
+</body>
+<script type="text/javascript">
+	$('.template-toggle').on('click',function(){
+		var context = $(this).next('.template-toggle-list');
+		$(this).find('i').toggleClass('fa-angle-double-down');
+		$(this).find('i').toggleClass('fa-angle-double-up');
+		$(this).toggleClass('bg-color-yellow');
+
+		context.toggle();
+		ajaxShow(context);
+	});
+
+	function ajaxShow(context){
+		if($.trim(context.html()).length==0){//if its empty
+			$.ajax({
+				type:"GET",
+				url: "<{$http_root_www}>company/coupons_template_ajax", 
+				data:{"cid":context.data('category-id'),"type1":'<{$type1}>',"type2":'<{$type2}>'},
+				beforeSend: function( xhr ) {
+					context.html("<div style='text-align:center;line-height:300px;'><i style='color:#FD5001 ' class='fa fa-spinner fa-3x fa-pulse'></i></div>");
+				},
+				success: function(result){
+					if($.trim(result).length==0){
+						$(context).html("<div style='text-align:center;line-height:300px;'><i  class='fa fa-frown-o fa-3x'>Empty</i></div>");
+					}else{
+						$(context).html(result);
+					}
+    			}
+    		}).fail(function(){
+    			$(context).html();
+    		});	
+		}
+		
+	}
+</script>
+</html>

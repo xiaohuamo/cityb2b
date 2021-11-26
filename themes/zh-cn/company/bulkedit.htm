@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-list main-form">
+
+					<form id="memberForm" action="<{$http_root_www}>company/bulkedit" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="colCurTit clearfix">
+							<h1>Step1:选择将要编辑的为奖卡</h1>
+						</div>
+
+						<table width='100%'>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Title</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								<{foreach from=$list item=item name='dl'}>
+									<tr>
+										<td>
+											<input type="checkbox" class='selectedItem' name="selectedItem[]" value='<{$item.id}>'>
+											<{$item.id}>
+										</td>
+										<td>
+											<{$item.title}>
+										</td>
+									</tr>
+								<{/foreach}>
+							</tbody>
+							
+
+							<tr>
+								<td>
+									<input type="checkbox" id="selectAllItem" >全选
+								</td>
+							</tr>
+						</table>
+
+
+						<div class="colCurTit clearfix">
+							<h1>Step2:选择将要编辑的字段</h1>
+						</div>
+
+						<br>
+						<select name='dataField'>
+							 <option value='false'>请选择</option>
+
+							<{foreach from=$editableField item=item}>
+								 <option value='<{$item.field}>' data-edittype='<{$item.type}>'><{$item.title}></option>
+							<{/foreach}>
+						</select>	
+						<br><br>
+
+						<div class="colCurTit clearfix">
+							<h1>Step3:编辑新内容</h1>
+						</div>
+
+						<div class="dataEdit">
+							<!-- initDataEdit -->
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit" >批量提交</button>
+						</div>
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+
+<script type="text/javascript">
+	$(function(){
+		$('select[name="dataField"]').on('change',function(){
+			 initDataEdit($(this).find('option:selected').data('edittype'));
+		})
+	})
+
+	function initDataEdit(type){
+		var html='';
+		console.log(type);
+		if(type=='text'){
+			html='<textarea name="updateValue"></textarea>';
+			$('.dataEdit').html(html);
+		}else if(type=='richtext'){
+			html='<textarea name="updateValue"></textarea>';
+			$('.dataEdit').html(html);
+
+			CKEDITOR.replace('updateValue', { 
+				height : 200,
+				filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic'
+			});
+
+		}else if(type=='inputtext'){
+			html='<input name="updateValue" type="text"></input>';
+			$('.dataEdit').html(html);
+		}else if(type=='number'){
+			html='<input name="updateValue" type="number" step="any"></input>';
+			$('.dataEdit').html(html);
+		}
+
+	}
+</script>
+
+<script type="text/javascript">
+	$(function(){
+
+		$('#selectAllItem').on('click',function(){
+			if($(this).is(':checked')){
+				$('.selectedItem').each(function(){
+					$(this).prop('checked', true);
+				});
+				console.log('all');
+			}else{
+				$('.selectedItem').each(function(){
+					$(this).prop('checked', false);
+				});
+				console.log('none');
+			}
+		})
+	})
+
+
+</script>
+</html>

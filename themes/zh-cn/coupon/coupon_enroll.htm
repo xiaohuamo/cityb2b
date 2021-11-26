@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style>
+		.double_label{
+			display: inline-block;
+			position: relative;
+		}
+		.double_label span{
+			display: block;
+		}
+		.double_label span.top{
+			font-weight: bolder;
+		}
+		.double_label span.bottom{
+		}
+
+		.application input[type='text']{
+			vertical-align: middle;
+			height: 26px;
+			padding:2px 15px;
+		}
+
+		.application .double_label{
+			vertical-align: middle;
+		}
+
+		.double_label input[type='checkbox']{
+			transform: scale(2.3);
+			position: absolute;
+			left: 5px;
+			top: 13px;
+		}
+
+		.checkbox-label{
+			padding-left: 40px;
+		}
+
+		.sec_city{
+			height: 80px;
+		}
+
+		.sec_city label{
+			width: 14%;
+		}
+
+		.sec_category{
+			height: 80px;
+		}
+
+		.sec_category label{
+			width: 28%;
+		}
+
+		.enrollbtn {
+		  background: #3498db;
+		  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+		  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+		  -webkit-border-radius: 28;
+		  -moz-border-radius: 28;
+		  border-radius: 28px;
+		  font-family: Courier New;
+		  color: #ffffff;
+		  font-size: 20px;
+		  padding: 10px 20px 10px 20px;
+		  text-decoration: none;
+		}
+
+		.enrollbtn:hover {
+		  background: #3cb0fd;
+		  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+		  text-decoration: none;
+		}
+
+		.credit_card_from{
+			padding:15px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+		$(function(){
+			$("input[name='city[]']").on('click',function(){
+				$("input[name='city[]']").prop('checked', false);
+    			$(this).prop('checked', true);
+			})
+
+			$("input[name='category[]']").on('click',function(){
+				$("input[name='category[]']").prop('checked', false);
+    			$(this).prop('checked', true);
+			})
+
+			$("input[name='payment']").on('click',function(){
+				if($(this).val()=='creditcard'){
+					$('.credit_card_from').show(100);
+				}else{
+					$('.credit_card_from').hide(100);
+				}
+			})
+		});  
+	</script>
+</head>
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">
+		<div class="wrap clearfix">
+			<div class="main clearfix" style="width: 100%">
+				<div class="box2">
+					<div class="main-form">
+						<form id="memberForm" action="<{$http_root_www}>coupon/enroll" method="post" target="post_frame" enctype="multipart/form-data" style='width: 790px;margin: auto;'>
+
+								<div class='application'>
+									<div><img  src="<{$SKIN_PATH}>images/enroll_banner.jpg" style="  width: 100%;"></div>
+									
+									<p style="margin-top: 49px;text-align: center;color: red;"><a style="font-size: 25px;font-weight:700;color: red;" href="/coupon1/7122">海选选手必读参赛说明&gt;&gt;</a></p>	
+									<h1 style="line-height: 100px;font-size: 30px;">报名表Application</h1>
+									
+									<h2>报名城市</h2>
+									<div class='sec_city'>
+										<label class='double_label checkbox-label ' >
+											<input type="checkbox" value='Sydeny' name="city[]">
+											<span class='top'>悉尼</span><span class='bottom'>Sydeny</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Melbourne' name="city[]" checked>
+											<span class='top'>墨尔本</span><span class='bottom'>Melbourne</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Brisbane' name="city[]">
+											<span class='top'>布里斯班</span><span class='bottom'>Brisbane</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Adelaide' name="city[]">
+											<span class='top'>阿德莱德</span><span class='bottom'>Adelaide</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Perth' name="city[]">
+											<span class='top'>珀斯</span><span class='bottom'>Perth</span></label>	
+
+									</div>
+									
+
+									
+									<div class='sec_category'>
+										<label class='double_label'><span class='top'>类别</span><span class='bottom'>Category</span></label>
+										<label class='double_label checkbox-label'><input value ='Solo' checked type="checkbox" name="category[]"><span class='top'>独唱</span><span class='bottom'>Solo</span></label>
+										<label class='double_label checkbox-label'><input value ='Group' type="checkbox" name="category[]"><span class='top'>组合</span><span class='bottom'>Group</span></label>
+									</div>
+									
+
+									<div style="height: 75px;">
+										<label class='double_label'><span class='top'>姓名<em style='color:red'>*</em></span><span class='bottom'>Name</span></label>
+										<input required style="width: 40%" type="text" name="name">
+										<label class='double_label'><span class='top'>性别<em style='color:red'>*</em></span><span class='bottom'>Gender</span></label>
+										<select name='gender' style="vertical-align: middle;height: 35px;padding:2px 15px;width: 42%;">
+											<option value='Male'>男 Male</option>
+											<option value='Female'>女 Female</option>
+											<option value='Other'>其它 Other</option>
+										</select>
+									</div>
+
+									<div style="height: 75px;">
+										<label class='double_label'><span class='top'>职业(可选)</span><span class='bottom'>Occupation</span></label>
+										<input style="width: 40%" type="text" name="occupation">
+										<label class='double_label'><span class='top'>国籍<em style='color:red'>*</em></span><span class='bottom'>Nationality</span></label>
+										<input required style="width: 30%" type="text" name="nationality" value='中国'>
+									</div>
+
+									<div style="height: 75px;">
+										<label class='double_label'><span class='top'>电话<em style='color:red'>*</em></span><span class='bottom'>Telephone Number</span></label>
+										<input required style="width: 78%" type="text" name="phone">
+									</div>
+
+									<div style="height: 75px;">
+										<label class='double_label'><span class='top'>现居地(可选)</span><span class='bottom'>Address</span></label>
+										<input  style="width: 84%" type="text" name="address">
+									</div>
+
+									<div style="height: 75px;">
+										<label class='double_label'><span class='top'>邮箱<em style='color:red'>*</em></span><span class='bottom'>Email</span></label>
+										<input required style="width: 90%" type="text" name="email">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>为什么参加<<2019中国好声音>>澳大利亚海选</span><span class='bottom'>What is your reason in choosing to participate in Sing! China Australia Audition?（Max 500 words）(可选)</span> </label>
+										<textarea  style=" width: 100%;height: 100px;" name='reason'></textarea>	
+									</div>
+									<div>
+										<label><input  required type="checkbox" name=""><em style='color:red'>*</em>我确认已经年满18周岁，年龄不实会造成参赛名额取消</label>
+										
+									</div>
+								</div>
+
+								<br>
+								<div>
+									
+									
+									
+									
+									<p style="font-weight:700;" >墨尔本艺术学院(MAA) City总校 </p>
+									<p><small>Address：  LEVEL 1, 364-372 Lonsdale st. Melbourne  </small></p>
+									<p><br></p>
+									
+									<p style="font-weight:700;" >墨尔本艺术学院(MAA) Box hill 校区 </p>
+									<p><small>Address：  5 Court st. Box HilL </small></p>
+									<p><br></p>
+									
+									<p style="font-weight:700;" >墨尔本艺术学院(MAA) ST Kilda校区 </p>
+									<p><small>Address： level 1,492 St. Kilda Rd, Vic 3004 </small></p>
+									<p><br></p>
+									
+									<p style="font-weight:700;" >东南区海选场 知音琴行DEAKIN展示厅 </p>
+									<p><small>Address： UNIT E27, 25-37 Huntingdale Rd, Burwood (Industry Park) </small></p>
+									<p><br></p>
+									
+									<p style="font-weight:700;" > 西区海选场 云登商会 WYNDHAM </p>
+									<p><small>Address： Level 1, C8, Main St. Point Cook </small></p>
+									<p><br></p>
+									<p style="font-weight:700;" >报名热线电话 0451 916 818 </p>
+									<p><br></p>
+									<label style="    color: red;    font-weight: 700;">请选择参赛地点和时间</label>
+									<select name='location'>
+										
+										<{foreach from=$sub_coupon_list item=item}>
+											<{if $item.quantity<=0}>
+											<!--<option disabled value='<{$item.id}>'>(已满)<{$item.title}></option>-->
+											<{else}>
+												<option  value='<{$item.id}>'><{$item.title}> </option>
+											<{/if}>
+										<{/foreach}>
+									</select>
+									
+									
+						
+								</div>
+								
+
+								<p>报名费：<strong>AUD$20/人</strong>（报名参赛者均有纪念礼品）</p>
+								<br>
+									<div class='payment' style="    font-weight: 700;">
+
+									<label><input type="radio" name="payment" value='royalpay'>微信支付</label>
+									<label><input type="radio" name="payment" value='paypal'>Paypal支付</label>
+									<label><input checked type="radio" name="payment" value='creditcard'>银行卡/信用卡支付</label>
+
+									<button class='enrollbtn' style="float: right;">报名</button>
+
+									<div class='credit_card_from'>
+										<input type="text" name="card_number" placeholder="Card Number" style="width: 250px;">
+										<input type="text" name="card_security_code" placeholder="Security Code" style="width: 100px;">
+										<span>Expires:</span>
+										<select name='card_expire_month'>
+												<option>Month</option>
+											 <{for $m=1 to 9}>
+	                                            <option value="<{$m}>">0<{$m}></option>
+	                                          <{/for}>
+	                                            <option value="10">10</option>
+	                                            <option value="11">11</option>
+	                                            <option value="12">12</option>
+										</select>
+
+										<select name='card_expire_year'>
+												<option>Year</option>
+											  <{for $y=16 to 46}>
+	                                            <option value="<{$y}>"><{$y}></option>
+	                                          <{/for}>
+										</select>
+									</div>
+									
+									<p ><strong style="color :red;">重要!获取您的报名信息</strong></p>
+									<p >1: 报名信息将发送到您的个人邮件中.(请检查 Junk Mail )</p>
+									<p >2: 关注 "墨尔本美食生活" ->我->我的订单.</p>
+								
+									<BR>
+								</div>
+							</form>
+							<div style="text-align: center;"><img style="width: 790px;" src="<{$SKIN_PATH}>images/enroll_footer0.jpg"></div> 
+							<br>
+					
+							<div style="text-align: center;"><img style="width: 790px;"  src="<{$SKIN_PATH}>images/enroll_footer2.jpg"></div> 
+							<br>
+							<div style="text-align: center;"><img style="width: 790px;"  src="<{$SKIN_PATH}>images/tongzong.png"></div> 
+							<br> 
+							<div style="text-align: center;"><img style="width: 790px;"  src="<{$SKIN_PATH}>images/zanzhu.jpg"></div> 
+
+							<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+							
+							<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<{include file='footer.htm'}>
+
+	</body>
+	</html>

@@ -1,0 +1,358 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<meta name="keywords" content="<{$pageKeywords}>" />
+<meta name="description" content="<{$pageDescription}>" />
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<link rel="stylesheet" href="<{$STATIC_PATH}>ccp/build/css/intlTelInput.css">
+<script src="<{$STATIC_PATH}>ccp/build/js/intlTelInput.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style type="text/css">
+.wx_login{
+	position: relative;
+}
+.wx_login_item{
+	position: relative;
+	display: inline-block;
+	color: white;
+    background: #74bd36;
+    width: 100%;
+    height: 100%;
+	top: 10px;
+	
+    text-align: center;
+    line-height: 120px;
+    font-size: 13px;
+    text-decoration: none;
+}
+.reg_login_item{
+	position: relative;
+	display: inline-block;
+	color: white;
+    background: #74bd36;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 13px;
+    text-decoration: none;
+}
+.wx_login_mask{
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	left: 0px;
+	display: none;
+}
+
+</style>
+
+<style type="text/css">
+	.reg_form .module{
+	  position:relative;
+	  top:15%;    
+	  margin-bottom: 50px;
+	  height:590px;
+	  max-width:450px;
+	  margin-left:auto;
+	  margin-right:auto;
+	  border-radius:5px;
+	  background:RGBA(255,255,255,1);
+	    
+	  -webkit-box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);        
+	  box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);
+	  
+	}
+
+	.reg_form .module ul{
+	  list-style-type:none;
+	  margin:0;
+	}
+
+	.reg_form .tab{
+	  float:left;
+	  height:60px;
+	  width:25%;
+	  padding-top:20px;
+	  box-sizing:border-box;
+	  background:#eeeeee;  
+	  text-align:center;
+	  cursor:pointer;
+	  transition:background .4s;
+	}
+
+	.reg_form .tab:first-child{  
+	  -webkit-border-radius: 5px 0px 0px 0px;
+	  border-radius: 5px 0px 0px 0px;
+	}
+
+	.reg_form .tab:last-child{  
+	  -webkit-border-radius: 0px 5px 0px 0px;
+	  border-radius: 0px 5px 0px 0px;
+	}
+
+	.reg_form .tab:hover{  
+	  background-color:rgba(0,0,0,.1);
+	}
+
+	.reg_form .activeTab{
+	  background:#fff;
+	}
+
+	.reg_form .activeTab .icon{
+	  opacity:1;
+	}
+
+	.reg_form .icon{
+	  height:24px;
+	  width:24px;
+	  opacity:.2;
+	}
+
+	.reg_form .form{
+	  float:left;
+	  height:86%;
+	  width:100%;
+	  box-sizing:border-box;
+	  padding:40px;
+	}
+
+	.reg_form .textbox{
+	  height:50px;
+	  width:100%;
+	  border-radius:3px;
+	  border:rgba(0,0,0,.3) 2px solid;
+	  box-sizing:border-box;
+	  padding:10px;
+	  margin:15px 0px;
+	}
+
+	.reg_form .textbox:focus{
+	  outline:none;
+	   border:rgba(24,149,215,1) 2px solid;
+	   color:rgba(24,149,215,1);
+	}
+
+	.reg_form .button{
+	  height:50px;
+	  width:100%;
+	  border-radius:3px;
+	  border:rgba(0,0,0,.3) 0px solid;
+	  box-sizing:border-box;
+	  padding:10px;
+	  margin-bottom:10px;
+	  background:#90c843;
+	  color:#FFF;
+	  font-weight:bold;
+	  font-size: 12pt;
+	  transition:background .4s;
+	  cursor:pointer;
+	}
+
+	.reg_form .button:hover{
+	  background:#80b438;
+	}
+
+	.reg_form .verifycode{
+		width: 50%;
+	}
+	.reg_form .verifycode_btn{
+		width: 47%;
+		background-color: #44c8a4;
+	}
+	.reg_form .verifycode_btn.disable{
+		background-color: #afafaf;
+	}
+</style>
+</head>
+<body>
+<{include file='header.htm'}>
+<script>
+var id='<{$pc_login_id}>';
+
+function check_weixin_login() {
+	$.post('<{$http_root_www}>query?cmd=check_weixin_login', {'id':id}, function(data){
+	    if(data.trim()=='VALID') {
+		 	window.location.href = '<{if $returnUrl}><{urldecode($returnUrl)}><{else}><{$http_root_www}><{/if}>';
+		}
+		setTimeout(function(){check_weixin_login();}, 2000);
+	});
+}
+check_weixin_login();
+</script>
+			
+<div class="container">
+	<div class="wrap">
+		<div class="login box2">
+			<h1><{$lang->login_in}></h1>
+			
+ 			<div class="form1">
+
+			<{if $ua == 'wechat'}>
+				<div class='wx_login'>
+					<a  class='wx_login_item '  style=' background:#74bd36;' href="<{$http_root_www}>member/wx_redirect?returnUrl=<{$returnUrl}>"><{$lang->wechat_log_in}></a>
+				</div>
+			<{/if}>
+
+			
+				<form id='memberForm' class='normal-login' action="<{$http_root_www}>member/login" method="post" target="post_frame">
+					<div class="row clearfix">
+						<i><img src="<{$SKIN_PATH}>images/ico_09.png" alt="" /></i>
+						<div><input type="text" name="name" class="input-text" placeholder="<{$lang->user_name}>" /></div>
+					</div>
+
+					<div class="row clearfix">
+						<i><img src="<{$SKIN_PATH}>images/ico_10.png" alt="" /></i>
+						<div><input type="password" value="" name="pwd" class="input-text" placeholder="<{$lang->password}>" /></div>
+					</div>
+
+					<div class="rowSubmit clearfix">
+						<div><input type="submit" value="<{$lang->log_in}>" class="btn1" /></div>
+					</div>
+
+					<br>
+					<script src='https://www.google.com/recaptcha/api.js'></script>
+					<div class="g-recaptcha" data-sitekey="6LeufUMUAAAAAEDZotsZQFVjgOQaIcUS46B9ghpA"></div>	
+
+					<div class="rowOther">
+						<input type="checkbox" value="1" name="remember" id="remember" checked /><label for="remember"><{$lang->remember_me}></label>
+					</div>
+
+					<input type="hidden" name="returnUrl" value='<{$returnUrl}>'>
+				</form>
+
+				<form id='memberForm' class='mobileonly-login reg_form' action="<{$http_root_www}>member/mobileonly_login" method="post" target="post_frame" style='display: none'>
+
+					<input type="text" placeholder="<{$lang->mobile_phone_number}>" class="textbox" id='mobile' name='mobile'/>
+			      	<p class="ajax_check_response"></p>
+
+			        <input type="button" value="<{$lang->remind_user_register_10}>" class="button verifycode_btn" id='mobileverifycode_btn'/>
+			        <input type="text" placeholder="<{$lang->verify_code}>" name='code' class="textbox verifycode" />
+
+					<div class="rowSubmit clearfix">
+						<div><input type="submit" value="<{$lang->log_in}>" class="btn1" /></div>
+					</div>
+
+					<div class="rowOther">
+						<input type="checkbox" value="1" name="remember" id="remember" checked /><label for="remember"><{$lang->remember_me}></label>
+					</div>
+
+					<input type="hidden" name="returnUrl" value='<{$returnUrl}>'>
+				</form>
+
+				<script type="text/javascript">
+
+					$(function () {
+						$("#mobile").intlTelInput({
+					      // allowDropdown: false,
+					      // autoHideDialCode: false,
+					         autoPlaceholder: "aggressive",
+					      //dropdownContainer: "cpp-body",
+					      // excludeCountries: ["us"],
+					      // formatOnDisplay: false,
+					      // geoIpLookup: function(callback) {
+					      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+					      //     var countryCode = (resp && resp.country) ? resp.country : "";
+					      //     callback(countryCode);
+					      //   });
+					      // },
+					       hiddenInput: "full_number",
+					      // initialCountry: "auto",
+					      // nationalMode: false,
+					      onlyCountries: ['cn', 'au'],
+					      // placeholderNumberType: "MOBILE",
+					       // preferredCountries: ['cn', 'au' ,'nz'],
+					      // separateDialCode: true,
+					      utilsScript: "<{$STATIC_PATH}>ccp/build/js/utils.js"
+					    });
+
+						$('#mobileverifycode_btn').on('click',function(){
+							var mobile = $("#mobile").val();
+
+							var full_number = $("#mobile").intlTelInput("getNumber");
+
+							if(full_number==''||mobile==''){alert('<{$lang->input_mobile_number}>');return false}
+							if($('#mobileverifycode_btn').hasClass('disable'))return false;
+
+							//ask for mobile SMS
+							$.get( "<{$http_root_www}>system/send_sms_login_verification_code?mobile="+mobile+"&full_number="+full_number,function(data){console.log(data)} );
+							
+							// set timer
+							setTimer($(this));
+						})
+					})
+					
+
+					function setTimer(obj){
+						// set timer
+						var time_length = 60;
+						$(obj).val(time_length+'s');
+						$(obj).addClass('disable');
+						
+						var timer = setInterval(function () {
+							time_length--;
+							$(obj).val(time_length+'s');
+
+							if(time_length==0){
+								clearInterval(timer);
+								$(obj).val('<{$lang->remind_user_register_10}>');
+								$(obj).removeClass('disable');
+							}
+						},1000)
+					}
+
+					function switchLoginForm() {
+						$('form.normal-login').toggle();
+						$('form.mobileonly-login').toggle();
+
+						if ($('form.normal-login').is(":hidden")) {
+							$('#switchLoginBtn').css('background','#2bb8aa').html('<{$lang->account_login}>');
+						}
+
+						if ($('form.mobileonly-login').is(":hidden")) {
+							$('#switchLoginBtn').css('background','#FD5001 ').html('<{$lang->mobile_login}>');
+						}
+
+					}
+				</script>
+
+				<div class='wx_login'>
+					<a class='reg_login_item' id='switchLoginBtn' style='background:#FD5001 ;' href="javascript:;" onClick='switchLoginForm();'><{$lang->mobile_login}></a>
+
+					<a class='reg_login_item ' style='background:#363fbd;' href="<{$http_root_www}>member/register?returnUrl=<{$returnUrl}>"><{$lang->register}></a>
+
+					<a class='reg_login_item ' style='background:#bd3636;' href="<{$http_root_www}>system/forget_password?returnUrl=<{$returnUrl}>"><{$lang->forget_password}></a>
+
+					<{if $ua=='wechat'}>
+
+					<{elseif $ua=='desktop'}>
+
+					<span class=' reg_login_item' style='background:#74bd36;' onClick='$(this).find(".wx_login_mask").toggle()'>
+							<{$lang->wechat_code}>
+							<img class='wx_login_mask' src='<{$loginQrcode}>'>
+						</span> 
+
+					<{/if}>
+				</div>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<{include file='footer.htm'}>
+<script>
+	$('.container').css('height', screen.availHeight - 70 - 60);
+	$('.wrap').css('height', '100%');
+	$('.box2').css('height', '100%');
+</script>
+</body>
+</html>

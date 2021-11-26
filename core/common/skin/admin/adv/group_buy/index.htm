@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+function DeleteSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('<{$lang->are_you_sure_delete_selected_records}>')) $('#listForm').attr('action', '?con=admin&ctl=adv/group1_buy&act=delete').submit();
+}
+function AuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要将当前选中记录的状态设置为审核通过吗？')) $('#listForm').attr('action', '<{$doUrl}>act=audit').submit();
+}
+function UnAuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要取消当前选中记录的审核吗？')) $('#listForm').attr('action', '<{$doUrl}>act=unaudit').submit();
+}
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+			<a onclick="DeleteSome();" class="lnkDeleteSome"><{$lang->bulk_delete}></a>
+		<!-- 	<a onclick="AuditSome();">批量审核</a>
+			<a onclick="UnAuditSome();">批量取消审核</a> -->
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td width="40"><input type="checkbox" id="checkAll" /></td>
+				<td>ID</td>
+				<td>团名称</td>
+				<td>团长</td>
+				<td>团类型</td>
+				<td>成团奖励发放</td>
+				<td>状态</td>
+				<td>当前奖励</td>
+				<td>自开团</td>
+				<td>母团ID</td>
+				
+				<td width="8%"><{$lang->delete}></td>
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+			<{foreach from=$data item=item key=key}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><input type="checkbox" name="ids[]" value="<{$item.id}>" class="listChk" /></td>
+
+					<td><{$item.id}></td>
+
+					<td><a target='_blank' href="<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>"><{$item.name}></a></td>
+
+					<td>
+						<{$item.create_user_name}>
+						<br>
+						<small>(ID:<{$item.create_user_id}>)</small>
+					</td>
+					
+					<td>
+					<{if $item.allow_user_group==1}>
+						<span>用户自开团</span>
+					<{else}>
+						<span>
+						<{$item.size}>人团
+						</span>
+						<br>
+						<small>(<{$item.current_group_size}>/<{$item.size}>)</small>
+					<{/if}>
+					</td>
+
+					<td>
+						<{if $item.auto_reward}>
+							<span style='color:green'>自动发放</span>
+						<{else}>
+							<span style='color:red'>手动发放</span>
+						<{/if}>
+					</td>
+
+					<td>
+						<{if $item.status==0}>
+						<!-- group_ready -->
+						<span style='color:#000'>筹备中</span>
+						<{elseif $item.status==1}>
+						<!-- group_running -->
+						<span style='color:#f60'>进行中</span>
+						<{elseif $item.status==2}>
+						<!-- group_close -->
+						<span style='color:#000'>临时中止</span>
+						<{elseif $item.status==3}>
+						<!-- group_staging -->
+						<span style='color:#fc3'>阶段奖励达成</span>
+						<{elseif $item.status==4}>
+						<!-- group_finalizing -->
+						<span style='color:#4b33ff'>最终奖励达成，等待审核通过</span>
+						<{elseif $item.status==5}>
+						<!-- group_complete -->
+						<span style='color:green'>已完成</span>
+						<{else}>
+						<!-- group_error -->
+						<span style='color:red'>出错了</span>
+						<{/if}>
+
+					</td>
+
+					<td><{$item.current_reward}></td>
+
+					<td>
+						<{if $item.allow_user_group}>
+							用户可自行开团（MaxSize:<{$item.max_user_group}>）
+						<{else}>
+							不可自行开团
+						<{/if}>
+					</td>
+
+					<td>
+						<{$item.parentId}>
+					</td>
+
+					
+					<td><a href="<{$delUrl}>id=<{$item.id}>" class="lnkDelete" onclick="return chkDelete();"></a></td>
+				</tr>
+			<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="11" align="right"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

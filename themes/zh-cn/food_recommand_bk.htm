@@ -1,0 +1,82 @@
+
+    <div class='search-result'  >
+  <{foreach from=$recommend item=item name='cr'}>
+
+
+<div >
+
+<div class='item' data-id='item<{$item.id}>' onClick='saveCurrentAncher(this);' >
+
+      <div class='top-sec' >
+	    <div class='left-sec1' >
+        <p><i class='fa fa-home'></i><{$item.categoryName|truncate_cn:30:'..'}></p>
+         </div>
+ <div class='right-sec1' >
+         <p><{$item.cityName|truncate_cn:30:'..'}></p>
+         </div>
+
+		
+
+	   </div> 
+ 
+	   
+	 <div class='left-sec' style="position: relative;">
+        <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+          <img src="<{$UPLOAD_PATH}><{$item.pic|image:200:200:'cut'}>">  
+        </a>
+		 <span class=' recommend-icon'>推广</span>
+      </div>
+      
+      <div class='right-sec' >
+	    <div class='businessName'>
+         <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.businessDisplayName|truncate_cn:22:'..'}></a>
+            
+
+           <{if $item.distance<100000&&$item.distance>0}>
+           <em style='color:#f30'>&nbsp;<{number_format($item.distance/1000,2,'.','')}>km</em>
+           <{/if}>
+<!--
+           <span class='rating'>
+              <{section name=em loop=5}>
+                  <{if $smarty.section.em.index<$item.ratting_score}>
+                      <img src="<{$SKIN_PATH}>mobile/images/icon62.png">
+                  <{else}>
+                      <img src="<{$SKIN_PATH}>mobile/images/icon63.png">
+                  <{/if}>
+              <{/section}>
+              
+          </span> -->
+
+        </div>
+        <div class='title';   <{if $item.restaurant_menu=='restaurant_menu'}> style="    color: #f30;" <{/if}>>
+           <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+          <{$item.title|truncate_cn:80:'..'}>
+           </a>
+         </div>
+
+      
+        <div class=' '></div>
+         <div class='price'> <{if $item.price1 !='$0.00'}><{$item.price1}> <{/if}> <{if $item.promotion_desc}><{$item.promotion_desc}><{/if}>  <{if $item.priceOff>0}><em>-<{$item.priceOff}>% </em><{/if}> <{if $item.price1 !=$item.price2}><s> <{$item.price2}></s><{/if}> 
+
+       <!--   <{if $loginUser}>
+          <span style='border:1px solid ;padding: 0px 5px;border-radius: 3px;   ' class='add_fav <{if $item.faved}>faved<{/if}>' data-id='<{$item.id}>' onClick='add_fav(this);'><small><{if $item.faved}>已收藏<{else}>收藏<{/if}></small></span>
+          <{/if}> -->
+
+         
+          <em1><small><i class='fa fa-heart' style="color:#ff8b8b; ">&nbsp;<{$item.hits}></i></small>
+        </em1>
+      </div>
+       
+      </div>
+</div>
+ <!--
+<{if $item.addontext}>
+  <div class='coupon-addon'>
+  <{foreach from=$item.addontext item=t}>
+    <span><{$t}></span>
+  <{/foreach}>
+  </div>
+<{/if}> -->
+</div>
+<{/foreach}>
+</div>

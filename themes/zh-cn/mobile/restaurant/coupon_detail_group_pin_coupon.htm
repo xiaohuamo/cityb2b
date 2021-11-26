@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/style_group_pin.css" />
+	
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+	<style type="text/css">
+		.pop-spec .top{
+			position: relative;
+			border: 1px solid #dedede;
+			padding: 0px;
+			margin-bottom: 10px;
+		}
+
+		.pop-spec .top.selected{
+			border: 1px solid #FD5001 ;
+		}
+
+		.pop-spec .top p{
+			padding: 5px 10px;
+		}
+
+		.pop-spec .top i{
+			position: absolute;
+			color: #61d461;
+			top: 20px;
+			right: 20px;
+			display: none
+		}
+	</style>
+
+</head>
+<body class="bg-1">
+	<!-- wx share thumbnail Min 300x300-->
+	<img src="<{$UPLOAD_PATH}><{$coupon.pic}>" style='display:none;width: 300px;height: 300px'>
+
+	<header id="hd">
+		<div class="left">
+				<!--	<a onClick='window.history.back()' class="a-back"> --></a>
+		</div>
+		<h1>
+			<a onCLick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');">商品</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f2').offset().top-40},'slow');">说明</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'slow');">评价</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'slow');">相关</a>
+		</h1>
+		<{include file ="mobile/coupon_detail/sec_more.htm"}>
+	</header>
+	<section id="bd">
+		<div class='sec-product'>
+
+			<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:660:420}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			   		
+			         <{if $coupon.pics}>
+			          <{foreach from=$coupon.pics item=item name='cpl'}>
+		             	 <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$item.pic|image:660:420}>" ></div>
+		              <{/foreach}>
+			         <{/if}>
+			    </div>
+			    <div class="swiper-pagination"></div>
+			</div>
+
+			<div class="comm-tit">
+				<h3><{$coupon.title}>
+                <em> 
+                    <{if $coupon.perCustomerLimitQuantity!='0'}>单笔限购<{$coupon.perCustomerLimitQuantity}>个<{/if}>
+                    <{if $coupon.perCustomerMinLimitQuantity!='0'}>最少购买<{$coupon.perCustomerMinLimitQuantity}>个<{/if}>
+                </em>
+                </h3>
+				<h4><{$coupon.coupon_summery_description}></h4>
+				<p><{$coupon.price1}> <s><{$coupon.price2}></s> 
+				
+				<{if $pendingQty>0}>
+                	<small style='color:red'>(正在购买 <{$pendingQty}>人)</small>
+                <{/if}>
+                
+                </p>
+			</div>
+
+
+
+			<ul class="ul-group1">
+                <{foreach from=$userGroupList item=item}>
+                    <li>
+                        <div class="go">
+                            <div class="time" style="font-size: 0.4rem;">
+                                 倒计时
+                                 <!-- <{date('Y-m-d H:i:s',$group_pin.time_limit+$item.gen_date)}> -->
+                                <span class="time-count-down" endDate="<{date('Y-m-d H:i:s',$group_pin.time_limit+$item.gen_date)}>"></span>
+                            </div>
+                            <a data-user-group-id='<{$item.id}>' class="btn-go pop-spec-trigger" style="width: 3rem;height: 3rem;background-size: 3rem 3rem;line-height: 3rem;font-size: 14px;">去拼单</a>
+                        </div>
+                       
+                        <div class="txt" style="width: 8rem;">
+                            <em><{$item.user_list[0].user_name}>的团</em>
+                            <div class="info">
+                               
+                                <p>已有<span class="s1"><{$item.user_list|@count}></span>人参团 , 仅缺<span><{$group_pin.group_size_each-$item.user_list|@count}></span>人</p>
+                            </div>
+
+                            <{foreach from=$item.user_list item=u}>
+                                <div class="item on">
+                                    <div class="img">
+                                        <img src="<{$UPLOAD_PATH}><{$u.user_logo|image:46:46}>" alt="<{$u.user_id}>" />
+                                    </div>
+                                </div>
+                              
+                             <{/foreach}>
+                        </div>
+                    </li>
+                <{/foreach}>
+            </ul>
+
+			<{include file='mobile/coupon_detail/sec_explain.htm'}>
+		</div>
+
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class="comm-btn">
+			<div class="left">
+
+				<{include file='mobile/coupon_detail/sec_favandstore.htm'}>
+				
+			</div>
+			<div class="right">
+				<a  data-user-group-id='-1' class="a1 pop-spec-trigger" style="width: 50%;position: relative;">
+				原价购买
+
+				<!-- <div style="position: absolute;top: 0.6rem;right: 1rem;">$<{$coupon.voucher_deal_amount}></div> -->
+
+				</a>
+				<a  data-user-group-id='0' class="a2 pop-spec-trigger" style="width: 50%;position: relative;">
+				一键拼单
+
+				<div style="position: absolute;top: 0.6rem;right: 1rem;">
+					 <{if $group_pin.reward_type=='percent'}>
+                        $<{($coupon.voucher_deal_amount*(100-$group_pin.reward_value)/100)|string_format:"%.2f"}>
+                    <{elseif $group_pin.reward_type=='flat'}>
+                        $<{$coupon.voucher_deal_amount-$group_pin.reward_value}>
+                    <{/if}>
+				</div>
+
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- 选择类型弹窗 -->
+	<div class="pop-spec">
+		<span class="spec-close"></span>
+
+		<div class="top" data-name='<{$coupon.title}>' 
+						data-item-id='<{$coupon.id}>' 
+						data-subormain='m'
+						data-create-user-id='<{$coupon.createUserId}>' 
+						data-item-price = '<{$coupon.voucher_deal_amount}>'
+						data-o-price = '<{$coupon.voucher_original_amount}>'  
+						data-stock = '<{$coupon.qty}>' >
+			<p>
+				<{$coupon.title|truncate_cn:120:'..'}>
+				<span><{$coupon.price1}> &nbsp;&nbsp; <s><{$coupon.price2}></s></span>
+			</p>
+			<i class='fa fa-check fa-lg'></i>
+		</div>
+
+		<{foreach from=$sub_coupon item=citem name='dl'}>
+			<div class="top" data-name='<{$citem.title}>' 
+							data-item-id='<{$citem.id}>' 
+							data-subormain='s'
+							data-create-user-id='<{$citem.create_user_id}>' 
+							data-item-price = '<{$citem.customer_amount}>' 
+							data-o-price = '<{$citem.original_amount}>' 
+							data-stock = '<{$citem.quantity}>' >
+				<p>
+					<{$citem.title|truncate_cn:120:'..'}>
+					<span>$<{$citem.customer_amount}>&nbsp;&nbsp;<s>$<{$citem.original_amount}></s></span>
+				</p>
+				<i class='fa fa-check fa-lg'></i>
+			</div>
+
+		<{/foreach}>
+
+		<div class="spec-num">
+			<span>购买数量</span>
+			<div class="num">
+				<a href="javascript:void(0);" class="minusBtn">-</a>
+				<input class='prucheseQty g-input' type="text" value="1" >
+				<a href="javascript:void(0);" class="plusBtn">+</a>
+			</div>
+			<div style="position: absolute;right:0.8rem;color: #aaa">库存：<em id='stock_display'><{if $citem.quantity<=0}>已售完<{else}><{$citem.quantity}><{/if}></em></div>
+		</div>
+
+		<a class="spec-btn confirm add_carts"  onClick='add_carts();'>加入购物车</a>
+		<a class="spec-btn confirm group_pin"  onClick='group_pin();'>拼单</a>
+		
+	</div>
+	<div class="pop-bg"></div>
+	<!-- 选择类型弹窗-end -->
+
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+	<script>
+
+		function updatePriceDisplay(type){
+			if(type =='add_carts'){
+				$('.pop-spec .top').each(function(){
+
+					var price =  $(this).data('item-price');
+					var o_price = $(this).data('o-price');
+
+					$(this).find('p span').html( price+ "&nbsp;&nbsp; <s>"+o_price+"</s>");
+				})
+			}else if(type =='group_pin'){
+
+				var reward_value =parseFloat('<{$group_pin.reward_value}>');
+				var reward_type ='<{$group_pin.reward_type}>';
+
+				$('.pop-spec .top').each(function(){
+					
+					var price =  $(this).data('item-price');
+				
+					var displayPrice =0;
+					if(reward_type=='percent'){
+						displayPrice = price*(100-reward_value)/100.0
+
+					}else if(reward_type=='flat'){
+						displayPrice = price-reward_value;
+					}
+
+					$(this).find('p span').html('团购价：'+displayPrice.toFixed(2));
+				})
+			}
+		}
+
+		var user_group_id;
+
+	    $(document).ready(function($) {
+	        $('.ul-evaluate li').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	        $('.pop-spec-trigger').click(function(event) {
+	        	$('.pop-spec').addClass('open');
+	        	$('.pop-bg').show();
+
+	        	user_group_id= $(this).data('user-group-id');
+
+	        	if (user_group_id =='-1') {
+				   $('.confirm.add_carts').show();
+				   $('.confirm.group_pin').hide();
+
+				   updatePriceDisplay('add_carts');
+
+				}else{
+					$('.confirm.add_carts').hide();
+				    $('.confirm.group_pin').show();
+
+				    updatePriceDisplay('group_pin');
+
+					
+
+				}
+
+	        });
+	        $('.spec-close,.pop-bg,.spec-btn').click(function(event) {
+	        	$('.pop-spec').removeClass('open');
+	        	$('.pop-bg').hide();
+	        });
+            
+            $('.minusBtn').click(function(){
+                var _val = $(this).next('input').val()*1 - 1;
+                if( _val > 0 ){
+                    $(this).removeClass('disabled').next('input').val(_val);
+                }else if( _val == 0 ){
+                    $(this).addClass('disabled').next('input').val(_val);
+                }else{
+                    $(this).addClass('disabled');
+                }
+            });
+            $('.plusBtn').click(function(){
+                var _val = $(this).prev('input').val()*1 + 1;
+                $(this).prev('input').val(_val);
+                $(this).prev('input').prev('.minusBtn').removeClass('disabled');
+            });
+	    });
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+		})
+	</script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.pop-spec .top').on('click',function(){
+				$('.pop-spec .top').removeClass('selected');
+				$(this).addClass('selected');
+
+				$('.pop-spec .top i').hide();
+				$(this).find("i").show();
+
+				$('#stock_display').html($(this).data('stock'));
+			});
+			$('.pop-spec .top').first().click();
+		})
+		
+	</script>
+
+	 <script type="text/javascript">
+         function addToCart(qty){
+			$('.cartQty').show();
+			var currentTotal =parseInt($('.cartQty').html());
+			qty=parseInt(qty);
+			$('.cartQty').html(currentTotal+qty);
+		}
+    </script>
+
+	<script type="text/javascript">
+	function add_carts() { 
+		<{if !$loginUser}>
+			window.location.href = '<{$loginReturnUrl}>';
+		<{else}>
+
+		var main_coupon_id 	='<{$coupon.id}>';
+
+		$target = $('.pop-spec .top.selected');
+		
+		var qty= $('.prucheseQty').val();
+
+		var coupon_id = $target.data('item-id');
+		
+		var stock = parseInt($target.data('stock'));
+
+		if(isNaN(stock))stock=0;
+		if(qty<=0)return true;
+		if(qty>stock){htmlMessage('库存不足!'+coupon_name+' 数量不足,无法加入购物车'); return;}
+        	
+		$('body').append('<p class="form_response_loader"></p>');
+
+		var data ={'userId':'<{$loginUser.id}>',
+					'main_coupon_id':main_coupon_id,
+					'sub_coupon_id':coupon_id,
+					'quantity':qty,
+					};
+
+		$.post('<{$http_root_www}>query?cmd=add_carts', 
+			 	data, 
+				function(data){
+					$('.form_response_loader').remove();
+
+				  	try {
+				        data = jQuery.parseJSON(data);
+				    }
+				    catch(err) {
+				       htmlMessage("网路不给力亲，请稍后再试");
+				       return;
+				    }
+
+				  	if(data.status==200){
+				 		addToCart(qty);
+
+				 		htmlMessage(data.msg,function(){directBuyRedirect()});
+
+				  	}else{
+			  		htmlMessage(data.msg);
+				  	}
+				}
+	    );
+	
+		<{/if}>
+	}
+
+
+	var directBuyRedirecting=false;
+	function directBuyRedirect(){
+		if(directBuyRedirecting)return;
+		window.location.href = '<{$http_root_www}>member/showcart';
+		directBuyRedirecting=true;
+	}
+
+	</script>
+
+
+	<script type="text/javascript">
+	function group_pin() { 
+		<{if !$loginUser}>
+			window.location.href = '<{$loginReturnUrl}>';
+		<{else}>
+
+
+		$target = $('.pop-spec .top.selected');
+		
+		var coupon_id = $target.data('item-id');
+		var create_user_id = $target.data('create-user-id');
+		var qty= $('.prucheseQty').val();
+		var stock = parseInt($target.data('stock'));
+
+		if(isNaN(stock))stock=0;
+		if(qty<=0)return true;
+		if(qty>stock){htmlMessage('库存不足!'+coupon_name+' 数量不足,无法加入购物车'); return;}
+        	
+		var url="<{$http_root_www}>member/showcart";
+        url +="?specialGroupBuyCheckoutCode=<{$group_pin.reward}>";
+        //url +="&specialGroupPinCheckoutGuigeId="+guige_ids;
+        //url +="&specialGroupPinCheckoutGuigeDes="+guige_des;
+        url +="&specialGroupPinCheckoutSub="+coupon_id;
+        url +="&specialGroupPinCheckoutQty="+qty;
+        url +="&specialGroupPinCheckoutUserGroupId="+user_group_id;
+
+        window.location.href=url;
+		<{/if}>
+	}
+
+
+	$(function(){
+	     $('.time-count-down').each(function() {
+	        $(this).countDown();
+	    });
+	})
+	</script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+
+	<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$http_root_wx}>coupon1/<{$coupon.id}>?specialDisplay=group_pin&reftag=<{$loginUser.id}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>
+

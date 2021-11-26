@@ -1,0 +1,135 @@
+<!-- 头部 -->
+<div class="header">
+	<div class="head-top">
+		<div class="wp">
+			<div class="btn JS-select">
+				<p></i><{$lang->switch_lang}></p>
+				<div class="option JS-select-con">
+						<a href="<{$langSwitchUrl}>lang=zh-cn"><{$lang->lang_cn}></a>
+	    				<a href="<{$langSwitchUrl}>lang=zh-cn"><{$lang->lang_en}>(soon)</a>
+	    			</div>
+	    		</div>
+	    		<div class="btn JS-select">
+	    			<p><{$lang->currency_aud}></p>
+	    			<div class="option JS-select-con">
+	    				<a href="javascript:void(0)"><{$lang->currency_aud}></a>
+	    				<!-- <a href="">人民币</a>  -->
+	    			</div>
+	    		</div>
+
+	    		<a href="<{$http_root_www}>coupon/choose_city">
+                    <i class='fa fa-globe fa-lg' > </i>
+                </a>
+
+	    		<!-- 选择城市地址 -->
+	    		<{include file='index_inc_header_city.htm'}>
+	    		<!-- 选择城市地址 end-->
+	    		
+	    		<div class="r">
+	    			<{if $loginUser}>
+	    			<div class='already-login login'>
+	    				<label style='color:#666'>
+	    					<{$lang->welcome}> <{if $loginUser.nickname}><{$loginUser.nickname}><{else}><{$loginUser.name}><{/if}>&nbsp;&nbsp;
+	    				</label>
+
+	    					<span>
+	    					<a href="<{$http_root_www}>member/index">
+	    							<i class="fa fa-user fa-lg" aria-hidden="true" title='<{$lang->my_account}>'></i>
+	    						</a>
+	    					</span>
+
+	    					<{if $loginUser.role==3 || $loginUser.role==6}>
+							<span>
+								<a href="<{$http_root_www}>company/index">
+									<i class="fa fa-tachometer fa-lg" aria-hidden="true" title='运营中心'></i>
+								</a>
+							</span>
+							<{/if}>
+
+
+	    					<span>
+	    						<a href="<{$http_root_www}>member/showcart">
+	    							<i class="fa fa-shopping-cart  fa-lg" aria-hidden="true" title='<{$lang->shopping_cart}>'></i>
+	    						</a>
+	    					</span>
+
+	    					<span>
+	    						<a href="<{$http_root_www}>message/index">
+	    							<i class='fa fa-comment  fa-lg' aria-hidden="true" title='<{$lang->message}>'></i>
+	    							<!-- <b class="msgcount" style='position:relative;top: -3px;left: -9px'>1</b> -->
+	    						</a>
+	    					</span>
+
+	    					<span>
+	    						<a href="<{$http_root_www}>member/logout"><{$lang->log_out}></a>
+	    					</span>
+	    				</div>
+	    				<{else}>
+	    				<div class="login">
+	    					<a target="_blank" href="<{$http_root_www}>member/register"><{$lang->register}></a>
+	    					<a target="_blank" href="<{$http_root_www}>member/login"><{$lang->log_in}></a>
+	    				</div>
+	    				<{/if}>
+	    				<div class="l">|</div>
+	    				<a target="_blank" href="<{$http_root_www}>member/myorders" class="btn btn2"><{$lang->my_orders}></a>
+	    				<div class="l">|</div>
+	    				<div class="btn btn3 JS-select">
+	    					<p><{$lang->customer_services}></p>
+	    					<div class="option option2 JS-select-con">
+	    						<dl>
+	    							<dt><{$lang->customer}></dt>
+	    							<dd><a target="_blank" href="javascript:void(0)"><{$lang->help_center}></a></dd>
+	    							<dd><a target="_blank" href="javascript:void(0)"><{$lang->after_sales}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>info/103"><{$lang->term_and_condition}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>info/105"><{$lang->contact_us}></a></dd>
+	    						</dl>
+	    						<dl>
+	    							<dt><{$lang->business}></dt>
+	    							<dd><a target="_blank" href="<{$http_root_www}>business/welcome"><{$lang->business_join}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>business/logowall"><{$lang->our_business}></a></dd>
+	    						</dl>
+	    					</div>
+	    				</div>
+	    				<div class="l">|</div>
+	    				<div class="btn btn3 JS-select">
+	    					<p><{$lang->site_navigation}></p>
+	    					<div class="option option3 JS-select-con">
+	    						<dl>
+	    							<dt><{$lang->hot_category}></dt>
+	    							<!--dd><a target="_blank" href="<{$http_root_www}>coupons?couponType=9"><{$lang->shops}></a></dd-->
+	    							<dd><a target="_blank" href="<{$http_root_www}>local_services"><{$lang->local_services}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?couponType=7"><{$lang->coupon}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?couponType=4"><{$lang->voucher}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?couponType=10"><{$lang->concert}></a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>lottery/lottery_show"><{$lang->lottery}></a></dd>
+
+	    						</dl>
+	    						<dl>
+	    							<dt><{$lang->hot_area}></dt>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Melbourne</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">BoxHill</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Glen Waverley</a></dd><br/>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Clayton</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Caufield</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Springvale</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>coupons?listType=coupon&city=76">Carnegie</a></dd>
+
+	    						</dl>
+	    						<dl class="last">
+	    							<dt><{$lang->hot_business}></dt>
+	    							<dd><a target="_blank" href="<{$http_root_www}>store/23270">samsonite bags</a></dd>
+	    							<dd><a target="_blank" href="<{$http_root_www}>store/23945">Oscar seafoods</a></dd>
+	    							<!--dd><a target="_blank" href="<{$http_root_www}>store/25284">Betta 家电</a></dd-->
+	    							
+	    							<!--dd><a target="_blank" href="<{$http_root_www}>store/25160">鬼叔零食</a></dd-->
+
+	    						</dl>
+	    					</div>
+	    				</div>
+	    				<div class="l">|</div>
+	    				<a href="<{$http_root_www}>info/101" class="btn btn4"><{$lang->ubonus_legal_name}></a>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	<!-- 头部 end -->

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="?con=admin&ctl=adv/referal_link_info&act=index&pagetype=1&panaltype=1" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="?con=admin&ctl=adv/referal_link_info&act=add" method="post" enctype="multipart/form-data">
+			<table class='editTable'>
+				<tr class="editHdTr">
+					<td colspan="2">创建产品</td>
+				</tr>
+				
+					
+				
+				
+				<tr class="editTr">
+					<td class="editLtTd">引流源</td>
+						<td class="editRtTd"><select name="data[referal_type]" class="ahibw">
+						
+						
+							<{foreach from=$referal_type_list item=item key=key}>
+							<option value=<{$item.id}> <{if $item.id ==$data.referal_type}>selected<{/if}>><{$item.type}></option>
+							<{/foreach}>
+						</select>
+						</td>
+				
+			  </tr>
+					<tr class="editTr">
+					<td class="editLtTd">引流源子项</td>
+					<td class="editRtTd"><input style="width: 170px" name="data[referal_port_name]" value="<{$data.referal_port_name}>" type="text" size="30" class="text" /></td>
+				</tr>
+
+				
+
+
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave"/>
+				<a href="?con=admin&ctl=adv/referal_link_info" class="lnkReturn"><{$lang->return_to_list}></a>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

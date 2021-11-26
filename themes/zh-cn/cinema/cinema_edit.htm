@@ -1,0 +1,136 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				<{include file='cinema/top_menu.htm'}>
+
+				<div class="main-form">
+				
+					<div class="colCurTit">完善院线信息
+					</div>
+						
+					<form id="memberForm" class ='form-style-green memberForm' action="<{$http_root_www}>cinema/location_add" method="post" target="post_frame">
+					  	<div class="input-box clearfix">	
+								<span><label>影院</label></span>	
+								<input type="text" name="location" class="input-text"  required/>
+						</div>
+						<div class="input-box clearfix">	
+								<span><label>放映厅</label></span>		
+								<input type="text" name="room" class="input-text" required/>
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>描述</label></span>		
+								<input type="text" name="type" class="input-text" required/>
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>总座位数</label></span>		
+								<input type="text" name="total" class="input-text" required/>
+						</div>
+						
+					
+						<div class="input-box input-submit clearfix">
+
+
+							<button type="submit" style='float:right'>新增场馆</button>
+
+						</div>
+
+					</form>
+
+					<div id='display'>
+						<table style='width:100%'>
+							<tr style='width:100%;background-color:#00A1E9;color:white'>
+								<td>电影院</td>
+								<td>放映厅</td>
+								<td>描述</td>
+								<td>座位数</td>
+								<td>删除</td>
+							<tr>
+								<{foreach from=$locationList key=lacationname item=list}>
+									<{foreach from=$list item=item}>
+										<tr data-movie-id = '<{$item.id}>'>
+											<td ><{$lacationname}></td>
+											<td><{$item.room_name}></td>
+											<td><{$item.room_type}></td>
+											<td><{$item.total_seat}></td>
+											<td><a href="<{$http_root_www}>cinema/cinema_remove?id=<{$item.id}>"><i class='fa fa-close fa-lg'></i></a></td>
+
+										</tr>
+									<{/foreach}>
+							
+								<{/foreach}>
+						</table>
+					</div>
+					
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

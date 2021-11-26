@@ -1,0 +1,131 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style type="text/css">
+	.marketing-panel{
+		position: relative;
+	}
+
+	.marketing-panel .panel-item{
+		display: inline-block;
+		width: 32%;
+		height: 200px;
+		border: 1px solid #eee;
+	}
+
+	.marketing-panel .panel-item p{
+		text-align: center;
+		margin: 5px;
+	}
+
+	.marketing-panel .panel-item p.panel-title{
+		font-size: 0.8rem;
+	}
+
+	@media screen and (max-width:640px) {
+		.marketing-panel .panel-item{
+			display: block;
+			width: 100%
+		}
+	}
+</style>
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2"><a name="pagename"></a>
+
+				<div class="main-form">
+
+					
+
+					<div class="colCurTit clearfix">
+						<h1>明星店分享</h1>
+					</div>
+
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+
+					
+
+							<div class="input-box clearfix">
+
+								
+									<h1>您可以扫码分享您的明星网站拉!!!</h1>
+								
+
+								
+								<p>使用微信扫一扫,既可以分享链接. 您的朋友或用户点击,并购买产品,您就可以获得提成.
+								</p>
+							</div>
+							
+							<div class='marketing-panel'>
+								
+
+								<div class='panel-item'>
+									<p class='panel-title'>微信扫码查看店铺</p>
+									<p><img src="<{$storeQrCode}>"></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$storeLink}>">店铺网址</a></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$storeLink}>"><{$storeLink}></a></p>
+								</div>
+								
+							</div>
+
+							<div class="input-box clearfix" >
+								<button type="button"  onClick="window.location.href='<{$http_root_www}>company/index'" >返回</button>
+							</div>
+						
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

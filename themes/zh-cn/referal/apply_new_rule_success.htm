@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 200px' src="<{$SKIN_PATH}>mobile/images/logo.png"></a>
+</div>
+
+<div style="text-align: center; margin-bottom: 70px;">
+
+	<h1>使用媒体码成功</h1>
+    <p>恭喜您成功加入以下项目推广体系。您现在可以开始分享并获得收益。</p>
+
+    <div class='well'>
+	<p>产品：<{$coupon.title}></p>
+	<p>邀请商家：<{$businessName}></p>
+	<p>奖励说明：<{$desc}></p>
+	</div>
+
+	<div class='well'>
+		<p>推广方式一：直接分享该链接</p>
+		<strong><{$shareUrl}></strong>
+	</div>
+
+
+	<div class='well'>
+		<p>推广方式二：将该二维码放置在您发表的文章中或者直接转发</p>
+		<img src="<{$shareQRCode}>">
+	</div>
+
+
+	<div class='well'>
+		<p>推广方式三：直接分享产品页面。在微信中点击转发朋友圈直接转发</p>
+		<a href="<{$http_root_www}>coupon/<{$coupon.id}>" style=''><strong style="color:#2bb8aa">访问产品页></strong></a>
+	</div>
+
+	<br>
+	
+	<a class='btn btn-default' href="<{$http_root_www}>referal/manage_referral_rule_application">我的项目</a>
+	<a class='btn btn-default' href="<{$http_root_www}>referal/referrals?type=user">查看我的分享</a>
+	<a class='btn btn-default' href="<{$http_root_www}>member/recharge?type=CUSTOMER_REF_COMMISSION">查看详细收益</a>
+
+
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html>  
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />           
+	<title>抽奖社区-Ubonus美食生活
+	</title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+	<script>
+		var pageIndex = 2;
+		var  ajaxUrl ='<{$ajaxUrl}>';
+		var  skin_path ='<{$SKIN_PATH}>';
+		$(function(){
+			if ( $('#coupons').is(':visible') ) {
+				$(window).scroll(function(){
+					if ( $(window).scrollTop() + $(window).height() > $(document).height() - 100 ) {
+						loadMore();
+					}
+				});
+				
+			}
+		});
+
+		function loadMore() {
+			var skin_path =window.skin_path;
+			var ajaxUrl = window.ajaxUrl;
+			var pageIndex =window.pageIndex;
+			if ( $('#loading').length <= 0 ) {
+				$('#coupons').after('<div class="loading" id="loading" style="text-align:center; padding:10px 0;"><img src="' + skin_path +'images/loader.gif" /><div style="display:none;"></div></div>');
+				window.pageIndex++;
+				$('#loading>div').load(ajaxUrl +'page='+pageIndex, function(response, status, xhr){
+					if ( $('#loading .items').length <= 0 ) {
+						$('#loading>div').html('没有了').show().css('color', '#999').prev().remove();
+					}
+					else {
+						$('#loading .items').appendTo($('#coupons'));
+						$('#loading').remove();
+					}
+				});
+			}
+		}
+
+
+	</script>
+</head>
+
+<body>
+	<div  style="display:none;">
+		<img  style= " width:300px; height:300px; " src="<{$SKIN_PATH}>images/lottery/ubonus.jpg">
+	</div>
+	
+	<{include file='header.htm'}>
+	<div class="container">
+		<div class="wrap clearfix">
+			<script>
+				var screenwidth =$(window).width(); 
+				var height=screenwidth;
+			</script>
+			<div class="phone-list p-hide" id="coupons">
+				<{include file="lottery/lottery_show_ajax.htm"}>
+			</div>
+			<div class="sp15 clear m-hide"></div>
+			
+			<!--分割线-->
+			<div class="listType">
+				<div class="listType-bd">
+					<div  class="box2">
+						<div  class="pic-item-list clearfix">
+							<div class="m-hide">
+						<!--<div class="pic-item">
+									<dl class="item">
+										<dt>
+
+											<a href="<{$http_root_www}>lottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>">
+												<div class="pic"><img src="/themems" width="210" height="140" alt="<{$item.title}>" /></div>
+												<b><{$item.title|truncate_cn:140:'...'}></b>
+												<div class="txt clearfix"><span><{$item.businessName|truncate_cn:40:''}></span></div>
+											</a>
+										</dt>
+										<span style='float:left;margin: 4px 0px 0px 15px;'>
+											<span >参与人次：<{$item.total_draw}></span>&nbsp;&nbsp;&nbsp;
+										</span>
+
+										<span style='float:right;margin: 4px 20px 0px 0px;'>
+
+											<span >各类总中奖&nbsp;<{$item.total_bid}></span>
+										</span>
+									</dl>
+								</div> -->
+								<{foreach from=$heads item=item}>
+								<div class="pic-item">
+									<dl class="item">
+										<dt>
+
+											<a href="<{$http_root_www}>lottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>">
+												<div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic|image:495:315}>" width="210" height="140" alt="<{$item.title}>" /></div>
+												<b><{$item.title|truncate_cn:140:'...'}></b>
+												<div class="txt clearfix"><span><{$item.businessName|truncate_cn:40:''}></span></div>
+											</a>
+										</dt>
+										<span style='float:left;margin: 4px 0px 0px 15px;'>
+											<span >参与人次：<{$item.total_draw}></span>&nbsp;&nbsp;&nbsp;
+										</span>
+
+										<span style='float:right;margin: 4px 20px 0px 0px;'>
+
+											<span >各类总中奖&nbsp;<{$item.total_bid}></span>
+										</span>
+									</dl>
+								</div>
+								<{/foreach}>
+							</div>
+						</div>
+						<script>
+							$('.pic-item-list').each(function(){
+								$(this).find('.item').hover(function(){
+									$(this).addClass('on');
+								},function(){
+									$(this).removeClass('on');
+								});
+							});
+						</script>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<{include file='footer.htm'}>
+
+</body>
+
+</html>

@@ -1,0 +1,376 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ <script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+  <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+
+
+
+<style>
+
+	.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+		
+				<div class="main-form">				
+
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/delivery_setting" method="post" target="post_frame" enctype="multipart/form-data">
+			
+					<div  id="delivery5"  class="input-box clearfix">
+					<span><label>选择数据源</label></span>
+					<select  id="business_id0" name="business_id0" >
+						<option value="0"  >选择数据源</option>
+						
+						<{foreach from=$newsuplierList item=d}>
+							<option value="<{$d.business_id}>"<{if $d.business_id==$business_id}>selected<{/if}>  >
+								<{$d.business_name}>
+							</option>
+						<{/foreach}>
+							
+							</option>
+						
+					</select>
+					</div>
+					<div  id="delivery5"  class="input-box clearfix">
+					<span><label>配送时间</label></span>
+						
+								<input type="text" class="input-text" style="width:150px;" id="deliveryDate" name="deliveryDate1" value="<{$deliveryDate}>" onFocus="WdatePicker();">
+							
+                                  &nbsp;&nbsp; 
+							 <button type="button" style ="  font-size: 14px;  padding: 2px 15px;" class="btn btn-default btn-success" id="ButtonXML">
+                            导入表格</button>
+							<input type="file" id="inputXMl"  style="display: none;" onchange="importf(this)" value="XML导入" />
+						
+						</div>
+						
+                       
+
+	
+
+
+
+
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+				
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="<{$lang->logisitic_searchbox}> " style="width:250px; margin-right:5px;" />
+						
+						
+
+						<label><{$lang->filter}>:</label>
+						<select  id="business_id" name="business_id" >
+						<option value="0"  >请选择供货商</option>
+						<{foreach from=$newsuplierList item=d}>
+							<option value="<{$d.business_id}>"<{if $d.business_id==$business_id}>selected<{/if}>  >
+								<{$d.business_name}>
+							</option>
+						<{/foreach}>
+					</select>
+						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
+						<option value="all"  >配送日期 </option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+						</select>
+					
+					
+	                
+	              					
+ 
+					
+						<button type="submit"><{$lang->search}></button> 
+						&nbsp;&nbsp;
+						<button class="delete_current_date_button">清除选定日期数据</button>
+						 
+						 
+						 <script type="text/javascript">
+							$('.delete_current_date_button').on('click',function(){
+								var deliveryDate =$('#customer_delivery_date').val();
+								var business_id1 =$('#business_id').val();
+								
+								var deleteFlag =1;
+
+								if(confirm('确认删除目前选定日期('+deliveryDate+')的数据吗？')){
+									var vUrl="<{$http_root_www}>company/import_new_order?deleteFlag="+deleteFlag+"&customer_delivery_date="+deliveryDate+"&business_id1="+business_id1;
+									  
+										window.open(vUrl);
+								}
+							})
+							
+						</script>
+						 
+						 <{if $customer_delivery_date}>
+						
+                     <div id="printer">
+						
+						</div>
+						<{/if}>
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th><{$lang->logistic_delivery_date}></th>
+									<th><{$lang->logistic_sequenceNo}></th>
+									
+									
+									
+									<th><{$lang->order_id}></th>		
+								
+									<th><{$lang->user}></th>	
+									<th>phone</th>	
+									
+									<th><{$lang->delivery}></th>				
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+								    <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
+									<td><{$item.logistic_sequence_No}></td>
+								  
+									
+									  
+									<td>
+										<{$item.order_name}>
+										<br>
+										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+									</td>
+									
+								
+									<td><{$item.first_name}> <{$item.last_name}></td>
+									
+									
+									<td><{$item.phone}></td>
+									
+									
+									
+									<td>	
+										<{if $item.customer_delivery_option==1}>
+											<{$lang->delivery}>
+											<{if $item.tracking_id}>  <i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> <{/if}>
+										<{elseif $item.customer_delivery_option==2}>
+											<{$lang->pick_up}>
+										<{elseif $item.customer_delivery_option==0}>
+											<!-- 未注明 -->
+										<{/if}>	
+									</td>	
+
+								
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+					
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+    <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+    <script>
+
+        $("#ButtonXML").click(function () {
+            $("#inputXMl").click();
+        });
+
+        var wb; //读取
+        var rABS = false;
+
+        //开始导入
+        function importf(obj) {
+            if (!obj.files) {
+                return;
+            }
+            var f = obj.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                if (rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                /**
+                * wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                * wb.Sheets[Sheet名]获取第一个Sheet的数据
+                */
+                var excelJson = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                excelJson.pop();
+                console.log(excelJson);
+                InsertProduct(excelJson);
+                //document.getElementById("excelContent").innerHTML = JSON.stringify(excelJson);
+            };
+            if (rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+
+        //文件流转BinaryString
+        function fixdata(data) {
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        function InsertProduct(excelJson) {
+            var Jstring = JSON.stringify(excelJson);
+			var deliveryDate =$('#deliveryDate').val();
+			var business_id0 =$('#business_id0').val();
+			var url1 ='<{$http_root_www}>company/import_new_order_xiaochengxu';
+			if(!deliveryDate) {
+			 alert('请选择配送日期！');exit;
+			}
+			//alert (business_id0);
+			 if(business_id0 ==318811 ) {
+			  url1 ='<{$http_root_www}>company/import_new_order_easi';
+			 }else{
+			 
+			 }
+			// alert(url1);
+            $.ajax({
+			  
+                url: url1,      //异步方法
+                method: 'POST',
+                data: { "newusers": Jstring  ,"delivery_date": deliveryDate,"business_id0": business_id0},                 //传入的那么参数
+                cache: false,
+                timeout: 0,    
+				beforeSend: function () {
+                        $('body').append('<p class="form_response_loader"></p>');
+                    },
+				//延迟5秒执行
+                error: function () {                        //返回失败后
+                    alert("导入失败");
+                },
+                success: function (result) {
+                result=jQuery.parseJSON( result );
+			     
+                    if (result) {
+					
+                       window.location.href="<{$http_root_www}>company/import_new_order";
+					   console.log(result.message);
+                        location.reload();
+						$('.form_response_loader').remove();
+                    }
+                    else {
+                        alert('no result' + result.message); console.log(result.message);
+                    }
+                }
+                   
+              
+            });
+        }
+    </script>
+
+				
+
+					<script type="text/javascript">
+						$(function(){
+							$('.chooseDate').on('change',function(){
+							   $('#printer').css({ "display": "none" });
+								var datestr = $(this).val();
+								$.ajax({
+									url:"/company/get_truck_list_of_deliver_date_ajax",
+									data: {datestr : datestr},
+									contentType: "application/json",
+        							dataType: "json",
+									success:function(data){
+										var html = '<option value="all"><{$lang->logistic_choosetruck}></option>';
+										for (var i = data.length - 1; i >= 0; i--) {
+											html += "<option value="+data[i]+">Truck"+data[i]+"</option>";
+										}
+										$('.chooselogistic_truck_No').html(html);
+									},
+									error:function(data){
+										console.log(data);
+									}
+								})
+							})
+
+						})
+					</script>
+
+</body>
+
+</html>

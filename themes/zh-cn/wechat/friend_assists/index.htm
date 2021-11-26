@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="wap-font-scale" content="no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>wechat/friend_assists/css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>wechat/friend_assists/css/lib.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>wechat/friend_assists/css/style.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>wechat/friend_assists/css/less.css">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>wechat/friend_assists/css/leaderboard.css">
+
+    <style type="text/css">
+        body{
+            background:url(<{$SKIN_PATH}>wechat/friend_assists/images/newyearbg.jpg)!important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 主内容 -->
+    <div id="bd">
+        <!-- 助攻 -->
+        <div class="m-assists">
+            <img class="img" src="<{$SKIN_PATH}>wechat/newyear1/new_year_banner2.jpg" alt="">
+            <{if $type=='new'}>
+                <!-- 首次进入页面 -->
+                <div class="txt">
+                    <div class="tit">
+                        <span>
+                            快来参加活动赢取奖品
+                        </span>
+                    </div>
+                    <div class="num">已有  <{$totalPlayer}> 人参与 </div>
+                </div>
+
+                <{if $event_finish}>
+                    <a class="btn " href="<{$askForAssistUrl}>">活动已经结束咯,查看结果</a>
+                <{else}>
+                    <a class="btn " href="<{$askForAssistUrl}>">我也要玩</a>
+                <{/if}>
+            <{elseif $type=='self'}>
+                <!-- 开启自己的页面 -->
+                 <div class="txt">
+                    <div class="tit">
+                        <span>
+                            你已获神助攻 - 排名第<{$ranking}>
+                        </span>
+                    </div>
+                    <div class="num"><{$userData.total}> 次</div>
+                    <div style='position: relative;top: 35px;color:#a81e04;font-weight: bold;'>已有  <{$totalPlayer}> 人参与</div>
+                </div>
+
+                <div style="font-size: 16px;color: #dcdcdc;line-height: 3rem;font-weight: bolder;">
+                     你好！<{$userDisplayName}>
+                </div>
+
+                <{if $event_finish}>
+                    <a class="btn " href="#">活动已经结束咯</a>
+                <{else}>
+                   <a class="btn myfancy" href="#m-share-tip">分享求助攻</a>
+                <{/if}>
+
+                
+            <{elseif $type=='friend'}>
+                <!-- 开启别人的页面 -->
+                 <div class="txt">
+                    <div class="tit">
+                        <span>
+                            Ta已获神助攻 - 排名第<{$ranking}>
+                        </span>
+                    </div>
+                    <div class="num"><{$userData.total}> 次</div>
+                    <div style='position: relative;top: 35px;color:#a81e04;font-weight: bold;'>已有  <{$totalPlayer}> 人参与</div>
+                </div>
+
+                <{if $event_finish}>
+                    <a class="btn " href="#">活动已经结束咯</a>
+                <{else}>
+                   <a class="btn myfancy" href="#m-share-tip" style="position: absolute;top:10px;right: 10px;font-size: 20px;">帮Ta分享</a>
+                    <a class="btn " href="<{$askForAssistUrl}>">我也要玩</a>
+                <{/if}>
+
+            <{/if}>
+           
+        </div>
+        <!-- 助攻 end-->
+
+        <!-- 说明 -->
+        <div class="m-tips">
+            <h4>活动说明：</h4>
+            <p>规则：分享给微信好友或朋友圈，被点开一次即记录为获得一次神助攻！ 活动截止后排名前100的朋友都可以获得相应奖品！ </p>
+            <p>时间：2018.2.1-2.14    24点 </p>
+            <p>请点击此页面底部按钮填写（昵称和手机号）以免错过中奖！</p>
+            <p>领奖说明：本轮奖品仅支持自取！</p>
+
+            <p>自取时间：2018.2.17-2.18（大年初二初三）  10:00-17:00 </p>
+            <p>自取地点：墨尔本会展中心 华人团拜会Ubonus美食生活展台    1 Convention Centre Pl, South Wharf VIC 3006</p>
+            <p>自取凭证：凭中奖昵称和手机号领取！</p>
+
+            <p>活动最终解释权归Ubonus美食生活 Ubonus Pty Ltd 所有</p>
+
+            <img class="img" src="<{$SKIN_PATH}>wechat/newyear1/new_year_banner.jpg" alt="">
+            <img class="img" src="<{$SKIN_PATH}>wechat/newyear1/winning.jpg" alt="">
+        </div>
+        <!-- 说明 end-->
+
+        <!-- 秒杀倒计时 -->
+        <div class="m-seckill">
+            <h3>风生水起 吉祥富贵</h3>
+            <div id="clock"></div>
+        </div>
+        <!-- 秒杀倒计时 end-->
+
+        <!-- 列表 -->
+        <ul class="ul-list1">
+
+            <{foreach from=$coupons item=item}>
+                 <li>
+                    <a href="<{$http_root_wx}>coupon/<{$item.id}>">
+                        <div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="<{$item.title}>"></div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                            <p>原价：<{$item.price2}></p>
+                            <p class="price">秒杀价：<span><{$item.price1}></span></p>
+                        </div>
+                    </a>
+                </li>
+            <{/foreach}>
+           
+        </ul>
+        <!-- 列表 end-->
+
+        <!-- 二维码 -->
+        <div class="m-code">
+            <h3>风生水起 吉祥富贵</h3>
+            <p>2018澳洲华人线上年货节</p>
+            <p>扫码回复“福利” 每天送送送！</p>
+            <img src="<{$SKIN_PATH}>wechat/friend_assists/images/img-code.jpg" alt="" class="img-code">
+            <p>电脑端登录：www.ubonus365.com</p>
+        </div>
+        <!-- 二维码 end-->
+
+        <div style="text-align: center;">
+             <a href="<{$http_root_www}>coupon/4787">
+                <img  style='width:100%;max-width: 600px;' src="<{$SKIN_PATH}>wechat/newyear1/sponsor.jpg">
+            </a> 
+             <a href="<{$http_root_www}>store/199768">
+                <img  style='width:100%;max-width: 600px;' src="<{$SKIN_PATH}>wechat/newyear1/gold_sponsor.jpg">
+            </a> 
+             <a href="<{$http_root_www}>coupons/106126103">
+                <img  style='width:100%;max-width: 600px;' src="<{$SKIN_PATH}>wechat/newyear1/seckill.jpg">
+            </a> 
+             <a href="<{$http_root_www}>coupons/106126102">
+                <img  style='width:100%;max-width: 600px;' src="<{$SKIN_PATH}>wechat/newyear1/free.jpg">
+            </a> 
+             <a href="<{$http_root_www}>lottery/lottery_show">
+                <img  style='width:100%;max-width: 600px;' src="<{$SKIN_PATH}>wechat/newyear1/lottery.jpg">
+            </a>  
+            <br>  
+            <a href="<{$http_root_www}>redbag/redbag_show?bag_id=148">
+                <img  style='width:100%;max-width: 400px;' src="<{$SKIN_PATH}>wechat/newyear1/redbag.jpg">
+            </a> 
+        </div>
+
+
+        <div class='leaderboard'>
+            <div class="table-title">
+                <h3 style="text-align: center;color:#000">排行榜</h3>
+                <{if $event_finish}>
+                <p style="text-align: center;color:#f30">活动已经结束，请小伙伴们尽快填写手机号。我们马上联系您</p>
+                <{/if}>
+            </div>
+
+            <table class="table-fill">
+                <thead>
+                    <tr>
+                    <th class="">用户</th>
+                    <th class="">获得助攻</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover">
+                     <{foreach from=$leaderboard item=item name='dl'}>
+                             <tr>
+                                <td class="text-left"><{$smarty.foreach.dl.index+1}>. <{$item.user_name}></td>
+                                <td class=""><{$item.total}></td>
+                            </tr>
+                    <{/foreach}>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="m-btn1">
+            <a class="myfancy btn2" href="#m-form1">填写个人信息领取奖品</a>
+        </div>
+
+    </div>
+    <!-- 主内容 end-->
+
+    <!-- 弹窗：分享提示 -->
+    <div class="m-pop dn" id="m-share-tip">
+        <div class="pop-bg"></div>
+        <div class="inner" style="top:85px;">
+            <div class="m-share-tip">
+                <span class="s-arrow"></span>
+                <p>人们常说人这一生中有几个神助攻足矣！</p>
+                <p><span>点击右上角分享到朋友圈</span></p>
+                <p>看看谁是你的神助攻吧！</p>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗：分享提示 end-->
+
+    <!-- 弹窗：赢取杯 -->
+    <div class="m-pop dn" id="m-form1">
+        <div class="pop-bg"></div>
+        <div class="inner">
+            <div class="close"></div>
+            <div class="m-form1">
+                <form  class='playerInfo'>
+                    <h3><img src="<{$SKIN_PATH}>wechat/friend_assists/images/pic3.jpg" alt=""></h3>
+                    <p>昵称：</p>
+                    <input type="text" name='nickname' placeholder="昵称" value='<{$loginUser.nickname}>'>
+
+                    <p>你的手机号：</p>
+                    <input type="text" name='phone' placeholder="请输入手机号领取" value='<{$loginUser.phone}>'>
+                   
+                    <div class='confirmBtn' >确认</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗：赢取杯 end-->
+
+	<script src="<{$SKIN_PATH}>wechat/friend_assists/js/jquery.js"></script>
+	<script src="<{$SKIN_PATH}>wechat/friend_assists/js/lib.js"></script>
+
+    <!-- 倒计时 -->
+    <script type="text/javascript" src="<{$SKIN_PATH}>wechat/friend_assists/js/jquery.countdown.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#clock').countdown('<{$smarty.const.SPECIAL_EVENT_TIME_START}>', function(event) {
+              $(this).html(event.strftime('倒计时 <span>%D 天</span> <span>%H</span>:<span>%M</span>:<span>%S</span>'));
+              // $(this).html(event.strftime('%D 天 %H:%M:%S'));
+            });
+        })
+    </script> 
+
+    <script type="text/javascript">
+        
+       $('.playerInfo .confirmBtn').on('click',function(){
+            var phone = $("input[name='phone']").val();
+            var nickname = $("input[name='nickname']").val();
+
+             $.get( "<{$http_root_www}>query?cmd=savePlayerInfo",  
+                { userId: "<{$loginUser.id}>", phone: phone,nickname:nickname},
+                function() {
+                  // alert( "success" );
+                })
+                  .done(function() {
+                    // alert( "second success" );
+                  })
+                  .fail(function() {
+                    // alert( "error" );
+                  })
+                  .always(function() {
+                    // alert( "finished" );
+                  });
+            });
+        
+    </script>
+
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+
+  
+
+    <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$http_root_wx}>member/friend_assists&baseUserId=<{$baseUserId}>';
+        var desc="<{$pageDescription}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/wechat/newyear1/new_year_banner2.jpg';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+
+    <{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'||$coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'||$coupon_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+       
+           <div class="comm-express toggle-txt">
+           		<h3><{$lang->online_payment}></h3>
+           		<div class="txt">
+                <{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+                    <p>Paypal 
+                   <!--  <{if $coupon_delivery_info.transactionFeeChargeFrom_paypal=='user'}>(<{$coupon_delivery_info.paypalsurcharge*100}>%<{$lang->surcharge_fees}>)<{/if}> -->
+                    </p>
+                <{/if}>
+
+                <{if $coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+                    <p><{$lang->pay_wechat}> 支付宝支付
+                   <!--  <{if $coupon_delivery_info.transactionFeeChargeFrom_royalpay=='user'}>(<{$coupon_delivery_info.royalpaysurcharge*100}>%<{$lang->surcharge_fees}>)<{/if}> -->
+                    </p>
+                <{/if}>
+
+                 <{if $coupon_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+                    <p>Hcash Pay 
+                  <!--   <{if $coupon_delivery_info.transactionFeeChargeFrom_hcash=='user'}>(<{$coupon_delivery_info.hcashsurcharge*100}>%<{$lang->surcharge_fees}>)<{/if}> -->
+                    </p>
+                 <{/if}>
+
+                  <{if $coupon_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+                    <p>支持信用卡支付
+                   <!--  <{if $coupon_delivery_info.transactionFeeChargeFrom_creditcard=='user'}>(<{$coupon_delivery_info.creditcardsurcharge*100}>%手续费)<{/if}> -->
+                    </p>
+                  <{/if}>
+
+                </div>
+            </div>
+    <{/if}>
+
+    <{if $coupon_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+
+           <div class="comm-express toggle-txt">
+           		<h3><{$lang->offline_payment}></h3>
+           		<div class="txt">
+                <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.offline_pay_des}>)}>
+                </div>
+          </div>
+    <{/if}>
+
+ 
+   
+    <{if $coupon_delivery_info.EvoucherOrrealproduct=='realproduct'}>
+
+        <{if $coupon_delivery_info.deliver_avaliable}>
+
+               <div class="comm-express toggle-txt">
+               		<h3><{$lang->support_delivery}></h3>
+               		<div class="txt">
+                    <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.delivery_description}>)}>
+                    </div>
+                </div>
+
+        <{/if}>
+
+        <{if $coupon_delivery_info.pickup_avaliable}>
+
+               <div class="comm-express toggle-txt">
+               		<h3><{$lang->pick_up}></h3>
+               		<div class="txt">
+                    <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.pickup_des}>)}>
+                    </div>
+                </div>
+
+                 <{include file ="mobile/coupon_detail/sec_stafflist.htm"}>
+
+        <{/if}>
+
+        
+    <{/if}>

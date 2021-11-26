@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{if $side=='company'}>
+			<{include file='company/side.htm'}>
+		<{else}>
+			<{include file='member/side.htm'}>
+		<{/if}>
+		<div class="main">
+			<div class="box2" style="min-height: 600px;">
+
+					<{if $loginUser.wx_openID}>
+					<!-- 已经绑定微信 -->
+					<div class="main-list main-form">
+
+					<form id="memberForm" class="form-style-green" action="<{$http_root_www}>member/wx_manage_account" method="post" target="post_frame">
+
+						<div class="input-box clearfix">
+							<h1><{$lang->manage_wx_bind}></h1>
+							<p><{$lang->wx_manage_desc1}></p>
+							<p><{$lang->wx_manage_desc2}> <a target='_blank' href="<{$http_root_www}>business/wx_official_account"><em><{$lang->follow_wechat}></em></a></p>
+						</div>
+
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th><{$lang->user_name}></th>
+									<th><{$lang->default_login}></th>
+								</tr>
+							</thead>
+							<{foreach from=$userList item=item}>
+							<tr>
+								<td><{$item.name}></td>
+								<td > <input type="checkbox" name="defaultWxloginAccount[]" value="<{$item.name}>"  <{if $selected.name==$item.name}>checked<{/if}>/></td>
+							</tr>
+							<{/foreach}>
+
+						</table>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->set_default_login}></button>
+						</div>
+
+					</form>
+
+					<br><br><br><br>
+					<form id="memberForm" class="form-style-green" action="<{$http_root_www}>member/unbind_wx" method="post" target="post_frame" >
+						<div class="input-box input-submit clearfix" style="background-color: #eee;padding: 10px">
+							<p><{$lang->login_current_account}> <small><{$loginUser.name}></small> <button type="submit" style="background-color: #f23030;float: right;"><{$lang->wx_unlock_wechat}></button></p>
+						</div>
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+					
+					<script type="text/javascript">
+						$("input:checkbox").on('click', function() {
+							  var $box = $(this);
+							  if ($box.is(":checked")) {
+							   
+							    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+							    // the checked state of the group/box on the other hand will change
+							    // and the current value is retrieved using .prop() method
+							    $(group).prop("checked", false);
+							    $box.prop("checked", true);
+							  } else {
+							    $box.prop("checked", false);
+							  }
+						});
+
+					</script>
+
+
+					<{else}>
+					<!-- 还未绑定微信 -->
+
+					<div class='main-form form-style-green'>.
+						<div class="input-box clearfix">
+							<h1><{$lang->manage_wx_bind}></h1>
+							<p><{$lang->wx_no_panding}></p>
+							<p><{$lang->wx_scan_qrcode}></p>
+							<p><{$lang->wx_refresh}></p>
+						</div>
+
+						<div class="toLogin">
+							<div class="toLogin-weixincode" style='text-align:center'>
+								<img src="<{$bindWxQRCode}>" />
+							</div>
+						</div>
+					</div>		
+
+					<{/if}>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

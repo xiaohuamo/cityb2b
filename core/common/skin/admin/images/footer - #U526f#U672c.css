@@ -1,0 +1,6 @@
+@charset "utf-8";
+body { background:#EBEEF6; }
+.copyright { height:30px; padding:0 10px; background:url(bg_footer.jpg) repeat-x; color:#ACCAEA; line-height:30px; font-family:arial; }
+.copyright span { float:right; }
+.copyright a { color:#ACCAEA; text-decoration:underline; }
+.copyright a:hover { color:#ACCAEA; text-decoration:none; }

@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>2019澳洲华裔小姐大赛-墨尔本赛区</title>
+		  <meta name="keywords" content="2019澳洲华裔小姐大赛-墨尔本赛区" />
+   <meta name="description" content="2019澳洲华裔小姐大赛-墨尔本赛区" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/themes/zh-cn/brandstore/2019miss/css/bootstrap.css" />
+	</head>
+	<body>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/jquery-1.12.4.min.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/bootstrap.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/vue.min.js" ></script>
+			<script type="text/javascript">
+		$(function(){
+						
+			  $('img.lazyload').unveil();
+		})
+	</script>
+		<style>
+			/*手机*/
+			#top{
+				/*height: 440px;*/
+				width: 100%;
+				background-image: url(//themes/zh-cn/brandstore/2019miss/img/haibao.png);
+				background-repeat: no-repeat;
+				background-size: 100%;
+			}
+			.demo-nav{
+				height: 56px;
+				line-height: 56px;
+				display: flex;
+				text-align: center;
+				background-color: #f6dad7;
+				color: white;				
+			}
+			.demo-nav a{
+				 color: #a56d6d;
+			}
+			.demo-nav a:hover,.demo-nav a:focus{
+				color: white;
+			}
+			.flex-1{
+				flex: 1;
+			}
+			.saishi{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+				/*border: 1px solid #000000;*/
+				
+			}
+			.btn-saishi{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    border-radius: 13px;
+			    background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+			    margin-top: 20px;
+			    color: #a56d6d;
+			    letter-spacing: 3px;
+			    font-size: 16px;
+				font-weight:600;
+			}
+			.saishi-content{
+				text-align: center;
+				margin-top: 10px;
+			}
+			.content-top{
+				width: 70%;
+				/*height: 20px;
+				background-color:#f6dad7 ;*/
+				display: inline-block;
+				/*border-radius: 15px 15px 0 0;*/
+			}
+			.content-top img{
+				height: 13px;
+			}
+			.content-con{
+				width: 89%;
+				height: auto;
+				display: inline-block;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+			}
+			.pingwei-introduce{
+				margin: 25px 0px;
+				text-align: justify;
+			}
+			.a-style{
+				color: #ad666b;
+			}
+			.sign{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+			}
+			.sign-img img{
+				width: 12%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 0px;
+			}
+			.vote-img img{
+				width: 16%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote-all{
+				width: 89%;
+				height: 450px;
+				overflow: scroll;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+				margin: 0px auto;
+			}
+			.row-bottom{
+				margin-bottom: 13px;
+			}
+			.vote-img-top{
+				/*height: 50px;*/
+				width: auto;
+				border-radius: 25px;
+			}
+			.vote-img-top img{
+				width: 100%;
+				height: 71px;
+				border-radius: 35px;
+			}
+			.vote-btn{
+				margin-top: 10px;
+				display: block;
+				height: 49px;
+				line-height: 27px;
+				width: 100%;
+				background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+				border-radius: 10px;
+				color: #a56d6d;
+				
+			}
+			
+			.banner{
+				width: 98%;
+				height: auto;
+				margin-bottom: 20px;
+				background-color: #f6dad7;
+				border-radius: 15px;
+				margin: 0px auto;
+				text-align: center;
+			}
+			.beauty{
+				width: 100%;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+			}
+			.beauty-content{
+				margin: 0px auto;
+				width: 89%;
+				height: auto;
+			}
+			.beauty-title{
+				text-align: left;
+				color: #95494e;
+			    height: 45px;
+			    margin-bottom: 10px;
+			    border-bottom: 1px solid #f6dad7;
+			}
+			.row-bottom{
+				margin-bottom: 18px;
+			}
+			.row-style{
+				height: auto;
+				width: 100%;
+				/*background-color: #f6dad7;*/
+				margin: 0px;
+				margin-bottom: 10px;
+			}
+			.col-item {
+				/*height: 100%;*/
+				/*border:1px solid #f6dad7;*/
+				/*background-color: #f6dad7;*/
+			    /*width: 45%;*/
+			    /*margin-left: 10px;*/
+			    /*margin-top: 10px;*/
+			}
+			#video1{
+				width: 100%;
+			}
+			.member-top-img{
+				height: auto;
+				width: 100%;
+			}
+			.member-top-img img{
+				height: auto;
+				width: 100%;
+				border-radius: 60px;
+			}
+			.mamber-name{
+				margin-top: 10px;
+			}
+			.goods{
+				width: 100%;
+				text-align: center;
+				margin-bottom: 20px;
+				border: none;
+			}
+			.goods-content{
+				width: 89%;
+				height: auto;
+				border: 0px solid #f6dad7;
+				margin: 0px auto;
+			}
+			.goods-title{
+				color: #95494e;
+				margin-bottom: 20px;
+			}
+			.goods-inner{
+				width: 100%;
+				height: auto;
+			}
+			.discount{
+				display: block;
+			    height: 30px;
+			    width: 85%;
+			    line-height: 30px;
+			    background-color: #ff6600;
+			    margin: 10px auto;
+			}
+			.price{
+				color: red;
+			}
+			.live{
+				width: 100%;
+				height: auto;
+				border: 0px solid #1B6D85;
+				text-align: center;
+			}
+			.live-live{
+				width: 89%;
+				margin: 0px auto;
+				
+			}
+			.live-btn{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+				border-radius: 13px;		    
+			    margin-top: 20px;
+			    color: #a56d6d;
+			    letter-spacing: 3px;
+    			font-size: 16px;
+				font-weight:600;
+			}
+			.live-content{
+				margin-top: 20px;
+			}
+			.footer{
+				
+				background-color: #f6dad7; 
+				margin-top: 20px;
+			}
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px){ 
+				body{
+					font-size: 25px;
+				}
+				.btn-saishi{
+					width: 190px;
+				    height: 65px;
+				    line-height: 65px;
+				    margin-top: 25px;
+				    border-radius: 20px;
+				    font-size: 25px;
+				}
+				.saishi-content{
+					margin-top: 15px;
+				}	
+				.content-top img{
+					height: 25px;
+				}
+				.content-con{
+					height: auto;
+				}
+				.pingwei-introduce{
+					margin: 50px 0px;
+				}
+				.vote{
+					padding-bottom: 45px;
+				}
+				.vote-all{
+					height: 460px;
+					overflow: scroll;
+				}
+				.vote-img-top{
+					/*height: 130px;*/
+					width: auto;
+					border-radius: 75px;
+				}
+				.vote-img-top img{
+					width: 100%;
+					height: 145px;
+					border-radius: 75px;
+				}
+				.vote-btn{
+					height: 50px;
+					line-height: 50px;
+					border-radius: 20px;
+				}
+				.beauty{
+					margin-top: 40px;
+					margin-bottom: 40px;
+				}
+				.beauty-title{
+					font-size: 25px;
+				}
+				.row-style{
+					margin: 0px;
+					margin-bottom: 15px;
+				}
+				.col-item{
+				    /*margin-left: 20px;*/
+				    /*margin-top: 20px;*/
+				}
+				.mamber-name{
+					margin-top: 15px;
+					font-size: 25px;
+				}
+				
+				.member-top-img img{
+					border-radius: 100px;
+				}
+				.goods{
+					margin-bottom: 40px;
+				}
+				.goods-title{
+					font-size: 25px;
+					color: #95494e;
+				}
+				.goods-inner{
+					width: 100%;
+					height: auto;
+				}
+				.discount{
+				    height: 50px;
+				    line-height: 50px;
+				}
+				.live-btn{
+					width: 190px;
+				    height: 65px;
+				    line-height: 65px;
+				    margin-top: 25px;
+				    border-radius: 20px;
+				    font-size: 25px;	
+				}
+				.footer{
+					height: 100px; 
+				}
+			}
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width:992px){ 
+				#div-max{
+					width: 65%;
+					margin: 0px auto;
+				}
+				.vote-img-top img{
+					height: 188px;
+					border-radius: 95px;
+				}
+				.member-top-img img{
+					border-radius: 150px;
+				}
+
+			}
+		</style>
+	<div id="div-max">
+	  	<div id="top">
+	  		<img width="100%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/haibao@2x.png" />
+	  	</div>
+	  	<div role="navigation">
+		  <div class="demo-nav">
+		  	<a class="flex-1" href="#reg">报名</a>
+  			<a class="flex-1" href="#vote">投票</a>
+  			<a class="flex-1" href="#zhibo" accesskey="">直播</a>
+  			<a class="flex-1" href="#ticket" accesskey="">订票</a>
+  			<a class="flex-1" href="#zanzhu">赞助</a>
+  			<a class="flex-1" href="#news">新闻</a>
+		  </div>
+		</div>
+		<div class="saishi">
+			<div class="btn-saishi" onclick="showInfo()">		
+				大赛简介
+			</div>
+			<div class="btn-saishi" style="margin-left: 10px;" onclick="showMeaning()">		
+				参赛的意义
+			</div>
+			<div class="saishi-content">
+				<div class="content-top">
+					<img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/yuanjiao@3x.png" />
+				</div>
+				<div id="show-info" class="content-con">
+					2019澳洲华裔小姐大赛于今年4月在墨尔本正式启动，澳洲华裔小姐大赛是一项倍受全球华人华侨瞩目的国际赛事。由TV MEDIA AUSTRALIA 授权，墨尔本“大上海联合总会”全权主办。
+时间：2019年4⽉-7 ⽉。本次大赛主办方堪称最佳⼈气的组织，“大上海联合总会”汇集墨尔本各商会、同乡会、侨团组织、知名企业及多方媒体联袂合作！为缔造美丽时尚及文化交流添上浓墨重彩的一笔。
+海纳百川，融合多元。秉承 “秀外慧中、天然灵动的理念，选拔优秀华裔女性代表，弘扬传统美德，传承骨根文化，更推崇“精品个性”的独特⻛尚，专业打造一台美轮美奂的真人秀。让中华女性之美传递世界。
+				</div>
+				<div id="show-mean" class="content-con hidden">
+					<p>●&nbsp;&nbsp;&nbsp;“佳人海上生，顾盼倾墨城”，本届主题是为无论来自何方，如今生活在澳洲的华裔佳丽而设，充分展现了她们在不同语言、不同文化背景下的不同的成长经历， 倡导“寻找最美的妳”的独立 与自我理念，并以新的价值观接纳与融合四方;</p>
+					<p>●&nbsp;&nbsp;&nbsp;“寻找最美的妳”提倡与强调的是参选佳丽的品质，特征，才艺的异同，无论妳来自澳洲哪个城市，或者在澳洲探亲访友的游客，无论妳中文普通话能力的高低，无论妳参与时间的长短(除 决赛佳丽必须保证参加到最后)，大赛组委会均欢迎你的到来(授权方对参赛佳丽的基本要求见: www.tvb.com.au) 。在我们眼肿每佳丽即是自己的 IP 和“大 V” , 妳展现自我风采的舞台，已在 报名的那一刻拉开序幕，参与，互动与创意由此开始; </p>
+					<p>●&nbsp;&nbsp;&nbsp;本次选美竞赛组委会为每位佳丽开设个人专页， 其中包括: 佳丽简介，自我评价勾选(如: 自信，乐观，善良，健康，勤俭，向上，同理心，坚韧，自律，主见， 智慧等多个方面) ， 姿态美照和魅力视频 ，均由佳丽以自媒体的方式，不限形式自行上传; </p>
+					<p>●&nbsp;&nbsp;&nbsp;本次选美舞台，为佳丽充分体验前所未有的“个人魅力”市场回馈投票，由 The Sino 传媒，微奖 网，出国梦生态联合打造的互联网生态平台，公开呈现来自世界各地“妳追捧者与粉丝“ 的人气 投票，商业人气投票与奖金人气投票，没有先来后到，一比高低，同时，结合所有赞助商的产 品与服务与佳丽紧密互动; </p>
+					<p>●&nbsp;&nbsp;&nbsp;本赛事联手 Grandshow Media & Entertainment，墨尔本最佳商业微电影制作机构，全场跟踪拍 摄每位佳丽的“精彩故事”，记录妳珍贵的化蝶历程; </p>
+					<p>●&nbsp;&nbsp;&nbsp;参选佳丽可以一展妳的魅力与才华，广泛接触中西社群，线上线下曝光，历届获奖者经验指点， 人生导师的点评开悟，职业发展与品牌代言机会和决赛突颖而出的发展机会等。</p>
+
+				</div>
+			</div>
+		</div>
+	<!--	<div id="reg" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/meinv@2x.png"/></div>
+			<div class="content-con" >
+					1，截止澳洲时间2019年7月14日和21日周日23:59:59PM： 决出本届最后《每周最具网上人气奖 》；<br><br>
+2，截止澳洲时间2019年7月21日周日23:59:59PM: 累计人气总排名前10位佳丽，每位将荣获3张VIP决赛座席票（含佳丽本人），可携同亲友或粉丝作为贵宾邀请至决赛现场； <br><br>
+3，截止澳洲时间2019年7月25日周四21:00:00PM（大约）: 决出本届累计人气总排名最具《网络总人气小姐Top10》前10名(适所有线上报名选手), 登台澳洲最具规模的皇冠（Crown）娱乐城，棕榈树（Palms）剧院舞台领奖； <br><br>
+4，截止澳洲时间2019年7月25日周四22:00:00PM（大约）: 决出本届累计人气总排名UBONUS最具《网络总人气小姐Top1,2,3》前3名 (适所有线上报名选手)，荣耀登台接受奖杯， 同时，根据本届累计购物总金额，总奖金，总直播投票第一名，分别颁发UBONUS《最佳商业人气奖》Best Commercial Promoting （现金奖$500），《最佳奖金人气奖》Best Business Contribution（现金奖$500） ，《最佳直播人气奖》Best Live Stream（现金奖$500）奖杯， 按照规则，佳丽获得的奖金人气投票奖金现金，将在决赛后7日内发放给佳丽或由佳丽增值折算成物品； <br><br>
+5，截止澳洲时间2019年7月25日周四22:15:00PM（大约）: 决出本届《2019澳洲华裔小姐竞选墨尔本赛区》冠军（现金奖$3,000），亚军(现金奖$1,000)，季军（现金奖$500），琉璃奖杯及特别奖项奖杯，皇冠，权杖，斗篷，礼仪带，超值奖品誉满天下； <br><br>
+（注： 澳洲时间2019年7月14日周日23:59:59 起微信，网页人气投票关闭，仅开放商业，奖金人气，直播人气投票。 组办方有权对以上规则进行调整，恕不另行通知） <br><br>
+
+					
+			</div>
+			<div class="content-con" style="text-align: center;">
+				
+					<div class="btn-saishi"><a href="/coupon1/chinese_pageant1" style="color: #a56d6d;font-weight:600;">立即报名</a></div>
+			</div>
+			
+		</div> -->
+		
+		<div id="vote" class="vote">			
+			<div class="vote-img"><img src="/themes/zh-cn/brandstore/2019miss/img/huangguan@3x.png"/></div>
+			<div class="vote-all" style="text-align: center;">
+				<div class="row row-bottom">
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/倪飘飘summer.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=501" class="vote-btn">倪飘飘summer	</a>
+					</div>
+					
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/黄衫(Endora).jpg"/></div>
+						<a href="/coupon1/miss01?miss_id=430" class="vote-btn">黄衫 (Endora)</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/谭嘉歆（Catherine）.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=431" class="vote-btn">谭嘉歆 （Catherine）	</a>
+					</div>
+					
+					
+					
+				</div>
+				
+				<div class="row row-bottom">
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/陈焯汶（Kris）.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=433" class="vote-btn">陈焯汶（Kris）</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/姜汶池（Doris）.JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=434" class="vote-btn">姜汶池（Doris）</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/冯伊莎（sasha）.JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=435" class="vote-btn">冯伊莎（sasha）</a>
+					</div>
+					
+					
+				</div>
+				<div class="row row-bottom">
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/刘霞（Christy）.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=436" class="vote-btn">刘霞（Christy）</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/吴美霖(Wendy).jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=453" class="vote-btn">吴美霖 (Wendy)</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/何诗莹(Susan).JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=437" class="vote-btn">何诗莹(Susan)</a>
+					</div>
+					
+					
+				</div>
+				
+				
+				
+					<div class="row row-bottom">
+				
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/秋雅田(Natalie).JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=438" class="vote-btn">邱雅田 (Natalie)</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/陈彦君(Michelle).JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=439" class="vote-btn">陈彦君 (Michelle)</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/沈安琪(Angela).JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=440" class="vote-btn">沈安琪(Angela)</a>
+					</div>
+				
+				</div>
+				<div class="row row-bottom">
+				
+				<div class="col-sm-4 col-xs-4">
+						
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/杜拉拉Elena.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=492" class="vote-btn">杜拉拉Elena</a>
+							</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/谢尚彤（Cher）.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=432" class="vote-btn">谢尚彤（Cher）	</a>
+					</div>
+					
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/倪丽珺(Nikki).JPG"/></div>
+							<a href="/coupon1/miss01?miss_id=452" class="vote-btn">倪丽珺(Nikki)</a>
+							
+					</div>
+				
+				</div>
+				
+					<div class="row row-bottom">
+				
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/方嘉伊Carrie.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=454" class="vote-btn">方嘉伊Carrie</a>
+					</div>
+					
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/赵婉君Jennifer.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=455" class="vote-btn">赵婉君Jennifer</a>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/孙寒秋Athena.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=456" class="vote-btn">孙涵秋 Athena</a>
+					</div>
+					
+					
+					</div>
+					
+				<div class="row row-bottom">
+				
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/耿丹頔Cathryn.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=458" class="vote-btn">耿丹頔Cathryn</a>
+					</div>
+					
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/刘宇朝Ashley.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=457" class="vote-btn">刘宇朝Ashley</a>
+					</div>
+				
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/娄青竹.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=462" class="vote-btn">娄青竹</a>
+					</div>
+					
+					</div>
+					
+					<div class="row row-bottom">
+				
+				<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/范汝洁Anna.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=461" class="vote-btn">范汝洁Anna</a>
+					</div>
+					
+					
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/譚沛瑜Pearl.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=486" class="vote-btn">譚沛瑜Pearl</a>
+							</div>
+				
+					<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/代悦Sophia.jpg"/></div>
+							<a href="/coupon1/miss01?miss_id=463" class="vote-btn">代悦Sophia</a>
+					</div>
+					
+					</div>
+					
+					<div class="row row-bottom">
+				
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/徐梵丁Fanie.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=466" class="vote-btn">徐梵丁Fanie</a>
+							</div>
+							
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/喜仁Shireen.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=465" class="vote-btn">喜仁Shireen</a>
+							</div>
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/张鸣宇Mindy.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=464" class="vote-btn">张鸣宇Mindy</a>
+							</div>
+					
+					</div>
+					<div class="row row-bottom">
+				
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/胡雯婧Pythia.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=468" class="vote-btn">胡雯婧Pythia</a>
+							</div>
+							
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/Gabrielle李珂清.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=469" class="vote-btn">Gabrielle李珂清</a>
+							</div>
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/李佳雯Carmen.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=470" class="vote-btn">李佳雯Carmen</a>
+							</div>
+					
+					</div>
+					<div class="row row-bottom">
+				
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/Kassie孙嘉宜.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=473" class="vote-btn">Kassie孙嘉宜</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/原嘉懿Stacey.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=475" class="vote-btn">原嘉懿Stacey</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/苏韵Angel.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=476" class="vote-btn">苏韵Angel</a>
+							</div>
+					
+					</div>
+					<div class="row row-bottom">
+				
+								<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/Fiona_周豫昕.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=479" class="vote-btn">Fiona_周豫昕</a>
+							</div>
+							
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/林婉纯Minnie.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=478" class="vote-btn">林婉纯Minnie</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/韦欣.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=480" class="vote-btn">韦欣</a>
+							</div>
+					
+					</div>
+					
+					<div class="row row-bottom">
+				
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/刘沁园Janey.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=481" class="vote-btn">刘沁园Janey</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/曹玺Cecilia.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=482" class="vote-btn">曹玺Cecilia</a>
+							</div>
+							
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/李瞳Jessica.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=483" class="vote-btn">李瞳Jessica</a>
+							</div>
+							
+							
+					
+					</div>
+					
+					<div class="row row-bottom">
+				
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/陈善咪.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=495" class="vote-btn">陈善咪</a>
+							</div>
+	
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/杜卓曈Josie.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=485" class="vote-btn">杜卓曈Josie</a>
+							</div>
+							
+	<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/刘爽.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=487" class="vote-btn">刘爽</a>
+							</div>
+							
+					
+					</div>
+					
+					
+					<div class="row row-bottom">
+				
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/李亚蓉Amy.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=489" class="vote-btn">李亚蓉Amy</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/Iris曹佳颖.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=490" class="vote-btn">Iris曹佳颖</a>
+							</div>
+								<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/王云姣.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=488" class="vote-btn">王云姣</a>
+							</div>
+	
+							
+					
+					</div>
+					
+					<div class="row row-bottom">
+				
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/杨馨.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=493" class="vote-btn">杨馨</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/朱元shirley.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=496" class="vote-btn">朱元shirley</a>
+							</div>
+							
+					      	<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/鄢然Yanice.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=497" class="vote-btn">鄢然Yanice</a>
+							</div>
+					</div>
+					
+						<div class="row row-bottom">
+				
+						
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/蒋赫Doris.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=498" class="vote-btn">蒋赫Doris</a>
+							</div>
+							<div class="col-sm-4 col-xs-4">
+								<div class="vote-img-top"><img src="/themes/zh-cn/brandstore/2019miss/img/刘雨尧Rain.jpg"/></div>
+									<a href="/coupon1/miss01?miss_id=499" class="vote-btn">刘雨尧Rain</a>
+							</div>
+							
+					      	
+					</div>
+			
+				</div>
+				
+			
+				
+				
+			</div>
+				
+		<div id="reg" class="sign">			
+			
+			<div class="content-con" style="text-align: center;">
+			<!--
+			<p class='vote-desc' style="font-size:14px;font-weight:500;color:red;">
+1）<em style="font-weight:600">每周人气投票的排名及颁奖</em>	每周日晚上23:59:59（澳洲时间）统计每周佳丽的人气投票的排名（第一次颁奖日为2019年6月10日星期一），并在次日公布</p>
+
+
+					<p class='vote-desc' style="font-size:14px;font-weight:500;color:red;">
+					
+					
+2）<em style="font-weight:600">复赛直接进入决赛</em>： ： 截至2019年6月24日23:59:59PM ,累计人气前12名 (已入围决赛佳丽不占用名额),将由评委选其中3名进入决赛；；<br></p><p class='vote-desc' style="font-size:14px;font-weight:500;color:red;">
+3）<em style="font-weight:600">决赛特邀贵宾佳丽</em>：截至2019年7月21日23:59:59累计人气总排名前10位人气排名将被做为贵宾邀请至决赛现场，并赢得3张VIP嘉宾座席票，且有机会登台澳洲最具规模的皇冠（Crown）娱乐城，棕榈树（Palms）剧院舞台，发表最具人气奖获奖感言）；<br></p><p class='vote-desc' style="font-size:14px;font-weight:500;color:red;">
+4）<em style="font-weight:600">决赛现场颁奖</em>: 截至2019年7月25日21:00:00PM(澳洲时间，截止时间暂定)，累计人气总排名前3位 (所有线上报名选手)，将会在决赛现场获得颁发《2019澳洲华裔小姐竞选墨尔本赛区》：《最具总人气奖》冠，亚，季军三等奖及其它奖项详见条约细节<br></p>
+			
+					-->
+				
+					1，截止澳洲时间2019年7月14日和21日周日23:59:59PM： 决出本届最后《每周最具网上人气奖 》；<br><br>
+2，截止澳洲时间2019年7月21日周日23:59:59PM: 累计人气总排名前10位佳丽，每位将荣获3张VIP决赛座席票（含佳丽本人），可携同亲友或粉丝作为贵宾邀请至决赛现场； <br><br>
+3，截止澳洲时间2019年7月25日周四21:00:00PM（大约）: 决出本届累计人气总排名最具《网络总人气小姐Top10》前10名(适所有线上报名选手), 登台澳洲最具规模的皇冠（Crown）娱乐城，棕榈树（Palms）剧院舞台领奖； <br><br>
+4，截止澳洲时间2019年7月25日周四22:00:00PM（大约）: 决出本届累计人气总排名UBONUS最具《网络总人气小姐Top1,2,3》前3名 (适所有线上报名选手)，荣耀登台接受奖杯， 同时，根据本届累计购物总金额，总奖金，总直播投票第一名，分别颁发UBONUS《最佳商业人气奖》Best Commercial Promoting （现金奖$500），《最佳奖金人气奖》Best Business Contribution（现金奖$500） ，《最佳直播人气奖》Best Live Stream（现金奖$500）奖杯， 按照规则，佳丽获得的奖金人气投票奖金现金，将在决赛后7日内发放给佳丽或由佳丽增值折算成物品； <br><br>
+5，截止澳洲时间2019年7月25日周四22:15:00PM（大约）: 决出本届《2019澳洲华裔小姐竞选墨尔本赛区》冠军（现金奖$3,000），亚军(现金奖$1,000)，季军（现金奖$500），琉璃奖杯及特别奖项奖杯，皇冠，权杖，斗篷，礼仪带，超值奖品誉满天下； <br><br>
+（注： 澳洲时间2019年7月14日周日23:59:59 起微信，网页人气投票关闭，仅开放商业，奖金人气，直播人气投票。 组办方有权对以上规则进行调整，恕不另行通知） <br><br>
+
+					
+			
+					<div class="btn-saishi"><a href="/article/70" style="color: #a56d6d;font-weight:600;">立即投票</a></div><br>
+					<div class="btn-saishi" style="
+    width: 260px;
+"><a href="/article/vote_weekly" style="color: #a56d6d;font-weight:600;">周排名（加直播票）</a></div>
+					
+			</div>
+			
+		</div>
+<!--
+		<div class="banner">
+			<img src="/themes/zh-cn/brandstore/2019miss/img/haibao@2x.png" />
+			banner
+	<!--	</div> -->
+		<!--
+		<div class="beauty">
+			<div class="beauty-content">
+				<div class="beauty-title">佳丽视频    往届精彩</div>
+				<div class="row row-style">
+					<div class="col-xs-6 col-sm-6 col-item">
+						
+						<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/gf0XAB9c5Nw?start=595" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						
+					</div>
+					<div class="col-xs-6 col-sm-6 col-item">
+						<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/VKkjXldJn64?start=595" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+				</div>
+				<div class="row row-style">
+					<div class="col-xs-6 col-sm-6 col-item">
+						<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/4b_TDCLGU9k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-item">
+						<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/aGPDOyrPSkw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</div>
+				</div>
+			</div>
+			
+		</div>  -->
+
+		<div class="beauty">
+			<div class="beauty-content">
+				<div class="beauty-title">线上评委会成员</div>
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="changeInfo1()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/pingwei03.JPG" />
+						</div>
+						<div class="mamber-name">张雨晴</div>
+						
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="changeInfo2()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/Picture1.jpg" />
+						</div>
+						<div class="mamber-name">Stephen Bucknall</div>
+						
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="changeInfo3()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/009.jpg" />
+						</div>
+						<div class="mamber-name">邝氏姐妹</div>
+						
+					</div>
+				</div>
+				<div id="info1" class="content-con pingwei-introduce" >
+					<p>籍贯:中国 出生地 悉尼 174cm,美国瓦萨文理学院 流利中英文 中级日语/粤语</p>
+					<p>特长: 舞蹈(街舞,爵士),主持,平面及T台模特,表演 爱好: 健身,拳击,游泳,时尚博客,旅游,阅读</p>
+					<p>2013纽约华裔小姐冠军 最完美体态第12届瑞丽模特大赛亚军 双语之星奖 2017环球小姐中国亚军 </p>
+					<p>工作经历 《生死突击》 中饰演 依云(女一) ,中美合拍电影 《纸骑兵》 总制片助理 ,纪录片《WE留学生》主持人及副导演 </p>
+				</div>
+				<div id="info2" class="content-con pingwei-introduce hidden" >
+					<p>Stephen以时装模特的身份开始了他的职业生涯，并在澳洲、亚洲和美洲许多国家从事模特事业。在他的模特生涯中，Stephen为Calvin Klein、Ray Ban、Hugo Boss, Just Jeans, Cadbury拍摄了超过200个电视商业广告。Stephen还在《时尚COSMO》杂志的《Who ' s sexy now》版块中出演Cleo Centrefold。</p>
+					<p>當他的模特生涯即将结束时，Stephen为Jean Paul Gautier、Hugo Boss、Levis和Lee Jeans等高端客户制作并编排了2000多场时装秀、电视广告和电影。Stephen也为Heather Locklear和Jan Michael Vincent主演的电影《Flare》担任时尚部分制作。</p>
+					<p>1988年，Stephen成立了FRM模特管理公司，随后又成立了Reelfaces模特管理公司。FRM模特管理公司现今已成功运作30年，并赢得了澳大利亚具有领导力的模特经纪公司和时尚活动协调人的声誉。直到今天，Stephen仍然亲自为来自南苏丹，如今身在纽约的超级名模Ajak Deng做管理。</p>
+					<p>Stephen在模特时尚行业的地位和影响力，让他出现在许多具有领导力的谈话节目，并作为行业专家定期在澳大利亚主要报纸上刊登文章。Stephen定期参加墨尔本和悉尼时装周，并且经常出现在一线明星的活动中。</p>
+				</div>
+				<div id="info3" class="content-con pingwei-introduce hidden" >
+				<p>墨尔本著名音乐人</p>
+				</div>
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo1()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/picture3.jpg" />
+						</div>
+						<div class="mamber-name">吕枫</div>
+						
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo2()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/Picture4.jpg" />
+						</div>
+						<div class="mamber-name">Eva Zhang</div>
+						
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo3()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/Picture5.jpg" />
+						</div>
+						<div class="mamber-name">Grace Hu</div>
+						
+					</div>
+				</div>
+				<div id="infos1" class="content-con pingwei-introduce" >
+					<p>毕业于中国四川省舞蹈学学院歌剧系，和四川音乐学院声乐系。</p>
+					<p>美民通原生态跨界歌唱家。96年央视青歌赛通俗唱法 Top 10</p>
+					<p>16 年亚太地区USANA 新加坡 Got Talent 银奖 Got Talent 三等奖。</p>
+					<p>14年成功举办《澳洲月.中华情》中国民歌吕枫个人演唱会。并被RMIT授予 《中国民族音乐传播大使）》</p>
+					<p>15年在墨尔本成功主演了舞台剧 《雷雨》里蘩逸这一角色。</p>
+					<p>17年澳中友好45周年，主创主演情景歌舞《天路畅想曲》，19年主创主演小型歌舞剧《丝绸之路》，和《山河板块》导演之一。</p>
+					<p>澳大利亚英汉教育学会理事；华星艺术团艺术顾问；澳大利亚音乐家协会副秘书长。</p>
+				</div>
+				<div id="infos2" class="content-con pingwei-introduce hidden" >
+					<p>毕业于上戏舞蹈学院中国舞专业，曾是上海歌舞团舞蹈演员，国际高级瑜伽导师，肚皮舞教练。星越洋舞蹈艺术中心创始人，多次参加澳洲多元文化的大小型演出、编创与策划，选美小姐比赛评委及才艺表演指导老师和形象设计！在墨尔本当地多个幼儿园中小大学等文化节做中国舞workshop和表演！</p>
+				</div>
+				<div id="infos3" class="content-con pingwei-introduce hidden" >
+					<p>Grace Hu，现任I•PR•G集团CEO。I•PR•G作为国际公关公司，是一间集作家，设计师，摄影师，模特，建筑师，投资分析师，对话开启人，故事讲述者的创意工作室。I•PR•G与企业和组织合作，共同发展和推广，并保护他们的品牌及声誉。</p>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo12()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/008.jpg" />
+						</div>
+						<div class="mamber-name">徐永明</div>
+						
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo13()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/007.jpg" />
+						</div>
+						<div class="mamber-name">丁瑾倩Julie Ding</div>
+						
+					</div>
+					
+				    <div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img" onclick="replaceInfo11()">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/judge/Picture2.jpg" />
+						</div>
+						<div class="mamber-name">杜立媛</div>
+						
+					</div>
+				</div>
+				<div id="infos11" class="content-con pingwei-introduce" >
+	<p>墨尔本亚汇舞蹈社会长，澳大利亚中华国际艺术节艺术总监，“金尊杯”东方睿智世界亚裔小姐墨尔本赛区艺术总监及培训总指导，澳华全国妇女会舞蹈竞演评委，墨尔本大学生才艺比赛评委，“水立方杯”海外华裔青少年中文歌曲大赛评委等大型舞蹈及艺术表演比赛评委。</p>
+				
+
+
+				</div>
+				<div id="infos12" class="content-con pingwei-introduce hidden" >
+					<p>美沃国际创始人，美国钛合影业联合创始人，著名摄影家，选美赛事专家。</p>
+					<p>徐永明美沃国际文化传媒创始人，美国钛合影业联合创始人，丹麦Random Walk 轻奢品牌联合创始人，著名摄影家，选美赛事专家。多年来一直担任世界小姐大赛、地球小姐大赛的评委及赛事顾问，连续十四年担任瑞丽模特大赛的评委及导师，中俄蒙美丽使者国际大赛评委会主席。</p>
+				</div>
+				<div id="infos13" class="content-con pingwei-introduce hidden" >
+					<p>籍贯：中国，出生于上海，身高1.66cm在5岁时随父母移居澳大利亚墨尔本，毕业于墨尔本大学的法学院和商学院的双学位。流利英语和中文，日文中级。
+擅长钢琴，唱歌，网球喜好英国文学，旅游等。
+曾获得2008年华裔小姐墨尔本赛区的最上镜小姐，最具智慧奖和季军</p>
+				</div>
+				</div>
+			</div>
+		<!--</div>-->
+
+		
+		<div id = "zanzhu" class="live">
+			<div class="live-live">
+				<div class="live-btn">
+					赞助商方案
+				<!--<img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo1@2x.png" />-->
+				</div>
+				<div class="live-content">
+				<a href="#"><img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/sponsor.jpg" /></a>
+				</div>
+			</div>
+				<div id="reg" class="sign">			
+			
+			<div class="content-con" style="text-align: center;">
+					欢迎赞助上加盟!<br>
+					
+					<div class="btn-saishi"><a href="/themes/zh-cn/brandstore/2019miss/img/2019miss-business-sponsor.pdf" style="color: #a56d6d;font-weight:600;">中文版</a></div>&nbsp;&nbsp;<div class="btn-saishi"><a href="/themes/zh-cn/brandstore/2019miss/img/2019miss-business-sponsor-en.pdf" style="color: #a56d6d;font-weight:600;">英文版</a></div>
+			</div>
+			
+		</div>
+		</div> <!--
+		<div id= "zanzhu1" class="goods">
+			<div class="goods-content">
+				<div class="goods-title">赞助商信息</div>
+				<div class="goods-inner">
+				<table class="table table-bordered">
+						<tr>
+							<td style="vertical-align: middle;" colspan="4" rowspan="4">
+								<div style="height:auto; width:100% ;background-color: #f6dad7;">
+									<img style="width: 100%;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/jinwang01.jpg" />
+								</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">总冠名</div>
+									<div></div>
+								
+								</div>
+							</td>
+							</tr>
+							</table>
+					<table class="table table-bordered">
+						
+						<tr>
+							
+							
+							<td >
+								<div style="height: auto; width:100% ;background-color: #f6dad7;">
+									<img style="width: 100%;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/zanzhushang01.jpg" />
+								</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">金牌赞助</div>
+									<div></div>
+									<div class="price"></div>
+								</div>
+							</td>
+							<td>
+								<div style="height: auto; width:100% ;background-color: #f6dad7;">
+									<img style="width: 100%;" src="/themes/zh-cn/brandstore/2019miss/img/zanzhushang02.jpg" />
+								</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">金牌赞助</div>
+									<div></div>
+									<div class="price"></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<div style="height: auto; width:100% ;background-color: #f6dad7;">
+									<img style="width: 100%;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/zanzhushang03.png" />
+								</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">赞助商</div>
+									<div></div>
+									<div class="price"></div>
+								</div>
+							</td>
+							<td >
+								<div style="height: auto; width:100% ;background-color: #f6dad7;">
+									<img style="width: 100%;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/zanzhushang03.png" />
+								</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">Kinly Eye Beauty</div>
+									<div></div>
+									<div class="price"></div>
+								</div>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+		-->
+		<div class="banner">
+		
+		<img img width="90%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/banner01.JPG" /></a>
+		</div>
+
+		<div id = "zhibo" class="live">
+			<div class="live-live">
+				<div class="live-btn">
+					赛事直播
+				<!--<img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo1@2x.png" />-->
+				</div>
+				<div class="live-content">
+				<a href="http://jclive.jingchang.tv/?camera_id=1059486&from=groupmessage"><img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo@2x.png" /></a>
+				</div>
+			</div>
+			
+		</div>
+		<br>
+		
+		
+		<div id ="ticket" class="live">
+			<div class="live-live">
+				<div class="live-btn">
+					票务·购买
+					
+				</div>					
+					
+				<div class="live-content">
+					<a href="<{$http_root_www}>coupon1/7389?reftag=<{$reftag}>"><img img width="100%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/ticket.jpg" /></a>
+				</div>
+			</div>
+		</div>	
+		<div id="news" class="live">
+			<div class="live-live" style="width:100%;">
+				<div class="live-btn">
+					活动新闻 
+				</div>					
+				<div class="content-con pingwei-introduce" >
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/HgYPn2Y0Lz8C_LdkT30dkA">●&nbsp;&nbsp;&nbsp;澳大利亚华人旅游联盟，私人定制为您保驾护航——澳洲华裔小姐墨尔本赛区特刊</a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/MEO4URyvV-m4-L_NnCjsqQ">●&nbsp;&nbsp;&nbsp;美丽的“二次方”—2019澳洲华裔小姐竞选墨尔本赛区第二场海选</a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/RKbwQRClkiSqXipuytj3QQ">●&nbsp;&nbsp;&nbsp;寻找最美的你，快打开Iconic Boutique--Fashion Girl的百变衣橱 </a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/bgIDFDcQqkOpBOOG25zCGQ">●&nbsp;&nbsp;&nbsp;2019TVB澳洲华裔小姐竞选墨尔本赛区首批复赛入围选手隆重亮相！</a></p>	
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/VDV82pOCW6cQnTiuJWcI3Q">●&nbsp;&nbsp;&nbsp;第二次海选</a></p>	
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/z-2WjNEsDV2Md2fEsOQvHg">●&nbsp;&nbsp;&nbsp;澳州第一的住宅建造商成功入驻大上海选美平台，马云几年前要做的事我们实现啦</a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/BQbcsT1XOarARVCrClAA4Q">●&nbsp;&nbsp;&nbsp;2019 澳洲华裔小姐墨尔本赛区特定餐饮特刊</a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/-lsMJRdCbupFTujvEpktjw">●&nbsp;&nbsp;&nbsp;海外华文传媒协会高级访问团浙江行圆满结束 </a></p>
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/C_ZExOmpeYvxIeXdEvnQcw">●&nbsp;&nbsp;&nbsp;2019年澳洲华裔小姐竞选墨尔本赛区海选，不止寻找美丽，还要变得更美</a></p>	
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/y755JOICVqIDEvbgDYms1g">●&nbsp;&nbsp;&nbsp;2019澳洲华裔小姐墨尔本赛区佳丽招募之From Zero to Hero“复仇者联盟”篇</a></p>	
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/cIZCIpG7xaqW-6Flj72yIA">●&nbsp;&nbsp;&nbsp;2019澳洲华裔小姐墨尔本赛区之“美女与野兽”篇——复活节特刊</a></p>	
+					<p><a class="a-style" href="https://mp.weixin.qq.com/s/OCWeF9DghcJDKH2wxrMGQw">●&nbsp;&nbsp;&nbsp;是谁发现墨尔本最闪亮的那颗星? --2019澳洲华裔小姐墨尔本赛区评委简介</a></p>	
+					
+				
+				</div>
+			</div>
+		</div>
+		<div id="sponsor" class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">赞助商及指定机构</span></div>
+			<div class="text-center" ><img width="100%"  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/sponsor1.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">协办机构</span></div>
+			<div class="text-center" ><img width="100%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xieban.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">媒体支持</span></div>
+			<div class="text-center" ><img width="100%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/meiti.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">特别鸣谢</span></div>
+			<div class="text-center" ><img width="100%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/mingxie.jpg" /></div>
+			<br>
+		<footer class="footer" style="">
+		
+	  		<img width="100%" height="auto" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/foot.jpg" />
+	  	
+		</footer>
+		
+		
+		
+		
+			
+	</div>
+	
+ <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- WX jssdk share -->
+	
+	<script>
+	function showInfo(){
+		$('#show-info').removeClass('hidden');
+		$('#show-mean').addClass('hidden')
+	}
+	function showMeaning(){
+		$('#show-mean').removeClass('hidden');
+		$('#show-info').addClass('hidden');
+	}
+	function changeInfo1(){
+		$('#info1').removeClass('hidden');
+		$('#info2').addClass('hidden');
+		$('#info3').addClass('hidden');
+	}
+	function changeInfo2(){
+		$('#info2').removeClass('hidden');
+		$('#info1').addClass('hidden');
+		$('#info3').addClass('hidden');
+	}
+	function changeInfo3(){
+		$('#info3').removeClass('hidden');
+		$('#info1').addClass('hidden');
+		$('#info2').addClass('hidden');
+	}
+	function replaceInfo1(){
+		$('#infos1').removeClass('hidden');
+		$('#infos2').addClass('hidden');
+		$('#infos3').addClass('hidden');
+	}
+	function replaceInfo2(){
+		$('#infos2').removeClass('hidden');
+		$('#infos1').addClass('hidden');
+		$('#infos3').addClass('hidden');
+	}
+	function replaceInfo3(){
+		$('#infos3').removeClass('hidden');
+		$('#infos1').addClass('hidden');
+		$('#infos2').addClass('hidden');
+	}
+	
+	function replaceInfo11(){
+		$('#infos11').removeClass('hidden');
+		$('#infos12').addClass('hidden');
+		$('#infos13').addClass('hidden');
+	}
+	function replaceInfo12(){
+		$('#infos12').removeClass('hidden');
+		$('#infos11').addClass('hidden');
+		$('#infos13').addClass('hidden');
+	}
+	function replaceInfo13(){
+		$('#infos13').removeClass('hidden');
+		$('#infos11').addClass('hidden');
+		$('#infos12').addClass('hidden');
+	}
+	</script>
+    <script type="text/javascript">
+        var shareTitle='2019澳洲华裔小姐大赛-墨尔本赛区';
+        var shareLink='https://ubonus365.com/2019miss88';
+        var desc='澳洲华裔小姐大赛是一项倍受全球华人华侨瞩目的国际赛事。由TV MEDIA AUSTRALIA 授权，墨尔本“大上海联合总会”全权主办';//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/brandstore/2019miss/img/haibao@3x.png';
+    </script>
+
+   <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- WX jssdk share -->
+   
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+	
+	</body>
+</html>

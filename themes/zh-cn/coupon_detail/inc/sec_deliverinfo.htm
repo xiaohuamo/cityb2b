@@ -1,0 +1,119 @@
+
+<{if $coupon_delivery_info.EvoucherOrrealproduct=='realproduct'}>
+    <{if $coupon_delivery_info.deliver_avaliable}>
+    <div class="m-tip-lb">
+        <div class="tip">
+            <h4><span> <{$lang->delivery}> </span><em>  Tips</em></h4><br>
+			<{$coupon_delivery_info.item_delivery_fee_summery}><br>
+			  <{if $business_delivery_info.amount_for_free_delivery>0}> 
+			<strong>
+				<label><{$lang->free_freight_amount}>>=</label>
+				$<{$coupon_delivery_info.amount_for_free_delivery}>
+			</strong>
+			<br>
+			<{/if}>
+            <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.delivery_description}>)}>
+        </div>
+		
+    </div>
+    <{/if}>
+
+    <{if $coupon_delivery_info.pickup_avaliable}>
+    <div class="m-tip-lb">
+        <div class="tip">
+            <h4><span> <{$lang->pick_up}> </span><em>  Tips</em></h4>
+            <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.pickup_des}>)}><br>
+			<{include file='coupon_detail/inc/sec_stafflist.htm'}>
+        </div>
+    </div>
+
+   
+
+    <{/if}>
+<{/if}>
+
+<{if $coupon.finePrint}>
+<div class="m-tip-lb">
+    <div class="tip content-image-fullsize">
+        <h4><span> <{$lang->warm_prompt}> </span><em>  Tips</em></h4><br>
+        <{str_replace('white-space: pre-wrap;','',<{$coupon.finePrint}>)}>
+    </div>
+</div>
+<{/if}>
+
+<{if $addontext}>
+<div class="m-tip-lb">
+    <div class="tip content-image-fullsize">
+        <!-- <h4><span></span><em>  Tips</em></h4> -->
+        <div class='coupon-addon' style="line-height: 20px">
+          <{foreach from=$addontext item=t}>
+            <span style='white-space: nowrap;color: #fff;background: rgba(43, 184, 170,0.4);padding: 1px 6px;border-radius: 10px;'><{$t}></span>
+          <{/foreach}>
+
+          <p><{$addondata.time_limit_desc}></p>
+          <p><{$addondata.sharable_desc}></p>
+          <p><{$addondata.apportmant_required_desc}></p>
+          </div>
+    </div>
+</div>
+<{/if}>
+
+
+<{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'||$coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'||$coupon_delivery_info.supporthcashpayment=='supporthcashpayment'||$coupon_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+<div class="m-tip-lb">
+    <div class="tip">
+        <h4><span> <{$lang->online_payment}></span><em> Tips</em></h4>
+
+        <{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+        <p>paypal 
+            <!-- <{if $coupon_delivery_info.transactionFeeChargeFrom_paypal=='user'}>(<{$coupon_delivery_info.paypalsurcharge*100}>%手续费)<{/if}> -->
+        </p>
+        <{/if}>
+
+        <{if $coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+        <p>Wechat and Alipy 
+            <!-- <{if $coupon_delivery_info.transactionFeeChargeFrom_royalpay=='user'}>(<{$coupon_delivery_info.royalpaysurcharge*100}>%手续费)<{/if}> -->
+        </p>
+        <{/if}>
+
+        
+
+        <{if $coupon_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+        <p>Credit Card 
+            <!-- <{if $coupon_delivery_info.transactionFeeChargeFrom_creditcard=='user'}>(<{$coupon_delivery_info.creditcardsurcharge*100}>%手续费)<{/if}> -->
+        </p>
+        <{/if}>
+
+    </div>
+</div>
+<{/if}>
+
+<{if $coupon_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+<div class="m-tip-lb">
+    <div class="tip">
+        <h4><span><{$lang->offline_payment}></span><em>  Tips</em></h4><br>
+        <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.offline_pay_des}>)}>
+    </div>
+</div>
+<{/if}>
+
+
+
+
+<{if $coupon.redeemProcedure}>
+<div class="m-tip-lb">
+    <div class="tip">
+        <h4><span><{$lang->how_to_use}> </span><em> How To Redeem</em></h4>
+        <{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}>
+    </div>
+</div>
+<{/if}>
+
+<{if $coupon.refund_policy}>
+<div class="m-tip-lb">
+    <div class="tip">
+        <h4><span><{$lang->refund_policy}> </span><em>  Tips</em></h4>
+        <{str_replace('white-space: pre-wrap;','',<{$coupon.refund_policy}>)}>
+    </div>
+</div>
+<{/if}>

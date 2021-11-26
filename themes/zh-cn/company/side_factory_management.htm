@@ -1,0 +1,25 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a  href="<{$http_root_www}>company/generate_sequence_number"<{if $submenu=='generate_sequence_number'}> class="current"<{/if}>>
+				获取配货号
+		</a>
+	
+		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
+				打印装箱单/配货总单
+		</a>
+		<{if $loginUser.id ==318843}>
+		<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
+				导入外部订单
+		</a><{/if}>
+		
+		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
+				打印标签
+		</a>
+			
+	</div>
+</li>

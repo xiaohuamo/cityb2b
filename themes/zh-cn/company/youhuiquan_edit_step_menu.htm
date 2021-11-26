@@ -1,0 +1,23 @@
+<div class="input-box input-submit clearfix">
+	<{if $step&&$step!='1'}>
+	<button type="button" onClick="window.location.href='<{$prevUrl}>';" style="float:left;">上一步</button>
+	<{/if}>
+
+	<button type="submit" style="float:right;"> 
+		<{if $step&&$step=='5'}>
+		
+		<{if $data.status==4}>
+			完成
+		<{else}>
+			发布
+		<{/if}>
+		
+		<{elseif  $step&&$step=='1'}>
+		开始
+		<{else}>
+		下一步
+		<{/if}></button>
+</div>
+
+
+

@@ -1,0 +1,146 @@
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+<div class="header">
+
+	<div class="topArea">
+
+		<div class="wrap clearfix">
+
+			<a href="<{$http_root_www}>"><img src="<{$SKIN_PATH}>images/logo.png" style='height: 44px;margin: 5px' alt="<{$site.name}>" /></a>
+
+			<em >
+				<a href="<{$langSwitchUrl}>lang=zh-cn"><{$lang->lang_cn}></a>
+				/
+	    		<a href="<{$langSwitchUrl}>lang=en"><{$lang->lang_en}></a>
+				
+			</em>
+
+			
+
+			<{if $loginUser}>
+			<span class='tips'>
+					<span>
+							<{$lang->welcome}> <{if $loginUser.nickname}><{$loginUser.nickname}>(<{$loginUser.id}>)<{else}><{$loginUser.name}>(<{$loginUser.id}>)<{/if}>&nbsp;&nbsp;
+					</span>
+
+
+					<span>
+						<a href="<{$http_root_www}>member/index">
+							<i class="fa fa-user fa-lg" aria-hidden="true" title='个人中心'></i>
+						</a>
+					</span>
+
+					<{if $loginUser.role==3}>
+					<span>
+						<a href="<{$http_root_www}>company/index">
+							<i class="fa fa-tachometer fa-lg" aria-hidden="true" title='商家中心'></i>
+						</a>
+					</span>
+					<{/if}>
+
+					<span>
+						<a href="<{$http_root_www}>member/showcart">
+							<i class="fa fa-shopping-cart  fa-lg" aria-hidden="true" title='购物车'></i>
+							 <{if $loginUser}>
+			                    <b id="msgcount"><{$carts_count}></b>
+			                  <{/if}>
+						</a>
+					</span>
+
+					<span>
+						<a href="<{$http_root_www}>message/index">
+							<i class='fa fa-comment  fa-lg' aria-hidden="true" title='消息中心'></i>
+							<!-- <b id="msgcount"></b> -->
+						</a>
+					</span>
+
+					<span>
+						<a href="<{$http_root_www}>member/logout"><{$lang->log_out}></a>
+					</span>
+					
+			 </span>
+
+			<{else}>
+			 <span class="tips">
+			 	<span>
+			 		<a href="<{$http_root_www}>member/register?returnUrl=<{$returnUrl}>"><{$lang->register}></a>
+					
+			 	</span>
+			 	<span>
+			 		<a href="<{$http_root_www}>member/login?returnUrl=<{$returnUrl}>"><{$lang->log_in}></a>
+			 	</span>
+			 </span>
+			<{/if}>
+
+		</div>
+
+	</div>
+
+	<!-- 获取屏幕宽度，如果是320及以下不显示logo-->
+
+	<div class="ctArea p-hide">
+
+		<div class="wrap clearfix">
+
+			<div class="logo">
+				<a href="<{$http_root_www}>"><img src="<{$SKIN_PATH}><{$lang->logo_path}>" width="135" height="44" alt="<{$site.name}>" /></a>
+			</div>
+		
+			<div ><i id = 'btn-staticArea' class='fa fa-navicon fa-2x btn-staticArea'></i></div>
+
+		</div>
+
+	</div>
+
+	
+
+	<div class='staticArea p-hide'>
+
+		<{if $loginUser}>
+		<div class='staticArea-content'>
+			<div><h1><{$lang->my_account}></h1></div>
+			<ul class="clearfix">
+				<li><a href="<{$http_root_www}>member/myorders"><{$lang->my_orders}></a></li>
+				<li><a href="<{$http_root_www}>member/fav"><{$lang->fav}></a></li>
+				<li><a href="<{$http_root_www}>member/recharge"><{$lang->wallet}></a></li>
+				<li><a href="<{$http_root_www}>referal/index" ><{$lang->my_share}></a></li>
+				<li><a href="<{$http_root_www}>member/profile"><{$lang->user_setting}></a></li>
+			</ul>
+			<div><h1><{$lang->business_center}></h1></div>
+			<ul class="clearfix">
+				<li ><a href="<{$http_root_www}>company/coupons"><{$lang->publish_center}></a></li>
+				<li ><a href="<{$http_root_www}>company/customer_orders"><{$lang->customer_center}></a></li>
+				<li ><a href="<{$http_root_www}>company/account_balance"><{$lang->money_account}></a></li>
+				<li ><a href="<{$http_root_www}>company/community_index"><{$lang->community_marketing}></a></li>
+				<li ><a href="<{$http_root_www}>company/business_setting_main"><{$lang->business_setting}></a></li>
+			</ul>
+		</div>
+		<{else}>
+			<div><h1><{$lang->ubonus_legal_name}></h1></div>
+			<ul class="clearfix">
+				<li><a href="<{$http_root_www}>"><{$lang->home}></a></li>
+				<li><a href="<{$http_root_www}>member/login"><{$lang->log_in}></a></li>
+				<li><a href="<{$http_root_www}>member/register"><{$lang->register}></a></li>
+				<li><a href="<{$http_root_www}>member/register_business"><{$lang->register_new_business}></a></li>
+			</ul>
+		<{/if}>
+	</div>
+
+</div>
+
+
+<script>
+
+	$('#btn-staticArea').click(function(){
+
+		$('.staticArea').toggleClass('staticArea-open');
+
+		$('#btn-staticArea').toggleClass('fa-navicon');
+
+		$('#btn-staticArea').toggleClass('fa-minus');
+
+		$('#currentcity-label-outside').toggle();
+
+	});
+</script>
+

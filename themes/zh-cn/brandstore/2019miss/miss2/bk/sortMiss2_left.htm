@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		
+
+	    <title>佳丽排名</title>
+	    <style>
+	    	#sortMiss{
+	    		margin: 0px auto;
+	    		padding-top: 30px;
+	    		padding-bottom: 30px;
+	    		position: relative;
+	    		width: 520px;
+	    		height: 728px;
+	    		text-align: center; 
+	    		background-image: url(img/sort-bg.jpg);
+	    		background-size: 100% 100%;
+	    	}
+	    	.middle-photo{
+	    		margin-top: 65px;
+	    	}
+	    	.item{
+	    		position: relative;
+	    		display: inline-block;
+	    		
+	    	}
+	    	.item-wrap{
+	    		position: relative;
+	    		height: 60px;
+	    		width: 60px;
+	    		border-radius: 30px;
+	    		margin:15px 10px;
+	    		overflow: hidden;
+	    	}
+	    	.imgs{
+	    		width: 100%;
+	    		height: 100%;
+	    	}
+	    	.name{
+	    		position: absolute;
+	    		left: 0;
+	    		bottom: 0;
+	    		padding-bottom: 5px;
+	    		background-color: white;
+	    		color: #4b4171;
+	    		width: 100%;
+	    		font-size: 12px;
+	    	}
+	    	.hg{
+	    		position: absolute;
+	    		top: -8px;
+	    		right: -6px;
+	    	}
+	    </style>
+		
+	</head>
+	<body>
+			<div id="sortMiss">
+				<div class="middle-photo">
+				<div v-for="(items,i) in trangleList" >
+					<div class="item" v-for="(item,j) in items">
+						<div class="item-wrap">
+							<img class="imgs" :src='item.imgsrc'/>
+							<div class="name">{{item.name}}</div>
+						</div>
+						<div class="hg" v-if="i < 2">
+							<img  :src="'img/' + (i*(j+1) + 1) + '.png'" width="30px" height="30px"/>
+						</div>
+					</div> 
+				</div>
+				</div>
+				
+			</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js" ></script>
+		<script type="text/javascript" src="js/vue.min.js" ></script>
+		
+		<script>
+		
+				  
+		var leftTime = (new Date('2019-07-25')) - new Date(); //计算剩余的毫秒数
+		var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10)+1; //计算剩余的天数
+		var datas=[
+			{total_count:0,num:1,no:1,zhibo_id:24,votes:473,name:'Kassie',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:2,no:2,zhibo_id:2,votes:437,name:'Susan',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:3,no:3,zhibo_id:10,votes:464,name:'Mindy',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:4,no:4,zhibo_id:33,votes:475,name:'Stacey ',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:5,no:5,zhibo_id:20,votes:456,name:'Athena',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:6,no:6,zhibo_id:27,votes:430,name:'Endora ',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:7,no:7,zhibo_id:7,votes:470,name:'Carmen',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:9,no:8,zhibo_id:12,votes:438,name:'Natalie',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:9,no:9,zhibo_id:12,votes:438,name:'Natalie',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:10,no:10,zhibo_id:13,votes:440,name:'Angela',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:11,no:11,zhibo_id:11,votes:431,name:'Catherin',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:12,no:12,zhibo_id:16,votes:439,name:'Michelle',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:13,no:13,zhibo_id:23,votes:468,name:'Pythia',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:14,no:14,zhibo_id:6,votes:463,name:'Sophia',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:15,no:15,zhibo_id:8,votes:453,name:'Wendy',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:16,no:16,zhibo_id:0,votes:489,name:'Amy',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:17,no:17,zhibo_id:4,votes:483,name:'Jessica',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:18,no:18,zhibo_id:32,votes:485,name:'Josie',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:19,no:19,zhibo_id:15,votes:455,name:'Jennifer',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:20,no:20,zhibo_id:18,votes:452,name:'Nikki',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'},
+			{total_count:0,num:21,no:21,zhibo_id:30,votes:400,name:'Cecilia',ubonus_count:0,zhibo_count:0,imgsrc:'img/beautyweb.png'}
+			
+		],trangleList=[];
+				new Vue({
+					el:'#sortMiss',
+					data:{
+						datas,//原始data
+						days,
+						trangleList,//三角
+						tableList:[]//表格
+					},
+					mounted:function(){
+						this.refresh_vote(9);
+               			this.refresh_vote_zhibo();
+					},
+					methods:{
+						refresh_vote:function(group_id){
+							var _this=this;
+						   var group_id=group_id;
+							$.ajax({
+								url:"https://ubonus365.com/coupon/get_ajax_vote_rank?group_id="+group_id,
+								type:"GET",
+								beforeSend:function(){
+								},
+							}).done(function(data){
+							   	var newdata=JSON.parse(data);
+								$.each(newdata,function(i,n){  
+									// 将Ubonus 的最新数据发送给总的选手统计信息数组中。
+									_this.send_ubonus_vote(n);
+								})
+								_this.tableList=[].concat(datas)
+//								console.log('a:',_this.tableList)
+								var copyData = [].concat(datas),
+								trangleList = [];
+								while (copyData.length>0){
+									trangleList.push(copyData.splice(0,trangleList.length+1))
+								}
+								_this.trangleList = [].concat(trangleList);
+							}).always(function(){
+							})			
+							
+							setTimeout(()=>this.refresh_vote(9),5000);
+						},
+						send_ubonus_vote:function(vote_data){
+							var _this=this;
+						    $.each(datas,function(i,n){  
+								  if(vote_data.id ==n.votes) {
+								  // 如果在数组中找到该选手，则更新该选手在统计中Ubonus票数
+									n.ubonus_count=vote_data.vote_count;
+									n.total_count=parseInt(n.ubonus_count) +parseInt(n.zhibo_count);
+								  }								  
+							})
+						     datas.sort(this.compare('total_count',false))
+						},
+						refresh_vote_zhibo:function(){
+							var _this=this;
+							$.ajax({
+				                url: "http://mp.jingchang.tv/live/api/getPlayerList?page=1&num=50&callback=callback",
+				                dataType: "jsonp",
+				                jsonp:"callback",
+				                success: function (res) {
+									 $.each(res.data,function(i,n){  
+										// 将Ubonus 的最新数据发送给总的选手统计信息数组中。
+										_this.send_zhibo_vote(n);
+									})
+									
+				                }
+				            });
+							setTimeout(()=>this.refresh_vote_zhibo(),5000);
+						},
+						send_zhibo_vote:function(zhibo_data){
+							var _this=this
+						    $.each(datas,function(i,n){  
+								if(zhibo_data.player_no ==n.zhibo_id) {
+								  // 如果在数组中找到该选手，则更新该选手在统计中Ubonus票数
+									n.zhibo_count=zhibo_data.vote_count;
+									n.total_count=parseInt(n.ubonus_count) +parseInt(n.zhibo_count);
+								}
+							})
+						    datas.sort(this.compare('total_count',false))
+						    
+						},
+						compare:function( property, desc ) {
+							return function ( a, b ) {
+								var value1 = a[ property ];
+								var value2 = b[ property ];
+								if ( desc == true ) {                    
+									//排序升序排列                   
+									return value1 - value2;           
+								} else {                     
+									return value2 - value1;
+								}
+							}
+						}
+					}
+				}) 
+		</script>
+	
+</html>

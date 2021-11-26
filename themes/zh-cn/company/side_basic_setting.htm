@@ -1,0 +1,28 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='basic_setting'}> class="current"<{/if}>><{$lang->basic_setting}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a href="<{$http_root_www}>company/logo"  <{if $submenu=='logo'}> class="current"<{/if}>>
+			Logo
+		</a>	
+		
+		<a href="<{$http_root_www}>company/profile_manager"  <{if $submenu=='profile_manager'}> class="current"<{/if}>>
+			联系信息
+		</a>
+		<a href="<{$http_root_www}>company/profile_pic" <{if $submenu=='profile_pic'}> class="current"<{/if}>>
+		<!--	<{$lang->image}> --> 店铺图片
+		</a>	
+	
+		
+		<a href="<{$http_root_www}>company/profile" <{if $submenu=='profile'}> class="current"<{/if}>>
+			<{$lang->business_info}>
+		</a>
+		<a href="<{$http_root_www}>member/changepwd?side=company"<{if $submenu=='changepwd'}> class="current"<{/if}>>
+				<{$lang->password_setting}>	
+		</a>
+		
+	</div>
+</li>

@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ubonus美食生活-<{$pageTitle}>-专注墨尔本华人美食生活的电商平台</title>
+
+    <meta name="keywords" content="Ubonus美食生活 2017 Ubonus美食生活周末秒杀 特别 团购 秒杀 新年购 澳洲 澳大利亚 墨尔本 悉尼 布里斯班 阿德莱德 华人  电商 电子 商务 在线生活服务 "/>
+
+    <meta name="description" content="Ubonus美食生活- Ubonus美食生活 2017 Ubonus美食生活周末秒杀 特别 团购 秒杀 新年购  澳洲 澳大利亚 墨尔本 悉尼 布里斯班 阿德莱德 华人  电商 电子 商务 在线生活服务 "/>
+
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>shoppingday/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>shoppingday/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>shoppingday/qj.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>shoppingday/hl.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+
+    <!-- 头部 -->
+    <div class="header header-sever header-mall">
+        <{include file='index_inc_header.htm'}>
+
+        <div class="head-con head2">
+            <div class="wp">
+                <div class="logo">
+                    <a href="" style="font-size: 50px;color: white">
+                         <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/shoppingday_logo.png" alt="">
+                    </a>
+                </div>
+                <div class="head-center">
+                    <div class="search">
+                        <div class="form">
+                            <div >
+                                <div class="inner">
+                                    <input type="text" class="inp" id='search-input' autocomplete="off">
+                                    <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                                </div>
+                                <div class="search-list">
+                                    <ul class="ul-search TAB" id="search-hint">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hot">
+                            <a target="_blank" href="<{$http_root_www}>coupon1/7403">海胆饺子</a>
+                            <a target="_blank" href="<{$http_root_www}>store/">2-3折海参</a>
+                            <a target="_blank" href="<{$http_root_www}>">东京日料$6.90日餐</a>
+                            <a target="_blank" href="<{$http_root_www}>">小龙坎20代金券</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="head-right">
+                    <a class="shopping" href="<{$http_root_www}>member/showcart">我的购物车
+                        <{if $loginUser}>
+                        <em class='shopping-cart-qty-display'><{$carts_count}></em>
+                        <{/if}>
+                    </a>
+                </div>
+                <div>
+                     <img class='lazyload' style="margin-left: 10px; margin-top: -10px;width: 80px;height: 80px;" data-src="<{$SKIN_PATH}>images/pc-main/eq.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 头部 end -->
+ 
+
+    <!-- 2017-9-15导航 -->
+    <div class="m-nav2">
+            <ul class="ul-nav2 fix" style="display: none;">
+                <!--li ><a class="topNavigation" data-floor='f3'  >倾情推荐</a></li-->
+                <li ><a class='topNavigation' data-floor='f4'  >限时秒杀</a></li>
+                <li ><a class='topNavigation' data-floor='f5'  >超值拼团</a></li>
+                <li ><a class='topNavigation' data-floor='f6'  >爆品抢购</a></li>
+
+                <li ><a class='topNavigation' data-floor='f7'  >丽人专场</a></li>
+             <!--   <li ><a class='topNavigation' data-floor='f8'  >童趣世界</a></li> -->
+             
+                <li ><a class='topNavigation' data-floor='f10'  >电子数码</a></li>
+                <li ><a class='topNavigation' data-floor='f11'  >日用百货</a></li>
+                <li ><a class='topNavigation' data-floor='f12'  >幸运转盘</a></li>
+                <li ><a class='topNavigation' data-floor='f14'  >活动票务</a></li>
+                <li><a class='topNavigation' data-floor='f15'  > 美食天堂</a></li>
+                <!--li ><a class='topNavigation' data-floor='f16'  >本地服务</a></li-->
+              <!--  <li ><a class='topNavigation' data-floor='f17' >Hcash</a></li> -->
+            </ul>
+    </div>
+    <!-- 2017-9-15导航 end-->
+
+    <div class="h-ban1">
+        <div class="wp">
+            <div class="col-l">
+                <ul class="v-nav">
+                    <li >
+                        <a onclick="$('html, body').animate({scrollTop: $('#f7').offset().top+40}, 1000);" href="#f7" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop01.png);"><span>品牌推荐</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f8').offset().top+40}, 1000);" href="#f8" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">海胆饺子</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f7').offset().top+40}, 1000);" href="#f7" style="display: inline-table;padding-left: 12px;"><span  style="font-size: 10px;">肯辛顿红酒</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f9').offset().top+40}, 1000);" href="#f9" style="display: inline-table;padding-left: 12px;"><span  style="font-size: 10px;">澳洲海参</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a onclick="$('html, body').animate({scrollTop: $('#f47').offset().top+40}, 1000);" href="#f47" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop02.png);"><span>1元拼团</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f6').offset().top+40}, 1000);" href="#f6" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">单品价格高达$40</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a onclick="$('html, body').animate({scrollTop: $('#f5').offset().top+40}, 1000);" href="#f5" style="display:inline-table;background-image: url(<{$SKIN_PATH}>images/shop03.png);"><span>购物节爆款</span>
+                        </a>
+                        <a target="_blank" href="<{$http_root_www}>coupon/4369" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">丽人 </span></a>
+                        <a target="_blank" href="<{$http_root_www}>coupon/3888" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">代购</span></a>
+                        <a target="_blank" href="<{$http_root_www}>coupon/4139" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">名牌</span></a>
+                        <a target="_blank" href="<{$http_root_www}>coupon/4182" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">百货</span></a>
+                    </li>
+                    <!--li >
+                        <a onclick="$('html, body').animate({scrollTop: $('#f12').offset().top+40}, 1000);" href="#f12" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop04.png);"><span>幸运转盘</span>
+                        </a>
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=78" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">男士</span></a>
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=77" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">女士</span></a>
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=76" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">儿童</span></a>
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=79" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">数码</span></a>
+                    </li-->
+                    <li >
+                        <a onclick="$('html, body').animate({scrollTop: $('#f10').offset().top+40}, 1000);" href="#f10" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop05.png);"><span>美食秒杀</span></a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f11').offset().top+40}, 1000);" href="#f11" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">小龙坎</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f10').offset().top+40}, 1000);" href="#f10" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">东京日料</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f17').offset().top+40}, 1000);" href="#f17" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">麻辣烫</span>
+                        </a>
+                    </li>
+                    <!--li >
+                        <a target="_blank" href="<{$http_root_www}>group1_buy/list" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop06.png);"><span>本地生活</span></a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f15').offset().top+40}, 1000);" href="#f15" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">美食</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f14').offset().top+40}, 1000);" href="#f14" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">活动</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f16').offset().top+40}, 1000);" href="#f16" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">服务</span>
+                        </a>
+                    </li-->
+                    <li >
+                        <a target="_blank" href="<{$http_root_www}>brandstore" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop07.png);"><span>线上大抽奖</span></a>
+						 <!--a onclick="$('html, body').animate({scrollTop: $('#f49').offset().top+40}, 1000);" href="#f49" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">大洋线下专场</span>
+                        </a-->
+					      <a onclick="$('html, body').animate({scrollTop: $('#f11').offset().top+40}, 1000);" href="#f11" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">机票</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f10').offset().top+40}, 1000);" href="#f10" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">代金券</span>
+                        </a>
+                        <a onclick="$('html, body').animate({scrollTop: $('#f17').offset().top+40}, 1000);" href="#f17" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">礼品</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-c">
+                <div class="h-slide1">
+                    <ul class="items">
+                       <!-- <{foreach from=$bannerData item=item}>
+                        <li class="item">
+                            <a target="_blank" href="<{$http_root_www}><{$item.url}>"> <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+                        </li>
+                        <{/foreach}>
+						-->
+						<li class="item" style="float: left; width: 550px;">
+                            <a target="_blank" href="/coupon1/7403"> <img  src="<{$SKIN_PATH}>shoppingday/images/banner01.jpeg" alt="科大讯飞翻译机" </a>
+                        </li>
+						<li class="item" style="float: left; width: 550px;">
+                            <a target="_blank" href="/store/214563"> <img  src="<{$SKIN_PATH}>shoppingday/images/banner02.jpg" alt="肯辛顿红酒2瓶$2.99" </a>
+                        </li>
+						
+                    </ul>
+                    <ul class="hd">
+                        <{foreach from=$bannerData item=item}>
+                            <li></li>
+                        <{/foreach}>
+                    </ul>
+                    <a class="prev" href="javascript:void(0)"></a>
+                    <a class="next" href="javascript:void(0)"></a>
+                </div>
+            </div>
+            <div class="col-r">
+                <ul class="ul-hot">
+                    <li>
+                        <a href="https://www.ubonus365.com/coupon/4371" target="_blank" class="item">
+                            <img class='lazyload' data-src="<{$http_root_www}>data/upload/2017-10/20171024103427707224.jpg" alt="">
+                            <div class="txt">
+                                <p class="p1">感应双电弧充电打火机悬空感应电量显示</p>
+                                <p class="p2">$24.98</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.ubonus365.com/coupon/4447" target="_blank" class="item">
+                            <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/front_page.png" alt="">
+                            <div class="txt">
+                                <p class="p1">双11特价！澳洲境内转学升学服务</p>
+                                <p class="p2">$0.98</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.ubonus365.com/coupon/4182" target="_blank" class="item">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}>2017-09/20170927143756130342.jpg" alt="">
+                            <div class="txt">
+                                <p class="p1">蓝牙音箱插卡迷你小音响随身听户外便携式</p>
+                                <p class="p2">$14.90</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.ubonus365.com/coupon/4007" target="_blank" class="item">
+                            <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/4007.jpg" alt="">
+                            <div class="txt">
+                                <p class="p1">澳大利亚100%羊毛围巾</p>
+                                <p class="p2">$39.00</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="f1" class="hot-item">
+        <div class="wp">
+
+            <div>
+                <a target="_blank" href="<{$http_root_www}>store/29350">
+                     <!--img class='lazyload' style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/zd_lg.jpg" alt=""-->
+                </a>
+
+                <!--a target="_blank" href="<{$http_root_www}>store/26040">
+                     <!--img class='lazyload' style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/firstshopping_lg.jpg" alt="">
+                </a>
+                <!--a target="_blank" href="<{$http_root_www}>store/23270">
+                    <img style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/samsonite_lg.jpg" alt="">
+                </a-->
+
+                <!--a target="_blank" href="<{$http_root_www}>store/26040">
+                    <img style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/firstshopping_lg.jpg" alt="">
+                </a>
+
+                <a target="_blank" href="<{$http_root_www}>coupon/3399">
+                    <img style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/igg_lg.jpg" alt="">
+                </a-->
+            </div>
+
+        </div>
+    </div>
+    <div style="height: 350px;">
+    </div>
+    <div class="hot-item">
+        <div class="wp">
+            <!--div class="box_hd" id="f3">
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">倾情推荐</h3>
+                    <a class="box_subtit"></a>
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125115" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div-->
+
+            <!--ul class="items ul-row10">
+                <{foreach from=$list50 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>store/<{$item.createUserId}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul-->
+        <!--
+          	<ul class="items ul-row10" style="width:100%;" >
+                <{foreach from=$GroupPurchase item=item}>
+                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                 <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul>
+
+          -->
+		  
+		   <div style="margin-top: 1px;">
+		    <{include file='inc_countdown.htm'}>
+               
+            </div>
+		  
+		  <ul class="items ul-row10" style="width:100%;">
+                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4930?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                 <img src="<{$SKIN_PATH}>shoppingday/images/brand/0001.jpg" alt="" >
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>翻译机 省$270</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4876?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                 <img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/kunxindun.jpg" alt="" >
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>肯辛顿酒庄 低于1折秒</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4877?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+								<img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/weiaijia.jpg" alt="" >                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>唯爱佳奶粉 半价 及大促</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4879?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                              <img src="<{$SKIN_PATH}>shoppingday/images/brand/xuehua.jpg" alt="" >                            </div> 
+							   
+                            <div class="txt" style="height:16px;">
+                                <p>雪花啤酒 勇闯天涯 限量秒</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4874?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+								<img  src="<{$SKIN_PATH}>shoppingday/images/brand/chenguan.jpg" alt="" >                            </div> 
+						                        
+						
+                            <div class="txt" style="height:16px;">
+                                <p>晨光文具 中国高端品牌</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4885?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                        	<img  src="<{$SKIN_PATH}>shoppingday/images/brand/dyson.png" alt="" > 
+ 						  </div>
+                            <div class="txt" style="height:16px;">
+                                <p>Dyson 团购价格</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4884?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                             <img  src="<{$SKIN_PATH}>shoppingday/images/brand/yanwotang.png" alt="" >    </div>
+                            <div class="txt" style="height:16px;">
+                                <p>墨尔本燕窝堂 博览会特价</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4883?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                              <img  src="<{$SKIN_PATH}>shoppingday/images/brand/taihehang.jpg" alt="" >    </div>   
+                            <div class="txt" style="height:16px;">
+                                <p>海参超低秒抢 </p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4878?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/xiaolongkan.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>小龙砍$20抵用券仅售$1</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+                    <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4875?specialDisplay=group_pin">
+                             <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/dongjing.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>东京日料 低于5折 多次券</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4873?specialDisplay=group_pin">
+                            <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/haizhongzhiwang.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>海中之王 展会促销</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/ani.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>水光针 2折特价 限量秒</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				  <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/mig.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>MIG 羊毛被 低于半价 限量秒杀</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/jianli.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>美容大牌 2折美白券 限量秒</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/shanghaihuiguan.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>最正宗上海菜 限量秒</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/samsonite.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>新秀丽 急速秒超低</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				  <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4930?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                 <img src="<{$SKIN_PATH}>shoppingday/images/brand/0001changqing.jpg" alt="" >
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>长青 雪山大特价</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4876?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                 <img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001chihuochun.png" alt="" >
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>销售最好 最受欢迎自助餐</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4877?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+								<img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001dongfanghangkong.png" alt="" >                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>机票大抽奖</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4879?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                              <img src="<{$SKIN_PATH}>shoppingday/images/brand/0001dor24k.jpg" alt="" >                            </div> 
+							   
+                            <div class="txt" style="height:16px;">
+                                <p>美妆豪华品牌 购物节特价1折</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4874?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+								<img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001gongdelin.jpg" alt="" >                            </div> 
+						                        
+						
+                            <div class="txt" style="height:16px;">
+                                <p>猫本素食一线品牌 半价促销</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4885?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                        	<img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001jili.jpg" alt="" > 
+ 						  </div>
+                            <div class="txt" style="height:16px;">
+                                <p>多个地产项目 优惠多</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4884?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                             <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001nafanghangkong.png" alt="" >    </div>
+                            <div class="txt" style="height:16px;">
+                                <p>南方航空 机票大抽奖</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4883?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                              <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001niubaba.jpg" alt="" >    </div>   
+                            <div class="txt" style="height:16px;">
+                                <p>火锅粉最爱 销量破千</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4878?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001nokubeautify.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>网红美容店 价格特优</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+                    <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4875?specialDisplay=group_pin">
+                             <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001oscar.png" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>塔州海鲜 海胆饺子</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4873?specialDisplay=group_pin">
+                            <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001sambakinghig.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>网红蛋糕 超级爆品</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                                   <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001tontine.png" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>名品羊毛被 超级大特价</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				  <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/mig.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>MIG 羊毛被 低于半价 限量秒杀</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001ubonus.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>澳洲四级电商生态门户</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/0001xiaoshijigou.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>400场演唱会缔造者</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+				
+				 <li style="width:12%;padding:1.5px;margin: 0 1.5px 3px;text-align: center;">
+                    
+                    <div class="inner" style="    padding: 0px;">
+                        <a target="_blank" href="/coupon/4869?specialDisplay=group_pin">
+                           <div class="pic" style="    width: 100%;    height: auto;">
+                                  <img  src="<{$SKIN_PATH}>shoppingday/images/brand/samsonite.jpg" alt="" >  
+                            </div>
+                            <div class="txt" style="height:16px;">
+                                <p>新秀丽 急速秒超低</p>
+                            </div>
+                        </a>
+                       
+                    </div>
+                </li>
+                            </ul>
+		  
+            <div class="box_hd" id="f4">
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">限时秒杀</h3>
+                    <a class="box_subtit"></a>
+                </div>
+                <div class="box_hd_col2">
+                    <div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="<{$smarty.const.SPECIAL_EVENT_TIME_START}>"><em>00</em><em>00</em><em>00</em></span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a>
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc4.jpg" alt="" />
+                </a>
+            </div>
+         <ul class="items ul-row10" style="    padding-top: 2px;">
+                <{foreach from=$buy_List item=item}>
+                <li style="width: 19%;height:265px;margin: 0 5.5px 3px;">
+                   <div class="inner" style="    padding: 2px;">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic" style=" width:100%;height: 100%;">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" style="   border-radius: 10px;">
+                                <{if $item.totalQty==0}>
+                                    <em style="background-image: url(<{$SKIN_PATH}>images/icon-detail.png);display: inline-block;width: 150px;height: 150px;margin-top: -150px;"></em>
+                                <{/if}>
+                            </div>
+                             <div class="txt" style="    height: 44px;">
+                                <p style="height: 90%;font-size:14px;"><{$item.title|truncate_cn:90:'...'}></p>
+                            </div>
+                        </a>
+                        </a>
+                        <div class="seckill-box" style="height: 47px; padding-top:12px;">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"  style="font-size:18px;"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old"  style="font-size:14px;">$<{$item.voucher_original_amount}></span>
+                                </div>
+                            </div>
+
+                            <{if $item.totalQty==0}>
+                            <a target="_blank"  class="buy soldout" style="    line-height: 47px;">Sold Out</a>
+                            <{else}>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy"style="    line-height: 47px;">立即抢购</a>
+                            <{/if}>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul>
+
+            <!--div class="box_hd" id="f49">
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">大洋专场</h3>
+                    <a class="box_subtit"></a>
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125114" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list49 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul-->
+ <!--
+            <div class="box_hd" id="f5" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">超值拼团</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/11/01 17:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+     <!--           </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>group_pin/index" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+			
+
+            <div style="margin-top: 1px;">
+                <a href="<!--<{$http_root_www}>group_pin/index-->">
+       <!--             <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc5.jpg" alt="" />
+                </a>
+            </div>
+            <ul class="items ul-row10" >
+                <{foreach from=$GroupPurchase item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin">
+                            <div class="pic">
+                                 <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em>
+                                        <{if $item.reward_type=='percent'}>
+                                            <{($item.voucher_deal_amount*(100-$item.reward_value)/100)|string_format:"%.2f"}>
+                                        <{elseif $item.reward_type=='flat'}>
+                                            <{$item.voucher_deal_amount-$item.reward_value}>
+                                        <{/if}>
+                                    </span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                                 (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) 
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul>
+         
+		-->
+		
+		
+		
+            <div class="box_hd" id="f6" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">爆款特价</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125113" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125113">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc6.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list5 item=item}>
+                <!--{if strstr($item.categoryId,',106125104')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+		
+		
+        
+            <div class="box_hd" id="f47" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">$0免费送</h3>
+                </div>
+                <div class="box_hd_col2">
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125111" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125111">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc47.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list47 item=item}>
+                <!--{if strstr($item.categoryId,',106125104')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+
+
+            <div class="box_hd" id="f7" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">女性专场</h3>
+                </div>
+                <div href="<{$http_root_www}>coupons/106125106" class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125106" class="box_subtit">
+                        更多
+                        <i class="box_subtit_arrow"></i>
+                    </a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125106">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc7.jpg" alt="" />
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list6 item=item}>
+                <!--{if strstr($item.categoryId,',106125101')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                 <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                                 <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+            <div class="box_hd" id="f8" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">童趣世界</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125110" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125110">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc8.jpg" alt="" />
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list7 item=item}>
+                <!--{if strstr($item.categoryId,'106125102')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                 <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                 <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+            <div class="box_hd" id="f9" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">男士专享</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125105" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125105">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc9.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list36 item=item}>
+                <!--{if strstr($item.categoryId,',106125105')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                 <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+            <div class="box_hd" id="f10" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">电子数码</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125112" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125112">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc10.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list37 item=item}>
+                <!--{if strstr($item.categoryId,',106125106')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                  <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+            <div class="box_hd" id="f11" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">日用百货</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>139</em><em>33</em><em>24</em></span>
+                    </div-->
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125104" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125104">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc11.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list38 item=item}>
+                <!--{if strstr($item.categoryId,',106125107')}-->
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                  <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <!--{/if}-->
+                <{/foreach}>
+            </ul>
+
+            <!--div class="box_hd" id="f12" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">幸运转盘</h3>
+                </div>
+                <div class="box_hd_col2">
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>lottery/lottery_show" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <ul class="items ul-row10" style="text-align: center;">
+                <{foreach from=$bonus item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=<{$item.id}>">
+                        <img style="width: 175px;height: 175px;" class='lazyload' src="<{$SKIN_PATH}>images/lottery/<{$item.pic1}>" alt="">
+                        <p style="text-align: center;width:100%;"><{$item.title}></p>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul-->
+
+            <!--div class="box_hd" id="f14" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">活动票务</h3>
+                </div>
+                <div class="box_hd_col2">
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125103" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125103">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc14.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list45 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul-->
+
+            <!--div class="box_hd" id="f15" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">美食天堂</h3>
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125101" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125101">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc15.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list39 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul-->
+
+            <!--div class="box_hd" id="f16" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">本地生活</h3>
+                </div>
+                <div class="box_hd_col2">
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125105" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125105">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc16.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list40 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul-->
+
+
+            <div class="box_hd" id="f17" >
+                <div class="box_hd_col1">
+                    <i class="box_hd_dec"></i>
+                    <i class="box_hd_icon"></i>
+                    <h3 class="box_tit">Hcash海淘</h3>
+                </div>
+                <div class="box_hd_col2">
+                </div>
+                <div class="button_more">
+                    <a href="<{$http_root_www}>coupons/106125108" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                </div>
+            </div>
+            <div style="margin-top: 1px;">
+                <a href="<{$http_root_www}>coupons/106125108">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>shoppingday/images/pc17.jpg" alt=""/>
+                </a>
+            </div>
+            <ul class="items ul-row10">
+                <{foreach from=$list41 item=item}>
+                <li>
+                    <div class="inner">
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <div class="pic">
+                                <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                            </div>
+                            <div class="txt">
+                                <p><{$item.title}></p>
+                            </div>
+                        </a>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="price1">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+
+                                <{if $item.proportion!=0}>
+                                <div class="jdt">
+                                    已售<{$item.proportion|string_format:"%d"}>%
+                                    <i><b style="width:<{$item.proportion}>%"></b></i>
+                                </div>
+                                <{/if}>
+                            </div>
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        </div>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <{include file='index_inc_footer.htm'}>
+    <!-- 底部 end -->
+    <!-- 右边栏 -->
+    <{include file='index_inc_right.htm'}>
+    <!--右边栏 end-->
+    <!-- 浮动导航-->
+    <ul class="default-outer">
+        <li><a target="_blank" href="<{$http_root_www}>"><em>Ubonus<br/>首页</em></a></li>
+        <!--li class="floor f3"><a href="#f3"><em>倾情<br/>推荐</em></a></li-->
+        <li class="floor f3"><a href="#f4"><em>限时<br/>秒杀</em></a></li>
+        <li class="floor f3"><a href="#f5"><em>超值<br/>拼团</em></a></li>
+        <li class="floor f3"><a href="#f6"><em>圣诞<br/>豪礼</em></a></li>
+        <li class="floor f3"><a href="#f7"><em>女性<br/>专场</em></a></li>
+        <li class="floor f3"><a href="#f8"><em>童趣<br/>世界</em></a></li>
+        <li class="floor f3"><a href="#f9"><em>男士<br/>专享</em></a></li>
+        <li class="floor f3"><a href="#f10"><em>电子<br/>数码</em></a></li>
+        <li class="floor f3"><a href="#f11"><em>日用<br/>百货</em></a></li>
+        <!--li class="floor f3"><a href="#f12"><em>幸运<br/>转盘</em></a></li-->
+        <!--li class="floor f3"><a href="#f14"><em>活动<br/>票务</em></a></li-->
+        <!--li class="floor f3"><a href="#f15"><em>美食<br/>天堂</em></a></li-->
+        <!--li class="floor f3"><a href="#f16"><em>本地<br/>生活</em></a></li-->
+        <li class="floor f3"><a href="#f17"><em>Hcash<br/>海淘</em></a></li>
+    </ul>
+    <!-- 浮动导航end-->
+    <script type="text/javascript" src="<{$SKIN_PATH}>shoppingday/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>shoppingday/lib.js"></script>
+    <script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+    <script src="<{$SKIN_PATH}>shoppingday/dong.js"></script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+    <script>
+        jQuery(".h-slide1").slide({mainCell:".items",effect:"left",autoPlay:true});
+    </script>
+    <script>
+        $('.time-c1').each(function() {
+            $(this).countDown();
+        });
+    </script>
+    <script>
+        $(function(){
+            $('.ul-nav2').parent().removeClass('none')
+            $('.topNavigation').on('click',function(){
+                var floorNo = $(this).data('floor');
+                $(this).parent().siblings().removeClass('on');
+                $(this).parent().addClass('on');
+                $('html, body').animate({scrollTop: $('#'+floorNo).offset().top-68}, 1000);
+            });
+        })
+    </script>
+
+<script>
+    $(function() {
+        $('img.lazyload').unveil();
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!-- group user List admin -->
+<div class='group_user_list'>
+	<div class='list_top'>
+		<span class='group_reward'>当前达成奖励：<{$reward_msg}></span><span style='float:right'>当前人数:<{$current}></span>
+	</div>
+	
+	<div class='list_body'>
+		<table style='width:100%'>
+			<{foreach from=$data item=item name='userlistloop'}>
+			<tr>
+				<td class='user_name' style='width:20%'><{$smarty.foreach.userlistloop.index+1}>.<{$item.user_name}></td>
+				<td class='user_nickname' style='width:20%'> <{$item.user_nickname}></td>
+				<td class='user_qty' style='white-space:nowarp'>x <{$item.qty}> 人</td>
+				<td class='user_email'><{$item.user_email}></td>
+				<td class='user_phone'><{$item.user_phone}></td>
+			</tr>
+			<{/foreach}>
+		</table>
+		
+	</div>
+
+	<{$condition_level_html}>
+
+</div>

@@ -1,0 +1,90 @@
+
+<{if $loginUser.role==3 || $loginUser.role==6 || $loginUser.role==101 || $miss}>
+<style type="text/css">
+	.mutil-level-menu{
+		margin-left: 20px;
+	}
+
+	.mutil-level-menu a{
+		color:#515253;
+	}
+
+	.mutil-level-menu a:hover{
+		color: #00A1E9;
+	}
+
+	.mutil-level-menu .top-level{
+		height: 40px;
+		line-height: 40px;
+		font-size: 15px;
+	}
+
+	.top-level i{
+		color: #00A1E9;
+	}
+
+	.top-level a{
+		text-decoration: none;
+		cursor: default;
+	}
+
+	.top-level a.current{
+		color: #00A1E9;
+	}
+
+	.mutil-level-menu .second-level{
+		padding-left: 50px;
+		display: none;
+	}
+
+	.second-level a{
+		text-decoration: none;
+		display: block;
+		font-size:13px;
+		height: 40px;
+		line-height: 40px;
+		cursor: default;
+	}
+
+	.second-level a.current{
+		color: #00A1E9;
+	}
+
+</style>
+<script type="text/javascript">
+	$(function(){
+		$('.top-level a.current').parent().next('.second-level').show();
+
+		$('.top-level').on('click',function(){
+			$(this).next('.second-level').toggle(100);
+		})
+	})
+</script>
+<div class="side m-hide">
+<{if $loginUser.role ==6}>
+		<{include file='company/side_agent.htm'}>
+   <{else}>
+
+	<{if $loginUser.business_type_miss ==1}>
+		<{include file='company/side_miss.htm'}>
+	<{else if $loginUser.business_type_service ==1}>
+		<{include file='company/side_service.htm'}>
+	<{else if $loginUser.business_type_restaurant ==1}>
+		<{include file='company/side_restaurant.htm'}>
+	<{else if $loginUser.business_type_freshfood ==1}>
+	<{include file='company/side_freshfood.htm'}>
+	<{else if $loginUser.business_type_media ==1}>
+		<{include file='company/side_media.htm'}>
+	<{else if $loginUser.business_type_shop ==1}>
+		<{include file='company/side_shop.htm'}>
+	<{else if $loginUser.business_type_factory ==1}>
+		<{include file='factory/side_factory.htm'}>
+	<{else if $loginUser.business_type_factory_2c ==1}>
+		<{include file='factory_2c/side_factory.htm'}>
+	<{else}>
+       
+	<{/if}>
+	<{/if}>
+	
+</div>
+<{/if}>

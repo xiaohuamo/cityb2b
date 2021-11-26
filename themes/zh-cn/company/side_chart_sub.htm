@@ -1,0 +1,157 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfood}></strong></a> 
+					
+				</div>
+			</li>
+			
+			
+		
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='selling'}> class="current"<{/if}>>销售分析</a>
+			</div>
+
+			<div class='second-level'>
+				
+				
+				
+				<a href="<{$http_root_www}>chart/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
+					按周销售分析
+				</a>
+					<a href="<{$http_root_www}>chart/selling_daily"<{if $submenu=='selling_daily'}> class="current"<{/if}>>
+					按日销售分析
+				</a>
+				
+				
+				<a href="<{$http_root_www}>chart/selling_weekly_compare"<{if $submenu=='selling_weekly_compare'}> class="current"<{/if}>>
+					按周销售对比图
+				</a>
+			
+				
+			</div>
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='user_chart'}> class="current"<{/if}>>用户分析</a>
+			</div>
+
+			<div class='second-level'>
+				
+					<a href="<{$http_root_www}>chart/new_user_weekly"<{if $submenu=='new_user_weekly'}> class="current"<{/if}>>
+					用户增长-周
+				</a>
+				
+				<a href="<{$http_root_www}>chart/new_user_daily"<{if $submenu=='new_user_daily'}> class="current"<{/if}>>
+					用户增长-日
+				</a>
+				<!--
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					新老用户下单对比-周
+				</a>
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					新老用户下单对比-日
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					用户注册及用户下单对比-周
+				</a>
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					用户注册及用户下单对比-日
+				</a>
+			    <a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					复购率-（1-3-6）月，用户复购
+				</a>
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					复购率-14天客户回购比率
+					复购率-7天客户回购比率
+				</a>
+				-->
+				
+			</div>
+		</li>
+		
+
+<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>>订单分析</a>
+			</div>
+
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					统配订单分析
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					单均及毛利
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					订单数量趋势
+				</a>
+				
+				
+			
+				
+			</div>
+		</li>
+		
+
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>company/ubonus_package"<{if $menu=='community'}> class="current"<{/if}>><{$lang->online_promotion}></a>
+			</div>
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>member/index"<{if $menu=='community'}> class="current"<{/if}>><{$lang->my_account}></a>
+			</div>
+		</li>
+		
+	<!--	
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='article_vote'}> class="current"<{/if}>>文章/社群</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/article"<{if $submenu=='article'}> class="current"<{/if}>>美文</a>
+				
+				<a href="<{$http_root_www}>voting/voting_manage"<{if $submenu=='voting_manage'}> class="current"<{/if}>>
+					人气及投票
+				</a>
+				
+			</div>
+			
+		</li>
+	-->	
+		
+	</ul>
+	
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

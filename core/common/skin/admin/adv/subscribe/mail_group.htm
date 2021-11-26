@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script>
+function searchSubmit ()
+{
+	var couponname	= document.getElementsByName('couponname')[0].value;
+	window.location.href = '?con=admin&ctl=adv/subscribe&act=mail_group&couponname=' + couponname;
+}
+
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="search">
+			<input type="text" class="text" style="width:200px;" maxlength="200" name="couponname" value="<{$search.couponname}>" placeholder='搜couponName'/>
+			<a onclick="searchSubmit()" class="lnkSearch"><{$lang->search}></a>
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td>couponID</td>
+				<td>couponName</td>
+				<td width="5%"><{$lang->send}></td>
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+				<{foreach from=$data item=item key=key}>
+					<td><{$item.id}></td>
+					<td><{$item.title}></td>
+					<td><a href="?con=admin&ctl=adv/subscribe&act=sendtwo&id=<{$item.id}>"><img src="<{$SKIN_PATH}>images/ico-list-mail.png" alt="<{$lang->send_mail_to_him_her}>" style="vertical-align:middle;" /></a></td>
+					</tr>
+				<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="12"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

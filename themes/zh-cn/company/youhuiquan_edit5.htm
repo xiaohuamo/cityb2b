@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+						<span class = 'step-number-icon' style='float:left' >5</span>
+						<div class="colCurTit clearfix">
+							<h1>第 五 步：优惠描述</h1>
+						</div>
+
+						<{include file='company/youhuiquan_edit_step_menu_top.htm'}>
+						
+						<form id="memberForm"  class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame">
+
+							<div class="input-box clearfix">
+								<div class=' form-style-green '>
+									<span>
+									<label >优惠说明</label>
+									</span>
+								</div>
+								
+							</div>
+
+								<input type="text" name="coupon_summery_description" class="input-text" value="<{$data.coupon_summery_description}>" placeholder="放在产品最明显的为地方，高度概括本产品最吸引人的地方" style="width:97%;" />
+
+
+						
+
+						
+
+								<div class="input-box clearfix">
+									<div class='form-style-green '>
+										<span>
+											<label>如何使用服务</label>
+										</span>
+									</div>
+								</div>
+
+								<textarea name="redeemProcedure" class="input-textarea" style="width:80%; "><{$data.redeemProcedure}></textarea>
+
+								<script>
+									$(function(){
+										CKEDITOR.replace('redeemProcedure', {
+											height : 200,
+											filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+											placeholder:"eg：消费时请携带订单或者出示订单二维码，并且出示个人ID",
+										});
+									});
+								</script>
+						
+							
+						  	<div class="input-box clearfix">
+								<span>
+									<label>退货政策</label>
+								</span>
+							</div>
+						  	
+						  	<textarea name="refund_policy" class="input-textarea" style="width:80%; "> 
+						  		<{if !$data.refund_policy}><{if $loginUser.refund_policy}><{$loginUser.refund_policy}><{else}><p><span style="font-size:14px">优惠券售出后1周内可退款</span></p>
+<{/if}><{else}><{$data.refund_policy}><{/if}>
+							</textarea>
+
+						  	<script>
+								$(function(){
+									CKEDITOR.replace('refund_policy', {
+										height : 200,
+										filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+										placeholder:"eg：退货时请将产品按原地址寄回或送还商家。经商家确认产品一切正常后退款。产品支持购买后30天退货",
+									});
+								});
+							</script>
+
+						<{include file='company/youhuiquan_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

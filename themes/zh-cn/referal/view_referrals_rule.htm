@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+					
+						<div class="main-list ">
+							<p>
+								<strong>总量：</strong><span>页面点击：<{$ruleStatistics.pageView}></span>  <span>浏览用户：<{$ruleStatistics.pageUser}></span>  <span>销售数量：<{$ruleStatistics.orderCount}></span>  <span>销售额：  <{$ruleStatistics.totalSales}></span>    <span>佣金支出：<{$ruleStatistics.totalCommission}></span>    
+							</p>
+
+							<{if $list}>	
+								<form method="post" >
+									
+									<table cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th>用户名</th>
+												<th>数据</th>
+												<th>加入时间</th>
+												<th>状态</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<{foreach from=$list item=item name='dl'}>
+
+											<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+												<td><{$item.user_name}></td>
+
+												<td><span>页面点击：<{$item.statistics.pageView}> 访问用户：<{$item.statistics.pageUser}> 销售数量：<{$item.statistics.orderCount}> 销售额：<{$item.statistics.totalSales}> 佣金：<{$item.statistics.totalCommission}>  </span></td>
+
+												<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+
+												<td class='update-result'>
+													<{if $item.status==0}>
+														<span style='color:#f30'>禁用</span>
+													<{elseif $item.status==1}>
+														<span style='color:green'>通过</span>
+													<{/if}>
+												</td>
+
+												<td>
+													<select class='update-selected' data-target-id='<{$item.id}>'>
+														<option value='1' <{if $item.status==1}>selected<{/if}> >启用用户</option>
+														<option value='0' <{if $item.status==0}>selected<{/if}> >禁用用户</option>
+													</select>
+												</td>
+											</tr>
+											<{/foreach}>
+										</tbody>
+									</table>
+								</form>
+							<{else}>
+								还没有介绍记录
+							<{/if}>
+						</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+
+$(function(){
+	$('.update-selected').on('change',function(){
+		var value = $(this).find("option:selected").val();
+		var target =$(this).data('target-id');
+
+		$display=$(this).parent().prev('.update-result');
+
+		console.log(target);
+		console.log(value);
+
+		$.ajax({
+		  method: "get",
+		  url: "<{$http_root_www}>referal/update_referral_rule_application_ajax",
+		  data: { target:target,value:value},
+		  beforeSend:function(){
+		  		$display.html("<i class='fa fa-spinner fa-pulse'></i>");
+		  },
+		  success:function(result){
+		  		try{
+					console.log(result);
+
+					var msg = "";
+
+					if(value==1){
+						msg="<span style='color:green'>通过</span>";
+					}else if(value==0){
+						msg="<span style='color:#f30'>禁用</span>";
+					}
+
+					$display.html(msg);
+
+				}catch(err){
+					$display.html("<i class='fa fa-warning'></i>");
+				}
+
+		  },
+		  complete:function(){
+
+		  },
+		  error:function(result){
+		  	  $display.html("<i class='fa fa-warning'></i>");
+		  }
+		})
+	});
+})
+
+</script>
+
+</body>
+</html>

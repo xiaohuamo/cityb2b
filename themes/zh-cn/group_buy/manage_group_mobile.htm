@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>group1_buy/list" class="a-back"></a>
+	</div>
+	<h1>我发布的团</h1>
+
+	<div class="right" style="line-height: 1.5rem">
+		<a class='btn btn-sm' style="background-color: #FD5001 ;" href="<{$http_root_www}>group1_buy/create_group_view" >发布</a>
+	</div>
+</header>
+
+<section id="bd" style="background-color: #FFF" style="position: relative;">
+
+<{foreach from=$groups item=item}>
+<div class="media" style="padding: 5px;margin-top:20px; ">
+  <div class="media-left">
+  	 <span style="float: left; font-size: 10px;">
+    	<{if $item.allow_user_group==0&&$item.parentId==0}>
+			<!-- 商家团 -->
+			<span class='label label-default'>商家团</span>
+		<{elseif $item.allow_user_group==1&&$item.parentId==0}>
+			<!-- Master用户团 -->
+			<span class='label label-danger'>Master用户团</span>
+		<{elseif $item.allow_user_group==0&&$item.parentId!=0}>
+			<!-- Child用户团 -->
+			<span class='label label-default'>Child用户团</span>
+		<{/if}>
+    </span>
+
+    <a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'>
+      <img style="width: 90px;height: 60px;max-width: none" class="media-object" src="<{$UPLOAD_PATH}><{$item.pic}>" alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+
+    <h5 class="media-heading">
+    	<a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a>
+    </h5>
+   
+    <p>
+    <span>
+    	<{if $item.status==0}>
+		<!-- <span>Ready</span> -->
+		<span class='label label-default'>状态：Ready</span>
+		<{elseif $item.status==1}>
+		<!-- <span>Running</span> -->
+		<span class='label label-info'>状态：进行中</span>
+		<{elseif $item.status==2}>
+		<!-- <span>Closed</span> -->
+		<span class='label label-default'>状态：关闭</span>
+		<{elseif $item.status==3}>
+		<!-- <span>Stageing</span> -->
+		<span class='label label-warning'>状态：阶段奖励达成</span>
+		<{elseif $item.status==4}>
+		<!-- <span>Finalizing</span> -->
+		<span class='label label-warning'>状态：最终奖励达成</span>
+		<{elseif $item.status==5}>
+		<!-- <span>Complete</span> -->
+		<span class='label label-success'>状态：奖励已经发放</span>
+		<{else}>
+		Error
+		<{/if}>
+    </span>
+
+    <{if !($item.allow_user_group==1&&$item.parentId==0)}>
+    <!-- master 用户团暂不统计人数 -->
+    <span style="float: right;">人数：  <em style="color:#f23030"><{$item.current}>&nbsp; </em> &nbsp;</span> 
+    <{/if}>
+
+     </p>
+  
+  </div>
+</div>
+    <div class='action' style="text-align: right;padding:5px;margin: 5px;background-color: #eee">
+    	<{if $item.current>0}>
+    	<span class='btn btn-sm btn-default' style="float: left;"><a href="<{$http_root_www}>group1_buy/group_list_show?id=<{$item.id}>">团员列表</a></span>
+    	<{/if}>
+
+    	<{if $item.allow_user_group==0&&$item.parentId==0}>
+			<!-- 商家团 -->
+			<span class='btn btn-default btn-sm'>
+				<{if $item.status==0}>
+					<!-- <td>Ready</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==1}>
+					<!-- <td>Running</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a>
+				<{elseif $item.status==2}>
+					<!-- <td>Closed</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==3}>
+					<!-- <td>Stageing</td> -->
+					<a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a>
+				<{elseif $item.status==4}>
+					<!-- <td>Finalizing</td> -->
+					<a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a>
+				<{elseif $item.status==5}>
+					<!-- <td>Complete</td> -->
+					奖励已经发放
+				<{else}>
+				Error
+				<{/if}>
+			</span>
+
+				<{if $item.status==1||$item.status==3||$item.status==4}>
+				<span class='btn btn-danger btn-sm'>
+				<a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a>
+				</span>
+				<{/if}>
+				
+			<{elseif $item.allow_user_group==1&&$item.parentId==0}>
+
+	    	<span class='btn btn-sm btn-default' style="float: left;"><a href="<{$http_root_www}>group1_buy/child_group_list?id=<{$item.id}>">开团列表</a></span>
+
+			<!-- Master用户团 -->
+			<span class='btn btn-default btn-sm'>
+				<{if $item.status==0}>
+					<!-- <td>Ready</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==1}>
+					<!-- <td>Running</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a>
+				<{elseif $item.status==2}>
+					<!-- <td>Closed</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==3}>
+					<!-- <td>Stageing</td>
+					<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a></td> -->
+					Error
+				<{elseif $item.status==4}>
+					<!-- <td>Finalizing</td>
+					<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a></td> -->
+					Error
+				<{elseif $item.status==5}>
+					<!-- <td>Complete</td>
+					<td>奖励已经发放</td> -->
+					Error
+				<{else}>
+					Error
+				<{/if}>
+			</span>
+
+				<{if $item.status==1||$item.status==3||$item.status==4}>
+				<!-- <a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a> -->
+				<{/if}>
+				
+
+			<{elseif $item.allow_user_group==0&&$item.parentId!=0}>
+			<!-- Child用户团 -->
+			<span class='btn btn-default btn-sm'>
+				<{if $item.status==0}>
+					<!-- <td>Ready</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==1}>
+					<!-- <td>Running</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a>
+				<{elseif $item.status==2}>
+					<!-- <td>Closed</td> -->
+					<a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a>
+				<{elseif $item.status==3}>
+					<!-- <td>Stageing</td> -->
+					<a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a>
+				<{elseif $item.status==4}>
+					<!-- <td>Finalizing</td> -->
+					<a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a>
+				<{elseif $item.status==5}>
+					<!-- <td>Complete</td> -->
+					奖励已经发放
+				<{else}>
+				Error
+				<{/if}>
+			</span>
+
+			
+				<{if $item.status==1||$item.status==3||$item.status==4}>
+				<!-- <a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a> -->
+				<{/if}>
+			
+
+			<{/if}>
+			<span class='btn btn-default btn-sm'>
+			<a href="<{$http_root_www}>group1_buy/group_delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.name}>?')">删除 <i class='fa fa-close fa-lg' style='color:red'></i></a>
+			</span>
+    </div>
+   
+   
+<{/foreach}>
+
+
+<div style="text-align: center; padding: 15px 40px;line-height: 22px;font-size: 14px;color: #888; border-top: 1px solid #eee" >
+	<p>友情提示：</p>
+	<p>长按二维码关注Ubonus公众号，凑团成功后您将自动收到奖励的推送</p>
+	<img src="<{$http_root_www}>themes/zh-cn/images/pc-main/erweima.png">
+	<p>在个人中心填写您的邮箱地址,您同样也会收到邮件推送</p>
+</div>
+
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>
+
+
+

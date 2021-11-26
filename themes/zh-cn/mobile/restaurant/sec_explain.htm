@@ -1,0 +1,254 @@
+
+
+<!-- 亮点 -->
+<div div id="f11">
+
+<{if $coupon.business.deliver_avaliable}>
+<div class="comm-express toggle-txt">
+    <h3>配送说明</h3>
+	
+	
+	 <div class="txt" style="display: block;line-height: 25px;">
+	 <{if $delivery_fee_desc}><{$delivery_fee_desc}> <{/if}><{if $coupon.business.delivery_description}><{$coupon.business.delivery_description}><{/if}>
+	 </div>
+	
+	
+    <div class="txt" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}></div>
+</div>
+<{/if}>
+
+
+<{if $coupon.business.pickup_avaliable}>
+<div class="comm-express toggle-txt">
+    <h3>自取说明</h3>
+	
+	
+	 <div class="txt" style="display: block;line-height: 25px;">
+	 <{if $coupon.business.pickup_des}><{$coupon.business.pickup_des}><{/if}>
+	 </div>
+	
+	
+    
+</div>
+<{/if}>
+
+
+
+
+<{if $coupon.refund_policy}>
+<div class="comm-express toggle-txt">
+    <h3><{$lang->refund_policy}></h3>
+    <div class="txt" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.refund_policy)}></div>
+</div>
+<{/if}>
+
+
+	<div class="comm-express toggle-txt">
+           <h3>联系信息</h3>
+	
+	
+				 <div class="txt" style="display: block;line-height: 25px;">
+				
+						<p>地址：<{$coupon.business.googleMap}></p>
+						<p>电话：<{$coupon.business.tel}></p>
+						<p>微信：<{if $coupon.business.busi_weixin_nametel}> <{$coupon.business.busi_weixin_nametel}><{else}>ubonus003<{/if}></p>
+					
+					<br>
+					<img class="info-logo" src="<{$SKIN_PATH}>images/ubonus006.jpg" alt="" style="    height: 200px;    width: 200px;    /* text-align: center; */">
+					<br>
+				 </div>
+				
+				
+				<div class="txt" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}></div>
+			</div>
+
+
+
+
+
+
+
+
+
+<div class="comm-express toggle-txt">
+   
+    <h3>信用卡购买声明</h3>
+	
+    <div class="txt content-image-fullsize" style="display: block; color:red;"> 使用信用卡支付购买本产品,必须在消费时出示Photo ID及信用卡, 并与您购买时信息一致.否则,商家会拒绝提供相关服务.</div>
+</div>
+</div>
+
+<div div id="f2">
+<!-- 温馨提示 -->
+<{if $coupon.finePrint}>
+<div class="comm-express toggle-txt" >
+    <h3 style="font-weight: 600;"><{$lang->warm_prompt}></h3>
+    <div class="txt content-image-fullsize" style="display: block;"><{str_replace('white-space: pre-wrap;','',<{$coupon.finePrint}>)}></div>
+</div>
+<{/if}>
+
+
+
+
+<{if $coupon.redeemProcedure}>
+<div class="comm-express toggle-txt">
+    <h3><{$lang->how_to_use}></h3>
+    <div class="txt" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}></div>
+</div>
+<{/if}>
+
+
+
+<{if $coupon.business.companyDescription}>
+<div class="comm-express toggle-txt">
+    <h3><{$lang->about_the_business}></h3>
+    <div class="txt content-image-fullsize" style="display: block;">
+<{str_replace('white-space: pre-wrap;','',str_replace('<img alt="" src=',' <img class="lazyload" data-src=',$coupon.business.companyDescription))}>
+
+	</div>
+</div>
+<{/if}>
+
+<{if $coupon.business.googleMap}>
+<div class="comm-express ">
+    <h3>商家地址</h3>
+    <div class="txt content-image-fullsize" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.business.googleMap)}></div>
+
+
+     <!-- google MAP -->
+    <div id="googleMap" style="width: 100%;height: 30vh"></div>
+    <script>
+      var uluru = {lat: <{$coupon.business.latitude}>, lng: <{$coupon.business.longitude}>};
+
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('googleMap'), {
+          center: uluru,
+          zoom: 15
+        });
+
+        var marker = new google.maps.Marker({position: uluru, map: map});
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&callback=initMap"
+    async defer></script>
+    <!-- google MAP -->
+
+</div>
+<{/if}>
+
+
+
+<div div id="f10">
+<!-- 详情 -->
+<{if $coupon.content}>
+<div class="content-image-fullsize" style='font-size: 13px;padding: 15px;overflow: hidden;'>
+  <{str_replace('white-space: pre-wrap;','',str_replace(' src=',' data-src=',str_replace('<img','<img class="lazyload"',$coupon.content)))}>
+
+
+</div>
+<{/if}>
+</div>
+<!-- 商家二维码 -->
+<{if $coupon.business.busi_weixin_scancode}>
+<div style="text-align: center;"><img src="<{$UPLOAD_PATH}><{$coupon.business.busi_weixin_scancode|image:172:172}>" id="main_pic"  width="172" height="172"  /></div>
+<{/if}>
+
+
+<{if $addontext}>
+<div class="comm-express toggle-txt" >
+        <!-- <h4><span></span><em>  Tips</em></h4> -->
+        <div class='coupon-addon' style="line-height: 28px;margin: 10px">
+          <{foreach from=$addontext item=t}>
+            <span style='white-space: nowrap;color: #fff;background: rgba(43, 184, 170,0.4);padding: 1px 6px;border-radius: 10px;'><{$t}></span>
+          <{/foreach}>
+
+          <p><{$addondata.time_limit_desc}></p>
+          <p><{$addondata.sharable_desc}></p>
+          <p><{$addondata.apportmant_required_desc}></p>
+          </div>
+</div>
+<{/if}>
+
+
+</div>
+
+<!--商品评价-->
+<div class="comm-evaluate" id="f3">
+  	
+<div class="tit">
+	<h3><{$lang->customer_review}></h3><!--（<span>$evaluation</span>）-->
+	<!-- <a class="more">查看全部</a> -->
+</div>
+	<{if $evaluation}>	
+	<ul class="g-ul ul-evaluate">
+		<{foreach from=$evaluation item=item}>
+		<li>
+			<div class="top">
+				<div class="face"><img src="<{$UPLOAD_PATH}><{$item.user_avatar}>"></div>
+				<span class="name"><{if !$item.user_nickname}><{$lang->anon_user}><{else}><{$item.user_nickname}><{/if}></span>
+				<em class="time"><{for $i=0 to 4}>
+					<{if $item.score_avg>$i}>
+						<i class='fa fa-star' style="color:#FD5001 "></i>
+					<{else}>
+						<i class='fa fa-star-o' style="color:#FD5001 "></i>
+					<{/if}>
+				<{/for}><{$item.createTime|date_format:"%Y-%m-%d"}></em>
+			</div>
+			<p><{$item.description}></p>
+		</li>
+		<{/foreach}>
+	</ul>
+	<{else}>
+	<div style="text-align: center;"><small>还没有任何评论</small></div>
+	<{/if}>
+
+</div>
+
+<!--随机产品-->
+<div id="f4">
+   
+
+
+
+
+<{foreach from=$selfProduct item=item}>
+<div class="well" style="background-color: #FFFFFF;width:100%;float: left;padding: 4px; ">
+      <div class="overflow-hidden">
+		<a href="<{$http_root_www}>coupon1/<{$item.id}>"</a>
+          <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:400:254:'cut'}>" style="border-radius: 4px;    width: 100%;border:0px;"alt="<{$item.title}>" >
+        </a> 
+      </div>
+    <div class="caption">
+        <h5 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><{$item.title}></h5>
+        <!--small ><{$item.coupon_summery_description}></small-->
+        <span style="display: block;font-size: .44rem;color: #f23030;font-weight: bold;">$<{$item.voucher_deal_amount}></span>
+    </div>
+</div>
+<{/foreach}>
+
+
+
+
+
+
+<{foreach from=$recommends item=item}>
+
+	<div class="well" style="background-color: #FFFFFF;width:50%;padding: 4px;float: left;">
+	      <div class="overflow-hidden">
+			<a href="<{$http_root_www}>coupon1/<{$item.id}>">
+	           <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:170:108:'cut'}>" style=" border-radius: 4px;   width: 100%;border:0px;" alt="<{$item.title}>"  >
+	        </a> 
+	      </div>
+	    <div class="caption">
+	        <h5 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><{$item.title}></h5>
+	      
+	        <span style="display: block;font-size: .44rem;color: #f23030;font-weight: bold;">$<{$item.voucher_deal_amount}></span>
+	    </div>
+	</div>
+
+<{/foreach}>
+
+
+
+</div>

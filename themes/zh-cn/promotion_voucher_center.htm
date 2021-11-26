@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+<a  href="<{$http_root_www}>"><img style='width: 20%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+<div style="text-align: center;">
+	<!-- <h5 class='text-info'>优惠劵领取</h5> -->
+
+	 <!-- banner -->
+    <div id="banner">
+        <div class="swiper-wrapper">
+           <div class="swiper-slide">
+            <a href="<{$http_root_www}>coupon1/5041"><img src="<{$UPLOAD_PATH}>2018-07/20180704113309784077.jpg" alt="<{$item.title}>"></a>
+            </div>
+<!--
+	  <{foreach from=$bannerData item=item}>
+            <div class="swiper-slide">
+            <a href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+            </div>
+        <{/foreach}>
+	-->	
+	
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+	<!-- banner end-->
+
+
+	<p style="color:#f30">请确保您已经在以下店铺中。所有优惠卷必须当场使用</p>
+	<{foreach from=$orderList key=key item=item}>
+		<a href="<{$http_root_www}>test/promotion_voucher_express?storeId=<{$key}>">
+			<div class='well' style="width: 85%;margin:10px auto;">
+				<{$storeList[$key]}>
+			</div>
+		</a>
+	<{/foreach}>
+	<p style="color:#aaa">提示：一个微信帐户只可以领取其中一个,店铺排名基于过去1天的领取数量</p>
+</div>
+
+<div style="margin: 2rem">
+	
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+
+    <script>
+
+        $(function(){
+
+            var swiper = new Swiper('#banner', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true,
+
+               autoplay:2000
+
+           });
+
+
+
+            var swiper = new Swiper('.m-adve', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true
+
+           });
+
+
+
+            //
+
+            $(".m-seckill").each(function(){
+
+                var swiper = new Swiper($(this).find(".swiper-container")[0], {
+
+                    slidesPerView: 3.7,
+
+                    paginationClickable: true,
+
+                    spaceBetween : 5,
+
+                    freeMode: true
+
+                });
+
+            });
+        })
+
+        
+
+
+
+    </script>
+
+
+</body>
+</html>
+
+
+

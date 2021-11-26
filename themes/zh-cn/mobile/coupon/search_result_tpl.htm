@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$lang->product}><{$lang->search}></title>
+
+    <meta name="keywords" content="<{$pageKeywords}>"/>
+
+    <meta name="description" content="<{$pageDescription}>"/>
+    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	 <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+	 <style type="text/css">
+	 	.dropdown-menu li{
+	 		height: 40px;
+	 	}
+
+	 	.dropdown-menu li a{
+	 		line-height: 40px!important;
+	 	}
+	 	.dropdown-menu{
+	 		max-height: 75vh;
+	 		overflow-y: scroll;
+	 	}
+
+	 	.filter-sec.fixed{
+	 		position: fixed;
+		    width: 100%;
+		    top: 1.6rem;
+		    z-index: 3;
+	 	}
+	 </style>
+</head>
+
+<body class="bg-1">
+
+	<header id="hd" style="height: 1.5rem;background: #FD5001;">
+		<div class="left">
+			<a href="<{$http_root_www}>" class="a-back"></a>
+		</div>
+
+		<div class="so-top so-top-2" style="    height: 1.0rem;; margin:0 1.5rem ;margin-top: .25rem;">
+
+		 	<input type="text" class="g-input sele" readonly="readonly" value="<{if $primaryListType=='business'}><{$lang->store}><{else}><{$lang->product}><{/if}>">
+
+            <div class="sub">
+
+                <span style="    line-height: 1.2rem;"><{$lang->product}></span>
+
+               <span style="    line-height: 1.2rem;"><{$lang->store}></span>
+
+            </div>
+
+			<input style ="width:100%;border-radius: 18px;" type="text" value="<{$searchKeywords}>" class="g-input inp">
+
+		</div>
+
+		
+	</header>
+
+	<section class='search-nav'>
+		<ul >
+			 <li>
+                 <a href="<{setpath obj=$catUrl path='coupons/' alias=$parent.alias}>"><{$lang->all}><{$parent.name}></a>
+            </li>
+			 <{foreach from=$childs item=item}>
+            <li >
+                <a href="<{setpath obj=$catUrl path='coupons/' alias=$item.alias}>"<{if $item.id==$category.id}> class="on"<{/if}>><{$item.name}></a>
+
+                <br>
+                 <{foreach from=$item.child item=citem}>
+                 	 <a class='subitem' href="<{setpath obj=$catUrl path='coupons/' alias=$citem.alias}>"<{if $citem.id==$category.id}> class="on"<{/if}>><{$citem.name}></a>
+                 <{/foreach}>
+
+            </li>
+            <{/foreach}>
+		</ul>
+	</section>
+
+	<section id="bd" >
+
+		<{if $alias!='106'}>
+			<div class='category_nav' style="line-height: 40px;">
+				<span><{$lang->category}></span>
+				<{foreach from=$parents item=item}>
+					 <i class="crumbs-arrow">></i>
+	                <span >
+	                   <{$item.name}>
+	                </span>
+
+	            <{/foreach}>
+
+	            <{if $searchKeywords}>
+	            	 <i class="crumbs-arrow">></i>
+	                <span >
+	                	"<{$searchKeywords}>"
+					</span>
+				<{/if}>
+			</div>
+		<{/if}>
+
+		<div class="filter-sec">
+
+			 <{if $langStr=='zh-cn'}>
+			
+			<div class="btn-group" style="width: 33%" >
+			  <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="overflow: hidden;text-overflow: ellipsis;">
+			    <{if $city}><{$city.en_name}><{else}><{$lang->location}><{/if}> <i class='fa fa-angle-down'></i>
+			  </button>
+			    <ul class="dropdown-menu" >
+			    	<li>
+                        <a href="<{$cityUrl}>cityid=<{$cityParent.id}>" > <{$lang->all}><{$cityParent.name}></a> 
+                    </li>
+
+			       <{foreach from=$citylist item=item}>
+                    <li >
+                        <a href="<{$cityUrl}>cityid=<{$item.id}>" > <{$item.name}></a> 
+                    </li>
+                    <{/foreach}>
+                            
+		         </ul>
+
+			</div>
+			
+			<{else}>
+			<div class="btn-group" style="width: 33%" >
+			  <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="overflow: hidden;text-overflow: ellipsis;">
+			    <{if $city}><{$city.en_name}><{else}><{$lang->location}><{/if}> <i class='fa fa-angle-down'></i>
+			  </button>
+			    <ul class="dropdown-menu" >
+			    	<li>
+                        <a href="<{$cityUrl}>cityid=<{$cityParent.id}>" > <{$lang->all}><{$cityParent.en_name}></a> 
+                    </li>
+
+			       <{foreach from=$citylist item=item}>
+                    <li >
+                        <a href="<{$cityUrl}>cityid=<{$item.id}>" > <{$item.en_name}></a> 
+                    </li>
+                    <{/foreach}>
+                            
+		         </ul>
+
+			</div>
+			
+			<{/if}>
+
+			<div class="btn-group " style="width: 33%">
+			  <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+			    <{$lang->sort}>  <i class='fa fa-angle-down'></i>
+			  </button>
+
+			   <ul class="dropdown-menu" >
+			    <li <{if $orderby=='default'}> style='background:#FD5001 ' <{/if}>>
+			    	<a href="<{$orderbyUrl}>orderby=default"> <{$lang->over_all}></a>
+			    </li>
+			    <li <{if $orderby=='hits'}> style='background:#FD5001 ' <{/if}>>
+			    	<a href="<{$orderbyUrl}>orderby=hits"><{$lang->hot}></a>
+			    </li>
+			    <li  <{if $orderby=='buy'}> style='background:#FD5001 ' <{/if}>>
+			    	<a href="<{$orderbyUrl}>orderby=buy"><{$lang->sales_volume}></a>
+			    </li>
+			  </ul>
+
+			</div>
+
+			<div class='btn btn-default filter' style="width: 30%">
+				<{$lang->filter}><i class='fa fa-filter' style="color:#FD5001 "></i>
+			</div>
+
+		</div>
+
+		
+
+
+		<!---
+		 <{if $primaryListType=='coupon'}>
+                 <div class='coupontype_nav' >
+                        <span class='type2'>
+                            <a href="<{$couponTypeUrl}>couponType=" <{if $couponType==''}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>全部</a>
+                        </span>
+
+                        <span class='type2'>
+                            <a href="<{$couponTypeUrl}>couponType=2" <{if $couponType=='2'}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>返现卷</a>
+                        </span>
+
+                        <span class='type4'>
+                            <a href="<{$couponTypeUrl}>couponType=4" <{if $couponType=='4'}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>优惠券</a>
+                        </span>
+
+                        <span class='type7'>
+                            <a href="<{$couponTypeUrl}>couponType=7" <{if $couponType=='7'}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>代金券</a>
+                        </span>
+
+                        <span class='type9'>
+                            <a href="<{$couponTypeUrl}>couponType=9" <{if $couponType=='9'}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>商品</a>
+                        </span>
+
+                        <span class='type10'>
+                            <a href="<{$couponTypeUrl}>couponType=10" <{if $couponType=='10'}> style='color:#FD5001 ;font-weight:bolder'<{/if}>>演唱会</a>
+                        </span>
+                </div>
+        <{/if}>
+		-->
+        
+
+
+		<{block name=search_result}><{/block}>
+		
+        <div><br><h1 style="    font-size: 14px;    margin-left: 10px;  text-align: center;  margin-right:  10px;"><{$description}>  </h1></div>
+		<div class="pager">
+			 <{$pager.pageStr}>
+		</div>
+	</section>
+
+
+    <!-- 底部 -->
+        <{include file='mobile/mobile_footer.htm'}>
+    <!-- 底部 end-->
+
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			$(window).scroll(function (event) {
+			    var scroll = $(window).scrollTop();
+			    if(scroll>85){
+			    	$('.filter-sec').addClass('fixed');
+			    }else{
+			    	$('.filter-sec').removeClass('fixed');
+			    }
+			});
+		})
+	</script>
+
+	<script>
+	    $(document).ready(function($) {
+	        $('.m-list9 li .con').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	    });
+	</script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+		$(".m-pic1").each(function(){
+		    var swiper = new Swiper($(this).find(".swiper-container")[0], {
+		        slidesPerView: 3,
+		        paginationClickable: true,
+		        spaceBetween : 5,
+		        freeMode: true
+		    });
+		});
+	</script>
+
+
+	<script type="text/javascript">
+	$(function(){
+		 $('.inp').keyup(function(e) {
+                    if(e.keyCode == 13){
+                        // console.log('enter key');
+                        var listType = ($('.g-input.sele').val()=='产品')?'product':'business';
+                        var key = $(this).val()
+                        window.location.href='<{$http_root_www}>coupons?key='+key+'&listType='+listType;
+                    }
+            });
+
+		 $('.filter').on('click',function(){
+		 	$('.search-nav').toggleClass('on');
+		 	//$('#bd').toggleClass('search-nav-on')
+		 })
+	})
+
+	</script>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$shareDesc}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/images/wx_share.jpg';
+    </script>
+
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ubonus团购</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/lib.css" />
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/style.css" />
+    <script type="text/javascript" src="<{$SKIN_PATH}>group1_buy/js/jquery.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>slick/slick.css">
+	<script type="text/javascript" src="<{$STATIC_PATH}>slick/slick.min.js"></script>
+</head>
+<body>
+	<div class="viewport">
+
+		<!-- 顶部标题 -->
+		<div class="top-bar">
+			<a href="<{$http_root_www}>" class="return"></a>
+			<h2>Ubonus团购</h2>
+		</div>
+		<!-- 商品图 -->
+		<{foreach from=$list item=item}>
+		<div class="goods-box">
+			<div class="pic">
+			<a href='<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>'>
+				<img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="">
+			</a>
+			</div>
+			<div class="price" <{if $item.allow_user_group==1}>style='background-color:#c73b3b' <{/if}>>
+				<div class="right">
+					<{if $item.allow_user_group==1}>
+						<span>用户自开团</span>
+					<{else}>
+						<span><{$item.size}>人团</span>
+					<{/if}>
+
+					
+
+					<{if $item.status==0}>
+					<!-- group_ready -->
+					<a >筹备中</a>
+					<{elseif $item.status==1}>
+					<!-- group_running -->
+					<a href='<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>'>立即参团</a>
+					<{elseif $item.status==2}>
+					<!-- group_close -->
+					<a  >临时中止</a>
+					<{elseif $item.status==3}>
+					<!-- group_staging -->
+					<a href='<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>'>立即参团</a>
+					<{elseif $item.status==4}>
+					<!-- group_finalizing -->
+					<a href='<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>'>立即参团</a>
+					<{elseif $item.status==5}>
+					<!-- group_complete -->
+					<a  >已完成</a>
+					<{else}>
+					<!-- group_error -->
+					<a >出错了</a>
+					<{/if}>
+
+				
+				</div>
+				<div class="left">
+					<p><span><{$item.name}></span></p>
+				</div>
+			</div>
+			<div class="tit">
+				<p><{$item.description}></p>
+				
+			</div>
+		</div>
+		<br>
+		<{/foreach}>
+		<div class='footer'>
+			<a class='btn btn1' href="<{$http_root_www}>group1_buy/manage_joined_group">我参加的团</a>
+			<a class='btn btn2' href="<{$http_root_www}>group1_buy/group_manage">我发起的团</a>
+		</div>
+	</div>
+
+</body>
+
+ 	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='Ubonus美食生活 - Ubonus团购';
+        var shareLink='<{$http_root_wx}>group1_buy/list';
+        var desc=shareTitle;//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>/themes/zh-cn/mobile/images/pc-main/logo_wx.jpg';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+</html>

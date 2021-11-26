@@ -1,0 +1,458 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<link rel="stylesheet" href="<{$STATIC_PATH}>ccp/build/css/intlTelInput.css">
+<script src="<{$STATIC_PATH}>ccp/build/js/intlTelInput.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script>
+function checkName(obj) {
+	var val = $(obj).val();
+	if (val != '') {
+		$.get('<{$http_root_www}>system/register_namecheck', { 'name': val }, function(data){
+			if ( data.trim() == '<{$lang->exist}>' ) {
+				$('p.ajax_check_response').html('<{$lang->remind_user_register_16}><a href="<{$http_root_www}>system/forget_password"><{$lang->application}></a>');
+			}else{
+				$('p.ajax_check_response').html(" ");
+			}
+		});
+	}else{
+		$('p.ajax_check_response').html(" ");
+	}
+}
+
+$(function(){
+	$("input[name='name'],input[name='email'],input[name='mobile']").on('blur',function(){
+		checkName(this);
+	})
+})
+</script>
+
+<style type="text/css">
+	.ajax_check_response{
+		font-size: 11px;
+		line-height: 30px;
+		text-align: right;
+		color: red;
+	}
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<script>
+var id='<{$pc_login_id}>';
+function check_weixin_login() {
+	$.post('<{$http_root_www}>query?cmd=check_weixin_login', {'id':id}, function(data){
+	    if(data.trim()=='VALID') {
+		 window.location.href = '<{if $returnUrl}><{urldecode($returnUrl)}><{else}><{$http_root_www}><{/if}>';
+		}else{
+		 $('#abb').html('0');
+		}
+		setTimeout(function(){check_weixin_login();}, 2000);
+	});
+}
+check_weixin_login();
+</script>
+
+<script type="text/javascript">
+	$(function(){
+
+		$('.reg_switch li').on('click',function(){
+			var target=$(this).data('target');
+
+			$('.reg_form .form').hide();
+			$('.reg_form .form.'+target).show();
+			$('.reg_switch li').removeClass('activeTab');
+			$(this).addClass('activeTab');
+
+			$('p.ajax_check_response').html(" ");
+		})
+		$('.reg_switch li').first().trigger('click')
+	})
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$('#emailverifycode_btn').on('click',function(){
+			var email = $("input[name='email']").val();
+			if(email==''){alert('<{$lang->remind_user_register_15}>');return false}
+			if($('#emailverifycode_btn').hasClass('disable'))return false;
+
+			//ask for email
+			$.get( "<{$http_root_www}>system/send_email_verification_code?email="+email,function(data){console.log(data)} );
+			
+			// set timer
+			setTimer($(this));
+		})
+
+		$('#mobileverifycode_btn').on('click',function(){
+			var mobile = $("#mobile").val();
+
+			var full_number = $("#mobile").intlTelInput("getNumber");
+
+			if(full_number==''||mobile==''){alert('<{$lang->input_mobile_number}>');return false}
+			if($('#mobileverifycode_btn').hasClass('disable'))return false;
+
+			//ask for mobile SMS
+			$.get( "<{$http_root_www}>system/send_sms_verification_code?mobile="+mobile+"&full_number="+full_number,function(data){console.log(data)} );
+			
+			// set timer
+			setTimer($(this));
+		})
+	})
+
+
+	function setTimer(obj){
+		// set timer
+		var time_length = 60;
+		$(obj).val(time_length+'s');
+		$(obj).addClass('disable');
+		
+		var timer = setInterval(function () {
+			time_length--;
+			$(obj).val(time_length+'s');
+
+			if(time_length==0){
+				clearInterval(timer);
+				$(obj).val('获得验证码');
+				$(obj).removeClass('disable');
+			}
+		},1000)
+	}
+	
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		  $("#mobile").intlTelInput({
+	      // allowDropdown: false,
+	      // autoHideDialCode: false,
+	         autoPlaceholder: "aggressive",
+	      //dropdownContainer: "cpp-body",
+	      // excludeCountries: ["us"],
+	      // formatOnDisplay: false,
+	      // geoIpLookup: function(callback) {
+	      //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+	      //     var countryCode = (resp && resp.country) ? resp.country : "";
+	      //     callback(countryCode);
+	      //   });
+	      // },
+	       hiddenInput: "full_number",
+	      // initialCountry: "auto",
+	      // nationalMode: false,
+	      onlyCountries: ['cn', 'au'],
+	      // placeholderNumberType: "MOBILE",
+	       // preferredCountries: ['cn', 'au' ,'nz'],
+	      // separateDialCode: true,
+	      utilsScript: "<{$STATIC_PATH}>ccp/build/js/utils.js"
+	    });
+
+	})
+</script>
+
+<script type="text/javascript">
+	// Resize reCAPTCHA to fit width of container
+// Since it has a fixed width, we're scaling
+// using CSS3 transforms
+// ------------------------------------------
+// captchaScale = containerWidth / elementWidth
+
+function scaleCaptcha(elementWidth) {
+  // Width of the reCAPTCHA element, in pixels
+  var reCaptchaWidth = 304;
+  // Get the containing element's width
+	var containerWidth = $('.module').width();
+  
+    var captchaScale = containerWidth / reCaptchaWidth * 0.7;
+    // Apply the transformation
+    $('.g-recaptcha').css({
+      'transform':'scale('+captchaScale+')'
+    });
+}
+
+$(function() { 
+ 
+  // Initialize scaling
+  scaleCaptcha();
+  
+  // Update scaling on window resize
+  // Uses jQuery throttle plugin to limit strain on the browser
+  $(window).resize(  scaleCaptcha  );
+  
+});
+
+</script>
+
+<div class="container">
+
+	<div class="wrap">
+
+		<div class="reg box2 clearfix">
+
+
+			<style type="text/css">
+				.reg_form{
+				  position:relative;
+				  top:20px;
+				  background-size:cover;
+				  margin-left:auto;
+				  margin-right:auto; 
+				}
+
+				.reg_form .module{
+				  position:relative;
+				  top:15%;    
+				  margin-bottom: 50px;
+				  height:590px;
+				  max-width:450px;
+				  margin-left:auto;
+				  margin-right:auto;
+				  border-radius:5px;
+				  background:RGBA(255,255,255,1);
+				    
+				  -webkit-box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);        
+				  box-shadow:  0px 0px 15px 0px rgba(0, 0, 0, .45);
+				  
+				}
+
+				.reg_form .module ul{
+				  list-style-type:none;
+				  margin:0;
+				}
+
+				.reg_form .tab{
+				  float:left;
+				  height:60px;
+				  width:25%;
+				  padding-top:20px;
+				  box-sizing:border-box;
+				  background:#eeeeee;  
+				  text-align:center;
+				  cursor:pointer;
+				  transition:background .4s;
+				}
+
+				.reg_form .tab:first-child{  
+				  -webkit-border-radius: 5px 0px 0px 0px;
+				  border-radius: 5px 0px 0px 0px;
+				}
+
+				.reg_form .tab:last-child{  
+				  -webkit-border-radius: 0px 5px 0px 0px;
+				  border-radius: 0px 5px 0px 0px;
+				}
+
+				.reg_form .tab:hover{  
+				  background-color:rgba(0,0,0,.1);
+				}
+
+				.reg_form .activeTab{
+				  background:#fff;
+				}
+
+				.reg_form .activeTab .icon{
+				  opacity:1;
+				}
+
+				.reg_form .icon{
+				  height:24px;
+				  width:24px;
+				  opacity:.2;
+				}
+
+				.reg_form .form{
+				  float:left;
+				  height:86%;
+				  width:100%;
+				  box-sizing:border-box;
+				  padding:40px;
+				}
+
+				.reg_form .textbox{
+				  height:50px;
+				  width:100%;
+				  border-radius:3px;
+				  border:rgba(0,0,0,.3) 2px solid;
+				  box-sizing:border-box;
+				  padding:10px;
+				  margin:15px 0px;
+				}
+
+				.reg_form .textbox:focus{
+				  outline:none;
+				   border:rgba(24,149,215,1) 2px solid;
+				   color:rgba(24,149,215,1);
+				}
+
+				.reg_form .button{
+				  height:50px;
+				  width:100%;
+				  border-radius:3px;
+				  border:rgba(0,0,0,.3) 0px solid;
+				  box-sizing:border-box;
+				  padding:10px;
+				  margin-bottom:10px;
+				  background:#90c843;
+				  color:#FFF;
+				  font-weight:bold;
+				  font-size: 12pt;
+				  transition:background .4s;
+				  cursor:pointer;
+				}
+
+				.reg_form .button:hover{
+				  background:#80b438;
+				}
+
+				.reg_form .verifycode{
+					width: 50%;
+				}
+				.reg_form .verifycode_btn{
+					width: 50%;
+					background-color: #44c8a4;
+				}
+				.reg_form .verifycode_btn.disable{
+					background-color: #afafaf;
+				}
+
+				.reg_form .form{
+					display: none;
+				}
+			</style>
+
+			<div class="reg_form">
+			  <div class="module">
+			  	
+
+			    <ul class='reg_switch'>
+			      <li data-target='mobile_reg' class="tab activeTab" ><i class='fa fa-mobile fa-2x icon'></i></li>
+			      <li data-target='normal_reg' class="tab "><span><i class='fa fa-user fa-2x icon'></i></span></li>
+			      <li data-target='email_reg' class="tab" ><i class='fa fa-envelope fa-2x icon'></i></li>
+			      <li data-target='wexin_reg' class="tab" ><i class='fa fa-weixin fa-2x icon'></i></li>
+			    </ul>
+
+
+			     <form class="form mobile_reg memberForm" target="post_frame"  method="post" action="<{$http_root_www}>member/register?type=mobile">
+			      <div>
+			      	<a  style="text-align: center;color:#fff;display: block; line-height: 50px;background-image: url('<{$SKIN_PATH}>images/bg-h17.jpg');height: 50px;background-position: center;font-size: 15px;" href="<{$http_root_www}>member/register_business"><{$lang->register_business}></a>
+			      </div>
+			      <br>
+
+			      <input type="text" placeholder="<{$lang->mobile_phone_number}>" class="textbox" id='mobile' name='mobile'/>
+			      <p class="ajax_check_response"></p>
+
+			       <input type="button" value="<{$lang->remind_user_register_10}>" class="button verifycode_btn" id='mobileverifycode_btn'/><input type="text" placeholder="<{$lang->verify_code}>" name='code' class="textbox verifycode" />
+			       
+			      <input type="password" name='password' placeholder="<{$lang->password_requirement}>" class="textbox" />
+			      <input type="password" name='passwordAgain' placeholder="<{$lang->confirm_password}>" class="textbox" />
+
+			      
+
+			        <input type="checkbox" name="agree" value="1" id="agree3" />
+				  <label for="agree3"><{$lang->i_have_agreed_with}> 《<a href="<{$http_root_www}>info/103" target="_blank"><{$lang->term_and_condition}></a>》</label>
+				  <br><br>
+
+			      <input type="submit" value="<{$lang->register_now}>" class="button"/>
+
+			       <p><small><{$lang->mobile_verification_daley}></small></p>
+			       
+			       <input type="hidden" name="returnUrl" value='<{$returnUrl}>'>
+			    </form>
+			    
+			    <form class="form normal_reg memberForm" target="post_frame" method="post" action="<{$http_root_www}>member/register?type=normal">
+			      <input type="text" name='name' placeholder="<{$lang->user_name_requirement}>"  class="textbox" />
+			      <p class="ajax_check_response"></p>
+
+			      <input type="password" name='password' placeholder="<{$lang->password_requirement}>" class="textbox" />
+			      <input type="password" name='passwordAgain' placeholder="<{$lang->confirm_password}>" class="textbox" />
+
+			      <input type="checkbox" name="agree" value="1" id="agree1" />
+				  <label for="agree1"><{$lang->i_have_agreed_with}> 《<a href="<{$http_root_www}>info/103" target="_blank"><{$lang->term_and_condition}></a>》</label>
+
+				  <br><br>
+				  <script src='https://www.google.com/recaptcha/api.js'></script>
+				  <div class="g-recaptcha" data-sitekey="6LeufUMUAAAAAEDZotsZQFVjgOQaIcUS46B9ghpA"></div>	
+				  <br>
+
+			      <input type="submit" value="<{$lang->register_now}>" class="button" />
+
+			      <input type="hidden" name="returnUrl" value='<{$returnUrl}>'>
+			    </form>
+
+			    <form class="form email_reg memberForm" target="post_frame" method="post" action="<{$http_root_www}>member/register?type=email">
+			     
+			      <input type="text" placeholder="Email" name='email' class="textbox" />
+			      <p class="ajax_check_response"></p>
+
+			       <input type="button" value="<{$lang->email_code}>" class="button verifycode_btn" id='emailverifycode_btn'/><input type="text" name='code' placeholder="<{$lang->verify_code}>" class="textbox verifycode" />
+
+
+			      <input type="password" name='password' placeholder="<{$lang->password_requirement}>" class="textbox" />
+			      <input type="password" name='passwordAgain' placeholder="<{$lang->confirm_password}>" class="textbox" />
+
+			     
+			        <input type="checkbox" name="agree" value="1" id="agree2" />
+				  <label for="agree2"><{$lang->i_have_agreed_with}> 《<a href="<{$http_root_www}>info/103" target="_blank"><{$lang->term_and_condition}></a>》</label>
+				  <br><br>
+
+			      <input type="submit" value="<{$lang->register_now}>" class="button" />
+
+			       <p><small><{$lang->remind}></small></p>
+
+			       <input type="hidden" name="returnUrl" value='<{$returnUrl}>'>
+			    </form>
+
+
+			     <form class="form wexin_reg">
+			     	<h1 style="text-align: center;"><{$lang->wx_scan_log_in}></h1>
+
+			     	<div style="text-align: center;">
+			     		<img src="<{$loginQrcode}>" height="200" width="200"/>	
+			     	</div>
+			    </form>
+
+			    <iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+			  </div>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

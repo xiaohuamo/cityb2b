@@ -1,0 +1,28 @@
+<{foreach from=$data item=item}>
+<div class='list-item'>
+	<div class="pic-item-list pil4 clearfix">
+		<div class="pic-item">
+			<dl class="item"> 
+				<dt>
+					<a  href="<{$http_root_www}>coupon/<{$item.id}>">
+						<i><{$item.coupontype.name}></i>
+						<{if $item.has_sub_coupons}><i1>多产品</i1><{/if}>
+						<div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic|image:214:136}>" width="214" height="136" "cut"/></div>
+						<b style='text-align:left'><{$item.title|truncate_cn:120:'...'}></b>
+						<div class="txt clearfix"><span><{$item.company.businessName|truncate_cn:35:''}></span></div>
+					</a>
+				</dt>
+				<dd class="tips clearfix">
+					<span><{$item.price1}></span>
+					<span><{number_format($item.wj_points)}>积分</span>
+					<a  href="<{$http_root_www}>coupon/<{$item.id}>"></a>
+				</dd>
+			</dl> 
+		</div>
+	</div>
+	<div class='list-label label-title'><{$item.industry}></div>
+	<!-- <a class='list-btn btn-view'>预览</a> -->
+	<a  style="float:left; background-color:#FFCC33;margin-left:5px;" href='<{$http_root_www}>coupon/<{$item.id}>' class='list-btn btn-view'>预览</a>
+	<a href='<{$http_root_www}>company/coupons_copy?to=-1&id=<{$item.id}>' class='list-btn btn-use'>使用</a>
+</div>
+<{/foreach}>

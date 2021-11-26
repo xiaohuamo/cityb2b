@@ -1,0 +1,504 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<script>
+	var php_root ='<{$http_root_www}>';
+</script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >2</span>
+					
+					<div class="colCurTit clearfix">
+						<h1>第二步：基本信息编辑</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div id="city_list" class="input-box clearfix " >
+							<span><label>可见城市</label></span>
+
+							<{foreach from=$fullcitylist item=country}>
+								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $data.city))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
+							<{/foreach}>
+
+							<em>不勾选则全站可见</em>
+
+							<{foreach from=$fullcitylist item=country}>
+								<div class='country<{$country.id}>' style='display: none'>
+									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
+									<{foreach from=$country.child item=city}>
+									<em style="display: inline-block;min-width: 150px">
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $data.city))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+									</em>
+
+										<{if $city.child}>
+										<div class='cl3 well' data-parentid='<{$city.id}>' style='display: none'>
+											<input type="checkbox" class='checkallsuburb'><strong>全选</strong>
+
+											<{foreach from=$city.child item=suburb}>
+											<em>
+												<input id ='suburb<{$suburb.id}>' type="checkbox" name="city[]" value="<{$suburb.id}>" <{if in_array($suburb.id, explode(',', $data.city))}> checked<{/if}> >
+												<label for='suburb<{$suburb.id}>'><{$suburb.name}></label>
+											</em>
+											<{/foreach}>	
+										</div>
+										<{/if}>
+										
+									<{/foreach}>
+								</div>
+							<{/foreach}>
+						</div>
+						
+						<script type="text/javascript">
+							
+							function dd(obj) {
+								if($(obj).is(':checked')){
+									$(".country"+$(obj).val()).show(100);
+								}else{
+									$(".country"+$(obj).val()).hide(100);
+									$(".country"+$(obj).val()+" .cl2").prop('checked',false);
+								}
+							}
+
+							function cc(obj) {
+								if($(obj).is(':checked')){
+									$(".cl3[data-parentid="+$(obj).val()+"]").show(100);
+								}else{
+									$(".cl3[data-parentid="+$(obj).val()+"]").hide(100);
+									$(".cl3[data-parentid="+$(obj).val()+"]").find('input').prop('checked',false);
+								}
+							}
+
+							$(function(){
+								$('.cl1').on('click',function(){
+									dd($(this));
+								})
+
+								$('.cl1').each(function(){
+									dd($(this));
+								})
+							})
+
+							$(function(){
+								$('.cl2').on('click',function(){
+									cc($(this));
+								})
+
+								$('.cl2').each(function(){
+									cc($(this));
+								})
+							})
+
+							$(function(){
+								$('.checkall').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('.cl2').prop('checked',true);
+										$(this).siblings('.cl3').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('.cl2').prop('checked',false);
+										$(this).siblings('.cl3').find('input').prop('checked',false);
+									}
+
+									$('.cl1').each(function(){
+										dd($(this));
+									})
+
+									$('.cl2').each(function(){
+										cc($(this));
+									})
+
+								})
+							})
+
+							$(function(){
+								$('.checkallsuburb').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('input').prop('checked',false);
+									}
+								})
+							})
+						</script>
+				
+						
+						<br><hr><br>
+						
+						
+						
+						<{if $data.EvoucherOrrealproduct == 'restaurant_menu'}>
+						<{else}>
+						<div class="input-box clearfix">
+							<span><label >自定义分类 </label></span>
+							启用/修改<input type="checkbox" id = 'cCategoryId_lock' name='cCategoryId_lock' <{if $data.cCategoryId_lock==1}>checked<{/if}>/>
+							<span class='help-box' data-content='如果您有很多产品，编辑自定义分类，有助于您系统化的分类产品。 产品在您的商家店铺中也会按照您的分类显示'></span>
+
+							<div class='category_show' style='display:none'>
+							
+								<{if $table_tr}>
+								<a href="<{$http_root_www}>customizable_category/edit"><em>编辑自定义分类</em></a>
+								<table class='citen_edit'style='width:100%'>
+									<tr style='width:100%;background:#00A1E9;color:white'>
+										<td style='width=80%'>名称</td>
+										<td style='width=20%'>使用</td>
+									</tr>
+									<{$table_tr}>
+								</table>
+								<{else}>
+								<em>您还没有任何自定义分类，<a href="<{$http_root_www}>customizable_category/edit">编辑自定义分类</a></em>
+								<{/if}>
+
+							</div>
+						</div>
+
+						<br><hr><br>
+						<{/if}>
+
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>限时发布</label></span>
+							</div>
+							
+							<input type="checkbox" name="autoOffline" <{if $data.autoOffline}>checked<{/if}>>
+
+							<span class='autoOffline-timerange'>
+								<input type="text" class="input-text"  name="startTime" value="<{if $data.startTime>0}><{date('Y-m-d', $data.startTime)}><{/if}>"  onFocus="WdatePicker();" />
+								To:
+								<input type="text" class="input-text"  name="endTime" value="<{if $data.endTime>0}><{date('Y-m-d', $data.endTime)}><{/if}>"  onFocus="WdatePicker();" />
+							</span>
+
+							<em>加不勾选表示一直有效</em>
+
+							<script type="text/javascript">
+								$(function(){
+									$('input[name=autoOffline]').on('click',function(){
+										if($(this).attr('checked')){
+											$('.autoOffline-timerange').show();
+										}else{
+											$('.autoOffline-timerange').hide();
+										}
+									})
+
+									if($('input[name=autoOffline]').attr('checked')){
+											$('.autoOffline-timerange').show();
+										}else{
+											$('.autoOffline-timerange').hide();
+										}
+								})
+							</script>
+						</div>
+                        <br><hr><br>
+						
+						<{if $data.bonusType == 7 || $data.bonusType==18}>
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>本产品是否多次使用</label></span>
+							</div>
+								<label><input  onclick ="show_multi_use(0);"  <{if $data.multi_use<=1}>checked<{/if}> type="radio" name="is_multi_use" value='0'> 只是用一次</label>
+							    <label><input  onclick ="show_multi_use(1);" <{if $data.multi_use>1}>checked<{/if}> type="radio" name="is_multi_use" value='1'> 可使用多次</label>
+								<div id="is_multi_use01" style=" margin-left:160px;  display:none;" >
+									<input  id="multi_use01" type="text" class="input-text"  name="multi_use" value="<{if $data.multi_use<=1}>1<{else}><{$data.multi_use}><{/if}>"  />
+							       <br><em>填入该产品可使用的次数</em>
+								   <br><em>多次使用产品不适用于多个子券产品，如果确认为多次使用产品。本编辑页第4步中的子卡编辑信息将全部会被删除。</em>
+
+							</div>
+							
+
+						</div>
+						<{/if}>
+						
+						
+						
+						
+								
+						
+
+						<br><hr><br>
+
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>搜索关键字</label></span>
+							</div>
+								
+							<textarea name="searchKeywords"  rows="4" cols="70" maxlength="200" placeholder='编辑相关关键字有助于产品被更容易的搜索到'><{$data.searchKeywords}></textarea>
+							<em>Max 25 Words</em>
+
+						</div>
+						
+                      <!--  <{if $loginUser.allow_buy_link_customelize}>allow <{else}>not allow <{/if}> -->
+						  <{if $loginUser.allow_buy_link_customelize}>
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>购买跳转链接</label></span>
+							</div>
+									<input type="text" class="input-text"  name="buy_link" value="<{$data.buy_link}>"  />
+							
+							<em>特殊商家权限</em>
+
+						</div>
+						
+
+						<{/if}>
+						<div class="input-box clearfix"  <{if !strstr($data.categoryId,',106126')}>style="display: none;" <{/if}>>
+						  	<div >
+							<span><label>美食发布高级设置</label></span>
+							</div>
+							
+							<br>
+
+							<label>用餐人数</label>
+							<label><input <{if strstr($addonData.guest_limit,'1')}>checked<{/if}> type="checkbox" name="guest_limit[]" value='1'> 1人</label>
+
+							<label><input <{if strstr($addonData.guest_limit,'2-3')}>checked<{/if}> type="checkbox" name="guest_limit[]" value='2-3'> 2-3人</label>
+
+							<label><input <{if strstr($addonData.guest_limit,'4-5')}>checked<{/if}> type="checkbox" name="guest_limit[]" value='4-5'> 4-5人</label>
+
+							<label><input <{if strstr($addonData.guest_limit,'6-8')}>checked<{/if}> type="checkbox" name="guest_limit[]" value='6-8'> 6-8人</label>
+
+							<label><input <{if strstr($addonData.guest_limit,'9')}>checked<{/if}> type="checkbox" name="guest_limit[]" value='9'> 9人以上</label>
+
+							<br>
+
+							<label>是否需要预约</label>
+							<label><input <{if $addonData.apportmant_required=='apportmant_require'}>checked<{/if}> type="radio" name="apportmant_required" value='apportmant_require'> 需要预约</label>
+							<label><input <{if $addonData.apportmant_required=='apportmant_not_required'}>checked<{/if}> type="radio" name="apportmant_required" value='apportmant_not_required'> 不需要预约</label>
+							<br>
+
+							<textarea placeholder='预约说明' name='apportmant_required_desc' rows="4" cols="50"><{$addonData.apportmant_required_desc}></textarea>
+
+							<br>
+
+							<label>是否限时</label>
+							<label><input <{if $addonData.time_limit=='no_time_limit'}>checked<{/if}> type="radio" name="time_limit" value='no_time_limit'> 不限时</label>
+							<label><input <{if $addonData.time_limit=='time_limit'}>checked<{/if}> type="radio" name="time_limit" value='time_limit'> 限时</label>
+							<br>
+
+							<textarea placeholder='限时说明' name='time_limit_desc' rows="4" cols="50"><{$addonData.time_limit_desc}></textarea >
+							<br>
+
+							<label>公共假日是否可用</label>
+							<label><input <{if $addonData.available_on_holiday=='available_on_holiday'}>checked<{/if}> type="radio" name="available_on_holiday" value='available_on_holiday'> 可用</label>
+							<label><input <{if $addonData.available_on_holiday=='not_available_on_holiday'}>checked<{/if}> type="radio" name="available_on_holiday" value='not_available_on_holiday'> 不可用</label>
+							<br>
+
+							<label>是否可以和其它优惠同享</label>
+							<label><input <{if $addonData.sharable=='sharable'}>checked<{/if}> type="radio" name="sharable" value='sharable'> 同享</label>
+							<label><input <{if $addonData.sharable=='not_sharable'}>checked<{/if}> type="radio" name="sharable" value='not_sharable'> 不同享</label>
+							<br>
+
+							<textarea placeholder='同享说明' name='sharable_desc' rows="4" cols="50"><{$addonData.sharable_desc}></textarea>
+							<br>
+
+							<label>是否有包间</label>
+							<label><input <{if $addonData.private_room=='has_private_room'}>checked<{/if}> type="radio" name="private_room" value='has_private_room'> 有</label>
+							<label><input <{if $addonData.private_room=='no_private_room'}>checked<{/if}> type="radio" name="private_room" value='no_private_room'> 没有</label>
+							<br>
+
+							<label>用餐时段</label>
+							<label><input <{if strstr($addonData.meal_type,'breakfast')}>checked<{/if}> type="checkbox" name="meal_type[]" value='breakfast'> 早餐</label>
+							<label><input <{if strstr($addonData.meal_type,'lunch')}>checked<{/if}> type="checkbox" name="meal_type[]" value='lunch'> 午餐</label>
+							<label><input <{if strstr($addonData.meal_type,'dinner')}>checked<{/if}> type="checkbox" name="meal_type[]" value='dinner'> 晚餐</label>
+							<label><input <{if strstr($addonData.meal_type,'midnight')}>checked<{/if}> type="checkbox" name="meal_type[]" value='midnight'> 宵夜</label>
+							<br>
+
+
+
+						</div>
+						
+						
+						<{include file='company/coupons_edit_step_menu.htm'}>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+
+									
+<style type="text/css">
+	.input_html{
+		display: none;
+	}
+	input[name='nodecname']{
+		width:105px;
+	}
+	input[name='nodeorder']{
+		width:55px;
+	}
+
+	.add_top_level_item{
+		line-height: 35px;
+	}
+	table.citen_edit tr{
+		line-height: 35px;
+	}
+	table.citen_edit tr:hover{
+		background-color: #FD5001 ;
+	}
+	tr.highlight{
+		background-color: #FD5001 ;
+	}
+</style>
+<script type="text/javascript">
+
+	var selectedCategoryID='<{$data.cCategoryId}>'.split(',');
+
+	function popSelectedCategory(){
+		$allCheckbox=$("input[name='cCategoryId[]']");
+		$allCheckbox.each(function(){
+			if(selectedCategoryID.indexOf($(this).val())!='-1'){
+				$(this).prop('checked', true);
+			}
+		})
+	}
+
+  function show_multi_use(is_multi_use) {
+    
+	//alert(is_multi_use);
+	if (is_multi_use) {
+	  $('#is_multi_use01'). css("display","");
+	
+	
+	}else {
+	  $('#is_multi_use01'). css("display","none");
+	  //$('#multi_use01').val(1);
+	}
+  
+   
+  }
+
+	function loadChildAjax(obj){
+		$icon = $(obj).find('.load_child i');
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		if($(obj).hasClass('opened')){
+			$children=getChildCItem(obj);
+			$children.hide();
+			$children.each(function(){
+				$(this).find('.load_child i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			});
+
+			$icon.removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			$(obj).removeClass("opened").addClass("collapsed");
+		}else if($(obj).hasClass('collapsed')){
+			$children=$("tr.citem[data-pid='"+id+"']");
+			$children.show();
+
+			$icon.removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$(obj).removeClass("collapsed").addClass("opened");
+		}else{
+			$.ajax({
+				url:"<{$http_root_www}>customizable_category/load_child_show",
+				data:{pid:id},
+				
+				beforeSend:function(){
+					$icon.removeClass('fa-plus-square-o').addClass('fa-spinner fa-spin');
+				},
+				success:function(data){
+					$(obj).after(data);
+					$(obj).addClass('opened');
+					$icon.addClass('fa-minus-square-o');
+				},
+				error:function(){
+					$icon.addClass('fa-plus-square-o');
+				},
+				complete:function(){
+					$icon.removeClass('fa-spinner fa-spin');
+					popSelectedCategory();
+				}
+			})
+		}
+	}
+
+	function getChildCItem(obj){
+		//从第一个子类到最后一个子类的全部tr
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		$allItem = $('tr.citem');
+		var firstIndex = $allItem.index($("tr.citem[data-pid='"+id+"']").first());
+
+		if($(obj).nextAll("tr.citem[data-pid='"+pid+"']").length!==0){
+			var lastIndex =  $allItem.index($(obj).nextAll("tr.citem[data-pid='"+pid+"']").first());
+		}else{
+			var lastIndex =  $allItem.index($("tr.citem[data-pid='"+id+"']").last())+1;
+		}	
+
+		if(lastIndex==-1){
+			$children=$allItem.slice(firstIndex);
+		}else{
+			$children=$allItem.slice(firstIndex,lastIndex);
+		}
+		return $children;
+	}
+
+	function loadChild(obj){
+		console.log('.load_child clicked');
+		$citem = $(obj).parents('tr.citem');
+		loadChildAjax($citem);
+	}
+
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+	popSelectedCategory();
+	//init state
+	if($('#cCategoryId_lock').is(':checked')){
+		$('.category_show').show();
+	}
+	//bind action
+	$('#cCategoryId_lock').on('click',function(){
+		$('.category_show').toggle(this.checked);
+	})
+	var multi_use= parseInt('<{$data.multi_use}>');
+	if(multi_use>1) {
+		show_multi_use(1);
+	}else{
+		show_multi_use(0);
+	}
+	
+
+});
+
+
+</script>
+
+
+</body>
+</html>

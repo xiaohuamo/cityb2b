@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="Ubonus美食生活 墨尔本 " />
+	<meta name="description" content="专注墨尔本华人美食生活的电商平台 " />
+    <meta content="telephone=no" name="format-detection" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+
+	<!-- inedx -->
+		<div style="text-align: center;padding: 100px 0px">
+			<h1 style="color:#31708f;font-size: 40px;margin: 10px">购买成功!</h1>
+			<br>
+			<p>订单编号：<{$orderId}></p>
+			<br>
+			<p>您选择的支付方式是Hcash支付!</p>
+			<br>
+			<p>Hcash支付一般需要30分钟-2天到账</p>
+			<br>
+			<p>商家会在确认支付到账后为您发货</p>
+			<br>
+			<p>如果您的支付信息有误，客户会主动联系您，订单可能会被取消。</p>
+			<br>
+
+			<br>
+			<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+			<br>
+			<br>
+			<p></p>
+			<span><a href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>">查看订单</a></span>
+			|
+			<span><a href="<{$http_root_www}>">返回首页</a></span>
+
+		</div>
+
+		<{include file ="payment/pc_success_footer.htm"}>
+	<!-- inedx -->
+
+	<!-- 底部 -->
+	<{include file='index_inc_footer.htm'}>
+	<!-- 底部 end -->
+
+
+	<!-- 右边栏 -->
+	<{include file='index_inc_right.htm'}>
+	<!--右边栏 end-->
+
+	
+	<!-- 浮动导航end-->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+	<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+	<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+	<script src="<{$SKIN_PATH}>js/dong.js"></script>
+	
+
+</body>
+</html>

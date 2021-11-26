@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Ubonus美食生活</title>
+
+    <meta name="keywords" content="墨尔本美食 墨尔本团购 "/>
+
+    <meta name="description" content="专注墨尔本华人美食生活的电商平台   
+ "/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css"/>
+</head>
+
+<body class="index">
+
+<!-- 头部 -->
+<header id="hd">
+    <div class="left">
+        <a href="javascript:void(0);" class="a-so"></a>
+        <!-- 城市选择 -->
+        <div class="m-city">
+            <div class="con"><span><{$city.name}></span><i></i></div>
+            <ul class="g-ul">
+                <{foreach from=$citylist item=item}>
+                <li><a href="<{$http_root_www}>?cityid=<{$item.id}>"><{$item.name}></a></li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <!-- 城市选择 end-->
+
+    </div>
+    <!--h1 class='search-icon-assosiate'>Ubonus</h1-->
+    <div class="right">
+        <!--  <a class="a-new" href="<{$http_root_www}>message/index"><em>9+</em></a> -->
+        <a class="a-cart" href="<{$http_root_www}>member/showcart"></a>
+    </div>
+</header>
+<!-- 头部 end-->
+
+<!-- 主内容 -->
+<section id="bd">
+    <!-- banner -->
+
+    <div id="banner" class="swiper-container-horizontal">
+        <div class="swiper-wrapper">
+            <{foreach from=$bannerData item=item}>
+            <div class="swiper-slide" style="width: 1019px;">
+                <a href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+            </div>
+            <{/foreach}>
+        </div>
+        <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span
+                class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span>
+        </div>
+    </div>
+
+    <!-- banner end-->
+
+    <!-- 列表 -->
+
+    <ul class="g-ul ul-list1">
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f1').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon1_03.png);"></i>生鲜食品
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f2').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon7_07.png);"></i>手机数码
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f3').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon2_05.png);"></i>家具家居
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f4').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon3_05.png);"></i>电器厨具
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f5').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon4_05.png);"></i>女性世界
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f6').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon4_05.png);"></i>乐器摄影
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f7').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon6_07.png);"></i>服饰衣帽
+            </a>
+        </li>
+        <li>
+            <a onclick="$('html, body').animate({scrollTop: $('#f8').offset().top-$('#hd').height()*1.4}, 1000);">
+                <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon8_07.png);"></i>医药保健
+            </a>
+        </li>
+    </ul>
+    <!-- 列表 end-->
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg17.png);">
+        <h3><img src="<{$SKIN_PATH}>mobile/images/icon77.png" alt="">爆款集合</h3>
+        <!--p>一家好店，流连忘返</p-->
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==8}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                </a>
+            </div>
+            <h4><a href="<{$http_root_www}>coupon1/2613"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg16.png);">
+        <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106"></a>
+        <h3><img src="<{$SKIN_PATH}>mobile/images/icon78.png" alt="">最新上架</h3>
+        <!--p>至尊享受，尽善尽美</p-->
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==9}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                </a>
+            </div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg18.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106124"></a>
+        <h3 id="f1"><img src="<{$SKIN_PATH}>mobile/images/icon81.png" alt="">生鲜食品</h3>
+        <!--p>一家好店，流连忘返</p-->
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==10}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                </a>
+            </div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg19.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105104"></a>
+        <h3 id="f2"><img src="<{$SKIN_PATH}>mobile/images/icon79.png" alt="">手机数码</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==11}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                </a>
+            </div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg20.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105103"></a>
+        <h3 id="f3"><img src="<{$SKIN_PATH}>mobile/images/icon80.png" alt="">家具家居</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==12}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"
+                                                                alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg21.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105105"></a>
+        <h3 id="f4"><img src="<{$SKIN_PATH}>mobile/images/icon82.png" alt="">电器厨具</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==13}>
+        <li>
+            <div class="pic"><a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"
+                                                                alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg22.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105101"></a>
+        <h3 id="f5"><img src="<{$SKIN_PATH}>mobile/images/icon83.png" alt="">女性世界</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==14}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"
+                                                                alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg23.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105107"></a>
+        <h3 id="f7"><img src="<{$SKIN_PATH}>mobile/images/icon84.png" alt="">服装鞋帽眼镜</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==15}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"
+                                                                alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg23.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105109"></a>
+        <h3 id="f6"><img src="<{$SKIN_PATH}>mobile/images/icon84.png" alt="">乐器摄影文娱</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==16}>
+        <li>
+            <div class="pic">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"
+                                                                                  alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+    <!--
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg23.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105102"></a>
+        <h3><img src="<{$SKIN_PATH}>mobile/images/icon84.png" alt="">礼物精品</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==17}>
+        <li>
+            <div class="pic"><a href="<{$http_root_www}>coupon1/<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"
+                                                                                  alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+
+    <div class="m-tit4" style="background-image:url(<{$SKIN_PATH}>mobile/images/bg23.png);">
+          <a class="a-det" target="_blank" href="<{$http_root_www}>category/index?section=106105113"></a>
+        <h3 id="f8"><img src="<{$SKIN_PATH}>mobile/images/icon84.png" alt="">医药保健</h3>
+    </div>
+    <ul class="g-ul ul-list8">
+        <{foreach from=$data item=item}>
+        <{if $item.panaltype==18}>
+        <li>
+            <div class="pic"><a href="<{$http_root_www}>coupon1/<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"
+                                                                                  alt=""></a></div>
+            <h4><a href="<{$http_root_www}>coupon1/2762"><{$item.title}></a></h4>
+            <span class="s-price">$<{$item.voucher_deal_amount}></span>
+        </li>
+        <{/if}>
+        <{/foreach}>
+    </ul>
+    -->
+</section>
+<!-- 主内容 end-->
+
+<!-- 底部 -->
+<{include file='mobile/mobile_footer.htm'}>
+<!-- 底部 end-->
+
+<!-- 搜索框 -->
+<div class="box-so bg-1">
+    <div class="inner">
+        <div class="so-top so-top-2">
+            <input type="text" class="g-input sele" readonly="readonly" value="产品">
+            <div class="sub">
+                <span>产品</span>
+                <span>店铺</span>
+            </div>
+            <input type="text" placeholder="输入关键字搜索" class="g-input inp">
+        </div>
+        <a href="javascript:void(0);" class="a-txt">取消</a>
+    </div>
+    <div class="m-so">
+        <h4>热门搜索<a class="a-update"></a></h4>
+        <ul class="g-ul">
+            <li><a href="<{$http_root_www}>store/23270">箱包</a></li>
+            <li><a href="<{$http_root_www}>store/23961">羊毛被</a></li>
+            <li><a href="<{$http_root_www}>store/23945">海鲜</a></li>
+            <li><a href="<{$http_root_www}>store/25913">保健品</a></li>
+            <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=25160">零食</a></li>
+            <li><a href="<{$http_root_www}>coupon1/2694">演唱会</a></li>
+        </ul>
+    </div>
+
+    <div class="so-pop">
+        <a class="a-shop search-keyword-display"><!-- 店铺搜索&gt;手机 --></a>
+        <ul class="g-ul ul-screen" style="max-height: 83vh;overflow: scroll;">
+        </ul>
+    </div>
+</div>
+
+<!-- 搜索框 end-->
+
+<!-- 侧边按钮 -->
+
+<a href="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>">
+    <div id="g-chat"></div>
+</a>
+<div id="g-top"></div>
+<!-- 侧边按钮-end -->
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('img.lazyload').unveil();
+    })
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        //城市选择
+        $(".m-city").click(function () {
+            $(this).find("ul").stop().slideToggle();
+        });
+        $(".m-city li").click(function () {
+            var _cont = $(this).text();
+            var _pare = $(this).parents(".m-city");
+            $(_pare).find('span').text(_cont);
+        });
+    });
+</script>
+
+    <link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+<script>
+    $(function () {
+        var swiper = new Swiper('#banner', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            autoplay:2000
+        });
+
+        var swiper = new Swiper('.m-adve', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true
+        });
+
+        $(".m-seckill").each(function () {
+            var swiper = new Swiper($(this).find(".swiper-container")[0], {
+                slidesPerView: 3.7,
+                paginationClickable: true,
+                spaceBetween: 5,
+                freeMode: true,
+                autoplay:2000
+            });
+        });
+        $("#fnTimeCountDown").fnTimeCountDown();
+    })
+</script>
+
+
+<script src="<{$SKIN_PATH}>mobile/js/downCount.js"></script>
+<script type="text/javascript">
+
+    //点击搜索框弹出+消失
+
+    $(".a-so,.search-icon-assosiate").click(function () {
+        $("body").addClass('open-so');
+    });
+
+    $(".so-top-pop").click(function () {
+        $("body").addClass('open-so');
+    });
+
+    $(".box-so .a-txt").click(function () {
+        $("body").removeClass('open-so');
+    });
+
+    $('.box-so .so-top .inp').click(function () {
+        $('.so-pop').show();
+        $('.m-so').hide();
+    });
+
+</script>
+
+<script type="text/javascript">
+    var searchEnterTimeoutClock;
+    $(function () {
+        // 搜索键盘事件
+        $('.inp').keyup(function (e) {
+            if (e.keyCode == 13) {
+                // console.log('enter key');
+                var listType = ($('.g-input.sele').val() == '产品') ? 'product' : 'business';
+                var key = $('.g-input.inp').val();
+                window.location.href = '<{$http_root_www}>coupons?key=' + key + '&listType=' + listType;
+            } else {
+                updateDisplay();
+                clearTimeout(searchEnterTimeoutClock);
+                searchEnterTimeoutClock = setTimeout(function () {
+                    getSearchHint();
+                }, 500)
+            }
+        });
+    });
+
+    function getSearchHint() {
+        var _key = $('.inp').val();
+        $.ajax({
+            url: '<{$http_root_www}>query?cmd=searchv2mobile',
+            data: {'key': _key},
+            method: "POST",
+            beforeSend: function () {
+                //$('#search-hint').html("");
+            },
+            success: function (data) {
+                $('.ul-screen').html(data);
+            }
+        });
+    }
+
+    function gotoSearchItem(obj) {
+        var listType = $(obj).data('hint-type');
+        window.location.href = '<{$http_root_www}>coupons?listType=' + listType + '&key=' + $(obj).find('span.search-hint-text').html();
+    }
+
+    function updateDisplay() {
+        var html = $('input.sele').val() + "搜索&gt;" + $('input.inp').val();
+        $('.search-keyword-display').html(html);
+    }
+</script>
+</body>
+</html>

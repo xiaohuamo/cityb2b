@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script>
+	function selectAll(obj) {
+		$(document.getElementsByName('ids[]')).attr('checked', obj.checked);
+	}
+	function confirmDel() {
+		if ( $(document.getElementsByName('ids[]')).filter(':checked').length <= 0 ) {
+			alert('您还没有选择要删除的记录');
+			return false;
+		}
+		if (window.confirm('您确定要删除所选记录吗？')) return true; return false;
+	}
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		
+		
+		<div class="main" style='width:100%!important'>
+			<div class="box2">
+				<div class="main-list">
+
+					<{if $data}>
+						<form method="post" action="?mbt=<{$mbt}>">
+							
+								<table cellspacing="0" cellpadding="0" width="100%">
+									<thead>
+										<tr>
+											<th>选择</th>
+											<th>发件人</th>
+											<th>邮件主题</th>
+											<th>邮件内容</th>
+											<th>发送时间</th>
+											<th>删除</th>
+										</tr>
+									</thead>
+									<tbody>
+										<{foreach from=$data item=item name='dl'}>
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+											<td><input type="checkbox" name="ids[]" value="<{$item.id}>" /></td>
+
+											<td><{$item.from}></td>
+
+											<td><{$item.subject|truncate_cn:100:'...'}></td>
+
+											<td><{$item.content|truncate_cn:100:'...'}></td>
+
+											<td><{date('Y-m-d H:i:s', $item.sendTime)}></td>
+											
+											<td><a href="<{$delUrl}>deleteId=<{$item.id}>" onClick="if (!window.confirm('您确定要删除这条消息吗？')) return false;">删除</a></td>
+										</tr>
+										<{/foreach}>
+									</tbody>
+								</table>
+							
+							<div class="dels">
+								<input type="checkbox" id="checkAll" onClick="selectAll(this);" /><label for="checkAll">全选/取消全部</label>
+								<button type="submit" onClick="return confirmDel();">删除所选</button>
+							</div>
+						</form>
+						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+					<{else}>
+						还没有消息
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

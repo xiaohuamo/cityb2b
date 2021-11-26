@@ -1,0 +1,135 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>.main-form .input-box span label { width:150px; </style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+            
+			<div class="box2">
+              
+				<div class="main-form">
+				<div class="colCurTit clearfix">
+						<h1>自动查图</h1>
+					</div>
+
+					<form id="memberForm" class ='form-style-green' action="<{$http_root_www}>company/images_grab" method="post" target="post_frame">
+
+					  
+						<hr><br>
+
+						
+						
+						
+						
+					 <{if $countOfBarCodeNotLongEnough}>
+					     <div class="input-box clearfix">	
+							<span><label>条码不符合要求：</label></span>		
+							<span><{$countOfBarCodeNotLongEnough}></span>	<em>&nbsp;条码长度小于9</em>
+						</div>
+					 <{/if}>
+
+					
+					 <{if $countofWebCollected}>
+					     <div class="input-box clearfix">	
+							<span><label>从线上库找到：</label></span>		
+							<span><{$countofWebCollected}></span>	
+						</div>
+					 <{/if}>
+
+
+					<{if $countofWebCollectMissing}>
+					     <div class="input-box clearfix">	
+							<span><label>在线上库未发现：</label></span>		
+							<span><{$countofWebCollectMissing}></span>	<em>&nbsp;条码长度小于9</em>
+						</div>
+					 <{/if}>
+					 
+					 
+					 
+					 <{if $countOfStandardProductLibCollected}>
+					     <div class="input-box clearfix">	
+							<span><label>从库中获取图片：</label></span>		
+							<span><{$countOfStandardProductLibCollected}></span>	
+						</div>
+					 <{/if}>
+
+
+					<{if $countOfStandardProductLibCollecteFailied}>
+					     <div class="input-box clearfix">	
+							<span><label>从标准库中失败：</label></span>		
+							<span><{$countOfStandardProductLibCollecteFailied}></span>	<em>&nbsp;条码长度小于9</em>
+						</div>
+					 <{/if}>
+
+					
+					 
+
+						
+					
+						<br>
+
+
+						<hr><br>
+	                  
+						
+
+						<input type='hidden' name='returnUrl' value = '<{$returnUrl}>'>
+					
+						<div class="input-box input-submit clearfix">
+							<button type="submit">启动自动查图</button>
+						</div>
+
+					</form>
+
+					
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/sms_verify.js"></script>
+
+
+
+</body>
+
+</html>

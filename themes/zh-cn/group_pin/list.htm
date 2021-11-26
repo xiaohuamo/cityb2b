@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='group_buy/group_buy_top_menu.htm'}>
+				<div class="main-form">	
+
+					<div class="colCurTit">
+						<span class="links">
+							<a class='btn-yellow' href="<{$http_root_www}>group_pin/create" ><i class='fa fa-plus'></i>添加新团</a>
+						</span>
+					</div>
+
+					<div class="main-list">
+					<table style='width:100%'>
+						<thead >
+							<tr>
+								<th>id</th>
+								<th>团购产品</th>
+								<th>产品状态</th>
+								<th>奖励</th>
+								<th>生成时间</th>
+								<th>列表</th>
+								<th>删除</th>
+							</tr>
+						</thead>
+						<tbody>
+							<{foreach from=$list item=item name='dl'}>
+
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}> >
+									<td><{$item.id}></td>
+
+									<td>
+										<a href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin" target='_blank'><{$item.coupon_id}></a>
+										<br>
+										<small><{$item.coupon_name}></small>
+									</td>
+
+									<td>
+										<{if $item.coupon_status}>
+											<span style='color:green'>产品已上线</span>
+										<{else}>
+											<span style='color:red'>产品未上线</span>
+										<{/if}>
+									</td>
+
+									<td>
+										<a href="<{$http_root_www}>member/showcart?specialGroupBuyCheckoutCode=<{$item.reward}>"><{$item.reward}></a>
+										<br>
+										<small><{$item.reward_type}><{$item.reward_value}></small>
+									</td>
+
+									<td><{date('Y-m-d H:i', $item.gen_date)}></td>
+
+									<td><a href="<{$http_root_www}>group_pin/user_group_list?group_id=<{$item.id}>">用户拼单列表</a></td>
+
+									<td><a href="<{$http_root_www}>group_pin/delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.name}>?')"><i class='fa fa-close fa-lg' style='color:red'></i></a></td>
+								</tr>
+								
+							<{/foreach}>
+						</tbody>
+					</table>
+
+					<{if $pager}>
+					<div class="pager"><{$pager}></div>
+					<{/if}>		
+
+					</div>
+					
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

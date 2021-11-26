@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap">
+	
+	<{include file='company/side.htm'}>
+
+		<div class="main">
+		
+		<div class="box2 clearfix">
+			
+			<{include file='company/side_company_info.htm'}>
+			
+			<div class="main-form">
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/notice" method="post" target="post_frame" enctype="multipart/form-data">	
+					<div class="input-box clearfix">
+						<h1>编辑店铺通知</h1>
+						<p>编辑轮播手机通知，多条消息可用分号 ; 隔开</p>
+						<p>店铺通知目前仅支持手机版</p>
+					</div>
+
+					<div class="input-box clearfix" style="text-align: center;">
+						<textarea name='business_notice' style="width: 60%;height: 200px;"><{$loginUser.notice}></textarea>
+					</div>
+					
+					<div class="input-box input-submit clearfix">
+						<button type="submit" >保存修改</button>
+					</div>
+				</form>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+			</div>
+
+		</div>
+	</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

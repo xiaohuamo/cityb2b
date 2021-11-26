@@ -1,0 +1,118 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+	<style>	
+
+	.main-form .input-box span label { width:200px; }
+	.inviteQrCode{
+		position: fixed;
+	    width: 200px;
+	    height: 200px;
+	    margin: auto;
+	    background-color: #eee;
+	    border: 5px solid #2bb8aa;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    padding: 28px;
+	    text-align: center;
+	    display: none;
+	}
+
+	</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+
+					<{include file='company/side_business_option_menu.htm'}>	
+					<div class="colCurTit">
+							<span class="links">
+								<a class='btn-yellow' onClick="$('.inviteQrCode').toggle()" class="link2"><i class='fa fa-plus'></i>邀请员工</a>
+							</span>
+					</div>
+
+					<div class='main-form form-style-green'>
+						<div class='input-box'>
+							<h1>兑付员工管理</h1>
+							<p>通过扫描二维码的方式添加微信用户作为您的扫码员工，员工扫描客户所持的订单二维码可以协助订单的核销</p>
+						</div>
+					</div>
+
+					<div class="main-list">
+
+					<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th>用户名</th>
+									<th>昵称</th>
+									<th>加入时间</th>
+									<th>删除</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<{foreach from = $staff_list item=item}>
+									<tr>
+										<td><{$item.name}></td>
+										<td><{$item.nickname}></td>
+										<td><{$item.date|date_format:"%T %D"}></td>
+										<td><a href="<{$http_root_www}>company/redeem_staff_delete?userid=<{$item.id}>">删除</a></td>
+									</tr>
+
+								<{/foreach}>
+							</tbody>
+						</table>
+
+						</div>
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div>
+	<div class='inviteQrCode'>
+		<p>请让员工扫描此二维码或者发送此二维码给指定员工</p>
+		<img src="<{$staffInviteQrCode}>">
+	</div>
+	<{include file='footer.htm'}>
+</body>
+</html>

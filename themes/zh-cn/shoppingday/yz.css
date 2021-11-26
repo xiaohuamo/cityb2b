@@ -1,0 +1,293 @@
+.talk-pop{position: fixed;top: 50%;left: 50%;width: 860px;height: 572px;
+    margin:-286px 0 0 -430px;overflow: hidden;background-color: #fff;border:1px solid #ccc;}
+.talk-pop .col-l{position: absolute;top: 0;left: 0;width: 220px;height: 100%;
+    background-color: #363f48;border-right: 1px solid #ccc;}
+.talk-pop .col-r{position: absolute;left: 221px;top: 0;height: 100%;width: 639px;}
+.talk-sidebar{height: 133px;background-color: #e45050;overflow: hidden;}
+.talk-sidebar .logo{padding:8px 0 0 12px;}
+.talk-sidebar .my{overflow: hidden;margin-top: 5px;}
+.talk-sidebar .img{float: left;width: 60px;height: 60px;position: relative;border-radius: 50%;
+    background: url(../images/bg_user.png) no-repeat left top;overflow: hidden;margin:0 0 0 4px;}
+.talk-sidebar .img img{width: 48px;height: 48px;position: relative;top: 50%;left: 50%;
+    margin:-24px 0 0 -24px;border-radius: 50%;}
+.talk-sidebar .txt{margin-left: 71px;}
+.talk-sidebar .txt h5{font-weight: normal;}
+.talk-sidebar .txt h5 a{
+    font-size: 18px;
+    color: #fff;
+    line-height: 28px;
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.talk-sidebar .txt p{margin-top: 8px;}
+.talk-sidebar .txt .a1{display: inline-block;width: 17px;height: 17px;
+    background: url(../images/rank2014.gif) no-repeat;
+    background-position: 0 -34px;}
+.talk-sidebar .txt .a2{
+    margin-left: 4px;
+    display: inline-block;
+    height: 17px;
+    line-height: 16px;
+    width: 80px;
+    background: url(../images/plus.png) left -52px no-repeat;}
+.talk-sidebar .u-search{overflow: hidden;position: relative;
+    display: block;
+    margin: 0 0 0 10px;
+    clear: both;
+    background: url(../images/bg_serch.png) left top no-repeat;
+    width: 198px;
+    height: 28px;
+    line-height: 20px;
+    top: 5px;
+    left: -5px;}
+.talk-sidebar .u-search a{float: left;width: 28px;height: 28px;}
+.talk-sidebar .u-search .inp{
+    padding: 4px;
+    border: none;
+    width: 150px;
+    color: #999;
+    margin-top: 2px;
+}
+.talk-sidebar .u-search .inp::-webkit-input-placeholder {color: #a49fa5;}
+.talk-sidebar .u-search .inp::-moz-placeholder {color: #a49fa5; }
+.talk-sidebar .u-search .inp::-ms-input-placeholder {color: #a49fa5;}
+.u-list li{
+    min-height: 60px;
+}
+.u-list a{color: #b3b3b3;
+    padding: 6px 10px 7px 55px;
+    position: relative;
+    height: 100%;
+    color: #707D8A;
+    display: block;
+    min-height: 47px;
+}
+.u-list .category{margin-top: 2px;}
+.u-list i{font-style: normal;}
+.u-list .ico{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 8px
+}
+.u-list .ico1{
+    background: url(../images/01.png) center center no-repeat;
+    background-size: 40px 40px;
+}
+.u-list .ico em{
+    bottom: -7px;
+    left: 5px;
+    display: inline-block;
+    font-style: normal;
+    width: 30px;
+    height: 20px;
+    font-size: 12px;
+    background: url(../images/bg_grade3.png) left 3px no-repeat;
+    background-position: left -23px;
+    vertical-align: middle;
+    position: absolute;
+}
+.u-list h5{
+    vertical-align: middle;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 400;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.u-list i{display: block;
+    position: relative;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 21px;
+}
+.u-list i span{
+    width: 40px;
+    text-align: right;
+    position: absolute;
+    right: 0;
+}
+.u-list i b{width: 100px;height: 18px;
+    display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.u-list .current a{background-color: #2f363e;}
+.u-list a:hover{background-color: #414b55;}
+
+.talk-pop .tit{
+    height: 42px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.talk-pop .tit h5{
+    padding: 6px 5px 0 36px;
+    margin:7px 0 0 10px;
+    font-size: 16px;
+    font-weight: normal;
+    background: url(../images/bg_grade3.png) no-repeat;
+    background-position: left -16px;
+}
+.talk-pop .tit i{
+    position: relative;
+    top: -2px;
+    margin-left: 7px;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #70d672;
+}
+.im-chat-list .auto-box{
+   position: relative;
+   padding: 0 10px;
+   height: 395px;
+   zoom: 1;
+   overflow: auto; 
+}
+/* css3滚动条 */
+.im-chat-list .auto-box::-webkit-scrollbar {width:5px;height:1px;}
+/* 两端按钮*/
+.im-chat-list .auto-box::-webkit-scrollbar-button{display: none;}
+/*滚动条轨道背景颜色*/
+.im-chat-list .auto-box::-webkit-scrollbar-track-piece{background:#f4f4f4;}
+/*滚动条样式*/
+.im-chat-list .auto-box::-webkit-scrollbar-thumb{background:#c3c3c3;border-radius: 5px;}
+.im-chat-list li{display: block;width: 100%;margin: 10px 0;overflow: hidden;}
+.im-chat-list li.time{text-align: center;margin: 5px 0 15px;color:#aaa;}
+.im-chat-list .ibox{float: left;}
+.im-chat-list h4{
+    font-weight: normal;
+    padding: 0 14px;
+    color: #ccc;
+    font-size: 12px;
+}
+.im-chat-list .box{background-color: #e8e8e8;padding:10px 10px;border-radius: 10px;display: inline-block;
+    position: relative;margin:3px 10px 0;}
+.im-chat-list .box i{position: absolute;top: 9px;left: -6px;width: 6px;height: 11px;
+    background: url(../images/y-aro1.png) no-repeat left top;}
+.im-chat-list .box p{line-height: 18px;color:#333;font-size: 12px;
+    display: inline-block;padding: 0;}
+.im-chat-list .me .ibox{float: right;text-align: right;}
+.im-chat-list .me .box{background-color: #d8e8f9;}
+.im-chat-list .me .box i{left: auto;right: -6px;
+    background: url(../images/y-aro2.png) no-repeat left top;}
+.im-chat-list .info{text-align: left;}
+.im-chat-list .info .img{float: left;width: 60px;height: 60px;}
+.im-chat-list .info .img img{width: 100%;height: 100%;}
+.im-chat-list .info .txt{float: left;margin-left: 10px;}
+.im-chat-list h5{
+    line-height: 20px;
+    color: #333;
+    font-weight: normal;
+}
+.edit-area{border-top: 1px solid #e2e2e2;position: relative;}
+.edit-area .top{overflow: hidden;height: 24px;overflow: hidden;}
+.edit-area .face{
+    margin: 5px 0 5px 10px;
+    line-height: 30px;
+    vertical-align: middle;
+    width: 22px;
+    height: 24px;
+    float: left;
+    background: url(../images/icon01.png) no-repeat;
+    background-position: left -2px;
+}
+.edit-area .box-file{
+    margin:2px 0 0 10px;
+    float: left;
+    height: 30px;
+    width: 30px;
+}
+.edit-area .box-file i{
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background: url(../images/icon01.png) no-repeat;
+    background-position: -28px top;
+}
+.edit-area .box-file input{position: absolute;left: -99999px;}
+.edit-area .top p{margin:3px 0 0 10px;cursor: pointer;
+    float: left;padding-left: 25px;line-height: 20px;
+    color:#fc5d60;background: url(../images/bg_star.png) no-repeat left center;}
+.edit-area .rule{float: right;line-height: 22px;color: #5EA1E8;margin:2px 20px 0 0;
+    padding-left: 22px;background: url(../images/help.png) left center no-repeat}
+.edit-area .bot{
+    padding: 5px 10px;
+    height: 75px;
+}
+.edit-area .bot .ipt-area{
+    position: relative;
+    height: 100%;
+}
+.edit-area .bot .text{position: absolute;top: 0;left: 0;width: 510px;}
+.edit-area .bot .text textarea{width: 100%;resize: none;height: 73px;border:0;}
+.edit-area .bot .btn{position: absolute;bottom: 0;right: 15px;width: 91px;height: 36px;}
+.edit-area .btn input{background:none;float: left;width: 74px;height: 36px;
+    border:0;background-color: #e66464;font-size: 16px;cursor: pointer;color:#fff;}
+.edit-area .btn i{float: left;width: 16px;height: 36px;cursor: pointer;
+    border-left: 1px solid #f0a2a2;
+    background:#e66464 url(../images/y-aro3.jpg) no-repeat center;}
+.edit-area .btn .send{display: none;position: absolute;top: -55px;right: 0;width: 245px;border:1px solid #d9d9d9;
+    background-color: #fff;}
+.edit-area .btn .send p{text-align: center;height: 24px;line-height: 24px;overflow: hidden;
+    background-color: #f5f5f5;}
+.edit-area .btn .send p a{color:#333;display: block;}
+.edit-area .btn .send p:hover{background-color: #e6e6e6;}
+.edit-area .btn .send.on{display: block;}
+.face-box{display: none;width: 373px;height: 222px;border:1px solid #e1e1e1;position: absolute;top: -229px;left: 40px;
+    background-color: #fff;}
+.face-box .biaoqing{position: absolute;top: 4px;left: 4px;width: 364px;height: 186px;
+    overflow: auto;}
+/* css3滚动条 */
+.face-box .biaoqing::-webkit-scrollbar {width:5px;height:1px;}
+/* 两端按钮*/
+.face-box .biaoqing::-webkit-scrollbar-button{display: none;}
+/*滚动条轨道背景颜色*/
+.face-box .biaoqing::-webkit-scrollbar-track-piece{background:#fff;}
+/*滚动条样式*/
+.face-box .biaoqing::-webkit-scrollbar-thumb{background:#f0f0f0;border-radius: 5px;}
+.face-box .img-list{width: 100%;}
+.face-box .img-list td{height: 29px;cursor: pointer;border:1px solid #e1e1e1;}
+.face-box .tab-list{position: absolute;bottom: 0;left: 0;width: 100%;height: 26px;line-height: 26px;
+    background-color: #f0f0f0;}
+.face-box .tab-list li{float: left;text-align: center;width: 63px;}
+.face-box .tab-list a{display: block;color:#000;}
+.face-box .tab-list li:hover,.face-box .tab-list li.on a{background-color: #fff;}
+.ping-box{display: none;position: absolute;top: -141px;left: 70px;background-color: #fff;width: 206px;height: 120px;
+    padding: 0 11px;
+    box-shadow: 0 0 8px rgba(0,0,0,.2);border-radius: 5px;border:1px solid #d4d9df;}
+.ping-box h5{font-weight: normal;font-size: 12px;color:#333;line-height: 25px;
+    margin-top: 5px;}
+.ping-box .close{position: absolute;top: 12px;right: 12px;
+    width: 9px;height: 9px;background: url(../images/y-close1.jpg) no-repeat left top;}
+.ping-box p{height: 22px;overflow: hidden;border-bottom: 1px solid #dbdbdb;padding:5px 0 20px;margin-bottom: 9px;}
+.ping-box p i{float: left;width: 25px;height: 22px;margin-right: 4px;cursor: pointer;
+    background-repeat: no-repeat;background-position: center;
+    background-image: url(../images/star_lg.png);background-size: 25px 22px;}
+.ping-box p i.on{background-image: url(../images/star_on_lg.png);}
+.ping-box .bottom{overflow: hidden;height: 22px;line-height: 22px;}
+.ping-box .bottom span{float: left;font-size: 12px;color:#999;width: 65px;height: 22px;}
+.ping-box .bottom button{float: right;width: 52px;height: 22px;background-color: #ccc;color:#fff;
+    border:0;}
+.ping-box .bottom button.ok{background-color: #fc5d60;cursor: pointer;}
+.txt-pop{display: none;position: absolute;top: -77px;right: 14px;background-color: #fff;width: 165px;
+    line-height: 18px;padding: 5px 9px 9px;border:1px solid #e2e2e2;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);border-radius: 5px;color:#555;}
+.txt-pop i{position: absolute;width: 18px;height: 10px;bottom: -10px;right: 22px;
+    background: url(../images/y-aro4.png) no-repeat left top;}
+.round_shade_center{padding: 8px;background-color: #fff;border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,.5);}
+.round_box_close{position: absolute;top: -9px;right: -9px;color:#fff;border-radius: 50%;
+    background-color: rgba(0,0,0,.8);font-size: 0;width: 19px;height: 19px;
+    background-position: center;background-repeat: no-repeat;
+    background-image: url(../images/addr-close-white.png);
+    background-size: 9px 9px;}
+.round_shade_box{display: none;}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+			 <{include file='company/side_restaurant_info.htm'}>
+				<div class="main-form">
+						<span class = 'step-number-icon' style='float:left' >5</span>
+						<div class="colCurTit clearfix">
+							<h1>&nbsp;店铺条款</h1>
+						</div>
+
+						<{include file='company/freshfood_edit_step_menu_top.htm'}>
+						
+						<form id="memberForm"  class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame">
+
+							<div class="input-box clearfix">
+								<span>
+									<label>退货政策</label>
+								</span>
+							</div>
+						  	
+						  	<textarea name="refund_policy" class="input-textarea" style="width:80%; "> 
+						  		<{if !$data.refund_policy}>1)客户在接到产品后请仔细核对，有任何问题请在24小时内向客服反应，并发送相关图片信息。<br>
+								2）商家根据出货记录进行核对并在2个工作日内（24-48小时）处理。除质量问题原因导致，售出的产品不在支持退货。<{else}><{$data.refund_policy}><{/if}>
+							</textarea>
+
+						  	<script>
+								$(function(){
+									CKEDITOR.replace('refund_policy', {
+										height : 100,
+										filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+										placeholder:"eg：退货时请将产品按原地址寄回或送还商家。经商家确认产品一切正常后退款。产品支持购买后30天退货",
+									});
+								});
+							</script>
+
+							<{if $data.bonusType!=9}>
+								<div class="input-box clearfix">
+									<div class=' form-style-green '>
+										<span>
+										<label>使用提示</label>
+										</span>
+									</div>
+								</div>
+								
+								<textarea name="finePrint" class="input-textarea" style="width:80%; ">
+								<{if !$data.finePrint}>
+								1)付款可能包含小额手续费，如采用转账方式，需下订单后及时转账并截图给客服	<br>
+								2）信用卡支付，交货时可能要求出示ID，否则可导致订单无法执行。<br>
+								3)如本店提供自提服务，用户取货时需准备好订单以便商家进行核对。
+							<{else}><{$data.finePrint}><{/if}>
+								
+								
+								</textarea>
+
+								<script>
+									$(function(){
+										CKEDITOR.replace('finePrint', {
+											height : 150,
+											filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+											placeholder:"eg：请将重要的产品信息或者需要突出的服务说明添加在这里",
+										});
+									});
+								</script>
+
+							
+							<{/if}>
+							
+						 
+
+						<{include file='company/freshfood_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:250px; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='member/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="main-form">
+
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>member/broadcast_control" method="post" target="post_frame">
+					  <div class="input-box clearfix">	
+						<span><label>Ubonus 直播 ID:</label></span>
+						 UUID<{$loginUser.id}>
+						</div>
+
+						<div class="input-box clearfix">
+
+							<span><label>您的直播频道链接: </label></span>
+
+							<a target＝'_blank' href="<{$http_root_www}>index.php?ctl=broadcast&act=index&id=UUID<{$loginUser.id}>">查看</a>
+
+						</div>
+
+
+						<div class="input-box clearfix">	
+								<span><label>开始直播：</label></span>		
+							<input type="checkbox" name="isbroadcasting" class="input-text" onclick="if($(this).is(':checked')){$('.broadcastType').show();}else{$('.broadcastType').hide();}" <{if $broadcastInfo.isbroadcasting=="on"}> checked <{/if}>/>
+						</div>
+
+						<div class='broadcastType' <{if $broadcastInfo.isbroadcasting=="off"||!$broadcastInfo.isbroadcasting}>style="display: none;"<{/if}>>
+
+							<div class="input-box clearfix">	
+									<span><label>直播标题</label></span>		
+								<input type="text" name="title" class="input-text" value='<{$broadcastInfo.broadcastTitle}>'/>	
+							</div>
+
+							<div class="input-box clearfix">	
+									<span><label>播放直播信号：</label></span>		
+								<input type="radio" name="broadcastType" class="input-text" value='live' <{if $broadcastInfo.broadcastType=="live"}>checked<{/if}>/>	
+							</div>
+							<div class="input-box clearfix">	
+									<span><label>播放录播片段：</label></span>		
+								<input type="radio" name="broadcastType" class="input-text" value='rec' <{if $broadcastInfo.broadcastType=="rec"}>checked<{/if}>/>	
+							</div>
+						</div>
+						
+
+                       <div class="input-box clearfix">
+
+							<span><label>直播说明：</label></span>
+							<br>
+							<ul style='font-size: 12px;background: #eee;padding: 25px;margin: 20px 100px;width: 400px;list-style-type: square;'>
+								<li>下载APP  Wowza GoCoder</li>
+								<li>打开设置，选择 Wowza Streaming Engine</li>
+								<li>在Host中填写以下信息: </li>
+								<li>Server 221.121.142.184 </li>
+								<li>port 1935</li>
+
+								<li>在Application中填写以下信息 </li>
+								<li>Application name:live</li>
+								<li>Stream Name: UUID<{$loginUser.id}></li>
+
+								<li>在Login中填写一下信息:</li>
+								<li>username: live1</li>
+								<li>password: Abcd@2017</li>
+
+								<li>点击开始直播</li>
+
+								<li><p>Note:直播信号一般会有30秒左右的延迟，直播开始后30秒左右频道的视频才会开始播放</p></li>
+							</ul>
+						</div>
+						
+
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit">保存修改</button>
+
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>
+

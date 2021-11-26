@@ -1,0 +1,23 @@
+<{assign var="nbsp" value="&nbsp;&nbsp;&nbsp;&nbsp;"}>
+<{foreach from=$list item=item}>
+	<tr class='citem' data-pid='<{$item.parent_id}>' data-id='<{$item.id}>' >
+		<td><{$nbsp|str_repeat:($item.level-1)}><{$item.order_num}></td> 
+
+		<td>
+			<{$nbsp|str_repeat:($item.level-1)}>
+			<{if $item.hasChild>0}>	
+			<span class='load_child load_child_btn' onClick='loadChild(this);'><i class='fa fa-plus-square-o'></i></span>
+			<{else}>
+			<span class='load_child_btn'><i class='fa fa-square'></i></span>
+			<{/if}>
+			<span><{$item.name}></span>
+		</td>
+		
+		<td>
+			<span class='edit_item_btn' onClick='showInput(this);'>
+				<i class='fa fa-plus'></i>
+			</span>
+		</td>
+		<td><a href="<{$http_root_www}>customizable_category/delete_node?id=<{$item.id}>">x</a></td>
+	<tr >
+<{/foreach}>

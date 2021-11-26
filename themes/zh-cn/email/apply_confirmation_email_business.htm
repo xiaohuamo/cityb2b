@@ -1,0 +1,144 @@
+<{include file='email/inc/email_head.htm'}>
+<body>
+	<table class="body">
+		<tr>
+			<td class="center" align="center" valign="top">
+				<center>
+					<table class="row header" style="background: #fff;">
+						<tr>
+							<td class="center" align="center">
+								<center>
+									<table class="container" >
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns" >
+													<tr>
+														<td class="six sub-columns">
+															<img src="https://www.ubonus365.com/themes/zh-cn/images/logo.png">
+														</td>
+														<td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
+															<span class="template-label" style="color:#000"><{$lang->order_createtime}>：<{$createTime}> </span>
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</center>
+							</td>
+						</tr>
+					</table>
+					<table class="container">
+						<tr>
+							<td>
+								<table class="row">
+									<tr>
+										<td class="wrapper last">
+											<table class="twelve columns">
+												<tr>
+													<td>
+														<h6>Hello <{$businessName}> :</h6>
+														<p ><{$message}></p>
+
+														<div class='panel' >
+															<p class='panel'><{$lang->products}>:<{$productName}></p>
+															<p ><{$lang->offline_success_description2}>：<{$order_id}></p>
+
+															<p><{$itemTable}></p>
+
+															<div class='brief_summary'>
+																<{if $deliveryFees!=0}>
+																	<span><{$lang->deliver_fee}>：+$<{$deliveryFees}></span>
+																<{/if}>
+																<{if $bookingFees!=0}>
+																	<span><{$lang->booking_fee}>：+$<{$bookingFees}></span>
+																<{/if}>
+																<{if $promotionTotal!=0}>
+																	<span><{$lang->discount}>：-$<{$promotionTotal}></span>
+																<{/if}>
+																<{if $useMoney!=0}>
+																	<span><{$lang->wallet}>：-$<{$useMoney}></span>
+																<{/if}>
+																<{if $surcharge!=0}>
+																	<span><{$lang->surcharge_fees}>：+$<{$surcharge}></span>
+																<{/if}>
+																<{if $productPrice!=0}>
+																	<span><{$lang->total}>：<strong><{$productPrice}></strong></span>
+																<{/if}>
+															</div>
+
+
+														</div>
+
+														<div class='panel' >
+															<{if $payment=='not avaliable'}>
+
+																<p ><{$lang->email_free_no_need_pay}></p>
+
+															<{else}>
+																<p ><{$lang->payment_type}>：<{$payment}></p>
+																<p ><{$lang->is_paid}>:&nbsp;<strong><span ><{if $status}><{$lang->paid}><{else}><{$lang->unpaid}><{/if}></span></strong></p>
+																<p> </p>
+
+																<p ><{$lang->pack_up}>：<strong><span ><{$delivery_option_desc}></span></strong></p>
+
+																<{if $delivery_option==2}>
+																<p><{$lang->pickup_nickname}>:<{$pickupnickname}></p>
+																<p><{$lang->pickup_address}>：<{$pickupaddress}></p>
+																<{/if}>
+																<p ></p>
+
+															<{/if}>
+															
+
+															<{if $customer_message}>
+															<p><{$lang->email_customer_message}>：<strong><span style="background-color:rgb(255, 255, 0)"> <{$customer_message}></span></strong></p>
+															<{/if}>
+														</div>
+
+													
+
+														<div class='panel' >
+															<p ><{$lang->email_customer}>：<{$customerName}></p>
+															<p ><{$lang->telephone}>：<{$phone}></p>
+															<p ><{$lang->address}>：<{$address}></p>
+															<p >Email：<{$email}></p>
+														</div>
+
+
+													</td>
+													<td class="expander"></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								
+									<table class="row">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td align="center">
+															<center>
+																<p style="text-align:center;"><a href="https://ubonus365.com/company/help?id=20"><{$lang->term_and_condition}></a> | <a href="https://www.ubonus365.com/">Ubonus美食生活-Ubonus</a> </p
+																	></center>
+																</td>
+																<td class="expander"></td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table>
+				<{include file='email/inc/footer_script.htm'}>
+			</body>
+			</html>

@@ -1,0 +1,419 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<!--<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script> -->
+	<!--<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" /> -->
+	 <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style>
+		.double_label{
+			display: inline-block;
+			position: relative;
+		}
+		.double_label span{
+			display: block;
+		}
+		.double_label span.top{
+			font-weight: bolder;
+		}
+		.double_label span.bottom{
+		}
+
+		.application input[type='text']{
+			vertical-align: middle;
+			height: 26px;
+			padding:2px 15px;
+			width: 100%;
+			margin-top: 0.9rem;
+		}
+
+		.application .double_label{
+			vertical-align: middle;
+		}
+
+		.double_label input[type='checkbox']{
+			transform: scale(1.5);
+			position: absolute;
+			left: 5px;
+			top: 13px;
+		}
+
+		.checkbox-label{
+			padding-left: 40px;
+		}
+
+		.sec_city{
+			height: 140px;
+		}
+
+		.sec_city label{
+		}
+
+		.sec_category{
+			height: 70px;
+		}
+
+		.sec_category label{
+			width: 30%;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+		$(function(){
+		    $('.credit-card-box').hide(100);
+		
+			$("input[name='payment']").on('click',function(){
+				if($(this).val()=='creditcard'){
+					$('.credit-card-box').show(100);
+				}else{
+					$('.credit-card-box').hide(100);
+				}
+			})
+
+		});
+	</script>
+</head>
+<body>
+	
+	<div >
+		<div class="wrap clearfix">
+			<div class="main clearfix" style="<{if $display_mode =='pc'}>width: 768px; <{/if}>    margin: auto;">
+				<div class="box2">
+					<div class="main-form">
+						<form id="memberForm" action="<{$http_root_www}>coupon/unimelb" method="post" target="post_frame" enctype="multipart/form-data" >
+                             <h1 style="line-height: 3rem;font-size: 20px;text-align:center;">第7届全澳大学华语辩论邀请赛</h1>
+							  <h1 style="line-height: 1rem;font-size: 16px;text-align:center;">Vip& Svip 门票$10起</h1>
+								<div><img  src="<{$SKIN_PATH}>images/bianlunsaizhongchou.jpg" style="  width: 100%;"></div>
+								
+								<div >
+									<p style="margin-top: 1rem;text-align: center;text-align:right;"><a style="font-size: 16px;font-weight:500;" href="/coupon1/7265">全澳辩论赛介绍&gt;&gt;</a></p>
+
+										
+								</div>
+								
+								<!--
+								 <div class="panel panel-default credit-card-box1">
+					                    <div class="panel-heading display-table" style="       width: 100%;" >
+					                        <div class="row display-tr" >
+					                            <h3 style="   font-weight: 600;  width: 100%;"  class="panel-title display-td" >&nbsp;众筹进度 &nbsp;第一阶段目标金额:$3000 &nbsp;&nbsp;完成:$<{$total_money}></h3>
+											
+					                            <div class="display-td" >                            
+					                               
+					                            </div>
+					                        </div>                    
+					                    </div>
+										
+										   <div class="panel-body">
+
+					                               
+					                            <div class="row">
+					                             
+												<div><img src="<{$SKIN_PATH}>/images/7265progressbar-top.jpg" width="100%" height="auto" alt=""></div> 
+			
+				
+											
+							
+											<div class="progress" style="margin-bottom: 0px;">
+												<div class="progress-bar progress-bar-success" role="progressbar"
+													 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+													 style="width: <{$percent}>;">
+													<span > <{$percent}> 完成</span>
+												</div>
+											</div>
+											<div><img src="<{$SKIN_PATH}>/images/7265progressbar-bottom.jpg" width="100%" height="auto" alt=""></div> 	
+											
+							</div>
+										
+					                                
+					                            </div>
+					                           
+					                    </div> -->
+										
+										</div>	
+								
+					
+								
+								 <div class="panel panel-default credit-card-box1">
+					                    <div class="panel-heading display-table" style="       width: 100%;" >
+					                        <div class="row display-tr" >
+					                            <h3 style="   font-weight: 600;  width: 100%;"  class="panel-title display-td" >门票列表&nbsp;&nbsp;每次可以购买一张门票</h3>
+											
+					                            <div class="display-td" >                            
+					                               
+					                            </div>
+					                        </div>                    
+					                    </div>
+										
+										   <div class="panel-body">
+
+					                               
+					                            <div class="row">
+					                              <div>
+									<label style="padding-left: 10px;font-size:14px;"><input type="radio" name="option" checked  value='-1'>&nbsp;请选择门票类型</label><br><br>
+										<{foreach from=$optionList item=item name='op'}>
+											<p style="font-size: 20px;    padding-left: 10px;    margin: 0 0 0px;    font-weight: 700;    color: red;"><{$item.amount}></p>
+											<label style="padding-left: 10px;font-size:14px;"><input type="radio" name="option" value='<{$smarty.foreach.op.index}>'>&nbsp;<{$item.optionName}></label><br><br>
+											 
+										<{/foreach}>
+									
+								</div>
+
+					                                
+					                            </div>
+					                           
+					                    </div>
+										
+										</div>
+								
+								<br>
+								
+								<div class="panel panel-default credit-card-box1">
+					                    <div class="panel-heading display-table" style="      width: 100%;" >
+					                        <div class="row display-tr" >
+					                            <h3 style="   font-weight: 600;   width: 100%;"  class="panel-title display-td" >2 填写信息&nbsp;&nbsp;接受门票及优惠券</h3>
+											
+					                            <div class="display-td" >                            
+					                               
+					                            </div>
+					                        </div>                    
+					                    </div>
+										
+										   <div class="panel-body">
+
+					                               
+					                            <div class="row">
+					                            	<div  style="    margin-left: 1rem;">
+										<label class='double_label'><span class='top'>姓名 <em style='color:red'>*</em>	</span><span class='bottom'>Name</span></label>
+										<input style="    width: 96%;    margin-top: 1rem;    margin-left: 1rem;"  type="text" name="name" value="<{$loginUser.person_first_name}>" >
+										
+									</div>
+                                    <br>
+										<div  style="    margin-left: 1rem;">
+										<label class='double_label'><span class='top'>电话 <em style='color:red'>*</em> </span><span class='bottom'>Telephone Number</span></label>
+										<input style="    width: 96%;    margin-top: 1rem;    margin-left: 1rem;"  type="text" name="phone" value="<{$loginUser.phone}>">
+									</div>
+                                    <br>
+										<div  style="    margin-left: 1rem;">
+										<label class='double_label'><span class='top'>邮箱 <em style='color:red'>*</em> </span><span class='bottom'>Email</span></label>
+										<input style="    width: 96%;    margin-top: 1rem;    margin-left: 1rem;"  type="text" name="email" 	value="<{$loginUser.email}>">
+									</div>
+
+					                                
+					                            </div>
+					                           
+					                    </div>
+										
+										</div>
+								
+								<br>
+								<div class="panel panel-default credit-card-box1">
+					                    <div class="panel-heading display-table" style="        width: 100%;" >
+					                        <div class="row display-tr" >
+					                            <h3 style="  font-weight: 600;  width: 100%;"  class="panel-title display-td" >3 选择支付方式</h3>
+											
+					                            <div class="display-td" >                            
+					                               
+					                            </div>
+					                        </div>                    
+					                    </div>
+										
+										 
+										
+										</div>
+								<div class='payment' style="    font-weight: 700;">
+									<label><input checked type="radio" name="payment" value='royalpay'>微信支付</label>
+									<label><input type="radio" name="payment" value='paypal'>Paypal支付</label>
+									<label><input  type="radio" name="payment" value='creditcard'>银行卡/信用卡支付</label>
+									<br>
+
+									 <!-- CREDIT CARD FORM STARTS HERE -->
+					                <div class="panel panel-default credit-card-box">
+					                    <div class="panel-heading display-table" >
+					                        <div class="row display-tr" >
+					                            <h3 class="panel-title display-td" >信用卡</h3>
+					                            <div class="display-td" >                            
+					                                <img class="img-responsive pull-right" src="<{$SKIN_PATH}>images/accepted_card.png">
+					                            </div>
+					                        </div>                    
+					                    </div>
+					                    <div class="panel-body">
+
+					                            <div class="row">
+					                                <div class="col-xs-12">
+					                                    <div class="form-group">
+					                                        <label for="cardNumber">CARD NUMBER</label>
+					                                        <div class="input-group">
+					                                            <input  type="tel" class="form-control" name="card_number" placeholder="Valid Card Number" autocomplete="cc-number"
+					                                            />
+					                                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+					                                        </div>
+					                                    </div>                            
+					                                </div>
+					                            </div>
+					                            <div class="row">
+					                                <div class="col-xs-4 col-md-4">
+					                                    <div class="form-group">
+					                                        <label for="cardExpiry"> MM</label>
+					                                        <select  class="form-control" name='card_expire_month'>
+					                                          <{for $m=1 to 9}>
+					                                            <option value="<{$m}>">0<{$m}></option>
+					                                          <{/for}>
+					                                            <option value="10">10</option>
+					                                            <option value="11">11</option>
+					                                            <option value="12">12</option>
+					                                        </select>
+					                                    </div>
+					                                </div>
+
+					                                 <div class="col-xs-4 col-md-4">
+					                                    <div class="form-group">
+					                                        <label for="cardExpiry"> YY</label>
+					                                        <select  class="form-control" name='card_expire_year'>
+					                                          <{for $y=16 to 46}>
+					                                            <option value="<{$y}>"><{$y}></option>
+					                                          <{/for}>
+					                                        </select>
+					                                    </div>
+					                                </div>
+
+					                                <div class="col-xs-4 col-md-4 pull-right">
+					                                    <div class="form-group">
+					                                        <label for="cardCVC">CV CODE</label>
+					                                        <input  type="tel"  class="form-control" name="card_security_code" placeholder="CVC" autocomplete="cc-csc"
+					                                        />
+					                                    </div>
+					                                </div>
+					                            </div>
+					                           
+					                    </div>
+					                </div>        
+
+					                <style type="text/css">
+					                  /* CSS for Credit Card Payment form */
+					                  .credit-card-box .panel-title {
+					                      display: inline;
+					                      font-weight: bold;
+					                  }
+					                  .credit-card-box .form-control.error {
+					                      border-color: red;
+					                      outline: 0;
+					                      box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+					                  }
+					                  .credit-card-box label.error {
+					                    font-weight: bold;
+					                    color: red;
+					                    padding: 2px 8px;
+					                    margin-top: 2px;
+					                  }
+					                  .credit-card-box .payment-errors {
+					                    font-weight: bold;
+					                    color: red;
+					                    padding: 2px 8px;
+					                    margin-top: 2px;
+					                  }
+					                  .credit-card-box label {
+					                      display: block;
+					                  }
+					                  /* The old "center div vertically" hack */
+					                  .credit-card-box .display-table {
+					                      display: table;
+					                  }
+					                  .credit-card-box .display-tr {
+					                      display: table-row;
+					                  }
+					                  .credit-card-box .display-td {
+					                      display: table-cell;
+					                      vertical-align: middle;
+					                      width: 50%;
+										  
+									
+
+
+									.credit-card-box1 .panel-title {
+					                      display: inline;
+					                      font-weight: bold;
+					                  }
+					                  .credit-card-box1 .form-control.error {
+					                      border-color: red;
+					                      outline: 0;
+					                      box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+					                  }
+					                  .credit-card-box1 label.error {
+					                    font-weight: bold;
+					                    color: red;
+					                    padding: 2px 8px;
+					                    margin-top: 2px;
+					                  }
+					                  .credit-card-box1 .payment-errors {
+					                    font-weight: bold;
+					                    color: red;
+					                    padding: 2px 8px;
+					                    margin-top: 2px;
+					                  }
+					                  .credit-card-box1 label {
+					                      display: block;
+					                  }
+					                  /* The old "center div vertically" hack */
+					                  .credit-card-box1 .display-table {
+					                      display: table;
+					                  }
+					                  .credit-card-box1 .display-tr {
+					                      display: table-row;
+					                  }
+					                  .credit-card-box1 .display-td {
+					                      display: table-cell;
+					                      vertical-align: middle;
+					                      width: 50%;
+										  
+					                  }
+					                </style>    
+					                <!-- CREDIT CARD FORM ENDS HERE -->
+										<br>
+											<br>
+											
+									<button class="btn btn-primary btn-block btn-large" style="    height: 5rem;">开始购买</button>
+
+									<br>
+									<p ><strong style="color :red;">重要!获取您的门票和优惠券</strong></p>
+									<p >1: 购买后,确认信息将发送到您的个人邮件中(请检查 Junk Mail ) .</p>
+									<p >&nbsp;&nbsp; 其中门票和优惠券将会分别发放邮件,您可能接受到一条或多条邮件.</p>
+									<p >2: 在您的账户中获得订单信息  关注 "墨尔本美食生活" ->我->我的订单.</p>
+								</div>
+
+							</form>
+						
+							<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+							
+							<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$http_root_wx}>coupon1/unimelb';
+        var desc='第7届全澳大学华语辩论邀请赛';//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/images/bianlunsaizhongchou.jpg';
+    </script>
+
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+	</body>
+	</html>

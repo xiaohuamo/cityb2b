@@ -1,0 +1,432 @@
+		<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style>
+	.main-form .input-box span label { width:160px; }
+	.moneyDetail span:nth-child(3){
+		display: inline-block;
+		width: 100px;
+	}
+</style>
+
+<script>
+function call_url(){
+	window.location.href = '<{$http_root_www}>member/myorders';
+}
+
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+			<{include file='member/side.htm'}>
+		
+		<div class="main">
+			<div class="box2">
+				
+				<{include file='member/my_order_submenu.htm'}>
+
+				<div class="main-form form-style-green">
+
+					<div class="input-box input-submit clearfix">
+						
+						<button type="button">
+							<a href="<{$http_root_www}>member/myorders"><{$lang->back_to_list}>	</a>
+						</button>
+						
+						<!-- 商家联系Ubonus -->
+						<button><a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_ubonus}>	</a></button>
+
+						<!-- 客户联系商家 -->
+						<button><a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$data.business_userId}>orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_business}></a></button>
+
+						<{if $data.status==0&&$data.coupon_status=='c01'}>
+						<!-- 未支付&&申领中 -->
+						<button><a href="<{$http_root_www}>member/cancel_order?orderId=<{$data.orderId}>"><{$lang->cancel}></a></button>
+						<{/if}>
+
+						<{if $data.rated==0}>
+						<button><a target='_blank' href="<{$http_root_www}>company/customers_rating_edit?orderId=<{$data.orderId}>"  ><{$lang->customer_review}></a></button>	
+						<{/if}>
+
+						<button class='resend_btn' ><{$lang->resend_email}></button>
+
+						<script type="text/javascript">
+							$('.resend_btn').on('click',function(){
+								var couponId=$(this).data('id');
+								var context =$(this);
+
+								if(confirm('<{$lang->resend_email}> to  <{$data.email}>?')){
+									$.ajax({
+										url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>", 
+										beforeSend: function( xhr ) {
+											context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+										},
+										success: function(result){
+											context.html("已发送");
+											context.css('background-color','#FD5001 ');
+										}
+									})
+								}
+							})
+							
+						</script>
+
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label><{$lang->order_id}></label></span>
+						<{$data.orderId}>
+
+						<small>(<{date('Y-m-d H:i:s', $data.createTime)}>)</small>
+
+						<{$lang->status}>：
+
+						<{if $data.coupon_status=='c01'}>
+							<span style="color:#FD5001 "><{$lang-><{$data.coupon_status}>}></span>
+						<{elseif $data.coupon_status=='b01'}>
+							<span style="color:green"><{$lang-><{$data.coupon_status}>}></span>
+						<{elseif $data.coupon_status=='d01'}>
+							<span style="color:red"><{$lang-><{$data.coupon_status}>}></span>
+						<{/if}>
+						
+					</div>
+
+					<{if $userGroup}>
+						<div class="input-box clearfix">
+							<span><label><{$lang->status}></label></span>
+							<{if $userGroup.status==0}>
+								<span style="color:#FD5001 ">拼单还未完成</span>
+							<{elseif $userGroup.status==1}>
+								<span style="color:green">拼单已经完成</span>
+							<{elseif $userGroup.status==2}>
+								<span style="color:#f30">拼单已经过期</span>
+							<{/if}>
+							<small>(User Group Id : <{$userGroup.id}> <a href="<{$http_root_www}>group_pin/user_group_show?id=<{$userGroup.id}>">查看</a>)</small>
+							
+						</div>
+					<{/if}>
+
+						
+					
+					<img style='width:100px;position: absolute;top: 100px;right: 20px' src='<{$redeemQRCode}>'>
+                    <div class="input-box clearfix">
+						<span><label>配送日期</label></span>
+						<span style='font-weight :500; color:#f30'><{date('Y-m-d ', $data.logistic_delivery_date)}></span>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label><{$lang->order_name}></label></span>
+						<{$data.order_name}></a>
+					</div>
+					
+					<div class="input-box clearfix">
+						<span><label><{$lang->total_amount}></label></span>
+						<{$data.money}></a>
+					</div>
+					
+					<div class="input-box clearfix">
+						<span><label><{$lang->payment}><{$lang->status}></label></span>
+						<{if $data.status==0}>
+						<span style='color:#f30'><{$lang->unpaid}></span>
+						<{elseif $data.status==1}>
+						<span style='color:green'><{$lang->paid}></span>
+						<{elseif $data.status==2}>
+						<span style='color:#FD5001 '>Pending</span>
+						<{/if}>
+						<small><{$lang->payment_type}>:<{$data.payment}></small>
+					</div>
+
+					<{if $data.payment_note}>
+						<div class="input-box clearfix">
+							<span><label>Hcash 支付</label></span>
+
+							<small>支付金额 : <{$data.payment_note.hcash}></small>
+							<small>单号 : <{$data.payment_note.hcash_order_id}></small>
+							<small>标签 : <{$data.payment_note.hcash_order_tag}></small>
+
+							<{if $data.payment_note.note}>
+								<br>
+								<span>客服 Note : <{$data.payment_note.note}></span>
+							<{/if}>
+						</div>
+					<{/if}>
+
+					<{if $data.customer_delivery_option==2}>
+					<div class="input-box clearfix">
+						<span><label><{$lang->deliver_option}></label></span>
+						<{$lang->pick_up}>
+					</div>
+					 <div class="input-box clearfix">
+					 	<span><label><{$lang->pickup_nickname}></label></span>
+						<{$data.pickupname}>
+					</div>
+					 <div class="input-box clearfix">
+						<span><label><{$lang->pickup_address}></label></span>
+						<{$data.pickupaddress}>
+					</div>
+					 <div class="input-box clearfix">
+						<span><label><{$lang->mobile_phone}></label></span>
+						<{$data.pickupphone}>
+					</div>
+
+					<div class="input-box clearfix">
+						<span><label><{$lang->userself_pickinguo_description}></label></span>
+						<br><br>
+							<{$data.pickup_des}>
+						
+						
+					</div>
+
+					<{elseif $data.customer_delivery_option==1}>
+						<div class="input-box clearfix">
+						<span><label><{$lang->deliver_option}></label></span>
+							<{$lang->business_deliver}>
+						</div>
+
+						<{if $data.tracking_id}>
+							<div class="input-box clearfix">
+								<span><label><{$lang->tracking_number}></label></span>
+									<{if $data.tracking_operator=='fastway'}>
+										<a style='color:green' target='_blank' href="https://www.fastway.com.au/tools/track?l=<{$data.tracking_id}>"><{$data.tracking_id}></a> 
+
+									<{elseif $data.tracking_operator=='auspost'}>
+
+										<a style='color:green' target='_blank' href="https://auspost.com.au/parcels-mail/track.html#/track?id=<{$data.tracking_id}>"><{$data.tracking_id}></a> 
+
+									<{/if}>
+
+									
+							</div>
+						<{/if}>
+						<div class="input-box clearfix">
+							<span><label><{$lang->delivery_instructions}></label></span>
+							<br>
+								<{$data.delivery_description}>
+							
+							
+						</div>
+
+					<{/if}>
+
+	          		
+				    <{if $data.payment=='offline'}>
+
+						<div class="input-box clearfix">
+							<span><label><{$lang->payment_instructions_with_underline}></label></span>
+								<br><br>
+									<{$data.offline_pay_des}>
+								
+								
+						</div>
+	                <{/if}>
+
+					
+					<{if $data.message_to_business}>
+					<div class="input-box clearfix">
+						<span><label><{$lang->message_to_business}></label></span>
+						<{$data.message_to_business}>
+					</div>
+					<{/if}>
+
+					<div class="main-list">		
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th><{$lang->products}></th>		
+									<th><{$lang->specification}></th>	
+									<th><{$lang->price}></th>	
+									<th><{$lang->quantity}></th>			
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$items item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>"><{$item.bonus_title}></a></td>
+									
+									<td><{$item.guige_des}></td>
+
+									<td>
+										<{$item.voucher_deal_amount}>
+									</td>
+
+									<td>X <{$item.customer_buying_quantity}></td>
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>			
+					</div>	
+
+
+					<div class='moneyDetail' style="text-align: right;padding: 10px">
+						<{if $moneyDetail.goodsTotal}>
+							<div style="color: #f00;font-weight: bolder;">
+								<span><{$lang->total}></span><span>:</span><span><{$moneyDetail.goodsTotal}></span>
+							</div>
+						<{/if}>
+						
+						<{if $moneyDetail.deliveryFee>0}>
+							<div>
+								<span><{$lang->deliver_fee}></span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
+							</div>
+						<{/if}>
+						<{if $moneyDetail.platformFee>0}>
+							<div>
+								<span><{$lang->platform_reservation_fee}></span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
+							</div>
+						<{/if}>
+						
+
+						<{if $moneyDetail.promotionTotal>0}>
+							<div>
+								<span><{$lang->enter_promotion_code}></span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.useMoney>0}>
+							<div>
+								<span><{$lang->wallet}> <{$lang->online_payment}></span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.transactionSurcharge>0}>
+							<div>
+								<span><{$lang->surcharge_fees}></span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
+							</div>
+						<{/if}>
+
+						<{if $moneyDetail.transactionBalance}>
+							<div style="color: #f00;font-weight: bolder;">
+								<span><{$lang->total_amount}></span><span>:</span><span><{$moneyDetail.transactionBalance}></span>
+							</div>
+						<{/if}>
+					</div>
+
+
+<!--
+					<div class='well'>
+						<{if $data.businessContactPhone}>
+						<p>
+							<{$lang->telephone}>：<{$data.businessContactPhone}>
+						</p>
+						<{/if}>
+
+						<{if $data.businessAddress}>
+						<p>
+							<{$lang->address}>：<{$data.businessAddress}>
+						</p>
+						<{/if}>	
+					</div> -->
+
+					<{if $data.finePrint}>
+						<div class='well'>
+							<span class='label label-info'><{$lang->warm_prompt}></span>
+							<p>
+							 
+									<{$data.finePrint}>
+								
+							
+							
+								
+							</p>
+						</div>
+					<{/if}>
+
+					<{if $data.redeemProcedure}>
+						<div class='well'>
+							<span class='label label-info'><{$lang->how_to_use}></span>
+							<p>
+							   
+									<{$data.redeemProcedure}>
+							
+								
+							</p>
+						</div>
+					<{/if}>
+
+					<{if $data.refund_policy}>
+						<div class='well'>
+							<span class='label label-info'><{$lang->refund_policy}></span>
+							<p>
+							   
+									<{$data.refund_policy}>
+								
+								
+							</p>
+						</div>
+					<{/if}>
+
+
+					<h2 style="padding-left:30px; font-size:16px;"><{$lang->operation_log}></h2>
+						<div class="main-list">
+							<{if $log}>
+								<table cellspacing="0" cellpadding="0" width="100%">
+									<thead>
+										<tr>
+											<th><{$lang->operator}></th>
+
+											<th><{$lang->action}></th>
+
+											<th><{$lang->time}></th>
+										</tr>
+									</thead>
+									<tbody>
+										<{foreach from=$log item=item name='dl'}>
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+											<td><{$item.action_user_name}></td>
+
+											<td><{$lang-><{$item.action_id}>}><br><!-- (<{$item.en_description}>) --></td>
+
+											<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+
+										</tr>
+										<{/foreach}>
+									</tbody>
+								</table>
+								
+							<{else}>
+								<{$lang->no_data}>
+							<{/if}>
+						</div>
+
+						<br>
+						<div class='well'>
+							<p style="text-align: center;">
+								<{$lang->wechat_code}>
+								<br>
+								<img src="<{$SKIN_PATH}>images/ubonus_support.jpeg" width="100px">
+								<br>
+								contact_customer_services：please SMS to 0425 616 988
+							</p>
+						</div>
+				
+					<div class="input-box input-submit clearfix">
+						
+						<button type="button" onClick="call_url();" style='float:right'><{$lang->back_to_list}></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

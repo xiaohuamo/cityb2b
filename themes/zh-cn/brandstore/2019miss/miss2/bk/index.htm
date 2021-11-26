@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>佳丽精彩</title>
+    <!-- zui -->
+    <link href="css/zui.min.css" rel="stylesheet">
+    <style>
+    	.show{
+    		display: block;
+    	}
+    	a:hover,a:focus{
+    		color: #95494e;
+    		text-decoration: none;
+    	}
+    	.font-white{
+    		color: white;
+    	}
+    	.a-menu{
+    		display: flex;
+			  height: 45px;
+				line-height: 45px;
+				background-color: #f6dad7;
+				border-radius: 5px;
+				text-align: center;
+    	}
+    	.flex-1{
+				flex: 1;
+			} 
+    	/*佳丽详情*/
+    	.beauty-detail{
+    		margin-top: 10%;
+    		border: 8px solid #f6dad7;
+    		border-radius: 5px;
+    	}
+    	.flex-beauty-detail{
+    		display: flex;
+    		text-align: center;
+    		color: #95494E;
+    	}
+    	.beauty-detail-info{
+    		background-image: url(img/background.png);
+    		background-repeat:no-repeat;
+    		background-size: cover;
+    		padding: 10px;
+    		color: #514f4f;
+    	}
+    	.beauty-detail-img{
+    		width: 30px;
+    		height: 30px;
+    	}
+    	.flex-beauty-detail span{
+    		margin-left: 10px;
+    	}
+    	
+    	.btn-vote{
+    		color: #636263;
+		    height: 30px;
+		    line-height: 30px;
+		    background-color: #f6dad7;
+		    border-radius: 4px;
+		    margin-left: 30px;
+		    margin-right: 30px;
+		    margin-top: 20px;
+		    margin-bottom: 20px;
+    	}
+    	
+    	/*佳丽视频*/
+    	.beauty-video{
+    		margin-top: 20px;
+    		margin-bottom: 20px;
+		    height: 45px;
+		    border: 2px solid #ffadc4;
+		    border-radius: 3px;
+		    line-height: 45px;
+		    text-indent: 20px;
+		    color: #95494e;
+    	}
+    	.down{
+			  margin: 10px auto;
+			  display: block;
+			  width: 25px;
+			}
+		
+			.tip{
+				background-color: #ffadc4;
+		    border-radius: 3px;
+		    padding: 10px;
+		    margin-bottom: 15px;
+			}
+			
+			.more-product{
+				width: 100px;
+		    height: 35px;
+		    line-height: 35px;
+		    color: #636263;
+		    border: 2px solid #ffadc4;
+		    border-radius: 5px;
+		    text-align: center;
+		    margin: 0px auto;
+			}
+			
+			
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px){
+				.container {
+			    max-width: 740px;
+					font-size: 25px !important;
+				}
+				.a-menu{
+					height: 56px;
+					line-height: 56px;
+				}
+				/*佳丽详情*/
+				.beauty-detail{
+	    		margin-top: 6%;
+	    	}
+	    	.beauty-detail-info{
+	    		background-image: url(img/background@3x.png);
+	    		padding: 25px;
+	    	}
+	    	.beauty-detail-img{
+	    		width: auto;
+	    		height: auto;
+	    	}
+	    	.flex-beauty-detail span{
+	    		margin-left: 15px;
+	    	}
+	    	
+	    	.btn-vote{
+			    height: 70px;
+			    line-height: 70px;
+			    border-radius: 10px;
+			    margin-left: 70px;
+			    margin-right: 70px;
+			    margin-top: 35px;
+			    margin-bottom: 35px;
+	    	}
+	    	/*佳丽视频*/
+	    	.beauty-video{
+	    		margin-top: 50px;
+	    		margin-bottom: 50px;
+			    height: 87px;
+			    line-height: 87px;
+	    	}
+	    	.down{
+				  margin: 15px auto;
+				  width: 40px;
+				}
+	    	.tip{
+	    		padding: 20px;
+	    		margin-bottom: 25px;
+	    	}
+	    	.more-product{
+	    		width: 180px;
+			    height: 60px;
+			    line-height: 60px;
+	    	}
+	    	
+	    	
+			}
+			
+			
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width: 992px){
+				.container {
+			    max-width: 960px;
+			    font-size: 25px;
+				}
+			}
+			@media (min-width: 1200px){
+    		.container {
+			    max-width: 960px !important;
+			    width: 960px !important;
+			    font-size: 25px;
+				}
+    	}
+			
+    </style>
+    
+  </head>
+  <body>
+	  <div class="container">
+	  	<div id="top">
+	  		<img src="img/banner.png" />
+	  		
+	  		<div class="a-menu">
+				  <a class="flex-1 font-white" href="#">佳丽报名</a>
+	  			<a class="flex-1 font-white" href="#">人气投票</a>
+	  			<a class="flex-1 font-white" href="#">直播风采</a>
+	  			<a class="flex-1 font-white" href="#">活动订票</a>
+	  			<a class="flex-1 font-white" href="#">赞助合作</a>
+				</div>
+	  	</div>
+	  	<div class="beauty-detail">
+	  		<div class="beauty-detail-info">
+	  			<p>陈彦君&nbsp;&nbsp;&nbsp;&nbsp;(Michelle Chen)  <span style="color: #e95365;">439号</span></p>
+	  			<div class="flex-beauty-detail">
+	  				<p class="flex-1"><img class="beauty-detail-img" src="img/fire.png"/><span>人气</span></p>
+	  				<p class="flex-1"><img class="beauty-detail-img" src="img/star.png"/><span>商业人气</span></p>
+	  				<p class="flex-1"><img class="beauty-detail-img" src="img/prize.png"/><span>奖金</span></p>
+	  			</div>
+	  			<div class="flex-beauty-detail">
+	  				<p class="flex-1">23456</p>
+	  				<p class="flex-1">2323</p>
+	  				<p class="flex-1">43657</p>
+	  			</div>
+	  			<div>年龄：22 职业：学生 特长：芭蕾舞 兴趣爱好：电影，看书，旅行</div>
+	  			<div>我读的书愈多，就愈亲近世界，愈明了生活的意义，愈觉得生活的重要。——高尔基</div>
+	  		</div>
+	  		
+	  		
+	  		<div id="myNiceCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+				  <!-- 轮播项目 -->
+				  <div class="carousel-inner">
+				    <div class="item active">
+				      <img alt="First slide" src="img/beautyweb.png">
+				    </div>
+				    <div class="item">
+				      <img alt="Second slide" src="img/beautyweb.png">
+				    </div>
+				    <div class="item">
+				      <img alt="Third slide" src="img/beautyweb.png">
+				    </div>
+				  </div>
+				
+				  <!-- 项目切换按钮 -->
+				  <a class="left carousel-control" href="#myNiceCarousel" data-slide="prev">
+				    <span class="icon icon-chevron-left"></span>
+				  </a>
+				  <a class="right carousel-control" href="#myNiceCarousel" data-slide="next">
+				    <span class="icon icon-chevron-right"></span>
+				  </a>
+				</div>
+	  	</div>
+			
+			<div class="flex-beauty-detail ">
+				<div onclick="voteDaily()" class="flex-1 btn-vote">每日投票</div>
+				<div  class="flex-1 btn-vote">批量投票</div>
+			</div>			
+			<img id="scanImg" src="img/erweima.png" hidden="hidden"/>
+			
+			<div class="beauty-video">佳丽视频</div>
+			<div style="width: 100%;">
+				<video style="width: 100%;" controls>
+					<source src="https://www.runoob.com/try/demo_source/mov_bbb.mp4">
+				</video>
+				<div class="panel-group" id="accordionPanels" aria-multiselectable="true">
+				  <div class="panel panel-default">
+				    <div class="panel-heading" id="headingOne">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordionPanels" href="#collapseOne">
+				          <!--<img onclick="loadMore()" class="down" src="img/down.png" />-->
+									<img  class="down" src="img/down.png" />
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseOne" class="panel-collapse collapse">
+				      <div class="panel-body">
+				      	<video class="showVideo"  style="width: 100%;" controls>
+									<source src="https://www.runoob.com/try/demo_source/movie.mp4">
+								</video>
+								<video class="showVideo" style="width: 100%;" controls>
+									<source src="https://www.runoob.com/try/demo_source/movie.mp4">
+								</video>
+								<video class="showVideo"  style="width: 100%;" controls>
+									<source src="https://www.runoob.com/try/demo_source/movie.mp4">
+								</video>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			
+			<div class="beauty-video">商业人气<span style="color: #747077;">(商城销售：$56221)</span></div>
+			<div class="tip font-white">规则：在佳丽商城购买产品，没消费1$，可以帮助佳丽增加一票，并累计在礼物总额中！购买后可以自己使用，也可以送给佳丽</div>
+			<img src="img/vote.png" />
+			
+			<div class="cards cards-borderless">
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/yashua.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #424141;">电动牙刷澳洲</strong></div>
+			      <div class="card-content text-center"><span style="color: #f1668f;">$133</span></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/yashua.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #424141;">电动牙刷澳洲</strong></div>
+			      <div class="card-content text-center"><span style="color: #f1668f;">$133</span></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/yashua.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #424141;">电动牙刷澳洲</strong></div>
+			      <div class="card-content text-center"><span style="color: #f1668f;">$133</span></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/yashua.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #424141;">电动牙刷澳洲</strong></div>
+			      <div class="card-content text-center"><span style="color: #f1668f;">$133</span></div>
+			    </a>
+			  </div>
+			</div>
+			<div class="more-product" onclick="loadMore()">更多产品</div>
+			
+			<div class="beauty-video">佳丽奖金<span style="color: #747077;">(累计奖金：$25342)</span></div>
+			<div class="tip font-white">规则：为佳丽购买Ubouns购物券，每花费1$，可以为佳丽获得3个人气点，并为佳丽增加$0.5奖金。</div>
+			<div class="text-center">
+			<div class="cards cards-borderless">
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/youhuiquan.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;">$133购物券</strong></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/youhuiquan.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;">$133购物券</strong></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/youhuiquan.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;">$133购物券</strong></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="###">
+			      <img src="img/youhuiquan.png" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;">$133购物券</strong></div>
+			    </a>
+			  </div>			  
+			</div>
+			</div>
+			
+			<div class="beauty-video">佳丽生活</div>
+			<img src="img/broadcast.png" />
+			<h3 style="color: #f1668f;">陈彦君 <span>☆</span></h3>
+			<div class="tip font-white">我读的书愈多，就愈亲近世界，愈明了生活的意义，愈觉得生活的重要。——高尔基</div>
+			
+			
+			<div class="beauty-video">赞助商</div>
+			<div class="text-center" ><img src="img/sponsor.png" /></div>
+			
+			<div class="beauty-video">协办及媒体</div>
+			<div class="text-center" ><img src="img/sponsor.png" /></div>
+			
+			<div class="beauty-video">指定机构</div>
+			<div class="text-center" ><img src="img/sponsor.png" /></div>
+			
+			<img class="text-center" src="img/bottom.png" />
+	  </div>
+
+    <!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <!-- ZUI Javascript组件 -->
+    <script src="js/zui.min.js"></script>
+    <script>
+    function	voteDaily(){
+    	$('#scanImg').addClass('show');
+    }
+    function loadMore(){
+    	alert('执行加载更多');
+    }
+    </script>
+  </body>
+</html>

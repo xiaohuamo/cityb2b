@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post"  enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2">编辑商品</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">标题</td>
+					<td class="editRtTd"><input name="data[title]" style="display: inline-block;width: 70%" value='<{$data.title}>' class="text"></input></td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">副标题</td>
+					<td class="editRtTd"><input name="data[coupon_summery_description]" value="<{$data.coupon_summery_description}>" type="text" size="60" class="text" /></td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">发布</td>
+					<td class="editor">
+						<input name="data[status]" value="0" type="radio" id="status0"<{if $data.status==1}> checked<{/if}> /><label for="status0">取消发布</label><br />
+						
+						<input name="data[status]" value="4" type="radio" id="status4"<{if $data.status==4}> checked<{/if}> /><label for="status4">发布</label><br />
+					</td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">审批状态</td>
+					<td class="editor">
+						<input name="data[isApproved]" value="0" type="radio" id="isApproved0"<{if $data.isApproved==0}> checked<{/if}> /><label for="isApproved0">审核未通过</label><br />
+						
+						<input name="data[isApproved]" value="1" type="radio" id="isApproved1"<{if $data.isApproved==1}> checked<{/if}> /><label for="isApproved1">审核通过</label><br />
+					</td>
+				</tr>
+
+
+				<tr class="editTr">
+					<td class="editLtTd">原价</td>
+					<td class="editRtTd"><input name="data[voucher_original_amount]" value="<{$data.voucher_original_amount}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">现价</td>
+					<td class="editRtTd"><input name="data[voucher_deal_amount]" value="<{$data.voucher_deal_amount}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+
+				<tr class="editTr">
+					<td class="editLtTd">商家</td>
+					<td class="editRtTd">
+						 <{$data.businessName}> - ID：<{$data.createUserId}> 
+					</td>
+				</tr>
+			
+				<tr class="editTr">
+					<td class="editLtTd">类型<{$types.id}></td>
+					<td class="editRtTd">
+						<div id="bonusTypeWrapper">
+							<{foreach from=$types item=item}>
+								<input type="radio" name="data[bonusType]" value="<{$item.id}>" id="bonusType<{$item.id}>"<{if $data.bonusType==$item.id}> checked<{/if}> /><label for="bonusType<{$item.id}>"><{$item.name}></label>
+							<{/foreach}>
+						</div>
+					</td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">客户信息对商家可见</td>
+					<td class="editRtTd"><input name="data[visibleForBusiness]" id="visibleForBusiness1" value="1" type="checkbox"<{if $data.visibleForBusiness}> checked<{/if}> /><label for="visibleForBusiness1">可见</label></td>
+				</tr>
+				
+
+				<tr class="editTr">
+					<td class="editLtTd">语言服务类型</td>
+					<td class="editRtTd"><select name="data[languageType]" class="ahibw">
+						<option value="">请选择</option>
+						<option value="en"<{if $data.languageType=='en'}> selected<{/if}>>english only</option>
+						<option value="zh"<{if $data.languageType=='zh'}> selected<{/if}>>chinese only</option>
+						<option value="zh-en"<{if $data.languageType=='zh-en'}> selected<{/if}>>chinese&english</option>
+					</select></td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">关联产品推荐</td>
+					<td class="editRtTd">
+						<input name="data[relatedProduct]" value="<{$data.relatedProduct}>" style="display: inline-block;width: 70%" type="text" class="text" placeholder="Eg:2541#1251#1234#4514"/>
+						<br>
+						<small>手动输入的关联产品会显示在产品详情页底部的推荐产品中</small>
+					</td>
+					
+				</tr>
+
+
+				<tr class="editTr">
+					<td class="editLtTd">平台佣金比例</td>
+					<td class="editRtTd"><input name="data[platform_commission_rate]" value="<{$data.platform_commission_rate}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">平台佣金固定值</td>
+					<td class="editRtTd"><input name="data[platform_commission_base]" value="<{$data.platform_commission_base}>" type="text" size="30" class="text" /></td>
+				</tr>
+
+			
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

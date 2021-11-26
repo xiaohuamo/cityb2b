@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+   <meta name="keywords" content="<{$pageKeywords}>" />
+   <meta name="description" content="<{$pageDescription}>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+
+	
+	
+	
+<link rel="stylesheet" href="/themes/zh-cn/mobile/css/style_food.css" />
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+	<style type="text/css">
+		.coupon_option{
+			border: 1px solid #FD5001 ;
+			padding: 5px 5px;
+			margin: 0px 0px;
+		}
+
+		.coupon_option .title{
+			color: #000;
+    		font-size: 0.45rem;
+		}
+		.coupon_option .price{
+			
+		}
+
+		.coupon_option .quantity{
+
+		}
+
+		.coupon_option .quantity i{
+			color:#FD5001 ;
+			font-size: 20px;
+		}
+
+		.coupon_option .quantity .input-quantity{
+			width: 30px;
+			text-align: center;
+			border:none;
+			font-size: 15px;
+		}
+		.coupon_option .quantity .stock{
+			font-size: 10px;
+			color: #999;
+			text-align: right;
+		}
+
+		.coupon_option .description{
+			border-top: 1px solid #ddd;
+			line-height: 17px;
+			padding-top: 10px;
+			color: #FD5001;
+			font-size: 12px;
+
+		}
+		.coupon_option .spec-num{
+		
+		}
+		.h2, h2{
+		font-size: .45rem;  
+		text-align: center;  
+		line-height: 1.5rem; 
+		margin: 0;  
+		font-weight: normal;
+		
+		}	
+		#hd{
+		    background-color: rgba(251, 194, 61,0.75);
+			}
+		.h1, h1 {
+    font-size: 17px;
+	    margin-top: 5px;
+    margin-bottom: 5px;
+    }
+    .comm-pic {
+       margin-top: -1.5rem;
+   }
+   
+   
+   
+  .item .right-sec .title{
+    font-size: 14px;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    height: 1.4rem;
+    margin-top: 0.1rem;
+  }
+
+  .item .right-sec .title a{
+      text-decoration: none;
+      color: inherit;
+  }
+
+  .item .right-sec .businessName{
+    font-size: 14px;
+    m;
+    color: #06c1ae;
+    font-weight: 700;
+    margin-top: -0.3rem;
+  }
+
+  .item .right-sec .rating{
+    display: inline-block;
+  }
+
+   .item .right-sec .rating img{
+    width: 0.4rem;
+  }
+
+  .item .right-sec .price{
+   font-size: 15px;
+   color: #FF9800;
+    font-weight: 600;
+	
+	
+  }
+
+  .item .right-sec .price s{
+    color: #726262;
+    font-size: 15px;
+    font-weight: 200;
+	padding-left: 0.2rem;
+  }
+
+  .item .right-sec .price em{
+    width: 2rem;
+    height: 1rem;
+    border: 1px #FF9800 solid;
+    color: #FF9800;
+    font-size: 15px;
+    padding-left: 0.2rem;
+  }
+   .item .right-sec .price em1{
+  
+	
+    color: #FD5001 ;
+    font-size: 16px;
+    float:right;
+  }
+  
+   .search-result .item{
+    border-bottom: 1px solid #eee;
+    height:5.5rem;
+	margin-left: 8px;
+	padding-top: 0.4rem;
+  }
+
+   .search-result .item .top-sec .left-sec1{
+   float:left;
+	    padding-left: 0.2rem;
+		color: #FF9800;
+	 
+  }
+  .search-result .item .top-sec .right-sec1{
+   float:right;
+  
+  color: #a59696;
+  padding-right: 0.9rem;
+	 
+  }
+  .search-result .item .top-sec{
+    height:1.1rem;
+	width:100%;
+    font-size: 15px;
+	 
+  }
+ 
+  .search-result .item .left-sec{
+    display: inline-block;
+    width: 95px;
+    float: left;
+    padding: 1%;
+  }
+
+  .search-result .item .left-sec img{
+    width: 100%;
+	padding: 0px;
+  }
+
+  .search-result .item .right-sec{
+    margin-right:0.5rem;
+    padding: 2%;
+    margin-left: 90px;
+    position: relative;
+  }
+
+
+.rich_media_tool .meta_primary {
+    margin-right: 20px;
+}
+
+.rich_media_tool .meta_primary {
+    float: left;
+    margin-right: 10px;
+}
+.js-roll1 {
+    text-align: center;
+    line-height: 1.5rem;
+}
+.js-roll1 span {
+     position: relative;
+    padding: 0 .2rem;
+    font-size: .37rem;
+    color: #808080;
+}
+	</style>
+
+	
+<style type="text/css">
+.vote-header{
+	font-size: 28px;
+    font-weight: 300;
+    color: #2f2f2f;
+    text-align: center;
+    padding: 50px 0px 13px 0px;
+}
+.vote-breaker{
+	background: #2bb8aa;
+    width: 38px;
+    height: 10px;
+    margin: auto;
+}
+.vote-desc{
+	max-width: 650px;
+    margin: auto;
+    padding: 20px 0px 40px 0px;
+    text-align: center;
+}
+.container{
+	margin: auto;
+	left: 0px;
+	right:0px;
+	
+}
+.voting_item_container{
+    display: inline-block;
+   
+    margin: 1rem 0rem;
+}
+
+.voting_item_container .top-section{
+	position: relative;
+	
+	background-color: #fff;
+}
+
+.voting_item_container .top-section .title{
+	position: absolute;
+    height: 50px;
+    /* margin-top: 10px; */
+    float: left;
+    top: 2.9rem;
+    color: #fff;
+    left: 0.6rem;
+    font-size: 0.6rem;
+    font-weight: 550;
+    margin-right: 0.6rem;
+	
+}
+
+
+.voting_item_container .mid-section{
+	position: relative;
+	height: 50px;
+	
+}
+.voting_item_container .bottom-section{
+	
+	position: relative;
+	height: 150px;
+	overflow: hidden;
+}
+ .detail{
+	position: absolute;
+    bottom: 0px;
+    cursor: pointer;
+    line-height: 30px;
+    height: 30px;
+    padding: 0px 18px;
+    font-size: 15px;
+    color: #777;
+    border: 1px solid #777;
+    border-radius: 24px;
+    left: 0;
+    right: 0;
+    width: 60px;
+    margin: auto;
+}
+
+.rank{
+	-webkit-box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	margin-top: -2.6rem;
+    /* margin: auto; */
+    width: 40px;
+    height: 40px;
+    left: 0;
+    right: 0;
+    background: #f2f2f2;
+    border-radius: 36px;
+    border: 1px solid #fff;
+    opacity: 0.9;
+}
+.rank .order_label{
+	    font-size: 12px;
+    text-align: center;
+    display: block;
+    margin-top: 3px;
+
+}
+.rank .order{
+	color: #3bb8aa;
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+    margin-top: -5px;
+}
+.vote-statics{
+	padding-left: 10%;
+	
+	padding-right: 0px;
+}
+.vote-statics .count_label{
+	    font-weight: 500;
+	font-size: 15px;
+}
+.vote-statics .count{
+	font-size: 14px;
+}
+.vote-statics .count_change{
+	position: relative;
+	color:#f33;
+	font-weight: bolder;
+	font-size: 19px;
+}
+.vote-btn-bg{
+	position: absolute;
+    top: 0.8rem;
+   
+    padding: 5px 9px;
+    background: #2bb8aa;
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.vote-btn{
+	
+}
+.voted{
+	color:#FD5001 ;
+}
+.rank-first{
+	
+}
+.rank-second{
+	
+}
+.rank-thired{
+	
+}
+</style>
+
+
+<script type="text/javascript">
+	$(function(){
+		$('.vote-btn-bg').on("click",function(){
+			<{if !$loginUser}>
+				alert('请先登录！');
+				window.location.href = '<{$http_root_www}>member/login?returnUrl=/voting/show?id=' + '<{$voting.id}>';
+			<{else}>
+			   
+				if($(this).hasClass('disable'))return;
+				$target = $(this).find('.vote-btn');
+				if($target.hasClass('voted')){
+					withdrawAjax($target);
+					$('#wechat-'+$target.data('id')).css("display",'none');
+				}else{
+					voteAjax($target);
+						$('#wechat-'+$target.data('id')).css("display",'');
+				}
+			
+				
+			<{/if}>
+			
+		})
+	})
+
+	function count_change(obj,value){
+		if(value==0)return;
+		if(value>0){
+			displayValue="+" + Math.abs(value);
+		}
+		if(value<0){
+			displayValue="- " + Math.abs(value);
+		}
+		var id = $(obj).data('id');
+
+		$count = $('div.vote-statics[data-id="'+id+'"]').find('.count');
+		console.log($count);
+		$count.html(parseInt($count.html()) + parseInt(value));
+
+		$target=$('div.vote-statics[data-id="'+id+'"]').find('.count_change');
+		$target.css('opacity','1').css('top','0');
+
+		$target.html(displayValue);
+		$target
+		.stop( true, false )
+		.animate({"top":"-=10px"},500)
+		.animate({opacity:0},1000);
+
+	}
+
+	function voteAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/vote_ajax",
+			data:{id:id},
+			
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-o-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-up').addClass('voted');
+				count_change(obj,+1);
+			},
+			error:function(){
+
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+
+	function withdrawAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/withdraw_vote_ajax",
+			data:{id:id},
+
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-o-up').removeClass('voted');
+				count_change(obj,-1);
+			},
+			error:function(){
+				
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+function myfun()
+　　{
+
+ 　   	$("img[name='content_img']").each(function(){
+       
+		$(this).attr('alt',"<{$pageKeywords}>");
+		//alert($(this).attr("alt"));
+　　})
+}
+　　/*用window.onload调用myfun()*/
+　　window.onload = myfun;//不要括号
+</script>
+	
+	
+</head>
+<body id='body1' class="bg-1" style=" background-color: #fff; margin:auto;   max-width: 768px!important;">
+	 <nav id="header_menu" class="fixed" style=" display:none;        margin: auto;  position: fixed;    width: 100%;    top: 0;    z-index: 99;    height: 40px;">
+            <ul class="g-ul m-tab3" style="border-bottom: 0px #e0e0e0 solid;background-color: #FD5001 ;    opacity: 0.6;" >
+                <li style="width:20%" class="nav-btn on" ><a  href="/articlelist?type=1" style="    line-height: 0.8rem;">最新</a></li>
+                <li style="width:20%" ><a   href="/articlelist?type=2" style="    line-height: 1rem;">精选</a></li>
+				<li style="width:20%" ><a  href="/articlelist?type=3" style="    line-height: 1rem;">吃货攻略</a></li>
+                <li style="width:20%" ><a  href="/articlelist?type=4" style="    line-height: 1rem;">餐厅活动</a></li>
+				<li style="width:20%" ><a  href="/articlelist?type=5" style="    line-height: 1rem;">美文</a></li>
+            </ul>
+        </nav>
+
+		
+		<div  id="bd1"class="comm-tit" style=" margin-top: 1rem;   border-bottom: 0px solid #e0e0e0;max-width: 768px;
+    margin: auto;">
+	
+				<p style="    font-size: 22px;        margin-top: 30px; line-height: 1.4;    margin-bottom: 14px;    font-weight: 480;"><{$article.title}></p>
+				
+                <p><a style="  font-size: 15px;  color: #576b95;    text-decoration: none;    -webkit-tap-highlight-color: rgba(0,0,0,0);"><{$businessDisplayName}></a>&nbsp; 
+<span id='datetime' style=" color: rgba(0,0,0,0.3);font-size: 15px;"></span></span></p>
+			
+
+			
+			</div>
+		
+			
+	<section id="bd5" style=" background-color: #fff; margin-top:-1.5rem; margin-bottom:0.8rem; max-width:768px;margin: auto; ">
+		
+        
+		   <{if $article.votingId}>
+		   <div class="container" style="    max-width: 768px;">
+			<br><hr>
+			<!--<h1 class='vote-header'style="font-size: 22px;    line-height: 1.4;    margin-bottom: 14px;    font-weight: 480;    max-width: 100%;"><{$voting.title}></h1>
+			<div class='vote-breaker'></div> -->
+			<p class='vote-desc' style="font-size:24px;font-weight:600;color:red;">参加美食评选抽大奖!!!</p>
+			<p class='vote-desc' style="font-size:24px;font-weight:600;color:red;">可获得海中之王(Ocean King ) 大礼包和其它大奖共计88份!!!</p>
+			<div style="">
+				<{foreach from=$list item=item}>
+					<div class='voting_item_container'>
+							<div class='top-section col-xs-6' style="padding-right: 2px;    padding-left: 2px;">
+								
+									<img src="<{$UPLOAD_PATH}><{$item.pic}>" width='100%' style="height: 3.5rem;">
+								
+								
+								<div class='rank'>
+									<span class='order_label'>排名</span><span class='order <{if $item.rank==1}>rank-first<{/if}> <{if $item.rank==2}>rank-second<{/if}> <{if $item.rank==3}>rank-thired<{/if}>'><{$item.rank}></span>
+								</div>
+								<!--<div class=" title" > 
+								<{$item.title|truncate_cn:80:'..'}>
+								</div> -->
+							</div>
+							
+							<div class='mid-section col-xs-6' style="padding-right: 2px;    padding-left: 2px;">
+							<div class=' col-xs-12 ' data-id='<{$item.id}>'  style="padding-right: 2px;  font-size:12px;    height: 1.2rem;  padding-left: 2px;">
+									<{$item.title|truncate_cn:140:'..'}>
+								</div>
+							<div class='col-xs-12 vote-statics' data-id='<{$item.id}>'style="padding-right: 2px;    padding-left: 2px;">
+							<{if $item.voted==true}>
+								
+								<span class='vote-btn-bg vote-statics' style="padding: 0px 6px;" data-id='<{$item.id}>'>
+								  <i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-up vote-btn voted'></i>
+								 <span class='count_label'></span><span class='count'><{$item.vote_count}></span>&nbsp<span class='count_change'></span>
+								  </span>
+								  <{else}>
+								  <span class='vote-btn-bg vote-statics' style="padding: 0px 6px;"  data-id='<{$item.id}>'>
+								  <i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-up vote-btn '></i>
+								 <span class='count_label'></span><span class='count'><{$item.vote_count}></span>&nbsp<span class='count_change'></span>
+								  </span>
+								  
+								  <{/if}>
+							</div>
+							
+								
+								
+								<div class='col-xs-12'  style="padding-right: 2px">
+								<{if $item.couponid}>
+								<span class='vote-btn-bg' style ="right: 0;   background: #FD5001 ;">
+								
+								  <a href="<{$http_root_www}>coupon1/<{$item.couponid}>">券</a>
+								  
+								  </span>
+								<{/if}>
+								</div>
+							</div>
+							
+								<div id='wechat-<{$item.id}>'  style="<{if $item.voted}>display:none;<{else}>display:none;<{/if}>  margin-top: 3rem;margin-bottom: -1.0rem;">
+								
+									<section data-role="outer" label="Powered by 135editor.com" style="font-size:16px;font-family:微软雅黑;"><section class="_135editor" data-tools="135编辑器" data-id="93677" style="border: 0px none; box-sizing: border-box;"><section style="padding: 1em; box-sizing: border-box;"><section data-width="100%" style="width: 100%; border-width: 1px; border-style: dashed; border-color: rgb(118, 85, 60); box-sizing: border-box;"><section style="margin-top: -1em; text-align: center;"><section style="padding: 5px 1em; display: inline-block; background: rgb(118, 85, 60); color: rgb(255, 255, 255); border-radius: 10px; box-sizing: border-box;"><section class="135brush" data-brushtype="text" style="font-size: 14px;">长按二维码，参与抽大奖</section></section><section style="padding: 0.8em 0.6em; box-sizing: border-box;"><section style="background: #f0c44e; color: #ffffff;"><section style="display: flex; justify-content: space-between; align-items: center; background: url(&quot;https://mmbiz.qpic.cn/mmbiz_png/6xXnThFcMTS7uOeH6KibH8yXRJApqgLklhy0acVJZvqFYJxWxAbJW4DzQrJ258a2oq2sPcX0GX9AfRvuhESB4icQ/640?wx_fmt=png&quot;) center center / cover;"><section data-width="100%" style="width: 100%; display: inline-block; font-size: 15px;"><section class="135brush" data-brushtype="text"><p><span style="font-size: 24px; color: #0070c0;"><strong>开始抽奖 88份精美大奖</strong></span></p></section></section><section style="padding: 10px; width: 150px; box-sizing: border-box;"><img class="" src="/themes/zh-cn/images/2019lottery1.jpg" data-type="jpg" data-w="258" data-width="100%" title="qrcode_for_gh_e82fc2596a04_258 (1)_看图王.jpg" style="display: block; width: 100%;"></section></section></section></section></section></section></section></section></section>
+								</div>
+							
+					</div>
+				<{/foreach}>
+			</div>
+	</div>
+	<{else}><!--
+			<section data-role="outer" label="Powered by 135editor.com" style="font-size:16px;font-family:微软雅黑;"><section class="_135editor" data-tools="135编辑器" data-id="93677" style="border: 0px none; box-sizing: border-box;"><section style="padding: 1em; box-sizing: border-box;"><section data-width="100%" style="width: 100%; border-width: 1px; border-style: dashed; border-color: rgb(118, 85, 60); box-sizing: border-box;"><section style="margin-top: -1em; text-align: center;"><section style="padding: 5px 1em; display: inline-block; background: rgb(118, 85, 60); color: rgb(255, 255, 255); border-radius: 10px; box-sizing: border-box;"><section class="135brush" data-brushtype="text" style="font-size: 14px;">长按二维码，参与抽大奖</section></section><section style="padding: 0.8em 0.6em; box-sizing: border-box;"><section style="background: #f0c44e; color: #ffffff;"><section style="display: flex; justify-content: space-between; align-items: center; background: url(&quot;https://mmbiz.qpic.cn/mmbiz_png/6xXnThFcMTS7uOeH6KibH8yXRJApqgLklhy0acVJZvqFYJxWxAbJW4DzQrJ258a2oq2sPcX0GX9AfRvuhESB4icQ/640?wx_fmt=png&quot;) center center / cover;"><section data-width="100%" style="width: 100%; display: inline-block; font-size: 15px;"><section class="135brush" data-brushtype="text"><p><span style="font-size: 24px; color: #0070c0;"><strong>开始抽奖 88份精美大奖</strong></span><span style="font-size: 18px;"><strong> 日料 火锅</strong></span></p><p><span style="font-size: 18px;"><strong>烧烤 麻辣烫</strong></span></p></section></section><section style="padding: 10px; width: 150px; box-sizing: border-box;"><img class="" src="/themes/zh-cn/images/2019lottery1.jpg" data-type="jpg" data-w="258" data-width="100%" title="qrcode_for_gh_e82fc2596a04_258 (1)_看图王.jpg" style="display: block; width: 100%;"></section></section></section></section></section></section></section></section><p style="font-family: 微软雅黑;"><br></p></section>
+	-->
+	<{/if}>
+	
+	<div class="sec-product" style="    width: 97%;       padding-left: 3%;background-color: #fff;">
+        <!--  <div style=" margin-bottom: 0.3rem;"><img src="<{$UPLOAD_PATH}><{$article.pic}>" width="100%" height="auto"  /></div> -->
+			
+
+			   <{str_replace('white-space: pre-wrap;','',str_replace(' src=',' data-src=',str_replace('<img','<img name="content_img"   class="lazyload"',$article.content)))}>
+			</div>
+			<div class="rich_media_tool" id="js_toobar3" style="    margin-top: 1.2rem; margin-bottome:2rem;">
+
+                                            <a class="media_tool_meta meta_primary" id="js_view_source" href="<{$http_root_wwww}><{$article.link}>" style="      margin-bottom: 16px;
+    margin-left: 10px;  color: #576b95;    text-decoration: none;    -webkit-tap-highlight-color: rgba(0,0,0,0);">阅读Ubonus原文</a>
+                                <div id="js_read_area3" class="media_tool_meta tips_global_primary meta_primary" style=" color: #576b95;    text-decoration: none;    -webkit-tap-highlight-color: rgba(0,0,0,0);">阅读 <span id="readNum3"><{$article.hits}></span></div>
+
+                <span  class="media_tool_meta meta_extra meta_praise" id="like3" style=" color: #576b95;    text-decoration: none;    -webkit-tap-highlight-color: rgba(0,0,0,0);">
+                    <i class="icon_praise_gray"></i><span class="praise_num"  style ="display :none;" id="likeNum3"></span>
+                </span>
+
+                
+
+            </div>
+	    
+		<!--	<div ><img src="<{$SKIN_PATH}>images/article/header-ubonus-ad1.jpg" width="100%" height="auto"  /></div> -->
+			   		
+
+			
+			
+		</div>
+		<div class="search-result" id="search-result" style="  min-height: auto;   max-width: 786px;    margin: auto; margin-top:3rem;">
+
+			<{$result_section}>
+		</div >
+
+ 
+      <div class='loading' >
+        <!--<i class='fa fa-spinner fa-pulse'></i>
+        <em>加载中...</em> -->
+      </div>
+	 
+  </div>
+
+  
+  <div  style=" margin-bottom: 0.3rem;">
+
+<iframe id="video" width="100%"  src="https://www.youtube.com/embed/dqDBjB6-w0M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>			
+
+
+
+<div class="rich_media_tool" >
+
+     <a class="media_tool_meta meta_primary" id="js_view_source" href="<{$http_root_www}>coupon1/4942" style="      margin-bottom: 16px;
+    margin-left: 10px;  color: #576b95;  float:right;  text-decoration: none;    -webkit-tap-highlight-color: rgba(0,0,0,0);">内容详情>></a>
+    </div>
+	    
+</div>
+  
+	<div class="js-roll1" style=" margin-top: 1rem; line-height: 0.5rem;">
+	<!--<span style="font-size: 15px;line-height: 0.5rem;">Ubonus美食生活-微奖网</span>--></div>
+	
+	<div class="h2" style="       padding: 0 .2rem;     font-size: 15px;  color: #808080;">
+	<a href="/index1">www.ubonus365.com</a>
+	
+	</div>
+   <div id="footer1" style="display:none;" >
+		   <{include file='mobile/mobile_footer.htm'}> </div>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+	<script>
+	    $(document).ready(function($) {
+	         function IsPC() {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = ["Android", "iPhone",
+                      "SymbianOS", "Windows Phone",
+                      "iPad", "iPod"];
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+              if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                  flag = false;
+                 break;
+             }
+         }
+		//  alert(flag);
+         return flag;
+      }
+		//alert(<{$article.createTime}>);
+	    var datat = new Date(<{$article.createTime}>*1000);
+	 
+		var datetime= datat.format('yyyy-MM-dd');
+		$('#datetime').html(datetime);
+		
+		
+		var display_footer_menu_top =$('#js_toobar3').offset().top-500;
+	    var video_height=250;
+	  if(IsPC()){
+	  $('#body1').width(768);
+	  $('#video').height(432);
+	// alert(video_height);
+	  }else{
+	 // alert(document.body.clientWidth);
+	  var screen_width =document.body.clientWidth;
+	  video_height =screen_width *9/16;
+	  // $('#body1').width(document.body.clientWidth);
+	// alert(video_height);
+	   $('#video').height(video_height);
+	  }
+	 
+	   $(window).scroll(function() {
+					
+        display_footer_menu_top =$('#js_toobar3').offset().top-1000;
+           //	alert($(bodu).height());
+    
+					if($(window).scrollTop() > $(window).height() ) {
+					
+					$('#g-top').css('display','block');
+					$('#header_menu').css('display','block');
+					
+						//$('#hd').css('opacity',1);
+					}else{
+					$('#g-top').css('display','none');
+					//$('#header_menu').css('display','none');
+					//$('#hd').css('opacity',0.7);
+				}
+				
+				if($(window).scrollTop() > display_footer_menu_top ) {
+					
+					$('#footer1').css('display','block');
+					$('#g-top').css('bottom','2rem');
+				
+						//$('#hd').css('opacity',1);
+					}else{
+					$('#footer1').css('display','none');
+					//$('#hd').css('opacity',0.7);
+						$('#g-top').css('bottom','0.7rem');
+				}
+				
+					});
+	  
+	  
+	  
+	      
+	    });
+		
+		Date.prototype.format =function(format)
+			  {
+			  var o = {
+			  "M+" : this.getMonth()+1, //month
+			  "d+" : this.getDate(), //day
+			  "h+" : this.getHours(), //hour
+			  "m+" : this.getMinutes(), //minute
+			  "s+" : this.getSeconds(), //second
+			  "q+" : Math.floor((this.getMonth()+3)/3), //quarter
+			  "S" : this.getMilliseconds() //millisecond
+			  }
+			  if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
+			  (this.getFullYear()+"").substr(4- RegExp.$1.length));
+			  for(var k in o)if(new RegExp("("+ k +")").test(format))
+			  format = format.replace(RegExp.$1,
+			  RegExp.$1.length==1? o[k] :
+			  ("00"+ o[k]).substr((""+ o[k]).length));
+			  return format;
+			  }
+			  
+		
+		
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			
+			 $("p").css('max-width','100%');
+			  $("img").css('height','auto');
+			    $("img").css('text-align','center');
+			 
+			  $('img.lazyload').unveil(500);
+		})
+	</script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	</script>
+
+	
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- sec float go top -->
+	<div id="g-top"  onclick="$('html,body').animate({scrollTop: $('#bd1').offset().top-40},'slow');" style="  bottom:.7rem;       right: 0.2rem; width: 1rem;
+    height: 1rem;"></div>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$article.title}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$article.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>
+

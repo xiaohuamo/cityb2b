@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/luobo.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+
+   <script type="text/javascript">
+	function myfun()
+　　{
+
+ 　   	$("img[name='content_img']").each(function(){
+       
+		$(this).attr('alt',"<{$pageTitle}>");
+		//alert($(this).attr("alt"));
+　　})
+}
+　　/*用window.onload调用myfun()*/
+　　window.onload = myfun;//不要括号
+</script>
+</head>
+
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+    <!-- inedx -->
+    <div class="main bg-fff">
+    	<!-- 面包屑 -->
+    	<div class="m-cur-lb">
+    		<div class="wp">
+    			<div class="cur">
+    				<a href="<{$http_root_www}>" class="first"><{$lang->home}></a>
+                    <a href="#"><{$lang->shops}></a>
+                    <em><{$coupon.title}></em>
+    			</div>
+    		</div>
+    	</div>
+		<!-- 面包屑end -->
+		<div class="row-lb-1">
+			<div class="wp">
+				<div class="col-l">
+					<div class="m-row1-lb">
+						<!-- 轮播 -->
+						<div class="slide-lb-1">
+							<ul>
+                                <li><img src="<{$UPLOAD_PATH}><{$coupon.pic}>" alt=""></li>
+
+                                 <{foreach from=$coupon.pics item=item name='cpl'}>
+                                  <li><img src="<{$UPLOAD_PATH}><{$item}>" alt=""></li>
+                                  <{/foreach}>
+								
+							</ul>
+						</div>
+						<!-- 轮播 end-->
+						<!-- 大图 -->
+						<div class="pic-move">
+							<img src="<{$UPLOAD_PATH}><{$coupon.pic}>" alt="">
+							<!-- <i>放大镜icon</i> -->
+						</div>
+						<!-- 大图 end -->
+					</div>
+					
+
+                    <{include file='coupon_detail/inc/sec_content.htm'}>
+
+
+				</div>
+				<div class="col-r">
+					<div class="m-tuxun">
+						<div class="tit">
+							<h3><{$coupon.title}>
+                            <em> 
+                                <{if $coupon.perCustomerLimitQuantity!='0'}>
+                                    <{$lang->purchese_limit_max}>
+                                    <{$coupon.perCustomerLimitQuantity}>
+                                    <{$lang->item}>
+                                <{/if}>
+                                <{if $coupon.perCustomerMinLimitQuantity!='0'}>
+                                    <{$lang->purchese_limit_min}>
+                                    <{$coupon.perCustomerMinLimitQuantity}>
+                                    <{$lang->item}>
+                                <{/if}>
+                            </em>
+                            </h3>
+							<p><{$coupon.coupon_summery_description}></p>
+						</div>
+						<div class="cost">
+							<strong><span></span><{$coupon.price1}></strong>
+
+                            <{if $coupon.priceOff>0}>
+    							<p>
+                                <span><{$coupon.priceOff}>%OFF</span>
+                                <em class="error"><{$coupon.price2}></em>
+                                <em><{$lang->save}><{$coupon.priceSave}></em>
+                                </p>
+							<{/if}>
+                            
+                            <{include file='coupon_detail/inc/sec_favandshare.htm'}>
+
+						</div>
+
+                        <{if $wholesaledata}>
+                        <div class="cost" style="font-size: 20px;color: #FD5001;">
+                            <div style="display:inline;">
+                            $<{$wholesaledata.price}>
+                            <em>≥<{$wholesaledata.amount}><{$lang->units}></em>
+                            </div>
+                            <{if $wholesaledata.price1!='0' && $wholesaledata.amount1!=0}>
+                            <div style="display:inline;margin-left:16px;margin-right: 16px;">
+                            $<{$wholesaledata.price1}>
+                            <em>≥<{$wholesaledata.amount1}><{$lang->units}></em>
+                            </div>
+                            <{/if}>
+                            <{if $wholesaledata.price2!='0' && $wholesaledata.amount2!=0}>
+                            <div style="display:inline;">
+                            $<{$wholesaledata.price2}>
+                            <em>≥<{$wholesaledata.amount2}><{$lang->units}></em>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <{/if}>
+
+						<div class="style-lb">
+							<ul class="ul-style-lb">
+                                <{foreach from=$guige item=item}>
+								<li>
+									<dl>
+										<dt>
+										<{$item.guige_name}>:
+											
+										
+										</dt>
+										<dd>
+                                        <{if !$item.is_pic_style}>
+                                            <{foreach from=$item.guige_details item=sitem}>
+                                            <label <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> class='on'<{/if}> ><input style='display: none' class='guige_radio_btn' type="radio" id="sub<{$sitem.id}>" name="<{$item.guige_id}>" data-id="<{$sitem.id}>" value="<{$sitem.name}>" <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> checked<{/if}>> <{$sitem.name}></label>
+                                            <{/foreach}>
+                                        <{else}>
+                                            <{foreach from=$item.guige_details item=sitem}>
+                                            <label <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> class='on'<{/if}>><input style='display: none' type="radio" class='guige_radio_btn' id="sub<{$sitem.id}>"  data-id="<{$sitem.id}>" name="<{$item.guige_id}>" value="<{$sitem.name}>" <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> checked<{/if}>> <img src="<{$UPLOAD_PATH}><{$sitem.pic|image:35:35}>"></label>
+                                            <{/foreach}>
+                                        <{/if}>
+											
+										</dd>
+									</dl>
+								</li>
+                                <{/foreach}>
+								
+								<li>
+									<dl>
+										<dt><{$lang->quantity}>：</dt>
+										<dd class="g-num">
+											<span>
+												<i class="min">-</i><input value="1" class="num" id="quantity" name="quantities[]"><i class="add">+</i>
+											</span>
+											<i class="invent">
+                                            <{$lang->stock}> 
+                                            <em id='stock_display'><{$coupon.qty}></em>
+                                            <{$lang->item}> 
+                                            <{if $pendingQty>0}>
+                                            <small style='color:red'>(<{$lang->buying_1}> <{$pendingQty}><{$lang->buying_2}>)</small>
+                                            <{/if}>
+                                            </i>
+										</dd>
+									</dl>
+								</li>
+
+                                <input type="hidden" name="ids[]" value="<{$coupon.id}>" />
+                                <input type="hidden" id ="sub<{$coupon.id}>_main_or_sub" name="main_or_sub[]" value="m" />
+                                <input id="sub<{$coupon.id}>_amount" name="sub_money[]" type="hidden"  value="<{$coupon.voucher_deal_amount}>"  />
+                             
+
+							</ul>
+							<div class="btn-lb">
+
+                                <{if $group_pin}>
+                                    <a  class="btn2 " style='background-color: #ff5f74;color: #fff' href="<{$http_root_www}>coupon/<{$coupon.id}>?specialDisplay=group_pin">拼团</a>
+                                <{else}>
+                                     <a  class="btn2 <{$coupon.id}>" data-value="<{$coupon.id}>" data-availablestock='<{$coupon.qty}>' onClick="add_carts(this,true);"><{$lang->buy_now}></a>
+                                <{/if}>
+
+                                <a  class="btn1 <{$coupon.id}>" data-value="<{$coupon.id}>" data-availablestock='<{$coupon.qty}>' onClick="add_carts(this,false);" ><{$lang->add_to_cart}></a>
+
+                                <a class="btn2" target="_blank" onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&couponid=<{$coupon.id}>','singleChat')"><{$lang->contact_business}></a>
+                              
+							</div>
+
+						</div>
+					</div>
+
+
+                   <!-- 商家递送信息展示 -->
+                    <{include file='coupon_detail/inc/sec_deliverinfo.htm'}>
+                    
+                   
+
+				<div class="m-cont-lb">
+					<div class="m-corre-lb">
+						<h3 class="tit"><{$lang->related_product}></h3>
+						<ul class="ul-recom-lb corre">
+							<{foreach from=$recommends item=item}>
+                                <li>
+                                    <div class="items">
+                                        <div class="img">
+                                        <a href="<{$http_root_www}>coupon1/<{$item.id}>"><img alt="<{$item.title}>" src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>"></a>
+                                        </div>
+                                        <div class="txt">
+                                            <h4 ><strong>
+											 <{if $langStr=='en'}>
+												<{$item.title_en}>
+											 <{else}>
+												<{$item.title}>
+											 <{/if}>
+											
+											
+											</strong></h4>
+                                            <p>
+                                                <a href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.coupon_summery_description}></a>
+                                            </p>
+                                            <em>$<{$item.voucher_deal_amount}></em>
+                                            <div class="ico">
+                                                <a href="" class="ico1"><{$item.hits}></a>
+                                                <!--a href="" class="ico2"></a-->
+                                                <!--a href="" class="ico3"></a-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <{/foreach}>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    </div>
+    <!-- inedx -->
+    <!-- 底部 -->
+   <{include file='index_inc_footer.htm'}>
+    <!-- 底部 end -->
+    <!-- 右边栏 -->
+    <{include file='index_inc_right.htm'}>
+    <!--右边栏 end-->
+   
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+    <script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+    <script src="<{$SKIN_PATH}>js/dong.js"></script>
+    <link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+    <script type="text/javascript">
+    jQuery(".fullSlide").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click"
+    });
+    jQuery(".ul-row2").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "left",
+        autoPlay: true,
+        vis: 5
+    });
+        jQuery(".slide-lb-1").slide({mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true,vis:5});
+    </script>
+   
+    <script>
+    $('.time-c').each(function() {
+        $(this).countDown();
+    })
+    $(".m-tuxun .combo li").click(function(event) {
+    	$(this).addClass('on').siblings('li').removeClass('on');
+    });
+    $(".ul-style-lb dd label").click(function(event) {
+    	$(this).addClass('on').siblings('label').removeClass('on');
+    });
+   
+    </script>
+
+    <script type="text/javascript">
+        function addToCart(qty){
+            var currentTotal =parseInt($('.shopping-cart-qty-display').html());
+            qty=parseInt(qty);
+            $('.shopping-cart-qty-display').html(currentTotal+qty);
+        }
+
+        $(function(){
+            <{if $coupon.bonusType=='9'}>getQty();<{/if}>
+            $('.guige_radio_btn').on('click',function(){
+                getQty();
+                if(typeof gotoguige ==="function")gotoguige();
+            });
+        })
+
+        function getQty(){
+            try{
+                var guigeData = JSON.parse('<{$guigeData}>');
+            }catch(e){
+                var guigeData = [];
+            }
+           
+            var couponId =<{$coupon.id}>;
+            var guige1Id=$('.guige_radio_btn:checked').eq(0).data('id');
+            var guige2Id=$('.guige_radio_btn:checked').eq(1).data('id');
+
+            if(guige1Id==null)guige1Id='undefined';
+            if(guige2Id==null)guige2Id='undefined';
+            
+            var guigeKey=guige1Id+'#'+guige2Id;
+
+            var returnData = guigeData[guigeKey];
+         
+            $('#stock_display').html(returnData);
+            
+            $("."+couponId).data('availablestock',returnData);
+        }
+
+        var processingLock=false;
+        var alreadyAddCart=false;
+
+        function add_carts(obj,redirect) {
+            <{if !$loginUser}>
+                htmlMessage('<{$lang->login_in_before_buy}>',function(){
+                     window.location.href = '<{$loginReturnUrl}>';
+                });
+               
+            <{else}>
+
+            if(processingLock==true)return;
+
+            if(alreadyAddCart&&redirect){window.location.href = '<{$http_root_www}>member/showcart';return false;}
+
+            var available_stock = parseInt($(obj).data('availablestock'));
+
+            if(isNaN(available_stock))available_stock=0;
+            
+            var quantity =  $('#quantity').val();
+
+            if(quantity==0){
+                htmlMessage('<{$lang->minimun_1_item}>');
+                return;
+            }
+            if(available_stock<quantity || available_stock==0){
+                htmlMessage('<{$lang->sold_out_too_slow}>');
+                return;
+            }
+
+           
+            if($('.guige_radio_btn:checked').length==0){
+                var guige_ids=null;
+            }else if($('.guige_radio_btn:checked').length==1){
+                var guige_ids=$('.guige_radio_btn:checked').eq(0).data('id');
+            }else if($('.guige_radio_btn:checked').length==2){
+                var guige_ids = $('.guige_radio_btn:checked').eq(0).data('id')+','+$('.guige_radio_btn:checked').eq(1).data('id');
+            }
+
+            processingLock=true;
+            $('body').append('<p class="form_response_loader"></p>');
+
+            $.post('<{$http_root_www}>query?cmd=add_carts', {
+                'main_coupon_id': '<{$coupon.id}>',
+                'quantity':quantity,
+                'guige_ids':guige_ids,
+
+            }, 
+            function(data){
+                processingLock=false;
+                $('.form_response_loader').remove();
+                
+                try {
+                    data = jQuery.parseJSON(data);
+                    if(data.status==200) alreadyAddCart=true;
+                }
+                catch(err) {
+                   data={};
+                   data.msg="网路不给力亲，请稍后再试";
+                }
+
+                htmlMessage1(data.msg,function(){ 
+
+                   if(data.status!=200)return;
+
+                    addToCart(quantity);
+                
+                    if(redirect==true){
+                        window.location.href = '<{$http_root_www}>member/showcart';
+                    }
+                });
+            });
+            <{/if}>
+        }
+
+    </script>
+</body>
+
+</html>

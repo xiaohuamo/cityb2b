@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$lang->personal_info}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css"/>
+
+	<style>
+        .new-add .con .inp {
+            padding-left: 3.5rem;
+        }
+
+        .text-white {
+           /* color: #fff */
+        }
+
+		.a-back {
+        /*    filter:brightness(0%) invert(100%); */
+		}
+	</style>
+</head>
+
+
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>member/index" class="a-back"></a>
+	</div>
+	<h1 class="text-white"><{$lang->personal_info}></h1>
+	<div class="right">
+		<button onclick="$('#memberForm').submit()" class="a-red text-white" style="    height: 1.3rem;        background-color: transparent;" onClick="$('#memberForm').submit()" class="a-red"><{$lang->save}></button>
+	</div>
+</header>
+
+
+<section id="bd">
+	<div class="new-add">
+		<form id="memberForm" action="<{$http_root_www}>member/profile" method="post">
+
+			<div class="con">
+				<em><{$lang->user_name}>：</em>
+                <{if $loginUser.name}>
+					<input type="text" name="name" class="g-input inp" value="<{$loginUser.name}>" disabled/>
+					<em style="font-size:14px; color:#C00;"></em>
+                <{else}>
+					<input type="text" name="name" class="g-input inp" value=""/>
+                <{/if}>
+				<em style="    right: 0rem;    left: auto;"> <a href="<{$http_root_www}>member/changepwd"><{$lang->change_password}></a></em>
+			</div>
+			<div class="con">
+				<em>Email：</em>
+				<input type="text" name="email" class="g-input inp" value="<{$loginUser.email}>"/><em style="font-size:14px; color:#C00;"></em>
+			</div>
+			<div class="con">
+				<em><{$lang->nickename}>：</em>
+				<input type="text" name="nickname" class="g-input inp" value="<{$loginUser.nickname}>"/>
+			</div>
+
+			<div class="con">
+				<em><{$lang->first_name}>：</em>
+				<input type="text" name="person_first_name" class="g-input inp" value="<{$loginUser.person_first_name}>"/>
+			</div>
+			<div class="con">
+				<em><{$lang->last_name}>： </em>
+				<input type="text" name="person_last_name" class="g-input inp" value="<{$loginUser.person_last_name}>"/>
+			</div>
+			<div class="con">
+				<em><{$lang->telephone}>： </em>
+				<input type="tel" name="tel" class="g-input inp" value="<{$loginUser.tel}>"/>
+			</div>
+			<div class="con">
+				<em><{$lang->mobile_phone}>： </em>
+				<input type="tel" name="phone" class="g-input inp" value="<{$loginUser.phone}>"/>
+			</div>
+
+		</form>
+	</div>
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+</body>
+</html>

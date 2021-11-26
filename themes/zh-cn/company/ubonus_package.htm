@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style type="text/css">
+	.package .item{
+		border: 1px solid #FD5001 ;
+		display: inline-block;
+		margin: 10px;
+	}
+
+	@media screen and (max-width:640px) {
+		.package .item{
+			position: relative;
+			display: block;
+			width: 90%;
+			margin: 10px auto;
+			left: 0;
+			right: 0;
+		}
+
+		.package .item img{
+			width: 100%;
+		}
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">				
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/abn_application" method="post" target="post_frame" enctype="multipart/form-data">
+						
+					<div class="input-box clearfix">
+						<h1>Ubonus推广套餐</h1>
+						<p>Ubonus美食生活的站内以及媒体渠道的推广套餐让您一键打开澳洲200万华人市场</p>
+						<p>套餐详情 敬请期待</p>
+					</div>
+
+					<div class='package'>
+						<{foreach from=$package item=item}>
+						<div class='item'>
+							<a target='_blank' href="<{$http_root_www}>coupon/<{$item.id}>">
+								<img src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt='<{$item.title}>'>	
+							</a>
+						</div>
+						<{/foreach}>
+					</div>
+					
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='advanced_setting'}> class="current"<{/if}>><{$lang->advanced_setting}></a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>company/redeem_staff_manage" <{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
+			<{$lang->redeem_staff}>
+		</a>	
+		<a href="<{$http_root_www}>company/staff" <{if $submenu=='staff'}> class="current"<{/if}>>
+			<{$lang->shop_staff_management}>
+		</a>
+		<!--
+		<a href="<{$http_root_www}>company/busi_pay_setting_application" <{if $submenu=='busi_pay_setting_application'}> class="current"<{/if}>>
+			<{$lang->payment_application}>
+		</a> ->
+		<!--<a href="<{$http_root_www}>company/profile_web" <{if $submenu=='profile_web'}> class="current"<{/if}>>
+			<{$lang->social_network}>
+		</a> -->
+	
+		<!--<a href="<{$http_root_www}>company/company_category_set"<{if $submenu=='company_category_set'}> class="current"<{/if}>>
+			<{$lang->business_category}>
+		</a> -->
+		
+		
+		<a href="<{$http_root_www}>company/choose_business_type?freshfood=1"<{if $submenu=='choose_business_type'}> class="current"<{/if}>>
+		<{$lang->console_switch}>
+		</a>
+		<a href="<{$http_root_www}>company/weixin_bangding"<{if $submenu=='weixin_bangding'}> class="current"<{/if}>>
+		<{$lang->link_wechat_account}>
+		</a>
+		<a href="<{$http_root_www}>company/weixin_kefu"<{if $submenu=='weixin_kefu'}> class="current"<{/if}>>
+		<{$lang->link_wechat_message}>
+		</a>
+				
+	</div>
+</li>

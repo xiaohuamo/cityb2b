@@ -1,0 +1,17 @@
+html { overflow-y:auto; }
+.middle { position:absolute; top:50%; left:50%; width:610px; height:500px; margin:-250px 0 0 -305px; overflow:hidden; }
+.login { width:610px; height:401px; margin:0 auto; background:url(bg_login.jpg) no-repeat; }
+
+/* 版本信息 */
+.version { padding:50px 0 0 137px; color:#C0CDD9; font-size:12px; line-height:145%; }
+.version em { font-style:normal; font-family:Arial; font-size:11px; }
+
+/* 表单部分 */
+.login-panel { width:380px; margin:0 auto; padding:185px 0 5px 0; text-align:left; clear:both; }
+.field { height:32px; clear:both; }
+li.field label { display:block; float:left; width:120px; padding-right:10px; line-height:23px; text-align:right; }
+.input { padding: 0; color:#666; zoom:1; }
+.field:after { content:'\20'; display:block; height:0; clear:both; }
+.text { height:18px; padding:1px 3px; border:1px solid #777; background:#fff; color:#666; line-height:16px; font-family:Verdana, Geneva, sans-serif; }
+.submit-field { padding:0 10px 20px 130px; _padding-left:133px; clear:both; }
+.btn-submit { width:132px; height:29px; border:0px; background:url(btn_login.jpg) no-repeat; cursor:pointer; }

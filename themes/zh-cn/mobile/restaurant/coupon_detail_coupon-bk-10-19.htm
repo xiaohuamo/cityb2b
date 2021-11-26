@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap_restaurant.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style_restaurant.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/lib.css" />
+	<script src="<{$SKIN_PATH}>mobile/js/jquery.min.js"></script>
+	<script src="<{$SKIN_PATH}>mobile/js/restaurant.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+	<style type="text/css">
+		
+	</style>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript">
+		function myfun(){
+			init_page();
+			load_category_coupon_list();
+			load_menu();
+            var cart ='<{$cart}>';
+			if( cart==1) {
+			$('.inpageShoppingCart').show();
+			}
+		}
+		window.onload = myfun;
+	</script>
+
+	<script type="text/javascript">
+		var  click_category=0;
+	</script>
+</head>
+<body class="bg-1">
+	<header id="hd" style="opacity: 1;position: relative;" >
+
+		<h1 style="margin-left: 0.9rem;">
+			<a onCLick="change_category('bd');"><{$lang->place_order}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f10').offset().top-40},'fast');"><{$lang->business}></a> 
+			<a onCLick="$('html,body').animate({scrollTop: $('#f11').offset().top-40},'fast');"><{$lang->warm_prompt}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'fast');"><{$lang->custoemr_review_management}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'fast');"><{$lang->related_product}></a>
+			<{include file ="mobile/sec_more.htm"}>
+		</h1>
+		<!--
+		<h1>
+			<a onCLick="change_category('bd');">下单</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f10').offset().top-40},'fast');">商家</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f11').offset().top-40},'fast');">提示</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'fast');">评价</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'fast');">相关</a>
+		</h1> -->
+	</header>
+	<section id="bd">
+		<div class="sec-product" style="margin-top: -1.45rem;">
+
+			<div class="comm-pic">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:157:'cut'}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+				</div>
+			</div>
+			
+			<{if ($restaurant_promotion_manjian.discount || $restaurant_promotion_manjian.promotion_desc )}>
+			<div class='money-display' style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;font-size: 15px; font-weight:600; background-color: #d9eff5cc;padding: 5px 15px;color: #f23030;"><{$lang->promption}>： 
+				<{if $restaurant_promotion_manjian.discount}>
+				<strong style="font-size:14px;"><{$restaurant_promotion_manjian.discount}>%OFF.</strong>
+				<{/if}> 
+				<{if $restaurant_promotion_manjian.promotion_desc}>
+				<{$restaurant_promotion_manjian.promotion_desc}>
+				<{/if}>
+			</div>
+			<{/if}>
+
+			<{if !$isSingleSupplierDispCenter}>
+			<div class="head-business-box">
+				<div class='deliver-date-display' style="font-size: 1em; font-weight: bolder;">
+				</div>
+			</div>
+			<{else}>
+			<div class="head-business-box deliver-date-display">
+			</div>
+			<{/if}>
+
+			<div id="leftnav" class="col-l" style="width: 3.26rem;padding-bottom:2rem;">
+			</div> 
+
+			<div id= 'box-prod' class="box-prod " style="padding-right: .05rem;">
+				<div id= "menu-section" class=" col-r comm-tit " style="padding: 0.35rem 0.2rem;">
+					<div id="coupon_list" ></div>
+					<div id="menu_menu" ></div>
+					<div id="menu_menu1" ></div>
+				</div>
+			</div>
+			<div id='content01' class="txt content-image-fullsize" style="display: block;"><p>&nbsp;</p>
+
+			</div>
+			<div id="business_info"></div>
+		</div>
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class='inpageShoppingCart' style="position: fixed;top: 0;right: 0;width: 100%;padding-bottom: 3rem;height: 100vh;overflow-y: scroll;z-index: 99999;display: none; background-color: #fff;padding: 3%">
+		</div>
+		<div id='foot_menu'  class="comm-btn-restaurant" style="z-index: 999;padding: 0.1rem;">
+			<div class="left">
+				<{include file='mobile/restaurant/sec_favandstore.htm'}>
+			</div>
+			<div class="right" >
+				<a  onClick='add_carts();' style="width: 100%;" class="a1 "><{$lang->buy_now}></a>
+			</div>
+		</div>
+
+		<{if $isDispCenterBusiness}>
+		<div class='deliver-center-user-panel'>
+		  	<!-- 统配中心用户弹窗 -->
+		  	<div class='panel-header'>
+		  		<div class='panel-header-text'><{$lang->logistic_choosedate}></div>
+		  		<span class='fa fa-close'></span>
+		  	</div>
+
+		  	<div class='panel-body'>
+		  		
+			   <h5><{$lang->logistic_checkarea}></h5>
+				<div style="text-align: center;">
+			    
+			    	<input class='postcode-validation' type="number" placeholder="&nbsp;<{$lang->input_post_code}>..." style="padding-left: 0.2rem;;margin-top: 0.2rem;">
+			    	<span>
+			    		
+			    	</span>
+			    </div>
+
+			    <div>
+				
+				  <div >
+			    	<{if !$isSingleSupplierDispCenter}>
+			    	<h5><{$lang->other_merchants_same_time}></h5>
+			    	<{/if}>
+			    	<!-- available business in this period -->
+			    	<div class='business-box'>
+				    	<!-- <span>
+				    		<a href="">
+				    			<img src="https://ubonus365.com/data/upload/thumbnails/2020-06/20200616122826177122_396x157_cut.jpg">
+				    		</a>
+				    		<div>生鲜</div>
+				    	</span> -->
+
+				    	<p class='business-box-start-shopping-btn' onClick="$('.deliver-center-user-panel').hide();" style="text-align: center;margin-top: 2rem; display: none;"><em style="background: #FD5001 ;color: #fff;padding: 10px 20px;font-size: 0.5rem;">开始购物</em></p>
+			    	</div>
+			    </div>
+				
+			    	<h5><{$lang->logistic_delivery_date}></h5>
+			    	<div class='time-box date-options'>
+			    		<!-- day of week -->
+			    		<{foreach from=$businessDispSchedule item=item}>
+			    			<span class='<{if $dispCenterUserSelectedDeliveryDate|strpos:<{$item->orderDeliveryTimestamp}> !== false && $item->isAvaliable == true}> selected <{/if}>
+			    				<{if $item->isAvaliable == false}> unavailable <{/if}>'
+			    				data-delivery-anytime= '<{$item->delivery_anytime}>'
+			    				data-delivery-morning= '<{$item->delivery_morning}>'
+			    				data-delivery-afternoon= '<{$item->delivery_afternoon}>'
+			    				data-order-delevery-timestamp='<{$item->orderDeliveryTimestamp}>'
+			    				>
+			    				<{$item->getOrderDeliveryDisplay($lang['lang'][0])}>
+			    			</span>
+			    		<{/foreach}>
+			    	</div>
+			    	<h5><{$lang->logistic_schedule_time}></h5>
+			    	<div class='time-box time-options'>
+			    		<!-- Morning or afternoon -->
+			    		<span style="height:2rem;"
+			    			class='delivery-option-anytime
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'anytime' !== false}>selected<{/if}>
+			    			' 
+			    			data-val='anytime'>
+							<{$lang->any_time}><em>8:00 - 20:00</em>
+			    		</span>
+			    		<span style="height:2rem;"
+			    			class='delivery-option-morning
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'morning' !== false}>selected<{/if}>
+			    			' 
+			    			data-val='morning'>
+							<{$lang->morning}><em>8:00 - 12:00</em>
+			    		</span>
+			    		<span style="height:2rem;"
+			    			class='delivery-option-afternoon
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'afternoon' !== false}>selected<{/if}>
+			    			' 
+			    			data-val='afternoon'>
+							<{$lang->afternnon}><em>12:00 - 20:00</em>
+			    		</span>
+			    	</div>
+			    </div>
+
+			  
+		    </div>
+		</div>
+		<{/if}>
+
+	</div>
+	</section>
+
+	<style type="text/css">
+		.deliver-center-user-panel {
+			position: fixed;
+			top: 1%;
+			left: 1%;
+			height: 98vh;
+			width: 98vw;
+			border:2px solid #f15353;
+			z-index: 999;
+			background: #fff;
+			display: none;
+		}
+		.deliver-center-user-panel .panel-header {
+			position: absolute;
+		    top: 0px;
+		    left: 0px;
+		    width: 100%;
+		    background-color: #f15353;
+		    color: #fff;
+		    text-align: center;
+		    font-size: 0.6rem;
+		    padding: 0.1rem;
+		    z-index: 100;
+		}
+		.deliver-center-user-panel .panel-header.ready {
+			background-color: #3cab4a !important;
+		}
+
+		.deliver-center-user-panel .panel-body {
+			overflow-y: scroll;
+			height: 97vh;
+			padding: 7% 3% 0% 3%;
+		}
+
+		.deliver-center-user-panel .panel-header span {
+			position: absolute;
+		    top: 0px;
+		    right: 0px;
+		    width: 1.5rem;
+		    height: 1.4rem;
+		    line-height: 1.4rem;
+		}
+
+		.deliver-center-user-panel h5 {
+			width: 100%;
+			text-align: center;
+			font-size: .48rem;
+		    height: 0.8rem;
+		    line-height: 1rem;
+		    font-weight: 600;
+		}
+
+		.deliver-center-user-panel .time-box span {
+			display: inline-block;
+		    width: 30%;
+		    height: 2.5rem;
+		    border: 1px solid #FD5001 ;
+		    line-height: 1.2rem;
+		    text-align: center;
+		    margin: 0px 3px;
+		    overflow: hidden;
+		    position: relative;
+		}
+
+		.time-box.date-options span {
+			width: 21%;
+			background: #5cd46b;
+		}
+		.time-box.date-options span.unavailable {
+			border: 1px solid #eee;
+			background: #eee;
+		}
+
+
+		.deliver-center-user-panel .time-box span em {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			width: 100%;
+			text-align: center;
+			font-size: smaller;
+			font-weight: lighter;
+		}
+		.deliver-center-user-panel .time-box span i {
+			font-size: 10px;
+		    position: absolute;
+		    bottom: 18px;
+		    left: 0;
+		    width: 100%;
+		    text-align: center;
+		}
+
+		.deliver-center-user-panel .time-box span.selected {
+			background: #FD5001 ;
+			color: #fff;
+		}
+
+		.deliver-center-user-panel .business-box span {
+			display: inline-block;
+		    width: 47%;
+		    height: 2rem;
+		    border: 1px solid #FD5001 ;
+		    text-align: center;
+		    margin: 10px 1%;
+		}
+
+		.head-business-box {
+			<{if !$isSingleSupplierDispCenter}>
+				height: 110px;
+			<{else}>
+		   		height: 60px;
+			<{/if}>
+			background: #fff;
+			border-bottom: 2px solid #eee;
+			overflow-y: hidden;
+		}
+		.head-business-box.open{
+			height: auto!important;
+		}
+		.head-business-box img{
+			display: none;
+		}
+		.head-business-box div{
+			line-height: 1.4rem;
+		}
+		.head-business-box i{
+			font-size: 2em;
+		    float: right;
+		    top: 20px;
+		    right: 12px;
+		    position: relative;
+		}
+		.head-business-box.fixed {
+			position: fixed;
+		    top: 0;
+		    right: 0;
+		    width: 100vw;
+		    z-index: 99;
+		}
+		.head-business-box span {
+			display: inline-block;
+		    width: 31%;
+		    height: 1.4rem;
+		    border: 1px solid #FD5001 ;
+		    background: #FD5001 ;
+		    text-align: center;
+		    margin: 5px 1%;
+		}
+	</style>
+	
+	<style type="text/css">
+		.coupon_option.fixBottom{
+			position: fixed;
+		    bottom: -25px;
+		    right: 0;
+		    z-index: 1000;
+		    width: 100%;
+		    background: #fff;
+		    box-shadow: 5px -10px 10px #888888;
+		}
+		.coupon_option.fixBottom .fa-close{
+			position: absolute;
+			font-size: 1rem;
+			display: block!important;
+		}
+		.coupon_option.fixBottom > div:nth-of-type(1){
+			float: none!important;
+			width: 100%!important;
+		}
+		.coupon_option.fixBottom > div:nth-of-type(3){
+			margin: 20px;
+		}
+
+		.coupon_option.fixBottom .quantity i {
+			font-size: 1rem;
+		}
+		.coupon_option.fixBottom .quantity .input-quantity {
+			font-size: 0.8rem;
+			width: 1rem;
+		}
+	</style>
+	<script type="text/javascript">
+		$(function(){
+			var selectedDateTarget = $('.time-box.date-options span.selected');
+			var selectedTimeTarget = $('.time-box.time-options span.selected');
+			if (selectedDateTarget.length==0 || selectedTimeTarget.length==0) {
+				$('.deliver-center-user-panel').show();
+			} 
+
+			if (selectedDateTarget.length==1 && selectedTimeTarget.length==1) {
+				loadBusiness();
+			} 
+			toggleHeaderReady();
+
+			function toggleDeliverOptionForDate(target) {
+				if ($(target).data('delivery-afternoon') == 1) {
+					$('.delivery-option-afternoon').show();
+				} else {
+					$('.delivery-option-afternoon').hide();
+				}
+
+				if ($(target).data('delivery-anytime') == 1) {
+					$('.delivery-option-anytime').show();
+				} else {
+					$('.delivery-option-anytime').hide();
+				}
+
+				if ($(target).data('delivery-morning') == 1) {
+					$('.delivery-option-morning').show();
+				} else {
+					$('.delivery-option-morning').hide();
+				}
+
+				if ($('.time-box.time-options span:visible').length == 1) {
+					$('.time-box.time-options span:visible').first().addClass('selected');
+					loadBusiness();
+				}
+			}
+
+			function loadBusiness() {
+				var selectedDateTarget = $('.time-box.date-options span.selected');
+				var selectedTimeTarget = $('.time-box.time-options span.selected');
+				if (selectedDateTarget.length==1 && selectedTimeTarget.length==1) {
+
+					var time = $(selectedDateTarget).data('order-delevery-timestamp');
+					var option = $(selectedTimeTarget).data('val');
+
+					document.cookie = "DispCenterUserSelectedDeliveryDate="+time+"@"+option+ "; path=/";
+
+					<{if $isSingleSupplierDispCenter}>
+						$('.business-box-start-shopping-btn').show();
+						return;
+					<{/if}>
+					$.ajax({
+						url: '/restaurant/get_available_business_of_delivery_date', 
+						method: "POST",
+						data: { option: option, time: time, businessid: '<{$restaurant_id}>'},
+						beforeSend: function(){
+							var htmlLoading = '<div style="text-align: center;"><em class="fa fa-spinner fa-spin fa-lg"></em></div>';
+							$('.business-box').html(htmlLoading);
+							<{if !$isSingleSupplierDispCenter}>
+							$('.deliver-date-display').html(htmlLoading);
+							<{else}>
+							$('.head-business-box').html(htmlLoading);
+							<{/if}>
+						},
+						success: function(data){
+							$('.business-box').html(data);
+							var data1=data;
+							var reg=/&nbsp;<{$lang->go_shop}>>>/g;
+							data1=data1.replace(reg,'');
+							<{if !$isSingleSupplierDispCenter}>
+								$('.head-business-box span').remove();
+								$('.head-business-box').append(data1);
+							<{else}>
+								$('.head-business-box').html(data1);
+							<{/if}>
+							
+							$('.head-business-box i').remove();
+
+							if ($('.head-business-box span').length > 4) {
+								$('.head-business-box').prepend("<i class='fa fa-lg fa-angle-down'></i>");
+								$('.head-business-box span').css('width','22%');
+							}else if ($('.head-business-box span').length == 4) {
+								$('.head-business-box span').css('width','23%');
+							}else if ($('.head-business-box span').length == 3) {
+								$('.head-business-box span').css('width','31%');
+							}else if ($('.head-business-box span').length == 2) {
+								$('.head-business-box span').css('width','48%');
+							} else if ($('.head-business-box span').length == 1) {
+								$('.head-business-box span').hide();
+							} else {
+								$('.head-business-box span').hide();
+							}
+
+							if ($('.head-business-box span').length > 6) {
+								$('.head-business-box').removeClass('open');
+							} else {
+								$('.head-business-box').addClass('open');
+							}
+						},
+						error: function(data){
+							console.log(data);
+						},
+					});
+				}
+			}
+
+			function isPostcodeSupported(postcode) {
+				if (postcode.length!=4) return -1; 
+				var postcodeSupported = "<{$postcodeSupported}>";
+				return postcodeSupported.indexOf(postcode);
+			}
+
+			function toggleHeaderReady(){
+				var selectedDateTarget = $('.time-box.date-options span.selected');
+				var selectedTimeTarget = $('.time-box.time-options span.selected');
+
+				var time = $(selectedDateTarget).data('order-delevery-timestamp');
+				var option = $(selectedTimeTarget).data('val');
+				var deliverDateDisplay = new Date(time*1000).toDateString();
+
+				if (selectedDateTarget.length==1 && selectedTimeTarget.length==1) {
+					$('.deliver-center-user-panel .panel-header').addClass('ready');
+					$('.deliver-center-user-panel .panel-header .panel-header-text').html('<{$lang->logistic_choosedate}><{$lang->logistic_selected}>');
+					$('.dispcenter-footer-icon-text').html('<{$lang->unified_delivery}>').css('color','#3cab4a');
+
+					var html = "<em onclick='$(\".deliver-center-user-panel\").show();return false;' style='margin-left: 0.5rem;line-height:60px'>"+"<{$lang->logistic_delivery_date}>:"+
+					deliverDateDisplay+"&nbsp;&nbsp;<em class='promotion-des-display'><{$lang->logistic_choosedate}></em></em><a href='https://ubonus365.com'>&nbsp;&nbsp;&nbsp;&nbsp;<em class='promotion-des-display'><{$lang->logistic_more_shop}></em></a>";
+					
+					$('.deliver-date-display').html(html);
+				} else {
+					$('.deliver-center-user-panel .panel-header').removeClass('ready');
+					$('.deliver-center-user-panel .panel-header .panel-header-text').html('选择配送时间');
+					$('.dispcenter-footer-icon-text').html('<{$lang->unified_delivery}>').css('color','#f15353');
+					$('.deliver-date-display').html(' ');
+				}
+			}
+
+			function alertEmptyingShoppingCartOnDateChange() {
+				var cartQty = parseInt($('.cartQty').text());
+				if(cartQty>0){
+					var answer =  confirm("您的购物车里仍有商品，更改递送时间将会清空购物车，请问您要继续吗?");
+
+					if (answer) {
+						$.ajax({
+							url: '/query?cmd=empty_cart', 
+							success: function(data){
+								if(data.trim()=='success'){
+									$('.cartQty').html('0');
+									$('.input-quantity').val(0);
+									updateShoppingCart('menu','<{$coupon.createUserId}>');
+								}
+							},
+							error: function(data){
+								console.log(data);
+							},
+						})
+					}
+
+					return answer;
+				} else {
+					return true;
+				}
+			}
+
+			function selectThisItem(obj) {
+				$(obj).siblings().removeClass('selected');
+				$(obj).addClass('selected');
+				// update little availabe text
+				$(obj).siblings().not('.unavailable').find('i').html('<{$lang->logistic_selected}>');
+				$(obj).find('i').html('<{$lang->logistic_selected}>');
+			}
+			$('.time-box.date-options span.selected i').html('已选');//default selction from cookie text need to update
+
+
+			$('.time-box.date-options span').not('.unavailable').on('click',function(){
+				if (alertEmptyingShoppingCartOnDateChange()) {
+					selectThisItem(this);
+					$('.time-box.time-options span').removeClass('selected');
+					toggleDeliverOptionForDate(this);
+					toggleHeaderReady();
+				}
+
+			})
+			$('.time-box.time-options span').on('click',function(){
+				selectThisItem(this)
+				loadBusiness();
+				toggleHeaderReady();
+			})
+			$('.panel-header .fa-close').on('click',function(){
+				$('.deliver-center-user-panel').hide();
+			})
+			$('.postcode-validation').on('keyup',function(){
+				if (isPostcodeSupported($(this).val()) >= 0) {
+					$(this).next('span').html("<em class='fa fa-check-circle fa-lg' style='color:green'></em>支持");
+				}else {
+					$(this).next('span').html("<em class='fa fa-times-circle-o fa-lg' style='color:red'></em>不支持");
+				}
+			})
+
+			//默认选择第一个 available date 和 delver anytime if none selected from cookie
+			if($('.time-box.date-options span.selected').length == 0)
+				selectThisItem($('.time-box.date-options span').not( ".unavailable" ).first());
+			toggleDeliverOptionForDate($('.time-box.date-options span.selected'));
+
+			if($('.time-box.time-options span.selected').length == 0)
+				$('.time-box.time-options span.delivery-option-anytime').addClass('selected');
+
+			loadBusiness();
+			toggleHeaderReady();
+
+
+			$(document.body).on( 'click', '.head-business-box i', function(){
+				$('.head-business-box').toggleClass('open');
+			} );
+
+			$(window).scroll(function(){
+
+				if ($(window).scrollTop() > $('.head-business-box').position().top ) {
+					$('.head-business-box').addClass('fixed');
+					$('.head-business-box').removeClass('open');
+				}else{
+					$('.head-business-box').removeClass('fixed');
+				}
+				if ($(window).scrollTop() > $('#business_info').position().top){
+					$('.head-business-box').removeClass('fixed');
+				}
+			})
+		})
+	</script>
+
+	<script>
+		$(document).ready(function($) {
+			$('.ul-evaluate li').each(function() {
+				$(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+				var _val = $(this).find('dl').attr('value');
+				$(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.form_response_loader').remove();
+		})
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			var cart_count;
+		})
+		function  load_category_coupon_list() {
+			var htm_cat_notexist=0;
+
+			<{if $langStr=='zh-cn'}>
+			var url ='/data/upload/htm/restaurant/category_<{$coupon.createUserId}><{$refresh_code}>.htm';
+			<{else}>
+			var url ='/data/upload/htm/restaurant/category_<{$coupon.createUserId}>_en<{$refresh_code}>.htm';
+			<{/if}>
+
+			$.ajax({
+				url: url, 
+				success: function(data){
+					$('#leftnav').load(url);
+				},
+				error: function(data){
+					htm_cat_notexist=1;
+				},
+			})
+
+
+			var htm_coupon_list_notexist=0;
+			var url1 ='/data/upload/htm/restaurant/coupon_list_<{$coupon.createUserId}><{$refresh_code}>.htm';
+			$.ajax({
+				url: url1, 
+				success: function(data){
+					$('#coupon_list').load(url1);
+				},
+				error: function(data){
+					htm_coupon_list_notexist=1;
+				},
+			})
+
+			$.ajax({
+				url:"/restaurant/get_category_coupon_list?businessUserId=<{$coupon.createUserId}>",
+				type:"GET",
+				beforeSend:function(){
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(d){
+				data = JSON.parse(d);
+
+				if (htm_cat_notexist) {
+					$('#leftnav').html(data['category']);
+				}
+				if (htm_coupon_list_notexist) {
+					$('#coupon_list').html(data['coupon_list']);
+				}
+
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+		function  init_page() {
+
+
+			$.ajax({
+				url:"/restaurant/init_page?businessUserId=<{$coupon.createUserId}>",
+				type:"GET",
+				beforeSend:function(){
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(d){
+				data = JSON.parse(d);
+				$('.inpageShoppingCart').html(data['html']);
+
+				var order_qty = parseInt(data['totalQuantity']);
+				var totalPrice = data['totalPrice'];
+
+				if ( order_qty>0) {
+					$('#carts_count_id').html(order_qty);
+					$('#tp').html('$'+totalPrice);
+				}
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+		function load_menu(){
+			var htm_menu_notexist=0;
+			<{if $langStr=='zh-cn'}>
+			var url ='/data/upload/htm/restaurant/menu_<{$coupon.createUserId}><{$refresh_code}>.htm';
+			var url1 ='/data/upload/htm/restaurant/menu_<{$coupon.createUserId}>_1<{$refresh_code}>.htm';
+			<{else}>
+			var url ='/data/upload/htm/restaurant/menu_<{$coupon.createUserId}>_en<{$refresh_code}>.htm';
+			var url1 ='/data/upload/htm/restaurant/menu_<{$coupon.createUserId}>_1_en<{$refresh_code}>.htm';
+			<{/if}>
+			$.ajax({
+				url: url, 
+				success: function(data){
+					$('#menu_menu').load(url);
+
+				},
+				error: function(data){
+					htm_menu_notexist=1;
+				},
+			})
+			$.ajax({
+				url: url1, 
+				success: function(data){
+					$('#menu_menu1').load(url1);
+				},
+				error: function(data){
+				},
+			})
+			$.ajax({
+				url:"/restaurant/get_menu?businessUserId=<{$coupon.createUserId}>",
+				type:"GET",
+				beforeSend:function(){
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(data){
+			  // alert(data);
+			  if(htm_menu_notexist){
+			  	$('#menu_menu').html(data);
+			  }
+			  $('img.lazyload').unveil();
+			  fix_bar_position('初始');
+
+			  $('.toggle-txt').on('click',function(){
+			  	$(this).find('div.txt').toggle();
+			  })
+
+			  $('.fa-minus-square').on('click',function(){			
+			  	<{if !$loginUser}>
+			  	window.location.href = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/restaurant/<{$restaurant_id}>");
+			  	<{else}>
+
+			  	$target = $(this).next('.input-quantity');
+
+			  	if($target.val()>0)$target.val(parseInt($target.val())-1);
+
+			  	updateShoppingCart($target,'<{$coupon.createUserId}>');
+			  	<{/if}>
+			  })
+
+
+			  $('.fa-plus-square').on('click',function(){
+
+			  	<{if !$loginUser}>
+			  	window.location.href = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/restaurant/<{$restaurant_id}>");
+			  	<{else}>
+
+			  	$target = $(this).prev('.input-quantity');
+			  	if(!$target.val()){
+			  		$target.val(0);
+			  	}
+
+			  	if($target.data('type')=='menu_option')$target.parents('.menu_guige').find('.menu_option input').val(0);
+
+			  	$target.val(parseInt($target.val())+1);
+
+
+			  	$aa =$target.prev('.fa-minus-square');
+			  	$aa.show();
+
+			  	updateShoppingCart($target,'<{$coupon.createUserId}>');
+			  	<{/if}>
+			  })
+			  load_business_info();
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+		function load_business_info(){
+
+			$.ajax({
+				url:"/restaurant/get_business_info?businessUserId=<{$coupon.createUserId}>",
+				type:"GET",
+				beforeSend:function(){
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(data){
+			  // alert(data);
+			  $('#business_info').html(data);
+
+			  $('img.lazyload').unveil();
+
+
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			$(document.body).on( 'click', '.coupon_option .title img,.coupon_option .title .fa-close', function(){
+				if ($(this).parents('.coupon_option').hasClass('fixBottom')) {
+					//close
+					$(this).parents('.coupon_option').toggleClass('fixBottom');
+					$(this).attr('src', $(this).data('src-org'));
+				}else {
+					//open
+					$('.coupon_option').removeClass('fixBottom');
+					$(this).parents('.coupon_option').toggleClass('fixBottom');
+					$(this).attr('src', $(this).data('src-lg'));
+				}
+			} );
+		})
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('img.lazyload').unveil();
+		})
+		function add_carts() { 
+			<{if !$loginUser}>
+			var u = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/member/showcart?business_userid=<{$coupon.createUserId}>&code_str="+encodeURIComponent(code_str)+"#directCheckout");
+			window.location.href = u;
+			<{else}>
+
+			window.location.href = '<{$http_root_www}>member/showcart?business_userid=<{$coupon.createUserId}>#directCheckout';
+			<{/if}>
+		}
+	</script>
+	<{include file ="mobile/restaurant/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+	<script type="text/javascript">
+		var shareTitle='<{$pageTitle}>';
+		var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+</body>
+</html>
+

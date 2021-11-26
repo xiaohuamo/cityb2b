@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title><{if $pageKeywords}>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="<{$pageKeywords}>" /><{/if}><{if $pageDescription}>
+    <meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+	<header id="hd">
+		<div class="left">
+			<a onClick='history.back()' class="a-back"></a>
+		</div>
+		<h1><{$lang->buyer_address}></h1>
+		<div class="right">
+			<div class="right">
+				<a href="<{$http_root_www}>member/delivery_address_edit" class="a-red"><{$lang->add_product}></a>
+			</div>
+		</div>
+	</header>
+
+	<section id="bd">
+	 <{if $data}>	
+		<ul class="g-ul ul-add">
+		<{foreach from=$data item=item name='dl'}>	
+			<li <{if $item.isDefaultAddress==1}>class="on"<{/if}>>
+				<i></i>
+				<div class="txt">
+					<div class="top">
+						<span><{$item.first_name}>&nbsp; <{$item.last_name}></span>
+						<em><{$item.phone}></em>
+					</div>
+					<div class="top">
+						<span>Email:<{$item.email}></span>
+						
+					</div>
+					<p><{$item.address}></p>
+				</div>
+				<a href="<{$http_root_www}>member/delivery_address_edit?id=<{$item.id}>" class="edit"></a>
+				
+			</li>
+			<{/foreach}>
+			
+		</ul>
+		<{else}>
+				
+		<{/if}>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+<{include file="mobile/mobile_footer.htm"}>
+</body>
+</html>

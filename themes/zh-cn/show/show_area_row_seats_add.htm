@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}>  </title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.form.js"  ></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:120px; }
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<{include file='show/show_management_menu.htm'}>
+				<div class="colCurTit clearfix">
+						添加场馆座位
+					</div>
+				<div class="main-form">
+					<form id="memberForm" action="<{$http_root_www}>show/show_area_row_seats_add" method="post" target="post_frame" enctype="multipart/form-data">
+					  <div class="input-box clearfix">
+							<span>
+							<label>场馆：</label>
+							</span>
+								<select name="stadium_id" class="ahibw"  >
+							<{foreach from=$stadium item=item}>
+								<option value="<{$item.id}>" <{if $item.id==$stadium_id}>selected<{/if}> ><{$item.name}></option>
+							<{/foreach}>
+							</select>
+						</div>
+						<div class="input-box clearfix">
+							<span>
+							<label>区：</label>
+							</span>
+							<input type="text" name="area" id="area" class="input-text" value="<{$area}>" style="width:400px;" />
+						</div>
+						<div class="input-box clearfix">
+							<span>
+							<label>排：</label>
+							</span>
+							<input type="text" name="row" id="row" class="input-text" value="<{$row}>" style="width:400px;" />
+						</div>
+						
+					<div class="input-box clearfix">
+							<span>
+							<label>开始编号</label>
+							</span>
+							<input type="text" name="seats_start" id="seats_start" class="input-text" value="<{$data.a}>" style="width:400px;" />
+						</div>
+						
+						<div class="input-box clearfix">
+							<span>
+							<label>结束编号</label>
+							</span>
+							<input type="text" name="seats_end" id="seats_end" class="input-text" value="<{$seats_end}>"  style="width:400px;" />
+						</div>
+					  <div class="input-box clearfix">
+					    <span>
+			        <label>残疾人座位</label>
+						  </span>
+					    <p>
+					      <label>
+					        <input name="seats_special" type="radio" value="0" checked>
+					        正常座位</label>
+					      <br>
+					      <label>
+					        <input type="radio" name="seats_special" value="1">
+					        残疾人座位</label>
+					      <br>
+				        </p>
+					  </div>
+						<div class="input-box input-submit clearfix">
+							<button type="submit">保存修改</button>
+					  </div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script>
+						$('#memberForm').submit(function(){
+							var _form = $(this);
+							_form.find(':submit').attr('disabled', true);
+							$('.response').remove();
+							_form.before('<p class="response">Loading...</p>');
+							$(window).scrollTop($('.box2').offset().top);
+							$('#post_frame').unbind('load').load(function(){
+								_form.find(':submit').attr('disabled', false);
+								var data = $(this).contents().find('body').html();
+								$('.response').remove();
+								data = eval('('+ data +')');
+								_form.before('<p class="response">'+ data.msg +'</p>');
+								if (data.status==200) {
+									_form.slideUp(10, function(){
+										$(this).remove();
+										//setTimeout(function(){
+											window.location.href ='<{$http_root_www}>show/show_area_row_seats_add';
+										//}, 2000);
+									});
+								}
+							});
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

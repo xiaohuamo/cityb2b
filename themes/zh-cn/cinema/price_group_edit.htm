@@ -1,0 +1,166 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+<script type="text/javascript">
+	function updateItemDisplay(obj){
+		var total =$(obj).val();
+
+		var html=[] ;
+
+		for (var i =total - 1; i >= 0; i--) {
+			html.push("<div class='input-box clearfix'>");
+			html.push("<span><label>名称</label></span>");
+			html.push("<input type='text' name='item["+i+"][room]'' class='input-text' required/>");
+			html.push("</div>");
+
+			html.push("<div class='input-box clearfix'>");
+			html.push("<span><label>票价</label></span>");
+			html.push("<input type='text' name='item["+i+"][type]'' class='input-text' required/>");
+			html.push("</div>");
+		};
+
+		$('.items').html(html.join(""));
+
+	}
+</script>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				<{include file='cinema/top_menu.htm'}>
+
+				<div class="main-form">
+				
+					<div class="colCurTit">完善价格信息
+					</div>
+
+					<form class ='form-style-green memberForm' action="<{$http_root_www}>cinema/price_group_add" method="post" target="post_frame">
+					  <div class="input-box clearfix">	
+								<span><label>价格组名称</label></span>	
+								<input type="text" name="labelname" class="input-text"  required/>
+						</div>
+						 <div class="input-box clearfix">	
+								<span><label>价格数量</label></span>	
+								<input type="text" name="size" class="input-text" value='1' onBlur="updateItemDisplay(this)" required/>
+						</div>
+
+						<div class='items'>
+							<div class="input-box clearfix">	
+								<span><label>名称</label></span>		
+								<input type="text" name="item[0][room]" class="input-text" required/>
+							</div>
+
+							<div class="input-box clearfix">	
+								<span><label>票价</label></span>		
+								<input type="text" name="item[0][type]" class="input-text" required/>
+							</div>
+
+						</div>
+						
+					
+						<div class="input-box input-submit clearfix">
+
+
+							<button type="submit" style='float:right'>新增价格组</button>
+
+						</div>
+
+					</form>
+
+					<div id='display'>
+						<table style='width:100%'>
+							<tr style='width:100%;background-color:#00A1E9;color:white'>
+								<td>价格组名称</td>
+								<td>票价</td>
+								<td>删除</td>
+							<tr>
+							
+							
+								<{foreach from=$priceGroupList item=item}>
+								<tr data-movie-id = '<{$item.id}>'>
+									<td ><{$item.label_name}></td>
+									
+									<td>
+										<{foreach from=$item.price_group|@unserialize key=key item = price}>
+											[<{$key}>:<{$price}>]
+										<{/foreach}>
+									</td>
+									<td><a href="<{$http_root_www}>cinema/price_group_remove?id=<{$item.id}>"><i class='fa fa-close fa-lg'></i></a></td>
+
+								</tr>
+								<{/foreach}>
+								
+							
+							
+						</table>
+					</div>
+
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+ <{extends file="article/search_result_tpl.htm"}>
+ 
+<{block name=result_display}>
+<div class="mbs-cont">
+    <ul class="ul-sev">
+
+        <{foreach from=$data item=item}>            
+        <li style="margin: 4px 1px 6px 2px;   height: 315px;">
+            <a href="<{$http_root_www}>article/<{$item.id}>">
+                <i class="type <{$item.typecss}>"></i>
+                <div class="pic">
+                    <img src="<{$UPLOAD_PATH}><{$item.pic|image:373:238}>" alt="<{$item.title}>" />
+                </div>
+                <div class="txt">
+                    <h2 style="font-size: 16px; color: #4a4a4a; "><{$item.title|truncate_cn:120:'...'}></h2>
+                    <div class="tip">
+                        <div class="price">
+                            <em class="new"><{if $item.price1=='0.00'}><{$item.price1}><{/if}></em>
+                            <s><{$item.price2}></s>
+                        </div>
+                        <strong>
+                        <i></i><{$item.hits}>
+                    </strong>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <{/foreach}>
+    </ul>
+</div>
+
+<{/block}>

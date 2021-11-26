@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+</head>
+
+<body>
+<div style="height: 800px;width: 800px;">
+	<label>7天新增用户数:</label> <label style="color: red;font-size: large;"><{$date7}></label>
+	<br/>
+	<label>15天新增用户数:</label> <label style="color: red;font-size: large;"><{$date15}></label>
+	<br/>
+	<label>30天新增用户数:</label> <label style="color: red;font-size: large;"><{$date30}></label>
+	<br/>
+	<label>全部用户数:</label> <label style="color: red;font-size: large;"><{$dateall}></label>
+	<br/>
+
+	<label>7天产品销售额:</label> <label style="color: red;font-size: large;"><{$salemoney7}></label>
+	<br>
+	<label>15天产品销售额:</label> <label style="color: red;font-size: large;"><{$salemoney15}></label>
+	<br/>
+	<label>30天产品销售额:</label> <label style="color: red;font-size: large;"><{$salemoney30}></label>
+	<br/>
+	<label>全部产品销售额:</label> <label style="color: red;font-size: large;"><{$salemoneyall}></label>
+	<br/>
+
+	<label>7天热销产品（前100个）:</label ><br/>
+
+	<{foreach from=$hotsale7 item=item}>
+		<label style="color: red;font-size: large;">
+			数量：<{$item.sumcount}> 产品名称：<{$item.bonus_title}>
+			<br/>
+		</label>
+	<{/foreach}>
+
+	<br/>
+	<label>15天热销产品（前100个）:</label><br/>
+	<{foreach from=$hotsale15 item=item}>
+	<label style="color: red;font-size: large;">
+		数量：<{$item.sumcount}> 产品名称：<{$item.bonus_title}>
+		<br/>
+	</label>
+	<{/foreach}>
+
+	<br/>
+	<label>30天热销产品（前100个）:</label><br/>
+	<{foreach from=$hotsale30 item=item}>
+	<label style="color: red;font-size: large;">
+		数量：<{$item.sumcount}> 产品名称：<{$item.bonus_title}>
+		<br/>
+	</label>
+	<{/foreach}>
+	<br/>
+
+	<label>全部热销产品（前100个）:</label><br/>
+	<{foreach from=$hotsaleall item=item}>
+	<label style="color: red;font-size: large;">
+		数量：<{$item.sumcount}> 产品名称：<{$item.bonus_title}>
+		<br/>
+	</label>
+	<{/foreach}>
+	<br/>
+
+	<!--label>7天价钱排序（前10个）:</label>  <label style="color: red;font-size: large;"></label>
+	<br/>
+	<label>15天价钱排序（前10个）:</label> <label style="color: red;font-size: large;"></label>
+	<br/>
+	<label>30天价钱排序（前10个）:</label> <label style="color: red;font-size: large;"></label-->
+</div>
+</body>
+</html>

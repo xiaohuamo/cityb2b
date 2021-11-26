@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>品牌导航</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body style="background:#f3f4f6;">
+
+<!-- 头部 -->
+<header id="hd">
+    <div class="left">
+        <a href="<{$http_root_www}>" class="a-back"></a>
+    </div>
+    <div class="right">
+    </div>
+    <h1>品牌旗舰店</h1>
+</header>
+<!-- 头部 end-->
+
+<!-- 主内容 -->
+<section id="bd">
+    <div class="box-prods">
+        <div class="col-l">
+            <div class="pic-menu"><img src="<{$SKIN_PATH}>mobile/images/pic36.jpg" alt=""></div>
+            <ul class="g-ul  s-nav">
+                <{foreach from=$type item=item}>
+                    <li ><a  href="<{$http_root_www}>brandstore?id=<{$item.alias}>" class="s1" ><{$item.name}></a></li><!--class="on"-->
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="col-r">
+            <ul class="g-ul ul-list16">
+            <{foreach from=$data item=item}>
+                <div class="tabshow1" style="margin-top: 10px;">
+                    <li>
+                        <a href="<{$http_root_www}>store/<{$item.createUserId}>">
+                            <{if $item.logo!=''}>
+                            <div class="pic"><img src="<{$UPLOAD_PATH}><{$item.logo}>" >
+                            </div>
+                            <{else}>
+                            <div class="pic"><img src="<{$SKIN_PATH}>brandstore/images/Smilingface.png" >
+                            </div>
+                            <{/if}>
+                            <p><{$item.businessname}></p>
+                        </a>
+                    </li>
+                </div>
+           <{/foreach}>
+            </ul>
+       </div>
+   </div>
+</section>
+<!-- 主内容 end-->
+
+<{include file='mobile/mobile_footer.htm'}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+</body>
+</html>

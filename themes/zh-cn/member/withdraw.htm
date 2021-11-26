@@ -1,0 +1,101 @@
+<!doctype html><html><head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script> 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style>	.main-form .input-box span label { width:250px; }</style>
+</head>
+<body>
+	<{include file='header.htm'}>
+	<div class="container">
+		<div class="wrap clearfix">		
+			<{include file='member/side.htm'}>	
+			<div class="main">
+				<div class="box2">
+					<div class="colCurTit">
+						<{$lang->money_account_balance}>: $<{if $balance<=0}>0<{else}><{$balance}><{/if}>
+
+						<span class="links">
+							<a class='btn-yellow' href="<{$http_root_www}>member/withdraw_account" ><{$lang->setting}></a>  
+						</span>
+					</div>	
+
+					<div class="main-form">				
+
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>member/withdraw" method="post" target="post_frame" enctype="multipart/form-data">
+
+						<div class="input-box clearfix">
+							<h1><{$lang->withdraw}></h1>
+							<p><{$lang->withdraw_desc1}></p>
+							<p><{$lang->withdraw_desc2}></p>
+							<{if $firstdraw==1}><p>*<{$lang->withdraw_desc3}></p><{/if}>
+						</div>
+						
+						<div class="input-box clearfix">
+
+							<span><label><{$lang->Account_name}></label></span>
+							<{$user_account_info.account_name}>
+
+						</div>
+						<div class="input-box clearfix">
+
+							<span><label><{$lang->first_name}></label></span>
+							<{$user_account_info.firstname}>
+
+						</div>
+						<div class="input-box clearfix">
+
+							<span><label><{$lang->last_name}></label></span>
+							<{$user_account_info.lastname}>
+						</div>
+						
+						<div class="input-box clearfix">
+
+							<span><label>BSB</label></span>
+							<{$user_account_info.bsb_number}>
+
+						</div>
+						
+						<div class="input-box clearfix">
+
+							<span><label>Account Number</label></span>
+							<{$user_account_info.account_number}>
+
+						</div>
+						
+						<div class="input-box clearfix">
+
+							<span><label><{$lang->withdraw_amount}></label></span>
+							<input type="number" min="0.5" step="0.01"  name="amount" class="input-text" required  />
+
+						</div>
+						
+						
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit" style='float:right'><{$lang->withdraw}></button>
+
+						</div>
+
+                   	</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+				
+			</div>	
+		</div>	
+	</div>
+</div>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+<{include file='footer.htm'}>
+</body>
+</html>

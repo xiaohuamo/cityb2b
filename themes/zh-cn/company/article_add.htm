@@ -1,0 +1,992 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+
+
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+<script>
+	var php_root ='<{$http_root_www}>';
+</script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+ 
+ <script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+<style type="text/css">
+	.image_view{
+		position: relative;
+		right: 0;
+		left: 0;
+		margin: 30px auto;
+
+	}
+	.image_item{
+		border: 2px solid #ddd;
+	}
+	.image_mask{
+		position: absolute;
+		text-align: center;
+		top: 1px;
+		left: 1px;
+		opacity: 0;
+		background-color: #eee;
+	}
+	.image_mask:hover{
+		opacity: 0.6;
+	}
+
+	.image_view_remove{
+		position: absolute;
+		display: inline-block;
+		bottom: 0;
+		right: 0;
+		cursor: pointer;
+	}
+
+	.image_view_add{
+		color: #fff;
+	    border: 1px solid #e0b123;
+	    background: #FD5001 ;
+	    padding: 10px;
+	    display: inline-block;
+	}
+
+	@media screen and (max-width:640px) {
+		.image_view,.image_item,.image_mask{
+			width: 100%!important;
+			height: auto!important;
+		}
+	}
+</style>
+<script> 
+
+var cats = [];
+<{foreach from=$categoriesAll item=item}>
+cats.push(['<{$item.id}>', '<{$item.name}>', <{$item.childCount}>]);
+<{/foreach}>
+
+
+
+
+function catChg(obj) {
+	var vv = $(obj).val(); 
+
+	var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+	if (isNaN(cc)) cc = 0;
+
+	var cat_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd')
+	
+
+	if (vv == '' || cc <= 0) {
+		$(obj).next().nextAll().remove();
+
+		if($(".nice-check-box input[value='"+vv+"']").length>0){
+			$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
+		}else{
+			$.get('<{$http_root_www}>company/category_insert_single', 
+				{ 'cid': vv,}, 
+				function(data){
+					$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="userCategoryId[]"  value="' + vv +'" checked /><label for="'+vv+'"><strong>' + cat_name + '</strong></label></div>');
+					$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+			});
+		}
+
+	}else {
+		$(obj).next().nextAll().remove();
+		var c = $('<select name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		for (var i = 0; i < cats.length; i++) {
+			if ( cats[i][0].substring(0, vv.length) == vv && cats[i][0].length == vv.length + 3 ) {
+				c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
+			}
+		}
+		$(obj).next().after(c);
+		setDroplist(c);
+	}
+}
+
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1>发布美文</h1>
+						<{$data}>
+					</div>
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						
+					<div i class="input-box clearfix" >
+						
+							<div class="input-box  form-style-green">
+							<span>
+							<label>文章标题</label>
+							</span>
+							<input type="text" name="title" class="input-text" value="<{$data.title}>" placeholder="请输入-标题党级别的标题..." style="width:60%;font-size:14px;" />
+							<span class='help-box' data-content='最多64个字'></span>
+					  	</div>
+						
+										
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>辛苦的小编名</label></span>
+								<input type="text" name="editor"  class="input-text" value="<{$data.editor}>" placeholder="U哥" style="width:30%;font-size:14px;" />
+							<span class='help-box' data-content='最多10个字'></span>
+							</div>
+						</div>
+						
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>搜索关键字1</label></span>
+								<input type="text" name="keyword1"  class="input-text" value="<{$data.keyword1}>" placeholder="比如 麻辣烫" style="width:30%;font-size:14px;" />
+							<span class='help-box' data-content='最多10个字,必须要有'></span>
+							</div>
+						</div>
+						
+							<div class="input-box clearfix ">
+						  	<div >
+							<span><label>搜索关键字2</label></span>
+								<input type="text" name="keyword2"  class="input-text" value="<{$data.keyword2}>" placeholder="比如 墨尔本麻辣烫" style="width:30%;font-size:14px;" />
+							<span class='help-box' data-content='最多10个字,必须要有'></span>
+							</div>
+						</div>
+							
+						<div id="div03" class="input-box clearfix"  >
+
+							<span>
+
+							<label>文章内容</label>
+
+							</span>
+
+						</div>
+
+						
+							<div class="input-box clearfix"  style='padding-left: 100px;padding-right:30px;margin-left: 60px;'>
+							
+						  	<textarea name="content" class="input-textarea" style="width:80%; height:300px;" > 
+						  		<{$data.content}>
+							</textarea>
+                            <br>
+							<em>如果将公众号软文的文章放在里面的操作方法为:</em><br>
+							<em>1)在微信公众号素材里找到文章,并进入修改, 整体拷贝(copy)文章.</em><br>
+							<em>2)打开135编辑器(https://www.135editor.com/),进入公众号文件编辑窗,将刚才的内容黏贴(paste)进去</em><br>
+							<em>3)将135编辑器文章可以适当调整编辑(根据需要),然后整体拷贝(copy)</em><br>
+							<em>4)将内容再黏贴(paste)到上面的文本框中即可.</em><br>
+							<em>注:可能其它的编辑器也可以未测试,保存后可以进行预览.</em><br>
+							
+						  	
+							</div>
+						
+						<br><hr><br>
+						<div class="input-box clearfix">
+									<div class='form-style-green '>
+										<span>
+											<label>副标题</label>
+										</span>
+									</div>
+										<input type="text" name="Description"  class="input-text" value="<{$data.Description}>" placeholder="该标题微信转发时为副标题, 可以输入最多100个字" style="width:70%;font-size:14px;" />
+						                <input type="hidden" name="id"  class="input-text" value="<{$id}>"  />
+						
+									
+									</div>
+								
+						  
+								<br><hr><br>
+					
+						
+						
+							<div class=' form-style-green ' >
+								<span ><label>选择文章类型 </label></span> 
+							</div>
+							
+							<br>
+
+							<div  style='padding-left: 100px;padding-right:30px;margin-left: 60px;'>
+							  <{foreach from=$article_type item=item}>
+									<div >
+										<input type="radio" name="category_id" onclick ="set_option_if_restaurant(this);" value="<{$item.idd}>" <{if $item.idd ==$data.category_id}>checked<{/if}> />
+										
+										
+										<label for=""><strong><{$item.cat_name}></strong></label>
+									</div>
+									
+							 
+									<{if $item.idd ==2}>
+									
+									<div   id ="restaurant_recommend"  class="input-box clearfix" style='<{if $data.category_id==2}><{else}>display:none;<{/if}>padding-right:30px;margin-left: 20px;' >
+										<input name="restaurant_recommend" type="checkbox"  value="1" <{if $data.restaurant_recommend ==1}>checked<{/if}> /> 
+
+										申请为置顶</a>
+									</div>
+							  <{/if}>
+									<{/foreach}>
+							
+						</div>
+					<br><hr><br>
+					<script>
+					
+						$(function(){
+							//根据内容是否与产品相关进行初始化
+							var business_id='<{$data.business_id}>';
+							var product_id ='<{$data.product_id}>';
+							
+							if(business_id){
+								set_business_product_display1(3);
+							}else if (product_id){
+								
+							  set_business_product_display1(2);
+							
+							}else  {
+							 set_business_product_display1(1);
+							
+							}
+						})
+
+					
+					
+					 function set_option_if_restaurant(obj){
+					 
+					   //alert($(obj).val());
+					   if($(obj).val()==2) {
+					     $('#restaurant_recommend').css('display','');
+					   
+ 					   }else{
+					    $('#restaurant_recommend').css('display','none');
+					   }
+					 
+					 }
+					 
+					  function set_option_if_cityRange(obj){
+					 
+					
+					   if($(obj).prop("checked") ){
+					     $('#cityRange').css('display','');
+					   
+ 					   }else{
+					    $('#cityRange').css('display','none');
+					   }
+					 
+					 }
+					 
+					 function set_option_if_catRange(obj){
+					 
+					
+					   if($(obj).prop("checked") ){
+					     $('#catRange').css('display','');
+						  $('#all_category').css('display','');
+						 
+					   
+ 					   }else{
+					    $('#catRange').css('display','none');
+						  $('#all_category').css('display','none');
+						
+					   }
+					 
+					 }
+					 
+					  function set_business_product_display(obj,option){
+					 
+					  // 如果选择不相关 某一个产品或某一个商家
+					  if(option==1) {
+					   if($(obj).prop("checked") ){
+					    
+						 $('#business_id').val('');
+						 $('#product_id').val('');
+						 $('#business_id').css('display','none');
+						 $('#business_id_em').css('display','none');
+						 
+						 $('#product_id').css('display','none');
+						 $('#product_id_em').css('display','none');
+					   
+ 					   }
+					   }
+					   // 选择相关于某一个产品
+					   if(option==2) {
+					   if($(obj).prop("checked") ){
+					    
+						 $('#business_id').val('');
+						
+						 $('#business_id').css('display','none');
+						  $('#business_id_em').css('display','none');
+						 $('#product_id').css('display','');
+						  $('#product_id_em').css('display','');
+					   
+ 					   }
+					   }
+					   // 选择相关于某一个商家
+					    if(option==3) {
+							if($(obj).prop("checked") ){
+					    
+						
+						 $('#product_id').val('');
+						 $('#business_id').css('display','');
+						 $('#product_id').css('display','none');
+						  $('#business_id_em').css('display','');
+						 $('#product_id_em').css('display','none');
+					   
+ 					   }
+					   }
+					 
+					 }
+					 
+					   function set_business_product_display1(option){
+					 
+					  // 如果选择不相关 某一个产品或某一个商家
+					  if(option==1) {
+					  
+					    
+						
+						 $('#product_id').val('');
+						 $('#business_id').css('display','none');
+						 $('#business_id_em').css('display','none');
+						 
+						 $('#product_id').css('display','none');
+						 $('#product_id_em').css('display','none');
+					   
+ 					  
+					   }
+					   // 选择相关于某一个产品
+					   if(option==2) {
+					   
+					    
+						 $('#business_id').val('');
+						
+						 $('#business_id').css('display','none');
+						  $('#business_id_em').css('display','none');
+						 $('#product_id').css('display','');
+						  $('#product_id_em').css('display','');
+					   
+ 					  
+					   }
+					   // 选择相关于某一个商家
+					    if(option==3) {
+							
+					    
+						
+						 $('#product_id').val('');
+						 $('#business_id').css('display','');
+						 $('#product_id').css('display','none');
+						  $('#business_id_em').css('display','');
+						 $('#product_id_em').css('display','none');
+					   
+ 					
+					   }
+					 
+					 }
+					 
+					 
+					
+					</script>
+						<div class=' form-style-green ' >
+								<span ><label>精选设置 </label></span> 
+							</div>
+							
+							
+
+							<div  >
+							 
+									
+									
+									<div class="input-box clearfix" style='padding-left: 100px;padding-right:30px;margin-left: 60px;' >
+								<input name="recommend1" type="checkbox"  value="1" <{if $item.recommend ==1}>checked<{/if}> /> 
+
+								申请精选好文</a>
+							</div>
+							
+						</div>
+
+					
+					
+						
+							<br><hr><br>
+                         <div>
+							<div class=' form-style-green ' >
+								<span ><label>对应商家及产品设置 </label></span> 
+							</div>
+							
+							<br>
+							
+							
+							<div style='padding-left: 100px;padding-right:30px;margin-left: 60px;'>
+							
+							  <div>
+										<input type="radio" name="Business_products" onclick ="set_business_product_display(this,1);"  value="1" checked />
+										
+										
+										<label for=""><strong>不相关</strong></label>
+								</div>
+								 <div>
+										<input type="radio" name="Business_products"  onclick ="set_business_product_display(this,3);" value="0" <{if $data.business_id}>checked<{/if}> />
+										
+										<label for=""><strong>对应某一商家</strong></label>
+										<br>
+										<input type="text" id="business_id" name="business_id"   onkeydown ="$('#product_id').val('');" class="input-text" value="<{if $data.business_id}><{$data.business_id}><{else if $data.product_id}><{else}><{$loginUser.id}><{/if}>" placeholder="请输入商家id" style="width:50%;font-size:12px;" />	<em id="business_id_em" ><br>商家中心(www.ubonus365.com/company/index 右上角(查看本页面右上角)括弧里的编号(<strong style="color:blue;">433222)</strong>就是商家ID</em>
+									</div>	
+									<div>
+										<input type="radio"name="Business_products" value="0" onclick ="set_business_product_display(this,2);" <{if $data.product_id}>checked<{/if}>/>
+										
+										
+										<label for=""><strong>对应某一产品</strong></label>
+										<br>
+										<input type="text" id = "product_id" name="product_id"  onkeydown ="$('#business_id').val('')"; class="input-text"  value="<{$data.product_id}>" placeholder="请输入产品id,只能输入一个产品" style="width:50%;font-size:12px;" />
+										<em id = "product_id_em"><br>产品id可以在ubonus网上看到自己的产品,产品链接地址最后边的编号www.ubonus365.com/coupon1/7322 的 <strong style="color:blue;">7322</strong> 就是产品id</em>
+										</div>
+							</div>
+
+					
+						</div>
+							<br><hr><br>
+	          
+
+							
+							<div>                
+							<div class=' form-style-green ' >
+								<span ><label>对应区域设置 </label></span> 
+							</div>
+							
+							
+
+							<div  >
+							 
+									
+									
+									<div  class="input-box clearfix" style='padding-left: 100px;padding-right:30px;margin-left: 60px;' >
+								<input id="set_cityRange" onclick ="set_option_if_cityRange(this);" name="set_cityRange" type="checkbox"  value="1" <{if $item.recommend ==1}>checked<{/if}> /> 
+
+								如该文章涉及某一地区美食介绍,如攻略,汇总等请指定地区</a>
+							</div>
+								<div id="cityRange"   class="input-box clearfix" style="<{if $data.city}><{else}>display:none; <{/if}> font-size:14px;   background-color: #f0f0f0;    padding-left: 170px;    ">
+							<{foreach from=$fullcitylist item=country}>
+								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $data.city))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
+							<{/foreach}>
+
+							<em>不勾选则全站可见</em>
+ 
+							<{foreach from=$fullcitylist item=country}>
+								<div class='country<{$country.id}>' style='display: none;'>
+									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
+									<{foreach from=$country.child item=city}>
+									<em style="display: inline-block;min-width: 150px; font-size:12px;">
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $data.city))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+									</em>
+
+										<{if $city.child}>
+										<div class='cl3 well' data-parentid='<{$city.id}>' style='display: none'>
+											<input type="checkbox" class='checkallsuburb'><strong>全选</strong>
+
+											<{foreach from=$city.child item=suburb}>
+											<em style="font-size:12px;">
+												<input id ='suburb<{$suburb.id}>' type="checkbox" name="city[]" value="<{$suburb.id}>" <{if in_array($suburb.id, explode(',', $data.city))}> checked<{/if}> >
+												<label for='suburb<{$suburb.id}>'><{$suburb.name}></label>
+											</em>
+											<{/foreach}>	
+										</div>
+										<{/if}>
+										
+									<{/foreach}>
+								</div>
+							<{/foreach}>
+						</div>
+						
+						<script type="text/javascript">
+							
+							function dd(obj) {
+								if($(obj).is(':checked')){
+									$(".country"+$(obj).val()).show(100);
+								}else{
+									$(".country"+$(obj).val()).hide(100);
+									$(".country"+$(obj).val()+" .cl2").prop('checked',false);
+								}
+							}
+
+							function cc(obj) {
+								if($(obj).is(':checked')){
+									$(".cl3[data-parentid="+$(obj).val()+"]").show(100);
+								}else{
+									$(".cl3[data-parentid="+$(obj).val()+"]").hide(100);
+									$(".cl3[data-parentid="+$(obj).val()+"]").find('input').prop('checked',false);
+								}
+							}
+
+							$(function(){
+								$('.cl1').on('click',function(){
+									dd($(this));
+								})
+
+								$('.cl1').each(function(){
+									dd($(this));
+								})
+							})
+
+							$(function(){
+								$('.cl2').on('click',function(){
+									cc($(this));
+								})
+
+								$('.cl2').each(function(){
+									cc($(this));
+								})
+							})
+
+							$(function(){
+								$('.checkall').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('.cl2').prop('checked',true);
+										$(this).siblings('.cl3').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('.cl2').prop('checked',false);
+										$(this).siblings('.cl3').find('input').prop('checked',false);
+									}
+
+									$('.cl1').each(function(){
+										dd($(this));
+									})
+
+									$('.cl2').each(function(){
+										cc($(this));
+									})
+
+								})
+							})
+
+							$(function(){
+								$('.checkallsuburb').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('input').prop('checked',false);
+									}
+								})
+							})
+						</script>
+				
+						
+							
+						</div>
+
+					
+					
+						</div>
+							<br><hr><br>
+                          
+
+						<div class="input-box clearfix" >
+								<span>
+									<label>添加主图片</label>
+								</span>
+						
+						</div>
+						
+						
+					
+					<div class="input-box clearfix">
+							<p style="padding-left: 100px;padding-right:30px;margin-left: 60px;">请上传尺寸最小为 660 X 420 的图片。 尺寸过小会导致图片不清晰</p>
+						</div>
+
+						<div class='upload_image_list' data-cropsize='660,420' data-listsize='1'>
+							<span class='image_view_add' >添加一张图片</span>
+						</div>
+						
+							<br><hr><br>
+
+						<div class="input-box clearfix" >
+							<div class=' form-style-green '>
+								<span><label>设置文章所属行业</label></span>
+							</div>
+							
+			
+							<div  >
+							 
+									
+								<div  class="input-box clearfix" style=' padding-left: 100px;padding-right:30px;margin-left: 60px;' >
+								<input id="set_catRange" onclick ="set_option_if_catRange(this);" name="set_catRange" type="checkbox"  value="1" checked /> 
+
+								如该文章涉及某一个行业分类, 比如:火锅,海鲜自助等,可以选择相应分类. 同时可以选择多个</a>
+							</div>
+							
+							
+							 <div  id = "catRange" style="  font-size:14px;       margin-left: 170px;    ">
+								<select  id="bigcategoryid" name="allCategoryId[]" class="ahibw" onChange="catChg(this);"  >
+									<{foreach from=$categories item=item}>
+											<option value="<{$item.id}>" cc="<{$item.childCount}>" <{if substr($item.id,0,6)==$category}>selected<{/if}> ><{if $item.name=='本地服务'}><{$item.name}>/餐厅<{else}><{$item.name}><{/if}>   </option>
+									<{/foreach}>
+							</select>
+						
+							<br><em>点击下拉框进项选择，可多选,绿色为已选，灰色为未选，鼠标点击可选择或取消</em>
+								</div>
+							</div>
+							
+						
+						</div>
+					
+						
+
+						<div id="all_category" class="input-box clearfix" >
+							
+
+							<div class='my_categorys-list' style='padding-left: 80px; font-size:13px;padding-right:30px;'>
+								<{foreach from=$userCategory item=item1}>
+									<div class='nice-check-box'>
+										<input id="<{$item1.id}>" type="checkbox" name="userCategoryId[]" value="<{$item1.id}>"
+										 checked />
+										<label for="<{$item1.id}>"><strong><{$item1.name}></strong></label>
+									</div>
+								<{/foreach}>
+								
+							</div>
+						</div>
+						<br><hr><br>
+					
+						
+						<div class="input-box input-submit clearfix">
+							
+
+							<button type="submit" style="float:right;" onclick="save_tradinghours_submit();"> 
+								
+								保存
+								</button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+ <script>
+ 
+   function save_tradinghours_submit() {
+			   
+			    var frm = document.forms["memberForm"];
+				 
+				  $("#btnSerialize").click();
+			       frm.submit();
+				
+				
+            }
+ 
+      </script>
+									
+<style type="text/css">
+	.input_html{
+		display: none;
+	}
+	input[name='nodecname']{
+		width:105px;
+	}
+	input[name='nodeorder']{
+		width:55px;
+	}
+
+	.add_top_level_item{
+		line-height: 35px;
+	}
+	table.citen_edit tr{
+		line-height: 35px;
+	}
+	table.citen_edit tr:hover{
+		background-color: #FD5001 ;
+	}
+	tr.highlight{
+		background-color: #FD5001 ;
+	}
+</style>
+<script type="text/javascript">
+
+	var selectedCategoryID='<{$data.cCategoryId}>'.split(',');
+
+	function popSelectedCategory(){
+		$allCheckbox=$("input[name='cCategoryId[]']");
+		$allCheckbox.each(function(){
+			if(selectedCategoryID.indexOf($(this).val())!='-1'){
+				$(this).prop('checked', true);
+			}
+		})
+	}
+
+	function loadChildAjax(obj){
+		$icon = $(obj).find('.load_child i');
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		if($(obj).hasClass('opened')){
+			$children=getChildCItem(obj);
+			$children.hide();
+			$children.each(function(){
+				$(this).find('.load_child i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			});
+
+			$icon.removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			$(obj).removeClass("opened").addClass("collapsed");
+		}else if($(obj).hasClass('collapsed')){
+			$children=$("tr.citem[data-pid='"+id+"']");
+			$children.show();
+
+			$icon.removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$(obj).removeClass("collapsed").addClass("opened");
+		}else{
+			$.ajax({
+				url:"<{$http_root_www}>customizable_category/load_child_show",
+				data:{pid:id},
+				
+				beforeSend:function(){
+					$icon.removeClass('fa-plus-square-o').addClass('fa-spinner fa-spin');
+				},
+				success:function(data){
+					$(obj).after(data);
+					$(obj).addClass('opened');
+					$icon.addClass('fa-minus-square-o');
+				},
+				error:function(){
+					$icon.addClass('fa-plus-square-o');
+				},
+				complete:function(){
+					$icon.removeClass('fa-spinner fa-spin');
+					popSelectedCategory();
+				}
+			})
+		}
+	}
+
+	function getChildCItem(obj){
+		//从第一个子类到最后一个子类的全部tr
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		$allItem = $('tr.citem');
+		var firstIndex = $allItem.index($("tr.citem[data-pid='"+id+"']").first());
+
+		if($(obj).nextAll("tr.citem[data-pid='"+pid+"']").length!==0){
+			var lastIndex =  $allItem.index($(obj).nextAll("tr.citem[data-pid='"+pid+"']").first());
+		}else{
+			var lastIndex =  $allItem.index($("tr.citem[data-pid='"+id+"']").last())+1;
+		}	
+
+		if(lastIndex==-1){
+			$children=$allItem.slice(firstIndex);
+		}else{
+			$children=$allItem.slice(firstIndex,lastIndex);
+		}
+		return $children;
+	}
+
+	function loadChild(obj){
+		console.log('.load_child clicked');
+		$citem = $(obj).parents('tr.citem');
+		loadChildAjax($citem);
+	}
+
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+	popSelectedCategory();
+	//init state
+	if($('#cCategoryId_lock').is(':checked')){
+		$('.category_show').show();
+	}
+	//bind action
+	$('#cCategoryId_lock').on('click',function(){
+		$('.category_show').toggle(this.checked);
+	})
+
+});
+
+
+</script>
+
+<script type="text/javascript">
+	var cropsize = $('.upload_image_list').data('cropsize');
+	var cs = cropsize.split(',');
+	//var w=cs[0];
+	//var h=cs[1];
+	var w=330;
+	var h=210;
+
+	$('.image_uploader input[name="resize"]').val(cropsize);
+
+	var listsize=$('.upload_image_list').data('listsize');
+
+	var displayTarget;
+
+	addImageView('<{$data.pic}>');
+	
+	<{foreach from=$data.pics|@unserialize item=item}>
+		addImageView('<{$item}>');
+	<{/foreach}>
+
+	$('.image_view_add').on('click',function(){
+		addImageView();
+	})
+
+	function addImageView(src){
+		if(!src)src='default/image_upload.jpg';
+		$newdiv = $("<div></div>").addClass('image_view')
+					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"点击编辑"))
+					.append($("<input name='images[]' type='hidden'>").val(src))
+					.append($("<div>x</div>").addClass('image_view_remove'));
+
+		$newdiv.on('click',function(){
+			$(".image_uploader").find('input[name="image"]').click();
+			displayTarget = $(this).find('.image_item');
+		})
+
+		$newdiv.find('.image_view_remove').on('click',function(){
+			$(this).parent().remove();
+		})
+
+		$('.image_view_add').before($newdiv);
+
+		$('.image_view').css('width',w).css('height',h);
+		$('.image_view').css('margin-left','160px');
+	
+		$('.image_item').css('width',w).css('height',h);
+		$('.image_mask').css('width',w).css('height',h).css('line-height',h+'px');
+	}
+</script>
+
+<script>
+	var jcrop_api;
+
+	function initJcrop(){
+		if(jcrop_api){
+			jcrop_api.destroy();
+			$('.preview').removeAttr('style');
+		}
+
+		$('.preview').Jcrop({
+			boxWidth:  $(window).width()*0.9, 
+			boxHeight: $(window).height()*0.8,
+			onSelect:    function(c){
+				$('input[name="bounds"]').val(c.x+','+c.y+','+c.x2+','+c.y2);
+			},
+			onChange: function(c){
+				$('.selected_size_display').html(c.w.toFixed(0) + " x " +c.h.toFixed(0));
+			},
+			onRelease:   function(){
+				$('input[name="bounds"]').val('');
+			},
+			//onChange:    showCoords,
+			//bgColor:     'black',
+			//bgOpacity:   .4,
+			//setSelect:   [ 100, 100, 50, 50 ],
+			aspectRatio: w / h
+		},function(){
+			var bounds = this.getWidgetSize();
+			$('.image_uploader').css('width',bounds[0]);
+			jcrop_api=this;
+		});
+	}
+
+    function openFile(event) {
+		var input =event.target;
+
+		var reader = new FileReader();
+
+		reader.onload = function(){
+			var dataURL = reader.result;
+			$('.preview').attr('src',dataURL);
+			initJcrop();
+			$(".image_uploader").show();
+		};
+
+		if(input.files.length>0)
+			reader.readAsDataURL(input.files[0]);
+	};
+
+	$(function(){
+		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪，补白缩放</label><button type='button' class='close'>x</button></form>");
+	})
+
+	$(function(){
+		$('input[name="image"]').on('change',function(event){
+			openFile(event);
+		})
+	})
+
+	$(function(){
+		$('button.close').on('click',function(){
+			$(this).parent().hide();
+		})
+	})
+
+	$(function(){
+		$("form.image_uploader").on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+	            type: 'POST',
+	            url: "<{$http_root_www}>test/save_image",
+	            data: new FormData(this),
+	            enctype: 'multipart/form-data',
+	            contentType: false,       
+				cache: false,             
+				processData:false,  
+				beforeSend:function(){
+					console.log('uploading');
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+	            success: function(result) {
+	               result=String(result).trim();
+	               $(displayTarget).attr('src',"<{$UPLOAD_PATH}>"+result);
+	               $(displayTarget).siblings('input').val(result);
+
+	               jcrop_api.destroy();
+				   $('.preview').removeAttr('style').removeAttr('src');
+	               $(".image_uploader").hide();
+	            },
+	            complete:function(){
+	            	console.log('complete');
+	            	$('.form_response_loader').remove();
+	            },
+	            error:function(){
+	            	console.log('error');
+	            }
+	        })
+		})
+	})
+</script>
+
+
+  <script type="text/javascript">
+        var shareTitle='快速代金券生成与分享-Ubonus 微奖网';
+        var shareLink='<{$shareUrl}>';
+        var desc="Ubonus 微奖网 为各行业商家提供 快速生成代金券功能,一键生成不含糊!!";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+</body>
+</html>

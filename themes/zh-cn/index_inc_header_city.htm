@@ -1,0 +1,21 @@
+<!-- 选择城市地址 -->
+<div class="xz-city btn btn1 JS-select">
+
+  <{if $langStr=='zh-cn'}>
+    <p><{$cityParent.name}> - <{$city.name}></p>
+	<{else}>
+	  <p><{$cityParent.en_name}> - <{$city.en_name}></p>
+	<{/if}>
+    <div id="city-box1" class="JS-select-con">
+        <dl>
+            <{foreach from=$fullcitylist item=country}>
+            <dd style="clear: left;"><a style="font-weight: bolder;" href="<{$http_root_www}>?cityid=<{$country.id}>"><{if $langStr=='zh-cn'}><{$country.name}><{else}><{$country.en_name}><{/if}></a></dd>
+                <{foreach from=$country.child item=city}>
+                    <dd><a href="<{$http_root_www}>?cityid=<{$city.id}>"><{if $langStr=='zh-cn'}><{$city.name}><{else}><{$city.en_name}><{/if}></a></dd>
+                <{/foreach}>
+            <{/foreach}>
+        </dl>
+    </div>
+</div>
+
+<!-- 选择城市地址 end-->

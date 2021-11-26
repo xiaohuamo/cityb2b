@@ -1,0 +1,155 @@
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #language-close-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #language-close-modal:hover,
+    #language-close-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+	.language-btn {
+        text-align: center;
+		width: 30%;
+		display: inline-block;
+		line-height: 50px;
+		color: #fff;
+		background-color: #FD5001 ;
+	}
+</style>
+
+<!-- The Modal -->
+<div id="language-modal" class="modal">
+
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span id="language-close-modal">&times;</span>
+
+		<p><{$lang->please_select_langugae}></p>
+		<div>
+			<div class="language-btn" style="float: left" onclick="selectLanguage('en')">
+				<span><{$lang->lang_en}></span>
+			</div>
+
+			<div class="language-btn" style="float: right" onclick="selectLanguage('zh-cn')">
+				<span><{$lang->lang_cn}></span>
+			</div>
+		</div>
+		<p>&nbsp;</p>
+	</div>
+
+</div>
+
+<script>
+    // Get the modal
+    var language_modal = document.getElementById("language-modal");
+
+    // Get the <span> element that closes the modal
+    var languageSpan = document.getElementById("language-close-modal");
+
+
+    var lang = getCookie();
+    if(lang !== 'zh-cn' && lang !== 'en') {
+        showSelectLanguage(true);
+	}
+
+    // When the user clicks on <span> (x), close the modal
+    languageSpan.onclick = function() {
+        showSelectLanguage(false);
+    }
+
+    function showSelectLanguage(show) {
+        if(show) {
+            language_modal.style.display = "block";
+		} else {
+            language_modal.style.display = "none";
+		}
+	}
+
+    function selectLanguage(value) {
+        setCookie(value, 'user-lang');
+        setCookie(value, 'lang');
+        insertParam(value, 'lang');
+	}
+
+    function insertParam(value, key) {
+        key = encodeURIComponent(key);
+        value = encodeURIComponent(value);
+
+        // kvp looks like ['key1=value1', 'key2=value2', ...]
+        var kvp = document.location.search.substr(1).split('&');
+        let i=0;
+
+        for(; i<kvp.length; i++){
+            if (kvp[i].startsWith(key + '=')) {
+                let pair = kvp[i].split('=');
+                pair[1] = value;
+                kvp[i] = pair.join('=');
+                break;
+            }
+        }
+
+        if(i >= kvp.length){
+            kvp[kvp.length] = [key,value].join('=');
+        }
+
+        // can return this or...
+        let params = kvp.join('&');
+
+        // reload page with new params
+        document.location.search = params;
+    }
+
+    function setCookie(value, c_name, exdays = new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000)) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+        document.cookie = c_name + "=" + c_value;
+    }
+
+    function getCookie(c_name = 'user-lang') {
+        var i, x, y, ARRcookies = document.cookie.split(";");
+        for (i = 0; i < ARRcookies.length; i++) {
+            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+            x = x.replace(/^\s+|\s+$/g, "");
+            if (x == c_name) {
+                return unescape(y);
+            }
+        }
+    }
+
+</script>

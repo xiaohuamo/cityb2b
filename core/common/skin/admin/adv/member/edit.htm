@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function check (form)
+{
+	var password= $("input[name=data[password]]").val();
+	var password2= $("input[name=data[password2]]").val();
+
+	if (password!= '')
+	{
+		if (password.length < 6)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			
+			return false;
+		}
+
+		if (password!= password2)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			return false;
+		}
+	}
+
+	return true;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+	
+				<form action="<{$http_root_www}>system/system_login" method="post" class='hiddenUserLogin'>
+					<div class="editBtn clearfix">
+						<div><input type="submit" value="以该用户登陆" class="btn1" /></div>
+					</div>
+					
+				</form>
+				<script>
+					$('.hiddenUserLogin').submit(function(){
+					var _form = $(this);
+					var _action = _form.attr('action');
+					_form.find(':submit').attr('disabled', true);
+					
+					$.post(_action, {
+						'name' :'<{$data.name}>',
+						'pwd' : '<{$data.password}>',
+					}, function(data){
+						_form.find(':submit').attr('disabled', false);
+
+						try{
+							data = JSON.parse(data);
+						}catch(err){
+							data['msg'] = data;
+						}
+
+						if (data.status==200) {
+							alert('登录成功！如果页面没有自动跳转，请检查是否浏览器block popups');
+							window.open('<{$http_root_www}>member/index','_blank');
+						}else{
+							alert(data.msg);
+						}
+
+					});
+					return false;
+				});
+				</script>
+				
+	
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post" onSubmit="return check(this);" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2"><{$lang->edit_user}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->user_name}></td>
+					<td class="editRtTd"><input name="name" value="<{$data.name}>" type="text" size="30" class="text" disabled /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->password}></td>
+					<td class="editRtTd"><input name="data[password]" value="" type="password" size="30" class="text" /> <{$lang->edit_password_tips}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->confirm_password}></td>
+					<td class="editRtTd"><input name="data[password2]" value="" type="password" size="30" class="text" /></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->status}></td>
+					<td class="editRtTd">
+						<input id="isApproved" name="data[isApproved]" value="1" type="checkbox"<{if $data.isApproved==1}> checked<{/if}> /><label for="isApproved"><{$lang->audit}></label>
+					</td>
+				</tr>
+				
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

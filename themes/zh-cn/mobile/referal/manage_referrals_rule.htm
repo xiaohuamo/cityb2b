@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+<body class="bg-1">
+	<header id="hd">
+		<div class="left">
+		
+		</div>
+
+		<h1>
+			我是商家主
+		</h1>
+		<a style="position: absolute;top: 0.3rem;right: 10px;" href="<{$editUrl}>"> <i class='fa fa-plus' style='color: #FD5001 '></i>生成媒体码</a>
+	</header>
+
+	<section id="bd">
+		<div>
+			<select class='rule-select' style="width: 100%">
+			<option value='0' >
+			请选择项目
+			</option>
+
+			<{foreach from=$list item=item}>
+				<option value='<{$item.id}>' <{if $rule.id==$item.id}>selected<{/if}>>
+				<{$item.title}>
+				</option>
+			<{/foreach}>
+			</select>
+		</div>
+
+		<br>
+
+		<{if $rule}>
+		<div class="well" style="background-color: #fff">
+			<h5>媒体码:<{$rule.apply_code}></h5>
+			<h5><{$rule.desc}>
+			</h5>
+
+			<h5><small>页面点击：<{$ruleStatistics.pageView}></small>  </h5>
+			<h5><small>浏览用户：<{$ruleStatistics.pageUser}></small>  </h5>
+			<h5><small>销售数量：<{$ruleStatistics.orderCount}></small>  </h5>
+			<h5><small>销售额：  <{$ruleStatistics.totalSales}></small>    </h5>
+			<h5><small>佣金支出：<{$ruleStatistics.totalCommission}></small>    </h5>
+
+			<h5>
+				状态：
+				<span class='update-result'>
+				<{if $rule.status==0}>
+					<span style='color:green'>启用</span>
+				<{elseif $rule.status==1}>
+					<span style='color:#f30'>禁用</span>
+				<{elseif $rule.status==2}>
+					<span style='color:#FD5001 '>锁定</span>
+				<{/if}>
+				</span>
+
+				<small class='pull-right'><{date('Y-m-d H:i:s', $rule.gen_date)}></small>
+			</h5>
+			
+		</div>
+
+		<ul class="g-ul g-tab2 g-tab2-1">
+			<li><a href="<{$codeUrl}>id=<{$rule.id}>"><i class="ico2"></i>邀请资料</a></li>
+			<li><a href="<{$http_root_www}>coupon1/<{$rule.coupon_id}>"><i class="ico2"></i>查看产品</a></li>
+			<li>
+				<a >
+				<select class='update-selected' data-target-id='<{$rule.id}>'>
+					<option value='0' <{if $rule.status==0}>selected<{/if}>>启用规则</option>
+					<option value='1' <{if $rule.status==1}>selected<{/if}>>禁用规则</option>
+					<option value='2' <{if $rule.status==2}>selected<{/if}>>Lock规则</option>
+				</select>
+				</a>
+			</li>
+		</ul>
+		<{/if}>
+
+		<{if $ref_list}>
+		<ul class="g-ul m-list4 m-list4-1">
+			<{foreach from=$ref_list item=item name='dl'}>
+			<li>
+				<div class="top">
+					<p><{$item.user_name}> 
+						<select style="float: right;" class='update-selected-rule-application' data-target-id='<{$item.id}>'>
+							<option value='1' <{if $item.status==1}>selected<{/if}> >启用用户</option>
+							<option value='0' <{if $item.status==0}>selected<{/if}> >禁用用户</option>
+						</select>
+						<!-- <a href="<{$http_root_www}>referal/shared_coupon_detail?couponId=<{$item.couponId}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;margin-right: 10px;">业绩详情</a> -->
+					</P>
+				</div>
+				
+				<div class="top">
+					<span>点击：<{$item.statistics.pageView}> 用户：<{$item.statistics.pageUser}> 销售数量：<{$item.statistics.orderCount}> 销售额：<{$item.statistics.totalSales}> 佣金：<{$item.statistics.totalCommission}>  </span>
+				</div>
+
+				<p>
+				<span class='update-result-rule-application'>
+					<{if $item.status==0}>
+						<span style='color:#f30'>禁用</span>
+					<{elseif $item.status==1}>
+						<span style='color:green'>通过</span>
+					<{/if}>	
+				</span>
+				
+
+				<small><{date('Y-m-d H:i:s', $item.gen_date)}></small>
+				
+				</p>
+
+			</li>
+			<{/foreach}>
+		</ul>
+		<{/if}>
+
+	</section>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<{include file="mobile/mobile_footer.htm"}>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.rule-select').on('change',function(){
+
+				window.location.href="<{$http_root_www}>referal/manage_referral_rule_mobile?selectedId="+$(this).find('option:selected').val();
+			})
+		})
+	</script>
+	<script type="text/javascript">
+
+	$(function(){
+		$('.update-selected').on('change',function(){
+			var value = $(this).find("option:selected").val();
+			var target =$(this).data('target-id');
+
+			$display=$('.update-result');
+
+			console.log(target);
+			console.log(value);
+
+			$.ajax({
+			  method: "get",
+			  url: "<{$http_root_www}>referal/update_referral_rule_ajax",
+			  data: { target:target,value:value},
+			  beforeSend:function(){
+			  		$display.html("<i class='fa fa-spinner fa-pulse'></i>");
+			  },
+			  success:function(result){
+			  		try{
+						console.log(result);
+
+						var msg = "";
+
+						if(value==0){
+							msg="<span style='color:green'>启用</span>";
+						}else if(value==1){
+							msg="<span style='color:#f30'>禁用</span>";
+						}else if(value==2){
+							msg="<span style='color:#FD5001 '>锁定</span>";
+						}
+
+						$display.html(msg);
+
+					}catch(err){
+						$display.html("<i class='fa fa-warning'></i>");
+					}
+
+			  },
+			  complete:function(){
+
+			  },
+			  error:function(result){
+			  	  $display.html("<i class='fa fa-warning'></i>");
+			  }
+			})
+		});
+	})
+
+	</script>
+
+
+
+
+	<script type="text/javascript">
+
+	$(function(){
+		$('.update-selected-rule-application').on('change',function(){
+			var value = $(this).find("option:selected").val();
+			var target =$(this).data('target-id');
+
+			$display=$('.update-result-rule-application');
+
+			console.log(target);
+			console.log(value);
+
+			$.ajax({
+			  method: "get",
+			  url: "<{$http_root_www}>referal/update_referral_rule_application_ajax",
+			  data: { target:target,value:value},
+			  beforeSend:function(){
+			  		$display.html("<i class='fa fa-spinner fa-pulse'></i>");
+			  },
+			  success:function(result){
+			  		try{
+						console.log(result);
+
+						var msg = "";
+
+						if(value==1){
+							msg="<span style='color:green'>通过</span>";
+						}else if(value==0){
+							msg="<span style='color:#f30'>禁用</span>";
+						}
+
+						$display.html(msg);
+
+					}catch(err){
+						$display.html("<i class='fa fa-warning'></i>");
+					}
+
+			  },
+			  complete:function(){
+
+			  },
+			  error:function(result){
+			  	  $display.html("<i class='fa fa-warning'></i>");
+			  }
+			})
+		});
+	})
+
+	</script>
+
+</body>
+</html>

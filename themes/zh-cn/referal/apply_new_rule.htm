@@ -1,0 +1,151 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='member/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2" >
+				<div class="main-form" style='min-height: 600px'>
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame">
+					  <div class="input-box clearfix">	
+
+					 	<div class="input-box clearfix">
+							<h1>使用媒体码</h1>
+                          
+						</div>
+						
+						<div class="input-box clearfix" style="text-align: center;">
+                            <input type="number" name="referal_rule_code" class="input-text" required="" placeholder="请输入媒体码" />
+
+							<p class='validate_result'>
+								<!-- Ajax result -->
+							</p>
+						</div>
+
+						<div class="input-box input-submit clearfix" style="text-align: center;">
+
+							<button type="submit" class='apply-btn' style='display:none'>使用</button>
+
+							<button type="button" class='validate-btn' onclick="validateCode();">验证</button>
+							
+						</div>
+
+						<div class="input-box clearfix">
+                            <small>奖励方式一：按照产品标价的百分比在销售完成后给予提成。额度为平台销售提成的百分比,最高100%(平台所有的销售提成都将赠与分享者)</small>
+                            <small>奖励方式二：按固定金额在销售完成后给予提成，提成金额不会大于平台销售的提成</small>
+                            <small>Ubonus平台销售默认提成为产品售价的5%。合作商家可以享受更低的比率</small>
+						</div>
+
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+
+	function validateCode(){
+		var referal_rule_code =$("input[name='referal_rule_code']").val();
+
+		$.ajax({
+		  method: "get",
+		  url: "<{$http_root_www}>referal/preview_new_rule_ajax",
+		  data: { referal_rule_code: referal_rule_code},
+		  beforeSend:function(){
+		  		$('.apply-btn').hide();
+		  		$('.validate_result').html("<i class='fa fa-spinner fa-pulse'></i>");
+		  },
+		  success:function(result){
+		  		try{
+					var data = JSON.parse(result);
+
+					var msg = data.desc;
+
+					msg ="<p>"+msg+"</p>";
+					msg +="<p>商家："+data.create_user_name+"</p>";
+
+					$('.validate_result').html(msg);
+
+					$('.apply-btn').show();
+					$('.validate-btn').show();
+				}catch(err){
+					$('.validate_result').html('NO result');
+				}
+
+		  },
+		  complete:function(){
+
+		  },
+		  error:function(result){
+		  	  $('.validate_result').html('网络问题请稍后再试:'+result);
+		  }
+		})
+		  
+	}
+	
+
+</script>
+
+
+</body>
+
+</html>

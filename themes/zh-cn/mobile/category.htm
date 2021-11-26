@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>商家导航</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+</head>
+<body class="index-app open-so">
+   
+    <!-- 搜索框 -->
+    <div class="box-so bg-1" >
+        <div class="inner" style="background: rgba(251, 83, 4);" >
+          <a href="/" class="" style="
+    position: absolute;
+    left: 0.2rem;
+    top: 0.3rem;
+    width: 2.2rem;
+    /* height: 1.5rem; */
+    display: block;
+    /* background: url(../images/ico-back.png) no-repeat center center; */
+    -o-background-size: 100% auto;
+    -ms-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    /* vertical-align: middle; */
+    /* bottom: 1rem; */
+"><img src="/themes/zh-cn/mobile/images/ubonuslognew.png"></a>
+         <!--   <a  href='<{$http_root_www}>member/showcart' class="a-cart"></a> -->
+         
+            <form action="<{$http_root_www}>coupons">
+                <div class="so-top so-top-1" style ="margin-left: 3.4rem;    margin-right: 1.0rem;">
+				<input type="search" name="key" placeholder="<{$lang->please_input}>" class="g-input inp search" style=" width:100%;   border-radius: 18px;">
+                 
+                </div>
+            </form>
+        </div>
+        <div class="box-prod" >
+            <div class="col-l">
+
+              <!--  <div class="pic-menu"><img data-cid='106' class="loading-btn"  src="<{$SKIN_PATH}>mobile/images/pic336.jpg" alt=""></div>  -->
+                <ul class="g-ul s-nav">
+                 
+				 
+				 <{if $langStr=='zh-cn'}>
+				 
+				 <{foreach from=$categories item=item}>
+				
+                    <li>
+                        <a data-cid='<{$item.id}>' class="s1 loading-btn" ><{$item.name}></a>
+                        <{if $item.childCount>0}>
+                            <dl class="g-ul">
+                            <{foreach from=$item.child item=sitem}>
+							 <{if substr($sitem.id,0,9)=='106121102'}>
+				             <{else}>
+                                 <dt data-cid='<{$sitem.id}>' class='loading-btn'><{$sitem.name}></dt>
+                                  <{if $sitem.childCount>0}>
+                                    <dd>
+                                    <{foreach from=$sitem.child item=ssitem}>
+                                        <a data-cid='<{$ssitem.id}>' class='loading-btn'><{$ssitem.name}></a>
+                                     <{/foreach}>
+                                     </dd>
+                                  <{/if}>
+								  <{/if}>
+                            <{/foreach}>
+                            </dl>
+                        <{/if}>
+                    </li>
+					
+                 <{/foreach}>
+				 <{else}>
+				 <li>
+                        <a data-cid="106135" class="s1 loading-btn">COVID_19</a>
+						<dl class="g-ul">
+						  <dt data-cid="106135101" class="loading-btn">Masks</dt>
+						  <dt data-cid="106135103" class="loading-btn">Hand Sanitizer</dt>
+						  <dt data-cid="106135102" class="loading-btn">Sanitizer Sparys</dt>
+					   </dl>
+				</li>
+				 <li>
+                        <a data-cid="106127" class="s1 loading-btn">Beauty &amp; Health Care</a>
+						<dl class="g-ul">
+						   <dt data-cid="106127104" class="loading-btn">Beauty</dt>
+					  
+						   <dt data-cid="106127104" class="loading-btn">Health Care</dt>
+					   </dl>
+				</li>
+				
+				
+				<li>
+                        <a data-cid="106105103" class="s1 loading-btn">Furniture &amp; Textiles </a>
+						<dl class="g-ul">
+						  <dt data-cid="106105103101" class="loading-btn">Furnitures</dt>
+					  
+						  <dt data-cid="106105103103" class="loading-btn">Textiles</dt>
+					   </dl>
+					   
+				</li>
+				
+				<li>
+                        <a data-cid="106124" class="s1 loading-btn">Foods &amp; Freshs  </a>
+						<dl class="g-ul">
+						  <dt data-cid="106124109" class="loading-btn">Drinks</dt>
+					    </dl>
+					    
+					   
+				</li>
+				 <{/if}>
+                </ul>
+            </div>
+
+            <a href="javascript:void(0);" class="btn-arrow"></a>
+            
+            <div class="col-r" style="margin:4px;background-color: #fff;">
+                <ul class="g-ul  ul-list5-1 ajaxLoadTarget" style="    padding-bottom: 2rem;">
+                  <!--   <li>
+                        <div class="pic"><a href=""><img src="<{$SKIN_PATH}>mobile/images/pic5.jpg" alt=""></a></div>
+                        <h4><a href="">早春新款度假彩虹色连衣裙配衬...</a></h4>
+                        <span class="s-price">￥35.50</span>
+                    </li> -->
+                    
+                </ul>
+                <div class='loading-icon' style='text-align: center;font-size: 0.5rem;color: #2bb8aa;display: none;padding: 40px 0px;'>
+                    <i class="fa fa-refresh fa-spin fa-fw "></i>Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 搜索框 end-->
+    
+    <{include file='mobile/mobile_footer.htm'}>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+    <script>
+        $(document).ready(function() {
+            //侧边栏一级二级展开收起
+            $(".s-nav .s1").on('click',function(){
+                $(this).parent("li").siblings('li').removeClass('on');
+                $(this).parent("li").toggleClass('on');
+
+                $(this).parent("li").siblings('li').find('dl').stop().slideUp("fast");
+                $(this).next("dl").stop().slideToggle();
+            });
+
+            $(".s-nav dl dt").on('click',function(){
+                $(this).siblings('dt').removeClass('on');
+                $(this).toggleClass('on');
+
+                $(this).parent("dl").find("dd").stop().slideUp("fast");
+                $(this).next("dd").stop().slideToggle();
+            });
+
+            //侧边栏展开+收起
+            $(".box-prod .btn-arrow").click(function(){
+                $(this).toggleClass('btn-arrow-1');
+                $(this).parents(".box-prod").toggleClass('open');
+            });
+            
+
+            //
+           
+            //load more
+             $('.col-r').scroll(function() {
+               if($('.col-r').scrollTop() + $(window).height() > $('.ajaxLoadTarget').height()-100) {
+                   triggerLoading();
+                }
+            });
+
+            //
+            $('.loading-btn').on('click',function(){
+                 $('.ajaxLoadTarget').html('');
+                 currentCID = $(this).data('cid');
+
+                 endOfPage=false;
+                 currentPage = 1;
+                 triggerLoading();
+            });
+            <{if $section}>
+                $(".loading-btn[data-cid='<{$section}>']").click(); 
+                $(".s1[data-cid='<{$psection}>']").click(); // trigger very fast while top is loading. so this one dont load
+                currentCID='<{$section}>';
+            <{else}>
+                triggerLoading();
+            <{/if}>
+			
+			
+            
+        });     
+		
+		
+    </script>
+
+    <script type="text/javascript">
+        var isLoading = false;
+        var currentPage=1;
+        var currentCID = 106;
+        var endOfPage=false;
+
+        function triggerLoading(){
+            if(isLoading)return;
+            if(endOfPage)return;
+            ajaxLoad(currentCID,currentPage);
+        }
+
+        function ajaxLoad(cid,page){
+           // console.log(cid);
+          //  console.log(page);
+            $.ajax({
+                url:'<{$http_root_www}>category/category_list',
+                data:{cid:cid,page:page},
+                beforeSend:function(){
+                   isLoading=true;
+                   $('.loading-icon').show();
+                },
+
+            }).done(function(data){
+// console.log(data);
+                var ajaxLoadTarget=$('.ajaxLoadTarget');
+                var serverResponse = jQuery.parseJSON(data);
+                if(serverResponse.status==200){
+                    //load successful
+                    for (var i = serverResponse.msg.length - 1; i >= 0; i--) {
+                    var html = constructHtml(serverResponse.msg[i]);
+                     ajaxLoadTarget.append(html);
+                    }
+                    currentPage++;
+                }else if(serverResponse.status==300){
+                    //no more
+                    endOfPage=true;
+                }else{
+                    //error
+                }
+                
+
+            }).fail(function(data){
+
+            }).always(function(data){
+               isLoading=false;
+               $('.loading-icon').hide();
+            });
+        }
+
+        function constructHtml(data){
+            var baseUrl='<{$http_root_www}>';
+            var baseUploadPath='<{$UPLOAD_PATH}>';
+            
+			var isDelivery =data.deliver_avaliable;
+			var isPickup =data.pickup_avaliable;
+			
+            var html = "<li style='  margin-top: 20px;'>";
+            html +="<div class='pic'>";
+            html +="<a href='" + baseUrl + data.path+"/" + data.id + "'>";
+            html +="<img style='border-radius: 7px;' src='" +baseUploadPath + data.pic + "'>";
+            html +="</a></div>";
+
+            html +="<h1 style ='    margin-left: 4px;    font-size: 15px; font-weight:600;   margin-top: 7px;'>"+data.title+"</h1>";
+           
+            html +=" <div class='sales' style='    font-size: 12px;'>";
+			if(data.countOfSale>0) {
+			 html +="<span class='sales-num' style='    font-size: 11px;    color: #8c8a8a;    margin-left: 5px;'>已售&nbsp;<strong>" + data.countOfSale + "</strong>份</span>    ";
+			
+			}
+		   
+			if(isDelivery==1) {
+				html +="<span class='support-card' ><i class='fa fa-fw fa-check ' style='color:green'></i>配送</span> ";
+			}
+			
+			if(isPickup==1) {
+				html +="<span class='support-card'><i class='fa fa-fw fa-check ' style='color:green'></i>自取</span> ";
+			}
+			
+			
+			html +=" <span style='    font-size: 12px;  ' class='s-hits'><i></i> 3652 </span>"; 
+			html +="</div> ";
+			   
+		  
+	  
+	
+    
+	 
+
+	
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+		   
+          
+            html +="</li>";
+            
+            return html;     
+        }
+
+
+
+
+    </script>
+
+
+</body>
+</html>

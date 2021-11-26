@@ -1,0 +1,34 @@
+<div class="right">
+	<!--a href="javascript:;" class="share"></a-->
+	<div class="more-box">
+		<a href="javascript:;" class="more on" style="    width: 40px;    height: 40px;"><i></i></a>
+		<div class="box" style="display: none;">
+			<ul class="g-ul" >
+				<li onclick="chatUrl();">
+					<a ><i class="on" style="background-image:url(<{$SKIN_PATH}>mobile/images/z-ico1.png)"><em></em></i><{$lang->message}></a>
+				</li>
+				<li>
+					<a href="<{$http_root_www}>"><i style="background-image:url(<{$SKIN_PATH}>mobile/images/z-ico2.png)"></i><{$lang->home}></a>
+				</li>
+				<li>
+					<a href="<{$http_root_www}>category/index"><i style="background-image:url(<{$SKIN_PATH}>mobile/images/z-ico3.png)"></i><{$lang->search}></a>
+				</li>
+				<li>
+					<a href="<{$http_root_www}>member/fav"><i style="background-image:url(<{$SKIN_PATH}>mobile/images/z-ico4.png)"></i><{$lang->my_watch_list}></a>
+				</li>
+				<!--li>
+					<a href=""><i style="background-image:url(<{$SKIN_PATH}>mobile/images/z-ico5.png)"></i>浏览记录</a>
+				</li-->
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!--div id="g-top"></div-->
+<!-- 侧边按钮-end -->
+
+<script type="text/javascript">
+    function chatUrl() {
+        window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&couponid=<{$coupon.id}>');
+    }
+</script>

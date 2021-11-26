@@ -1,0 +1,207 @@
+<{if $coupon.id ==7176}>
+<!--<div class="txt content-image-fullsize" style="display: block;"> 
+  <a href ="" alt=""><img src="<{$SKIN_PATH}>images/enroll_footer0.jpg"></a>
+</div> -->
+<{else}>
+<!--
+<div class="txt content-image-fullsize" style="display: block;">
+ <a href ="<{$http_root_www}>coupon1/7115" > <img alt="墨尔本 大洋路 一日游 长青" src="<{$SKIN_PATH}>images/detail_header.jpeg"></a>
+</div>  -->
+<{/if}>
+<!-- 
+<div class="comm-express toggle-txt">
+   
+    <h3>信用卡购买声明</h3>
+	
+    <div class="txt content-image-fullsize" style="display: block; color:red;"> 使用信用卡支付购买本产品,必须在消费时出示Photo ID及信用卡, 并与您购买时信息一致.否则,商家会拒绝提供相关服务.</div>
+</div>
+-->
+
+  
+    <{if $coupon_delivery_info.EvoucherOrrealproduct=='realproduct'}>
+
+        <{if $coupon_delivery_info.deliver_avaliable}>
+
+               <div class="comm-express ">
+               		<h3><{$lang->freight_fees}></h3>
+               		<div class="txt">
+                 
+					<{$coupon_delivery_info.item_delivery_fee_summery}><br>
+					 <{if $business_delivery_info.amount_for_free_delivery>0}> 
+					<strong>
+						<label><{$lang->free_freight_amount}>>=</label>
+						$<{$coupon_delivery_info.amount_for_free_delivery}>
+					</strong>
+					<{/if}>
+			</div>
+                </div>
+
+        <{/if}>
+
+        
+    <{/if}>
+
+
+
+<div id="f1">
+<{if $coupon.highlight}>
+<div class="comm-express toggle-txt">
+     <h3 style="font-weight: 600;" ><{$lang->highlight}></h3>
+	 
+    <div class="txt content-image-fullsize" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.highlight)}></div>
+</div>
+<{/if}>
+</div>
+
+
+
+
+<{if $coupon.finePrint}>
+<div class="comm-express " >
+<h3 style="font-weight: 600;"><{$lang->warm_prompt}></h3>
+   
+	
+
+	
+    <div class="txt content-image-fullsize" style="display: block;">
+		<{str_replace('white-space: pre-wrap;','',str_replace('<img alt="" src=',' <img class="lazyload" data-src=',$coupon.finePrint))}>
+	
+	</div>
+	
+	 <div class="comm-express toggle-txt" style="padding: 0 .0rem;" >
+        <!-- <h4><span></span><em>  Tips</em></h4> -->
+        <div class='coupon-addon' style="line-height: 28px;margin: 2px;margin-top:10px;">
+          <{foreach from=$addontext item=t}>
+            <span style='white-space: nowrap;color: #fff;background: rgba(43, 59, 184, 0.73);padding: 1px 6px;border-radius: 10px;'><{$t}></span>
+          <{/foreach}>
+
+          <p><{$addondata.time_limit_desc}></p>
+          <p><{$addondata.sharable_desc}></p>
+          <p><{$addondata.apportmant_required_desc}></p>
+          </div>
+</div>
+	<div class="txt content-image-fullsize" style="display: block; color:red;"> <{$lang->credit_card_notice}></div>
+
+	<{if $addontext}>
+
+   
+<{/if}>
+</div>
+<{/if}>
+
+<div div id="f2">
+<!-- 温馨提示 -->
+
+
+
+
+
+
+
+<!-- 详情 -->
+<{if $coupon.content}>
+
+<div class="comm-express toggle-txt" >
+<h3 style="font-weight: 600;"><{$lang->details}></h3>
+<div class="content-image-fullsize" style='padding: 15px;overflow: hidden;'>
+  <{str_replace('white-space: pre-wrap;','',str_replace(' src=',' data-src=',str_replace('<img','<img name="content_img" class="lazyload"',$coupon.content)))}>
+ </div>
+
+</div>
+
+
+<{/if}>
+
+<!--商品评价-->
+
+
+
+
+
+
+<div class="comm-evaluate" id="f3"  style="font-weight: 600;" >
+    <{include file ="mobile/coupon_detail/sec_ratting.htm"}>
+</div>
+
+<{if $coupon.business.companyDescription}>
+<div class="comm-express ">
+    <h3><{$lang->about_the_business}></h3>
+    <div class="txt content-image-fullsize">
+		<{str_replace('white-space: pre-wrap;','',str_replace('<img alt="" src=',' <img class="lazyload" data-src=',$coupon.business.companyDescription))}>
+	
+	</div>
+	
+	
+
+	
+</div>
+<{/if}>
+
+
+<{if $coupon.business.googleMap}>
+<div class="comm-express ">
+    <h3><{$lang->business}><{$lang->address}></h3>
+    <div class="txt content-image-fullsize"><{str_replace('white-space: pre-wrap;','',$coupon.business.googleMap)}>
+    </div>
+    <!-- google MAP -->
+    <div id="googleMap" style="width: 100%;height: 30vh"></div>
+    <script>
+      var uluru = {lat: <{$coupon.business.latitude}>, lng: <{$coupon.business.longitude}>};
+
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('googleMap'), {
+          center: uluru,
+          zoom: 15
+        });
+
+        var marker = new google.maps.Marker({position: uluru, map: map});
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&callback=initMap"
+    async defer></script>
+    <!-- google MAP -->
+
+  
+</div>
+<{/if}>
+<{if $coupon.refund_policy}>
+<div class="comm-express ">
+    <h3><{$lang->refund_policy}></h3>
+    <div class="txt"><{str_replace('white-space: pre-wrap;','',$coupon.refund_policy)}></div>
+</div>
+<{/if}>
+<{if $coupon.redeemProcedure}>
+<div class="comm-express">
+    <h3><{$lang->how_to_use}></h3>
+    <div class="txt"><{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}></div>
+</div>
+<{/if}>
+
+
+
+
+
+
+
+
+
+<!-- 商家递送 -->
+<{include file ="mobile/coupon_detail/sec_deliverinfo.htm"}>
+<!-- 商家二维码 -->
+<{if $coupon.business.busi_weixin_scancode}>
+<div style="text-align: center;"><img src="<{$UPLOAD_PATH}><{$coupon.business.busi_weixin_scancode|image:172:172}>" id="main_pic"  width="172" height="172"  /></div>
+<{/if}>
+
+
+
+
+
+</div>
+
+
+<!--随机产品-->
+<div id="f4">
+    <{include file ="mobile/coupon_detail/sec_recommends.htm"}>
+    <{include file ="mobile/coupon_detail/sec_extend.htm"}>
+</div>

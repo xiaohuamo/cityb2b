@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">		
+
+					<form id="memberForm"  class ='form-style-green' action="<{$http_root_www}>company/other_option" method="post" target="post_frame" enctype="multipart/form-data">
+
+						 <div class="input-box clearfix">	
+							<h1>平台预订费 为Ubonus平台向客户收取的购买费用。</h1>
+							<p>费用可设置为：</p>
+							<p>Flat Rate： 按每笔订单收取</p>
+							<p>Per Item： 按每笔订单内的产品数量收取</p>
+							<em>如有问题请联系客服</em>
+						</div>
+
+						 <div class="input-box clearfix">	
+								<span><label>平台预订费</label></span>	
+								<input   type="number" name="bookingfee" class="input-text" value="<{$bookingfee}>" min='0' step='0.01'/>
+								<{$bookingfeetype}>
+								<select class="ahibw" name='bookingfeetype'>
+								  <option value="flatrate" <{if $bookingfeetype=='flatrate'}>selected<{/if}>>Flat Rate</option>
+								  <option value="peritem" <{if $bookingfeetype=='peritem'}>selected<{/if}>>Per Item</option>
+								</select>
+
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit" style='float:right'>保存修改</button>
+						</div>
+					
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

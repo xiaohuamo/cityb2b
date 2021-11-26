@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><{$pageTitle}></title>
+		<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+    <!-- zui -->
+    <link href="/themes/zh-cn/brandstore/2019miss/miss/css/zui.min.css" rel="stylesheet">
+	
+    <!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
+    <script src="/themes/zh-cn/brandstore/2019miss/miss/js/jquery-1.12.4.min.js"></script>
+    <!-- ZUI Javascript组件 -->
+    <script src="/themes/zh-cn/brandstore/2019miss/miss/js/zui.min.js"></script>
+	 <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	 <script type="text/javascript">
+		$(function(){
+						
+			  $('img.lazyload').unveil();
+			 //alert('<{$jump}>');
+              <{if $jump=='gift'}>
+			  			  var _targetTop = $('#gift').offset().top;//获取位置
+						jQuery("html,body").animate({scrollTop:_targetTop},1000);//跳转
+
+			  <{else if $jump=='shop'}>
+			  			  var _targetTop = $('#shopping').offset().top;//获取位置
+						jQuery("html,body").animate({scrollTop:_targetTop},1000);//跳转
+
+			  <{else}>
+			  <{/if}>
+
+		})
+	</script>
+    <style>
+    	.show{
+    		display: block;
+    	}
+    	a:hover,a:focus{
+    		color: #fff;
+    		text-decoration: none;
+    	}
+    	.font-white{
+    		 color: #a56d6d;
+    	}
+    	.a-menu{
+    		display: flex;
+			  height: 45px;
+				line-height: 45px;
+				background-color: #f6dad7;
+				border-radius: 5px;
+				text-align: center;
+    	}
+    	.flex-1{
+				flex: 1;
+			} 
+    	/*佳丽详情*/
+    	.beauty-detail{
+    		margin-top: 10%;
+    		border: 8px solid #f6dad7;
+    		border-radius: 5px;
+    	}
+    	.flex-beauty-detail{
+    		display: flex;
+    		text-align: center;
+    		color: #95494E;
+    	}
+    	.beauty-detail-info{
+    		background-image: url(/themes/zh-cn/brandstore/2019miss/miss/img/background.png);
+    		background-repeat:no-repeat;
+    		background-size: cover;
+    		padding: 10px;
+    		color: #514f4f;
+    	}
+    	.beauty-detail-img{
+    		width: 22px;
+    		height: 22px;
+    	}
+    	.flex-beauty-detail span{
+    		margin-left: 5px;
+    	}
+    	
+    	.btn-vote{
+    		color: #636263;
+		    height: 30px;
+		    line-height: 30px;
+		    background-color: #f6dad7;
+		    border-radius: 4px;
+		    margin-left: 20px;
+		    margin-right: 20px;
+		    margin-top: 20px;
+		    margin-bottom: 20px;
+    	}
+    	
+    	/*佳丽视频*/
+    	.beauty-video{
+    		margin-top: 20px;
+    		margin-bottom: 20px;
+		    height: 45px;
+		    border: 2px solid #ffadc4;
+		    border-radius: 3px;
+		    line-height: 45px;
+		    text-indent: 20px;
+		    color: #95494e;
+    	}
+    	.down{
+			  margin: 10px auto;
+			  display: block;
+			  width: 25px;
+			}
+		
+			.tip{
+				background-color: #ffadc4;
+		    border-radius: 3px;
+		    padding: 10px;
+		    margin-bottom: 15px;
+			}
+			
+			.more-product{
+				width: 100px;
+		    height: 35px;
+		    line-height: 35px;
+		    color: #636263;
+		    border: 2px solid #ffadc4;
+		    border-radius: 5px;
+		    text-align: center;
+		    margin: 0px auto;
+			}
+			
+			
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px){
+				.container {
+			    max-width: 740px;
+					font-size: 25px !important;
+				}
+				.a-menu{
+					height: 56px;
+					line-height: 56px;
+				}
+				/*佳丽详情*/
+				.beauty-detail{
+	    		margin-top: 6%;
+	    	}
+	    	.beauty-detail-info{
+	    		background-image: url(/themes/zh-cn/brandstore/2019miss/miss/img/background@3x.png);
+	    		padding: 25px;
+	    	}
+	    	.beauty-detail-img{
+	    		width: auto;
+	    		height: auto;
+	    	}
+	    	.flex-beauty-detail span{
+	    		margin-left: 8px;
+	    	}
+	    	
+	    	.btn-vote{
+			    height: 70px;
+			    line-height: 70px;
+			    border-radius: 10px;
+			    margin-left: 70px;
+			    margin-right: 70px;
+			    margin-top: 35px;
+			    margin-bottom: 35px;
+	    	}
+	    	/*佳丽视频*/
+	    	.beauty-video{
+	    		margin-top: 50px;
+	    		margin-bottom: 50px;
+			    height: 87px;
+			    line-height: 87px;
+	    	}
+	    	.down{
+				  margin: 15px auto;
+				  width: 40px;
+				}
+	    	.tip{
+	    		padding: 20px;
+	    		margin-bottom: 25px;
+	    	}
+	    	.more-product{
+	    		width: 180px;
+			    height: 60px;
+			    line-height: 60px;
+	    	}
+	    	
+	    	
+			}
+			
+			
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width: 992px){
+				.container {
+			    max-width: 960px;
+			    font-size: 25px;
+				}
+			}
+			@media (min-width: 1200px){
+    		.container {
+			    max-width: 960px !important;
+			    width: 960px !important;
+			    font-size: 25px;
+				}
+    	}
+			
+    </style>
+   
+  </head>
+  <body>
+	  <div class="container">
+	 
+	  <div id="top">
+	  		<img src="/themes/zh-cn/brandstore/2019miss/miss/img/banner.png" />
+	  		 <!--
+	  		<div class="a-menu">
+			 <a class="flex-1 font-white" href="/2019miss">首页</a>
+				  <a class="flex-1 font-white" href="#vote">投票</a>
+	  			<a class="flex-1 font-white" href="#video">视频</a>
+	  			<a class="flex-1 font-white" href="#shopping">购物</a>
+	  			<a class="flex-1 font-white" href="#gift">奖金</a>
+	  			<a class="flex-1 font-white" href="#life">生活</a>
+				
+				</div>	-->
+	  	</div>
+	
+		<{foreach from=$data item=item name='dl'}>
+		 <{if $smarty.foreach.dl.index <=200}>
+		 	<{if $item.new_cat}> 
+				<div class="content-con" style="text-align: center;">
+							<br>
+							
+							<div class="btn-saishi"><a href="/article/70" style="font-size:18px;color: #a56d6d;font-weight:600;"> <{if $jiali_id}><{$item.weeks_str1}><{else}><{$item.weeks_str}><{/if}></a></div><br>
+									 <{if $smarty.foreach.dl.index ==0}>
+						<!--	 <a href = "<{$http_root_www}>coupon1/miss_busi" >
+           	<div class="cards cards-borderless" style="margin-left:5px;" >
+					<img width="98%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/ubonus001.png" />
+				</div>
+		
+		 </a>-->
+<{/if}>
+					</div>
+				
+				
+			
+				
+			 <{if $jiali_id}>
+			 
+			    <{if $smarty.foreach.dl.index ==0}>
+	  			<div class="flex-beauty-detail">
+				<p style="white-space: normal;width:10%;"><span>编号</span></p>
+	  			<p style="white-space: normal;width:40%;"><span style="white-space: normal;width:20%;">佳丽</span></p>
+				
+	  				<p style="white-space: normal;width:35%;"><span>微信/网站/商业/奖金</span></p>
+	  				
+					<p style="white-space: normal;width:15%;"><span>总人气</span></p>
+					
+	  			</div>
+				<{/if}>
+                 <{else}>
+
+				<div class="flex-beauty-detail">
+				<p style="white-space: normal;width:10%;"><span>编号</span></p>
+	  			<p style="white-space: normal;width:40%;"><span style="white-space: normal;width:20%;">佳丽</span></p>
+				
+	  				<p style="white-space: normal;width:35%;"><span>微信/网站/商业/奖金</span></p>
+	  				
+					<p style="white-space: normal;width:15%;"><span>总人气</span></p>
+					
+	  			</div>
+
+				<{/if}>
+				
+				
+			   <{/if}>
+			   
+		<{if $item.cat_index <=19}> 
+		
+		  <{if $jiali_id}>
+		    <{if $jiali_id == $item.id}>
+		    <div id = "vote" class="beauty-detail" style ="margin-top:0px;">
+				
+				<div class="beauty-detail-info">
+	  			<div class="flex-beauty-detail">
+				
+					<p style="white-space: normal;width:10%;"><{$item.id}></p>
+				<p style="white-space: normal;width:40%;"><{$item.title}> </p>
+			
+	  			  <p style="white-space: normal;width:35%;"><{if ($item.id==483 && $item.wechat_total>=15000)}> 5000<{else}><{$item.wechat_total}><{/if}>/<{$item.vote_total}>/<{$item.selling_total}>/<{$item.gift_total}></p>
+	  				
+					<p style="white-space: normal;width:15%;"><{if ($item.id==483 && $item.wechat_total>=15000)}><{$item.point_total-$item.wechat_total+5000}> <{else}><{$item.point_total}><{/if}></p>
+	  			</div>
+				
+	  			
+	  			
+				</div>
+	  		
+	  		
+	  	
+				</div>
+		    <{/if}>
+		  <{else}>
+				<div id = "vote" class="beauty-detail" style ="margin-top:0px;">
+				
+				<div class="beauty-detail-info">
+	  			<div class="flex-beauty-detail">
+				
+					<p style="white-space: normal;width:10%;"><{$item.id}></p>
+				<p style="white-space: normal;width:40%;"><{$item.title}> </p>
+			
+	  			  <p style="white-space: normal;width:35%;"><{if ($item.id==483 && $item.wechat_total>=15000)}> 5000<{else}><{$item.wechat_total}><{/if}>/<{$item.vote_total}>/<{$item.selling_total}>/<{$item.gift_total}></p>
+	  				
+					<p style="white-space: normal;width:15%;"><{if ($item.id==483 && $item.wechat_total>=15000)}><{$item.point_total-$item.wechat_total+5000}> <{else}><{$item.point_total}><{/if}></p>
+	  			</div>
+				
+	  			
+	  			
+				</div>
+	  		
+	  		
+	  	
+				</div>
+				<{/if}>
+				<{/if}>
+			 <{/if}>
+		 <{/foreach}>		
+		
+			
+		
+			
+			
+			
+			
+			
+		
+		
+			
+			
+			
+			
+			<div id="sponsor" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">赞助商及指定机构</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/sponsor1.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">协办机构</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xieban.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">媒体支持</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/meiti.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">特别鸣谢</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/mingxie.jpg" /></div>
+			<br>
+			<img class="text-center"  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/foot.jpg" />
+	  </div>
+ <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='https://ubonus365.com/coupon1/miss01?miss_id=<{$miss_info.id}>';
+        var desc='澳洲华裔小姐大赛是一项倍受全球华人华侨瞩目的国际赛事。由TV MEDIA AUSTRALIA （TVB澳洲公司）授权，墨尔本“大上海联合总会”全权主办';//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$miss_info.pic}>';
+    </script>
+
+   <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- WX jssdk share -->
+   
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+    <script>
+	
+	
+	
+    function	voteDaily(){
+    	$('#scanImg').addClass('show');
+    }
+	
+	
+    function loadMore(){
+    	alert('执行加载更多');
+    }
+    </script>
+  </body>
+</html>

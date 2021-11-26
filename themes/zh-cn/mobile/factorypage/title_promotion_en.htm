@@ -1,0 +1,11 @@
+<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:157:'cut'}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			    </div>
+			</div>
+			
+			<{if ($restaurant_promotion_manjian.discount || $restaurant_promotion_manjian.promotion_desc || $restaurant_promotion_manjian.promotion_desc_en )}>
+			 <div class='money-display' style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;font-size: 15px; font-weight:600; background-color: #d9eff5cc;padding: 5px 15px;color: #f23030;">
+ Prompt： <{if $restaurant_promotion_manjian.discount}><strong style="font-size:14px;"><{$restaurant_promotion_manjian.discount}>%OFF.</strong><{/if}> <{if $restaurant_promotion_manjian.promotion_desc_en}><{$restaurant_promotion_manjian.promotion_desc_en}><{/if}>
+          </div>
+		  <{/if}>

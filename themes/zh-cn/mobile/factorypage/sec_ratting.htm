@@ -1,0 +1,27 @@
+	
+<div class="tit">
+	<h3><{$lang->customer_review}></h3><!--（<span>$evaluation</span>）-->
+	<!-- <a class="more">查看全部</a> -->
+</div>
+	<{if $evaluation}>	
+	<ul class="g-ul ul-evaluate">
+		<{foreach from=$evaluation item=item}>
+		<li>
+			<div class="top">
+				<div class="face"><img src="<{$UPLOAD_PATH}><{$item.user_avatar}>"></div>
+				<span class="name"><{if !$item.user_nickname}><{$lang->anon_user}><{else}><{$item.user_nickname}><{/if}></span>
+				<em class="time"><{for $i=0 to 4}>
+					<{if $item.score_avg>$i}>
+						<i class='fa fa-star' style="color:#FD5001 "></i>
+					<{else}>
+						<i class='fa fa-star-o' style="color:#FD5001 "></i>
+					<{/if}>
+				<{/for}><{$item.createTime|date_format:"%Y-%m-%d"}></em>
+			</div>
+			<p><{$item.description}></p>
+		</li>
+		<{/foreach}>
+	</ul>
+	<{else}>
+	<div style="text-align: center;"><small>还没有任何评论</small></div>
+	<{/if}>

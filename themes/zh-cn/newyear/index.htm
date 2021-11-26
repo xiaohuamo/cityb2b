@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ubonus美食生活-<{$pageTitle}>-专注墨尔本华人美食生活的电商平台</title>
+
+    <meta name="keywords" content="Ubonus美食生活 2017 Ubonus美食生活周末秒杀 特别 团购 秒杀 新年购 澳洲 澳大利亚 墨尔本 悉尼 布里斯班 阿德莱德 华人  电商 电子 商务 在线生活服务 "/>
+
+    <meta name="description" content="Ubonus美食生活-  2017 Ubonus美食生活周末秒杀 特别 团购 秒杀 新年购  澳洲 澳大利亚 墨尔本 悉尼 布里斯班 阿德莱德 华人  电商 电子 商务 在线生活服务 "/>
+
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>newyear/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>newyear/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>newyear/qj.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>newyear/hl.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+
+<!-- 头部 -->
+<div class="header header-sever header-mall">
+    <{include file='index_inc_header.htm'}>
+
+    <div class="head-con head2">
+        <div class="wp">
+            <div class="logo">
+                <a href="" style="font-size: 50px;color: white">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/newyear_logo.png" alt="">
+                </a>
+            </div>
+            <div class="head-center">
+                <div class="search">
+                    <div class="form">
+                        <div >
+                            <div class="inner">
+                                <input type="text" class="inp" id='search-input' autocomplete="off">
+                                <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                            </div>
+                            <div class="search-list">
+                                <ul class="ul-search TAB" id="search-hint">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="hot">
+                        <a target="_blank" href="<{$http_root_www}>store/24032">电视盒</a>
+                        <a target="_blank" href="<{$http_root_www}>store/26471">海鲜IGG</a>
+                        <a target="_blank" href="<{$http_root_www}>store/27404">羊毛被</a>
+                        <a target="_blank" href="<{$http_root_www}>store/26326">一对一雅思</a>
+                    </div-->
+                </div>
+            </div>
+            <div class="head-right">
+                <a class="shopping" href="<{$http_root_www}>member/showcart">我的购物车
+                    <{if $loginUser}>
+                    <em class='shopping-cart-qty-display'><{$carts_count}></em>
+                    <{/if}>
+                </a>
+            </div>
+            <div>
+                <img class='lazyload' style="margin-left: 10px; margin-top: -10px;width: 80px;height: 80px;" data-src="<{$SKIN_PATH}>images/pc-main/eq.png" alt="">
+            </div>
+
+            <style type="text/css">
+                .nav li a{color:#fff;}
+            </style>
+            <div style="position: relative;top: -25px;padding-left: 192px">
+                 <{include file='index_inc_title.htm'}>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- 头部 end -->
+
+
+<!-- 2017-9-15导航 -->
+<!-- 2017-9-15导航 end-->
+
+<div class="h-ban1">
+    <div class="wp">
+        <div class="col-l">
+            <ul class="v-nav">
+                <li >
+                    <a onclick="$('html, body').animate({scrollTop: $('#f2').offset().top}, 1000);" href="#f2" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>吉祥富贵</span>
+                    </a>
+                    <a onclick="$('html, body').animate({scrollTop: $('#f3').offset().top}, 1000);" href="#f3" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>0元好礼</span>
+                    </a>
+                </li>
+                <li >
+                    <!--a onclick="$('html, body').animate({scrollTop: $('#f4').offset().top}, 1000);" href="#f4" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>Ubonus秒杀</span>
+                    </a-->
+                    <a onclick="$('html, body').animate({scrollTop: $('#f5').offset().top}, 1000);" href="#f5" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>精选年货</span>
+                    </a>
+                </li>
+                <li >
+                    <a onclick="$('html, body').animate({scrollTop: $('#f6').offset().top}, 1000);" href="#f6" style="display:inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>佳节美食</span>
+                    </a>
+                    <a onclick="$('html, body').animate({scrollTop: $('#f7').offset().top}, 1000);" href="#f7" style="display:inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>中西佳酿</span>
+                    </a>
+                </li>
+                <li >
+                    <a onclick="$('html, body').animate({scrollTop: $('#f8').offset().top}, 1000);" href="#f8" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>生鲜滋补</span></a>
+                    <a onclick="$('html, body').animate({scrollTop: $('#f9').offset().top}, 1000);" href="#f9" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>新年新家</span></a>
+                </li>
+                <li >
+                    <a onclick="$('html, body').animate({scrollTop: $('#f10').offset().top}, 1000);" href="#f10" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>丽人美容</span></a>
+                    <a onclick="$('html, body').animate({scrollTop: $('#f11').offset().top}, 1000);" href="#f11" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>箱包百货</span></a>
+                </li>
+                <li >
+                    <a onclick="$('html, body').animate({scrollTop: $('#f12').offset().top}, 1000);" href="#f12" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>精彩票务</span></a>
+                    <a onclick="$('html, body').animate({scrollTop: $('#f13').offset().top}, 1000);" href="#f13" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/icon.png);"><span>生活服务</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-c">
+            <div class="h-slide1">
+                <ul class="items">
+                    <{foreach from=$bannerData item=item}>
+                    <li class="item">
+                        <a target="_blank" href="<{$http_root_www}><{$item.url}>"> <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+                    </li>
+                    <{/foreach}>
+                </ul>
+                <ul class="hd">
+                    <{foreach from=$bannerData item=item}>
+                    <li></li>
+                    <{/foreach}>
+                </ul>
+                <a class="prev" href="javascript:void(0)"></a>
+                <a class="next" href="javascript:void(0)"></a>
+            </div>
+        </div>
+        <div class="col-r">
+            <ul class="ul-hot">
+                <li>
+                    <a href="https://www.ubonus365.com/coupon/4297" target="_blank" class="item">
+                        <img class='lazyload' data-src="<{$http_root_www}>data/upload/2017-10/20171010131319652507.jpg" alt="">
+                        <div class="txt">
+                            <p class="p1">张学友世界巡回演唱会墨尔本站(CAT2档)</p>
+                            <p class="p2">$258.00</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.ubonus365.com/coupon/4765" target="_blank" class="item">
+                        <img class='lazyload' data-src="<{$http_root_www}>data/upload/2018-01/20180124195617846968.jpg" alt="">
+                        <div class="txt">
+                            <p class="p1">Samsonite KARISS</p>
+                            <p class="p2">$114.50</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.ubonus365.com/coupon/4610" target="_blank" class="item">
+                        <img class='lazyload' data-src="<{$http_root_www}>data/upload/2018-01/20180126145722248280.jpg" alt="">
+                        <div class="txt">
+                            <p class="p1">Igg新春自助餐 恭祝全球华人狗年大吉</p>
+                            <p class="p2">$88.00</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.ubonus365.com/coupon/4695" target="_blank" class="item">
+                        <img class='lazyload' data-src="<{$http_root_www}>data/upload/thumbnails/2018-01/20180122104441277603_660x420_fill.jpg" alt="">
+                        <div class="txt">
+                            <p class="p1">阳澄湖大闸蟹降临墨尔本（500g单盒装）</p>
+                            <p class="p2">$25.00</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id="f1" class="hot-item">
+    <div class="wp">
+
+        <div>
+            <a target="_blank" href="<{$http_root_www}>store/29350">
+                <!--img class='lazyload' style='width: 568px;margin: 15px' data-src="<{$SKIN_PATH}>images/event/zd_lg.jpg" alt=""-->
+            </a>
+        </div>
+
+    </div>
+</div>
+<div style="height: 350px;">
+</div>
+<div class="hot-item">
+    <div class="wp">
+        <!--
+                <div style="margin-top: 1px;" id="f2">
+                    <a href="<{$http_root_www}>coupons/106126101">
+                        <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f2.jpg" alt="" />
+                    </a>
+                </div>
+                <ul class="items ul-row10">
+                    <{foreach from=$list55 item=item}>
+                    <li>
+                        <div class="inner">
+                            <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                                <div class="pic">
+                                    <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                                </div>
+                                <div class="txt">
+                                    <p><{$item.title}></p>
+                                </div>
+                            </a>
+                            <div class="seckill-box">
+                                <div class="con">
+                                    <div class="price1">
+                                        <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                        <span class="old">$<{$item.voucher_original_amount}></span>
+                                    </div>
+
+                                    <{if $item.proportion!=0}>
+                                    <div class="jdt">
+                                        已售<{$item.proportion|string_format:"%d"}>%
+                                        <i><b style="width:<{$item.proportion}>%"></b></i>
+                                    </div>
+                                    <{/if}>
+                                </div>
+                                <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                            </div>
+                        </div>
+                    </li>
+                    <{/foreach}>
+                </ul>
+                --->
+
+        <div style="margin-top: 1px;" id="f3">
+            <a href="<{$http_root_www}>coupons/106126102">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f3.jpg" alt="" />
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list56 item=item}>
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul>
+
+        <!--div style="margin-top: 1px;" id="f4">
+            <a href="<{$http_root_www}>coupons/106126103">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f4.jpg" alt="" />
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$buy_List item=item}>
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>">
+                            <{if $item.totalQty==0}>
+                            <em style="background-image: url(<{$SKIN_PATH}>images/icon-detail.png);display: inline-block;width: 150px;height: 150px;margin-top: -150px;"></em>
+                            <{/if}>
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+                        </div>
+
+                        <{if $item.totalQty==0}>
+                        <a target="_blank"  class="buy soldout">Sold Out</a>
+                        <{else}>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                        <{/if}>
+                    </div>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul-->
+
+        <div style="margin-top: 1px;" id="f5" >
+            <a href="<{$http_root_www}>coupons/106126104">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f5.jpg" alt="" />
+            </a>
+        </div>
+        <ul class="items ul-row10" >
+            <{foreach from=$list58 item=item}>
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f6">
+            <a href="<{$http_root_www}>coupons/106126105">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f6.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list59 item=item}>
+            <!--{if strstr($item.categoryId,',106125104')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f7">
+            <a href="<{$http_root_www}>coupons/106126106">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f7.jpg" alt="" />
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list60 item=item}>
+            <!--{if strstr($item.categoryId,',106125101')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f8">
+            <a href="<{$http_root_www}>coupons/106126107">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f8.jpg" alt="" />
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list61 item=item}>
+            <!--{if strstr($item.categoryId,'106125102')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f9">
+            <a href="<{$http_root_www}>coupons/106126108">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f9.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list62 item=item}>
+            <!--{if strstr($item.categoryId,',106125105')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f10">
+            <a href="<{$http_root_www}>coupons/106126109">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f10.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list63 item=item}>
+            <!--{if strstr($item.categoryId,',106125105')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+        <div style="margin-top: 1px;" id="f11">
+            <a href="<{$http_root_www}>coupons/106126110">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f11.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list64 item=item}>
+            <!--{if strstr($item.categoryId,',106125105')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+
+        <div style="margin-top: 1px;" id="f12">
+            <a href="<{$http_root_www}>coupons/106126111">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f12.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list65 item=item}>
+            <!--{if strstr($item.categoryId,',106125105')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+
+
+        <div style="margin-top: 1px;" id="f13">
+            <a href="<{$http_root_www}>coupons/106126112">
+                <img class='lazyload' data-src="<{$SKIN_PATH}>newyear/images/f13.jpg" alt=""/>
+            </a>
+        </div>
+        <ul class="items ul-row10">
+            <{foreach from=$list66 item=item}>
+            <!--{if strstr($item.categoryId,',106125105')}-->
+            <li>
+                <div class="inner">
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <div class="pic">
+                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:273:182}>" alt="">
+                        </div>
+                        <div class="txt">
+                            <p><{$item.title}></p>
+                        </div>
+                    </a>
+                    <div class="seckill-box">
+                        <div class="con">
+                            <div class="price1">
+                                <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                <span class="old">$<{$item.voucher_original_amount}></span>
+                            </div>
+
+                            <!-- (<{$item.totalBuy}>/<{$item.totalQty+$item.totalBuy}>) -->
+                            <{if $item.proportion!=0}>
+                            <div class="jdt">
+                                已售<{$item.proportion|string_format:"%d"}>%
+                                <i><b style="width:<{$item.proportion}>%"></b></i>
+                            </div>
+                            <{/if}>
+                        </div>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>" class="buy">立即抢购</a>
+                    </div>
+                </div>
+            </li>
+            <!--{/if}-->
+            <{/foreach}>
+        </ul>
+    </div>
+</div>
+
+<!-- 底部 -->
+<{include file='index_inc_footer.htm'}>
+<!-- 底部 end -->
+<!-- 右边栏 -->
+<{include file='index_inc_right.htm'}>
+<!--右边栏 end-->
+<!-- 浮动导航-->
+<ul class="default-outer">
+    <li><a target="_blank" href="<{$http_root_www}>"><em>Ubonus<br/>首页</em></a></li>
+    <li class="floor f3"><a href="#f2"><em>吉祥<br/>富贵</em></a></li>
+    <li class="floor f3"><a href="#f3"><em>0元<br/>好礼</em></a></li>
+    <!--li class="floor f3"><a href="#f4"><em>Ubonus<br/>秒杀</em></a></li-->
+    <li class="floor f3"><a href="#f5"><em>精选<br/>年货</em></a></li>
+    <li class="floor f3"><a href="#f6"><em>佳节<br/>美食</em></a></li>
+    <li class="floor f3"><a href="#f7"><em>中西<br/>佳酿</em></a></li>
+    <li class="floor f3"><a href="#f8"><em>生鲜<br/>滋补</em></a></li>
+    <li class="floor f3"><a href="#f9"><em>新年<br/>新家</em></a></li>
+    <li class="floor f3"><a href="#f10"><em>丽人<br/>美容</em></a></li>
+    <li class="floor f3"><a href="#f11"><em>箱包<br/>百货</em></a></li>
+    <li class="floor f3"><a href="#f12"><em>精彩<br/>票务</em></a></li>
+    <li class="floor f3"><a href="#f13"><em>生活<br/>服务</em></a></li>
+</ul>
+<!-- 浮动导航end-->
+<script type="text/javascript" src="<{$SKIN_PATH}>shoppingday/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>shoppingday/lib.js"></script>
+<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+<script src="<{$SKIN_PATH}>shoppingday/dong.js"></script>
+<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+<script>
+    jQuery(".h-slide1").slide({mainCell:".items",effect:"left",autoPlay:true});
+</script>
+<script>
+    $('.time-c1').each(function() {
+        $(this).countDown();
+    });
+</script>
+<script>
+    $(function(){
+        $('.ul-nav2').parent().removeClass('none')
+        $('.topNavigation').on('click',function(){
+            var floorNo = $(this).data('floor');
+            $(this).parent().siblings().removeClass('on');
+            $(this).parent().addClass('on');
+            $('html, body').animate({scrollTop: $('#'+floorNo).offset().top-68}, 1000);
+        });
+    })
+</script>
+
+<script>
+    $(function() {
+        $('img.lazyload').unveil();
+    });
+</script>
+</body>
+
+</html>

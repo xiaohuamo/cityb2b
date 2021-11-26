@@ -1,0 +1,78 @@
+﻿/*******************************
+    -------[=加盟费用]-------
+********************************/
+#sec4 {padding: 60px 0 40px;}
+.box-fee {padding: 0 60px;}
+.box-fee .slick-list {padding: 80px 0 100px !important;}
+.box-fee .item {margin: 0 20px;height:802px;padding: 66px 34px 24px;border: 1px solid #ccd5df;border-radius: 5px;text-align: center;cursor: pointer;}
+.box-fee .item:hover,.box-fee .slick-center {background-color: #dd2727;}
+.box-fee .num {margin: 0 auto 80px;display: block;width: 80px;height: 93px;line-height: 93px;text-align: center;background: url(../images/ico-num-on.png);color: #ffbb42;font-size: 30px;}
+.box-fee .slick-center .num {background-image: url(../images/ico-num.png);color: #fff;}
+.box-fee .price {padding-bottom: 30px;border-bottom: 2px solid #dd2727;}
+.box-fee .item:hover .price,.box-fee .slick-center .price {border-bottom-color: #fff;}
+.box-fee .price .p1 {color: #818b95;font-size: 24px;}
+.box-fee .item:hover .price .p1,.box-fee .slick-center .price .p1 {color: #fff;}
+.box-fee .price .p2 {color: #818b95;font-size: 16px;}
+.box-fee .item:hover .price .p2,.box-fee .slick-center .price .p2 {color: #fff;}
+.box-fee .price img {margin-top: 10px;display: inline-block;vertical-align: top;}
+.box-fee .price img:last-of-type {display: none;}
+.box-fee .item:hover .price img:last-of-type,.box-fee .slick-center .price img:last-of-type {display: inline-block;}
+.box-fee .item:hover .price img:first-of-type,.box-fee .slick-center .price img:first-of-type {display: none;}
+.box-fee .price em {padding: 0 10px 0 5px;font-size: 40px;color: #dd2727;vertical-align: middle;}
+.box-fee .item:hover .price em,.box-fee .slick-center .price em {color: #fff;}
+.box-fee .info {margin: 75px 0;}
+.box-fee .info p {padding: 10px 0;line-height: 1.2;border-bottom: 1px solid #e2e9f0;color: #666;}
+.box-fee .item:hover .info p,.box-fee .slick-center .info p {color: #fff;}
+.box-fee .info span {font-size: 16px;color: #333;}
+.box-fee .item:hover .info span,.box-fee .slick-center .info span {color: #fff;}
+.box-fee .more {margin: 0 auto;display: block;width: 107px;height: 45px;line-height: 45px;text-align: center;border-radius: 5px;background-color: #dd2727;color: #fff;fz}
+.box-fee .item:hover .more,.box-fee .slick-center .more {background-color: #fff;color: #333;}
+.box-fee .btn {position: absolute;top: 50%;margin-top: -25px;display: block;width: 50px;height: 50px;background: url(../images/ico-arrow-1.png) center center no-repeat;z-index: 10;}
+.box-fee .btn:hover {background-image: url(../images/ico-arrow-on-1.png);}
+.box-fee .slick-prev {left: 0;}
+.box-fee .slick-next {right: 0;
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.box-fee .slick-center {
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.box-fee .slick-dots {position: absolute;right: 0;bottom: 0;left: 0;text-align: center;}
+.box-fee .slick-dots li {margin: 0 7px;display: inline-block;width: 14px;height: 14px;border-radius: 50%;background-color: #e5e5e5;}
+.box-fee .slick-dots .slick-active {background-color: #dd2727;}
+/*******************************
+    -------[=申请加盟]-------
+********************************/
+#sec6 {padding: 38px 0 100px;}
+.tab-join {padding-top: 64px;}
+.tab-join .tabtitle {overflow: hidden;text-align: center;}
+.tab-join .tabtitle li {padding: 0 20px;display: inline-block;width: 46%;max-width: 220px;}
+.tab-join .tabtitle a {display: block;width: 100%;height: 54px;line-height: 54px;background-color: #b8b8b8;color: #fff;font-size: 26px;}
+.tab-join .tabtitle .on a {background-color: #dd2727;}
+.ul-order {padding-top: 58px;overflow: hidden;}
+.ul-order li {margin-right: 2%;float: left;width: 23.5%;}
+.ul-order li:last-child {margin-right: 0;}
+.ul-order a {display: block;width: 100%;height: 100%;background-position: center center;background-repeat: no-repeat;background-size: cover;}
+.ul-order .li1 a  {background-image: url(../images/img-order-1.jpg);}
+.ul-order .li2 a  {background-image: url(../images/img-order-2.jpg);}
+.ul-order .li3 a  {background-image: url(../images/img-order-3.jpg);}
+.ul-order .li4 a  {background-image: url(../images/img-order-4.jpg);}
+.ul-order .mask {padding: 232px 50px 0;height: 370px;text-align: center;color: #fff;background-color: rgba(0, 0, 0, .3);}
+.ul-order a:hover .mask {background-color: transparent;}
+.ul-order p {margin-bottom: 8px;}
+.ul-order span {padding: 5px 26px;display: inline-block;background-color: #dd2727;border-radius: 3px;line-height: 1;}
+.ul-order .p2 {font-size: 20px;}
+.ul-order .p3 {line-height: 1.2;}
+.ul-dl {padding-top: 132px;overflow: hidden;}
+.ul-dl li {padding-top: 20px;float: left;width: 20%;border-right: 1px solid #d8d8d8;text-align: center;}
+.ul-dl li:last-child {border-right: none;}
+.ul-dl .tit {height: 100px;font-size: 22px;}
+.ul-dl .a-dl {margin: 0 auto;display: block;width: 140px;height: 54px;line-height: 50px;font-size: 22px;background: url(../images/ico-download.png) 30px center no-repeat #dd2727;color: #fff;border-radius: 10px;border: 2px solid #dd2727;text-indent: 1.5em;}
+.ul-dl .a-dl:hover {background-color: #fff;background-image: url(../images/ico-download-on.png);color: #dd2727;border-color: #dd2727;}

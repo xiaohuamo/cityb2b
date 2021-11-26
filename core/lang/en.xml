@@ -1,0 +1,1329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language lang="English">
+    <data_model_not_found>Model can not be found</data_model_not_found>
+    <!-- 语言 -->
+    <please_select_langugae>请选择语言</please_select_langugae>
+    <switch_lang>语言</switch_lang>
+    <lang_en>English</lang_en>
+    <lang_cn>中文</lang_cn>
+    <!-- 货币 -->
+    <currency_aud>AUD</currency_aud>
+
+    <welcome>Hello</welcome>
+    <my_account>Buyer account</my_account>
+    <shopping_cart>My Cart</shopping_cart>
+    <message>Message</message>
+    <account_login>Account Login</account_login>
+    <mobile_login>Mobile Login</mobile_login>
+    <register>Register</register>
+    <account_register>Account Register</account_register>
+    <email_register>Email Register</email_register>
+    <mobile_register>Mobile Register</mobile_register>
+    <wechat_register>WeChat Register</wechat_register>
+    <wechat_log_in>Wechat Login</wechat_log_in>
+	<groupbuy_end>Open soon</groupbuy_end>
+	<logistic_delivery_date_choose>Choose Date</logistic_delivery_date_choose>
+	<logistic_schedule_time1>Time Details</logistic_schedule_time1>
+	<approved>approved</approved>
+	
+	<unapproved>unapproved</unapproved>
+	
+	<confirm_update_delivery_date>Confirm to update delivery date?</confirm_update_delivery_date>
+	
+	<switch_to_main_pannel>Switch to Main Panel </switch_to_main_pannel>
+	
+	<wholeseller_card>Wholeseller Card</wholeseller_card>
+	<add_new_customer>Add New Customer</add_new_customer>
+	<customer_list>Customer Lists</customer_list>
+	<add_new_order>Add New Order</add_new_order>
+	<order_done>order placed!</order_done>
+	<print_picking_list>Print Picking List</print_picking_list>
+	<Single_Picking_item_edit>Picking Item Selected</Single_Picking_item_edit> 
+	<print_packing_slips>Print Packing lists </print_packing_slips> 
+	<print_item_packing_slips>Print Item Packing List</print_item_packing_slips> 
+	<print_label_logistic>Print Logistic Label</print_label_logistic> 
+	<add_dispatching_customer>Add Dispatching Customer</add_dispatching_customer>
+	
+	<switch_to_wholesale_pannel>Switch to Wholesale Panel</switch_to_wholesale_pannel>
+	<Sales_channel_management>Sales channel management </Sales_channel_management>
+	<invite_qr_code>Invite QR Code</invite_qr_code>
+	<Publish_Management>Publish Management</Publish_Management>
+	<open_store_setting>Open Store Setting</open_store_setting>
+	<Business_card_edit>Business Card</Business_card_edit>
+	<refresh_whole_channels>Refresh all Channels</refresh_whole_channels>
+	<refresh_shop>Refresh shop </refresh_shop>
+	<product_import_management>Product Import Management </product_import_management>
+	<multi_shop_delivery_date_management>Multi shopping setting </multi_shop_delivery_date_management>
+	
+	
+	<Sales_channel_list>Sales channel list</Sales_channel_list>
+	
+	
+    <log_in>Sign In</log_in>
+    <log_in_please>Sign In Please</log_in_please>
+    <optional1>（opt）</optional1>
+
+    <log_out>Sign Out</log_out>
+    <forget_password>Forget</forget_password>
+    <remember_me>Remember</remember_me>
+    <my_orders>Orders</my_orders>
+    <customer_services>Services</customer_services>
+    <site_navigation>Navigation</site_navigation>
+	 <site_category>Category</site_category>
+    <ubonus_legal_name>Ubonus Pty Ltd</ubonus_legal_name>
+    <log_in_succ>login successful</log_in_succ>
+    <customer>Customer</customer>
+    <help_center>Help</help_center>
+    <after_sales>Services</after_sales>
+    <term_and_condition>T &#38; C</term_and_condition>
+    <contact_us>Contact Us</contact_us>
+    <business>Seller</business>
+    <business_category>Categories</business_category>
+    <trading_hours>Trading hours</trading_hours>
+    <original_price>Was $</original_price>
+	<special_price>Hot Price</special_price>
+    <limit_buy>Limit</limit_buy>
+
+    <delivery_date_open_end_time_setting>Delivery Date Setting</delivery_date_open_end_time_setting>
+
+    <shop_card>Shop setting</shop_card>
+    <category_management>Sub Categories</category_management>
+	 <parent_category_management>Parent Categories</parent_category_management>
+    <items_management>Items edit</items_management>
+	
+	 <category_migration> Change item category</category_migration>
+	 <images_grab>auto images match</images_grab>
+	 
+	 <online_publish>online shop</online_publish>
+	 
+	<link_wechat_account>Link Wechat Account</link_wechat_account>
+	<link_wechat_message>Link Wechat Message</link_wechat_message>
+		
+	 <onoff_share>publishing/shareing</onoff_share> 
+	 <items_add>Items Add</items_add>
+    <cash_gift_voucher>Cash voucher</cash_gift_voucher>
+    <refresh_store>Refresh Store</refresh_store>
+
+    <msg_input_new_unit_number>Input new St Num if above num is wrong!</msg_input_new_unit_number>
+    <msg_input_new_address>Input new Addr if above info is wrong!</msg_input_new_address>
+    <do_not_have_account_yet>Do not have account yet</do_not_have_account_yet>
+    <already_have_account>Already have account</already_have_account>
+    <click>Click</click>
+
+    <business_join>Program</business_join>
+    <our_business>Partners</our_business>
+    <business_type_restaurant>Restaurant</business_type_restaurant>
+    <factory_stores_managment>Stores Management</factory_stores_managment>
+    <factory_add_new_stores>add_new_stores</factory_add_new_stores>
+    <authrise_manage_other_business_account>Manage Sub Stores</authrise_manage_other_business_account>
+
+
+    <business_type_mall>Mall(not include freshfood）</business_type_mall>
+    <business_type_freshfood>Freshfood/vegies/fruits/supermarket groceries</business_type_freshfood>
+    <business_type_service>Restaurant,local services and tickets</business_type_service>
+    <business_type_media>media and selling partners</business_type_media>
+    <business_type_factory>Factory/Importer/Farm(2b Wholesale)</business_type_factory>
+	<business_type_factory_2b>freshfood Factory(to B）</business_type_factory_2b>
+	<business_type_factory_2c>Factory/Importer/Farm（2c Retail)</business_type_factory_2c>
+	<publish_event>Events Management</publish_event>
+    <hot_category>Hot</hot_category>
+    <citywide_fresh_food_delivery>Citywide Fresh Food Delivery</citywide_fresh_food_delivery>
+    <citywide_restaurant_delivery>Citywide Restaurant Delivery</citywide_restaurant_delivery>
+    <shops>Shops</shops>
+    <local_services>Local</local_services>
+    <coupon>Coupon</coupon>
+    <Cash_Voucher>Cash Voucher</Cash_Voucher>
+    <voucher>Voucher</voucher>
+    <concert>Concert</concert>
+    <lottery>Lottery</lottery>
+    <hot_area>Areas</hot_area>
+    <hot_business>Recommended</hot_business>
+    <top_search>Top search</top_search>
+    <exist>exist</exist>
+    <get_password_from_phone>Find from mobile number.</get_password_from_phone>
+    <get_password_from_email>Find from email</get_password_from_email>
+    <input_username_phone_email>Please input Username or mobile number or email</input_username_phone_email>
+    <get_password_from_Username>Find Password from Username -phonenumber</get_password_from_Username>
+    <get_password_from_Username1>Find Password from Username -email</get_password_from_Username1>
+
+    <get_password_from_ubonus_service>Find password via Ubonus customer service</get_password_from_ubonus_service>
+    <reset_succ_login>Reset successful,logining in...</reset_succ_login>
+    <!-- Nav -->
+    <home>Home</home>
+    <luggage>Luggage</luggage>
+    <fresh_food>Food</fresh_food>
+    <family>Family</family>
+    <wool_quilt>Wool Quilt</wool_quilt>
+    <promotion_event>Promotion</promotion_event>
+    <ubonus_store>Ubonus Store</ubonus_store>
+    <ubonus_index>Home</ubonus_index>
+    <brand_store>Brands</brand_store>
+    <group_buy>Group</group_buy>
+    <food>Food</food>
+    <wholesale>Wholesale</wholesale>
+
+    <about_us>About Us</about_us>
+    <business_program>Business</business_program>
+    <our_partner>Partners</our_partner>
+    <contact_us>Contact Us</contact_us>
+    <join_us>Join Us</join_us>
+    <business_entrance>Set up your online store</business_entrance>
+
+    <bind_wx>Bind Wechat Account</bind_wx>
+    <bind_wx_desc>Wechat is a popular Chinese social media. Scan this QR code and your account will be linked to your Wechat Account</bind_wx_desc>
+
+    <setting_business_type>Setting Business Deault Pannel</setting_business_type>
+    <choose_type>Choose Business Pannel</choose_type>
+    <business_pannel_desc>switch your business management pannel, can see different menus</business_pannel_desc>
+    <!-- Home page -->
+    <website_notice>Site notice</website_notice>
+    <buyer_insurance>Buyers insurance</buyer_insurance>
+    <business_program>Business program</business_program>
+    <newbie_reward>customers welfare</newbie_reward>
+
+    <credit_card_notice_before_buy>Credit Card Notice</credit_card_notice_before_buy>
+    <credit_card_notice>Using credit card ,you have to show you ID and credit card when voucher redeem or picking up items.</credit_card_notice>
+    <freight_fees>Freight fees</freight_fees>
+
+    <seckill>Seckill</seckill>
+    <flash_sale>Flash sale</flash_sale>
+    <screaming_discount>Screaming discount</screaming_discount>
+    <buy_now>Buy now</buy_now>
+	<buy>Buy</buy>
+    <current_customer>Current Customer</current_customer>
+    <select_customer>Select Customer</select_customer>
+    <not_enough>Not enough?</not_enough>
+    <scan_and_share>scan QR code and share</scan_and_share>
+    <big_brand>Super brand</big_brand>
+    <more_surpirse>Acquire more pleasant surprise</more_surpirse>
+    <ubonus_recommend>Recommendation</ubonus_recommend>
+    <event_ticket>Ticket</event_ticket>
+    <catering_cate>Restaurant</catering_cate>
+    <fresh_product>Fresh food</fresh_product>
+    <digital_and_phone>Digital products</digital_and_phone>
+    <female_world>Female world</female_world>
+    <home_furniture>Furniture and home furnishing</home_furniture>
+    <home_appliance>Electric appliance and kitchen ware</home_appliance>
+    <clothing>Clothes and caps</clothing>
+    <read_more>Read more</read_more>
+    <more>More</more>
+    <see_detail>Details</see_detail>
+    <loading>loading...</loading>
+<merchant_store>Seller stores</merchant_store>
+<highlight>Highlight</highlight>
+<about_the_business>About Business</about_the_business>
+<warm_prompt>Tips</warm_prompt>
+<sys_prompt>system prompts</sys_prompt>
+<online_payment>Online Payment</online_payment>
+<offline_payment>Offline Payment</offline_payment>
+<delivery>Delivery</delivery>
+<pick_up>Offline self pickup</pick_up>
+<how_to_use>How To Use</how_to_use>
+<refund_policy>Refund Policy</refund_policy>
+<related_product>Related </related_product>
+<add_successfully>Add </add_successfully>
+
+    <full_and_easy>Complete And Easy</full_and_easy>
+    <direct_and_fast>Direct And Fast</direct_and_fast>
+    <quality_and_lifestyle>Quality Lifestyle</quality_and_lifestyle>
+    <lowprice_and_carefree>Price Guarantee</lowprice_and_carefree>
+
+    <my_watch_list>Watch List</my_watch_list>
+    <contact_customer_services>Customer Services</contact_customer_services>
+    <go_top>Go Top</go_top>
+    <feedback>Feedback</feedback>
+
+    <!-- Search result pages -->
+    <all_result>All results</all_result>
+    <repeal_all>Repeal all</repeal_all>
+    <product_filter>Commodity screening</product_filter>
+    <collapse>Collapse</collapse>
+    <commodities>Products</commodities>
+    <store>Store</store>
+    <over_all>General</over_all>
+    <sales_volume>Best selling</sales_volume>
+    <newest>Latest</newest>
+    <hot>Hot</hot>
+    <hot_category_list>Hot</hot_category_list>
+    <bought_history>Bought History</bought_history>
+    <bought_history_shop>Bought</bought_history_shop>
+    <category>Category</category>
+    <soldout>Sold Out</soldout>
+    <sector>Sector</sector>
+    <location>Location</location>
+    <you_may_like>You May Like</you_may_like>
+    <total_search_result>Total Result</total_search_result>
+    <!-- Detail page -->
+    <fav>Watched</fav>
+    <recommendation>Recommendation</recommendation>
+    <quantity>Quantity</quantity>
+    <stock>Inventory</stock>
+    <buy_now>Buy it now</buy_now>
+    <add_to_cart>Add to cart</add_to_cart>
+    <contact_business>Contact Seller</contact_business>
+    <product_detail>Details</product_detail>
+    <product_comment>Comments</product_comment>
+    <related_product_recommendation>Related</related_product_recommendation>
+    <no_review_yet>No Review Yet</no_review_yet>
+
+    <merchant_store>Seller stores</merchant_store>
+    <highlight>Highlight</highlight>
+    <about_the_business>About Business</about_the_business>
+    <warm_prompt>FinePrint</warm_prompt>
+    <sys_prompt>system prompts</sys_prompt>
+    <online_payment>Online Payment</online_payment>
+    <offline_payment>Offline Payment</offline_payment>
+    <delivery>Delivery</delivery>
+    <pick_up>Offline self pickup</pick_up>
+    <how_to_use>How To Use</how_to_use>
+    <refund_policy>Refund Policy</refund_policy>
+    <related_product>Related</related_product>
+    <add_successfully>Add</add_successfully>
+
+    <place_order>Order</place_order>
+
+    <Alipay>Alipay</Alipay>
+    <confirm>Ok</confirm>
+    <cancel>Cancel</cancel>
+    <resend_email>Resend email</resend_email>
+
+    <save>Save</save>
+    <delete>Delete</delete>
+    <item>item</item>
+    <purchese_limit_min>Minimum purchase</purchese_limit_min>
+    <purchese_limit_max>Max Buy</purchese_limit_max>
+    <watch>Save</watch>
+    <watched>Saved</watched>
+    <share>Share</share>
+    <go_group_buy>Group</go_group_buy>
+
+    <select_coupon_option>Options</select_coupon_option>
+    <package_sale>Package Sale</package_sale>
+
+    <!-- email display-->
+    <order_createtime>Order time</order_createtime>
+    <redeem_code>Redeem code</redeem_code>
+    <order_desc>Order name</order_desc>
+    <order_confirm_title>Your order has been confirmed:</order_confirm_title>
+
+
+    <!-- The page of shopping cart-->
+    <nothing_in_shopping_cart>There is nothing in your shopping cart</nothing_in_shopping_cart>
+    <over_buy_limit>The quantity has exceeded the purchase limit</over_buy_limit>
+    <view_item_from_all_business>All Business</view_item_from_all_business>
+
+    <my_cart>My shopping cart</my_cart>
+    <shopping_cart>Cart</shopping_cart>
+    <order_confirm>Confirm</order_confirm>
+    <payment>Pay</payment>
+    <complete>Finished</complete>
+    <unit_price>Unit price</unit_price>
+    <quantity>Quantity</quantity>
+    <subtotal>Subtotal</subtotal>
+    <continue_shopping>Continue</continue_shopping>
+    <final_amount_to_pay>amount to pay</final_amount_to_pay>
+    <total_amount>Total amount</total_amount>
+    <checkout>Checkout</checkout>
+    <total_item>Total Item</total_item>
+    <warning_no_multiple_store_checkout>You can’t close an account simulantaneously when there are several sellers’ products in the shopping cart. Please choose a seller and close
+        an account.
+    </warning_no_multiple_store_checkout>
+    <fill_order_info>Fill in and check the order information</fill_order_info>
+    <deliver_address>Deliver Address</deliver_address>
+    <manage_address>Management address</manage_address>
+    <new_manage_address>new contact address</new_manage_address>
+    <new_address>New Address</new_address>
+    <payment_option>Pay Op</payment_option>
+    <deliver_option>Delivery Op</deliver_option>
+    <tracking_number>tracking number</tracking_number>
+    <business_deliver>Seller delivery</business_deliver>
+    <no_support_delivery>products not support delivery</no_support_delivery>
+    <no_support_pickup>product not support pick up</no_support_pickup>
+    <choose_self_pickup_location>choose pickup location</choose_self_pickup_location>
+    <self_pickup>Self pickup</self_pickup>
+    <alert_no_enough_stocks>not enough stocks</alert_no_enough_stocks>
+    <unable_to_buy>Unable to add this product, please try again!</unable_to_buy>
+    <alert_min_stocks>Minimum 1 Units !</alert_min_stocks>
+    <alert_network_problems>Network Problems,Please retry</alert_network_problems>
+    <no_need_delivery>no need</no_need_delivery>
+		<salesTotal>Total Sales:</salesTotal>
+    <no_related_records>no related records</no_related_records>
+    <address_out_of_vic>Post code does not belong to VIC and cannot be supported temporarily</address_out_of_vic>
+    <out_of_delivery_range>The address you entered is out of the shipping range of the merchant</out_of_delivery_range>
+    <support>Support</support>
+    <not_support>Not Support</not_support>
+
+    <edit>Edit</edit>
+
+    <notice_deliver_fee_subject_to_condition>Remarks: when the sellers in some special regions can’t deliver commodities, they have the right to cancel orders or require users to
+        pay more freight charge.
+    </notice_deliver_fee_subject_to_condition>
+    <exchange_rate_lock>Exchange rate lock</exchange_rate_lock>
+    <refresh_exchange_rate>Refresh exchange rate</refresh_exchange_rate>
+
+    <pay_offline>Offline payment</pay_offline>
+    <pay_online>Online payment</pay_online>
+    <pay_paypal>Paypal</pay_paypal>
+    <pay_offline_desc>Offline Payments allow you to pay the order via offline payment descriptions</pay_offline_desc>
+    <notice_paypal_pay_desc>In the payment option paypal, you can directly transfer payment with paypal account, credit card or bank card (the card number of debitcard). (Reminder:
+        please finish the payment within thirty minutes, otherwise the order will lose efficiency)。
+    </notice_paypal_pay_desc>
+
+    <pay_wechat>Wechat payment</pay_wechat>
+    <notic_wechat_pay_desc>Pay using WeChat (Reminder: please finish the payment within thirty minutes, otherwise the order will lose efficiency)</notic_wechat_pay_desc>
+    <notic_alipay_desc>Pay using Alipay (Reminder: please finish the payment within thirty minutes, otherwise the order will lose efficiency)</notic_alipay_desc>
+
+    <pay_hcahs>Hcash payment</pay_hcahs>
+    <hrs_business_wallet_address>Wallet Address</hrs_business_wallet_address>
+    <notice_hcash_pay_desc>You need to pay the corresponding amount Hcash through wallet function of Hcash and provide a transfer voucher. The exchange rate of Hcash is updated in
+        real time. (Reminder: please finish the payment within thirty minutes, otherwise the order will lose efficiency)
+    </notice_hcash_pay_desc>
+    <notice_hcash_note>After submitting the order, the HRS payment team will review and confirm the payment. After successful payment, the HSR team will send you a notification
+        email and arrange logistics
+    </notice_hcash_note>
+
+    <pay_creditcard>Credit Card</pay_creditcard>
+    <notice_creditcard_pay_desc>Support Visa and Mastercard with AUD payment</notice_creditcard_pay_desc>
+
+
+    <creditcard>Creditcard payments</creditcard>
+    <creditcard_is_processing>We are now processing the payments...</creditcard_is_processing>
+    <sys_message_detail1>The order had been processed,your card is verifying now，you can check order from your account on our website。when the payments done you will received the
+        email .
+    </sys_message_detail1>
+    <creditcard_failure>Credit card payment failure.</creditcard_failure>
+    <creditcard_invalid>the credit card is invalid.</creditcard_invalid>
+    <sys_message_detail2>the card information is wrong ,please check and input again .</sys_message_detail2>
+    <unknow_payment_method>unknown payment method.</unknow_payment_method>
+    <sys_message_detail3>payment was unsucessful for network or other reasons.</sys_message_detail3>
+    <sys_message_detail2>Now we would not debit any amounts from your card. please try later!</sys_message_detail2>
+    <sys_message_detail4>Order confirmed and payment completed .please check email or check your account on website.
+    </sys_message_detail4>
+
+
+    <item_list>Lists</item_list>
+    <message_to_business>Message</message_to_business>
+    <enter_promotion_code>Discount code</enter_promotion_code>
+    <enter_money>Please enter Amount you wish to use</enter_money>
+
+    <apply>Use</apply>
+    <not_applied>Start apply</not_applied>
+    <messages_to_business>Any message to the shop owner?</messages_to_business>
+    <promotion_code_desc>promotion code will give more discounts</promotion_code_desc>
+    <available_fund>Available</available_fund>
+    <available_fund_desc>You can pay order user full or part of wallet money</available_fund_desc>
+    <spend_fund>Use Pokcet Money</spend_fund>
+    <product_total>Total amount</product_total>
+    <deliver_fee>deliver fee</deliver_fee>
+	 <deliver_distance>delvery Distance</deliver_distance>
+    <booking_fee>Booking fee</booking_fee>
+    <back_to_shopping_cart>Return to shopping cart</back_to_shopping_cart>
+
+    <operating>Operating</operating>
+    <undo>Undo</undo>
+    <desc>Description</desc>
+    <buyer_address>Address management</buyer_address>
+
+
+    <multi_order>multi_voucher</multi_order>
+    <multi_order1>total</multi_order1>
+    <multi_order2>times</multi_order2>
+    <multi_order3>used</multi_order3>
+    <multi_order4>still left</multi_order4>
+    <customer_name>Customer name</customer_name>
+
+
+    <checkout_total>Amount due</checkout_total>
+    <submit_order>Submit</submit_order>
+
+    <quality_certification>Quality certification</quality_certification>
+    <subscribe>Pay attention to me</subscribe>
+    <vip_center>My account</vip_center>
+    <contact_business>Contact seller</contact_business>
+    <I_wang_sell>Become a seller</I_wang_sell>
+
+    <!-- 后台 -->
+
+    <publish>Publish</publish>
+    <publish_information>Publish the product and information</publish_information>
+    <online_store>Online Store</online_store>
+    <coupon_and_voucher>Group By</coupon_and_voucher>
+
+
+    <business_store>Website of seller</business_store>
+    <business_center>Seller centre</business_center>
+    <business_store_description>Sller can customize the display of website</business_store_description>
+    <preview_store>Sites Preview</preview_store>
+    <preview_password>Preview_pass</preview_password>
+
+    <panding_email>Email setting</panding_email>
+    <panding_email_desc>Receiving orders via Email.</panding_email_desc>
+    <verification_mobile>Verification mobile</verification_mobile>
+    <verification_mobile_desc>publishing automatically on website with no verification</verification_mobile_desc>
+    <panding_wx>Wechat Pending</panding_wx>
+    <panding_wx_desc>can via your account from wechat</panding_wx_desc>
+
+    <follow_offical_account>Set wechat notice</follow_offical_account>
+    <follow_offical_account_desc>Scan QR code and follow will receving messages from wechat .</follow_offical_account_desc>
+
+
+    <management>Management</management>
+
+    <together_count>etc. total quantities is</together_count>
+    <login_in>Login in</login_in>
+    <order_management_and_user_feedback>Order management and user feedback.</order_management_and_user_feedback>
+    <order_management>Orders</order_management>
+	<sales_Management>sales Management</sales_Management>
+	<totalsales_commissions>sales commissions</totalsales_commissions>
+	
+    <order_management_amend>Orders amend</order_management_amend>
+
+    <marketing_tool>Marketing tools</marketing_tool>
+    <online_promotion>Marketing and AD</online_promotion>
+    <community_marketing>Community</community_marketing>
+    <bargain_sniping>Bargain Sniping</bargain_sniping>
+
+
+    <setting>Setting</setting>
+    <business_setting>Setting</business_setting>
+    <basic_setting>Basic setting</basic_setting>
+    <advance_setting>advanced setting</advance_setting>
+
+    <tools>Tool</tools>
+    <helpful_editing_tool>Auxiliary editing tool</helpful_editing_tool>
+    <batch_editor>Batch modifier</batch_editor>
+
+
+    <help_center>Help center</help_center>
+    <novice_document>Novice document</novice_document>
+    <novice_document>Novice document</novice_document>
+
+
+    <more_function>More functions</more_function>
+    <application_for_activation>Registrate After Application</application_for_activation>
+    <concert_management>Concert management</concert_management>
+    <movie_management>Film management</movie_management>
+
+    <open_store>Open your online store</open_store>
+
+
+    <!-- 2 -->
+
+    <publish_center>Publishing Center</publish_center>
+    <products>Products</products>
+    <voucher>Coupons</voucher>
+    <coupon>Cash coupons</coupon>
+    <online_store>Online Store/Commodities</online_store>
+
+    <product_display>Publish and display</product_display>
+
+    <!-- 3  -->
+
+    <product_management>Products management</product_management>
+	 <sub_category_managementd>sub Category </sub_category_managementd>
+	
+	
+    <console_switch>Console switch</console_switch>
+    <add_product>New</add_product>
+    <search>Search</search>
+    <image>Image</image>
+    <title>Name</title>
+    <price>Price</price>
+    <type>Types</type>
+    <deadline>Deadline</deadline>
+    <approve>Operator approval</approve>
+    <publish>Publish</publish>
+    <edit>Editor</edit>
+    <delete>Delete</delete>
+    <copy>Copy</copy>
+    <no_data>No data</no_data>
+    <are_you_sure_to_delete>Sure to Delete?</are_you_sure_to_delete>
+    <!--  5 -->
+    <edit_specification_link>Link products</edit_specification_link>
+
+    <please_choose>Please choose</please_choose>
+    <create_specification_link>Merge and creat specification link</create_specification_link>
+
+    <!-- 6  -->
+
+    <custome_classification>Categories</custome_classification>
+    <add_top_level_clissification>Adding top-level classification</add_top_level_clissification>
+    <sort>Sort</sort>
+    <title>Name</title>
+    <add_subclassification>Add subclassification</add_subclassification>
+    <delete>Delete</delete>
+
+
+    <email_unsub_success>Email unsubscribed successful</email_unsub_success>
+    <phone_unsub_success>phone unsubscribed successful</phone_unsub_success>
+    <email_cannt_verified>Email can not be verified</email_cannt_verified>
+    <email_cannt_find>Can not find Email</email_cannt_find>
+
+
+    <!-- 8 -->
+
+    <business_center>Home page</business_center>
+    <business_center_mall>Seller centre（mall version）</business_center_mall>
+    <business_center_freshfood>Seller(Fresh Supmakt）</business_center_freshfood>
+	<business_center_freshfoodFactory>Seller（Wholesale 2b）</business_center_freshfoodFactory>
+	<business_center_freshfoodFactory2c>Seller（Main Panel 2b2c）</business_center_freshfoodFactory2c>
+    <publish_center>Publishing Center</publish_center>
+    <online_store>Store Website</online_store>
+    <product_management>Commodity management</product_management>
+    <specification>Specification</specification>
+    <edit_specification_link>products_link</edit_specification_link>
+    <custome_classification>Custom classification</custome_classification>
+    <offline_voucher>Offline voucher</offline_voucher>
+    <offline_voucher_summery>Off/Voucher</offline_voucher_summery>
+    <pormotion_code>Pormo code</pormotion_code>
+
+    <!-- 9 -->
+    <local_services>Local service</local_services>
+    <all_product>All products</all_product>
+    <fast_release>Fast release</fast_release>
+    <coupon_publish>Conpus issued</coupon_publish>
+    <voucher_publish>Offline coupons</voucher_publish>
+
+
+    <!-- 10 -->
+    <product_management>Products management</product_management>
+
+
+    <search>Search</search>
+    <image>Image</image>
+    <title>Name</title>
+    <price>Price</price>
+    <type>Types</type>
+    <deadline>Deadline</deadline>
+    <approve>Operator approval</approve>
+    <publish>Publish</publish>
+    <edit>Editor</edit>
+    <delete>Delete</delete>
+    <copy>Copy</copy>
+
+    <!-- 11 -->
+
+    <fast_release>Fast publish</fast_release>
+    <say_something>Say something</say_something>
+    <price>Price</price>
+    <save>Save</save>
+
+    <!-- 12 -->
+    <coupon_management>Cash coupons management</coupon_management>
+    <new_coupon>New cash coupons</new_coupon>
+
+    <!-- 13 -->
+    <voucher_management>Coupons management</voucher_management>
+    <new_management>New coupons</new_management>
+
+    <!-- 14 -->
+    <list>List</list>
+    <generate_new_promotion_code>Generate new discount code</generate_new_promotion_code>
+    <description>Description</description>
+    <product>Products</product>
+    <condition>Condition</condition>
+    <type>Discount ways</type>
+    <amount>Amount</amount>
+    <expire>Expired method</expire>
+    <value>Value</value>
+    <generate_time>Generation time</generate_time>
+    <generate>Generation</generate>
+    <time_of_exchange>Times of exchange</time_of_exchange>
+    <delete>Delete</delete>
+
+    <!-- 15 -->
+    <customer_center>Customer Center</customer_center>
+    <dispatching_center>Dispatching Management</dispatching_center>
+    <logistic_center>Logistic Management</logistic_center>
+    <order_management>Order management</order_management>
+    <order_statistic>Statistic</order_statistic>
+    <custoemr_review_management>Ratings</custoemr_review_management>
+    <customer_management>Customers</customer_management>
+    <refund_and_return>Returned</refund_and_return>
+    <i_will_refund>New Return</i_will_refund>
+    <reason>Reason</reason>
+    <address_management>Address Management</address_management>
+    <!-- 16 -->
+    <search>Search</search>
+    <filter>Filter</filter>
+    <all>All</all>
+    <order_pdf>Order PDF</order_pdf>
+    <order_id>Order No.</order_id>
+    <user>User</user>
+    <status>Status</status>
+    <payment>Payment</payment>
+    <delivery>Delivery</delivery>
+    <submission_time>Time of submission</submission_time>
+
+    <!-- 17 -->
+    <total_number_of_order>Total number of orders query</total_number_of_order>
+    <product>Product</product>
+    <order_status>Status</order_status>
+    <specification>Specifications</specification>
+    <order_name>Order name</order_name>
+    <redeem_number>Redeem code</redeem_number>
+    <payment_type>Payment type</payment_type>
+    <bought>Bought</bought>
+    <user>User</user>
+    <staff>Staff</staff>
+    <date_start>Start date</date_start>
+    <date_end>End date</date_end>
+    <query>Query</query>
+
+    <!-- 21 -->
+
+    <money_account>Capital account</money_account>
+    <money_account_balance>Account Balance</money_account_balance>
+
+    <withdraw_desc1>Please confirmed your account information.</withdraw_desc1>
+    <withdraw_desc2>Ubonus will deal with in 48 hours</withdraw_desc2>
+    <withdraw_desc3>administration fees may occur</withdraw_desc3>
+    <withdraw_amount>Withdraw amount</withdraw_amount>
+    <money_account_desc>Transactions/Settlementas/Withdraws</money_account_desc>
+    <transaction>Transactions</transaction>
+    <settlement_center>Settlements</settlement_center>
+    <settlement_file_history>Settlements History</settlement_file_history>
+    <withdraw_account_management>Withdraws</withdraw_account_management>
+    <recharge>Recharge</recharge>
+    <recharge_amount>Recharge amount</recharge_amount>
+    <recharge_charge>will charge</recharge_charge>
+    <min_recharge>minimun recharge amount</min_recharge>
+    <ready_to_payment_page>Redirecting now ...</ready_to_payment_page>
+
+    <wx_panding_success>Unlock wechat successful</wx_panding_success>
+    <wx_panding_fail_later>Unlock wechat failed ,try later...</wx_panding_fail_later>
+
+    <wx_manage_desc1>other accounts pinding on this wechat account . we chat logon on will direct to default account if set default we chat account .</wx_manage_desc1>
+    <wx_manage_desc2>follow offical Ubonus wechat account -Ubonus- , will received order ,customer services messages.</wx_manage_desc2>
+    <default_login>Default Login</default_login>
+    <set_default_login>Set default login account</set_default_login>
+
+    <login_current_account>Current Login account</login_current_account>
+    <follow_wechat>Follow Ubonus</follow_wechat>
+    <order_had_been_processed>order been processed</order_had_been_processed>
+    <withdraw>Withdraw</withdraw>
+    <wx_unlock_wechat>Unlock current wechat account</wx_unlock_wechat>
+    <wx_no_panding>No wechat pinding on current account.</wx_no_panding>
+    <wx_scan_qrcode>Using wechat scan the QR code</wx_scan_qrcode>
+    <wx_refresh>Refresh page after wechat pinding successful .</wx_refresh>
+    <!-- 25 -->
+    <redbag>Red envelopes</redbag>
+    <ubonus_community>Micro prize community</ubonus_community>
+    <hand_out_redbag>Hand out red envelopes</hand_out_redbag>
+    <redbag_record>Red envelopes record</redbag_record>
+
+    <lottery>Prize draw</lottery>
+    <edit_lottery>Release prize draw</edit_lottery>
+    <lottery_winning_record>User winning record</lottery_winning_record>
+
+    <group_buy>Group purchase</group_buy>
+    <ubonus_community>Micro prize community</ubonus_community>
+    <launched_group>Launched group purchase</launched_group>
+    <group_buy_record>Group purchase record</group_buy_record>
+
+    <vote>Vote</vote>
+    <ubonus_community>Micro prize community</ubonus_community>
+    <edit_vote>Publish a vote</edit_vote>
+
+    <more_function>More functions</more_function>
+    <comming_soon>Coming soon</comming_soon>
+    <second_hand>Second-hand</second_hand>
+    <event>Activity</event>
+
+    <!-- 26 -->
+    <business_setting>Seller setting</business_setting>
+    <all>Whole</all>
+    <administrator_info>Admin_info</administrator_info>
+    <business_info>SellerInfo  address</business_info>
+    <address>Address</address>
+    <default_address>Default address</default_address>
+
+    <verified_address>Verfiy address</verified_address>
+    <logo>LOGO</logo>
+    <logo_path>images/logo_en.png</logo_path>
+    <image>Picture</image>
+	 <shop_image>Shop Picture</shop_image>
+    <social_network>Social contact</social_network>
+    <advance_setting>Advanced setting</advance_setting>
+    <staff>Shop staff</staff>
+    <redeem_staff>Clerk(checkingout)</redeem_staff>
+    <deliver_setting>Delivery setting</deliver_setting>
+	<salesman_setting>sales setting</salesman_setting>
+	<open_weekly_order>Open Weekly Order</open_weekly_order>
+    <payment_setting>Payment setting</payment_setting>
+    <payment_application>Payseller_direct</payment_application>
+    <abn_acn>ABN Info</abn_acn>
+    <booking_fee_setting>Reservation fee setting</booking_fee_setting>
+
+
+    <!-- 28 -->
+    <account_administrator>Account Administrator</account_administrator>
+    <information_of_seller>Information of seller</information_of_seller>
+    <contact_and_address>Contact/ Address</contact_and_address>
+    <logo>Logo</logo>
+    <picture>Picture</picture>
+    <website_and_social>Website/ social</website_and_social>
+    <administrator_information>Administrator information</administrator_information>
+    <user_name>User name</user_name>
+    <mail>Mail</mail>
+    <nickename>Nickname</nickename>
+    <first_name>First name</first_name>
+    <last_name>Last name</last_name>
+    <telephone>Tele</telephone>
+    <mobile_phone>Mobile</mobile_phone>
+    <Account_name>Account Name</Account_name>
+    <set_withdraw_account>Set withdraw account</set_withdraw_account>
+    <Max_amount_less_than_balance>The amount you input must less than your avaliable fund amounts.</Max_amount_less_than_balance>
+    <address>Address</address>
+    <info>info</info>
+    <id_number>ID Number</id_number>
+    <information_mailbox>Information mailbox</information_mailbox>
+    <save_modification>Save</save_modification>
+    <Delivery_China_needed>Delivery to China need to Filled</Delivery_China_needed>
+    <upload_image>Upload</upload_image>
+    <!-- 29 -->
+    <!--account_administrator>Account Administrator</account_administrator-->
+    <information_of_seller>Seller's info</information_of_seller>
+    <website_social>Website/social</website_social>
+    <legal_company_name>Legal company name</legal_company_name>
+	<service_range>service Region range</service_range>
+	
+    <showing_company_name>Trading name</showing_company_name>
+    <showing_company_name_en>Trading name(En)</showing_company_name_en>
+    <located_area>Located area</located_area>
+    <service_scope>Service Scope</service_scope>
+    <name_of_subordinate>Name of subordinate</name_of_subordinate>
+    <company_description>Company description</company_description>
+
+    <!-- 30 -->
+    <product_description>Product Description</product_description>
+    <mobile_product_description>Desc</mobile_product_description>
+
+    <save_modification>Save</save_modification>
+    <service_scope_national>national range</service_scope_national>
+    <!-- 31 -->
+    <information_of_seller>Seller's info</information_of_seller>
+
+    <!-- 32 -->
+    <information_of_seller>Seller's info</information_of_seller>
+    <name_of_subordinate>Name of subordinate</name_of_subordinate>
+    <!--company_description>Company description</company_description-->
+    <I_wang_share>Shareing</I_wang_share>
+    <my_sharing>My Shared</my_sharing>
+    <login_and_sharing>Login and share</login_and_sharing>
+    <login_in_before_buy>Please login in first!</login_in_before_buy>
+    <minimun_1_item>minimun 1 item！</minimun_1_item>
+    <sold_out_too_slow>sold out</sold_out_too_slow>
+    <seats>seats</seats>
+    <specification>Spec</specification>
+    <follow>Follow</follow>
+    <followed>Followed</followed>
+    <!-- 35 -->
+    <description_of_upload_picture>Please upload a picture with the smallest size of 400*400. Too small the size can cause the picture to be unclear</description_of_upload_picture>
+    <please_input>Please input</please_input>
+    <newest_desc>Everyday new coming</newest_desc>
+    <!-- 37 -->
+    <sina>Sina micro-blog</sina>
+    <wechat_public_number_or_groupname>Wechat public number or group name</wechat_public_number_or_groupname>
+    <wechat_code>WeChat</wechat_code>
+
+    <!-- 38 -->
+    <shop_staff>Shop staff</shop_staff>
+    <shop_staff_management>Branchs/Pickup</shop_staff_management>
+    <cashing_employee>Clerk(checkingout)</cashing_employee>
+    <delivery_setting>Delivery setting</delivery_setting>
+    <payment_setting>Payment setting</payment_setting>
+    <online_payment_application>Online payment application</online_payment_application>
+    <abn_authentication>ABN/CAN authentication</abn_authentication>
+    <new_employees>New employees</new_employees>
+    <branch>Branch</branch>
+    <administrators>Administrators</administrators>
+    <name_of_branch_store>Name of branch store</name_of_branch_store>
+    <edit>Edit</edit>
+    <banner_edit>Banner edit</banner_edit>
+    <store_notice>Store Notice</store_notice>
+    <!-- 40 -->
+    <support_customers_pickingup_goods>Support customers picking up goods</support_customers_pickingup_goods>
+    <self_pickup_desc>you can pickup from the shop address</self_pickup_desc>
+    <allow_customers_to_pickup_goods_personal>Allow customers to pick up goods in person</allow_customers_to_pickup_goods_personal>
+    <support_delivery>Support delivery</support_delivery>
+    <delivery_service>Delivery service</delivery_service>
+    <base_order_freight>Base order freight: the system provides orders + freight calculation for products</base_order_freight>
+    <freight_for_each_orderof_users>Freight for each order of users = basic freight + product freight * quantities</freight_for_each_orderof_users>
+
+    <basic_postage>Base delivery fee</basic_postage>
+    <per_item_add_fee>per item extra fees</per_item_add_fee>
+    <basic_local_postage>Basic local postage</basic_local_postage>
+    <basic_domestic_postage>Basic domestic postage</basic_domestic_postage>
+    <delivery_service_desc>Business will delivery the goods via post .</delivery_service_desc>
+    <amount_bigger_than>amount bigger than</amount_bigger_than>
+    <temporarily_unsupported>Temporarily unsupported</temporarily_unsupported>
+    <basic_international_postage>Basic international postage</basic_international_postage>
+    <temporarily_unsupported>Temporarily unsupported</temporarily_unsupported>
+    <free_freight_amount>Free freight amount</free_freight_amount>
+    <delivery_instructions>Delivery instructions</delivery_instructions>
+    <buying_1>Buying</buying_1>
+    <buying_2>Person</buying_2>
+
+    <underline_payment>Offline Payment</underline_payment>
+    <payment_instructions_with_underline>Offline pay Desc</payment_instructions_with_underline>
+
+    <!-- 41 -->
+    <userself_pickinguo_description>Self picking desc</userself_pickinguo_description>
+    <source_code>Source code</source_code>
+    <style>Style</style>
+    <format>Format</format>
+    <Font>Font</Font>
+    <size>Size</size>
+    <units>Units</units>
+    <save_modification>Save modification</save_modification>
+
+    <!-- 42 -->
+    <shop_staff>Shop staff</shop_staff>
+    <cashing_employee>Clerk(checkingout)</cashing_employee>
+    <delivery_setting>Delivery setting</delivery_setting>
+    <ubonus_charged_with_thepayment>Payment handled by Ubonus</ubonus_charged_with_thepayment>
+    <surcharge_fees>Transcation fees</surcharge_fees>
+    <myorder>Orders</myorder>
+
+    <!-- 47 -->
+    <order_management_and_user_feedback>Order management and user feedback</order_management_and_user_feedback>
+    <my_orders>My order</my_orders>
+    <my_voucher>My coupon</my_voucher>
+    <fav>Collection</fav>
+    <history>Browse history</history>
+    <wallet>Wallet</wallet>
+    <funds_and_points>Funds and points</funds_and_points>
+    <cash>Cash</cash>
+    <promotion_code>Discounted code</promotion_code>
+    <community>Community</community>
+    <ubonus_community>Micro prize community</ubonus_community>
+    <redbag>Red envelopes</redbag>
+    <lottery>Prize draw</lottery>
+    <group_buy>Collect group</group_buy>
+    <vote>Vote</vote>
+    <second_hand>Second-hand</second_hand>
+    <operation_log>Activities log</operation_log>
+    <activities>Activities</activities>
+    <details>Details</details>
+    <operator>Operator</operator>
+    <action>Action</action>
+
+    <event>Activity</event>
+    <friend>Friends</friend>
+    <promotion_system>Promotion system</promotion_system>
+    <setting>Setting</setting>
+    <advanced_setting>Advanced setting</advanced_setting>
+    <user_setting>User settings</user_setting>
+    <basic_setting>Basic settings</basic_setting>
+
+    <basic_setting_desc>Setting basic Info of the account</basic_setting_desc>
+    <advanced_setting_desc>Setting advanced info of the account</advanced_setting_desc>
+    <broadcast>Live broadcast</broadcast>
+    <ubonus_broadcast>Micro prize live broadcast</ubonus_broadcast>
+    <broadcast_setting>Live setting</broadcast_setting>
+    <more_function>More functions</more_function>
+    <comming_soon>Coming soon</comming_soon>
+    <platform_reservation_fee>booking fees</platform_reservation_fee>
+    <!-- 64 -->
+    <member_center>Member Home</member_center>
+    <my_orders>My order</my_orders>
+    <fav>Collection</fav>
+    <wallet>Wallet</wallet>
+    <promotion>Promotion</promotion>
+
+    <!-- 订单状态 -->
+    <all>All</all>
+    <unpaid>Unpaid</unpaid>
+    <submit>submit</submit>
+    <unsubmit>unsubmit</unsubmit>
+    <paid>Paid</paid>
+   <pinding>pinding</pinding>
+    <waiting>Waiting</waiting>
+    <send>Sent</send>
+    <please_rate>Rating</please_rate>
+    <rated>Rated</rated>
+    <canceled>Canceled</canceled>
+    <anon_user>Anon User</anon_user>
+    <customer_review>Rating</customer_review>
+    <related_item>Related</related_item>
+
+    <original_price>Was</original_price>
+    <buying_qty>Quantities</buying_qty>
+    <Limit_count>Limit</Limit_count>
+    <!-- 资金状态 -->
+    <settled>Settled</settled>
+    <processing>Processing</processing>
+    <canceled>Canceled</canceled>
+    <action_needed>Action required</action_needed>
+
+    <!-- 用户设置 -->
+    <personal_info>Profile</personal_info>
+    <avatar>Avatar</avatar>
+    <password>Password</password>
+    <password_setting>Password setting</password_setting>
+    <bind_wx>Bind Wx</bind_wx>
+    <wx_setting>Wx Setting</wx_setting>
+    <manage_wx_bind>Manage Wechat Binding</manage_wx_bind>
+    <old_password>Old Password</old_password>
+    <new_password>New Password</new_password>
+    <confirm_password>Confirm Password</confirm_password>
+    <change_password>Change Password</change_password>
+    <email>Email</email>
+    <!-- 注册 -->
+    <register_new_user>Registration</register_new_user>
+    <register_new_business>Registration new Business</register_new_business>
+    <verify_code>Verify Code</verify_code>
+    <i_have_agreed_with>i have read and am agreed with</i_have_agreed_with>
+    <register_now>Register Now</register_now>
+    <register_business_now>Register Business Now</register_business_now>
+    <change_another>Change</change_another>
+    <user_name_requirement>User Name need to be 6-16 characters</user_name_requirement>
+    <password_requirement>Password need to be 6-16 characters</password_requirement>
+    <wx_scan_log_in>Scan this Qr Code from WeChat to Enter Directly</wx_scan_log_in>
+    <next_step>Next</next_step>
+    <register_business>Business Registeration</register_business>
+    <register_user>User Registeration</register_user>
+    <choose_package>Package</choose_package>
+    <send_email_again>send email</send_email_again>
+    <sent>sent</sent>
+    <barcode_redeem_desc>show qrcode to redeem</barcode_redeem_desc>
+
+    <!-- 手机-我的 -->
+    <!--<my_orders>My order</my_orders>-->
+    <!--<unpaid>Unpaid</unpaid>-->
+    <!--<paid>Paid</paid>-->
+    <!--<waiting>Waiting</waiting>-->
+    <!--<send>Send</send>-->
+    <!--<please_rate>Please Rate</please_rate>-->
+    <!--<wallet>wallet</wallet>-->
+    <!--<promotion_code>Online discount code</promotion_code>-->
+    <!--<voucher_publish>Offline coupons</voucher_publish>-->
+    <!--<deliver_address>Deliver Address</deliver_address>-->
+    <!--<fav>Collection</fav>-->
+    <!---<community>Community</community>-->
+    <my_share>Sharing</my_share>
+    <!--<help_center>Help </help_center>-->
+    <!--<shopping_cart>My Cart</shopping_cart>-->
+    <my_business>My Business</my_business>
+    <become_business>Become Business</become_business>
+    <iam_staff>I'm staff</iam_staff>
+    <!--<personal_info>Personal Info</personal_info>-->
+    <!--broadcast_setting>Live setting</broadcast_setting-->
+    <!--<log_out>Sign Out</log_out>-->
+    <!-- 手机-我的end -->
+    <!--footer of mobile-->
+    <!--<home>Home</home>-->
+    <!--<message>Message</message>-->
+    <brand>Brand</brand>
+    <!--<category>Category</category>-->
+    <!--<group_buy>Group</group_buy>-->
+    <footer_my>Me</footer_my>
+    <!--footer of mobile end-->
+
+    <!--Message-->
+    <remind_address>Please fill in the address</remind_address>
+    <remind_name>Please fill in the name</remind_name>
+    <remind_phone>Please fill in the phone</remind_phone>
+    <remind_email>Please fill in the email</remind_email>
+    <remind_pickup_address>Please choose the delivery address</remind_pickup_address>
+    <remind_payment>Please choose the Payment method</remind_payment>
+
+
+    <!--Message end-->
+
+    <!--paypal_success-->
+    <paypal_success1>Payment success</paypal_success1>
+    <paypal_success2>But we haven't received a confirmation notice from Paypal yet。</paypal_success2>
+    <paypal_success3>because of network delay, the longest time may need to wait two hours. If you have not updated the order status in two hours, please contact us as soon as
+        possible.
+    </paypal_success3>
+    <paypal_success4>Please check your mailbox or in the personal center. I view the payment two-dimensional code in my order.</paypal_success4>
+    <paypal_success5>Your order has been confirmed, but the payment status is Pending</paypal_success5>
+    <paypal_success6>If your PayPal or bank account is insufficient, pending needs 3-6 days to handle, please contact your bank and paypal as soon as possible.</paypal_success6>
+    <paypal_success7>Purchase payment success</paypal_success7>
+    <paypal_success8>Congratulations on your successful completion of the payment</paypal_success8>
+    <paypal_success9>View the order</paypal_success9>
+    <!--paypal_success end-->
+
+    <!--offline_success_mobile-->
+    <offline_success_description1>Purchase success</offline_success_description1>
+    <offline_success_description2>Order number</offline_success_description2>
+    <offline_success_description3>The way you choose to pay is Offline payment</offline_success_description3>
+    <offline_success_description4>The payment Offline requires you to transfer the money in other ways, or to pay when you pick up and user voucher at store.</offline_success_description4>
+    <offline_success_description5>The business will generally contact you after receiving the order</offline_success_description5>
+    <offline_success_description6>For more information, see the seller's offline payment instructions</offline_success_description6>
+    <offline_success_description7>Return to home page</offline_success_description7>
+    <offline_success_description8>The payment Offline requires you to transfer the money in other ways, or to pay in the face. Business will generally contact you after
+        receiving the order, more information please check the seller's offline payment instructions.
+    </offline_success_description8>
+    <!--offline_success_mobile end-->
+
+    <submission_success>The order submission is successful and the payment page is automatically entered...</submission_success>
+
+    <!--Email 模板-->
+    <discount>Discount</discount>
+    <total>Total</total>
+    <is_paid>Paid status</is_paid>
+    <pack_up>Delivery/Pick up</pack_up>
+    <pickup_nickname>Pickup_shop_name</pickup_nickname>
+    <pickup_phone>Pick up contact</pickup_phone>
+    <pickup_address>Pick up address</pickup_address>
+    <purchase_instructions>Purchase instructions</purchase_instructions>
+    <delivery_pickup_instructions>Delivery/pickup instructions</delivery_pickup_instructions>
+    <redeem_qrcode>QR code</redeem_qrcode>
+    <qrcode_explain>QR code（seller scan only)</qrcode_explain>
+    <contact_ubonus>Contact ubonus</contact_ubonus>
+    <face_to_face_payment>Offline payment</face_to_face_payment>
+    <!--Email 模板 END-->
+
+    <!--become_business_user 模板-->
+    <apply_shop>Complete the Following Information and Submit</apply_shop>
+    <company_name>Company Name</company_name>
+    <!--company_description>Company description</company_description-->
+    <submit_company>Submit</submit_company>
+    <application>Application</application>
+    <!--account_administrator>Account Administrator</account_administrator-->
+    <!--become_business_user 模板 END-->
+
+
+    <promotion_verified_failure>Verified failure.promotion code invalid or expired!</promotion_verified_failure>
+    <verified_successful>verify successful</verified_successful>
+    <email_code>Verify Code</email_code>
+    <remind_user_register_1>Note: please be careful to see if the validation mail is in your spam</remind_user_register_1>
+    <remind_user_register_2>The user name exist. Please Try another username.</remind_user_register_2>
+    <remind_user_register_3>Ordinary username can not be mailbox, please use mailbox to verify registration</remind_user_register_3>
+    <remind_user_register_4>The ordinary username is not a mobile phone number, please use the mobile phone to verify the registration</remind_user_register_4>
+    <remind_user_register_5>The username requires 6-16 strings made up of A-Z, A-Z, 0-9, and underline, but can not begin with numbers and underlines</remind_user_register_5>
+    <remind_user_register_6>Please tick Term and conditions.</remind_user_register_6>
+    <remind_user_register_7>Two input password not same</remind_user_register_7>
+    <remind_user_register_8>The password requires 6-16 strings made up of A-Z, A-Z, 0-9, and underline</remind_user_register_8>
+    <remind_user_register_9>Please click the verification window</remind_user_register_9>
+    <remind_user_register_10>Send code</remind_user_register_10>
+    <remind_user_register_11>Registered Failed</remind_user_register_11>
+    <remind_user_register_12>Registered Registered</remind_user_register_12>
+    <remind_user_register_13>Verification code error or failure</remind_user_register_13>
+    <remind_user_register_14>The phone number has been registered. If you have any problems, please contact the customer service</remind_user_register_14>
+    <remind_user_register_15>Please input email address</remind_user_register_15>
+    <remind_user_register_16>user exist,forgot password?</remind_user_register_16>
+    <remind_user_register_17>ABN format is incorrect, it should be 11 digital number.</remind_user_register_17>
+    <find_password>Find password</find_password>
+    <find_username_phone_emial_password>username/phone/email</find_username_phone_emial_password>
+    <your_verification_code>your verification code is:</your_verification_code>
+    <continue_after_input_verification_code>continue after you input verification code .</continue_after_input_verification_code>
+    <please_input_username>Please input user name</please_input_username>
+    <please_input_password>Please input password</please_input_password>
+    <username_or_password_error>Username or Password is wrong!</username_or_password_error>
+    <reset>reset</reset>
+    <!-- customer_order_redeem_qrscan -->
+    <order_founded>Order Founded</order_founded>
+    <order_not_found>Order Not Found</order_not_found>
+    <please_rescan_qr_code>Please rescan the qrcode</please_rescan_qr_code>
+    <redeem_now>Redeem Now</redeem_now>
+    <order_detail>Order Detail</order_detail>
+    <redeem_now_comfirmation>Are you sure to redeem this order Now?</redeem_now_comfirmation>
+    <back_to_home>Home Page</back_to_home>
+    <back_to_list>Back to List</back_to_list>
+    <mobile_sucess_footer1>orders->extract qr-code</mobile_sucess_footer1>
+    <mobile_sucess_footer2>Click me->my order</mobile_sucess_footer2>
+
+    <order_hint>You can check your order via email or your account on our website !</order_hint>
+
+    <homepage_pc_newproduct>newest products</homepage_pc_newproduct>
+    <home_pc_desc>most popular trading platform in Melbourne with over 300s import/wholesale/retail business online</home_pc_desc>
+    <home_pc_title>Medical masks,Hand sanitiser,Wool quilt,gifts | Ubonus Ubonus365</home_pc_title>
+    <home_pc_newest>Newest</home_pc_newest>
+    <home_pc_quicksale>Quick sale</home_pc_quicksale>
+    <home_pc_quicksale_desc>Lowest price quick sale</home_pc_quicksale_desc>
+    <home_pc_Mall>Mall</home_pc_Mall>
+    <ubonus_recommend_desc>Recommend Brand</ubonus_recommend_desc>
+
+
+    <!-- Genernal -->
+    <time>Time</time>
+    <day>days</day>
+    <hour>hours</hour>
+    <minute>minutes</minute>
+    <second>seconds</second>
+    <before>before</before>
+    <after>after</after>
+    <click>Click</click>
+
+
+    <!-- banking card or creditcard-->
+    <card_title>Bankcard/creditcard</card_title>
+    <card_desc1>System will keep the card info for next shopping.</card_desc1>
+    <card_desc2>no card record at the moment.</card_desc2>
+
+    <update_success>Success!</update_success>
+    <update_failure>Falied!</update_failure>
+    <old_password_incorrect>Old password is incorrect</old_password_incorrect>
+
+    <wrong_email>Invalid Email</wrong_email>
+
+    <input_company_name>please input business/company name.</input_company_name>
+    <only_10_digital_phone>Wrong mobile number (10 digitals)</only_10_digital_phone>
+
+    <all_products>All items</all_products>
+    <!-- 商品购买状态  -->
+    <c01>Bought</c01>
+    <b01>Traded</b01>
+    <d01>Cancelled</d01>
+
+    <input_message>please leave you messages here ...</input_message>
+
+    <submit_success>submit success！</submit_success>
+    <submit_error>submit error！</submit_error>
+
+    <!-- verfy phone -->
+    <verify_code_sent>verification code sent，Please input the code..</verify_code_sent>
+    <verify_hint1>verify mobile</verify_hint1>
+    <verify_hint2>network problems ,please try later</verify_hint2>
+    <verify_hint3>verified</verify_hint3>
+
+    <mobile_phone_number>mobile number</mobile_phone_number>
+    <mobile_number_not_exist>Mobile number does not exist</mobile_number_not_exist>
+    <business_name>business name</business_name>
+    <business_address>Business name</business_address>
+    <input_mobile_number>Please input mobile number</input_mobile_number>
+    <input_verify_code>Please input verify code</input_verify_code>
+    <input_post_code>Please input post code</input_post_code>
+    <mobile_verification_daley>May delay message sent during busy time</mobile_verification_daley>
+    <your_verification_code>Your verification code is:</your_verification_code>
+    <mobile_sent_code_desc>Welcome to Ubonus，the last step for registration，Please input the verification code :</mobile_sent_code_desc>
+
+    <welcome_to_ubonus>Welcome to Ubonus</welcome_to_ubonus>
+    <thanks_for_choose_ubonus>Thank you for choose Ubonus</thanks_for_choose_ubonus>
+
+
+    <!--100  wallet -->
+    <start_time>Start Time</start_time>
+    <end_time>End Time</end_time>
+    <export>Export</export>
+    <wallet_filter1>All</wallet_filter1>
+    <wallet_filter2>Business Transcation</wallet_filter2>
+    <wallet_filter3>User Transactions</wallet_filter3>
+
+    <!--101  buy limited -->
+    <buy_limit_desc1>item(</buy_limit_desc1>
+    <buy_limit_desc2>)buy quantities</buy_limit_desc2>
+    <buy_limit_desc3>units,exceeds the max limit of</buy_limit_desc3>
+    <buy_limit_desc4>units;</buy_limit_desc4>
+    <buy_limit_desc5>units,less than minimun limit of</buy_limit_desc5>
+    <buy_limit_desc6>，you can buy now</buy_limit_desc6>
+
+    <!--101  email -->
+
+    <email_exist_1>Email exist, Please user another email and sumbit.</email_exist_1>
+    <email_order_confirmed>Order Confirmation</email_order_confirmed>
+    <email_order_cancelled>User cancelled order</email_order_cancelled>
+    <email_new_register>New User registration</email_new_register>
+    <email_business_send_item>Business shipping item</email_business_send_item>
+    <email_payments_notice>Payments settlement</email_payments_notice>
+    <email_subscriptions>Subscriptions</email_subscriptions>
+    <email_subscriptions_1>User Purchase items</email_subscriptions_1>
+    <email_business_qr_code>QR code(seller scan only)</email_business_qr_code>
+    <email_free_no_need_pay>This item is not need pay ,it is free</email_free_no_need_pay>
+    <email_your_message>Your message</email_your_message>
+    <email_return_instruction>Return instructions</email_return_instruction>
+    <email_customer_message>Customer message</email_customer_message>
+    <email_customer>Customer</email_customer>
+
+    <email_user_notice_no_reply>Ubonus notice -no need replying</email_user_notice_no_reply>
+    <email_user_notice_1>For receiving Ubonus email without block ,please</email_user_notice_1>
+    <email_user_notice_2>set to your email book</email_user_notice_2>
+
+    <email_dear>Dear</email_dear>
+    <email_welcome></email_welcome>
+    <email_order_received>We have received your order ,your order is</email_order_received>
+    <email_order_cancellation>your order has been cancelled ,if you have any problems ,please contact Ubonus</email_order_cancellation>
+    <email_welcome_business>Dear Business</email_welcome_business>
+    <email_order_cancellation1>Customer order has been cancelled,if you have any problems ,please contact Ubonus</email_order_cancellation1>
+    <email_order_shipping>Your items is now shipping(Order ID ：</email_order_shipping>
+    <email_order_shipping_id>tracking number check</email_order_shipping_id>
+    <email_order_infor_update>Order information and you can update by click</email_order_infor_update>
+    <email_order_info>Order information</email_order_info>
+    <email_payment_info>Payment Info</email_payment_info>
+    <email_check_more_order>More orders</email_check_more_order>
+    <not_support_return>cancel not allowed</not_support_return>
+    <cancel_order>cancel</cancel_order>
+    <email_notice_001>The seller received your order ,when seller shipping or redeem , the order will be traded .</email_notice_001>
+    <email_notice_002>If this order include muti items, and if seller only shipping part of items , the order still traded,the seller will contact buyer discuss about the
+        unshipping items
+    </email_notice_002>
+    <email_notice_003>You can login on Ubonus,and check your orders.</email_notice_003>
+
+    <email_notice_004>Account information notice</email_notice_004>
+    <email_notice_005>For making sure the shipping items will be shipped ,please</email_notice_005>
+    <email_notice_006>Fill in correct address and phone number.</email_notice_006>
+
+    <email_notice_007>The reason you received the email is you had registered to become Ubonus customer before.</email_notice_007>
+    <email_notice_008>This email is automatical sending email, please do not reply.</email_notice_008>
+    <email_notice_009>If you are not want to receive the email ,please click</email_notice_009>
+    <email_notice_010>to cancel subscription.</email_notice_010>
+    <email_notice_011>Ubonus message -Please do not reply.</email_notice_011>
+    <email_notice_012>Congratulations, you are successful to become Ubonus customer by Wechat account .your wechat account has pinding this email.</email_notice_012>
+    <email_notice_013>Ubonus registration email verification code - please do not reply.</email_notice_013>
+    <email_notice_014>you need input the verification code to finalize Ubonus registration via email</email_notice_014>
+    <email_notice_015>your email registration verification code is</email_notice_015>
+    <email_notice_016>you can update you profile via your account on Ubonus, please contact Ubonus is you need help.</email_notice_016>
+    <delivery_fee_combine_free>Combine items,free delivery</delivery_fee_combine_free>
+    <update>Update</update>
+    <max_quantity>Max quantity limit:</max_quantity>
+    <start_shopping>Start Shopping</start_shopping>
+
+    <can_not_add_more>can not add more items.</can_not_add_more>
+    <confirm_clear_cart>There are still products in your shopping cart. Changing the delivery time will empty the shopping cart. Do you want to continue?</confirm_clear_cart>
+    <!-- restaurant-->
+    <any_time>Any time</any_time>
+    <morning>Morning</morning>
+    <afternoon>Afternoon</afternoon>
+
+    <logistic_management_panel>Logistic  Management</logistic_management_panel>
+
+    <logistic_arrive_time>logistic Arrive Time</logistic_arrive_time>
+    <logistic_schedule_time1>Logistic Schedule time</logistic_schedule_time1>
+	
+	<logistic_management>Logistic panel</logistic_management>
+	<logistic_choosedate1>Choose Delivery Date</logistic_choosedate1>
+	<choose_business1>Choose Business</choose_business1>
+	
+	<logistic_choosedate>Select</logistic_choosedate>
+	<logistic_more_shop>More</logistic_more_shop>
+	<logistic_selected>(Selected)</logistic_selected>
+    <logistic_selectable>Optional</logistic_selectable>
+	<unified_delivery>Delivery</unified_delivery>
+	<logistic_choosetruck>choose Truck</logistic_choosetruck>
+	<logistic_checkarea>Check Post Code</logistic_checkarea>
+	<logisitic_customer_buy>customer buy</logisitic_customer_buy>
+	<logisitic_shipped>shipped</logisitic_shipped>
+	<logisitic_cancelled>cancelld</logisitic_cancelled>
+	<logisitic_searchbox>orderid/phone/name/productname</logisitic_searchbox>
+	<logistic_delivery_date>Delivery</logistic_delivery_date>
+	<logistic_schedule_time>Schedule Time</logistic_schedule_time>
+	<logistic_truck_no>Truck No</logistic_truck_no>
+	<logistic_sequenceNo>Sequence No</logistic_sequenceNo>
+	
+	<logistic_delivery_or_pickup>choose DeliveryOrpickup</logistic_delivery_or_pickup>
+	<logistic_delivery_busi>Delivery</logistic_delivery_busi>
+	<logistic_delivery_pickup>pickup</logistic_delivery_pickup>
+	<ordersReport>Sales Report</ordersReport>
+	<logistic_packing_slip>Packing Label</logistic_packing_slip>
+	<logistic_export_order_details>Export XLS Orders</logistic_export_order_details>
+	<logistic_export_Prepare_stock_summery>Export Summary Lists</logistic_export_Prepare_stock_summery>
+	<order_status> OrderStatus</order_status>
+	<order_payment_method> Payment Gateway</order_payment_method>
+	<business_department> sub stores</business_department>
+	<ifpaid>Paid/unpaid</ifpaid>
+	<follow_deliver_intr>Follow Delivery Instructions</follow_deliver_intr>
+	
+	<logistic_schedule_time1>Logistic Schedule time</logistic_schedule_time1>
+	<export_driver_excel>Export Driver Excel</export_driver_excel>
+	<logistic_arrive_time>logistic Arrive Time</logistic_arrive_time>
+	<logistic_route_management>Route Plan</logistic_route_management>
+	<logistic_management_panel>Logistic Centre Panel </logistic_management_panel>
+	<message_management>Delivery Message send </message_management>
+
+
+    <waiting_for_approve>Your order has been saved and waiting for factory to approve</waiting_for_approve>
+</language>

@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Waiting...</title>
+
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
+<style type="text/css">
+	body{
+		background: rgb(241,196,15);
+	}
+	h1{
+		font-family: 'Indie Flower', cursive;
+		text-align: center;
+		position: relative;
+		top: 200px;
+		font-weight: lighter;
+	}
+	div{
+		position: relative;
+		text-align: center;
+		top: 200px;
+	}
+
+	#player{
+		position: absolute;
+		left:-200px; top:450px;
+		-webkit-animation-name: fly; /* Safari 4.0 - 8.0 */
+	    -webkit-animation-duration: 3s; /* Safari 4.0 - 8.0 */
+	    -webkit-animation-timing-function: linear;
+	    animation-name: fly;
+	    animation-duration: 3s;
+	    animation-timing-function: linear;
+	}
+
+	/* Safari 4.0 - 8.0 */
+	@-webkit-keyframes fly {
+	    0%   { left:-200px; top:450px;}
+	    50%  { left:200px; top:450px;}
+	    100% { left:2000px; top:450px;}
+	}
+
+	/* Standard syntax */
+	@keyframes fly {
+        0%   { left:-200px; top:450px;}
+	    50%  { left:200px; top:450px;}
+	    100% { left:2000px; top:450px;}
+	}
+
+</style>
+
+</head>
+<body onLoad="window.location.href='<{$action}>'">
+
+<img id='player' src="<{$SKIN_PATH}>/images/ad.jpg">
+
+<h1>You will be redirected to the RoyalPay website in a few seconds...</h1>
+	<div>if you did not redriect, <a href="<{$action}>">click here</a></div>
+		
+
+</body>
+</html>

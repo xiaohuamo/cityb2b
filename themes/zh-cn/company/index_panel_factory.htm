@@ -1,0 +1,64 @@
+				<div class='index_panel'>
+							<div class='panel_item'style="height:auto;">
+									<div class='panel_item_top'>
+										<div class='panel_icon'><i class="fa fa-share fa-4x" ></i></div>
+										<h1><{$lang->publish_center}></h1>
+										<p><{$lang->publish_information}></p>
+									</div>
+									
+									
+								<div class='panel_item_sub' >
+								
+								<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}> class='panel_sub_item'>
+									<{$lang->shop_card}>	</a>
+								
+								<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='category_edit'}> class="current"<{/if}>  class='panel_sub_item'>
+									<{$lang->category_management}>
+								</a>
+												
+							
+								<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1" class='panel_sub_item' <{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+								<{$lang->items_management}>
+								</a>
+								
+								<a href="<{$http_root_www}>company/coupons?coupon_type=7"   <{if $local=='restaurant_menu_edit'}> class="current"<{/if}> class='panel_sub_item'>
+								<{$lang->package_sale}></a>
+									
+								<a href="<{$http_root_www}>company/coupons?coupon_type=18" class='panel_sub_item' <{if $submenu=='daijinquan'}> class="current"<{/if}>>
+									<{$lang->cash_gift_voucher}>
+								</a>			
+								</div>
+								
+							<div class='panel_item_sub' >
+								
+								<a href="<{$http_root_www}>company/coupons?coupon_type=4" class='panel_sub_item' <{if $submenu=='offline_voucher'}> class="current"<{/if}>>
+									<{$lang->offline_voucher_summery}>
+								</a>
+								<a href="<{$http_root_www}>company/promotion_code_manage" class='panel_sub_item' <{if $submenu=='promotion_code_manage'}> class="current"<{/if}>>
+									<{$lang->pormotion_code}>
+								</a>		
+									
+								<a href="<{$http_root_www}>restaurant/<{$loginUser.id}>"<{if $submenu=='1234'}> class=" current"<{/if}>  class='panel_sub_item'><{$lang->preview_store}></a>
+								
+								<a href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$loginUser.id}>&freshfood=1" class='panel_sub_item' <{if $submenu=='1234'}> class="current"<{/if}>>
+									<{$lang->refresh_store}>
+								</a>		
+									
+								<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='1234'}> class=" current"<{/if}>  class='panel_sub_item'><{$lang->preview_store}></a>
+								
+								
+								
+								</div>
+								
+							</div>
+							
+							
+						<{include file='company/index_panel_section_customer_centre.htm'}>
+						<{include file='company/index_panel_section_money_account.htm'}>
+						<{include file='company/index_panel_basic_setting.htm'}>
+						<{include file='company/index_panel_section_advanced_setting.htm'}>		
+						<{include file='company/index_panel_business_store.htm'}>		
+						<{include file='company/index_panel_online_promotion.htm'}>			
+						<{include file='company/index_panel_tools.htm'}>			
+						
+						</div>

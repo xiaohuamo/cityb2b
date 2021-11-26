@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+  <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	 <link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+	
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+ <script type="text/javascript">
+        //special checkout action; 
+        $(function(){
+           $('.go-back-btn').on('click',function(){
+                window.history.back();
+                
+            });
+			
+		
+			
+        })
+    </script>
+
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+<header id="hd" >
+	<div class="left">
+		<a  class="a-back go-back-btn"></a>
+	</div>
+	<h1>店铺产品分类-Ubonus美食生活</h1>
+
+	<div class="right">
+		<!-- <sapn style='line-height: 1.5rem' class='resend_btn' ><{$lang->send_email_again}></span>	-->
+	<!-- <span class='search-icon' style="margin-right: 10px;line-height: 1.5rem;"><img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;padding-right: 5px;'>  </span> -->
+	       <span class='search-icon' style="margin-right: 10px;">
+
+         
+
+      </span>
+
+
+
+	 
+
+	</div>
+
+	
+</header>
+<div class="container" style='margin-top: -17px;'>
+	<div class="wrap clearfix" style="   width: 100%;>
+		
+		<div class="main" >
+			<div class="box2">
+			<{include file='company/side_business_option_menu.htm'}>
+				<div class="main-form" style="padding: 2px;">				
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/referral_product_program" method="get">
+					
+				
+					
+					<div class="main-list">
+						<{if $data}>
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+									<tr>
+										
+										<!--<th style="    background: #fdda8b;"><{$lang->title}></th> -->
+										<th style="    background: #fdda8b;">置顶</th>
+										<th style="    background: #fdda8b;">商家</th>
+										<th style="    background: #fdda8b;"><{$lang->price}></th>
+										<th style="    background: #fdda8b;">删除</th>
+										<th style="    background: #fdda8b;">分类</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+							  <{foreach from=$data item=item name='dl'}>
+
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										<td  ></td>
+										<td  colspan="4">
+										<a target='_blank' href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a
+										
+										</td>
+										
+										</tr>
+										
+										<tr<{if $smarty.foreach.dl.index%3==0}> class="odd"<{/if}>>
+
+											
+										<td>
+												<input class='promote' type="checkbox" data-id="<{$item.id}>" <{if $item.promote==1}>checked<{/if}> >
+												
+												<span class='promote-ajax'></span>
+											</td>
+
+											<td>
+												<{$item.businessName}>
+											</td>
+
+											<td>
+												$<{$item.voucher_deal_amount}>
+								  				
+								  				
+							  				</td>
+
+							  		
+
+											<td>
+												<a href="<{$http_root_www}>company/referral_product_program?delete=<{$item.id}>">
+													<i class='fa fa-close fa-lg' style="color:#f30"></i>
+												</a>
+											</td>
+
+											<td>
+												<a href="<{$http_root_www}>company/referral_product_category?productId=<{$item.id}>">
+													<i class='fa fa-edit fa-lg' style="color:#f30"></i>
+												</a>
+											</td>
+
+											
+
+										</tr>
+									<{/foreach}>
+								</tbody>
+							</table>
+
+						<{else}>
+							<{$lang->no_data}>
+						<{/if}>
+					</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file="mobile/mobile_share_footer.htm"}>
+
+<script type="text/javascript">
+	$(function(){
+		var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+		$('.promote').on('click',function(){
+			var ajax_result = $(this).next('.promote-ajax');
+
+			if($(this).is(':checked')){
+				var promote = 1;
+			}else{
+				var promote = 0;
+			}
+
+			var id = $(this).data('id');
+
+			console.log(promote);
+
+				$.ajax({
+				  method: "POST",
+				  type:'post',
+				  url: "<{$http_root_www}>company/mark_promotion_item",
+				  data: { id:id ,promote:promote},
+				  beforeSend:function(){
+				  	$(ajax_result).html(iconLoading);
+				  }
+				})
+				  .done(function( msg ) {
+				   $(ajax_result).html(successIcon);
+				  })
+				  .fail(function(msg){
+				  	$(ajax_result).html(errorIcon);
+				  });
+		})
+	})
+</script>
+
+</body>
+</html>

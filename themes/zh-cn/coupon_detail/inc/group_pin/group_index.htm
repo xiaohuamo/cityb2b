@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Ubonus美食生活 - 拼单</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css"/>
+    <style type="text/css">
+        .crumbs-nav {
+            height: 21px;
+            font-size: 14px;
+            line-height: 20px;
+            padding-top: 17px;
+            margin-bottom: 8px;
+        }
+        .crumbs-arrow {
+            float: left;
+            margin-right: 8px;
+            font-family: SimSun;
+            font-style: normal;
+        }
+        .crumbs-nav .items {
+            float: left;
+            margin: 0 8px 5px 0;
+        }
+        .crumbs-nav .first-all {
+            font-size: 16px;
+        }
+        .crumbs-nav .first-all a {
+            color: #000;
+        }
+        .crumbs-nav .first-all a:hover {
+            color: #3bb4c7;
+        }
+        .crumbs-items {
+            position: relative;
+            display: block;
+            border: 1px solid #ddd;
+            line-height: 19px;
+            font-size: 12px;
+            padding: 0 23px 0 3px;
+        }
+        .crumbs-items b {
+            font-weight: normal;
+            margin-right: 3px;
+            color: #666;
+        }
+        .crumbs-items em {
+            color: #3bb4c7;
+        }
+        .crumbs-items i {
+            display: block;
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            right: 0;
+            top: 0;
+            background: url(../images/crumbs-close.png) no-repeat center center;
+        }
+
+        .crumbs-items:hover {
+            border-color: #3bb4c7;
+        }
+        .crumbs-items:hover i {
+            background-color: #3bb4c7;
+            background-image: url(../images/crumbs-close-h.png);
+        }
+        .search-key {
+            font-size: 12px;
+            font-weight: normal;
+        }
+        .crumbs-nav .btn-undo {
+            float: right;
+        }
+        .crumbs-nav .btn-undo .btn {
+            display: block;
+            color: #000;
+            border: 1px solid #ddd;
+            padding: 0 5px;
+            font-size: 12px;
+        }
+        .crumbs-nav .btn-undo .btn:hover {
+            border-color: #3bb4c7;
+        }
+
+
+        .ul-value-sl {
+            height: 50px;
+            width: 80%;
+            padding-left: 60px
+        }
+        .ul-value-sl li {
+            float: left;
+        }
+        .ul-value-sl a {
+            display: block;
+            margin: 0 15px;
+        }
+        .ul-value-sl a:hover {
+            color: #3bb4c7;
+        }
+
+    </style>
+</head>
+<body>
+   <!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+   <div class="head-con">
+        <div class="wp">
+            <div class="logo">
+                <a href="<{$http_root_www}>">
+                    <img src="<{$SKIN_PATH}>images/pc-main/logo.jpg"  style="    width: 208px;    height: 141px;">
+                </a>
+            </div>
+            <div class="head-center" style="">
+                <div class="search">
+                    <div class="form">
+                        <div ><!-- <form action=""> -->
+                            <div class="inner">
+                                <input type="text" class="inp" id='search-input' autocomplete="off">
+                                <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                            </div>
+                            <div class="search-list">
+                                <ul class="ul-search TAB" id="search-hint">
+                                    <!-- <li class="on"><a href="">手机壳</a></li>
+                                    <li><a href="">手机支架</a></li> -->
+                                </ul>
+                                <!-- 
+                                <div class="list-box">
+                                    <dl>
+                                        <dt>手机壳</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hot">
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery_show"><{$lang->lottery}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E6%BC%94%E5%94%B1%E4%BC%9A"><{$lang->concert}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%AE%B1%E5%8C%85"><{$lang->luggage}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%94%9F%E9%B2%9C"><{$lang->fresh_food}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E4%BA%B2%E5%AD%90"><{$lang->family}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%BE%8A%E6%AF%9B%E8%A2%AB"><{$lang->wool_quilt}></a>
+                    </div>
+                </div>
+
+                <{include file='index_inc_title.htm'}>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- 头部 end -->
+
+    <!-- 主体  -->
+    <div class="main" style="background-color:#f1f1f1;">
+        <div class="wp">
+
+            <div class="crumbs-nav">
+                <div class="items btn-undo">
+                    <a class="btn" href="<{$http_root_www}>group_pin/index">全部撤销</a>
+                </div>
+
+                <div class="items first-all">
+                    <a href="<{$http_root_www}>group_pin/index"><{$lang->repeal_all}></a>
+                </div>
+
+                <{foreach from=$parents item=item}>
+                     <i class="crumbs-arrow">></i>
+                    <div class="items">
+                        <a class="crumbs-items" href="<{$catUrl}>alias=<{$category.alias}>"><b>分类:</b><em><{$item.name}></em><i></i></a>
+                    </div>
+                <{/foreach}>
+               
+              <{if $searchKeywords}>
+
+                <i class="crumbs-arrow">></i>
+                <div class="items">
+                    <strong class="search-key">"<{$searchKeywords}>"</strong>
+                </div>
+                <{/if}>
+
+            </div>
+
+            
+
+            <div style="line-height: 50px">
+                <span style="float: left;">分类筛选：</span>
+                 
+                 <ul class="ul-value-sl">
+                    <li>
+                         <a href="<{$catUrl}>" class="on"><{$lang->repeal_all}><{$category.name}></a>
+                    </li>
+                   
+                    <{foreach from=$childs item=item}>
+                    <li>
+                        <a href="<{$catUrl}>alias=<{$item.alias}>"<{if $item.id==$category.id}> class="on"<{/if}>><{$item.name}></a>
+                    </li>
+                    <{/foreach}>
+                </ul>
+            </div>
+
+            <!--  <div class="m-tab" style="display: inline;float: right;">
+                <ul>
+                    <li>
+                        <a href="<{$group_pin_url}>" class="a2 <{if $type=='group_pin'}>on<{/if}>">拼单</a>
+                    </li>
+
+                                  </ul>
+            </div>           -->
+            
+            
+            
+            <ul class="ul-group2" style="clear: both;">
+
+                <{foreach from=$group_pin_list item=item}>
+                    <li>
+                        <div class="inner">
+                            <div class="pic-box">
+                                <div class="pic">
+                                    <a href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin">
+                                     <img src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="<{$item.title}>" />
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <!-- <div class="time">
+                                        倒计时<span class="time-c1" endDate="2017/9/24 00:00"></span>
+                                    </div> -->
+                                    <p>进行中...</p>
+                                </div>
+                                <em class="g-open">拼单</em>
+                            </div>
+                            <div class="txt-box">
+                                <h4><a href="<{$http_root_www}>coupon/<{$item.coupon_id}>?specialDisplay=group_pin"><{$item.title}></a></h4>
+                                <div class="desc">
+                                    <!-- <span>人数5/10</span> -->
+                                    <div class="price">
+                                        <strong>
+
+                                        <{if $item.reward_type=='percent'}>
+                                            $<{($item.voucher_deal_amount*(100-$item.reward_value)/100)|string_format:"%.2f"}>
+                                        <{elseif $item.reward_type=='flat'}>
+                                            $<{$item.voucher_deal_amount-$item.reward_value}>
+                                        <{/if}>
+                                    
+                                        </strong>
+
+                                         <em>$<{<{$item.voucher_original_amount}>}></em>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <{/foreach}>
+
+
+                <{foreach from=$group1_buy_list item=item}>
+
+
+
+                    <li>
+                        <div class="inner">
+                            <div class="pic-box">
+                                <div class="pic">
+                                     <a href=''>
+                                        <img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="">
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <!-- <div class="time">
+                                        倒计时<span class="time-c1" endDate="2017/9/24 00:00"></span>
+                                    </div> -->
+                                    <{if $item.status==0}>
+                                    <!-- group_ready -->
+                                    <p >筹备中</p>
+                                    <{elseif $item.status==1}>
+                                    <!-- group_running -->
+                                    <p >进行中</p>
+                                    <{elseif $item.status==2}>
+                                    <!-- group_close -->
+                                    <p >临时中止</p>
+                                    <{elseif $item.status==3}>
+                                    <!-- group_staging -->
+                                    <p >阶段奖励达成</p>
+                                    <{elseif $item.status==4}>
+                                    <!-- group_finalizing -->
+                                    <p >最终奖励达成</p>
+                                    <{elseif $item.status==5}>
+                                    <!-- group_complete -->
+                                    <p >已完成</p>
+                                    <{else}>
+                                    <!-- group_error -->
+                                    <p >出错了</p>
+                                    <{/if}>
+
+                                </div>
+
+                                 <{if $item.allow_user_group==1}>
+                                     <em class="g-open">凑团</em>
+                                <{else}>
+                                     <em class="g-open"><{$item.size}>人凑团</em>
+                                <{/if}>
+
+                            </div>
+                            <div class="txt-box">
+                                <h4><a href='<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>'><{$item.name}></a></h4>
+                                <div class="desc">
+                                    <!-- <span>人数5/10</span> -->
+                                    <!-- <div class="price">
+                                        <strong>
+
+                                        <{if $item.reward_type=='percent'}>
+                                            $<{($item.voucher_deal_amount*(100-$item.reward_value)/100)|string_format:"%.2f"}>
+                                        <{elseif $item.reward_type=='flat'}>
+                                            $<{$item.voucher_deal_amount-$item.reward_value}>
+                                        <{/if}>
+                                    
+                                        </strong>
+
+                                         <em>$<{<{$item.voucher_deal_amount}>}></em>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <{/foreach}>
+
+                
+            </ul>
+        </div>
+    </div>
+    <!-- 主体 end -->
+    <!-- 底部 -->
+    <div class="footer">
+        <ul class="fd-service">
+            <li>
+                <span><i class="ico ico1"></i>品类齐全 轻松购物</span>
+            </li>
+            <li>
+                <span><i class="ico ico2"></i>多仓直发 极速配送</span>
+            </li>
+            <li>
+                <span><i class="ico ico3"></i>正品行货 精致服务</span>
+            </li>
+            <li>
+                <span><i class="ico ico4"></i>天天低价 畅选无忧</span>
+            </li>
+        </ul>
+        <div class="fd-nav">
+            <a target="_blank" href="">关于我们</a> 
+            <a target="_blank" href="<{$http_root_www}>business/intro">商家入驻</a> 
+            <a target="_blank" href="<{$http_root_www}>business/logowall">合作伙伴</a> 
+            <a target="_blank" href="<{$http_root_www}>company/help?id=91">联系我们</a>
+        </div>
+    </div>
+    <!-- 底部 end -->
+    
+    <div class="m-toolbar">
+        <ul class="ul-toolbar">
+            <li>
+                <div class="inner">
+                    <i class="i1"></i>
+                    <p>我的团购</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i2"></i>
+                    <p>我的关注</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i3"></i>
+                    <p>我的优惠券</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i4"></i>
+                    <p>我的足迹</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i5"></i>
+                    <p>我的JIMI</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i6"></i>
+                    <p>联系卖家</p>
+                </div>
+            </li>
+            <li class="car">
+                <div class="inner">
+                    <i class="i7"></i>
+                    <span>购物车</span>
+                    <em>0</em>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i8"></i>
+                    <div class="qr-box">
+                        <img src="images/eq.png" alt="" />
+                        <em>微信扫码享优惠</em>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i9"></i>
+                    <p>加关注</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>coupon_detail/inc/group_pin/js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>coupon_detail/inc/group_pin/js/lib.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+
+    <script>
+        // 倒计时
+        $('.time-c1').each(function() {
+            $(this).countDown();
+        });
+        $('.time-c2').each(function() {
+            $(this).countDown();
+        });
+    </script>
+</body>
+</html>

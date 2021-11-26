@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+<{include file='header.htm'}>
+<div class="container">
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				<div class="main-form">
+
+					<div class="colCurTit">创建新投票
+						<span class="links">
+							<a class='btn-yellow' href="<{$http_root_www}>voting/voting_manage"><i class="fa fa-mail-reply"></i>返回投票管理</a>
+						</span>
+					</div>
+
+					<form id="memberForm" class ='form-style-green' action="<{$http_root_www}>voting/voting_update?id=<{$voting_id}>" method="post" target="post_frame">
+						<div class="input-box clearfix">	
+							<span><label>标题</label></span>	
+							<input type="text" name="title" class="input-text" value="<{$voting_title}>" placeholder='请在这里输入标题' required/>
+						</div>
+						<div class="input-box clearfix">	
+							<span><label>简介</label></span>		
+							<textarea  name="description"  rows="4" cols="50"  placeholder='简介将显示在投票页面的最顶端' required/><{$voting_description}></textarea>
+						</div>
+
+						
+						<div class="input-box input-submit clearfix">
+							<button type="submit" style='float:right'>更新描述</button>
+						</div>
+
+					</form>
+
+					<div class="colCurTit">
+						投票项
+						<span class="links " > 
+							<a class='btn-yellow' href="<{$http_root_www}>voting/item_create?id=<{$voting_id}>"><i class="fa fa-plus"></i>添加</a>
+						</span>
+					</div>
+					
+
+
+
+					<table style='width:100%'>
+						<thead style='width:100%;background:#00A1E9;color:white'>
+							<th>标题</th>
+							<th>排序</th>
+							<th>图片</th>
+							<th>当前票数</th>
+							<!-- <th>状态</th> -->
+							<th>编辑</th>
+							<th>删除</th>
+						</thead>
+						<tbody>
+							<{foreach from=$item_list item=item}>
+								<tr>
+									<td><{$item.title}></td>
+									<td><{$item.sort_id}></td>	
+									<td><img src="<{$UPLOAD_PATH}><{$item.pic|image:132:84}>" style="margin:10px;"></td>
+									<td><{$item.vote_count}></td>
+									<!-- <td><{$item.status}></td> -->
+									<td><a href="<{$http_root_www}>voting/item_create?id=<{$voting_id}>&item_id=<{$item.id}>" target="_blank">编辑</a></td>
+									<td><a href="<{$http_root_www}>voting/item_delete?id=<{$item.id}>">删除</a></td>
+								</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+					
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

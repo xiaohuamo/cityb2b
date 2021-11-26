@@ -1,0 +1,37 @@
+<div class='index_panel'>
+							
+
+
+							<{if $langStr=='zh-cn'}>
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-edit fa-4x'></i></div>
+									<h1><{$lang->business_store}></h1>
+									<p><{$lang->business_store_description}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<!-- <a href="<{$http_root_www}>index.php?ctl=template&act=template_edit" target='_blank'class='panel_sub_item'>店铺编辑</a> -->
+									<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' class='panel_sub_item'><{$lang->preview_store}></a>
+								</div>
+							</div>
+
+							
+
+						  <div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-share-alt-square fa-4x'></i></div>
+									<h1>推广套餐</h1>
+									<p><{$lang->online_promotion}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/ubonus_package" class='panel_sub_item'>推广套餐</a>
+								
+								</div>
+							</div>
+							<{/if}>
+
+
+							
+
+						
+						</div>

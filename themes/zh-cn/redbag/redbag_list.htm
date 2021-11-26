@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>$1000澳元红包免费送,百家餐厅,数百套餐尽在Ubonus澳洲美食平台，</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/reset.css">
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/style.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>images/redbag/js/jquery.js"></script>
+<script type="text/javascript">
+    new function (){
+       var _self = this;
+       _self.width = 640;//设置默认最大宽度
+       _self.fontSize = 100;//默认字体大小
+       _self.widthProportion = function(){var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;return p>1?1:p<0.32?0.32:p;};
+       _self.changePage = function(){
+           document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+       }
+       _self.changePage(); 
+       window.addEventListener('resize',function(){_self.changePage();},false);
+    };
+	
+	
+	function redirect_to_redbag () {
+
+window.location.href = '<{$http_root_www}>redbag/redbag';
+
+}
+	function redirect_to_wallet () {
+
+window.location.href = '<{$http_root_www}>member/recharge';
+
+}
+	function redirect_to_send_redbag () {
+
+window.location.href = '<{$http_root_www}>redbag/redbag_show?resend=1&bag_id=<{$redbag_id}>';
+
+}
+
+
+
+
+	</script>
+</head>
+<body>
+
+<div  style="display:none;">
+
+<img  style= " width:300px; height:300px; " src="<{$SKIN_PATH}>images/redbag/images/bg3.jpg">
+
+</div> 
+<div class="cont2">
+  <div class="open">
+    <div class="open_img"> <img src="<{$SKIN_PATH}>images/redbag/images/icon2.png"> </div>
+    <p><{if $message}><{$message}><{else}>恭<{$message}>喜！您抢到了装有$<{$data1.amount}>的红包哦！<{/if}></p>
+  </div>
+  <div class="hblb">
+    <div class="hblb_title"> <{if $redbag_id ==148}>
+	   Ubonus2018新年红包,每天可以开启一次,有效期从2018年2月1日-2月18日!
+
+    <{/if}> 共有<{$redbag_count}>个红包 </div>
+	
+    <div class="hblb_lb">
+      <ul>	
+	  
+	  <{foreach from=$data item=item name='dl'}>	
+	  
+        <li>
+          <div class="lb_img"><img src="<{if $item.avatar}><{$UPLOAD_PATH}><{$item.avatar}><{else}><{$SKIN_PATH}>images/ubonus-avatar.jpg<{/if}>"></div>
+          <div class="lb_text"><h2><{$item.userName}></h2><p><{date('m-d H:i:s', $item.createtime)}></p></div>
+          <div class="lb_rmb">$<{$item.amount}></div>
+        </li>
+		
+		<{/foreach}>
+		
+      </ul>
+    </div>
+  </div>
+
+  <{if $coupon}>
+  <div class="llsp">
+  	<div class="llsp_title">
+		红包可以购买任何美食套餐
+	</div>
+	
+	<div class="llsp_nr">
+		<div class="llsp_tp"  >
+			<a href="<{$http_root_www}>coupon1/<{$coupon.id}>">
+				<img src="<{$UPLOAD_PATH}><{$coupon.pic|image:590:375:cut}>"  />
+			</a>
+		</div>
+		
+		<div class="spmc">
+			<a href="<{$http_root_www}>coupon1/<{$coupon.id}>">
+			<h2><{$coupon.title}></h2>
+			<p><{$coupon.coupon_summery_description}></p>
+			</a>
+		</div>
+		<div class="jgl">
+			<h3><{$coupon.price1}></h3>
+			<p><{$coupon.price2}></p>
+			<span><img src="<{$SKIN_PATH}>images/redbag/images/icon4.png"><{$coupon.hits}></span>
+		</div>
+	</div>
+  </div>
+  <{/if}>
+
+   <div class="llsp">
+  	<div class="llsp_title">
+		您的手气真好！现在可以用红包购买美食啦!!
+	</div>
+	<div class="llsp_nr" style="height:4.46rem;"00>
+		<div class="llsp_tp" style="height:3.65rem;"  >
+		
+		<a href="<{$http_root_www}>food">
+			<img src="<{$UPLOAD_PATH}>thumbnails/2018-06/20180627121949208599_660x420_fill.jpg"  />
+		</a>
+		
+	 
+			<!--<a href="<{$http_root_www}>coupon1/<{$coupon.id}>" class="sp">商品</a> -->
+		</div>
+		
+	
+		
+		<div class="spmc">
+			<a href="<{$http_root_www}>food">
+			<h2>Ubonus澳洲美食 墨尔本百家餐厅美食套餐任您选 </h2>
+		
+			</a>
+		</div>
+		
+	</div>
+  </div>
+  <div class="hb_box">
+     <!--     <button type="button" class="chb  " onclick="redirect_to_business();" style="font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;" >我是商家</button> -->
+		  
+		
+		 <button type="button" class="chb  " onclick="redirect_to_redbag();" style="font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;" >我要发红包</button>
+			
+		 <button type="button" class="chb  " onclick="redirect_to_wallet();" style="font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;" >我的钱包</button>
+		 
+		 <button type="button" class="chb  " onclick="redirect_to_send_redbag();" style="font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;" >转发此红包</button>
+		
+	
+			<input type="hidden"   name="redbag_id" class="input-text"  value="<{$redbag.id}>" /> 
+			
+		</div>
+			  <div class="llsp">
+  	<div class="llsp_title">
+		2018 Ubonus澳洲美食购物平台
+	</div>
+	<div class="llsp_nr" style="height:4.16rem;"00>
+	
+		
+		<div class="llsp_tp" style="height:3.35rem;"  >
+		
+		<a href="<{$http_root_www}>food">
+			<img src="<{$SKIN_PATH}>images/redbag/images/bg4.jpg"  /> 
+		</a>
+		
+	 
+			<!--<a href="<{$http_root_www}>coupon1/<{$coupon.id}>" class="sp">商品</a> -->
+		</div>
+		
+		<div class="spmc">
+			<a href="<{$http_root_www}>food">
+			<h2>点击进入>>>></h2>
+		
+			</a>
+		</div> 
+		
+	</div>
+  </div>	
+  
+
+		
+	<div class="llsp">
+<div class="llsp_title">
+		如何使用：在购物车中使用钱包付款,输入金额,点击使用即可！ 
+	</div>
+	</div>	
+</div>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="$1000澳元红包,可以在Ubonus澳洲美食平台上购买任意餐厅套餐";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/images/redbag/images/bg3.jpg';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Cache-Control" content="no-transform">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<meta name="applicable-device" content="mobile">
+		<title></title>
+		<script type='application/javascript' src="js/fastclick.min.js" charset="utf-8"></script>
+		<link rel="stylesheet" href="css/active.css">
+	</head>
+	<body class="bodyBg">
+		<div class="new-gift-box">
+			<img src="images/banner.jpg" alt="" class="gift-cont-bg-top">
+			<a href="javascript:;" class="gift-ban-btn blue ask-rule">规则</a>
+			<a href="#" class="gift-ban-btn red">首页</a>
+			<div class="gift-content">
+				<div class="gift-cont-box">
+				<div class="gift-detail-content">
+					<div class="gift-detail-logo">
+						<img src="images/LOGO.png" alt="">
+					</div>
+					<h3 class="gift-detail-title">Ubonus&亿折扣 | 推出见面礼活动</h3>
+					<p class="gift-detail-time">活动有效期截止2020.10.01</p>
+					<ul class="gift-detail-packet clearfix">
+						<li>
+							<div class="packet-box">
+								<img src="images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>5.00</em></p>
+								<p class="packet-item-bottom">截止10.01</p>
+							</div>
+							<img src="images/and.png" alt="" class="packet-item-add">
+						</li>
+						<li>
+							<div class="packet-box">
+								<img src="images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>7.00</em></p>
+								<p class="packet-item-bottom">截止10.04</p>
+							</div>
+							<img src="images/and.png" alt="" class="packet-item-add">
+						</li>
+						<li>
+							<div class="packet-box">
+								<img src="images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>10.00</em></p>
+								<p class="packet-item-bottom">截止10.08</p>
+							</div>
+						</li>
+					</ul>
+					<a href="javascript:;" class="ask-packet-btn ask-active">一键领取全部红包</a>
+					<div class="gift-detail-store-title">
+						<p class="title">红包适用以下店铺</p>
+						<img src="images/xiala.png" alt="" class="arrow">
+					</div>
+					<dl class="gift-detail-store-list">
+					
+					  <{foreach from=$data item=item}>
+                   <{if $item.panaltype==70}> <{/if}>
+						<dd class="bgGreen">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="images/dp-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">蔬菜类店铺</h4>
+										<p class="intro"><{$item.displayName}></p>
+									</div>
+									<a href="<{$http_root_www}>restaurant/<{$item.id}>" class="store-item-right ">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearGreen">
+										<li class="">
+											<div class="store-big-enviro">
+												<img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro"><{$item.coupon_summery_description|truncate_cn:90:'...'}></p>
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearGreen">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearGreen">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+						<{/foreach}>
+						<dd class="bgRed">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top ">
+									<img src="images/tou-img2.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">肉类店铺</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+									<a href="javascript:;" class="store-item-right fr colorRed ask-active">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearRed">
+										<li>
+											<div class="store-big-enviro">
+												<img src="images/14340744854.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">全程追溯·品质有保障  生鲜100%批次质检，全程追溯·品质有保障  生鲜100%批次质检，…</p>
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearRed">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearRed">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgBlue">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">海鲜类店铺</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+									<a href="javascript:;" class="store-item-right fr colorBlue ask-active">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearBlue">
+										<li>
+											<div class="store-big-enviro">
+												<img src="images/14340744854.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">全程追溯·品质有保障  生鲜100%批次质检，全程追溯·品质有保障  生鲜100%批次质检，…</p>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgPupple">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">混合蔬菜/肉类/海鲜</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+									<a href="javascript:;" class="store-item-right fr colorPupple ask-active">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearPupple">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearPupple">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearPupple">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearPupple">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgYellow">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="images/tou-img5.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">亚洲杂货</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+									<a href="javascript:;" class="store-item-right fr colorYellow ask-active">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="images/14340744854.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">全程追溯·品质有保障  生鲜100%批次质检，全程追溯·品质有保障  生鲜100%批次质检，…</p>
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearYellow">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearYellow">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="images/tou-img6.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+									<a href="javascript:;" class="store-item-right fr colorOrange ask-active">立即使用></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img src="images/14340744854.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">全程追溯·品质有保障  生鲜100%批次质检，全程追溯·品质有保障  生鲜100%批次质检，…</p>
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearOrange">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearOrange">
+												<div class="store-big-enviro ">
+													<img src="images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+				</div>	
+			</div>
+			
+		</div>
+		<div class="gift-pop-shadow"></div>
+		<div class="gift-pop-box gift-new-pop">
+			<h3 class="gift-pop-title">领取新人见面礼</h3>
+			<div class="common-form-group gift-pop-form">
+				<div class="common-form">
+					<input type="text" class="common-input" placeholder="请输入姓名" id="userName">
+				</div>
+				<div class="common-form">
+					<input type="text" class="common-input" placeholder="请输入手机号" id="userPhone">
+				</div>
+				<div class="common-form pop-input-code">
+					<input type="text" class="common-input" placeholder="请输入验证码" id="userCode">
+					<span class="get-code">获取验证码</span>
+				</div>
+				<a href="javascript:;" class="gift-pop-btn">立即登录</a>
+			</div>
+			<img src="images/guanbi.png" alt="" class="gift-pop-close">
+		</div>
+		<div class="gift-pop-box gift-rule-pop">
+			<h3 class="gift-pop-title">活动规则</h3>
+			<p class="gift-pop-rule">1.这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则。</p>
+			<p class="gift-pop-rule">2.这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则。</p>
+			<p class="gift-pop-rule">3.这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则这里是规则。</p>
+			<img src="images/guanbi.png" alt="" class="gift-pop-close">
+		</div>
+		<div class="gift-footer">
+			<p>copyright ©亿忆网 版权所有</p>
+			<p class="fontArial">联系电话：400-601-2788</p>
+		</div>
+		<script src="js/jquery.min.1.11.1.js"></script>
+		<script>
+			//展示环境图片裁剪
+			function imgShow(obj,a,b){
+				var $par=obj.find("li");
+				var index=$par.length;
+				var wid=$par.innerWidth();
+				var percen=(wid - 4)/105;
+				console.log(wid);
+				for(var i=0;i<index;i++){
+					var image = new Image();
+			        image.src = $par.eq(i).find("img").attr("src");
+					var w=image.width;
+					var h=image.height;
+					if(w>h && (w/h)>percen ){
+						$par.eq(i).find(".store-big-enviro").removeClass(a);
+						$par.eq(i).find(".store-big-enviro").addClass(b);
+					}else if(w>h && (w/h)<percen){
+						$par.eq(i).find(".store-big-enviro").removeClass(b);
+						$par.eq(i).find(".store-big-enviro").addClass(a);
+					}
+				}
+			}
+			
+			imgShow($(".gift-store-small"),"img-conta","img-contb");
+			imgShow($(".gift-store-big"),"img-conta","img-contb");
+			//banner
+			function banImg(){
+				var img = new Image();
+				img.src =$(".gift-cont-bg-top").attr("src") ;
+				var realWidth=img.width;
+				var realHeight=img.height;
+				var wid=$(window).width();
+				var hei=wid * realHeight / realWidth
+				$(".gift-content").css("marginTop",-hei*0.67);
+			}
+			banImg();
+			$(window).resize(function(){
+				banImg();
+				imgShow($(".gift-store-small"),"img-conta","img-contb");
+				imgShow($(".gift-store-big"),"img-conta","img-contb");
+			})
+			$(function(){
+				setTimeout(function(){
+					imgShow($(".gift-store-small"),"img-conta","img-contb");
+					imgShow($(".gift-store-big"),"img-conta","img-contb");
+				},500)
+				//表单
+				$(document).on("click",".ask-active",function(){
+					$(".gift-pop-shadow").show();
+					$(".gift-new-pop").show();
+				}).on("click",".gift-pop-close",function(){
+					$(".gift-pop-shadow").hide();
+					$(".gift-new-pop").hide();
+					$(".gift-pop-form").find(".common-input").val("");
+				})
+				//规则
+				$(document).on("click",".ask-rule",function(){
+					$(".gift-pop-shadow").show();
+					$(".gift-rule-pop").show();
+				}).on("click",".gift-pop-close",function(){
+					$(".gift-pop-shadow").hide();
+					$(".gift-rule-pop").hide();
+				})
+				$(document).on("click",".gift-pop-btn",function(){
+					var $par=$(this).parents(".gift-pop-form");
+					var userName=$par.find("#userName").val();
+					var tel=$par.find("#userPhone").val();
+					var code=$par.find("#userCode").val();
+					if(userName==""){
+					  msgLay("您的姓名不能为空");
+					  return false;
+					}
+					if(tel==""){
+					  msgLay("您的电话不能为空");
+					  return false;
+					}else if(!check_telephone(tel)){
+					   msgLay("请输入正确的手机号");
+					  return false;
+					}
+				})
+				//状态提示语
+				function msgLay(message) {
+					var stml='<div class="common-message message-success"><p>'+message+'</p></div>';
+					shadowHide();
+				   $("body").append(stml);
+				   setTimeout(shadowHide,1000);
+				};
+				//提交状态的隐藏
+				function shadowHide(){
+				  $(".common-message").remove();
+				}
+				 function check_telephone(Phone) {
+				        if (!/^((0[1-9]{2}[0-9]{1})[1-9]{1}\d{6,7}|(0[1-9]{1}[0-9]{1})[1-9]{1}\d{7}|1(3|4|5|6|7|8|9)\d{9})$/.test(Phone)) {
+				            return false;
+				        }
+				        return true;
+				 }
+			})
+		</script>
+	</body>
+</html>

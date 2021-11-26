@@ -1,0 +1,9 @@
+<div class='level_condition'>
+	<{foreach from=$conditions key=key item=value name='condition'}>
+	<div class='each_condition'>
+		<span class='each_condition_level'>Level <strong><{$smarty.foreach.condition.index+1}></strong> </span>
+		<span> 条件：</span><{$key}> <span class='condition_type_text'><{$condition_type_text}></span>
+		<span> 奖励：</span><{$value}><span class='reward_type_text'> <{$reward_type_text}></span>
+	</div>
+	<{/foreach}>
+</div>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+<br>
+	<a href="<{$http_root_www}>"><img style='width: 25%' src="<{$UPLOAD_PATH}><{$loginUser.logo}>" alt='商家LOGO'></a>
+</div>
+
+<div style="text-align: center;padding: 30px 20px;margin-bottom: 70px">
+
+	<h1 class='text-info'>渠道加盟邀请</h1>
+
+	<div class='well'>
+		<p>商家：<{$loginUser.displayName}></p>
+		
+	</div>
+	
+
+	<div class='well'>
+		
+		<p><strong>识别下面二维码，即可完成申请广</strong></p>
+		<p>
+			<img src="<{$applyqrcode}>">
+		</p>
+	</div>
+
+	<p>
+		OR
+	</p>
+
+	<div class='well'>
+		<p>申请者可以直接点击下方链接</p>
+		<p>
+		 <a href="<{$applyUrl}>"><small><{$applyUrl}></small> </a>
+		</p>
+	</div>
+
+	<!-- <p>
+    	<strong>邀请码</strong>
+    </p>
+
+    <p>
+    	<strong><{$data.apply_code}></strong>
+    </p> -->
+
+	
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+</body>
+
+<!-- WX jssdk share -->
+<script type="text/javascript">
+    var shareTitle='分享推广邀请 - <{$business.businessName}>';
+    var shareLink='<{$shareUrl}>';
+    var desc="<{$coupon.title}>";//onMenuShareAppMessage
+   var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+</script>
+<{include file='wx_share_js.htm'}>
+<!-- WX jssdk share -->
+
+</html>

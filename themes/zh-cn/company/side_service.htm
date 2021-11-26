@@ -1,0 +1,108 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><{$lang->business_center}></a> 
+				<small style="padding-left:10%;font-size: 10px"><a href="<{$http_root_www}>member/index"><{$lang->my_account}></a></small> 
+			</div>
+		</li>
+
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><{$lang->publish_center}></a>
+			</div>
+
+
+			<div class='second-level'>
+			
+
+
+				<a href="<{$http_root_www}>company/coupons?coupon_type=7"<{if $submenu=='coupon'}> class="current"<{/if}>>
+						<{$lang->product_management}>
+				</a>
+				<a href="<{$http_root_www}>company/coupons?coupon_type=7&sub=event"<{if $submenu=='coupon_event'}> class="current"<{/if}>>
+					<{$lang->publish_event}>
+				</a>
+				<a href="<{$http_root_www}>company/coupons?coupon_type=4"<{if $submenu=='voucher'}> class="current"<{/if}>>
+					<{$lang->offline_voucher}>
+				</a>
+
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='1234'}> class="current"<{/if}>>
+						<{$lang->preview_password}>
+				</a>
+			</div>
+		</li>
+
+		<{include file='company/side_customer_centre.htm'}>
+		<{include file='company/side_money.htm'}>
+		<{include file='company/side_store.htm'}>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='business_setting'}> class="current"<{/if}>><{$lang->business_setting}></a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/business_setting_main" <{if $submenu=='business_setting'}> class="current"<{/if}>>
+					<{$lang->all}>
+				</a>
+				<a href="<{$http_root_www}>company/profile_manager"<{if $submenu=='profile_manager'}> class="current"<{/if}>>
+					<{$lang->administrator_info}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/redeem_staff_manage"<{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
+					<{$lang->redeem_staff}>
+				</a>
+				<a href="<{$http_root_www}>company/delivery_setting"<{if $submenu=='delivery_setting'}> class="current"<{/if}>>
+					<{$lang->deliver_setting}>
+				</a>
+				<a href="<{$http_root_www}>company/payment_setting"<{if $submenu=='payment_setting'}> class="current"<{/if}>>
+					<{$lang->payment_setting}>
+				</a>
+				<a href="<{$http_root_www}>company/busi_pay_setting_application"<{if $submenu=='busi_pay_setting_application'}> class="current"<{/if}>>
+					<{$lang->payment_application}>
+				</a>
+				<a href="<{$http_root_www}>company/choose_business_type"<{if $submenu=='choose_business_type'}> class="current"<{/if}>>
+					<{$lang->console_switch}>
+				</a>
+				<a href="<{$http_root_www}>company/other_option"<{if $submenu=='other_option'}> class="current"<{/if}>>
+					<{$lang->booking_fee_setting}>
+				</a>
+				<a href="<{$http_root_www}>member/wx_manage_account?side=company"<{if $menu=='wx_manage_account'}> class="current"<{/if}>><{$lang->wx_setting}></a>
+				
+				<a href="<{$http_root_www}>company/business_hour_setting"<{if $submenu=='trading-hour'}> class="current"<{/if}>>
+					营业时间
+				</a>
+			</div>
+		</li>
+		
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>company/ubonus_package"<{if $menu=='community'}> class="current"<{/if}>><{$lang->online_promotion}></a>
+			</div>
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>member/index"<{if $menu=='community'}> class="current"<{/if}>><{$lang->my_account}></a>
+			</div>
+		</li>
+		
+	</ul>
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+
+</div>

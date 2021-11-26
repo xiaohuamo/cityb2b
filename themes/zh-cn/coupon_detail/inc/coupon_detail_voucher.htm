@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css"/>
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css"/>
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/luobo.css"/>
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+
+</head>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+<!-- inedx -->
+<div class="main bg-fff">
+    <!-- 面包屑 -->
+    <div class="m-cur-lb">
+        <div class="wp">
+            <div class="cur">
+                <a href="<{$http_root_www}>" class="first">首页</a>
+                <a href="#">优惠券</a>
+                <em><{$coupon.title}></em>
+            </div>
+        </div>
+    </div>
+    <!-- 面包屑end -->
+    <div class="row-lb-1">
+        <div class="wp">
+            <div class="col-l">
+                <div class="m-row1-lb">
+                    <!-- 轮播 -->
+                    <div class="slide-lb-1">
+                        <ul>
+                            <li><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:660:420}>" alt=""></li>
+                            <{foreach from=$coupon.pics item=item name='cpl'}>
+                            <li><img src="<{$UPLOAD_PATH}><{$item|image:660:420}>" alt=""></li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                    <!-- 轮播 end-->
+                    <!-- 大图 -->
+                    <div class="pic-move">
+                        <img src="<{$UPLOAD_PATH}><{$coupon.pic|image:660:420}>" width="100%" height="auto"
+                             alt="<{$coupon.title}>"/>
+                        <i></i>
+                    </div>
+                    <!-- 大图 end -->
+                </div>
+                
+
+                 <{include file='coupon_detail/inc/sec_content.htm'}>
+
+                 
+            </div>
+            <div class="col-r">
+                <div class="m-tuxun">
+                    <div class="tit tit2">
+                        <h3><{$coupon.title}></h3>
+                        <p><{$coupon.coupon_summery_description}></p>
+                    </div>
+                    
+
+                    <div class="m-favor-lb">
+
+                        <{include file='coupon_detail/inc/sec_favandshare.htm'}>
+
+                        <ul class="ul-favor-lb">
+                            <div >
+                                  <{if $coupon.voucher_deal_amount>0}>
+                                      <em>售价:</em> &nbsp;
+                                      <em style="font-size: 20px;color:#F00"><{$coupon.price1}></em>
+                                      <br>
+                                  <{else}>
+                                      <em style="font-size: 20px;color:#F00">免费领取</em>
+                                      <br>
+                                  <{/if}>
+
+                                  <{if $coupon.voucher_original_amount>0}>
+                                      <s>面值：<{$coupon.price2}></s> 
+                                  <{/if}>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <{if $coupon.id==4861}>
+                        <a href="<{$http_root_www}>coupon/enroll" class="m-give">立刻报名</a>
+                    <{else}>
+                         <a href="<{$http_root_www}>coupon/checkout?id=<{$coupon.id}>" class="m-give">立刻领取</a>
+                    <{/if}>
+                </div>
+                
+                <{if $coupon.finePrint}>
+                <div class="m-tip-lb">
+                    <div class="tip">
+                        <h4><span>温馨提示 x</span><em>  Tips</em></h4>
+                        <{str_replace('white-space: pre-wrap;','',<{$coupon.finePrint}>)}>
+                    </div>
+                </div>
+                <{/if}>
+
+                <{if $coupon.redeemProcedure}>
+                 <div class="m-tip-lb m-tip2">
+                    <div class="tip">
+                        <h4><span>如何使用 x</span><em> How To Redeem</em></h4>
+                        <{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}>
+                    </div>
+                </div>
+                <{/if}>
+
+                <{if $coupon.refund_policy}>
+                     <div class="m-tip-lb m-tip2">
+                        <div class="tip">
+                            <h4><span>退货政策 x</span><em> Refund Policy</em></h4>
+                            <{str_replace('white-space: pre-wrap;','',$coupon.refund_policy)}>
+                        </div>
+                    </div>
+                <{/if}>
+
+                <{include file='coupon_detail/inc/sec_stafflist.htm'}>
+
+                <div class="m-corre-lb">
+                    <h3 class="tit">相关产品</h3>
+                    <ul class="ul-recom-lb corre">
+                        <{foreach from=$recommends item=item}>
+                        <li>
+                            <div class="items">
+                                <div class="img"><a href="<{$http_root_www}>coupon/<{$item.id}>"><img
+                                        src="<{$UPLOAD_PATH}><{$item.pic|image:360:230}>" alt=""></a></div>
+                                <div class="txt">
+                                    <h4><strong><{$item.title}></strong></h4>
+                                    <p>
+                                        <a href="<{$http_root_www}>coupon/<{$item.id}>"><{$item.coupon_summery_description}></a>
+                                    </p>
+                                    <!--em>$2335.00</em-->
+                                    <div class="ico">
+                                        <a href="" class="ico1"><{$item.hits}></a>
+                                        <!--a href="" class="ico2"></a-->
+                                        <!--a href="" class="ico3"></a-->
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- inedx -->
+<!-- 底部 -->
+<{include file='index_inc_footer.htm'}>
+<!-- 底部 end -->
+<!-- 右边栏 -->
+<{include file='index_inc_right.htm'}>
+<!--右边栏 end-->
+<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+<script src="<{$SKIN_PATH}>js/dong.js"></script>
+<script type="text/javascript">
+    jQuery(".fullSlide").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click"
+    });
+    jQuery(".ul-row2").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "left",
+        autoPlay: true,
+        vis: 5
+    });
+    jQuery(".slide-lb-1").slide({mainCell: ".bd ul", autoPage: true, effect: "top", autoPlay: true, vis: 5});
+</script>
+<script>
+    $(".city-name dd").click(function () {
+        var _txt = $(this).text();
+        $(".xz-city p").text(_txt);
+    })
+</script>
+<script>
+    $('.time-c').each(function () {
+        $(this).countDown();
+    })
+    $(".m-tuxun .combo li").click(function (event) {
+        /* Act on the event */
+        $(this).addClass('on').siblings('li').removeClass('on');
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(".fullSlide").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click"
+    });
+    jQuery(".ul-row2").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "left",
+        autoPlay: true,
+        vis: 5
+    });
+</script>
+
+<script>
+    $('.time-c').each(function () {
+        $(this).countDown();
+    })
+</script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+
+</body>
+</html>

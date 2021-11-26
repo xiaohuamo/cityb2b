@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Cache-Control" content="no-transform">
+		<meta http-equiv="Cache-Control" content="no-siteapp">
+		<meta name="applicable-device" content="mobile">
+		<title></title>
+		<script type='application/javascript' src="<{$SKIN_PATH}>promotion/js/fastclick.min.js" charset="utf-8"></script>
+		<link rel="stylesheet" href="<{$SKIN_PATH}>promotion/css/active.css">
+		
+		<script type="text/javascript">
+		function myfun(){
+		  var getpromotion ='<{$getpromotion}>';
+			if(getpromotion==2){
+			   $("#newtitle").html('您已经领取过了，可以开始购物了！');
+			}
+			if(getpromotion==1){
+			   $("#newtitle").html("恭喜领取成功，可以开始购物了");
+			}
+		}
+
+		window.onload = myfun;
+		</script>
+	
+	
+	</head>
+	<body class="bodyBg">
+		<div class="new-gift-box">
+			<img src="<{$SKIN_PATH}>promotion/images/banner.jpg" alt="" class="gift-cont-bg-top">
+			<a href="javascript:;" class="gift-ban-btn blue ask-rule">规则</a>
+			<a href="<{$http_root_www}>" class="gift-ban-btn red">首页</a>
+			<div class="gift-content">
+				<div class="gift-cont-box">
+				<div class="gift-detail-content">
+					<div class="gift-detail-logo">
+						<img src="<{$SKIN_PATH}>promotion/images/LOGO.png" alt="">
+					</div>
+					<h3 class="gift-detail-title">Ubonus&亿折扣 | 推出双节红包活动</h3>
+					<p class="gift-detail-time">活动有效期截止2021.1.10</p>
+					<ul class="gift-detail-packet clearfix">
+						<li>
+							<div class="packet-box">
+								<img src="<{$SKIN_PATH}>promotion/images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>3.00</em></p>
+								<p class="packet-item-bottom">截止1.10</p>
+							</div>
+							<img src="<{$SKIN_PATH}>promotion/images/and.png" alt="" class="packet-item-add">
+						</li>
+						<li>
+							<div class="packet-box">
+								<img src="<{$SKIN_PATH}>promotion/images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>5.00</em></p>
+								<p class="packet-item-bottom">截止1.10</p>
+							</div>
+							<img src="<{$SKIN_PATH}>promotion/images/and.png" alt="" class="packet-item-add">
+						</li>
+						<li>
+							<div class="packet-box">
+								<img src="<{$SKIN_PATH}>promotion/images/hongbao-img.png" alt="" class="li-item-bg">
+								<p class="packet-item-top">$<em>7.00</em></p>
+								<p class="packet-item-bottom">截止1.10</p>
+							</div>
+						</li>
+					</ul>
+					<{if $ua=="wechat"}>
+						<a href="<{$http_root_www}>promotion/new_promotion_code" style="    margin: 25px 15px;" class="ask-packet-btn "><span id="newtitle">一键领取全部红包</span></a>
+					<{else}>
+						<{if $loginUser}>
+							<!-- 已经登陆 -->
+							<a href="<{$http_root_www}>promotion/new_promotion_code" style="    margin: 25px 15px;" class="ask-packet-btn "><span id="newtitle">一键领取全部红包</span></a>
+						<{else}>
+							<!-- 未登陆 -->
+							<a href="javascript:;" style="    margin: 25px 15px;" class="ask-packet-btn fr ask-active"><span id="newtitle">一键领取全部红包</span></a>
+
+						<{/if}>
+                    <{/if}>
+					
+					<div style="        margin: 6rem 0rem -4rem 0rem;">
+						<h3 class="gift-detail-title" style ="    color: #000;    font-size: 15px;    font-weight: 600;    margin-bottom: 10px;">烧烤·甜点·美容·女装</h3>
+					<p class="gift-detail-time" style ="    color: #000;    font-size: 20px;    font-weight: 600;">低至3折</p>
+					<a href="http://d.ausgroupon.com/" class="ask-packet-btn "><span id="newtitle">立即抢购</span></a>
+					</div>
+				
+					<br>
+					<div class="gift-detail-store-title" style ="margin: 3.5rem 0 0;">
+						<p class="title">新人红包适用以下多家生鲜店铺</p>
+						<img src="<{$SKIN_PATH}>promotion/images/xiala.png" alt="" class="arrow">
+					</div> 
+					<dl class="gift-detail-store-list">
+					
+					
+						<dd class="bgPupple">
+										
+							
+							
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">多店统配-MK蔬菜</h4>
+										<p class="intro">质优价廉，菜品新鲜，200+品类 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/219842" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/219842">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/mkfood.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">质优价廉，菜品新鲜，200+品类</p>
+									</a>
+									
+								</div>
+							</div>
+							
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">多店统配-DNL 肉厂</h4>
+										<p class="intro">新鲜，价优，品类丰富 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/217093" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/217093">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/dnl-meat1.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">批发直连客户，肉类大全100+品类，还有副食及海鲜，Ubonus金牌商家</p>
+									</a>
+									
+								</div>
+							</div>
+							
+							
+							
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">多店统配-澳洲百味捞火锅卤味</h4>
+										<p class="intro">老板主理，百种餐点，高档餐品 百姓价 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/217777" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/217777">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/tongpei_baiweilao.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">特色烤鸭套餐 ，卤味，凉菜，炒菜 每周两团</p>
+									</a>
+									
+								</div>
+							</div>
+							
+								<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">多店统配-美心食品</h4>
+										<p class="intro">白菜猪肉饺子半价特惠，各色面点，厂家直销客户 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/318735" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/318735">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/meixin.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">白菜猪肉饺子半价特惠，各色面点，厂家直销客户</p>
+									</a>
+									
+								</div>
+							</div>
+							<!--
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/zhengdou.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">四店统配-正斗餐厅</h4>
+										<p class="intro">猫本名店，高端价优，周周特价 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218856" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/218856">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/zhengdou.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">名师制作，百种菜肴，粤菜海鲜，炒菜卤味凉菜，每周三团</p>
+									</a>
+									
+								</div>
+							</div>
+							-->
+						</dd>
+					
+		<!--
+						<dd class="bgGreen">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/dp-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">袋鼠生鲜 蔬果店</h4>
+										<p class="intro">95% 预定采购模式 新鲜度超高</p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218639" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									
+										<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorGreen" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorGreen ask-active">领取优惠券></a>
+										<{/if}>
+									
+									<{/if}>
+									
+								</div>
+								<div class="gift-store-item-bottom">
+								<a  href="<{$http_root_www}>restaurant/218639">
+									<ul class="gift-store-big bgLinearGreen">
+										<li class="">
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/daishushengxian.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">百种蔬果，农场直达，预定模式，新鲜价低</p>
+								</a>
+								</div>
+							</div>
+							</dd>
+					-->
+		
+					<!--	<dd class="bgGreen">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/dp-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">澳鲜生 蔬果店</h4>
+										<p class="intro">精选水果蔬菜，次日直达</p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218517" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+										<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorGreen" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorGreen ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+									
+								</div>
+								<div class="gift-store-item-bottom">
+								<a  href="<{$http_root_www}>restaurant/218517">
+									<ul class="gift-store-big bgLinearGreen">
+										<li class="">
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/aoxiansheng.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">可次日直达，亚洲水果，蔬菜，品类齐全</p>
+								</a>
+								</div>
+							</div>
+							</dd>
+					-->
+		
+						<dd class="bgGreen">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/dp-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">MK 蔬果店</h4>
+										<p class="intro">品类丰富 工厂实力强 专业水果批发</p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218812" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorGreen" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorGreen ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+									
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="<{$http_root_www}>restaurant/218812">
+									<ul class="gift-store-big bgLinearGreen">
+										<li class="">
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/mk-food-pack.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">满$50刀免运费.
+</p>
+								</a>
+								</div>
+							</div>
+						</dd>
+					<!--	
+						<dd class="bgRed">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top ">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img2.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">DNL 肉类副食</h4>
+										<p class="intro">100+产品可供选择，Ubonus长期合作商</p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218630" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									 	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorRed" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorRed ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="<{$http_root_www}>restaurant/218630">
+									<ul class="gift-store-big bgLinearRed">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/dnl-meat.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">满40刀起订，配送费5刀，满80刀免运费。配送时间：周一至周六.当日12：00前下单隔日配送。</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+					-->	
+						<dd class="bgPupple">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">澳鲜食品</h4>
+										<p class="intro">肉类 蔬菜 海鲜 副食 一站购物 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218643" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/218643">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/aoxianshipiin.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">满40刀起订，配送费5刀，满80刀免运费。</p>
+									</a>
+									
+								</div>
+							</div>
+						</dd>
+						<!--
+										<dd class="bgPupple">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">澳洲海参网 </h4>
+										<p class="intro">墨尔本最大海参进口及批发商之一，Ubonus4年金牌店铺 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>store/25831" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>store/25831">
+										<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/meixin1.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">墨尔本最大海参进口及批发商之一，Ubonus4年金牌店铺</p>
+									</a>
+									
+								</div>
+							</div>
+						</dd> -->
+						
+						<dd class="bgPupple">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img4.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">联合配送 综合店铺</h4>
+										<p class="intro">火锅 海鲜 肉类 牛奶 粮油 一站购物 </p>
+									</div>
+										<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218767" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorPupple" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorPupple ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+									 <a  href="<{$http_root_www}>restaurant/218767">
+										<ul class="gift-store-big bgLinearPupple">
+										<li>
+											<div class="store-big-enviro">
+												<img  href="<{$http_root_www}>restaurant/218767" src="<{$SKIN_PATH}>promotion/images/unitexpress.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">购买满$50起送，运费$10；购买满$100免运费</p>
+									
+									</a>
+								</div>
+							</div>
+						</dd>
+
+						
+						<dd class="bgBlue">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img href ="<{$http_root_www}>store/25831" src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">澳洲海参网 海鲜类店铺</h4>
+										<p class="intro">墨尔本大批发商之一直销 </p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>store/25831" class="store-item-right fr colorBlue ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorBlue" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorBlue ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+								
+								 <a  href="<{$http_root_www}>store/25831">
+									<ul class="gift-store-big bgLinearBlue">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/taihehang.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									
+									<p class="gift-store-big-intro">  墨尔本最大海参进口及批发商之一，工厂直销，Ubonus4年金牌店铺，值得信赖！</p>
+									</a>
+								</div>
+							</div>
+							</dd>
+
+						<!--
+						<dd class="bgBlue">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img href ="<{$http_root_www}>store/23945" src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">Oscar塔州 海鲜类店铺</h4>
+										<p class="intro">塔州工厂 Ubonus金牌店铺 4年 </p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>store/23945" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									 	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorBlue" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorBlue ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+								
+								 <a  href="<{$http_root_www}>store/23945">
+									<ul class="gift-store-big bgLinearBlue">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/oscar.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									
+									<p class="gift-store-big-intro">  塔州海鲜工厂直销，Ubonus4年金牌店铺，值得信赖！</p>
+									</a>
+								</div>
+							</div>
+							
+								</dd> -->
+
+						<!--
+						<dd class="bgBlue">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img href ="<{$http_root_www}>restaurant/217364" src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">澳洲海鲜工厂 海鲜类店铺</h4>
+										<p class="intro">各种澳洲海鲜  </p>
+									</div>
+									<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/217364" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorBlue" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorBlue ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+								
+								 <a  href="<{$http_root_www}>restaurant/217364">
+									<ul class="gift-store-big bgLinearBlue">
+										<li>
+											<div class="store-big-enviro">
+												<img   src="<{$SKIN_PATH}>promotion/images/haixiangongchang.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									
+									<p class="gift-store-big-intro"> 鲍鱼 深海刀鱼 带子 大虾 ，捕捞船队，新鲜价格优，服务好！</p></a>
+								</div>
+							</div>
+						</dd> -->
+						
+					<!--
+						<dd class="bgYellow">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img5.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">亚洲杂货</h4>
+										<p class="intro">23家店铺支持红包抵扣</p>
+									</div>
+										<a href="javascript:;" class="store-item-right fr ">开始购物></a>
+								</div>
+								<div class="gift-store-item-bottom">
+									<ul class="gift-store-big bgLinearYellow">
+										<li>
+											<div class="store-big-enviro">
+												<img src="<{$SKIN_PATH}>promotion/images/14340744854.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">全程追溯·品质有保障  生鲜100%批次质检，全程追溯·品质有保障  生鲜100%批次质检，…</p>
+									<ul class="gift-store-small clearfix">
+										<li>
+											<div class="gift-store-small-top bgLinearYellow">
+												<div class="store-big-enviro ">
+													<img src="<{$SKIN_PATH}>promotion/images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+										<li>
+											<div class="gift-store-small-top bgLinearYellow">
+												<div class="store-big-enviro ">
+													<img src="<{$SKIN_PATH}>promotion/images/14340744854.jpg" alt="" />
+												</div>
+												<div class="gift-store-big-mask"></div>
+											</div>
+											<p class="gift-store-small-bottom">全程追溯·品质有保全程追溯·品质有保障…</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</dd>
+						-->
+						<dd class="bgOrange">
+						<div class="gift-detail-store-title" style="margin: 1.5rem 0 0;">
+						
+							<p class="title" style="
+								margin-bottom: 12px;
+								font-size: 14px;    color: #595959;
+							">亿折扣吃喝玩乐低至3折</p><p class="title" style="
+								font-size: 20px;
+								color: blue;
+							">美食</p>
+						<img src="/themes/zh-cn/promotion/images/xiala.png" alt="" class="arrow">
+					</div>  </dd>
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/dangao.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">美食类</h4>
+										<p class="intro">【墨客蛋糕】莓来眼去 盒子蛋糕</p>
+									</div>
+									
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2764" class="store-item-right fr colorOrange ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2764">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2764" src="<{$SKIN_PATH}>promotion/images/mokedangao.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【墨客蛋糕】莓来眼去 盒子蛋糕 原价：12刀 折扣价：3.99刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">美食类</h4>
+										<p class="intro">【渔老大·鱼庄】50刀代金券</p>
+									</div>
+									
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2765" class="store-item-right fr colorOrange ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2765">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2765" src="<{$SKIN_PATH}>promotion/images/yulaoda.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【渔老大·鱼庄】50刀代金券 原价：50刀 折扣价：20刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">【粮手抓】照烧鸡肉卷 </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2756" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2756">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2756" src="<{$SKIN_PATH}>promotion/images/liangshouzhua.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【粮手抓】照烧鸡肉卷 原价：9.9刀 折扣价：2.9刀 </p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">【便当王&橘子工坊】秘制后切鸡排 </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2757" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2757">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2757" src="<{$SKIN_PATH}>promotion/images/biandangwang.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【便当王&橘子工坊】秘制后切鸡排 原价：9.5刀 折扣价：2.9刀 </p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">【火宴】烤生蚝/扇贝 </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2755" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2755">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2755" src="<{$SKIN_PATH}>promotion/images/huoyan.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【火宴】烤生蚝/扇贝 原价：4刀 折扣价：1.2刀 </p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">【濛龍山莊】烤全羊 代金券 </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2753" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2753">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2753" src="<{$SKIN_PATH}>promotion/images/kaoquanyang.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【濛龍山莊】烤全羊 代金券 原价：100刀 折扣价：40刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+							<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img3.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">餐馆类</h4>
+										<p class="intro">【酸奶大爆炸】桃里桃气 炒酸奶 </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2754" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2754">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2754" src="<{$SKIN_PATH}>promotion/images/suannai.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【酸奶大爆炸】桃里桃气 炒酸奶  原价：8刀 折扣价：1.9刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgOrange">
+						<div class="gift-detail-store-title" style="margin: 1.5rem 0 0;">
+						
+							<p class="title" style="
+								margin-bottom: 12px;
+								font-size: 14px;    color: #595959;
+							">亿折扣吃喝玩乐低至3折</p><p class="title" style="
+								font-size: 20px;
+								color: blue;
+							">美容</p>
+						<img src="/themes/zh-cn/promotion/images/xiala.png" alt="" class="arrow">
+					</div>  </dd>
+						
+						
+							<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/meirong.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">美容类</h4>
+										<p class="intro">【JAM Beauty】美睫（自然款）  </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2760" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2760">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2760" src="<{$SKIN_PATH}>promotion/images/Jam.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【JAM Beauty】美睫（自然款） 原价：39刀 折扣价：29刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+						
+							<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/meirong.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">美容类</h4>
+										<p class="intro">【Hollywood Skin】痘痘管理  </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2759" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2759">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2759" src="<{$SKIN_PATH}>promotion/images/Hollywood-skin.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【Hollywood Skin】痘痘管理  原价：80刀 折扣价：29刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						
+							<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/meirong.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">美容类</h4>
+										<p class="intro">【BeautyCare】接睫毛  </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2758" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2758">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2758" src="<{$SKIN_PATH}>promotion/images/BeautyCare.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【BeautyCare】接睫毛 原价：79刀 折扣价：29刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						<dd class="bgOrange">
+						<div class="gift-detail-store-title" style="margin: 1.5rem 0 0;">
+						
+							<p class="title" style="
+								margin-bottom: 12px;
+								font-size: 14px;    color: #595959;
+							">亿折扣吃喝玩乐低至3折</p><p class="title" style="
+								font-size: 20px;
+								color: blue;
+							">生活好物</p>
+						<img src="/themes/zh-cn/promotion/images/xiala.png" alt="" class="arrow">
+					</div>  </dd>
+					
+					
+					<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/hw-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">生活好物类</h4>
+										<p class="intro">【德国刀具】德国Carl Schmidt Sohn菜刀（16cm）  </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2763" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2763">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2763" src="<{$SKIN_PATH}>promotion/images/daoju.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【德国刀具】德国Carl Schmidt Sohn菜刀（16cm） 原价：69刀 折扣价：24.9刀</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+					
+						
+						
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/hw-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">生活好物类</h4>
+										<p class="intro">【美的】4升空气炸锅   </p>
+									</div>
+								
+									  <a href="http://d.yeeyi.com/details.aspx?ProductID=2761" class="store-item-right fr colorPupple ">立即抢购</a>
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="http://d.yeeyi.com/details.aspx?ProductID=2761">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="http://d.yeeyi.com/details.aspx?ProductID=2761" src="<{$SKIN_PATH}>promotion/images/meidi.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">【美的】4升空气炸锅 原价：229刀 折扣价：119刀 </p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/hw-01.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">生活好物类</h4>
+										<p class="intro">潮流开仓 气质女装  </p>
+									</div>
+									
+										<{if $getpromotion==2}>
+									  <a href="https://ubonus365.com/store/319172" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									  	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorBlue" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorBlue ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								
+									
+								
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="https://ubonus365.com/store/319172">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img href="https://ubonus365.com/store/319172" src="<{$SKIN_PATH}>promotion/images/nvzhuang.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">潮流开仓 气质女装 【ajeworld】【viktoriaandwoods】折上折 </p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+					
+					<!--	<dd class="bgOrange">
+							<div class="gift-store-item-box">
+								<div class="clearfix gift-store-item-top">
+									<img src="<{$SKIN_PATH}>promotion/images/tou-img6.png" alt="" class="fl store-item-left">
+									<div class="store-item-mid fl">
+										<h4 class="title">正斗餐厅 餐馆类</h4>
+										<p class="intro">猫本名店 粤菜 海鲜 卤味 炒菜 Yum Cha  </p>
+									</div>
+											<{if $getpromotion==2}>
+									  <a href="<{$http_root_www}>restaurant/218856" class="store-item-right fr colorPupple ">立即抢购</a>
+									<{else}>
+									 	<{if $ua=="wechat"}>
+											<a href="<{$http_root_www}>promotion/new_promotion_code" class="store-item-right fr colorOrange" ><span >领取优惠券</span></a>
+										<{else}>
+											  <a href="javascript:;" class="store-item-right fr colorOrange ask-active">领取优惠券></a>
+										<{/if}>
+									<{/if}>
+								</div>
+								<div class="gift-store-item-bottom">
+								 <a  href="<{$http_root_www}>restaurant/218856">
+									<ul class="gift-store-big bgLinearOrange">
+										<li>
+											<div class="store-big-enviro">
+												<img  src="<{$SKIN_PATH}>promotion/images/zhengdou.jpg" alt="" />
+											</div>
+											<div class="gift-store-big-mask"></div>
+										</li>
+									</ul>
+									<p class="gift-store-big-intro">猫本名店 粤菜 海鲜 卤味 炒菜 YaCha 应有尽有，Ubonus 首批统配商家</p>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+						-->
+						
+						
+						
+						
+					</dl>
+				</div>
+				</div>	
+			</div>
+			
+		</div>
+		<div class="gift-pop-shadow"></div>
+		<div class="gift-pop-box gift-new-pop">
+			<h3 class="gift-pop-title">领取新人双节红包</h3>
+				<div class="common-form-group gift-pop-form">
+					<div class="common-form">
+						<input type="text" class="common-input" placeholder="请输入姓名" id="userName">
+					</div>
+					<div class="common-form">
+						<input type="text" class="common-input" placeholder="请输入手机号" id="userPhone">
+					</div>
+					<div class="common-form pop-input-code">
+						<input type="text" class="common-input" placeholder="请输入验证码" id="userCode">
+						<span class="get-code">获取验证码</span>
+					</div>
+					<button type='submit' class="gift-pop-btn">立即领取</button>
+				</div>
+			<img src="<{$SKIN_PATH}>promotion/images/guanbi.png" alt="" class="gift-pop-close">
+		</div>
+		<div class="gift-pop-box gift-rule-pop">
+			<h3 class="gift-pop-title">活动规则</h3>
+			<p class="gift-pop-rule">1.本活动从12月21日-2021年1月10日。</p>
+			<p class="gift-pop-rule">2.每个用户（手机号码，微信）最多领取一次，可以领取三张优惠券，下单后直接在购物车使用优惠券即可减免</p>
+			<p class="gift-pop-rule">3.活动截至后优惠券自动作废，本优惠券不找零，不兑现！</p>
+			<img src="<{$SKIN_PATH}>promotion/images/guanbi.png" alt="" class="gift-pop-close">
+		</div>
+		<div class="gift-footer">
+			<p>copyright ©Ubonus 2020 版权所有</p>
+			<p class="fontArial">客服微信 ubonus003</p>
+		</div>
+
+		<script src="<{$SKIN_PATH}>promotion/js/jquery.min.1.11.1.js"></script>
+		<script>
+			//展示环境图片裁剪
+			function imgShow(obj,a,b){
+				var $par=obj.find("li");
+				var index=$par.length;
+				var wid=$par.innerWidth();
+				var percen=(wid - 4)/105;
+				console.log(wid);
+				for(var i=0;i<index;i++){
+					var image = new Image();
+			        image.src = $par.eq(i).find("img").attr("src");
+					var w=image.width;
+					var h=image.height;
+					if(w>h && (w/h)>percen ){
+						$par.eq(i).find(".store-big-enviro").removeClass(a);
+						$par.eq(i).find(".store-big-enviro").addClass(b);
+					}else if(w>h && (w/h)<percen){
+						$par.eq(i).find(".store-big-enviro").removeClass(b);
+						$par.eq(i).find(".store-big-enviro").addClass(a);
+					}
+				}
+			}
+			
+			imgShow($(".gift-store-small"),"img-conta","img-contb");
+			imgShow($(".gift-store-big"),"img-conta","img-contb");
+			//banner
+			function banImg(){
+				var img = new Image();
+				img.src =$(".gift-cont-bg-top").attr("src") ;
+				var realWidth=img.width;
+				var realHeight=img.height;
+				var wid=$(window).width();
+				var hei=wid * realHeight / realWidth
+				$(".gift-content").css("marginTop",-hei*0.67);
+			}
+			banImg();
+			$(window).resize(function(){
+				banImg();
+				imgShow($(".gift-store-small"),"img-conta","img-contb");
+				imgShow($(".gift-store-big"),"img-conta","img-contb");
+			})
+			$(function(){
+				setTimeout(function(){
+					imgShow($(".gift-store-small"),"img-conta","img-contb");
+					imgShow($(".gift-store-big"),"img-conta","img-contb");
+				},500)
+				//表单
+				$(document).on("click",".ask-active",function(){
+					$(".gift-pop-shadow").show();
+					$(".gift-new-pop").show();
+				}).on("click",".gift-pop-close",function(){
+					$(".gift-pop-shadow").hide();
+					$(".gift-new-pop").hide();
+					$(".gift-pop-form").find(".common-input").val("");
+				})
+				//规则
+				$(document).on("click",".ask-rule",function(){
+					$(".gift-pop-shadow").show();
+					$(".gift-rule-pop").show();
+				}).on("click",".gift-pop-close",function(){
+					$(".gift-pop-shadow").hide();
+					$(".gift-rule-pop").hide();
+				})
+				$(document).on("click",".gift-pop-btn",function(){
+					var $par=$(this).parents(".gift-pop-form");
+					var userName=$par.find("#userName").val();
+					var tel=$par.find("#userPhone").val();
+					var code=$par.find("#userCode").val();
+					if(userName==""){
+					  msgLay("您的姓名不能为空");
+					  return false;
+					}
+					if(tel==""){
+					  msgLay("您的电话不能为空");
+					  return false;
+					}else if(!check_telephone(tel)){
+					   msgLay("请输入正确的手机号");
+					  return false;
+					}
+
+					if (code=='') {
+						msgLay("请输入验证码");
+					  return false;
+					}
+					
+					$.ajax({
+						url:"<{$http_root_www}>member/register?type=mobileonly",
+						type:"POST",
+						data: {
+							mobile: tel,
+							code: code,
+						}
+					}).done(function(d){
+					    data = JSON.parse(d);
+					    msgLay(data.msg);
+					    if (data.status==200) {
+					    	window.location.href = '<{$http_root_www}>promotion/new_promotion_code';
+					    }
+					});
+
+				})
+				//状态提示语
+				function msgLay(message) {
+					var stml='<div class="common-message message-success"><p>'+message+'</p></div>';
+					shadowHide();
+				   $("body").append(stml);
+				   setTimeout(shadowHide,1000);
+				};
+				//提交状态的隐藏
+				function shadowHide(){
+				  $(".common-message").remove();
+				}
+				function check_telephone(phone) {
+			        if (!/^0[0-9]{9}$/.test(phone)) {
+			            return false;
+			        }
+			        return true;
+				}
+
+				$('.get-code').on('click',function(){
+					var mobile = $("#userPhone").val();
+
+					if(mobile==""){
+					  msgLay("您的电话不能为空");
+					  return false;
+					}else if(!check_telephone(mobile)){
+					   msgLay("请输入正确的手机号");
+					   return false;
+					}
+
+					if($('.get-code').hasClass('disable'))return false;
+
+					//ask for mobile SMS
+					$.get( "<{$http_root_www}>system/send_sms_verification_code?mobile="+mobile+"&full_number="+mobile,function(data){console.log(data)} );
+					
+					// set timer
+					setTimer($(this));
+				})
+
+				function setTimer(obj){
+					// set timer
+					var time_length = 60;
+					$(obj).val(time_length+'s');
+					$(obj).addClass('disable');
+					
+					var timer = setInterval(function () {
+						time_length--;
+						$(obj).html(time_length+'s');
+
+						if(time_length==0){
+							clearInterval(timer);
+							$(obj).html('获得验证码');
+							$(obj).removeClass('disable');
+						}
+					},1000)
+				}
+			})
+		</script>
+		
+			<!-- WX jssdk share -->
+	<script type="text/javascript">
+		var shareTitle='Ubonus亿折扣圣诞新年大促！单笔高达7刀立减！';
+		var shareLink='<{$shareUrl}>';
+        var desc="数十家餐厅、美容、百货及生鲜美食商家圣诞新年大优惠，还有红包购物券可以领";//onMenuShareAppMessage
+         var shareImg='<{$SKIN_PATH}>promotion/images/u_logo.jpg';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	</body>
+</html>

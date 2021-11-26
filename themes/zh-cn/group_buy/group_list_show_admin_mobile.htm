@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style type="text/css">
+		.list_body{
+			margin: 20px;
+		}
+		.list_body .item{
+			position: relative;
+			margin: 15px 0px;
+			border-bottom: 1px solid #eee;
+
+		}
+		.item .badge{
+			position: absolute;
+		    top: -8px;
+		    left: -10px;
+		    background: #FD5001 ;
+		}
+		.item .avatar,.item img{
+			height: 50px;
+			width: 50px;
+		}
+		.item .user_name{
+			line-height: 50px;
+		}
+		.item .user_nickname{
+			display: inline-block;
+			width: 50%;
+		}
+		.item .user_qty{
+			display: inline-block;
+			width: 40%;
+		}
+
+		.item .order_status{
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		}
+	</style>
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>group1_buy/group_manage" class="a-back"></a>
+	</div>
+	<h1>团员详情</h1>
+</header>
+
+
+<section id="bd" style="background-color: #FFF" style="position: relative;">
+
+<h5 style="text-align: center;">奖励：<{$reward_msg}> <span class='label label-info'>总人数:<{$current}></span> </h5>
+
+
+<!-- group user List admin -->
+<div class='group_user_list'>
+	
+	
+	<div class='list_body '>
+			<{foreach from=$data item=item name='userlistloop'}>
+			<div class='item '>
+				<span class="badge"><{$smarty.foreach.userlistloop.index+1}></span>
+				<span class='avatar'><img src="<{$UPLOAD_PATH}><{$item.avatar}>"></span>
+				<span class='user_name' > <{$item.user_name}></span>
+				<div style="padding: 10px">
+					<span class='user_nickname' >昵称： <{$item.user_nickname}></span>
+					<span class='user_qty' style='white-space:nowarp'>数量： <{$item.qty}></span>
+					<span class='user_email'>Email:<{$item.user_email}></span>
+					<span class='user_phone'>Phone:<{$item.user_phone}></span>
+				</div>
+				<{if $item.real_order_id}>
+					<!-- <a href="<{$http_root_www}>company/customer_order_detail?id=<{$item.real_order_id}>" class='order_status label label-success'>已下单</a> -->
+					<a class='order_status label label-success' onclick="alert('订单ID：<{$item.real_order_id}>')">已下单</a>
+				<{else}>
+					<a  class='order_status label label-default'>未购买</a>
+				<{/if}>
+			</div>
+			<{/foreach}>
+	</div>
+	
+
+</div>
+
+
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>
+
+
+

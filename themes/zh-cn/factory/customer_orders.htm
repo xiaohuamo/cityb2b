@@ -1,0 +1,573 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+
+	<style type="text/css">
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="订单号/兑换码/姓名/电话/产品名/快递号" style="width:250px; margin-right:5px;" />
+						当前系统时区： <{$currentTimeZone}>
+						当前系统时间： <{$currentTime}>
+						<br><br>
+
+						<label><{$lang->filter}>:</label>
+						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$st}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>to</label>
+						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$et}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						
+							<select id="currentBusinessId" name="currentBusinessId">
+							<option value="all" <{if $currentBusinessId=='all'}> selected<{/if}>>选择商家</option>
+							<{foreach from=$authrise_manage_other_business_account item=item}>
+								<option value="<{$item.customer_id}>" <{if $currentBusinessId==$item.customer_id}> selected<{/if}>><{$item.displayName}></option>
+							<{/foreach}>
+							
+						</select>
+						
+						<select name="ifpaid" id='ifpaid'>
+
+							<option value="all"<{if $ifpaid=='all'}> selected<{/if}>><{$lang->ifpaid}></option>
+
+							<option value="3" <{if $ifpaid=='3'}> selected<{/if}>><{$lang->unpaid}></option>
+
+							<option value="1"<{if $ifpaid=='1'}> selected<{/if}>><{$lang->paid}></option>
+
+							<option value="2"<{if $ifpaid=='2'}> selected<{/if}>><{$lang->pinding}></option>
+
+						</select>
+
+
+						<select name="status" id='status'>
+
+							<option value="all"<{if $status=='all'}> selected<{/if}>><{$lang->order_status}></option>
+
+							<option value="c01" <{if $status=='c01'}> selected<{/if}>>客户购买</option>
+
+							<option value="b01"<{if $status=='b01'}> selected<{/if}>>已兑付</option>
+
+							<option value="d01"<{if $status=='d01'}> selected<{/if}>>已取消</option>
+
+						</select>
+
+						<select id="customer_delivery_option" name="customer_delivery_option">
+							<option value="all" <{if $customer_delivery_option=='all'}> selected<{/if}>><{$lang->logistic_delivery_or_pickup}></option>
+							<option value="1"<{if $customer_delivery_option=='1'}> selected<{/if}>>商家递送</option>
+							<option value="2"<{if $customer_delivery_option=='2'}> selected<{/if}>>客户自取</option>
+						</select>
+
+						<select id="payment" name="payment">
+							<option value="all" <{if $payment=='all'}> selected<{/if}>><{$lang->order_payment_method}></option>
+							<option value="paypal" <{if $payment=='paypal'}> selected<{/if}>>paypal</option>
+							<option value="offline" <{if $payment=='offline'}> selected<{/if}>>offline</option>
+							<option value="royalpay" <{if $payment=='royalpay'}> selected<{/if}>>royalpay</option>
+							<option value="alipay" <{if $payment=='alipay'}> selected<{/if}>>alipay</option>
+							<option value="hcash" <{if $payment=='hcash'}> selected<{/if}>>hcash</option>
+							<option value="creditcard" <{if $payment=='creditcard'}> selected<{/if}>>creditcard</option>
+						</select> 
+
+						<select id="staff" name="staff">
+							<option value="all" <{if $staff=='all'}> selected<{/if}>><{$lang->business_department}></option>
+							<{foreach from=$staff_list item=item}>
+								<option value="<{$item.id}>" <{if $staff==$item.id}> selected<{/if}>><{$item.displayName}></option>
+							<{/foreach}>
+							
+						</select>
+
+						<button type="submit"><{$lang->search}></button>
+						
+						<br><br>
+                     
+						<button type="button" onclick="showPdf('pdf');"><{$lang->order_pdf}></button>
+						<button type="button" onclick="showPdf('shippingLabel');">Shipping Label PDF</button>
+						<input type="checkbox" name="fitInPage" id='fitInPage' value='true'>Fit in page
+                         <{if $loginUser.business_type_restaurant ==1 || $loginUser.business_type_freshfood ==1}>
+							  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_csv_fresh_and_restaurant">&nbsp;&nbsp;导出订单（购买但并未处理）</a></span>
+						  &nbsp;&nbsp; 	  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_freshfood_summery">&nbsp;&nbsp;导出库存总单</a></span>
+						
+						<{/if}>
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>
+									<th>预计配送时间</th>		
+									<th><{$lang->order_id}></th>		
+									<th>合并</th>		
+									<th><{$lang->product_total}></th>		
+									<th><{$lang->user}></th>	
+									<th>ID</th>	
+								
+									
+									<th>phone</th>	
+										<th><{$lang->status}></th>	
+									<th><{$lang->payment}></th>
+									<th><{$lang->delivery}></th>				
+									<th><{$lang->submission_time}></th>
+									<th>Invoice</th>
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									
+
+									<td>
+									
+									<{if !$item.merge_to_another_order}>
+									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>------<{/if}><br>
+								<!--<input data-id='<{$item.id}>'  type="text" class="input-text" ;style="width:100px;" id="delivery_date-<{$item.id}>" name="deliveryTime" value="<{date('Y-m-d', $item.logistic_delivery_date)}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+								--> 
+								 <input type="text" class="input-text" data-id='<{$item.id}>' id="deliveryTime-<{$item.id}>" style="width:100px;" name="deliveryTime" onchange="update_deliveryTime(this);" onclick="WdatePicker();" onfocus="WdatePicker();"
+								 
+												   value="<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}><{/if}>"   >
+											<span class='promote-ajax'></span>
+								 
+								 
+								  <{else}>
+								      不可用
+								  <{/if}>
+								
+								</td>
+								
+								<td>
+										<{$item.order_name}>
+										<br>
+										<a target='_blank' href="<{$http_root_www}>factory/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+									</td>
+									<td>
+									
+									
+									<{if $item.merge ==2}> <!--未发现相同客户记录 -->
+										本日唯一订单
+									
+									<{elseif $item.merge ==1}> <!--发现记录，且非第一笔记录，可以进行合并-->
+										
+										<div class="onoffswitch">
+													<input type="checkbox"  <{if $item.merge_to_another_order==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+														   data-id='<{$item.id}>' <{if $item.merge_to_another_order==1}> checked <{/if}>>
+													<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											
+												<{if $item.merge_to_another_order==1}>
+													<span class='publish_icon' data-id='<{$item.id}>'>
+															<span style="color:#58964E;">已合并</span>
+														</span>
+												<{else}>
+													<span class='publish_icon' data-id='<{$item.id}>'>
+															<span style="color:#F30;">未合并</span>
+														</span>
+												<{/if}>
+										
+										 <span class='promote-ajax'></span>
+									
+									<{elseif $item.merge==0}><!-- 为原始记录，是合并目标订单，该订单不能被其它合并 -->
+										第一笔订单
+									<{/if}>
+									
+									
+									
+									</td>
+									<td>
+									<{if $dispatching_user}>
+									
+							    	<{$item.money}>
+								
+									<{else}>
+								
+									<{$item.ori_sum}>
+									
+									<{/if}>
+									
+									
+									</td>
+									<td><{if $item.displayName}><{$item.displayName}> <{else}> <{$item.name}><{/if}> </td>
+									<td><{$item.userId}></td>
+									
+									<td><{$item.phone}></td>
+									
+									
+									<td>
+										<{if $item.coupon_status=='c01'}>
+												<span style="color:#FD5001 ;"><{$item.cn_coupon_status_name}></span>
+												<{if  $item.status==1}>
+													<span class='fast-approving-btn' data-id='<{$item.orderId}>'><span class='status_updating'>
+														<i class='fa fa-sign-out ' style='color:#58964E'></i>
+													</span></span>
+												<{/if}>
+											<{elseif $item.coupon_status=='b01'}>
+												<span style="color:#58964E;"><{$item.cn_coupon_status_name}></span>
+											<{elseif $item.coupon_status=='d01'}>
+												<span style="color:#F30;"><{$item.cn_coupon_status_name}></span>
+										<{/if}>	
+
+
+									<td>
+										<{if $item.status==1}>
+										<span style="color:#58964E;"><{$lang->submit}></span>
+										<{elseif $item.status==0}>
+										<span style="color:#F30;"><{$lang->ubsubmit}></span>
+										<{elseif $item.status==2}>
+										<span style="color:#F30;">Pending</span>
+										<{/if}>	
+										<br>
+										<small><{$item.payment}> </small>
+									</td>
+
+									<td>	
+										<{if $item.customer_delivery_option==1}>
+											<{$lang->delivery}>
+											<{if $item.tracking_id}>  <i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> <{/if}>
+										<{elseif $item.customer_delivery_option==2}>
+											<{$lang->pick_up}>
+										<{elseif $item.customer_delivery_option==0}>
+											<!-- 未注明 -->
+										<{/if}>	
+									</td>	
+
+									<td><{date('Y-m-d H:i', $item.createTime)}></td>
+									<td>
+										<{if !$item.merge_to_another_order}>
+									<a class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')">打印</a>
+									 <{else}>
+									   不可用
+									 <{/if}>
+									
+									</td>
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+						<div>
+							<i class='fa fa-sign-out ' style='color:#58964E'></i>快速兑付按钮	
+							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> 已经发货标识
+						</div>
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+								
+								 
+								  
+	 var loading = false;
+	 
+	    $('input[name=onoffswitch]').on('click', function () {
+        var orderId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>company/merge_order_update",
+            data: {"id": orderId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+                if (result.merge_to_another_order == '0') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+                } else if (result.merge_to_another_order == '1') {
+                    context.html("<span style='color:#58964E;'>已合并</span>");
+					$("#myonoffswitch"+orderId).attr("disabled","true");
+					
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+	 
+	 
+
+    function  update_deliveryTime(obj) {
+    if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+    
+        var id = $(obj).data('id');
+        var update_field_name = 'delivery_time';
+        var value;
+       
+            value = $(obj).val();//常规改动直接抓取改动值
+       
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(obj).next('.promote-ajax');
+		
+        $.ajax({
+            url: "<{$http_root_www}>company/update_delivery_time",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    }
+								  
+								  
+								</script>
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+function showPdf(type)
+{	
+	var vCustomerDeliveryOption= $('#customer_delivery_option option:selected').val();
+	var vStaff= $('#staff option:selected').val();
+	var vStatus= $('#status option:selected').val();
+	var vPayment=  $('#payment option:selected').val();
+	var vIfpaid=  $('#ifpaid option:selected').val();
+	
+	var vSk=$('#id_sk').val();
+	var vSt=$('#st').val();
+	var vEt=$('#et').val();
+
+	var fitInPage=$('#fitInPage').prop('checked');
+
+	var vUrl='<{$http_root_www}>factory/customer_orders?output='+type+'&ifpaid='+vIfpaid+'&status='+vStatus+'&payment='+vPayment+'&sk='+vSk+'&startTime='+vSt+'&endTime='+vEt+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+function export_csv() {
+
+  window.location.assign='<{$http_root_www}>company/export_csv_fresh_and_restaurant';
+
+}
+</script>
+
+
+</body>
+
+</html>

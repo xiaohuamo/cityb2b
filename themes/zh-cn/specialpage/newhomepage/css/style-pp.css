@@ -1,0 +1,368 @@
+﻿/*广告banner*/
+.banner a,.banner img{
+    display: block;
+    width: 100%;
+}
+/*index-row3*/
+.index-row3{
+    padding: 50px 0 40px;
+    overflow: hidden;
+}
+.ptith2{
+    margin-bottom: 35px;
+    position: relative;
+}
+.ptith2:before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    margin-top: -4px;
+    width: 100%;
+    height: 8px;
+    background-color: #00b5fc;
+}
+.ptith2 em{
+    position: relative;
+    z-index: 5;
+    display: inline-block;
+    margin-left: 55px;
+    padding: 0 25px;
+    font-size: 36px;
+    color: #89898a;
+    background-color: #fff;
+}
+.ptith2 span{color: #329ad1;}
+.index-row3 .col-l,.index-row3 .col-c,.index-row3 .col-r{height: 640px;}
+.index-row3 .col-l{
+    margin-right: 10px;
+    padding: 35px 30px 20px 20px;
+    width: 325px;
+    border: 1px solid #f1f1f1;
+    overflow: hidden;
+}
+.pdl-active{
+    overflow: hidden;
+}
+.pdl-active dt{
+    padding-bottom: 5px;
+    font-size: 30px;
+    color: #5d6472;
+    border-bottom: 3px solid #646b78;
+}
+.pdl-active a{
+    display: block;
+    padding: 22px 0 15px;
+    font-size: 19px;
+    border-bottom: 1px solid #ededed;
+}
+.pdl-active .time{
+    display: block;
+    margin-top: 12px;
+    overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    color: #bbb;
+    font-size: 12px;
+}
+.pdl-active .more{
+    float: right;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #646b78 url(../images/img-arrnext.png) center center no-repeat;
+    -webkit-background-size: 8px auto;
+    background-size: 8px auto;
+}
+.pdl-active .sp{
+    padding: 0 25px 0 30px;
+    background: url(../images/img-time.png) left 8px center no-repeat;
+}
+.pdl-active a:hover .more{background-color: #e64141;}
+.index-row3 .btnmore{
+    margin: 20px auto 0;
+    width: 165px;
+}
+.index-row3 .btnmore a{
+    display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 40px;
+    color: #fff;
+    background-color: #00b5fc;
+}
+.index-row3 .btnmore a:hover{background-color: #e64141;}
+.index-row3 .col-c{
+    width: 627px;
+    overflow: hidden;
+}
+.index-row3 .col-c .item{
+    border: 1px solid #f1f1f1;
+}
+.index-row3 .col-c .item:first-child{margin-bottom: 11px;}
+.index-row3 .col-c a,.index-row3 .col-c img{
+    display: block;
+    width: 100%;
+}
+.index-row3 .col-c a:hover{
+    opacity: .7;
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+    -ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=70)';
+}
+.index-row3 .col-r{
+    margin-right: 10px;
+    width: 300px;
+    overflow: hidden;
+}
+.imgScro .item,.imgScro a,.imgScro .img,.imgScro img,.imgScro .txt{
+    display: block;
+    outline: none;
+}
+.imgScro .img{
+    border: 1px solid #f1f1f1;
+}
+.imgScro .txt{
+    padding-top: 80px;
+    height: 302px;
+    font-size: 32px;
+    text-align: center;
+    color: #fff;
+    background-color: #94d54f;
+}
+.imgScro .txt .sp{
+    display: block;
+    padding-top: 10px;
+    font-size: 20px;
+    color: #e2f7cc;
+}
+.imgScro .slick-dots{
+    position: absolute;
+    left: 0;
+    bottom: 90px;
+    width: 100%;
+    text-align: center;
+}
+.imgScro .slick-dots li{
+    display: inline-block;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #7eb642;
+    cursor: pointer;
+}
+.imgScro .slick-dots .slick-active{background-color: #d7fcaf;}
+/*index-row4*/
+.index-row4{
+    padding: 40px 0 90px;
+    background-color: #f7f9fb;
+    overflow: hidden;
+}
+.index-row4 .rbox{
+    padding-bottom: 100px;
+    overflow: hidden;
+}
+.index-row4 .col-l{
+    height: 666px;
+}
+.index-row4 .colla{
+    display: block;
+    padding-top: 55px;
+    padding-left: 35px;
+    width: 330px;
+    height: 100%;
+    background-color: #4ca355;
+}
+.index-row4 .colla .tit{
+    position: relative;
+    display: block;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    font-size: 39px;
+    color: #fff;
+    line-height: 1.2;
+}
+.index-row4 .colla .sp{
+    padding: 8px 13px;
+    font-size: 22px;
+    color: #65c46f;
+    background-color: #fff;
+}
+.index-row4 .colla .sp1{
+    font-size: 19px;
+    color: #fff;
+}
+.index-row4 .colla .tit:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 75px;
+    height: 5px;
+    background-color: #fff;
+}
+.index-row4 .colla .btn{
+    display: block;
+    font-size: 14px;
+    color: #fff;
+}
+.index-row4 .colla:hover .btn{color: #90dde8;}
+.index-row4 .colca{
+    display: block;
+    width: 270px;
+    overflow: hidden;
+    color: #fff;
+}
+.index-row4 .colca .img{
+    display: block;
+    height: 333px;
+    background: #fff url(../images/imgp-img3.jpg) center center no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+}
+.index-row4 .colca .txt{
+    position: relative;
+    display: block;
+    padding-top: 50px;
+    height: 333px;
+    font-size: 30px;
+    background-color: #563894;
+    text-align: center;
+}
+.index-row4 .colca .txt:before,.index-row4 .colra .img:before{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+.index-row4 .colca .txt:before{
+    left: 50%;
+    top: -15px;
+    margin-left: -7.5px;
+    border-bottom: 15px solid #563894;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+}
+.index-row4 .colca .sp{font-size: 30px;}
+.index-row4 .colca .spt{
+    display: inline-block;
+    font-size: 75px;
+    border-bottom: 5px solid #fff;
+}
+.index-row4 .colca .spt span{font-size: 45px;}
+.index-row4 .colra,.index-row4 .movbox{
+    display: block;
+    width: 670px;
+    height: 50%;
+    overflow: hidden;
+    color: #fff;
+}
+.index-row4 .colra .txt{
+    float: left;
+    padding-top: 130px;
+    width: 46%;
+    height: 100%;
+    font-size: 39px;
+    text-align: center;
+    background-color: #63bbe4;
+}
+.index-row4 .colra .spt{
+    display: block;
+    font-size: 19px;
+    color: #bedae7;
+}
+.index-row4 .colra .img{
+    position: relative;
+    float: left;
+    width: 54%;
+    height: 100%;
+    background: #fff url(../images/imgp-img4.jpg) center center no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+}
+.index-row4 .colra .img:before{
+    top: 50%;
+    left: -15px;
+    margin-top: -7.5px;
+    border-right: 15px solid #fff;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+.index-row4 .colra .tag{
+    position: absolute;
+    top: 35px;
+    right: 24px;
+    padding: 3px 13px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #83c44e;
+}
+.index-row4 .movbox{
+    padding: 30px 55px 0 85px;
+    background-color: #fff;
+    overflow: hidden;
+}
+.index-row4 .movbox .tag span{
+    padding: 3px 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ead12c;
+}
+.movieScro .item{
+    outline: none;
+    overflow: hidden;
+}
+.movieScro .txt{
+    float: left;
+    padding-top: 45px;
+    font-size: 28px;
+}
+.movieScro .txt *{display: block;}
+.movieScro .txt .tit{
+    font-size: 26px;
+    color: #9ab7c5;
+}
+.movieScro .txt .emp{
+    font-size: 16px;
+    color: #bbced8;
+}
+.movieScro .img{
+    float: right;
+    width: 185px;
+    border: 8px solid #f7f7f7;
+    border-radius: 8px;
+    /*box-shadow: 1px 1px 0 16px rgba(0,0,0,.12);*/
+}
+.movieScro .slick-dots{
+    position: absolute;
+    left: 0;
+    bottom: 35px;
+    overflow: hidden;
+}
+.movieScro .slick-dots li{
+    display: inline-block;
+    margin: 0 8px;
+    width: 12px;
+    height: 12px;
+    background-color: #b0b0b0;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.movieScro .slick-dots .slick-active{
+    background-color: #fff;
+    border-color: #f6db2a;
+}
+
+.banner a:hover,
+.imgScro a:hover,
+.index-row4 .colca:hover .img,
+.index-row4 .colra:hover .img{
+    opacity: .7;
+    -ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=70)';
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+}

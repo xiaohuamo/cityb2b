@@ -1,0 +1,310 @@
+<!doctype html>
+<html>  
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />           
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	
+	
+</head>
+
+<style type="text/css">
+.vote-header{
+	font-size: 28px;
+    font-weight: 300;
+    color: #2f2f2f;
+    text-align: center;
+    padding: 50px 0px 13px 0px;
+}
+.vote-breaker{
+	background: #2bb8aa;
+    width: 38px;
+    height: 10px;
+    margin: auto;
+}
+.vote-desc{
+	max-width: 650px;
+    margin: auto;
+    padding: 20px 0px 40px 0px;
+    text-align: center;
+}
+.container{
+	width: 1200px;
+	margin: auto;
+	left: 0px;
+	right:0px;
+	
+}
+.voting_item_container{
+    width: 370px;
+    display: inline-block;
+    padding: 5px;
+    margin: 50px 0px;
+}
+
+.voting_item_container .top-section{
+	position: relative;
+	min-height: 200px;
+	background-color: #fff;
+}
+.voting_item_container .mid-section{
+	position: relative;
+	height: 50px;
+}
+.voting_item_container .bottom-section{
+	
+	position: relative;
+	height: 150px;
+	overflow: hidden;
+}
+ .detail{
+	position: absolute;
+    bottom: 0px;
+    cursor: pointer;
+    line-height: 30px;
+    height: 30px;
+    padding: 0px 18px;
+    font-size: 15px;
+    color: #777;
+    border: 1px solid #777;
+    border-radius: 24px;
+    left: 0;
+    right: 0;
+    width: 60px;
+    margin: auto;
+}
+
+.rank{
+	-webkit-box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.25);
+	position: absolute;
+    top: -63px;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    left: 0;
+    right: 0;
+    background: #f2f2f2;
+    border-radius: 50px;
+    border: 1px solid #fff;
+    opacity: 0.9;
+}
+.rank .order_label{
+	font-size: 18px;
+    text-align: center;
+    display: block;
+    margin-top: 12px;
+
+}
+.rank .order{
+	color: #3bb8aa;
+    font-size: 50px;
+    font-weight: 100;
+    display: block;
+    text-align: center;
+    margin-top: -15px;
+}
+.vote-statics{
+	padding-left: 170px;
+	line-height: 40px;
+}
+.vote-statics .count_label{
+	
+	font-size: 15px;
+}
+.vote-statics .count{
+	font-size: 14px;
+}
+.vote-statics .count_change{
+	position: relative;
+	color:#f33;
+	font-weight: bolder;
+	font-size: 19px;
+}
+.vote-btn-bg{
+	position: absolute;
+    top: 6px;
+    right: 0px;
+    padding: 5px 25px;
+    background: #2bb8aa;
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+}
+.vote-btn{
+	
+}
+.voted{
+	color:#FD5001 ;
+}
+.rank-first{
+	
+}
+.rank-second{
+	
+}
+.rank-thired{
+	
+}
+</style>
+
+
+<script type="text/javascript">
+	$(function(){
+		$('.vote-btn-bg').on("click",function(){
+			<{if !$loginUser}>
+				alert('请先登录！');
+				window.location.href = '<{$http_root_www}>member/login?returnUrl=/voting/show?id=' + '<{$voting.id}>';
+			<{else}>
+				if($(this).hasClass('disable'))return;
+				$target = $(this).find('.vote-btn');
+				if($target.hasClass('voted')){
+					withdrawAjax($target);
+				}else{
+					voteAjax($target);
+				}
+			<{/if}>
+			
+		})
+	})
+
+	function count_change(obj,value){
+		if(value==0)return;
+		if(value>0){
+			displayValue="+" + Math.abs(value);
+		}
+		if(value<0){
+			displayValue="- " + Math.abs(value);
+		}
+		var id = $(obj).data('id');
+
+		$count = $('div.vote-statics[data-id="'+id+'"]').find('.count');
+		console.log($count);
+		$count.html(parseInt($count.html()) + parseInt(value));
+
+		$target=$('div.vote-statics[data-id="'+id+'"]').find('.count_change');
+		$target.css('opacity','1').css('top','0');
+
+		$target.html(displayValue);
+		$target
+		.stop( true, false )
+		.animate({"top":"-=10px"},500)
+		.animate({opacity:0},1000);
+
+	}
+
+	function voteAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/vote_ajax",
+			data:{id:id},
+			
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-o-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-up').addClass('voted');
+				count_change(obj,+1);
+			},
+			error:function(){
+
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+
+	function withdrawAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/withdraw_vote_ajax",
+			data:{id:id},
+
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-o-up').removeClass('voted');
+				count_change(obj,-1);
+			},
+			error:function(){
+				
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+
+</script>
+<body>
+	<{include file='header.htm'}>
+	<div class="container">
+			<h1 class='vote-header'><{$voting.title}></h1>
+			<div class='vote-breaker'></div>
+			<p class='vote-desc'><{$voting.description}></p>
+			<div>
+				<{foreach from=$list item=item}>
+					<div class='voting_item_container'>
+							<div class='top-section'>
+								<a href='<{$http_root_www}>voting/item_detail?id=<{$item.id}>' target='_blank'>
+									<img src="<{$UPLOAD_PATH}><{$item.pic}>" width='100%'>
+								</a>
+								
+								<div class='rank'>
+									<span class='order_label'>排名</span><span class='order <{if $item.rank==1}>rank-first<{/if}> <{if $item.rank==2}>rank-second<{/if}> <{if $item.rank==3}>rank-thired<{/if}>'><{$item.rank}></span>
+								</div>
+								
+							</div>
+							<div class='mid-section'>
+								<div class='vote-statics' data-id='<{$item.id}>'>
+									<span class='count_label'>票数：</span><span class='count'><{$item.vote_count}></span>&nbsp<span class='count_change'></span>
+								</div>
+								<{if $item.voted==true}>
+								<span class='vote-btn-bg'>
+								  <i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-up vote-btn voted'></i>
+								  VOTE
+								  </span>
+								<{else}>
+								<span class='vote-btn-bg'>
+									<i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-o-up vote-btn '></i>
+									VOTE
+								</span>
+								<{/if}>
+							</div>
+							<div class='bottom-section'>
+								<span>
+								<div style='font-size: 16px;font-weight: bolder;color: #2bb8aa;'><{$item.title}></div>
+								<i class='fa fa-lg fa-quote-left'></i>
+								<{$item.description|truncate:100:'...'}>
+								<i class='fa fa-lg fa-quote-right'></i>
+								</span>
+
+								<{if $item.detail}>
+									<a class='detail' href='<{$http_root_www}>voting/item_detail?id=<{$item.id}>' target='_blank'>查看详情</a>
+								<{/if}>
+							</div>
+						
+					</div>
+				<{/foreach}>
+			</div>
+	</div>
+
+	<{include file='footer.htm'}>
+
+</body>
+
+</html>

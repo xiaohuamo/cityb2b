@@ -1,0 +1,27 @@
+<{foreach from=$heads item=item}>
+
+<div class="items clearfix" id="coupon<{$item.id}>">
+	<a href="<{$http_root_www}>lottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>"><img style='width: 100%' src="<{$UPLOAD_PATH}><{$item.pic}>" /></a>
+	
+	<div class='item-info'>
+		<div class='item-info-top' style="border-bottom: 0px solid #eee;">
+			<div>
+				<span style='font-size: 16px;display:inline-block;width:370px'><{$item.title|truncate:30:''}></span>
+				
+			</div>
+			<div>
+				<span style='float:left;margin: 0px 0px 0px 0px;'>
+			<span >参与人次：<{$item.total_draw}></span>&nbsp;&nbsp;&nbsp;
+			</span>
+						<span style='float:right;margin: 0px 4px 0px 0px;'>
+				
+				<span >各类总中奖&nbsp;<{$item.total_bid}></span>
+			</span>
+				
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+<{/foreach}>

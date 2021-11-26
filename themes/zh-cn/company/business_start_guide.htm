@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+	.main-form .input-box span label { width:200px; }
+
+	.main-form .input-box span label a.on { background:#4FABF0; }
+	</style>
+	
+
+</head>
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}>
+			<div class="main">
+				<div class="box2">
+					
+					<div class="main-form">	
+						<div class="colCurTit">新手导航
+						</div>
+						<form id="memberForm"  class='form-style-green' action="<{$http_root_www}>company/profile_contact" method="post" target="post_frame" enctype="multipart/form-data">
+						
+						
+							<div  class="colCurTit help-section-hd" >有问题？ <i class='fa fa-angle-double-down fa-lg '></i></div>	
+							<div class='help-section-bd'>
+							
+								<div class="input-box multi-select clearfix">
+									<span><label>有问题？</label>
+									</span>
+									点击<span class="links"  style="margin-top:2px;"> <a  class='btn-yellow' target="_blank" href="<{$http_root_www}>message/write?message_type=tech-support">在线提问</a></span>，信息会发送到Ubonus客服。请确认您的联系方式。最有效的联系方式是加微信：Ubonus666888.也可以提供电话号码或邮箱。我们会回尽快回复。如果紧急可致电0413 663 941（10:00am-5：00pm)。
+								</div>
+								<br>
+							   
+							</div>
+						   
+							<div  class="colCurTit help-section-hd" ><span class = 'step-number-icon' >1</span>基本信息设置 <i class='fa fa-angle-double-down fa-lg '></i></div>	
+							<div class='help-section-bd'>
+							
+								<div class="input-box multi-select clearfix">
+									<span><label>启动在线帮助</label>
+									</span>
+									
+								</div>
+								<br>
+							    <div class="input-box multi-select clearfix">
+									<span><label><a target="_blank" href="<{$http_root_www}>company/profile_manager">用户(管理员)信息 </a></label>
+									</span>
+									用户昵称、邮件、电话、手机、联系人姓名等重要的商家信息。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/logo">商家LOGO</a></label></span>
+									商家LOGO会显示在网页中，对于提升商家的知名度非常重要！
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/profile">商家基本信息</a></label></span>
+									包括商家名称、所在地区、商家简介及公司简介信息。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/profile_pic">图片展示</a></label></span>
+									该商家图片将展示在商家网站上【Ubonus可以自动帮助商家创建一个网站，适应台式机、ipad、和手机端显示】
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/profile_contact">联系人及地址</a></label></span>
+									联系人的信息（默认为用户信息，如果不同，可以更改），还有商家的地址信息。（如果有多个地点，填总部地点）
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/profile_web">网站社交信息</a></label></span>
+									商家网站、微信公众号、二维码、微博、facebook等信息。
+								</div>
+								<br>
+							</div>
+		
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >2</span>发布商家、产品、服务或项目展示  <i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+							<div class="input-box multi-select clearfix">
+								<span><label>发布展示</label></span>
+									  发商业信息、产品、服务、项目<strong>展示</strong>都可以通过使用<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=1" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons?coupon_type=1" >直接发布</a></span>来发布展示。在展示中可以展示商家、产品或服务，可以包括各种促销的文字信息。
+							  </div>
+							
+								
+								<br>
+							</div>
+							
+<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >3</span>置顶/推广 <i class='fa fa-angle-double-down fa-lg '></i></div>
+							<div class="help-section-bd">
+							
+							<div class="input-box multi-select clearfix">
+									<span><label>关键字/行业分类置顶</label></span>
+									<strong>【绝大多数免费】</strong>商家可以在这里选择<br>
+									<span class="links"  style="margin-top:2px;"><a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/keywords" >关键字置顶</a></span>（比如如果希望用户输入"地产"时，自己的信息置顶，那么就可以使用该功能）<br>
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank" href="<{$http_root_www}>company/category_buy" >行业分类置顶</a></span>&nbsp;&nbsp;当客户点击某个行业的类型时，如果您设置了置顶，那么会将您的信息置顶显示。比如，商家如果希望，在墨尔本，如果客户选择【建筑装修】行业分类时，自己的信息置顶，那么需要使用这项功能。事实上，网站的行业分类有三层，商家可以选择在任何一层置顶比如大类【建筑装修】--》中类【室内外装修】--》小类【地板地毯地砖】，商家可以选择在任何一个级别上进行置顶操作。
+								</div>
+							<br>
+							<div class="input-box multi-select clearfix">
+									<span><label>商家推广</label></span>
+									商家想让自己发布的产品、信息、促销、优惠能够被更多人注意和关注到。可以使用商家推广功能。推广功能包括：<br>
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=6" >手机特大图</a></span>&nbsp;可以让商家的产品图片以特大方式显示，能够直接对用户产生视觉的冲击。类似，报纸广告的整幅。特大图和普通图面积差9倍以上。<br>
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=3" >首页中心特大主图（6个位置）</a></span>&nbsp;显示在台式机\Pad 等设备的首页最中心位置，超大图。显示在手机设备上前6位的位置，最多放置3天。<br>
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=2" >首页流行主图（3个位置）</a></span>&nbsp;显示在台式机\Pad 等设备的首页右边，固定显示【不被滚动】位置，大图。显示在手机设备上前9位的位置，最多放置3天。<br>
+
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=1" >首页推荐产品（10个位置）</a></span>&nbsp;显示在台式机\Pad 等设备的首页中部，显示大图。显示在手机设备上前19位的位置，最多放置7天。<br>
+									<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=4" >商家logo展示（40个位置）</a></span>&nbsp;显示在台式机\Pad 等设备的首页中部，显示中图。最多放置60天。<br>	
+								
+								<span class="links"  style="margin-top:2px;"><a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/customer_homepage_ad_application_edit?type=5" >首页文字位置</a></span>&nbsp;显示在台式机\Pad 等设备的首页中部超级大图上方的文字链接，最多放置5条。<br>	
+							</div>
+							<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/category_select">设置行业类型</a></label></span>
+									设置行业分类<span class="links"  style="margin-top:2px;"> <a class='btn-yellow'  target="_blank"  href="<{$http_root_www}>company/category_select" >非常重要</a></span>,用户按照行业查找时，能够迅速找到您发布的信息。一个商家可以设置很多的行业类型。每个产品也可以对应多个不同的行业类型。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/keywords_edit">设置关键字</a></label></span>
+									设置关键字<span class="links"  style="margin-top:2px;"> <a class='btn-yellow'  target="_blank"  href="<{$http_root_www}>company/keywords_edit" >最重要</a></span>,用户输入关键字查找产品、服务或商业信息时，如果您设置了关键字，将被快速发现！
+								</div>
+								<br>	
+								
+								
+
+							</div>
+							
+								<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >+</span>更多导航<i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+							
+							
+							 <div class="colCurTit help-section-hd"><span class = 'step-number-icon' >4</span>发布优惠券、返现券<i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+							
+								<div class="input-box multi-select clearfix">
+									<span><label>发布促销-优惠券</label></span>
+									 
+									 比如商店、餐馆或服务业等都可以通过发布<strong>优惠券</strong>来吸引用户。客户在网上领取。客户与商家交易时，商家进行兑付。发布优惠券可以通过<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=4" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons?coupon_type=4" >直接发布</a></span>来发布优惠券。
+								</div>
+								<br>	
+								<div class="input-box multi-select clearfix">
+									<span><label>发布促销-返现券</label></span>
+									 比如像银行贷款等咨询业，可以发布返现券，客户与商家达成交易后，可以返给客户一定的现金或礼品卡。发布返现券可以通过<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=2" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons?coupon_type=2" >直接发布</a></span>来发布返现券。
+								</div>
+								<br>
+								
+							
+							</div>
+
+						
+							
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >5</span>发布团购代金券  <i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+								
+								<div class="input-box multi-select clearfix">
+									<span><label>发布团购代金券</label></span>
+									 在网上销售一种本地服务项目<strong>【线上购买、线下消费】或【线上锁定、线下支付和消费】</strong>，比如美食套餐、美食抵扣券、旅游套餐、机票、门票、电影票、旅馆、活动票务、生活服务、体育健身、户外活动、商业活动、批发等等。发布团购券可以通过<span class="links"  style="margin-top:2px;"> <a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=7" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons?coupon_type=7" >直接发布</a></span>来发布团购产品。Ubonus的团购发布系统非常强大，可以帮助您在多个国家，每个国家的多个城市，多个销售点定制规划在线产品的销售，并管理整个线上、线下的销售和兑付过程。在一个团购产品中，可以涉及多种子产品。
+								</div>
+								<br>
+							</div>
+							
+	
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >6</span>发布在线商城商品  <i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+								
+								
+								<div class="input-box multi-select clearfix">
+									<span><label>在线商城</label></span>
+									如果商家想要在Ubonus美食生活上卖商品，那么就需要使用在线商城的功能。发布商城可以通过<span class="links"  style="margin-top:2px;"> <a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=9" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>company/shops" >直接发布</a></span>来发布商城产品。发布商城之前，可能需要定义商品规格和递送方式。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/delivery_setting">递送设置</a></label></span>
+									递送设置，如果商家在网站上业务涉及到电子商务，而且需要邮东西给客户，那么需要设置这里
+								</div>
+								<br>
+								
+							</div>
+							
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >7</span>发布活动、商家消息、行业资讯  <i class='fa fa-angle-double-down fa-lg '></i> </div>
+							<div class='help-section-bd'>
+								
+								
+								<div class="input-box multi-select clearfix">
+									<span><label>在线商城</label></span>
+									如果商家想要在Ubonus美食生活上卖商品，那么就需要使用在线商城的功能。发布商城可以通过<span class="links"  style="margin-top:2px;"> <a class='btn-yellow'  target="_blank"  href="<{$http_root_www}>company/coupons_template?type1=9" >模板发布</a></span>或使用<span class="links"  style="margin-top:2px;"> <a class='btn-yellow'  target="_blank"  href="<{$http_root_www}>company/shops" >直接发布</a></span>来发布商城产品。发布商城之前，可能需要定义商品规格和递送方式。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/delivery_setting">递送设置</a></label></span>
+									递送设置，如果商家在网站上业务涉及到电子商务，而且需要邮东西给客户，那么需要设置这里
+								</div>
+								<br>
+								
+							</div>
+							
+								
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >8</span>发布商家在Ubonus美食生活的二级独立网站 <i class='fa fa-angle-double-down fa-lg '></i></div>
+							<div class="help-section-bd">
+								
+								<div class="colCurTit">制作商家网站--多种模板，自动响应台式机、pad和手机尺寸，拖拽式制作</div>
+								<div class="input-box multi-select clearfix">
+									<span>
+									<label>网站制作</label>
+									</span>
+									<strong>【定制网站】</strong>是Ubonus美食生活提供的一项非常好的功能。商家可以通过拖拽那些模板来创建自己的网站。通过菜单<span class="links"  style="margin-top:2px;"><a  class='btn-yellow'  target="_blank" href="<{$http_root_www}>index.php?ctl=template&act=template_edit?id=<{$loginUser.id}>" >定制网站</a></span>定制自己的商业网站，如果想看看网站的例子，可以<span class="links"  style="margin-top:2px;"><a  class='btn-yellow' target="_blank"  href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=180" >查看例子</a></span>，网站做完以后可以<span class="links"  style="margin-top:2px;"><a class='btn-yellow' target="_blank" href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=<{$loginUser.id}>" >预览网站</a></span>！目前定制网站在不断开发中。已经有不少功能可以提供使用了。
+								</div>
+								<br>
+
+							</div>
+							
+							
+							
+							
+							<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >9</span>推荐商家设置 <i class='fa fa-angle-double-down fa-lg '></i></div>
+								<div class="help-section-bd">
+								
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/abn_application">申请ABN认证</a></label></span>
+									申请ABN认证<strong>很重要</strong>,持有ABN说明商家是在澳洲境内的合法商家。网站会对通过认证的商家添加<strong>认证</strong>标志。
+								</div>
+								<br>
+							</div>
+								<div class="colCurTit help-section-hd" ><span class = 'step-number-icon' >10</span>个性及安全设置<i class='fa fa-angle-double-down fa-lg '></i></div>				
+							<div class='help-section-bd'>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>member/avatar">头像</a></label></span>
+									如果从微信注册，会默认获取头像信息。否则，自己需要添加头像信息。头像信息将现在在很多与产品和联系人相关的网页中。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>member/changepwd">密码信息</a></label></span>
+									设置新密码
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>member/change_email">设置新的email</a></label></span>
+									<strong>不能为空</strong>Email对于商家很重要，可能会接受订单、账单、支付的收据等。
+								</div>
+								<br>
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>member/wx_manage_account">微信绑定</a></label></span>
+									如果商家注册不是通过关注微信号后注册的，那么，为了能够在微信中使用网站，那么需要进行绑定操作。绑定操作必须要有email来接受绑定请求【可能绑定请求邮件被放到Junk Mail中，可检查JunK Mail】。具体绑定过程参见在线帮助。
+								</div>
+								<br>
+							</div>
+							
+							
+								<div class="colCurTit help-section-hd"><span class = 'step-number-icon' >11</span>商家可选设置及发布  <i class='fa fa-angle-double-down fa-lg '></i></div>
+								<div class="help-section-bd">
+								<div class="input-box multi-select clearfix">
+									<span><label><a  target="_blank" href="<{$http_root_www}>company/staff">员工/门店/分公司设置</a></label></span>
+									 是否有多个员工/门店或分公司？（推荐先创建2个员工/门店/分公司，先把所有信息录入完，知道工作流程后，才完善这里）
+								</div>
+								<br>
+							</div>					
+						
+							</div>
+						
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<{include file='footer.htm'}>
+
+</body>
+
+<script type="text/javascript">
+	$('.help-section-bd').hide();
+	$('.help-section-hd').on('click',function(){
+
+		$(this).toggleClass('help-section-hd-on');
+		$(this).find('i').toggleClass('fa-angle-double-down');
+		$(this).find('i').toggleClass('fa-angle-double-up');
+		$(this).next('.help-section-bd').toggle();
+	})
+</script>
+</html>

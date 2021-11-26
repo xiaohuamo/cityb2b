@@ -1,0 +1,124 @@
+<style type="text/css">
+.sub_coupon_edit input[type='number'] {
+	width: 80px;
+}
+.sub_coupon_edit input[type='text'] {
+	width: 350px;
+}
+</style>
+
+<div class="sub-coupons clearfix">
+	<div class="input-box clearfix">
+		<span>
+			<input type="checkbox" value='1' name="isSubCoupons" id="isSubCoupons" <{if $data.subCoupons|@count>0}> checked<{/if}>/>
+			<label for="isSubCoupons">添加更多优惠</label>
+
+			<em>是否提供更多优惠选择,比如满200赠20,满800赠100</em>
+			
+		</span>
+	</div>
+	<div class="input-box clearfix"  >
+		<div class="main-list" style="padding:0 0 20px;<{if $data.subCoupons|@count==0}> display: none<{/if}>">
+			<em>编写优惠券信息</em>
+			<table id="subCouponsTable" style="width: 100%;">
+				<thead>
+					<tr>
+						<th >优惠券名称</th>
+						<th>描述</th>
+						<th >售价</th>
+						<th >数量</th>
+						<th >删除</th>
+					</tr>
+				</thead>
+				<tbody class='sub_coupon_edit' >
+				
+					<{foreach from=$data.subCoupons item=item name='dl'}>
+					   
+						<tr id='sub<{$item.id}>' class='sub_coupon_item'>
+							<input type="hidden" name="sub_id[]" value="<{$item.id}>" />
+
+							<td>
+								<input name="sub_title[]" type="text" value="<{$item.title}>" />
+								<br>
+								<a  target="_blank" <{if !strstr($data.categoryId,',106121102')}>style="display: none;" <{/if}> href="<{$http_root_www}>company/sub_coupon_addon_edit?id=<{$item.id}>"><small>美食高级选项</small></a>
+							</td>
+
+							<td>
+								<textarea rows='5' name='product_description[]'><{$item.product_description}></textarea>
+							</td>
+
+							
+							<td>该优惠券售价由平台方决定,费用直接付给平台方,与商家无关</td>
+
+							<td><input name="sub_quantity[]" type="number" step='1' value="<{if $item.quantity !=0}><{$item.quantity}><{else}>999999<{/if}>"  /></td>
+
+														</td>
+						
+							<td><a onclick="delSubLine(this);"><i class="fa fa-close"></i></a></td>
+						</tr>
+
+						
+					<{/foreach}>
+				</tbody>
+			</table>
+			<br>
+			<button type="button" onclick="addSubLine();" style="background-color: #ffbf00">添加一个</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	function addSubLine(){
+		var html = '<tr class="sub_coupon_item">';
+		html +='<td><input type="text" name="sub_title[]" value="" /><input type="hidden" name="sub_id[]" value="0" /></td>';
+		html +='<td><textarea rows="5" name="product_description[]"></textarea></td>';
+		html +='<td>$2.00(价格由平台方定义和收取与商家无关)</td>';
+		html +='<td><input type="number" step="1"  name="sub_quantity[]" value="999999"  /></td>';
+		html +='<td><a onclick="delSubLine(this);"><i class="fa fa-close"></i></a></td></tr>';
+		$('.sub_coupon_edit').append(html);
+	}
+
+	function delSubLine(obj){
+		if(confirm('确定要删除该子卡？')){
+				 var id = $(obj).parent().siblings('input').val();
+				 if(id){
+				 	console.log(id);
+
+				 	$.ajax({
+		            type: 'POST',
+		            url: "<{$http_root_www}>company/sub_coupon_delete",
+		            data: {id:id},
+					beforeSend:function(){
+						$(obj).html("<i class='fa fa-spinner fa-spin'></i>");
+					},
+		            success: function(result) {
+		               data = JSON.parse(result);
+		               if(data.status==200)
+		               		$(obj).parent().parent().remove();
+		            },
+		            complete:function(){
+		            	console.log('complete');
+		            },
+		            error:function(){
+		            	console.log('error');
+		            }
+
+		        })
+			 }else{
+			 	$(obj).parent().parent().remove();
+			 }
+		}
+	}
+
+	$(function(){
+		$("#isSubCoupons").on('click',function(){
+			if($(this).is(':checked')){
+				$('.main-list').show();
+			}else{
+				$('.main-list').hide();
+			}
+			
+		})
+		
+	})
+</script>

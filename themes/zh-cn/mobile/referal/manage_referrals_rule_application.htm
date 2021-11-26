@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+	<header id="hd">
+		<div class="left">
+			<a onClick='history.back();' class="a-back"></a>
+		</div>
+		<h1>
+			我的合作项目
+			
+		</h1>
+		<a style="position: absolute;top: 0.3rem;right: 10px;" href="<{$http_root_www}>referal/referrals?type=user"><small>查看产品分享></small></a>
+	</header>
+
+	<section id="bd">
+		<div class="m-integral" style="background-color: #3da5fb" >
+			<h4>我的合作项目：<{$list|@count}></h4>
+			<h5>成交订单：<{$totalOrderCount}></h5>
+			<h5>佣金：$<{$totalCommission}></h5>
+		</div>
+
+		<ul class="g-ul g-tab2 g-tab2-1">
+			
+			<li ><a href="<{$http_root_www}>referal/apply_new_rule"><i class="ico2"></i>使用邀请码</a></li>
+			<li><a href="<{$http_root_www}>member/recharge?type=CUSTOMER_REF_COMMISSION"><i class="ico2">&nbsp;</i>取现</a></li>
+		</ul>
+
+		<{if $list}>
+		<ul class="g-ul m-list4 m-list4-1" >
+			<{foreach from=$list item=item name='dl'}>
+			<li>
+				<div class="top">
+					<p>
+						<div style="width: 75%;display: inline-block;"><{$item.coupon.title}></div>
+						<a href="<{$http_root_www}>referal/apply_new_rule_success?referal_rule_code=<{$item.apply_code}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;">查看资料</a>
+					</P>
+				</div>
+				
+				<div class="top">
+					<small style="width: 75%;display: inline-block;">
+						<{$item.desc}>
+
+						(媒体码：<{$item.apply_code}>)
+					</small>
+					
+					<{if $item.rule_status==0}>
+						<{if $item.status==1}>
+							<span style='color:green'>使用中</span>
+						<{elseif $item.status==0}>
+							<span style='color:#f30'>被禁用</span>
+						<{/if}>
+					<{elseif $item.rule_status==1}>
+						<span style='color:#f30'>规则整体禁用</span>
+					<{/if}>
+
+				
+						<p><small>订单数：<{$item.orderCount}></small></p>
+						<p><small>佣金：$<{$item.commissionTotal}></small></p>
+				</div>
+
+				<p>
+					<small><{date('Y-m-d H:i:s', $item.gen_date)}></small>
+					<a href="<{$http_root_www}>referal/shared_coupon_detail?couponId=<{$item.coupon_id}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;">业绩详情</a>
+					<a href="<{$http_root_www}>coupon1/<{$item.coupon_id}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;margin-right: 10px;">分享</a>
+				</p>
+
+			</li>
+			<{/foreach}>
+		</ul>
+		<{/if}>
+
+	</section>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<{include file="mobile/mobile_footer.htm"}>
+</body>
+</html>

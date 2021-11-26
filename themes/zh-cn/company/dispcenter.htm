@@ -1,0 +1,346 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+			<div class="main-form" style="background: #fff;">
+
+	     <{if $type!='single'}>
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/dispcenter_invite" method="post" target="post_frame" enctype="multipart/form-data">
+
+					<div class="input-box t clearfix">
+						<h1>集合店铺设置<{$type}></h1>
+						<p>如果该账户经营多个商家的产品，可以为每个商家创建一个账户，记住用户编号和密码，然后导入到集合店铺中。</p>
+						<p>这样做的最大好处是，当用户下单后，系统会将订单自动分开，每个商家能够获得相应的订单的备货单，装箱单以及可以进行标签打印等操作</p>
+						
+
+						<{if $isDispCenter==false && $isSuplier==false}>
+						<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_open"'>开通并成为统配管理商家</button>
+						<{/if}>
+
+						<{if $isDispCenter==false && $isSuplier==true}>
+							<p style='color: red'>你已经参与到某个商家的统配计划中，请联系你的统配管理商家或者系统管理员</p>
+							<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_leave"'>离开当前统配中心</button>
+						<{/if}>
+					</div>
+
+					<{if $isDispCenter==true}>
+						<div class="input-box  clearfix">
+							<label>商家编号（必填）：</label>
+
+							<input style="width:300px;" type="text" name="business_user_id" placeholder="商家ID" required>
+						
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>商家密码（必填）：</label>
+
+						
+							<input style="width:300px;"  type="text" name="business_user_password" placeholder="商家登陆密码" required>
+							
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>中文名称（必填）：</label>
+
+						
+							<input style="width:300px;"  type="text" name="cn_displayName" placeholder="商家中文名（页面显示最多4个字）" required>
+					
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>英文名称（可选）：</label>
+
+						
+							<input style="width:300px;"  type="text" name="en_displayName" placeholder="商家英文名（页面显示最多12个字符）" >
+							
+
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>面单名称（必填）：</label>
+
+							
+								<input style="width:300px;"  type="text" name="suppliers_name" placeholder="商家（在货运单上）" required>
+
+						
+						</div>
+						<div class="input-box  clearfix">
+							
+							
+							<button type="submit" class="btn btn-default btn-success" id="">添加</button>
+						</div>
+						
+					<{/if}>
+					
+				</form>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+            
+				<{if $isDispCenter==true}>
+				<div class='main-list'>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<thead>				
+							<tr>			
+								<th>商家ID</th>
+								<th>商家名称</th>
+								<th>商家名(物流面单显示)</th>
+								<th>商家中文名(店铺页面显示)</th>
+								<th>商家英文名(店铺页面显示)</th>
+							
+								<th>删除</th>
+							</tr>			
+						</thead>		
+						<tbody>		
+							<{foreach from=$suplierList item=item name='dl'}>	
+							<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td><{$item.suppliers_id}></td>
+								<td><{$item.name}></td>
+								<td><{$item.suppliers_name}></td>
+								<td><{$item.cn_displayName}></td>
+								<td><{$item.en_displayName}></td>
+							
+								<th>
+									<a href="<{$http_root_www}>company/dispcenter_delete?deleteid=<{$item.id}>">删除</a>
+								</th>
+							</tr>
+							<{/foreach}>	
+						</tbody>		
+					</table>	
+				</div>
+
+				<div style="padding: 20px">
+					<p>统配中心说明:</p>
+					<p>该页面控制统配中心下属供应商，您需要供应商的登陆密码才可操作。</p>
+					<p>统配中心的递送设置将用于其所有下属商家。请确保您 高级设置>递送设置 中设置了配送范围邮编。</p>
+					<p>统配中心的供应商负责产品和备货。请通过供应商账户的 高级设置>递送设置>统配商家递送日期设置 中设置配送日期。</p>
+					<p>统配管理商家负责物流与配送，您可以通过 <a href="<{$http_root_www}>company/oproute">optimoRoute 控制面板</a>管理订单的配送。</p>
+					<p>当删除全部商家后，统配中心即自动关闭。</p>
+				</div>
+				<{/if}>
+				
+				<{else}><!-- 如果为单店模式 -->
+				
+					<div class="colCurTit clearfix">
+						<h1>设置订单周日程</h1>
+					</div>
+				
+					<div class="input-box t clearfix">
+						
+						<p>设置日常每周配送或自取日程，客户下单时会自动选择相应的自取或配送日期，便于店铺分拣和备货。</p>
+						
+						
+
+						<{if $isDispCenter==false && $isSuplier==false}>
+						<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_open?type=<{$type}>"'>开启周日程</button>
+						<{/if}>
+
+						<{if $isDispCenter==false && $isSuplier==true}>
+							<p style='color: red'>该店铺已经参与到某个商家的统配计划中，请联系你的统配管理商家或者系统管理员</p>
+							<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_leave"'>离开当前统配中心</button>
+						<{/if}>
+					</div>
+
+					
+					
+			
+            
+				<{if $isDispCenter==true}>
+				<div class='main-list'>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<thead>				
+							<tr>			
+								<th>商家ID</th>
+								<th>商家名称</th>
+								<th>物流面单名<br>如:Panda</th>
+								<th>店铺页中文简称<br>4个中文字或12字符</th>
+								<th>店铺页英文简称<br>12字符以内</th>
+							
+								<th>删除</th>
+							</tr>			
+						</thead>		
+						<tbody>		
+							<{foreach from=$suplierList item=item name='dl'}>	
+							<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td><{$item.suppliers_id}></td>
+								<td><{$item.name}></td>
+								<td>
+								<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="suppliers_name" value="<{$item.suppliers_name}>" >
+											<span class='promote-ajax'></span>
+								</td>
+								<td>
+								<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="cn_displayName" value="<{$item.cn_displayName}>" >
+											<span class='promote-ajax'></span>
+								
+								
+								</td>
+								<td>
+								<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="en_displayName" value="<{$item.en_displayName}>" >
+											<span class='promote-ajax'></span>
+								
+								
+								
+								</td>
+							
+								<th>
+									<a href="<{$http_root_www}>company/dispcenter_delete?deleteid=<{$item.id}>&type=<{$type}>">关闭</a>
+								</th>
+							</tr>
+							<{/foreach}>	
+						</tbody>		
+					</table>	
+				</div>
+
+				<div style="padding: 20px">
+					<p>订单周日程已经开启，开启后可以通过 <a href="<{$http_root_www}>company/dispcenter_schedule"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
+					<{$lang->delivery_date_open_end_time_setting}>
+				</a>设置配送或自取日及开团截团时间</p>
+					
+				</div>
+				
+				<{/if}>
+				
+				
+				
+				
+				
+				  
+				 <{/if}>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		$('.chooseCustomer').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1&customer_id=" + $(this).val();
+		});
+		$('.chooseCategory').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1&customer_id=<{$customer_id}>&cat_id=" + $(this).val();
+		});
+		
+		
+	})
+</script>
+
+<script type="text/javascript">
+
+
+
+	function updateCategory(){
+		var iconUpdate = new IconUpdate(this);
+
+		var id =$(this).data('id');
+		var value =	$(this).val();
+		var update_field=$(this).attr('name');
+
+		var updateData={};
+		updateData['id']=id;
+		updateData[update_field]=value;
+
+		
+		//alert(updateData);
+		$.ajax({
+			url: "<{$http_root_www}>company/update_dispatching_centre_business_info",
+			type: "POST",
+			data: updateData,
+			beforeSend:function(){
+				iconUpdate.iconUpdating();
+			}
+		}).done(function(data){
+			try{
+				data = JSON.parse(data);
+			}catch(err){
+				//data['msg'] = data;
+			}
+
+			if(data.status==200){
+				iconUpdate.iconUpdateSuccess();
+			}else if(data.status==500){
+				alert(data.msg);
+				iconUpdate.iconUpdateFail();
+			}else{
+				iconUpdate.iconUpdateFail();
+			}
+		}).fail(function(){
+			iconUpdate.iconUpdateFail();
+		});
+	}
+
+	function IconUpdate (obj) {
+		this.target = $(obj).next('.promote-ajax');
+	}
+
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+
+	$('input[name=suppliers_name],input[name=cn_displayName],input[name=en_displayName]').on('change',updateCategory);
+	
+	
+	
+	
+	
+       
+
+    
+
+	
+</script>
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

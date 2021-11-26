@@ -1,0 +1,17 @@
+<!-- 侧边按钮 -->
+<!--a target = '_blank' onclick="window.open
+('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<
+{$businessChatId}>','singleChat')"-->
+
+<div id="g-top" onclick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');" style="display:'block'; bottom:3.5rem"></div>
+<div id="g-chat" onclick="chatUrl();"></div>
+
+
+
+<!-- 侧边按钮-end -->
+
+<script type="text/javascript">
+    function chatUrl() {
+        window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&couponid=<{$coupon.id}>');
+    }
+</script>

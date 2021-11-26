@@ -1,0 +1,25 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+				打印备货总单
+		</a>
+	
+		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
+				打印装箱单
+		</a>
+		
+		
+		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
+				打印标签
+		</a>
+
+		<a  href="<{$http_root_www}>company/label_print_log" <{if $submenu=='label_print_log'}> class="current"<{/if}>>
+			打印配货员记录
+		</a>
+	</div>
+</li>

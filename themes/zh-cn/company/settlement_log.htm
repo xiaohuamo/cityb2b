@@ -1,0 +1,120 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style type="text/css">
+	/*.s-point-from,.s-point-to{
+		display: inline-block;
+		width: 5px;
+		height: 5px;
+		border-radius: 5px;
+	}
+	.s-point-from{
+		background-color: green;
+	}
+	.s-point-to{
+		background-color: #FD5001 ;
+	}*/
+
+	.s-point-from,.s-point-to{
+		font-size: 10px;
+	}
+
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+
+					<div class="main-list">		
+						<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>		
+									<th>结算金额</th>	
+									<{for $foo=0 to $data|@count}>
+									 <th></th>
+									<{/for}>
+									<!-- <th>From</th>		
+									<th>To</th>	 -->
+									<th>结算订单</th>
+									<th>方式</th>		
+									<th>提交时间</th>				
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									
+
+									<td style="font-weight: bolder;">$<{$item.settle_amount}></td>	
+
+									<{for $foo=0 to $data|@count+$smarty.foreach.dl.length-$smarty.foreach.dl.index-2}>
+										<td></td>
+									<{/for}>
+
+									<td><em class='s-point-from' data-value="<{$item.settle_from}>"><{$item.settle_from}></em></td>
+									<td><em class='s-point-to' data-value="<{$item.settle_to}>"><{$item.settle_to}></em></td>
+
+									<{for $foo=0 to $data|@count-($smarty.foreach.dl.length-$smarty.foreach.dl.index+1)-($data|@count)}>
+									 	<td></td>
+									<{/for}>
+									
+									<td><{$item.settle_order_status}></td>
+
+									<td>
+										<{if $item.operation_type==mdl_settlement_log::OPERATION_TYPE_MANUAL}>
+											<span style='color:#FD5001 '>手动结算</span>
+										<{elseif $item.operation_type==mdl_settlement_log::OPERATION_TYPE_AUTO}>
+											<span style='color:green'>自动结算</span>
+										<{/if}>
+									</td>	
+
+									<td><{date('Y-m-d H:i', $item.gen_date)}></td>	
+								</tr>			
+							<{/foreach}>			
+						</tbody>		
+					</table>			
+					<{if $pager}>
+					<div class="pager"><{$pager}></div>
+					<{/if}>				
+					<{else}>				
+					还没有充值记录		
+					<{/if}>			
+				</div>		
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

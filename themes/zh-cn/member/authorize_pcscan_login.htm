@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding: 100px 000px">
+
+	<{if $result=='success'}>
+		<h1 class='text-info'>扫码登录成功</h1>
+		<p>恭喜您成功完成了微信扫码登录</p>
+		<p>您的pc页面正在自动跳转</p>
+		<p><{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}></p>
+
+		<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+
+		<div>
+			<a class='btn btn-default' href="<{$http_root_www}>member/index">个人中心</a>
+			<a class='btn btn-default' href="<{$http_root_www}>">返回首页</a>
+		</div>
+	<{else}>
+		<h1></h1>
+		<h1 class='text-info'>扫码登录失败</h1>
+		<p>很抱歉，微信扫码暂时无法登录</p>
+		<p>请联系Ubonus客服或者稍后再试</p>
+		<p><{$smarty.now|date_format:'%Y-%m-%d %H:%M:%S'}></p>
+		
+		<i class='fa fa-close fa-5x' style ='color:#FD5001 '></i>
+
+		<div>
+			<a class='btn btn-default' href="<{$http_root_www}>">返回首页</a>
+		</div>
+	<{/if}>	
+	
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+</body>
+</html>

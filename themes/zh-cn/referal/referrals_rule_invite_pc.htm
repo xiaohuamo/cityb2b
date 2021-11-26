@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="Ubonus美食生活  墨尔本  " />
+	<meta name="description" content="专注墨尔本华人美食生活的电商平台 " />
+    <meta content="telephone=no" name="format-detection" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+	<!-- inedx -->
+		<div style="text-align: center;padding: 100px 0px">
+
+				<h1 style="color:#31708f;font-size: 40px;margin: 10px">媒体邀请二维码!</h1>
+				<br>
+				<p style='text-align: center;'>生成并分发媒体码给指定用户可以给出特定的分享抽成，以此激励媒体和商家之间的互惠互利</p>
+				<br>
+				<p>请将该二维码或链接发送给您希望邀请的用户，用户识别次二维码后需要输入邀请码确认身份</p>
+				<br>
+				<p>
+					<img src="<{$applyqrcode}>">
+				</p>
+				<p>
+					OR
+				</p>
+				<p>
+				 <a href="<{$applyUrl}>"> <{$applyUrl}></a>
+				</p>
+
+				<br>
+
+				<!-- <p>
+	            	<strong>邀请码</strong>
+	            </p>
+
+	            <br>
+
+	            <p>
+	            	<strong><{$data.apply_code}></strong>
+	            </p> -->
+
+				<br>
+				<span><a href="<{$manageUrl}>">返回列表</a></span>
+				|
+				<span><a href="<{$http_root_www}>">首页</a></span>
+
+
+		</div>
+	<!-- inedx -->
+
+	<!-- 底部 -->
+	<{include file='index_inc_footer.htm'}>
+	<!-- 底部 end -->
+
+
+	<!-- 右边栏 -->
+	<{include file='index_inc_right.htm'}>
+	<!--右边栏 end-->
+
+	
+	<!-- 浮动导航end-->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+	<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+	<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+	<script src="<{$SKIN_PATH}>js/dong.js"></script>
+	
+</body>
+</html>

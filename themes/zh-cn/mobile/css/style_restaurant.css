@@ -1,0 +1,1212 @@
+/*-----------------[初始化]--------------*/
+
+body{color: #333;line-height: 1.5;font-family:"微软雅黑","Microsoft Yahei";}
+
+html{font-size: 30px}
+
+a{color: #333;}
+
+a:hover{color: #f60;text-decoration: none;}
+
+img{max-width: 100%;}
+
+.g-ul,.g-ul li,.g-ul h4,.g-ul p{list-style: none;margin: 0;padding: 0;}
+
+
+
+
+
+/*无选中效果*/
+
+
+
+/*布局*/
+
+.h2{height: 2rem;clear: both;overflow: hidden;margin: 0;}
+
+
+
+.g-ul,.g-ul li,.g-ul h4,.g-ul p{list-style: none;margin: 0;padding: 0;}
+
+
+
+
+
+/*******************************
+
+  -------[=头部]-------
+
+********************************/
+
+#hd{left: 0;right: 0;top: 0;border-bottom: 1px solid #d1d1d1;
+
+    background-color: #FD5001 ;z-index: 999;position: fixed;
+
+}
+
+#hd h1{font-size: .45rem;text-align: center;line-height: 1.3rem;margin: 0;font-weight: normal;}
+
+#hd .right{height: 1.5rem;position: absolute;top: 0;right: 0;}
+
+
+
+
+
+
+
+/*******************************
+
+    -------[=正文]-------
+
+********************************/
+
+#bd{padding: 1.5rem 0 0;}
+
+.bg-1{background-color: #f3f4f6;}
+
+
+
+/*******************************
+
+    -------[=首页]-------
+
+********************************/
+
+*{outline: none;}
+
+a,img,input{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+
+/*banner*/
+
+
+
+/*合作伙伴*/
+
+
+
+/*团购*/
+
+
+
+/*转盘*/
+
+
+
+/*代购*/
+
+
+
+
+/*分类导航*/
+
+/*广告*/
+
+
+
+/*电影娱乐*/
+
+
+
+/*本地服务*/
+
+
+
+
+
+/*店主推荐*/
+
+
+
+/*爆款*/
+
+
+
+/*秒抢*/
+
+
+
+
+
+/*倒计时*/
+
+
+
+
+
+/*
+
+-----------------[购物车2]--------------*/
+
+.m-cart{
+
+    background: #fff;
+
+    margin-bottom: .2rem;
+
+}
+
+
+
+.m-cart ul{}
+
+.m-cart li{
+
+    font-size: .44rem;color: #808080;line-height: 1;
+
+    position: relative;
+
+}
+
+.m-cart .content{background-color: #fff;
+
+    padding: 0 .52rem;position: relative;z-index: 2;
+
+    -webkit-transition: all 0.3s linear;}
+
+.m-cart li .con{
+
+    border-bottom: 1px #e0e0e0 solid;
+
+    overflow: hidden;
+
+    padding: .4rem 0 .4rem 0rem;
+
+    position: relative;z-index: 3;
+
+    background: #fff;
+
+}
+
+.m-cart li:last-child .con{border: none;}
+
+.m-cart li .pic{
+
+    float: left;width: 2.4rem;height: 1.6rem;
+
+    margin-right: .3rem;
+
+}
+
+.m-cart li .pic img{
+
+    display: block;width: auto;margin:auto;height: 100%;
+
+}
+
+.m-cart li .s-price{
+
+    float: right;
+
+    display: block;color: #f23030;
+
+}
+
+.m-cart li .txt{
+
+    overflow: hidden;
+
+}
+
+.m-cart li .txt h4{
+
+    font-size: .48rem;color: #333;font-weight: normal;
+
+    margin: 0 0 .3rem;
+
+    overflow: hidden;
+
+    -ms-text-overflow: ellipsis;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+.m-cart li .txt p{
+
+    line-height: 16px;
+    margin-bottom: .35rem;
+
+}
+
+
+
+/*加减*/
+
+.m-num{
+
+    overflow: hidden;
+
+}
+
+.m-num .minusBtn,.m-num .plusBtn{
+
+    width: .8rem;height: .8rem;line-height: .78rem;text-align: center;
+
+    -webkit-box-sizing: border-box;
+
+    -moz-box-sizing: border-box;
+
+    box-sizing: border-box;
+
+    border: 1px #FD5001 solid;
+
+    border-radius: .1rem;
+
+    font-size: .48rem;
+
+}
+
+.m-num .minusBtn{float: left;color: #FD5001 ;}
+
+.m-num .plusBtn{float: left;background: #FD5001 ;color: #fff;}
+
+.m-num .inp{
+
+    float: left;width: 1.56rem;height: .8rem;
+
+    background: #fff;
+
+    border: none;
+
+    font-size: .48rem;color: #333;line-height: .8rem;text-align: center;
+
+}
+
+
+
+
+
+/*
+
+-----------------[商家-消息-详情]--------------*/
+
+
+
+/*
+
+-----------------[商家-商品-发布]--------------*/
+
+
+
+/*城市选择*/
+
+
+
+
+
+
+
+
+
+/*页码*/
+
+
+
+/*搜索框*/
+
+
+
+
+
+
+
+/*******************************
+
+    -------[=帮助中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=店铺详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=订单详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=个人中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=好友]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=确认订单]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=发布中心]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=红包]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=我的收藏]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=我的钱包]-------
+
+********************************/
+
+#hd h1 a{margin: 0 .20rem;}
+
+
+
+/*******************************
+
+    -------[=我的订单]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=微奖社区]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=搜索]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=收货地址]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=社区营销]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-首页]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-投票详情]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家消息]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-资金]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商家-红包-发红包]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=商品详情]-------
+
+********************************/
+
+.comm-pic{overflow: hidden;position: relative;;}
+
+.comm-pic img{width: 100%;display: block;}
+
+
+
+.comm-tit{background-color: #fff;padding: .35rem .5rem;margin-bottom: .2rem;}
+
+.comm-tit h3{margin: 0;font-size: .52rem;line-height: .65rem;margin-bottom: .5rem;}
+
+.comm-tit p{margin-bottom: 0;font-size: .52rem;}
+
+.comm-tit s{ color: #a5928b;margin-left: .35rem;}
+
+
+
+.comm-express{border-top: 1px solid #e0e0e0;border-bottom: 1px solid #e0e0e0;
+
+    background-color: #fff;padding: 0 .5rem;margin-bottom: .2rem;
+
+}
+
+.comm-express h3{margin: 0;font-size: .48rem;height: 1.6rem;line-height: 1.6rem; font-weight:600;
+
+    background: url(../images/ico-21.png) no-repeat right center;
+
+    -o-background-size: .24rem auto;
+
+    -ms-background-size: .24rem auto;
+
+    -moz-background-size: .24rem auto;
+
+    -webkit-background-size: .24rem auto;
+
+    background-size: .24rem auto;
+
+}
+
+.comm-express .txt{font-size: .48rem;padding-bottom: .4rem;}
+
+
+
+.comm-evaluate{background-color: #fff;margin-bottom: .1rem;}
+
+.comm-evaluate .tit{overflow: hidden;height: 1.6rem;line-height: 1.6rem;padding: 0 .5rem;border-bottom: 1px solid #e0e0e0;}
+
+.comm-evaluate .tit h3{margin: 0;font-size: .48rem;float: left;line-height: 1.6rem;font-weight:600}
+
+.ul-evaluate{padding: 0 .5rem;border-bottom: 1px solid #e0e0e0;}
+
+.ul-evaluate li{padding: .4rem 0 .2rem;border-bottom: 1px solid #e0e0e0;}
+
+.ul-evaluate li:last-child{border-bottom: 0;}
+
+.ul-evaluate .top{overflow: hidden;position: relative;margin-bottom: .3rem;}
+
+.ul-evaluate .face{width: 1.15rem;height: 1.15rem;border-radius: 50%;float: left;}
+
+.ul-evaluate .face img{width: 100%;height: 100%;display: block;}
+
+.ul-evaluate .name{overflow: hidden;line-height: 1.15rem;padding-left: .35rem;font-size: .48rem;font-weight: bold;}
+
+.ul-evaluate .time{position: absolute;top: 0;right: 0;line-height: 1.15rem;font-style: normal;
+
+    color: #808080;font-size: .37rem;
+
+}
+
+
+.ul-evaluate p{font-size: .44rem;margin-bottom: 0;margin-bottom: .15rem;}
+
+.js-roll{text-align: center;line-height: 1.5rem;}
+
+.js-roll span{display: inline-block;position: relative;padding: 0 .2rem;font-size: .37rem;color: #808080;}
+
+.js-roll span:after,.js-roll span:before{content: '';position: absolute;
+
+    height: 1px;width: 3.3rem;background-color: #e0e0e0;top: 50%;
+
+}
+
+.js-roll span:after{left: 100%;}
+
+.js-roll span:before{right: 100%;}
+
+
+
+
+.comm-btn-restaurant{position: fixed;left: 0;right: 0;bottom: 0;border-top: 1px solid #e0e0e0;
+
+    background-color: #fff;z-index: 109;overflow: hidden;text-align: center;
+
+}
+
+.comm-btn-restaurant .left{width: 75%;float: left;}
+
+.comm-btn-restaurant .right{float: right;width: 25%;}
+
+.comm-btn-restaurant a{display: block;float: left;width: 25%;}
+
+.comm-btn-restaurant .left a{letter-spacing: .01rem;height: 1.70rem;padding-top: .05rem;font-size: .37rem;color: #808080;}
+
+.comm-btn-restaurant .left i{display: block;height: 1rem;background-position: center center;
+
+    background-repeat: no-repeat;
+
+    -o-background-size: 1rem auto;
+
+    -ms-background-size: 1rem auto;
+
+    -moz-background-size: 1rem auto;
+
+    -webkit-background-size: 1rem auto;
+
+    background-size: 1rem auto;
+
+}
+
+.comm-btn-restaurant .ico1 i{background-image: url(../images/fix-02.png);}
+
+.comm-btn-restaurant .ico2 i{background-image: url(../images/fix-06.png);}
+
+.comm-btn-restaurant .ico3 i{background-image: url(../images/fix-08.png);}
+
+.comm-btn-restaurant .right a{font-size: .45rem;color: #fff;letter-spacing: .02rem;line-height: 1.70rem;}
+
+.comm-btn-restaurant .a1{background-color: #FD5001 ;}
+
+
+
+/*******************************
+
+    -------[=发起投票]-------
+
+********************************/
+
+
+
+/*******************************
+
+    -------[=搜索弹窗]-------
+
+********************************/
+
+
+/*Pager css*/
+
+#g-chat{width: 1.2rem;height: 1.2rem;position: fixed;z-index: 999;border-radius: 50%;
+    right: .7rem;bottom: 2.2rem;
+    background: url(../images/ico-liao.png) no-repeat center center rgba(59,180,199,.6);
+    -o-background-size: .8rem auto;
+    -ms-background-size: .8rem auto;
+    -moz-background-size: .8rem auto;
+    -webkit-background-size: .8rem auto;
+    background-size: .8rem auto;
+}
+
+/*******************************
+    -------[=二期]-------
+********************************/
+/*.index-app #hd{background: #3bb4c7;}*/
+/*
+-----------------[代购app首页]--------------*/
+/*.box-supply .con{
+    overflow: hidden;
+}*/
+
+
+/*
+-----------------[商家店铺-商家]--------------*/
+
+
+/*
+-----------------[商家店铺-社区]--------------*/
+
+
+/*
+-----------------[商家店铺1]--------------*/
+
+
+/*
+-----------------[商家店铺-优惠1]--------------*/
+
+
+/*
+-----------------[微奖商城app]--------------*/
+
+
+.box-prod{
+    overflow: hidden;padding-left: 3.36rem;padding-right: .3rem;position: relative;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+    padding-left: 2.9rem;
+}
+
+.s-nav{
+    border: 1px #e0e0e0 solid;border-bottom: none;
+}
+.s-nav li{border-bottom: 1px #e0e0e0 solid;}
+.s-nav .s1{
+    display: block;
+    padding: 1rem 0;
+    font-size: .45rem;color: #333;line-height: .65rem;text-align: center;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+  /*  white-space: nowrap; */
+    background: #fff;
+}
+/*.box-so .s-nav .s1{padding: .4rem 0;}*/
+#bd{
+    -webkit-transition: linear 0.25s; /* Safari */
+    transition: linear 0.25s;
+}
+
+.content-image-fullsize img{
+    width: 100%!important;
+    height: auto!important;
+}
+
+.more-box {
+    display: inline-block;
+    position: relative;
+}
+
+.more-box a.more {
+    display: block;
+    width: 1.4rem;
+    height: 1.5rem;
+    background: url(../images/more.png) no-repeat center center;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    position: relative;
+}
+
+.more-box a.more.on i {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    background-color: #F15353;
+    border-radius: 50%;
+}
+
+.more-box .box {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 5rem;
+    background-color: rgba(20, 19, 19, 0.58);
+    border-radius: 3px;
+}
+
+.more-box .box ul li {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    padding: 0 0.15rem;
+}
+
+.more-box .box ul a {
+    display: block;
+    font-size: 12px;
+    color: #f6f6f6;
+    border-bottom: 1px solid #4b4847;
+}
+
+.more-box .box ul a i.on {
+    position: relative;
+}
+.more-box .box ul a i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.9rem;
+    height: 0.9rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-background-size: 0.9rem auto;
+    background-size: 22px auto;
+    margin-right: 0.5rem;
+}
+
+.more-box .box ul a i.on em {
+    position: absolute;
+    right: -5px;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    background-color: #F15353;
+    border-radius: 50%;
+}
+.comm-btn-restaurant .ico3 i .cartQty {
+    position: absolute;
+    font-style: normal;
+    top: 0px;
+    margin-left: 10px;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: 10px;
+    background: red;
+    color: white;
+    line-height: 17px;
+}
+input.header-search {
+    width: 25%;
+    height: 1rem;
+    border-radius: 15px;
+    font-size: 0.4rem;
+    padding: 0 20px 0 10px;
+    font-weight: normal;
+}
+input.header-search + i{
+    position: relative;
+    left: -20px;
+}
+
+.coupon_option{
+		    border-top-color: rgb(204, 204, 204);
+		    border-top-style: solid;
+		    border-top-width: 0px;
+		    border-right-color: rgb(204, 204, 204);
+		    border-right-style: solid;
+		    border-right-width: 0px;
+		    border-bottom-color:  #eee;
+		    border-bottom-style: solid;
+		    border-bottom-width: 1px;
+		    border-left-color: #eee;
+		    border-left-style: solid;
+		    border-left-width: 0px;
+		    border-image-source: initial;
+		    border-image-slice: initial;
+		    border-image-width: initial;
+		    border-image-outset: initial;
+		    border-image-repeat: initial;
+			padding: 2px 5px;
+			    margin: 0.2rem 0rem 0.8rem 0rem;
+		}
+
+		.coupon_option .title{
+			color: #000;
+    		font-size: 0.4rem;
+		}
+		.coupon_option .price{
+			
+		}
+
+		.coupon_option .quantity{
+
+		}
+
+		.coupon_option .quantity i{
+			color:#FD5001 ;
+			font-size: 0.68rem;	
+		}
+
+		.coupon_option .quantity .input-quantity{
+			    width: 0.68rem;
+				text-align: center;
+				border: none;
+				font-size: 0.40rem;
+		}
+		.coupon_option .quantity .stock{
+			font-size: 10px;
+			color: #999;
+			text-align: right;
+		}
+
+		.coupon_option .description{
+			border-top: 1px solid #fee;
+			line-height: 17px;
+			padding-top: 10px;
+			color: #a5928b;
+			font-size: 12px;
+
+		}
+		.coupon_option .spec-num{
+			
+		}
+		.col-l{
+			overflow-y: scroll;
+    		height: 90vh;
+    		position: absolute;
+			z-index: 9;
+		}
+		.col-l.fixed{
+			position: fixed;
+			/*top: 3.75rem; */
+			z-index: 9;
+			width: 2.8rem;
+			padding-bottom: 3rem;
+		}
+	    .s-nav .s1{
+			padding: 0.8rem 0;
+		   /* line-height: .25rem; */
+		}
+		.promotion-des-display, .confirmedMoneyAppliedAmount-display {
+		    background-color: #FD5001 ;
+		    color: #fff;
+		    //padding: 4px;
+		    border-radius: 5px;
+			padding: 4px 12px 5px 6px;
+		}
+
+
+		@media only screen and (min-width: 768px) {
+			html{
+				font-size: 50px!important;
+			}
+		    body{
+		    	width: 768px;
+		    	margin: auto;
+		    }
+		    #hd{
+		    	width: inherit;
+		    	margin: auto;
+		    }
+		    .comm-btn-restaurant{
+		    	width: 768px;
+		    	margin: auto;
+		    }
+
+		    .menu_guige{
+		    	width: 768px!important;
+		    	right: 0;
+		    	left: 0;
+		    	margin: auto;
+		    }
+
+		    .inpageShoppingCart{
+		    	width: 768px!important;
+		    	left: 0;
+		    	right: 0;
+		    	margin: auto;
+		    }
+		}
+
+
+	.deliver-center-user-panel {
+			position: fixed;
+			top: 1%;
+			left: 1%;
+			height: 98vh;
+			width: 98vw;
+			border:2px solid #f15353;
+			z-index: 999;
+			background: #fff;
+			display: none;
+		}
+		.deliver-center-user-panel .panel-header {
+			position: absolute;
+		    top: 0px;
+		    left: 0px;
+		    width: 100%;
+		    background-color: #f15353;
+		    color: #fff;
+		    text-align: center;
+		    font-size: 0.6rem;
+		    padding: 0.1rem;
+		    z-index: 100;
+		}
+		.deliver-center-user-panel .panel-header.ready {
+			background-color: #3cab4a !important;
+		}
+
+		.deliver-center-user-panel .panel-body {
+			overflow-y: scroll;
+			height: 97vh;
+			padding: 7% 3% 0% 3%;
+		}
+
+		.deliver-center-user-panel .panel-header span {
+			position: absolute;
+		    top: 0px;
+		    right: 0px;
+		    width: 1.5rem;
+		    height: 1.4rem;
+		    line-height: 1.4rem;
+		}
+
+		.deliver-center-user-panel h5 {
+			width: 100%;
+			text-align: center;
+			font-size: .48rem;
+		    height: 0.8rem;
+		    line-height: 1rem;
+		    font-weight: 600;
+		}
+
+		.deliver-center-user-panel .time-box span {
+			display: inline-block;
+		    width: 30%;
+		    height: 2.5rem;
+		    border: 1px solid #FD5001 ;
+		    line-height: 1.2rem;
+		    text-align: center;
+		    margin: 0px 3px;
+		    overflow: hidden;
+		    position: relative;
+		}
+
+		.time-box.date-options span {
+			width: 21%;
+			background: #5cd46b;
+		}
+		.time-box.date-options span.unavailable {
+			border: 1px solid #eee;
+			background: #eee;
+		}
+
+
+		.deliver-center-user-panel .time-box span em {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			width: 100%;
+			text-align: center;
+			font-size: smaller;
+			font-weight: lighter;
+		}
+		.deliver-center-user-panel .time-box span i {
+			font-size: 10px;
+		    position: absolute;
+		    bottom: 18px;
+		    left: 0;
+		    width: 100%;
+		    text-align: center;
+		}
+
+		.deliver-center-user-panel .time-box span.selected {
+			background: #FD5001 ;
+			color: #fff;
+		}
+
+		.deliver-center-user-panel .business-box span {
+			display: inline-block;
+		    width: 47%;
+		    height: 2rem;
+		    border: 1px solid #FD5001 ;
+		    text-align: center;
+		    margin: 10px 1%;
+		}
+
+		
+		.head-business-box_multi {
+		
+				height: 3.6rem;
+			
+			background: #fff;
+			border-bottom: 2px solid #eee;
+			overflow-y: hidden;
+		}
+		
+		
+		.head-business-box.open{
+			height: auto!important;
+		}
+		.head-business-box img{
+			display: none;
+		}
+		.head-business-box div{
+			line-height: 1.4rem;
+		}
+		.head-business-box.fixed {
+			position: fixed;
+		    top: 0;
+		    right: 0;
+		    width: 100vw;
+		    z-index: 99;
+		}
+		.head-business-box span {
+			display: inline-block;
+		    width: 31%;
+		    height: 1.4rem;
+		    border: 1px solid #FD5001 ;
+		    background: #FD5001 ;
+		    text-align: center;
+		    margin: 5px 1px;
+			border-radius: 5px;
+		}
+		
+		.deliver-center-user-panel {
+			position: fixed;
+			top: 1%;
+			left: 1%;
+			height: 98vh;
+			width: 98vw;
+			border:2px solid #f15353;
+			z-index: 999;
+			background: #fff;
+			display: none;
+		}
+		.deliver-center-user-panel .panel-header {
+			position: absolute;
+		    top: 0px;
+		    left: 0px;
+		    width: 100%;
+		    background-color: #f15353;
+		    color: #fff;
+		    text-align: center;
+		    font-size: 0.6rem;
+		    padding: 0.1rem;
+		    z-index: 100;
+		}
+		.deliver-center-user-panel .panel-header.ready {
+			background-color: #3cab4a !important;
+		}
+
+		.deliver-center-user-panel .panel-body {
+			overflow-y: scroll;
+			height: 97vh;
+			padding: 7% 3% 0% 3%;
+		}
+
+		.deliver-center-user-panel .panel-header span {
+			position: absolute;
+		    top: 0px;
+		    right: 0px;
+		    width: 1.5rem;
+		    height: 1.4rem;
+		    line-height: 1.4rem;
+		}
+
+		.deliver-center-user-panel h5 {
+			width: 100%;
+			text-align: center;
+			font-size: .48rem;
+		    height: 0.8rem;
+		    line-height: 1rem;
+		    font-weight: 600;
+		}
+
+		.deliver-center-user-panel .time-box span {
+			display: inline-block;
+		    width: 30%;
+		    height: 2.5rem;
+		    border: 1px solid #FD5001 ;
+		    line-height: 1.2rem;
+		    text-align: center;
+		    margin: 0px 3px;
+		    overflow: hidden;
+		    position: relative;
+		}
+
+		.time-box.date-options span {
+			width: 21%;
+			background: #5cd46b;
+		}
+		.time-box.date-options span.unavailable {
+			border: 1px solid #eee;
+			background: #eee;
+		}
+
+
+		.deliver-center-user-panel .time-box span em {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			width: 100%;
+			text-align: center;
+			font-size: smaller;
+			font-weight: lighter;
+		}
+		.deliver-center-user-panel .time-box span i {
+			font-size: 10px;
+		    position: absolute;
+		    bottom: 18px;
+		    left: 0;
+		    width: 100%;
+		    text-align: center;
+		}
+
+		.deliver-center-user-panel .time-box span.selected {
+			background: #FD5001 ;
+			color: #fff;
+		}
+
+		.deliver-center-user-panel .business-box span {
+			display: inline-block;
+		    width: 47%;
+		    height: 2rem;
+		    border: 1px solid #FD5001 ;
+		    text-align: center;
+		    margin: 10px 1%;
+		}
+		
+		.coupon_option.fixBottom{
+			position: fixed;
+		    bottom: -25px;
+		    right: 0;
+		    z-index: 1000;
+		    width: 100%;
+		    background: #fff;
+		    box-shadow: 5px -10px 10px #888888;
+		}
+		.coupon_option.fixBottom .fa-close{
+			position: absolute;
+			font-size: 0.8rem;
+			display: block!important;
+			    right: 12px;
+    color: #6c6464;
+    top: 10px;
+		}
+		.coupon_option.fixBottom > div:nth-of-type(1){
+			float: none!important;
+			width: 100%!important;
+		}
+		.coupon_option.fixBottom > div:nth-of-type(3){
+			margin: 20px;
+		}
+
+		.coupon_option.fixBottom .quantity i {
+			font-size: 1rem;
+		}
+		.coupon_option.fixBottom .quantity .input-quantity {
+			font-size: 0.8rem;
+			width: 1rem;
+		}
+
+
+/*
+-----------------[open screen]--------------*/
+
+
+
+
+/*index of newyear pages*/
+/*body.index2{background: url(../newyear/images/s-bg-m.jpg) repeat;}*/

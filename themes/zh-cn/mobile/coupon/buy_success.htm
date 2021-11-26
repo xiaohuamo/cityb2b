@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding: 100px 000px">
+			<h1 style="color:#31708f;font-size: 40px;margin: 10px">奖卷领取成功</h1>
+			<p>恭喜您成功完成了本张奖卷的领取！</p>
+			<br>
+			<p>如果您填写了正确的邮箱，确认邮件会同时发送给您，请确保您检查了邮件是否出现在垃圾邮件中</p>
+			<p>提示：邮件和订单中的二维码可以帮助您轻松兑付</p>
+			<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+			<p></p>
+			<span><a href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>">查看订单</a></span>
+			|
+			<span><a href="<{$http_root_www}>">返回首页</a></span>
+
+</div>
+
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+function DeleteSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('<{$lang->are_you_sure_delete_selected_records}>')) $('#listForm').attr('action', '<{$delUrl}>').submit();
+}
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$backUrl}>" >返回</a>
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td width="40"><input type="checkbox" id="checkAll" /></td>
+				<td>商家ID</td>
+				<td>商家名</td>
+				<td>From</td>
+				<td>To</td>
+				<td>结算金额</td>
+				<td>结算条件</td>
+				<td>结算方式</td>
+				<td>提交时间</td>
+				
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+			<{foreach from=$data item=item key=key}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><input type="checkbox" name="ids[]" value="<{$item.id}>" class="listChk" /></td>
+					<td><{$item.user_id}></td>
+					<td><{$item.createUser}></td>
+					<td><{$item.settle_from}></td>
+					<td><{$item.settle_to}></td>
+					<td>$<{number_format($item.settle_amount,2,'.','')}></td>
+					<td><{$item.settle_order_status}></td>
+					<td><{$item.operation_type}></td>
+					<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+				</tr>
+			<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="10"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

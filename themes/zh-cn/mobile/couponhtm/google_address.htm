@@ -1,0 +1,22 @@
+ 
+ <h3>商家地址</h3>
+    <div class="txt content-image-fullsize"><{str_replace('white-space: pre-wrap;','',$coupon.business.googleMap)}>
+    </div>
+    <!-- google MAP -->
+    <div id="googleMap" style="width: 100%;height: 30vh"></div>
+    <script>
+      var uluru = {lat: <{$coupon.business.latitude}>, lng: <{$coupon.business.longitude}>};
+
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('googleMap'), {
+          center: uluru,
+          zoom: 15
+        });
+
+        var marker = new google.maps.Marker({position: uluru, map: map});
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&callback=initMap"
+    async defer></script>
+    <!-- google MAP -->

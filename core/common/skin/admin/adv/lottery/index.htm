@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+function DeleteSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('<{$lang->are_you_sure_delete_selected_records}>')) $('#listForm').attr('action', '?con=admin&ctl=adv/lottery&act=delete').submit();
+}
+function AuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要将当前选中记录的状态设置为审核通过吗？')) $('#listForm').attr('action', '<{$doUrl}>act=audit').submit();
+}
+function UnAuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要取消当前选中记录的审核吗？')) $('#listForm').attr('action', '<{$doUrl}>act=unaudit').submit();
+}
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+
+function searchSubmit ()
+{
+	var keyword	= document.getElementsByName('keyword')[0].value;
+	var onlyNotApproved	= document.getElementsByName('onlyNotApproved')[0];
+	if (onlyNotApproved.checked) onlyNotApproved = 1;
+	else onlyNotApproved = 0;
+
+	window.location.href = '<{$searchUrl}>keyword=' + encodeURI(keyword) + '&onlyNotApproved=' + onlyNotApproved;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+			<a onclick="AuditSome();">批量审核</a>
+			<a onclick="UnAuditSome();">批量取消审核</a>
+		</div>
+		<div class="search">
+			<input type="text" class="text" style="width:200px;" maxlength="50" name="keyword" value="<{$search.keyword}>" placeholder="抽奖名称" />
+			<a onclick="searchSubmit()" class="lnkSearch"><{$lang->search}></a>
+			<input type="checkbox" onclick="searchSubmit()" name="onlyNotApproved"<{if $search.onlyNotApproved}> checked<{/if}> id="onlyNotApproved" /><label for="onlyNotApproved">仅显示未审核的记录</label>
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td width="40"><input type="checkbox" id="checkAll" /></td>
+				<td>项目编号</td>
+				<td>项目名称</td>
+				<td>商家名称</td>
+				<td>提交时间</td>
+				<td>商家审核状态</td>
+				<td>审核状态</td>
+				<td>审核时间</td>
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+			<{foreach from=$data item=item key=key}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><input type="checkbox" name="ids[]" value="<{$item.id}>" class="listChk" /></td>
+					<td><{$item.id}></td>
+					<td><{$item.title}></td>
+					<td><{$item.businessName}></td>
+					<td><{date('Y-m-d H:i', $item.createTime)}></td>
+					<td><{$item.status_desc}></td>
+					<td><{if $item.is_approved}><span style="color:#58964E;">已审核</span><{else}><span style="color:#F30;">未审核</span><{/if}></td>
+					<td><{if $item.is_approved}><{date('Y-m-d H:i', $item.auditTime)}><{else}>-<{/if}></td>
+				</tr>
+			<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="11" align="right"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

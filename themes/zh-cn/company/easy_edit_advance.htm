@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
+<style type="text/css">
+      form.easy_edit {
+        max-width: 300px;
+        margin: 10px auto;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+
+        font-family: 'Nunito', sans-serif;
+        color: #384047;
+      }
+
+      form.easy_edit h1 {
+        margin: 0 0 30px 0;
+        text-align: center;
+      }
+
+       form.easy_edit input[type="text"],
+       form.easy_edit input[type="password"],
+       form.easy_edit input[type="date"],
+       form.easy_edit input[type="datetime"],
+       form.easy_edit input[type="email"],
+       form.easy_edit input[type="number"],
+       form.easy_edit input[type="search"],
+       form.easy_edit input[type="tel"],
+       form.easy_edit input[type="time"],
+       form.easy_edit input[type="url"],
+       form.easy_edit textarea,
+       form.easy_edit select {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        font-size: 16px;
+        height: auto;
+        margin: 0;
+        outline: 0;
+        padding: 15px;
+        width: 93%;
+        background-color: #e8eeef;
+        color: #8a97a0;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+        margin-bottom: 30px;
+      }
+
+       form.easy_edit input[type="radio"],
+       form.easy_edit input[type="checkbox"] {
+        margin: 0 4px 8px 0;
+      }
+
+       form.easy_edit select {
+        padding: 6px;
+        height: 32px;
+        border-radius: 2px;
+      }
+
+       form.easy_edit button {
+        padding: 19px 39px 18px 39px;
+        color: #FFF;
+        background-color: #4bc970;
+        font-size: 18px;
+        text-align: center;
+        font-style: normal;
+        border-radius: 5px;
+        width: 100%;
+        border: 1px solid #3ac162;
+        border-width: 1px 1px 3px;
+        box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+        margin-bottom: 10px;
+      }
+
+       form.easy_edit fieldset {
+        margin-bottom: 30px;
+        border: none;
+      }
+
+       form.easy_edit legend {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+      }
+
+       form.easy_edit label {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+       form.easy_edit label.light {
+        font-weight: 300;
+        display: inline;
+      }
+
+       form.easy_edit .number {
+        background-color: #5fcf80;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 0.8em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 100%;
+      }
+
+      @media screen and (min-width: 480px) {
+
+        form.easy_edit {
+          max-width: 480px;
+        }
+
+      }
+</style>
+
+<style type="text/css">
+	.image_view{
+		position: relative;
+		right: 0;
+		left: 0;
+		margin: auto;
+	}
+	.image_item{
+		border: 1px solid #ddd;
+	}
+	.image_mask{
+		position: absolute;
+		text-align: center;
+		top: 1px;
+		left: 1px;
+		opacity: 0;
+		background-color: #eee;
+	}
+	.image_mask:hover{
+		opacity: 0.6;
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">
+
+					<form id="memberForm"  class='easy_edit' action="<{$http_root_www}>company/easy_edit_advance" method="post" target="post_frame" enctype="multipart/form-data">
+				        <h1>极速发布</h1>
+				        
+				        <fieldset>
+				          <legend><span class="number">1</span>基本信息</legend>
+				          <label for="title">标题：</label>
+				          <input type="text" id="title" name="title" required="">
+				          
+				          <label for="voucher_deal_amount">价格：</label>
+				          <input type="number" id="voucher_deal_amount" name="voucher_deal_amount" min="0" step="any">
+				          
+				          <label >图片：</label>
+				          <div class='upload_image_list' data-cropsize='660,420' data-listsize='1'>
+							<span class='image_view_add' style="display: none;">添加一张图片</span>
+						  </div>
+
+						  <br>
+				          <label>配送</label>
+				          <input type="radio" id="deliver_yes" value="1" name="deliver_avaliable"><label for="deliver_yes" class="light">支持配送</label><br>
+				          <input type="radio" id="deliver_no" value="0" name="deliver_avaliable"><label for="deliver_no" class="light">不支持配送</label>
+
+				     	  <label>自取</label>
+				          <input type="radio" id="pickup_yes" value="1" name="pickup_avaliable"><label for="pickup_yes" class="light">支持自取</label><br>
+				          <input type="radio" id="pickup_no" value="0" name="pickup_avaliable"><label for="pickup_no" class="light">不支持自取</label>
+
+				          <br><br>
+
+				          <label for="finePrint">提示:</label>
+				          <textarea id="finePrint" name="finePrint"></textarea>
+
+				        </fieldset>
+				        
+				        <fieldset>
+				          <legend><span class="number">2</span>更多信息</legend>
+				         <label for="qty">库存：</label>
+				          <input type="number" id="qty" name="qty">
+
+				          <label for="perCustomerLimitQuantity">限购：</label>
+				          <input type="number" id="perCustomerLimitQuantity" name="perCustomerLimitQuantity">
+
+				          <label for="voucher_original_amount">原价：</label>
+				          <input type="number" id="voucher_original_amount" name="voucher_original_amount" min="0" step="any">
+
+					      <label for="userCategoryId">分类：</label>
+							<select id="userCategoryId" name="userCategoryId">
+								<{foreach from=$categories key=key item=item}>
+								<optgroup label="<{$item.name}>">
+										<{foreach from=$item.child key=key item=citem}>
+											<option value="<{$citem.id}>"><{$citem.name}></option>
+										<{/foreach}>
+								</optgroup>
+								<{/foreach}>
+							</select>
+
+					      <label for="name">地区：</label>
+
+					      <{foreach from=$citylist item=country}>
+							<div class='country<{$country.id}>' >
+								<{foreach from=$country.child item=city}>
+								<em style="display: inline-block;min-width: 150px">
+									<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" /><label style="display: inline" for="city<{$city.id}>"><{$city.name}></label>
+								</em>
+								<{/foreach}>
+							</div>
+						<{/foreach}>
+
+				         
+				          <br>
+				          <br>
+
+				          <label for="content">详情：</label>
+				            <textarea id="content" name="content"></textarea>
+				        </fieldset>
+
+				        <button type="submit">发布</button>
+				      </form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	var cropsize = $('.upload_image_list').data('cropsize');
+	var cs = cropsize.split(',');
+	var w=cs[0];
+	var h=cs[1];
+
+	$('.image_uploader input[name="resize"]').val(cropsize);
+
+	var listsize=$('.upload_image_list').data('listsize');
+
+	var displayTarget;
+
+	addImageView();
+
+	function addImageView(src){
+		if(!src)src='default/image_upload.jpg';
+		$newdiv = $("<div></div>").addClass('image_view')
+					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"点击编辑"))
+					.append($("<input name='images[]' type='hidden'>").val(src));
+
+		$newdiv.on('click',function(){
+			$(".image_uploader").find('input[name="image"]').click();
+			displayTarget = $(this).find('.image_item');
+		})
+
+		$('.image_view_add').before($newdiv);
+
+		$('.image_view').css('width',"99%")
+		$('.image_item').css('width',"99%")
+		$('.image_mask').css('width',"99%")
+	}
+</script>
+
+<script>
+	var jcrop_api;
+
+	function initJcrop(){
+		if(jcrop_api){
+			jcrop_api.destroy();
+			$('.preview').removeAttr('style');
+		}
+
+		$('.preview').Jcrop({
+			boxWidth: $(window).width()*0.9, 
+			boxHeight:$(window).height()*0.75,
+			onSelect:    function(c){
+				$('input[name="bounds"]').val(c.x+','+c.y+','+c.x2+','+c.y2);
+			},
+			onChange: function(c){
+				$('.selected_size_display').html(c.w.toFixed(0) + " x " +c.h.toFixed(0));
+			},
+			onRelease:   function(){
+				$('input[name="bounds"]').val('');
+			},
+			//onChange:    showCoords,
+			//bgColor:     'black',
+			//bgOpacity:   .4,
+			//setSelect:   [ 100, 100, 50, 50 ],
+			aspectRatio: w / h
+		},function(){
+			var bounds = this.getWidgetSize();
+			$('.image_uploader').css('width',bounds[0]);
+			jcrop_api=this;
+		});
+	}
+
+    function openFile(event) {
+		var input =event.target;
+
+		var reader = new FileReader();
+
+		reader.onload = function(){
+			var dataURL = reader.result;
+			$('.preview').attr('src',dataURL);
+			initJcrop();
+			$(".image_uploader").show();
+		};
+
+		if(input.files.length>0)
+			reader.readAsDataURL(input.files[0]);
+	};
+
+	$(function(){
+		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪,补白缩放</label><button type='button' class='close'>x</button></form>");
+	})
+
+	$(function(){
+		$('input[name="image"]').on('change',function(event){
+			openFile(event);
+		})
+	})
+
+	$(function(){
+		$('button.close').on('click',function(){
+			$(this).parent().hide();
+		})
+	})
+
+	$(function(){
+		$("form.image_uploader").on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+	            type: 'POST',
+	            url: "<{$http_root_www}>test/save_image",
+	            data: new FormData(this),
+	            enctype: 'multipart/form-data',
+	            contentType: false,       
+				cache: false,             
+				processData:false,  
+				beforeSend:function(){
+					console.log('uploading');
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+	            success: function(result) {
+	               result=String(result).trim();
+	               $(displayTarget).attr('src',"<{$UPLOAD_PATH}>"+result);
+	               $(displayTarget).siblings('input').val(result);
+
+	               jcrop_api.destroy();
+				   $('.preview').removeAttr('style').removeAttr('src');
+	               $(".image_uploader").hide();
+
+	               addImageView();
+	            },
+	            complete:function(){
+	            	console.log('complete');
+	            	$('.form_response_loader').remove();
+	            },
+	            error:function(){
+	            	console.log('error');
+	            }
+	        })
+		})
+	})
+</script>
+
+
+</body>
+</html>

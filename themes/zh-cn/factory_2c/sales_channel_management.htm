@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory_2c/side.htm'}>
+		<div class="main">
+			<div class="box2">
+             
+				<div class="colCurTit">
+                    <{$pagename}>
+				</div>
+
+			
+
+				<div class="main-list">
+                    <{if $data}>
+						<div style="overflow-x: auto;overflow-y: auto;white-space: normal;">
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+								<tr>
+									<th>状态</th>
+									<th>上线下线</th>
+									<th>复制卡片</th>
+									<th>复制菜单</th>
+									<th>分类匹配处理</th>
+									<th>单品匹配处理</th>
+									<th>预览网站</th>
+                              		<th>渠道编号</th>
+									
+									<th>渠道简称</th>
+									<th>渠道公司名称</th>
+									<th>联系人</th>
+									<th>联系电话</th>
+									<th>地址</th>
+									
+								</tr>
+								</thead>
+								<tbody>
+                                <{foreach from=$data item=item name='dl'}>
+									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										
+										<td>
+                                            <{if $item.status==1}>
+												<span class='publish_icon' data-id='<{$item.id}>' >
+                                                        <span style="color:#58964E;">上线渠道</span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon' data-id='<{$item.id}>' >
+                                                        <span style="color:#F30;">下线渠道</span>
+                                                    </span>
+                                            <{/if}>
+											<br>
+										</td>
+										<td>
+											<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"   value='<{$item.couponId}>' id="myonoffswitch<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.status==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										</td>
+										<td>  <{if $item.couponId}>
+										    <span>已复制</span>
+										  <{else}>
+												<a href="<{$http_root_www}>factory_2c/channel_copy?id=<{$coupon.id}>&customer_id=<{$item.customer_id}>&title=" onClick="return window.confirm('确定要复制吗？');"><{$lang->copy}></a>
+								          <{/if}>
+										</td>
+										
+										<td>  <{if $item.menu_count >0 || $item.cate_count>0}>
+										    <span>已存在</span>
+										  <{else}>
+												<a href="<{$http_root_www}>factory_2c/restaurant_copy?from=<{$loginUser.id}>&to=<{$item.customer_id}>" onClick="return window.confirm('确定要复制吗？');"><{$lang->copy}></a>
+								          <{/if}>
+										</td>
+										<td>  
+												<a  target ="_blank" href=" <{$http_root_www}>factory_2c/fill_source_category_id_2_exist_sub_business?from=<{$loginUser.id}>&to=<{$item.customer_id}>"> 分类匹配</a>
+								        
+										</td>
+										<td>  
+												<a  target ="_blank" href=" <{$http_root_www}>factory_2c/fill_source_menu_id_2_exist_sub_business?from=<{$loginUser.id}>&to=<{$item.customer_id}>"> 单品匹配</a>
+								        
+										</td>
+										<td>  
+												<a  target ="_blank" href=" <{$http_root_www}>restaurant/<{$item.customer_id}>"> 预览</a>
+								        
+										</td>
+										<td>
+											<span><{$item.customer_id}></span>
+										</td>
+									
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="simply_name-<{$item.id}>" style="width:120px;" name="simply_name"
+												   value="<{$item.simply_name}>">
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
+									
+									
+									   	<td>
+											<span><{$item.displayName}></span>
+										</td>
+									
+								    	<td>
+											<span><{$item.nickname}></span>
+										</td>
+										<td>
+											<span><{$item.phone}></span>
+										</td>
+										
+								    	<td>
+											<span><{$item.googleMap}></span>
+										</td>
+										
+										
+									
+									
+									</tr>
+                                <{/foreach}>
+								</tbody>
+							</table>
+						</div>
+                        <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
+                    <{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    var loading = false;
+
+    $('input[name=simply_name]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+       
+        var updateData = {};
+   var     value = $(this).val();//常规改动直接抓取改动值
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory_2c/update_sales_item",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+    $('input[name=onoffswitch]').on('click', function () {
+        var id = $(this).data('id')
+		  var couponId = $(this).val();
+		//alert(couponId);
+        var context = $('.publish_icon[data-id=' + id + ']');
+       // alert('here');
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory_2c/set_channel_status_ajax",
+            data: {"id": id,"couponId":couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.status);
+                if (result.status == '0') {
+                    context.html("<span style='color:#F30;'>渠道下线</span>");
+                } else if (result.status == '1') {
+                    context.html("<span style='color:#58964E;'>渠道上线</span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+
+
+</script>
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"> < /iframe>
+    <{include file = 'footer.htm'}>
+
+	< /body>
+	< /html>

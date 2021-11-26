@@ -1,0 +1,269 @@
+	<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title>线上餐厅-Ubonus美食生活</title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.moneyDetail span:nth-child(3){
+		display: inline-block;
+		width: 100px;
+	}
+</style>
+
+    <script type="text/javascript">
+        //special checkout action; 
+        $(function(){
+           $('.go-back-btn').on('click',function(){
+                if($(this).hasClass('disabled'))return;
+                if($('.checkout-confirmation').is(":visible")){
+                    $('.shopping-cart').show();
+                    $('.checkout-confirmation').hide();
+                }else{
+                     window.history.back();
+                }
+
+            });
+			
+			
+			 $('.share-btn').on('click',function(){
+    $('.referral-share .share-display').show();
+  })
+
+  $('.referral-share .share-display').on('click',function(){
+    $(this).hide();
+  })
+        })
+    </script>
+
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a  class="a-back go-back-btn"></a>
+	</div>
+	<h1>Ubonus美食生活-墨尔本美食</h1>
+
+	<div class="right">
+		<!-- <sapn style='line-height: 1.5rem' class='resend_btn' ><{$lang->send_email_again}></span>	-->
+	<!-- <span class='search-icon' style="margin-right: 10px;line-height: 1.5rem;"><img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;padding-right: 5px;'>  </span> -->
+	       <span class='search-icon' style="margin-right: 10px;">
+
+          <img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;    padding-top: 9px;'>  
+
+      </span>
+
+
+
+	 
+
+	</div>
+
+	<script type="text/javascript">
+		$('.resend_btn').on('click',function(){
+			var couponId=$(this).data('id');
+			var context =$(this);
+
+			if(confirm('<{$lang->send_email_again}><{$data.email}>')){
+				$.ajax({
+					url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>", 
+					beforeSend: function( xhr ) {
+						context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+					},
+					success: function(result){
+						context.html("<{$lang->sent}>");
+						context.css('color','#fc0');
+					}
+				})
+			}
+		})
+		
+		
+		   $(".a-so,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".so-top-pop").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".box-so .a-txt , .g-ul li").click(function(){
+
+            $("body").removeClass('open-so');
+
+        });
+
+        $(".g-ul li").click(function(){
+          $(window).scrollTop($(".category-icon").position().top);
+        });
+	</script>
+</header>
+
+<section id="bd" style="background-color: #FFF">
+<!-- Header info -->
+	<div>
+		<span style="padding-left: 3px;line-height: 100px; font-size: 15px;color: red;">
+			分享最棒的美食平台Ubonus-赚取分红!	</span>
+		
+		
+	</div>
+
+	<table class="table table-sm">
+	  <tbody>
+	   
+
+		     <tr>
+		      <th scope="row">分享方法</th>
+		      <td> 微信转发-二维码推广-网址推广</td>
+		    </tr>
+   
+
+	  </tbody>
+	</table>
+
+
+	<div class='well'>
+		<span class='label label-info'>分享说明</span>
+		<!-- product -->
+		<table class='table'>
+				
+			<tbody>		
+					
+				<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+					<td>1)使用微信扫一扫分享. 用户点击就锁定为您的用户,购买后分红.</a></td>
+					
+				</tr>		
+<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+					<td>2)将所示二维码和网址放在自己的社交渠道中,比如朋友圈,微信软文,微博,网站等.</a></td>
+				</tr>						
+					
+			</tbody>		
+		</table>
+
+	
+
+	</div>
+
+	
+
+
+	
+
+
+	<div class='well'>
+		<p style="text-align: center;">
+			扫码或识别二维码
+			<br>
+			<img src="<{$storeQrCode}>" width="100px">
+			<br>
+			分享网址: <{$storeLink}>
+		</p>
+	</div>
+</section>
+
+<{include file="mobile/mobile_share_footer.htm"}>
+
+<div class='referral-share'>
+<div class='share-display'>
+  <div class='top'>
+    <img src="<{$SKIN_PATH}>images/redbag/img/guide1.png">
+  </div>
+  <{if $loginUser}>
+    <div class='qrcode'>
+      <img src="<{$shareQRCode}>">
+    </div>
+    <div class='bottom'>
+      <a href="<{$http_root_www}>referal/referrals?type=user" target="_blank" class='manage-share-link'><{$lang->my_sharing}></a>
+    </div>
+  <{else}>
+  
+    <h2><{$lang->login_and_sharing}></h2>
+    
+  <{/if}>
+</div>
+</div>
+
+<style type="text/css">
+.referral-share .share-btn{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255,191,0,0.7);
+  padding: 5px 15px;
+  z-index: 12;
+}
+
+.referral-share .share-display{
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width:100%;
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.referral-share .share-display h2{
+    color: #fff;
+    padding: 30px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.referral-share .top{
+  height: 120px;
+}
+.referral-share .top img{
+  width: 170px;
+  position: absolute;
+  right: 0px;
+}
+.referral-share .qrcode{
+  text-align: center;
+  padding: 50px 0px;
+}
+.referral-share .qrcode img{
+  display: inline-block;
+  width: auto;
+}
+.referral-share .bottom{
+  text-align: center;
+  width: 100%;
+  height: 50px;
+}
+.referral-share .bottom .manage-share-link{
+  background-color: #FD5001 ;
+  padding: 10px 20px;
+}
+</style>
+
+</body>
+</html>
+
+
+

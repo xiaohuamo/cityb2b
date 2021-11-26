@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+			<tr class="editHdTr">
+				<td colspan="2">查看详细</td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">兑换名称 : </td>
+				<td class="editRtTd"><a href="<{$data.product.url}>" target="_blank"><{$data.product.name}></a></td>
+			</tr>
+			
+			<{if $data.type=='coupon'}>
+			<tr class="editTr">
+				<td class="editLtTd">商品编号：</td>
+				<td class="editRtTd"><{$data.code}></td>
+			</tr>
+			<{/if}>
+			<tr class="editTr">
+				<td class="editLtTd">领取时间 : </td>
+				<td class="editRtTd"><{date('Y-m-d H:i:s', $data.createTime)}></td>
+			</tr>
+			<{if $data.type=='coupon'}>
+			<tr class="editTr">
+				<td class="editLtTd">状态 : </td>
+				<td class="editRtTd"><{if $data.status}>已使用<{else}>未使用<{/if}></td>
+			</tr>
+			<{/if}>
+			<{if $data.type=='product'}>
+			<tr class="editHdTr">
+				<td colspan="2">收货人信息</td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">姓名 : </td>
+				<td class="editRtTd"><{$data.name}></td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">街道地址 : </td>
+				<td class="editRtTd"><{$data.street}></td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">City/suburb : </td>
+				<td class="editRtTd"><{$data.city}></td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">State : </td>
+				<td class="editRtTd"><{$data.state}></td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">Country : </td>
+				<td class="editRtTd"><{$data.country}></td>
+			</tr>
+			<tr class="editTr">
+				<td class="editLtTd">邮箱 : </td>
+				<td class="editRtTd"><{$data.email}></td>
+			</tr>
+			<{/if}>
+		</table>
+		<div class="editBtn clearfix">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+		</div>
+	</div>
+</div>
+</body>
+</html>

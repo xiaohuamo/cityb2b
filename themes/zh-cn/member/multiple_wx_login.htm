@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+ <style type="text/css">
+ 	.super_large{
+ 		width: 70%;
+ 		height: 100px;
+ 		margin: 10px;
+ 	}
+ </style>
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding: 50px 0">
+	<h1 class='text-info'>微信多用户登录</h1>
+	<p>您的微信绑定了多个账户，请选择登录</p>
+	<{foreach from=$accounts item=user}>
+		<form action='<{$http_root_www}>member/multiple_wx_login' method='post'>
+			<input name ='id' value='<{$user.id}>' type='hidden'>
+			<input name ='name' value='<{$user.name}>' type='hidden'>
+			<input name ='pwd' value='<{$user.password}>' type='hidden'>
+			<input name ='returnUrl' value='<{$returnUrl}>' type='hidden'>
+			<button class='btn btn-default super_large' type='submit'><{$user.name}></button>
+		</form>
+	<{/foreach}>
+	<br> <br>
+	<p style="color:#aaa">提示：您可以在个人中心设置默认的微信登录帐号。</p>
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+

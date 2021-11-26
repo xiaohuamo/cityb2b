@@ -1,0 +1,103 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><{$lang->business_center}></a> 
+				<small style="padding-left:10%;font-size: 10px"><a href="<{$http_root_www}>member/index">个人中心</a></small> 
+			</div>
+		</li>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='my_mingxingshop'}> class="current"<{/if}>>我的明星店</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/referral_food_share"<{if $submenu=='referral_food_share'}> class="current"<{/if}>>
+					一键分享美食
+				</a>
+				<a href="<{$http_root_www}>company/mingxing_coupons"<{if $submenu=='yijianbanjia'}> class="current"<{/if}>>
+					一键搬家
+				</a>
+				
+				<a href="<{$http_root_www}>company/referral_product_program"<{if $submenu=='referral_product_program1'}> class="current"<{/if}>>
+					归类与置顶
+				</a>
+				<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' ><{$lang->preview_store}></a>
+				<a href="<{$http_root_www}>company/referral_product_program_share"<{if $submenu=='send_share'}> class="current"<{/if}>>
+					转发与分享
+				</a>
+				<a href="<{$http_root_www}>referal/referrals?type=user"<{if $submenu=='referrals_business'}> class="current"<{/if}>>
+					业绩查询
+				</a>
+				
+				<a href="<{$http_root_www}>customizable_category/edit?type=mingxingdian"<{if $submenu=='category_edit'}> class="current"<{/if}>>
+					商品分类
+				</a>
+				<a href="<{$http_root_www}>company/notice"<{if $submenu=='notice'}> class="current"<{/if}>>
+					商家通知
+				</a>
+				<a href="<{$http_root_www}>company/store_banner_edit"<{if $submenu=='store_banner_edit'}> class="current"<{/if}>>
+					店铺banner管理
+				</a>
+			</div>
+		</li>
+		
+		<{include file='company/side_money.htm'}>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='business_setting'}> class="current"<{/if}>><{$lang->business_setting}></a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/business_setting_main" <{if $submenu=='business_setting'}> class="current"<{/if}>>
+					<{$lang->all}>
+				</a>
+				<a href="<{$http_root_www}>company/profile_manager"<{if $submenu=='profile_manager'}> class="current"<{/if}>>
+					<{$lang->administrator_info}>
+				</a>
+				<a href="<{$http_root_www}>company/choose_business_type"<{if $submenu=='choose_business_type'}> class="current"<{/if}>>
+					店铺切换
+				</a>
+				<a href="<{$http_root_www}>member/wx_manage_account?side=company"<{if $menu=='wx_manage_account'}> class="current"<{/if}>><{$lang->wx_setting}></a>
+			</div>
+		</li>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>company/ubonus_package"<{if $menu=='community'}> class="current"<{/if}>>我要推广</a>
+			</div>
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='article_vote'}> class="current"<{/if}>>文章/社群</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/article"<{if $submenu=='article'}> class="current"<{/if}>>美文</a>
+				
+				<a href="<{$http_root_www}>voting/voting_manage"<{if $submenu=='voting_manage'}> class="current"<{/if}>>
+					人气及投票
+				</a>
+				
+			</div>
+			
+		</li>
+		
+	</ul>
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

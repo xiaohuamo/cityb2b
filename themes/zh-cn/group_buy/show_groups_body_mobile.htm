@@ -1,0 +1,329 @@
+<div class='group'>
+	<{foreach from=$groups item=item}>
+
+	<span data-id='<{$item.id}>' 
+		data-allow-user-group='<{$item.allow_user_group}>'
+		data-complete-condition='<{$item.complete_condition}>'
+		class='each_group
+		<{if $item.isUserIn}>joined_group<{/if}>
+
+		<{if $groups|@count==1}>single_group_display<{/if}>
+
+		<{if $item.status==0}>
+		group_ready
+		<{elseif $item.status==1}>
+		group_running
+		<{elseif $item.status==2}>
+		group_close
+		<{elseif $item.status==3}>
+		group_staging
+		<{elseif $item.status==4}>
+		group_finalizing
+		<{elseif $item.status==5}>
+		group_complete
+		<{else}>
+		group_error
+		<{/if}>
+		'>
+		<span class='each_group_top '>
+				<span class='user_already_in' <{if $item.isUserIn==false}>style='display:none'<{/if}>><i class='fa fa-check-circle-o fa-2x'></i></span>
+
+			<span class='group_name'><{$item.name}></span>
+			<span class='breaker'></span>
+			<span class='group_status'>
+				<{if $item.status==0}>
+				<!-- Coming Soon -->即将上线
+				<{elseif $item.status==1}>
+				<!-- Running -->凑团进行中
+				<{elseif $item.status==2}>
+				<!-- Close -->关闭
+				<{elseif $item.status==3}>
+				<!-- Staging -->分级奖励达成
+				<{elseif $item.status==4}>
+				<!-- Finalizing -->最终奖励达成
+				<{elseif $item.status==5}>
+				<!-- Complete -->完成
+				<{else}>
+				<!-- Error -->错误！
+				<{/if}>
+			</span>
+		</span>
+
+		
+
+		<{if $item.status==1 || $item.status==3}>
+		<span class='each_group_mask'>
+			<{if $item.allow_user_group}>
+				<i class='fa fa-users group_selected fa-4x' style='color:#FD5001 ;'></i>
+			<{elseif $item.isUserIn}>
+				<i class='fa fa-user-times group_selected fa-4x' style='color:#9E1414;'></i>
+			<{else}>
+				<i class='fa fa-user-plus group_selected fa-4x' style='color:#2a9e14;'></i>
+			<{/if}>
+		</span>
+		<{/if}>
+
+	</span>
+	<{/foreach}>
+</div>
+
+<div class='group_desc'>
+	<{foreach from=$groups item=item}>
+	<div class='group_desc_each' id ='group_desc_<{$item.id}>' style='display:none'>
+		<a href="<{$http_root_www}>coupon/<{$item.coupon_id}>" target='_blank' > 
+		<img style='width: 100%' src="<{$UPLOAD_PATH}><{$item.coupon_pic}>">
+		 </a>
+		<p><{$item.description}></p>
+		<span class='group_size' >最大人数：<{$item.max}></span>
+	</div>
+	<{/foreach}>
+</div>
+
+<div class='user_list'></div>
+
+<div class='bottom_sec'>
+	<button class='manage_group_btn'style='float:left'><a href="<{$http_root_www}>group1_buy/manage_joined_group">我的团购</a></button>
+	<button class='creat_group_btn'style='float:right;display:none' onClick='createUserGroupAjax();'><i class='fa fa-users' style='color:#FD5001 ;'></i> 我来开团</button>
+	<button class='join_group_btn' style='float:right;display:none' onClick='joinGroupAjax();'><i class='fa fa-user-plus'  style='color:#2a9e14;'></i> 加入</button>
+	<button class='leave_group_btn' style='float:right;display:none' onClick='leaveGroupAjax();'><i class='fa fa-user-times' style='color:#9E1414;'></i> 退出</button>
+</div>
+
+
+<!-- 如果是单个团显示 '我的团购'=>'Chris的团' 自动选中 -->
+<{if $groups|@count==1}>
+<script type="text/javascript">
+	$(function(){
+		$('.group1_buy_container_mobile').show();
+	})
+</script>
+<script type="text/javascript">
+var selectedGroupId=-1;
+$(function(){
+	$('.group1_buy_trigger_btn').html("<{$groupOwnerName}>"+"邀您入团");
+	selectedGroupId=$('.each_group').data('id');
+	loadUserList(selectedGroupId);
+	showGroupDesc(selectedGroupId);
+
+	showBtn($('.each_group'));
+})
+</script>
+
+<{else}>
+
+<script type="text/javascript">
+var selectedGroupId=-1;
+$(function(){
+	$('.group_running,.group_staging,.joined_group').on('click',function(){
+		if(selectedGroupId==$(this).data('id')){
+			$(this).find('.each_group_mask').hide();
+			selectedGroupId=0;
+
+			hideUserList();
+			hideGroupDesc();
+			hideAllBtn();
+		}else{
+			$('.group_running,.group_staging,.joined_group').each(function(){
+				$(this).find('.each_group_mask').hide();
+			});
+			$(this).find('.each_group_mask').show();
+			selectedGroupId=$(this).data('id');
+
+			loadUserList(selectedGroupId);
+			showGroupDesc(selectedGroupId);
+			showBtn(this);
+		}
+		
+	});
+});
+</script>
+
+<{/if}>
+
+<script type="text/javascript">
+function showBtn(obj){
+	hideAllBtn();
+	if($(obj).data('allow-user-group')=='1'){
+		$('.creat_group_btn').show();
+	}else{
+		if($(obj).is('.joined_group')){
+			showLeaveBtn();
+		}else{
+			showJoinBtn();
+		}
+	}
+}
+function showJoinBtn(){
+	$('.join_group_btn').show();
+	$('.leave_group_btn').hide();
+}
+function showLeaveBtn(){
+	$('.join_group_btn').hide();
+	$('.leave_group_btn').show();
+}
+function hideAllBtn(){
+	$('.join_group_btn').hide();
+	$('.leave_group_btn').hide();
+	$('.creat_group_btn').hide();
+}
+
+function loadUserList(id){
+	$.ajax({
+		   method:"GET",
+		   url: '<{$http_root_www}>group1_buy/group_list_show_ajax',
+		   data: {
+		   		id: id,
+		   		type:'user'
+		   },
+		   beforeSend : function (){
+              $('.user_list').html('<i class="fa fa-spinner fa-lg fa-spin" style="color:#31BC86"></i>');
+            },
+            success : function (returnData) {
+              $('.user_list').html(returnData);
+            }
+		});
+}
+function hideUserList(){
+	$('.user_list').html('');
+}
+function showGroupDesc(id){
+	$('.group_desc_each').each(function(){
+		$(this).hide();
+	});
+	$('#group_desc_'+id).show();
+}
+function hideGroupDesc(){
+	$('.group_desc_each').each(function(){
+		$(this).hide();
+	});
+}
+
+function joinGroupAjax(){
+	if(selectedGroupId<=0){
+		htmlAlert('选择group');
+		return;
+	}
+
+	var numberOfPeople=1;
+
+	$target=$(" .each_group[data-id='"+selectedGroupId+"']");
+	var condition=$target.data('complete-condition');
+	if(condition=="1"){
+		//一个人可以代表一个人参团
+		numberOfPeople=1
+	}else if(condition=="2"){
+		//一个人可以代表多个人参团
+		numberOfPeople=parseInt(prompt("请输入参团人数(最大5人)", "1"));
+		if(isNaN(numberOfPeople)){console.log('invalid input');return;}
+		if(numberOfPeople>5||numberOfPeople<=0){
+			htmlAlert('参团人数最大5人');return;
+		}
+	}
+
+
+	$.ajax({
+		   method:"GET",
+		   url: '<{$http_root_www}>group1_buy/join_group',
+		   data: {
+		   		groupId: selectedGroupId,
+		   		numberOfPeople:numberOfPeople
+		   },
+            success : function (returnData) {
+            	var returnData =JSON.parse(returnData)
+              	htmlAlert(returnData.msg);
+              	if(returnData.status==200){
+              		updateGroupState(selectedGroupId,'joined')
+              	}else if(returnData.status==100){
+              		window.location.href = returnData.redirect.replace('&amp;', '&');
+              	}
+            }
+		});
+}
+
+function updateGroupState(id,state){
+	
+	$target = $('[data-id="'+id+'"].each_group');
+
+	if(state=='joined'){
+		$target.addClass('joined_group')
+		$target.find('.user_already_in').show();
+		$target.find('.group_selected').removeClass('fa-user-plus').addClass('fa-user-times').css('color','#9E1414');
+		loadUserList(id);
+		showLeaveBtn();
+
+	}else if(state=='notjoined'){
+		$target.removeClass('joined_group')
+		$target.find('.user_already_in').hide();
+		$target.find('.group_selected').removeClass('fa-user-times').addClass('fa-user-plus').css('color','#2a9e14');
+		loadUserList(id);
+		showJoinBtn();
+	}
+	
+	// updateGroupAjax();
+	// loadUserList(id);
+	
+}
+function updateGroupAjax(){
+	$.ajax({
+		   method:"GET",
+		   url: '<{$http_root_www}>group1_buy/update_group_status_ajax',
+		   data: {
+		   		group1_buy_id: selectedGroupId,
+		   		coupon_id:'<{$main_coupon_id}>'
+		   },
+            success : function (returnData) {
+            	$('.group').html(returnData);
+            }
+		});
+}
+
+function leaveGroupAjax(){
+	if(selectedGroupId<=0){
+		htmlAlert('选择group');
+		return;
+	}
+
+	$.ajax({
+		   method:"GET",
+		   url: '<{$http_root_www}>group1_buy/leave_group',
+		   data: {
+		   		group_id: selectedGroupId
+		   },
+            success : function (returnData) {
+            var returnData =JSON.parse(returnData)
+              htmlAlert(returnData.msg);
+              if(returnData.status==200){
+              	updateGroupState(selectedGroupId,'notjoined')
+              }
+            }
+		});
+}
+
+function createUserGroupAjax(){
+	if(selectedGroupId<=0){
+		htmlAlert('选择group');
+		return;
+	}
+
+	var groupName = prompt("请输入新团名称", "新团名");
+    if (groupName == null) {
+       htmlAlert('新团名称不能为空');
+       return;
+    }
+
+	$.ajax({
+		   method:"GET",
+		   url: '<{$http_root_www}>group1_buy/create_user_group',
+		   data: {
+		   		groupId: selectedGroupId,
+		   		groupName:groupName
+		   },
+            success : function (returnData) {
+            var returnData =JSON.parse(returnData)
+              htmlAlert(returnData.msg);
+              if(returnData.status==200){
+              		window.location.href = returnData.redirect.replace('&amp;', '&');
+              }
+            }
+		});
+}
+</script>

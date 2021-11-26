@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+    <title>Ubonus美食生活 立减卷</title>
+
+    <style type="text/css">
+      .banner {
+        position: relative;
+      }
+
+      .banner img{
+        width: 100%;
+      }
+      .banner p{
+        color: white;
+        font-size: 1rem;
+        line-height: 2.5rem;
+      }
+
+      .banner a{
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .success h4{
+        text-align: center;
+        line-height: 4rem;
+      }
+
+      .promotion-item{
+        position: relative;
+      }
+
+      .promotion-item .price-off{
+        position: absolute;
+        top: -18px;
+        left: 10px;
+        height: 60px;
+        width: 60px;
+        line-height: 60px;
+        border-radius: 30px;
+        background: #FD5001 ;
+        color: #fff;
+        text-align: center;
+        font-size: 20px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div style='max-width:600px;margin: auto;padding: 10px'>
+        <div class='banner' >
+          <img src="<{$SKIN_PATH}>/images/promotion_voucher_banner.png">
+         <!--  <p>墨尔本美食季百家餐厅劲爆套餐超低价</p>
+          <p>火锅 烧烤 海鲜 干锅 川菜 特色应有尽有</p>
+          <a href="＃">点击进入</a> -->
+        </div>
+        <div class='user-info '>
+          
+          <h2 style="text-align: center;line-height: 5rem;color:#f30">$2立减卷</h2>
+
+          <form action='<{$http_root_www}>test/promotion_voucher_register' method='POST'>
+            <!-- <div class="form-group row">
+              <label for="staticEmail" class="col-3 col-form-label">姓</label>
+              <div class="col-9">
+                <input required="" type="text"  class="form-control" id="staticEmail" name='lastname'>
+              </div>
+            </div> -->
+            
+            <!--  <div class="form-group row">
+              <label for="inputPassword" class="col-3 col-form-label">姓名</label>
+              <div class="col-9">
+                <input required="" type="text" class="form-control" id="inputPassword" name='firstname' >
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <label for="mobile" class="col-3 col-form-label">电话</label>
+              <div class="col-9">
+                <input required="" type="tel" class="form-control" id="mobile" name='mobile'>
+              </div>
+            </div>
+
+            <!--  <div class="form-group row">
+              <label for="email" class="col-3 col-form-label">邮箱</label>
+              <div class="col-9">
+                <input required="" type="text" class="form-control" id="email"  name='email'>
+              </div>
+            </div> -->
+
+            <input type="hidden" name="openId" value='<{$openId}>'>
+
+            <input type="submit" value='立即领取' class='btn btn-block btn-primary' style="position: fixed;bottom: 0px;right: 0px;height: 60px;z-index: 5">
+          </form>
+
+        </div>
+        <div class='desc card'>
+          <p class='card-body'>
+            每人只能申请一次，可以在下面指定餐厅使用，卷有效期7天，本次活动由澳洲最大电商平台－Ubonus美食生活发起，Ubonus美食生活对本次活动由最终解释权
+          </p>
+        </div>
+
+        <br><br><br>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        $('#mobile').on('keyup',function(){
+           var tel = $(this).val();
+
+           if(tel.length<10){
+              $(this).css('border-color','red');
+              $('form :submit').attr("disabled", "disabled");
+           }else{
+              $(this).css('border-color','#00bd00');
+              $('form :submit').removeAttr("disabled");
+           }
+        })
+      })
+    </script>
+  </body>
+</html>

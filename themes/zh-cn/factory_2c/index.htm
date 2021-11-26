@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style type="text/css">
+	  .index_panel{
+	  	position: relative;
+	  	color: #637cff;
+	  }
+
+	   /*over right global css*/
+	  .index_panel a:hover{
+	   	text-decoration: none;
+	  }
+	  /*END over right global css*/
+
+	  .panel_item{
+	  	width: 44%;
+	  	margin: 2%;
+	  	display: inline-block;
+	  	height: 200px;
+	  	border: 1px solid #637cff;
+	  	overflow: hidden;
+	  }
+	  .panel_item_top{
+	  	height: 165px;
+	  }
+	  .panel_item_top .panel_icon{
+	  	text-align: center;
+	  	padding-top: 10px;
+	  }
+	  .panel_item_top h1{
+	  	text-align: center;
+	  	line-height: 60px;
+	  	font-size: 20px;
+	  }
+	  .panel_item_top p{
+	  	text-align: center;
+	  }
+	  .panel_item_sub{
+	  	height: 35px;
+	  	display: table;
+	  	table-layout: fixed;
+	  	width: 101%;
+	  }
+
+	  .panel_sub_item{
+	  	line-height: 35px;
+	  	overflow: hidden;
+	  	border-top: 1px solid #637cff;
+	  	border-right: 1px solid #637cff;
+	  	color: #637cff;
+	  	text-align: center;
+	  	display: table-cell;
+	  }
+	 .panel_sub_item:hover{
+	  	color: #fff;
+	  	background-color: #637cff;
+	  	cursor: pointer;
+	  }
+
+	  .mobile-alert .alert-item{
+	  	line-height: 30px;
+	    font-size: 14px;
+	    background: #d0ff44;
+	    margin: 10px;
+	    padding: 0px 15px;
+	    border-radius: 10px;
+	  }
+	</style>
+
+
+
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		<div class="wrap clearfix">
+	
+			<{include file='factory_2c/side.htm'}> 
+	
+			<div class="m-side m-hide">
+				<div class="main clearfix">
+					<{if $loginUser.role==3 ||  $loginUser.role==6 || $loginUser.role==5 || $miss}>
+					<div class="box2">
+						<div>
+						
+							<{include file='company/fast_config_panel.htm'}>
+                           	<{include file='factory_2c/index_panel_factory.htm'}>
+                                  
+								
+						</div>
+						
+					
+					
+					</div> 
+
+					<{else if  $loginUser.role!=6}>
+						<div class='panel_item'>
+							<div class='panel_item_top'>
+								<div class='panel_icon'><i class="fa fa-archive fa-4x" aria-hidden="true"></i></div>
+								<h1> <{$lang->open_store}></h1>
+								<p><{$lang->application_for_activation}></p>
+							</div>
+							<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>factory_2c/become_business_user" class='panel_sub_item'><{$lang->open_store}></a>
+							</div>
+						</div>
+					<{/if}>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+<{include file='footer.htm'}>
+</body>
+</html>

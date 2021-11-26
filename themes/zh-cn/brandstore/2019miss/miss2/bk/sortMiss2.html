@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>佳丽排名</title>
+	    <style>
+	    	#sortMiss{
+	    		margin: 0px auto;
+	    		padding-top: 30px;
+	    		padding-bottom: 30px;
+	    		position: relative;
+	    		width: 80%;
+	    		height: auto;
+	    		text-align: center; 
+	    		background-image: url(img/bg.png);
+	    		background-size: 100% 100%;
+	    		
+	    	}
+	    	.left-time{
+	    		position: absolute;
+	    		left: 50px;
+	    		width: 170px;
+	    		height: 350px;
+	    		border: 3px solid #825ea6;
+	    		border-radius: 15px;
+	    		color: #825ea6;
+	    		vertical-align: middle;
+	    	}
+	    	.left-time-wrap{
+	    		width: 20px;
+	    		float: left;
+	    		position: absolute;
+	    		font-size: 22px;
+	    		text-align: center;
+	    	}
+	    	.item{
+	    		position: relative;
+	    		display: inline-block;
+	    		
+	    	}
+	    	.item-wrap{
+	    		position: relative;
+	    		height: 80px;
+	    		width: 80px;
+	    		border-radius: 40px;
+	    		margin: 10px 28px;
+	    		overflow: hidden;
+	    	}
+	    	.imgs{
+	    		width: 100%;
+	    		height: 100%;
+	    	}
+	    	.name{
+	    		position: absolute;
+	    		left: 0;
+	    		bottom: 0;
+	    		padding-bottom: 5px;
+	    		background-color: white;
+	    		color: black;
+	    		width: 100%;
+	    		font-size: 12px;
+	    	}
+	    	.hg{
+	    		position: absolute;
+	    		top: -7px;
+	    		right: 13px;
+	    	}
+	    	
+	    </style>
+	</head>
+	<body>
+			<div id="sortMiss">
+				<div class="left-time">
+					<div style="font-size: 40px;">决赛</div>
+					<div class="left-time-wrap" style="left: 45px;">
+						<span style="color: #d87227;font-size: 30px;">7</span>月
+						<span style="color: #d87227;font-size: 30px;">25</span>日周四晚
+						<span style="color: #d87227;font-size: 30px;">7</span>点</div>
+					<div class="left-time-wrap" style="left: 100px;">
+						倒计时<span style="color: #d87227;font-size: 30px;">{{days}}</span>天
+					</div>
+				</div>
+				<div v-for="(items,i) in sort" >
+					<div class="item" v-for="(item,j) in items">
+						<div class="item-wrap">
+							<img class="imgs" :src='item.imgsrc'/>
+							<div class="name">{{item.name}}</div>
+						</div>
+						<div class="hg" v-if="i < 2">
+							<img  :src="'img/' + (i*(j+1) + 1) + '.png'" width="30px" height="30px"/>
+						</div>
+					</div> 
+				</div>
+			</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js" ></script>
+	<script type="text/javascript" src="js/vue.min.js" ></script>
+	<script>
+		var leftTime = (new Date('2019-07-25')) - new Date(); //计算剩余的毫秒数
+		var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10)+1; //计算剩余的天数
+		var datas=[
+			{num:1,no:12,votes:439,name:'荆微微',imgsrc:'img/beautyweb.png'},
+			{num:2,no:23,votes:440,name:'荆微微2',imgsrc:'img/beautyweb.png'},
+			{num:3,no:23,votes:440,name:'荆微微3',imgsrc:'img/beautyweb.png'},
+			{num:4,no:23,votes:440,name:'荆微微4',imgsrc:'img/beautyweb.png'},
+			{num:5,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:6,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:7,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:8,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:9,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:10,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:11,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:12,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:13,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:14,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:15,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:16,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:17,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:18,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:19,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'},
+			{num:20,no:23,votes:440,name:'荆微微1',imgsrc:'img/beautyweb.png'}
+			
+		],sort=[];
+		while (datas.length>0){
+			sort.push(datas.splice(0,sort.length+1))
+		}
+		new Vue({
+			el:'#sortMiss',
+			data:{
+				sort,
+				days
+			}
+		})
+	</script>
+</html>

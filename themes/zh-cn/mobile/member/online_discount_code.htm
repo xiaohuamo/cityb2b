@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>member/index" class="a-back"></a>
+	</div>
+	<h1>线上折扣码</h1>
+</header>
+
+<section id="bd">
+	<!-- <div class="m-menu">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><a class="on" >未使用</a></div>
+			    <div class="swiper-slide"><a >全部</a></div>
+				<div class="swiper-slide"><a >已使用</a></div>
+			</div>
+		</div>
+	</div> -->
+
+	<{if $data}>
+	<{foreach from=$data key=key item=item name='dl'}>
+	<div class="order-num order-num-1">
+	 
+		<span>商家：<{$item.businessName}></span>
+		<em></em>
+	</div>
+	<div class="order-num order-num-1">
+		<span>折扣说明：<{$item.promotion_des}></span>
+	</div>
+	
+	<div class="order-num order-num-1">
+		<span>折扣码：<{$item.promotion_code}></span>
+		<span>折扣额度：<{if $item.type==fixed}>$<{$item.value}><{else}><{$item.value}>%<{/if}></span>
+		
+	</div>
+	<div class="order-info order-info-1">
+		<ul class="g-ul m-list2">
+			
+			<li>
+				<div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic}>" alt=""></div>
+				<div class="con">
+					<h4><a href="<{$http_root_www}><{$item.link}>"><{$item.discount_range}></a></h4>
+				</div>
+				<em class="num"></em>
+				<div class="payment">
+				<a href="<{$http_root_www}><{$item.link}>">详细</a>
+	</div>
+			</li>
+		
+		</ul>
+		
+	</div>
+	<{/foreach}>
+	<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+	<{else}>
+	<div class="order-num order-num-1">
+		<span>未查找到相关数据</span>
+	</div>
+
+	<{/if}>
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+
+<script>
+    $(".m-menu").each(function(){
+        var swiper = new Swiper($(this).find(".swiper-container")[0], {
+            slidesPerView: 5,
+            paginationClickable: true,
+            spaceBetween : 5,
+            freeMode: true
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1392 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+
+
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+<script>
+	var php_root ='<{$http_root_www}>';
+</script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-json/2.4.0/jquery.json.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.2.17/jquery.timepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.2.17/jquery.timepicker.min.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/javascript.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/html.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="<{$STATIC_PATH}>businessHours-master/jquery.businessHours.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>businessHours-master/jquery.businessHours.css"/>
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>businessHours-master/libs/page.css"/>
+
+ <script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+<style type="text/css">
+	.image_view{
+		position: relative;
+		right: 0;
+		left: 0;
+		margin: 30px auto;
+
+	}
+	.image_item{
+		border: 2px solid #ddd;
+	}
+	.image_mask{
+		position: absolute;
+		text-align: center;
+		top: 1px;
+		left: 1px;
+		opacity: 0;
+		background-color: #eee;
+	}
+	.image_mask:hover{
+		opacity: 0.6;
+	}
+
+	.image_view_remove{
+		position: absolute;
+		display: inline-block;
+		bottom: 0;
+		right: 0;
+		cursor: pointer;
+	}
+
+	.image_view_add{
+		color: #fff;
+	    border: 1px solid #e0b123;
+	    background: #FD5001 ;
+	    padding: 10px;
+	    display: inline-block;
+	}
+
+	@media screen and (max-width:640px) {
+		.image_view,.image_item,.image_mask{
+			width: 100%!important;
+			height: auto!important;
+		}
+	}
+</style>
+
+<script> 
+
+var cats = [];
+<{foreach from=$categoriesAll item=item}>
+cats.push(['<{$item.id}>', '<{$item.name}>', <{$item.childCount}>]);
+<{/foreach}>
+
+
+function setBonusType(obj) {
+ 	bonusType=$(obj).val();
+	 $('.coupon-tyle-select-box-body').hide();
+	 $('.coupon-tyle-select-box-head').css('background-color','#B4DFE3');
+	 if($(obj).is(':checked')){
+	 	$(obj).parent().parent().css('background-color','#FFDB3F');
+	 	$(obj).parent().parent().next('.coupon-tyle-select-box-body').show();
+	 }
+}
+
+$(function(){
+	
+	 gen_youhuiquan();
+	
+	
+})
+
+
+
+function catChg(obj) {
+	var vv = $(obj).val(); 
+
+	var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+	if (isNaN(cc)) cc = 0;
+
+	var cat_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd')
+	
+
+	if (vv == '' || cc <= 0) {
+		$(obj).next().nextAll().remove();
+
+		if($(".nice-check-box input[value='"+vv+"']").length>0){
+			$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
+		}else{
+			$.get('<{$http_root_www}>company/category_insert_single', 
+				{ 'cid': vv,}, 
+				function(data){
+					$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="userCategoryId[]"  value="' + vv +'" checked /><label for="'+vv+'"><strong>' + cat_name + '</strong></label></div>');
+					$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+			});
+		}
+
+	}else {
+		$(obj).next().nextAll().remove();
+		var c = $('<select name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		for (var i = 0; i < cats.length; i++) {
+			if ( cats[i][0].substring(0, vv.length) == vv && cats[i][0].length == vv.length + 3 ) {
+				c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
+			}
+		}
+		$(obj).next().after(c);
+		setDroplist(c);
+	}
+}
+
+function gen_youhuiquan(){
+
+// 生成商家名称
+
+var  businessName =$('#title').val();
+var  main_zhekoulv=$('#main_zhekoulv').val();
+var  main_zhekoulv_amount=$('#main_zhekoulv_amount').val() ;
+sub_zhekoulv_02_amount
+
+
+
+
+
+
+var  youhuiquantitle = businessName + main_zhekoulv +'折';
+
+
+//检查主优惠券是否有折扣及金额限时,并生成主优惠券描述
+if (main_zhekoulv_amount>0) {
+
+  youhuiquantitle += '(消费满' + main_zhekoulv_amount  +')';
+}else{
+ youhuiquantitle += '(无消费额度限制)';
+
+}
+
+
+// 检查其它优惠券是否有折扣和金额描述,有折扣并且有金额描述时生成更多说明
+
+
+var  sub_zhekoulv_02=$('#sub_zhekoulv_02').val();
+var  sub_zhekoulv_02_amount=$('#sub_zhekoulv_02_amount').val() ;
+
+
+
+var  sub_zhekoulv_03=$('#sub_zhekoulv_03').val();
+var  sub_zhekoulv_03_amount=$('#sub_zhekoulv_03_amount').val() ;
+
+
+
+var  sub_zhekoulv_04=$('#sub_zhekoulv_04').val();
+var  sub_zhekoulv_04_amount=$('#sub_zhekoulv_04_amount').val() ;
+
+
+if (sub_zhekoulv_02>0 && sub_zhekoulv_02_amount>0) {
+
+  youhuiquantitle += ',' + sub_zhekoulv_02 +'折(消费满' + sub_zhekoulv_02_amount  +')';
+}
+
+
+if (sub_zhekoulv_03>0 && sub_zhekoulv_03_amount>0) {
+
+  youhuiquantitle += ',' + sub_zhekoulv_03 +'折(消费满' + sub_zhekoulv_03_amount  +')';
+}
+
+
+if (sub_zhekoulv_04>0 && sub_zhekoulv_04_amount>0) {
+
+  youhuiquantitle += ',' + sub_zhekoulv_04 +'折(消费满' + sub_zhekoulv_04_amount  +')';
+}
+
+// 限时优惠券标题
+  $('#youhuiquantitle').val(youhuiquantitle);
+
+
+}
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1>发布折扣券</h1>
+					</div>
+
+					
+					<div class="input-box clearfix" style="    margin-top: 15px;">
+						
+					</div>
+
+				
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						
+						
+						<div class="input-box  form-style-green">
+							<span>
+							<label>商家名称</label>
+							</span>
+							<input type="text"  name="businessName" id="title" class="input-text" value="<{$data.BusinessName}>优惠券"  onkeyup ="gen_youhuiquan();" onchange="gen_youhuiquan();" placeholder="请输入..." style="width:70%;font-size:14px;" />
+							<span class='help-box' data-content='默认标题,可以修改'></span>
+						</div>
+						
+                     <div class="input-box clearfix" style="    background-color: #f0f0f0;    padding-left: 10px;  margin-top:50px;  padding-top: 20px;">
+						<div>
+						<div class="input-box clearfix" >
+							<span>
+							<label style=" width: 80px;  font-size: 80%;  background: #FD5001 ;">优惠折扣券1</label>
+							</span>
+						</div>
+						
+						<div class="input-box clearfix">
+							<span>
+							<label style=" width: 80px;font-size: 80%; ">消费金额达到</label>
+							</span>
+							<input id="main_zhekoulv_amount" type="number" min='0' step='10' class="input-text" value="0"  name ="voucher_deal_amount" style="width:120px;" onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();"/> 
+						    <em> 如<strong style="font-size:15px;color:blue">0</strong>表示无消费金额限制; 或<strong style="font-size:15px;color:blue">50</strong>表示,消费满50可以使用下一行规定的折扣幅度 </em>
+						</div>
+						<div class="input-box clearfix">
+							<span>
+							<label  style=" width: 80px;font-size: 80%; ">折扣幅度</label>
+							</span>
+							<select  id="main_zhekoulv" style="background-color: #fff;   margin-right: 10px;" id="zhekoufudu1" name="zhekoufudu1" class="ahibw" onchange="gen_youhuiquan();" >
+								<option value="95"  >95折   </option>
+								<option value="9"  >9折   </option>
+								<option value="88" selected >88折   </option>
+								<option value="85"   >85折   </option>
+								<option value="8"  >8折   </option>
+								<option value="78" dipaly:  >78折   </option>
+								<option value="75"  >75折   </option>
+								<option value="7"  >7折   </option>
+								<option value="65"  >65折   </option>
+								<option value="6"  >6折   </option>
+								<option value="55"  >55折   </option>
+								<option value="5"  >5折   </option>
+								<option value="45"  >45折   </option>
+								<option value="4"  >4折   </option>
+								<option value="35"  >35折   </option>
+								<option value="3"  >3折   </option>
+								<option value="25"  >25折   </option>
+								<option value="2"  >2折   </option>
+								<option value="15"  >15折   </option>
+								<option value="1"  >1折   </option>
+								
+							</select>
+							
+						  <em> 优惠折扣券 只能添入折扣率如88折,填入88 , 75折-填入75 , 输入5 表示5折 </em>
+						</div>
+					
+						
+						</div>
+						<div class="input-box clearfix" >
+							<span>
+							<label id="add_voucher" style="  width:100px; font-size: 80%; background: #FD5001 ;    float: right;    margin-right: 20px;  background: #FD5001 ;" class='voucher_view_add'>+阶梯折扣设置</label>
+							</span>
+							
+						</div>
+						<script>
+							
+							$('.voucher_view_add').on('click',function(){
+							//alert($('#add_voucher').html());
+							  if($('#add_voucher').html()=='-<{$lang->collapse}>'){
+							   
+								$('#daijinquan02').css("display","none");
+								$('#add_voucher').html('+更多');
+								
+								}else{
+								 $('#daijinquan02').css("display","");
+								 $('#add_voucher').html('-<{$lang->collapse}>');
+								}
+							})
+						
+						</script>
+						<div id='daijinquan02' style="display:none;">
+						<hr style="background-color: #00996652;">
+					
+					<div class="input-box clearfix" >
+							<span>
+							<label style=" width: 80px;font-size: 80%;   background: #FD5001 ;">提示:</label>
+							</span>
+							<em>  当消费越多,折扣率越高时,可以设置阶梯折扣率. 比如: 无消费额度限时-9折, <strong style="font-size:13px;color:blue;">消费满50 88折</strong> , <strong style="font-size:13px;color:blue;">消费满100 85折 </strong>等<em>
+						</div>
+						
+						<div class="input-box clearfix" >
+							<span>
+							<label style=" width: 80px;font-size: 80%;   background: #FD5001 ;">阶梯二</label>
+							</span>
+							</div>
+						<div class="input-box clearfix">
+							<span>
+							<label style=" width: 80px;font-size: 80%; ">消费金额达到</label>
+							</span>
+							<input id="sub_zhekoulv_02_amount"  onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" type="number" min='0' step='10' class="input-text" value="0"  name ="voucher_deal_amount" style="width:120px;"/> 
+						 <em>  可以使用下面规定的折扣幅度(该金额需要大于之前的金额)<em>
+						 </div>
+							
+					
+						<div class="input-box clearfix">
+								<span>
+							<label style=" width: 80px;font-size: 80%; ">折扣幅度</label>
+							</span>
+							<select  id="sub_zhekoulv_02"  onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" style="background-color: #fff;  width:88px;  margin-right: 10px;" id="zhekoufudu1" name="zhekoufudu1" class="ahibw" >
+								<option value="0" selected  >请选择   </option>
+								<option value="95"  >95折   </option>
+								<option value="9"  >9折   </option>
+								<option value="88"  >88折   </option>
+								<option value="85"  >85折   </option>
+								<option value="8"  >8折   </option>
+								<option value="78"  >78折   </option>
+								<option value="75"  >75折   </option>
+								<option value="7"  >7折   </option>
+								<option value="65"  >65折   </option>
+								<option value="6"  >6折   </option>
+								<option value="55"  >55折   </option>
+								<option value="5"  >5折   </option>
+								<option value="45"  >45折   </option>
+								<option value="4"  >4折   </option>
+								<option value="35"  >35折   </option>
+								<option value="3"  >3折   </option>
+								<option value="25"  >25折   </option>
+								<option value="2"  >2折   </option>
+								<option value="15"  >15折   </option>
+								<option value="1"  >1折   </option>
+								
+							</select>
+						  <em>  折扣率比之前更大,比如上一个时88折, 这次必须比88折更多,比如85折<em>
+						</div>
+					 
+						
+					
+				<br>	<hr style="height:1px;background-color: #00996652;"><br>
+					
+						<div class="input-box clearfix" >
+							<span>
+							<label style=" width: 80px;font-size: 80%;   background: #FD5001 ;">阶梯三</label>
+							</span>
+							</div>
+						<div class="input-box clearfix">
+							<span>
+							<label style=" width: 80px;font-size: 80%; ">消费金额达到</label>
+							</span>
+							<input id="sub_zhekoulv_03_amount"  onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" type="number" min='0' step='10' class="input-text" value="0"  name ="voucher_deal_amount" style="width:120px;"/> 
+						     <em>  可以使用下面规定的折扣幅度<em>
+							</div>	
+					<div class="input-box clearfix">
+								<span>
+							<label style=" width: 80px;font-size: 80%; ">折扣幅度</label>
+							</span>
+							<select id="sub_zhekoulv_03"  onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" style="background-color: #fff;  width:88px;  margin-right: 10px;" id="zhekoufudu1" name="zhekoufudu1" class="ahibw" >
+								<option value="0" selected  >请选择   </option>
+								<option value="95"  >95折   </option>
+								<option value="9"  >9折   </option>
+								<option value="88"  >88折   </option>
+								<option value="85"  >85折   </option>
+								<option value="8"  >8折   </option>
+								<option value="78"  >78折   </option>
+								<option value="75"  >75折   </option>
+								<option value="7"  >7折   </option>
+								<option value="65"  >65折   </option>
+								<option value="6"  >6折   </option>
+								<option value="55"  >55折   </option>
+								<option value="5"  >5折   </option>
+								<option value="45"  >45折   </option>
+								<option value="4"  >4折   </option>
+								<option value="35"  >35折   </option>
+								<option value="3"  >3折   </option>
+								<option value="25"  >25折   </option>
+								<option value="2"  >2折   </option>
+								<option value="15"  >15折   </option>
+								<option value="1"  >1折   </option>
+								
+							</select>
+						
+						</div>
+					
+						
+						
+						<br><hr style="height:1px; background-color: #00996652;"><br>
+						
+					<div class="input-box clearfix" >
+							<span>
+							<label style=" width: 80px;font-size: 80%;   background: #FD5001 ;">阶梯四</label>
+							</span>
+							</div>
+					<div class="input-box clearfix">
+							<span>
+							<label style=" width: 80px;font-size: 80%; ">消费金额达到</label>
+							</span>
+							<input id="sub_zhekoulv_04_amount"  onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" type="number" min='0' step='10' class="input-text" placeholder="0"   name ="voucher_deal_amount" style="width:120px;"/> 
+						     <em>  可以使用下面规定的折扣幅度<em>
+							</div>	
+					<div class="input-box clearfix">
+								<span>
+							<label style=" width: 80px;font-size: 80%; ">折扣幅度</label>
+							</span>
+							<select id="sub_zhekoulv_04" onmouseleave= "gen_youhuiquan();" onchange="gen_youhuiquan();" style="background-color: #fff;  width:88px;  margin-right: 10px;" id="zhekoufudu1" name="zhekoufudu1" class="ahibw" >
+								<option value="0" selected  >请选择   </option>
+								<option value="95"  >95折   </option>
+								<option value="9"  >9折   </option>
+								<option value="88"  >88折   </option>
+								<option value="85"  >85折   </option>
+								<option value="8"  >8折   </option>
+								<option value="78"  >78折   </option>
+								<option value="75"  >75折   </option>
+								<option value="7"  >7折   </option>
+								<option value="65"  >65折   </option>
+								<option value="6"  >6折   </option>
+								<option value="55"  >55折   </option>
+								<option value="5"  >5折   </option>
+								<option value="45"  >45折   </option>
+								<option value="4"  >4折   </option>
+								<option value="35"  >35折   </option>
+								<option value="3"  >3折   </option>
+								<option value="25"  >25折   </option>
+								<option value="2"  >2折   </option>
+								<option value="15"  >15折   </option>
+								<option value="1"  >1折   </option>
+								
+							</select>
+						
+						</div>
+						</div>
+						</div>
+						
+						
+				
+						
+						
+						
+						<br><hr><br>
+						
+						<div id="city_list" class="input-box clearfix " >
+							<span><label>店铺位置</label></span>
+                          </div>
+						  <div class="input-box clearfix" style="  font-size:14px;   background-color: #f0f0f0;    padding-left: 10px;    ">
+							<{foreach from=$fullcitylist item=country}>
+								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $data.city))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
+							<{/foreach}>
+
+							<em>不勾选则全站可见</em>
+
+							<{foreach from=$fullcitylist item=country}>
+								<div class='country<{$country.id}>' style='display: none;'>
+									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
+									<{foreach from=$country.child item=city}>
+									<em style="display: inline-block;min-width: 150px; font-size:12px;">
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $data.city))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+									</em>
+
+										<{if $city.child}>
+										<div class='cl3 well' data-parentid='<{$city.id}>' style='display: none'>
+											<input type="checkbox" class='checkallsuburb'><strong>全选</strong>
+
+											<{foreach from=$city.child item=suburb}>
+											<em style="font-size:12px;">
+												<input id ='suburb<{$suburb.id}>' type="checkbox" name="city[]" value="<{$suburb.id}>" <{if in_array($suburb.id, explode(',', $data.city))}> checked<{/if}> >
+												<label for='suburb<{$suburb.id}>'><{$suburb.name}></label>
+											</em>
+											<{/foreach}>	
+										</div>
+										<{/if}>
+										
+									<{/foreach}>
+								</div>
+							<{/foreach}>
+						</div>
+						
+						<script type="text/javascript">
+							
+							function dd(obj) {
+								if($(obj).is(':checked')){
+									$(".country"+$(obj).val()).show(100);
+								}else{
+									$(".country"+$(obj).val()).hide(100);
+									$(".country"+$(obj).val()+" .cl2").prop('checked',false);
+								}
+							}
+
+							function cc(obj) {
+								if($(obj).is(':checked')){
+									$(".cl3[data-parentid="+$(obj).val()+"]").show(100);
+								}else{
+									$(".cl3[data-parentid="+$(obj).val()+"]").hide(100);
+									$(".cl3[data-parentid="+$(obj).val()+"]").find('input').prop('checked',false);
+								}
+							}
+
+							$(function(){
+								$('.cl1').on('click',function(){
+									dd($(this));
+								})
+
+								$('.cl1').each(function(){
+									dd($(this));
+								})
+							})
+
+							$(function(){
+								$('.cl2').on('click',function(){
+									cc($(this));
+								})
+
+								$('.cl2').each(function(){
+									cc($(this));
+								})
+							})
+
+							$(function(){
+								$('.checkall').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('.cl2').prop('checked',true);
+										$(this).siblings('.cl3').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('.cl2').prop('checked',false);
+										$(this).siblings('.cl3').find('input').prop('checked',false);
+									}
+
+									$('.cl1').each(function(){
+										dd($(this));
+									})
+
+									$('.cl2').each(function(){
+										cc($(this));
+									})
+
+								})
+							})
+
+							$(function(){
+								$('.checkallsuburb').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('input').prop('checked',false);
+									}
+								})
+							})
+						</script>
+				
+						
+							<br><hr><br>
+
+						<div class="input-box clearfix ">
+						  	<div >
+							<span><label>搜索关键字</label></span>
+							</div>
+						</div>
+							<div style="   background-color: #f0f0f0; padding-left: 10px;   padding-top: 10px;">
+							<textarea style="width:98%; " name="searchKeywords"  rows="4" cols="70" maxlength="100" placeholder='编辑相关关键字有助于产品被更容易的搜索到'><{$data.BusinessName}><{$data.categoryName}><{$data.searchKeywords}></textarea>
+							<br><em style="font-size: 80%;">最多25个字,空格分隔</em><br>
+
+						</div>
+						
+							<br><hr><br>
+
+
+						<div class="input-box clearfix"  >
+						  	<div >
+							<span><label>高级设置</label></span>
+							</div>
+						</div>
+						
+							<div style="      background-color: #f0f0f0;    padding-top: 10px;    padding-left: 10px;">
+
+						   <div >
+
+							<label>是否需要预约</label>
+								<label><input <{if $addonData.apportmant_required!='apportmant_require'}>checked<{/if}> type="radio" name="apportmant_required" value='apportmant_not_required'> 不需要预约</label>
+									<label><input <{if $addonData.apportmant_required=='apportmant_require'}>checked<{/if}> type="radio" name="apportmant_required" value='apportmant_require'> 需要预约</label>
+				            </div>
+							
+							<br>
+							<textarea style="width:98%; " placeholder="预约说明" name="apportmant_required_desc" rows="4" cols="50" ><{$addonData.apportmant_required_desc}></textarea>
+
+							
+							<div >
+							<br>
+							<label>是否限时</label>
+							<label><input <{if $addonData.time_limit!='time_limit'}>checked<{/if}> type="radio" name="time_limit" value='no_time_limit'> 不限时</label>
+							<label><input <{if $addonData.time_limit =='time_limit'}>checked<{/if}> type="radio" name="time_limit" value='time_limit'>  限时</label>
+							 </div>
+							
+<br>
+							<textarea style="width:98%; " placeholder='限时说明'  name='time_limit_desc' rows="4" cols="50"><{$addonData.time_limit_desc}></textarea >
+							
+							<br>
+							
+							<div >
+							<br>
+							<label>公共假日是否可用</label>
+							<label><input <{if $addonData.available_on_holiday!='not_available_on_holiday'}>checked<{/if}> type="radio" name="available_on_holiday" value='available_on_holiday'> 可用</label>
+							<label><input <{if $addonData.available_on_holiday=='not_available_on_holiday'}>checked<{/if}> type="radio" name="available_on_holiday" value='not_available_on_holiday'> 不可用</label>
+							</div>
+							<br>
+							<div >
+							<br>
+							<label>是否可以和其它优惠同享</label>
+							<label><input <{if $addonData.sharable!='not_sharable'}>checked<{/if}> type="radio" name="sharable" value='sharable'> 同享</label>
+							<label><input <{if $addonData.sharable=='not_sharable'}>checked<{/if}> type="radio" name="sharable" value='not_sharable'> 不同享</label>
+							
+							</div>
+                            <br>
+							<textarea  style="width:98%; " placeholder='同享说明' name='sharable_desc' rows="4" cols="50"><{$addonData.sharable_desc}></textarea>
+							
+							<br><br>
+
+							
+						</div>
+
+
+						<br><hr><br>
+						
+						
+								<div class="input-box clearfix">
+									<div class=' form-style-green '>
+										<span>
+										<label>营业时间</label>
+										</span>
+									</div>
+									
+
+							
+
+
+
+								</div>
+							<div>
+							<div style="    background-color: #f0f0f0;    ">
+							 <div style="margin-left: 10px;padding-top: 5px;">
+           
+								<div id="businessHoursContainer1"></div>
+								<div class="clean">&nbsp;</div>
+           
+										<div id="businessHoursContainer3"></div>
+										<div class="clean"/>
+								</div>
+								<textarea style="margin-left: 10px; margin-top:20px;margin-bottom: 10px;" placeholder='营业时间说明,比如元旦新年是否休假等等' name='sharable_desc' rows="4" cols="50"><{$addonData.sharable_desc}></textarea>
+							
+								<div class="input-box input-submit clearfix">
+	
+									<button id="btnSerialize" class="btn btn-primary" type="button" style="float: left; font-size:14px;  display:none;  margin-left: 10px;    background-color: #FD5001 ;"> 
+										设置营业时间
+										</button>
+								</div>
+								<br>
+								</div>
+								</div>
+									<br><hr><br>
+								<div class="input-box clearfix">
+									<div class=' form-style-green '>
+										<span>
+										<label>温馨提示</label>
+										</span>
+									</div>
+							
+								</div>
+								
+								<div class="input-box clearfix" style="      /* background-color: #f0f0f0; */">
+								
+								<textarea name="finePrint" class="input-textarea" style="margin-left: 170px; width:50%; "><{if $data.finePrint}><{$data.finePrint}><{else}><p><span style="font-size:14px">商家地址:<{$loginUser.address}></span></p><p><span style="font-size:14px"> 电话:</span></p><p ><span style="font-size:14px">优惠券仅能使用一次</span></p><p ><span style="font-size:14px">优惠券购买后请在14天之内使用(或查看具体商家说明),过期可能无法使用.</span></p><{/if}></textarea>
+
+								<script>
+									$(function(){
+										CKEDITOR.replace('finePrint', {
+											height : 200,
+											filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic'
+											
+										});
+									});
+								</script>
+								</div>
+									<br><hr><br>
+								
+								<div class="input-box clearfix">
+									<div class='form-style-green '>
+										<span>
+											<label>如何使用服务</label>
+										</span>
+									</div>
+									</div>
+								
+								<div class="input-box clearfix" style="    /* background-color: #f0f0f0; */">
+							
+								<textarea name="redeemProcedure" class="input-textarea" style="width:80%; "><{if $data.redeemProcedure}><{$data.redeemProcedure}><{else}><p><span style="font-size:14px">1) 请出示订单信息给商家服务人员. (订单信息在邮件中(请检查Junk Mail ) 或 您在Ubonus平台的账户中,请访问 <a href="https://www.ubonus365.com/member/exchange">我的订单</a> 或 ( https://www.ubonus365.com/member/exchange )</span></p>
+
+<p><span style="font-size:14px">2)商家服务员检查优惠券是否可以使用,如可以使用,核兑后即可使用.</span></p><{/if}></textarea>
+
+								<script>
+									$(function(){
+										CKEDITOR.replace('redeemProcedure', {
+											height : 200,
+											filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+											placeholder:"eg：消费时请携带订单或者出示订单二维码，并且出示个人ID",
+										});
+									});
+								</script>
+						   </div>
+								<br><hr><br>
+						  	<div class="input-box clearfix">
+								<span>
+									<label>退货政策</label>
+								</span>
+								</div>
+								
+								<div class="input-box clearfix" style="    /* background-color: #f0f0f0; */">
+							
+						  	<textarea name="refund_policy" class="input-textarea" style="width:80%; "> 
+						  		<{if !$data.refund_policy}><{if $loginUser.refund_policy}><{$loginUser.refund_policy}><{else}><p><span style="font-size:14px">优惠券售出后1周内可退款</span></p>
+								<{/if}><{else}><{$data.refund_policy}><{/if}>
+							</textarea>
+
+						  	<script>
+								$(function(){
+									CKEDITOR.replace('refund_policy', {
+										height : 200,
+										filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
+										placeholder:"eg：退货时请将产品按原地址寄回或送还商家。经商家确认产品一切正常后退款。产品支持购买后30天退货",
+									});
+								});
+							</script>
+								</div>
+									<br><hr><br>
+						<div class="input-box clearfix" >
+								<span>
+									<label>添加主图片</label>
+								</span>
+						
+						</div>
+
+						<div  style="margin-left:10px;" class="input-box clearfix">
+							
+							
+							<label><input type="radio" onclick="set_pic_form('yellow');" name="main_pic" value='yellow' checked> 黄色</label>
+							<label><input type="radio" onclick="set_pic_form('red');" name="main_pic" value='red'> 红色</label>
+							<label><input type="radio" onclick="set_pic_form('skyblue');" name="main_pic" value='skyblue'> 天蓝色</label>
+							<label><input type="radio" onclick="set_pic_form('custome');" name="main_pic" value='self'> 个性添加主图</label>
+						</div>
+						
+						<script>
+						  function set_pic_form(show){
+							 if (show =='custome'){
+							   $('#daijinquan_pics').css("display","");
+							   $('#daijinquan_pics_yellow').css("display","none");
+							   $('#daijinquan_pics_red').css("display","none");
+							   $('#daijinquan_pics_skyblue').css("display","none");
+									 
+							 }else if(show =='yellow'){
+							  $('#daijinquan_pics').css("display","none");
+							    $('#daijinquan_pics_yellow').css("display","");
+							   $('#daijinquan_pics_red').css("display","none");
+							   $('#daijinquan_pics_skyblue').css("display","none");
+							 }else if(show =='red'){
+							  $('#daijinquan_pics').css("display","none");
+							    $('#daijinquan_pics_yellow').css("display","none");
+							   $('#daijinquan_pics_red').css("display","");
+							   $('#daijinquan_pics_skyblue').css("display","none");
+							 
+							 }else if(show =='skyblue'){
+							  $('#daijinquan_pics').css("display","none");
+							    $('#daijinquan_pics_yellow').css("display","none");
+							   $('#daijinquan_pics_red').css("display","none");
+							   $('#daijinquan_pics_skyblue').css("display","");
+							 
+							 }
+						}
+						
+						</script>
+						
+						
+						
+						<div  id="daijinquan_pics_red" style ="margin-right:100px;margin-left:100px;display:none;" class="pic-move">
+						<img style="width:100%;" src="<{$UPLOAD_PATH}>youhuiquan/red.jpg" alt="">
+					    </div>
+						
+						
+						<div  id="daijinquan_pics_yellow" style ="margin-right:100px;margin-left:100px;" class="pic-move" >
+						<img  style="width:100%;" src="<{$UPLOAD_PATH}>youhuiquan/yellow.jpg" alt="">
+					    </div>
+						
+						
+						
+						<div  id="daijinquan_pics_skyblue" style ="margin-right:100px;margin-left:100px;display:none;" class="pic-move">
+						<img  style="width:100%;" src="<{$UPLOAD_PATH}>youhuiquan/skyblue.jpg" alt="">
+					    </div>
+						
+						
+						
+						
+						
+						<div id="daijinquan_pics" style="display:none;">	
+						<div class="input-box clearfix">
+							<p style="margin-left: 10px;    font-size: 80%;">请上传尺寸最小为 660 X 420 的图片。 尺寸过小会导致图片不清晰</p>
+						</div>
+
+						<div class='upload_image_list' data-cropsize='660,420' data-listsize='1'>
+							<span class='image_view_add' >添加一张图片</span>
+						</div>
+						</div>
+						<div class="input-box clearfix">
+								
+								<span><label>地址</label></span>
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="请输入地址"    value="<{$googleMap}>" name="googleMap" size="80" />
+								<input id="find" type="hidden" value="find" />
+							</div>				
+							
+							<div class="input-box clearfix " >
+								<div  class="map_canvas" style ='width:98%;height:300px;'></div>		
+							</div>
+
+							<div>
+								latitude:<{$loginUser.latitude}>
+								longitude:<{$loginUser.longitude}>
+							</div>
+							
+							<div style="display: none;">
+								<div class="input-box clearfix " >
+									<span><label>坐标位置</label></span>
+									<input  id ="google_location" type="text" class="input-text" value="<{$loginUser.google_location}>" name="location"  style="width:202px;"  />
+								</div>
+								<div class="input-box clearfix"  >
+
+									<span><label>号码</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrNumber}>" name="street_number" style="width:160px;" />
+									街道<input type="text" class="input-text" value="<{$loginUser.addrStreet}>" name="route"  style="width:202px;" />
+								</div>
+								<div class="input-box clearfix"  >
+									<span><label>城市</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrSuburb}>" name="locality"  style="width:160px;" />
+									邮编<input type="text" class="input-text" value="<{$loginUser.addrPost}>" name="postal_code"  style="width:202px;" />
+								</div>
+								<div class="input-box clearfix" >
+									<span><label>州</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrState}>" name="administrative_area_level_1"  style="width:160px;" />
+									国家代码<input type="text" class="input-text" value="<{$loginUser.countryCode}>" name="country_short" style="width:202px;" />
+								</div>
+								<div class="input-box clearfix"  >
+									<span><label>国家</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.country}>" name="country"  style="width:160px;" />
+									
+								</div>
+								
+								<div class="input-box clearfix" >
+									<span><label>地图链接</label></span>
+									<input  type="text" class="input-text" value="<{$loginUser.googleMapUrl}>" name="url"  />
+								</div>
+							</div>
+							
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries&libraries=places"></script>
+							<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+							
+							<script>
+							$(function(){
+							   
+								$("#geocomplete").geocomplete({
+									map: ".map_canvas",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$googleMap}>"
+								});
+								
+								$("#find").click(function(){
+									$("#geocomplete").trigger("geocode");
+								});
+								var map = $("#geocomplete").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							</script>				
+							
+						
+						<br><hr><br>
+						
+							<div class="input-box clearfix" >
+							<div class=' form-style-green '>
+								<span><label>选择行业分类</label></span>
+							</div>
+							<select  id="bigcategoryid" name="allCategoryId[]" class="ahibw" onChange="catChg(this);">
+									<{foreach from=$categories item=item}>
+											<option value="<{$item.id}>" cc="<{$item.childCount}>" <{if substr($item.id,0,6)==$category}>selected<{/if}> ><{if $item.name=='本地服务'}><{$item.name}>/餐厅<{else}><{$item.name}><{/if}>   </option>
+									<{/foreach}>
+							</select>
+							<em>点击下拉框进项选择，可多选</em>
+						</div>
+					
+						
+
+						<div id="all_category" class="input-box clearfix" >
+							<div class=' form-style-green '>
+								<span ><label>已选分类 </label></span> 
+							</div>
+							<em style="padding-left: 10px;">绿色为已选，灰色为未选，鼠标点击可选择或取消</em>
+							<br>
+
+							<div class='my_categorys-list' style='padding-left: 80px;padding-right:30px;'>
+								<{foreach from=$userCategory item=item1}>
+									<div class='nice-check-box'>
+										<input id="<{$item1.id}>" type="checkbox" name="userCategoryId[]" value="<{$item1.id}>"
+										 checked />
+										<label for="<{$item1.id}>"><strong><{$item1.name}></strong></label>
+									</div>
+								<{/foreach}>
+								
+							</div>
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label>优惠券描述</label>
+							</span>
+							<input id="youhuiquantitle" type="text" name="title"    class="input-text" value="<{$data.BusinessName}>优惠券"   placeholder="请输入..." style="width:70%;font-size:14px;" />
+					        <em> 会自动生成名称,也可以修改 </em>
+							
+						</div>
+					
+						<div class="input-box input-submit clearfix">
+							
+
+							<button type="submit" style="float:right;" onclick="save_tradinghours_submit();"> 
+								
+								生成优惠券
+								</button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+ <script>
+ 
+   function save_tradinghours_submit() {
+			   
+			    var frm = document.forms["memberForm"];
+				 
+				  $("#btnSerialize").click();
+			       frm.submit();
+				
+				
+            }
+ 
+        (function() {
+            Rainbow.color();
+            var businessHoursManager3 = $("#businessHoursContainer3").businessHours();
+			 var trading_hours = '<{$trading_hours}>';
+		     if (!trading_hours)  {
+			 
+			trading_hours = '[{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"},{"isActive":true,"timeFrom":"11:00","timeTill":"22:00"}]';
+			 
+			 }
+			try{
+                   // var businessHours = jQuery.parseJSON($("#businessHoursData").val());
+				    //alert(businessHours);
+				   
+					var businessHours=jQuery.parseJSON(trading_hours);
+				   
+                    
+			
+					var b3 = $("#businessHoursContainer3");
+					var businessHoursManagerBootstrap = b3.businessHours({
+						postInit:function(){
+							b3.find('.operationTimeFrom, .operationTimeTill').timepicker({
+								'timeFormat': 'H:i',
+								'step': 15
+							});
+						},
+						dayTmpl: '<div class="dayContainer" style="width: 80px;">' +
+								'<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"/></div>' +
+								'<div class="weekday"></div>' +
+								'<div class="operationDayTimeContainer">' +
+								'<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""/></div>' +
+								'<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""/></div>' +
+								'</div></div>',
+								 operationTime: businessHours
+					});
+			
+					
+                }catch(e) {
+                    alert("商家暂时没有营业时间数据!请进行设置");
+                }
+				
+			   $("#btnSerialize").click(function() {
+			   
+			   
+               // $("#businessHoursOutput1").val(JSON.stringify(businessHoursManager1.serialize()));
+				var trading_hours = JSON.stringify(businessHoursManager3.serialize());
+				//alert(trading_hours);
+				 $.ajax({
+                method: "get",
+                url: "<{$http_root_www}>query?cmd=set_business_trading_hours",
+                data: { trading_hours :trading_hours},
+                beforeSend:function(){
+                  
+                },
+                success:function(result){
+                    try{
+                        console.log(result);
+
+                       // result=JSON.parse(result);
+
+                        //alert('保存成功');
+
+                       
+                    }catch(err){
+                        
+                    }
+
+                    
+
+                },
+                complete:function(){
+                  $('.form_response_loader').remove();
+                },
+                error:function(result){
+                    
+                }
+              })
+				
+				
+				
+            });
+			
+
+            $("#btnInit").click(function() {
+                try{
+                    var businessHours = jQuery.parseJSON($("#businessHoursData").val());
+                    $("#businessHoursContainer3").businessHours({
+                        operationTime: businessHours
+                    });
+				
+                }catch(e) {
+                    alert("JSON non valid: " + e.message);
+                }
+            });
+
+            var businessHoursManager2 = $("#businessHoursContainer2").businessHours({
+                checkedColorClass: "workingBusinssDay",
+                inputDisabled: true,
+                uncheckedColorClass: "dayOff",
+                dayTmpl: '<div class="dayContainer">' +
+                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"/></div>' +
+                        '<div class="weekday"></div></div>'
+            });
+
+    
+        })();
+    </script>
+									
+<style type="text/css">
+	.input_html{
+		display: none;
+	}
+	input[name='nodecname']{
+		width:105px;
+	}
+	input[name='nodeorder']{
+		width:55px;
+	}
+
+	.add_top_level_item{
+		line-height: 35px;
+	}
+	table.citen_edit tr{
+		line-height: 35px;
+	}
+	table.citen_edit tr:hover{
+		background-color: #FD5001 ;
+	}
+	tr.highlight{
+		background-color: #FD5001 ;
+	}
+</style>
+<script type="text/javascript">
+
+	var selectedCategoryID='<{$data.cCategoryId}>'.split(',');
+
+	function popSelectedCategory(){
+		$allCheckbox=$("input[name='cCategoryId[]']");
+		$allCheckbox.each(function(){
+			if(selectedCategoryID.indexOf($(this).val())!='-1'){
+				$(this).prop('checked', true);
+			}
+		})
+	}
+
+	function loadChildAjax(obj){
+		$icon = $(obj).find('.load_child i');
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		if($(obj).hasClass('opened')){
+			$children=getChildCItem(obj);
+			$children.hide();
+			$children.each(function(){
+				$(this).find('.load_child i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			});
+
+			$icon.removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			$(obj).removeClass("opened").addClass("collapsed");
+		}else if($(obj).hasClass('collapsed')){
+			$children=$("tr.citem[data-pid='"+id+"']");
+			$children.show();
+
+			$icon.removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$(obj).removeClass("collapsed").addClass("opened");
+		}else{
+			$.ajax({
+				url:"<{$http_root_www}>customizable_category/load_child_show",
+				data:{pid:id},
+				
+				beforeSend:function(){
+					$icon.removeClass('fa-plus-square-o').addClass('fa-spinner fa-spin');
+				},
+				success:function(data){
+					$(obj).after(data);
+					$(obj).addClass('opened');
+					$icon.addClass('fa-minus-square-o');
+				},
+				error:function(){
+					$icon.addClass('fa-plus-square-o');
+				},
+				complete:function(){
+					$icon.removeClass('fa-spinner fa-spin');
+					popSelectedCategory();
+				}
+			})
+		}
+	}
+
+	function getChildCItem(obj){
+		//从第一个子类到最后一个子类的全部tr
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		$allItem = $('tr.citem');
+		var firstIndex = $allItem.index($("tr.citem[data-pid='"+id+"']").first());
+
+		if($(obj).nextAll("tr.citem[data-pid='"+pid+"']").length!==0){
+			var lastIndex =  $allItem.index($(obj).nextAll("tr.citem[data-pid='"+pid+"']").first());
+		}else{
+			var lastIndex =  $allItem.index($("tr.citem[data-pid='"+id+"']").last())+1;
+		}	
+
+		if(lastIndex==-1){
+			$children=$allItem.slice(firstIndex);
+		}else{
+			$children=$allItem.slice(firstIndex,lastIndex);
+		}
+		return $children;
+	}
+
+	function loadChild(obj){
+		console.log('.load_child clicked');
+		$citem = $(obj).parents('tr.citem');
+		loadChildAjax($citem);
+	}
+
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+	popSelectedCategory();
+	//init state
+	if($('#cCategoryId_lock').is(':checked')){
+		$('.category_show').show();
+	}
+	//bind action
+	$('#cCategoryId_lock').on('click',function(){
+		$('.category_show').toggle(this.checked);
+	})
+
+});
+
+
+</script>
+<script type="text/javascript">
+	var cropsize = $('.upload_image_list').data('cropsize');
+	var cs = cropsize.split(',');
+	var w=cs[0];
+	var h=cs[1];
+
+	$('.image_uploader input[name="resize"]').val(cropsize);
+
+	var listsize=$('.upload_image_list').data('listsize');
+
+	var displayTarget;
+
+	addImageView('<{$loginUser.pic}>');
+	
+	<{foreach from=$data.pics|@unserialize item=item}>
+		addImageView('<{$item}>');
+	<{/foreach}>
+
+	$('.image_view_add').on('click',function(){
+		addImageView();
+	})
+
+	function addImageView(src){
+		if(!src)src='default/image_upload.jpg';
+		$newdiv = $("<div></div>").addClass('image_view')
+					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"点击编辑"))
+					.append($("<input name='images[]' type='hidden'>").val(src))
+					.append($("<div>x</div>").addClass('image_view_remove'));
+
+		$newdiv.on('click',function(){
+			$(".image_uploader").find('input[name="image"]').click();
+			displayTarget = $(this).find('.image_item');
+		})
+
+		$newdiv.find('.image_view_remove').on('click',function(){
+			$(this).parent().remove();
+		})
+
+		$('.image_view_add').before($newdiv);
+
+		$('.image_view').css('width',w).css('height',h);
+		$('.image_item').css('width',w).css('height',h);
+		$('.image_mask').css('width',w).css('height',h).css('line-height',h+'px');
+	}
+</script>
+
+<script>
+	var jcrop_api;
+
+	function initJcrop(){
+		if(jcrop_api){
+			jcrop_api.destroy();
+			$('.preview').removeAttr('style');
+		}
+
+		$('.preview').Jcrop({
+			boxWidth:  $(window).width()*0.9, 
+			boxHeight: $(window).height()*0.8,
+			onSelect:    function(c){
+				$('input[name="bounds"]').val(c.x+','+c.y+','+c.x2+','+c.y2);
+			},
+			onChange: function(c){
+				$('.selected_size_display').html(c.w.toFixed(0) + " x " +c.h.toFixed(0));
+			},
+			onRelease:   function(){
+				$('input[name="bounds"]').val('');
+			},
+			//onChange:    showCoords,
+			//bgColor:     'black',
+			//bgOpacity:   .4,
+			//setSelect:   [ 100, 100, 50, 50 ],
+			aspectRatio: w / h
+		},function(){
+			var bounds = this.getWidgetSize();
+			$('.image_uploader').css('width',bounds[0]);
+			jcrop_api=this;
+		});
+	}
+
+    function openFile(event) {
+		var input =event.target;
+
+		var reader = new FileReader();
+
+		reader.onload = function(){
+			var dataURL = reader.result;
+			$('.preview').attr('src',dataURL);
+			initJcrop();
+			$(".image_uploader").show();
+		};
+
+		if(input.files.length>0)
+			reader.readAsDataURL(input.files[0]);
+	};
+
+	$(function(){
+		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪，补白缩放</label><button type='button' class='close'>x</button></form>");
+	})
+
+	$(function(){
+		$('input[name="image"]').on('change',function(event){
+			openFile(event);
+		})
+	})
+
+	$(function(){
+		$('button.close').on('click',function(){
+			$(this).parent().hide();
+		})
+	})
+
+	$(function(){
+		$("form.image_uploader").on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+	            type: 'POST',
+	            url: "<{$http_root_www}>test/save_image",
+	            data: new FormData(this),
+	            enctype: 'multipart/form-data',
+	            contentType: false,       
+				cache: false,             
+				processData:false,  
+				beforeSend:function(){
+					console.log('uploading');
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+	            success: function(result) {
+	               result=String(result).trim();
+	               $(displayTarget).attr('src',"<{$UPLOAD_PATH}>"+result);
+	               $(displayTarget).siblings('input').val(result);
+
+	               jcrop_api.destroy();
+				   $('.preview').removeAttr('style').removeAttr('src');
+	               $(".image_uploader").hide();
+	            },
+	            complete:function(){
+	            	console.log('complete');
+	            	$('.form_response_loader').remove();
+	            },
+	            error:function(){
+	            	console.log('error');
+	            }
+	        })
+		})
+	})
+</script>
+
+</body>
+</html>

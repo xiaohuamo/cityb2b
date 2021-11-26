@@ -1,0 +1,303 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+	<script type="text/javascript">
+	<{if $customer_delivery_date}>
+		$('#printer').css({ "display": "" });
+		 $('#searchbutton').css({ "display": "" });
+	 <{else}>
+		$('#printer').css({ "display": "none" });
+		 $('#searchbutton').css({ "display": "none" });
+	 <{/if}>
+</script>
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
+						
+						<br><br>
+
+						<label>选择渠道：</label>
+						<select  class='choosebusiness' id="business_id" name="business_id" >
+						<option value="0"  >全部商家</option>
+						<{foreach from=$SalesChannelCustomerList item=d}>
+							<option value="<{$d.customer_id}>"<{if $d.customer_id==$business_id}>selected<{/if}>  >
+								<{$d.displayName}>
+							</option>
+						<{/foreach}>
+						</select>
+						<label>选择配送日期：</label>
+						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
+						<option value="all"  ><{$lang->logistic_choosedate1}> </option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+						</select>
+					 
+						<script type="text/javascript">
+						$(function(){
+							$('.chooseDate').on('change',function(){
+							$('#printer').css({ "display": "none" });
+							 
+								var datestr = $(this).val();
+								if(datestr !='all'){
+								    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								   $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							$('.choosebusiness').on('change',function(){
+								$('#printer').css({ "display": "none" });
+							 
+								var datestr1 = $('#customer_delivery_date').val();
+								if(datestr1 !='all'){
+								    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								   $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+
+						})
+					</script>
+	              
+			
+						<button id="searchbutton" style="display:none; margin-left:0.5rem;" type="submit"><{$lang->search}></button>
+						  <{if $customer_delivery_date}>
+						<br><br>
+                     <div id="printer">
+						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">备货单(pdf)</button>
+					
+                    <{if !$business_id}>
+						<input  type="checkbox" name="printAllBusiness" id='printAllBusiness' value='true'>并打印所有渠道汇总分单
+						<{/if}>
+						
+                        <button  id="exportdata" type="button" onclick="showPdf('excel');">导出备货单（xls)</button>
+						 
+						<!--  <span id="print4" ><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>factory_2c/export_freshfood_summery?customer_delivery_date=<{$customer_delivery_date}>&business_id=<{$business_id}>">&nbsp;<{$lang->logistic_export_Prepare_stock_summery}>-<{$customer_delivery_date}>&nbsp;</a></span>
+						-->
+						</div>
+						<{/if}>
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>	
+                             <{if $business_id}>								
+								<th>商家编号</th>								
+									<{/if}><th>配送日期</th>
+									<th>类别</th>
+									
+									<th>类别英文名</th>
+									<th>产品编号</th>
+									<th>中文名</th>
+									
+									<th>英文名</th>		
+								<th>数量</th>	
+									<th>单位</th>	
+									
+												
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+								     <{if $business_id}>		
+								<td><{$item.business_id}></td> <{/if}>
+								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
+									<td><{$item.category_cn_name}></td>
+								  
+										<td><{$item.category_en_name}></td>
+									  <td><{$item.menu_id}></td>
+									
+									  
+									<td>
+										<{$item.bonus_title}>
+									</td>
+									
+								
+									<td><{$item.menu_en_name}></td>
+									
+										<td><{$item.total_quantity}></td>
+									<td><{$item.unit}></td>
+									
+								
+									
+									
+
+								
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+						
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+
+function showPdf(type)
+{	
+	
+	
+	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
+	if(!vcustomer_delivery_date) {
+	
+	 alert('请选择日期！');
+	}
+	
+	var vbusiness_id= $('#business_id option:selected').val();
+	
+	
+	var vSk=$('#id_sk').val();
+
+
+	var fitInPage=$('#fitInPage').prop('checked');
+	var printAllBusiness=$('#printAllBusiness').prop('checked');
+	if(printAllBusiness){
+	  printAllBusiness =1;
+	}else{
+	 printAllBusiness =0;
+	}
+	
+   
+	var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?output='+type+'&printAllBusiness='+printAllBusiness+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

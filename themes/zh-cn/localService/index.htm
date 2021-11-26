@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> 墨尔本 本地服务 | 墨尔本 美容 按摩</title>
+    <meta name="keywords" content=" 墨尔本 本地服务 | 墨尔本 美容 按摩" />
+    <meta name="description" content="Ubonus美食生活 微奖网是专注墨尔本华人美食生活服务的平台，为广大消费者提供关于墨尔本美容以及墨尔本按摩等生活方面的折扣团购信息。更多折扣活动请持续关注微奖网。" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/qj.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+
+<!-- 头部 -->
+<div class="header header-buy">
+    <{include file='index_inc_header.htm'}>
+    <div class="head-con">
+        <div class="wp">
+            <div class="logo">
+                <a href="">
+                    <img src="<{$SKIN_PATH}>images/pc-serve/logo-serve.png" alt="">
+                </a>
+            </div>
+
+            <div class="head-center">
+                <div class="search">
+                    <div class="form">
+                        <div ><!-- <form action=""> -->
+                            <div class="inner">
+                                <input type="text" class="inp" id='search-input' autocomplete="off">
+                                <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                            </div>
+                            <div class="search-list">
+                                <ul class="ul-search TAB" id="search-hint">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hot">
+                    
+					 <a target="_blank" href="<{$http_root_www}>lottery/lottery_show">抽奖</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E6%BC%94%E5%94%B1%E4%BC%9A">演唱会</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%AE%B1%E5%8C%85">箱包</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%94%B5%E5%BD%B1%E7%A5%A8">电影票</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%94%9F%E9%B2%9C">生鲜</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E4%BA%B2%E5%AD%90">亲子</a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%BE%8A%E6%AF%9B%E8%A2%AB">羊毛被</a>
+					     </div>
+                </div>
+            </div>
+            <div  class="head-right">
+                <a class="shopping" target="_blank" href="<{$http_root_www}>member/showcart">我的购物车
+                    <{if $loginUser}>
+                    <em class='shopping-cart-qty-display'><{$carts_count}></em>
+                    <{/if}>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 头部 end -->
+
+    <!-- 本地服务 -->
+    <div class="wp">
+        <div class="sev-row sev-row1">
+            <div class="sev-nav_top">
+                <span>全部商品分类</span>
+                <ul class="ul-nav_top">
+                    <li><a target="_blank" href="<{$http_root_www}>">Ubonus首页</a></li>
+                    <li><a target="_blank" href="<{$http_root_www}>coupons/106121">热销推荐</a></li>
+                    <li><a target="_blank" href="<{$http_root_www}>coupons/106121102">餐饮美食</a></li>
+                    <li><a target="_blank" href="<{$http_root_www}>coupons/106121101">活动票务</a></li>
+                    <li><a target="_blank" href="<{$http_root_www}>coupons/106121111">丽人专柜</a></li>
+                    <!--li><a target="_blank" href="<{$http_root_www}>coupons/106121104">旅游机票</a></li-->
+                    <li><a target="_blank" href="<{$http_root_www}>coupons/106121105">生活服务</a></li>
+                 <!--   <li><a target="_blank" href="<{$http_root_www}>daigou">产品代购</a></li>
+                    <li><a target="_blank" href="<{$http_root_www}>group1_buy/list">一起团购</a></li> -->
+                </ul>
+            </div>
+            <!--div class="sev-nav_bot">
+                <div class="col-l">
+                    <ul class="ul-nav_left">
+                        <li><a target="_blank" href="<{$http_root_www}>" class="n1">Ubonus首页</a><i></i></li>
+                        <li><a href="#f1" onclick="$('html, body').animate({scrollTop: $('#f1').offset().top}, 1000);" class="n1">热销推荐</a><i></i></li>
+                        <li><a href="#f2" onclick="$('html, body').animate({scrollTop: $('#f2').offset().top}, 1000);" class="n1">餐饮美食</a><i></i></li>
+                        <li><a href="#f3" onclick="$('html, body').animate({scrollTop: $('#f3').offset().top}, 1000);" class="n1">活动票务</a><i></i></li>
+                        <li>
+                            <a href="#f4" onclick="$('html, body').animate({scrollTop: $('#f4').offset().top}, 1000);" class="n1">丽人专柜</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li><a href="#f6" onclick="$('html, body').animate({scrollTop: $('#f6').offset().top}, 1000);" class="n1">生活服务</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li><a target="_blank" href="<{$http_root_www}>daigou" class="n1">产品代购</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li><a target="_blank" href="<{$http_root_www}>group1_buy/list" class="n1">一起团购</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-r">
+                    <div class="m-hot_sev">
+                        <span><i></i>热销产品</span>
+                        <{foreach from=$data item=item}>
+                        <{if $item.panaltype==19}>
+                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                            <{$item.title}>
+                        </a>
+                        <{/if}>
+                        <{/foreach}>
+                    </div>
+                    <div class="slide-sev">
+                        <div class="hd">
+                            <ul></ul>
+                        </div>
+                        <div class="bd">
+                            <ul>
+                                <{foreach from=$bannerData item=item}>
+                                <li>
+                                    <a target="_blank" href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+                                </li>
+                                <{/foreach}>
+                            </ul>
+                        </div>
+                        <a class="prev" href="javascript:void(0)"></a>
+                        <a class="next" href="javascript:void(0)"></a>
+                    </div>
+                </div>
+            </div-->
+            <div class="ind-row1">
+                <div class="col-l">
+                    <ul class="ul-nav_left">
+                        <li><a target="_blank" href="/" class="n1">Ubonus首页</a><i></i></li>
+                        <li><a href="#f1" onclick="$('html, body').animate({scrollTop: $('#f1').offset().top}, 1000);" class="n1">热销推荐</a><i></i></li>
+                        <li><a href="#f2" onclick="$('html, body').animate({scrollTop: $('#f2').offset().top}, 1000);" class="n1">餐饮美食</a><i></i></li>
+                        <li><a href="#f3" onclick="$('html, body').animate({scrollTop: $('#f3').offset().top}, 1000);" class="n1">活动票务</a><i></i></li>
+                        <li>
+                            <a href="#f4" onclick="$('html, body').animate({scrollTop: $('#f4').offset().top}, 1000);" class="n1">丽人专柜</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li><a href="#f6" onclick="$('html, body').animate({scrollTop: $('#f6').offset().top}, 1000);" class="n1">生活服务</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li><a target="_blank" href="/daigou" class="n1">产品代购</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                        <li style="border: none;"><a target="_blank" href="/group1_buy/list" class="n1">一起团购</a><i></i>
+                            <div class="indide">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-c">
+                    <div class="fullSlide">
+                        <div class="bd">
+                            <ul>
+                                <{foreach from=$bannerData item=item}>
+                                <li>
+                                    <a target="_blank" href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+                                </li>
+                                <{/foreach}>
+                            </ul>
+                        </div>
+
+                        <div class="hd">
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-r" style="height: 414px;">
+                    <ul class="ul-row1-1">
+
+                        <li>
+
+                            <a href="<{$http_root_www}>business/notice">
+
+                                <img src="<{$SKIN_PATH}>images/pc-main/lm-p7.png" alt="">
+
+                                <p><{$lang->website_notice}></p>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a>
+
+                                <img src="<{$SKIN_PATH}>images/pc-main/lm-p8.png" alt="">
+
+                                <p><{$lang->buyer_insurance}></p>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a target="_blank" href="<{$http_root_www}>business/intro">
+
+                                <img src="<{$SKIN_PATH}>images/pc-main/lm-p10.png" alt="">
+
+                                <p><{$lang->business_program}></p>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a>
+
+                                <img src="<{$SKIN_PATH}>images/pc-main/lm-p9.png" alt="">
+
+                                <p><{$lang->newbie_reward}></p>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                    <div class="ind-row1-pic2">
+                        <{foreach from=$data item=item}>
+                        <{if $item.panaltype==51}>
+                        <a href="<{$http_root_www}>coupon/<{$item.id}>" class="inner">
+                            <!--img data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt=""/-->
+                            <img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>">
+                        </a>
+                        <{/if}>
+                        <{/foreach}>
+                    </div>
+
+
+                    <div class="ind-row1-pic2">
+                        <a href="<{$http_root_www}>coupon/4861" class="inner">
+                            <img src="<{$http_root_www}>data/upload/thumbnails/2018-03/20180305100113100333_330x210_fill.jpg" alt="" src="/data/upload/thumbnails/2018-03/20180305100113100333_330x210_fill.jpg">
+                        </a>
+                        <a href="<{$http_root_www}>coupon/4587" class="inner">
+                            <img src="<{$http_root_www}>data/upload/thumbnails/2017-11/20171129002824153779_330x210_fill.png" alt="" src="/data/upload/thumbnails/2017-11/20171129002824153779_330x210_fill.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="sev-row sev-row2" id="f1">
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+                <h2><i class="ico-hot"></i>热销推荐</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data19 item=item name=name}>
+                <!--{if $smarty.foreach.name.iteration<=6}-->
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                    <!--em class="old">$988.00</em-->
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="sev-row sev-row3" id="f2">
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+                <h2><i class="ico-new"></i>餐饮美食</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data20 item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                    <!--em class="old">$988.00</em-->
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="sev-row sev-row5" id="f3">
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+                <h2><i class="ico-educ"></i>活动票务</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data21 item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                    <!--em class="old">$988.00</em-->
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="sev-row sev-row8" id="f4">
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+                <h2><i class="ico-health"></i>丽人专柜</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data22 item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                    <!--em class="old">$988.00</em-->
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="sev-row sev-row9" id="f5" >
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+
+                <h2><i class="ico-live"></i>旅游机票</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data23 item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        <div class="sev-row sev-row10" id="f6">
+            <div class="g-tit-sev">
+                <ul>
+                </ul>
+                <h2><i class="ico-girl"></i>生活服务</h2>
+            </div>
+            <ul class="ul-sev">
+                <{foreach from=$data24 item=item}>
+                <li>
+                    <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>">
+                        <i class="type t1"></i>
+                        <div class="pic">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic}>"  alt="" />
+                        </div>
+                        <div class="txt">
+                            <h4><{$item.title}></h4>
+                            <p><{$item.coupon_summery_description}></p>
+                            <div class="tip">
+                                <div class="price">
+                                    <em class="new">$<{$item.voucher_deal_amount}></em>
+                                    <!--em class="old">$988.00</em-->
+                                </div>
+                                <strong>
+                                    <i></i><{$item.hits}>
+                                </strong>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+
+    </div>
+    <!-- 本地服务 end -->
+
+<!-- 底部 -->
+<{include file='index_inc_footer.htm'}>
+<!-- 底部 end -->
+
+<!-- 右边栏 -->
+<{include file='index_inc_right.htm'}>
+<!--右边栏 end-->
+    <!-- 浮动导航-->
+    <ul class="default-outer">
+        <li class="floor f1"><a href="#f1"><em>热销<br />推荐</em></a></li>
+        <li class="floor f2"><a href="#f2"><em>餐饮<br />美食</em></a></li>
+        <li class="floor f3"><a href="#f3"><em>活动<br />票务</em></a></li>
+        <li class="floor f4"><a href="#f4"><em>丽人<br/>专柜</em></a></li>
+        <!--li class="floor f5"><a href="#f5"><em>旅游<br />机票</em></a></li-->
+        <li class="floor f6"><a href="#f6"><em>生活<br />服务</em></a></li>
+    </ul>
+    <!-- 浮动导航end-->
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+    <script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+    <script src="<{$SKIN_PATH}>js/dong.js"></script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('img.lazyload').unveil();
+        })
+    </script>
+    <script type="text/javascript">
+        jQuery(".slide-sev").slide({
+            mainCell:".bd ul",
+            autoPlay:true,
+            autoPage:true,
+            effect:"leftLoop",
+            titCell:".hd ul"
+        });
+        jQuery(".fullSlide").slide({
+            titCell: ".hd ul",
+            mainCell: ".bd ul",
+            effect: "fold",
+            autoPlay: true,
+            autoPage: true,
+            trigger: "click"
+        });
+        $(".ul-nav_left li:last-child()").css('border', 'none');
+        $(".g-tit-sev ul li:last-child()").css('border', 'none');
+    </script>
+</body>
+
+</html>

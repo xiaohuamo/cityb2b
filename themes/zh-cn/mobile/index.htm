@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+
+<html >
+
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127764298-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127764298-1');
+</script>
+	<meta charset="UTF-8">
+
+	<title><{$lang->home_pc_title}> </title>
+
+    <meta name="keywords" content="<{$lang->home_pc_title}>" />
+    
+    <meta name="description" content="<{$lang->home_pc_desc}> " />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="google-site-verification" content="WoGbyA9J7e9hDTdTvvPQduP43WGHx4jtqs3zRhyPQUU" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/mobile_extra_style.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/lib.css" />
+
+ <link rel="stylesheet" href="/themes/zh-cn/mobile/css/homepage_bootstrap.min.css" />
+	
+	
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jsbridge-mini.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <style type="text/css">
+                 .promotion-item{
+                    position: relative;
+                    margin-top: 14px;
+                  }
+
+                  .promotion-item .price-off{
+                    position: absolute;
+                    top: -18px;
+                    left: 10px;
+                    height: 40px;
+                    width: 40px;
+                    line-height: 40px;
+                    border-radius: 20px;
+                    background: #FD5001 ;
+                    color: #fff;
+                    text-align: center;
+                    font-size: 14px;
+                  }
+				  
+				 
+				  
+		.container {
+    padding-right: 2px;
+    padding-left: 2px;
+   
+}
+
+				  
+				  
+            </style>
+			
+			
+			
+</head>
+
+<body class="index index2">
+    <!-- wx share thumbnail -->
+    <img src="<{$SKIN_PATH}>images/wx_share.jpg" style='display: none'>
+
+
+    <!-- 开屏 -->
+    <{if $bannerOpened==false}>
+     <!-- include file='mobile/open_screen_mobile.htm' -->
+    <{/if}>
+    <!-- 开屏 end-->
+
+    <!-- 头部 -->
+
+    <header id="hd" >
+
+        <div class="left" >
+           
+            <!-- 城市选择 -->
+            <div class="m-city city-select" style="margin-top: -0.05rem;;margin-left: -10rem;">
+
+                <span class="con" style="font-size: .45rem"> 
+				<{if $langStr=='zh-cn'}>
+                    <span><{$city.name}></span>
+					<{else}>
+					<span><{$city.en_name}></span>
+					<{/if}>
+                    <i class='fa fa-angle-down '></i>
+                </span>
+
+                <ul class="g-ul">
+
+                    <{foreach from=$fullcitylist item=country}>
+                        <li><a href="<{$http_root_www}>?cityid=<{$country.id}>"><{if $langStr=='zh-cn'}><{$country.name}><{else}><{$country.en_name}><{/if}></a></li>
+                          <{foreach from=$country.child item=city}>
+                            <li><a href="<{$http_root_www}>?cityid=<{$city.id}>"><{if $langStr=='zh-cn'}><{$city.name}><{else}><{$city.en_name}><{/if}></a></li>
+                        <{/foreach}>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <!-- 城市选择 end-->
+        </div>
+
+        <div class='search' >
+            <span class='fa fa-search a-so' style="
+    font-size: 0.45rem;">&nbsp;<{$lang->please_input}>...</span>
+        </div>
+        <!--h1 class='search-icon-assosiate'>Ubonus</h1-->
+    <!-- 语言选择
+       <div class="right" style="    right: 1.5rem;">
+        
+            <div class="m-city lang-select" style="display: inline;padding: 0px">
+                <span class="con" style="font-size: 0.65rem;"> 
+                    <span >&nbsp;&nbsp;&nbsp;</span>
+				<i class="fa fa-globe" aria-hidden="true"></i>
+                     <span >&nbsp;&nbsp;&nbsp;</span>
+                </span>
+                <ul class="g-ul">
+                    <li>
+                        <a href="<{$langSwitchUrl}>lang=zh-cn"><{$lang->lang_cn}></a>
+                    </li>
+                    <li>
+                        <a href="<{$langSwitchUrl}>lang=en"><{$lang->lang_en}></a>
+                    </li>
+                </ul>
+            </div>
+          
+
+        
+         
+			
+        </div>
+		-->
+		   <!--  <a class="a-new" href="<{$http_root_www}>message/index"><em>9+</em></a> -->
+		<{include file ="mobile/sec_more.htm"}>
+    </header>
+    <!-- 头部 end-->
+
+
+
+    <!-- 主内容 -->
+	<section id="bd" style="padding: 0px">
+        <!-- banner -->
+        <div id="banner" style="max-height: 168px;     margin-top: 1.5rem;">
+            <div class="swiper-wrapper">
+            <{foreach from=$bannerDataMobile item=item}>
+                <div class="swiper-slide">
+                <a href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title|truncate_cn:65:'..'}>"></a>
+                </div>
+            <{/foreach}>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+		<!-- banner end-->
+	<{if $langStr=='zh-cn'}>
+        <!-- 列表 -->
+        <ul class="g-ul ul-newyearlist1" style="height:5.5rem;">
+          
+		   </li>
+			   <li style="   width: 25%;">
+                <a href="<{$http_root_www}>category/index?section=106124103">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon27.png);"></i>综合配送
+                </a>
+            </li>
+         
+		   </li>
+			   <li style="   width: 25%;">
+                <a href="<{$http_root_www}>category/index?section=106124101">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon81.png);"></i>肉类海鲜
+                </a>
+            </li>
+         
+		  
+		  
+		  
+		  
+            
+			
+			  </li>
+			   <li style="   width: 25%;">
+                 <a href="<{$http_root_www}>category/index?section=106124108">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon1_03.png);"></i>蔬菜水果
+                </a>
+            </li>
+			
+          </li>
+			   <li style="   width: 25%;">
+                <a href="#">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon42.png);"></i>养花种菜
+                </a>
+            </li>
+
+          <li style="   width: 25%;">
+                  <a href="<{$http_root_www}>category/index?section=106124110">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon2.png);"></i>亚洲食品
+                </a>
+            </li>
+			
+			<li style="   width: 25%;">
+                  <a href="<{$http_root_www}>category/index?section=106124105">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/food.png);"></i>餐厅美食
+                </a>
+            </li>
+
+		  
+        
+		<!--  <li style="   width: 25%;">
+                <a href="<{$http_root_www}>coupons/106119?reftag=<{$reftag}>">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon6.png);"></i>活动票务
+                </a>
+            </li> -->
+			<!-- <li style="   width: 25%;">
+                <a href="<{$http_root_www}>coupons/106127?reftag=<{$reftag}>">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon47.png);"></i>丽人生活
+                </a> -->
+         <!--   </li>
+			   <li style="   width: 25%;">
+                <a href="<{$http_root_www}>coupons/106128?reftag=<{$reftag}>">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon3_05.png);"></i>旅游/休闲
+                </a>
+            </li> -->
+         
+		
+           <li style="   width: 25%;">
+                <a href="<{$http_root_www}>category/index?section=106105">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon42.png);"></i>商城百货
+                </a>
+            </li>
+        
+		  <!-- <li style="   width: 25%;">
+                <a href="<{$http_root_www}>coupons/106129?reftag=<{$reftag}>">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon5.png);"></i>教育移民
+                </a>
+            </li> -->
+		
+			 <!--
+           <li style="   width: 25%;">
+                <a href="<{$http_root_www}>coupons/106121?reftag=<{$reftag}>">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon85.png);"></i>生活服务
+                </a>
+            </li> -->
+				 
+          
+        
+			
+		
+				  <li style="   width: 25%;">
+                <a href="<{$http_root_www}>business/welcome">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon26.png);"></i>我要开店
+                </a>
+            </li>
+   
+        </ul>
+		<{/if}>
+   <!--
+      		    <div style="margin-top: 1px;">
+		    <{include file='mobile/inc_countdown.htm'}>
+               
+            </div>
+			-->
+		 <!--
+  <a target="_blank" href="<{$http_root_www}>2019miss">
+   
+    <img width="100%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/haibao@2x.png" />
+   
+  </a> -->
+        <!-- Ubonus推荐 -->
+       
+	     <{if $langStr=='zh-cn'}>  
+	    	 <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+          <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i>Ubonus金牌店铺</span></h3>
+
+                 <p>汇集本地高端供应商，一应俱全</p>
+            </div>
+			
+            <ul class="g-ul ul-list8">
+			
+			  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/320069">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/mig.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/320069">MIG 鲜活海鲜团购</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#cac2c0;text-align: left;font-size: 0.4rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">鲜活海鲜 海鲜制品 </span>
+                  
+                  </div>
+                 </li>
+				 
+				   <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/218643">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/aoxianshipiin.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/218643">澳鲜食品</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#cac2c0;text-align: left;font-size: 0.4rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">500+品类 蔬果/肉类/海鲜/半成品 </span>
+                  
+                  </div>
+                 </li>
+				 
+				    <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/218812">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/mk.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="       margin-left: 0.1rem; margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/218812">MK农场水果预售</a></h4>
+                      <div class='row' style="line-height: 15px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#cac2c0;text-align: left;font-size: 0.4rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">300+品类 蔬果  </span>
+   
+                  </div>
+                 </li>
+				 <!--
+				  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>store/320153">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/haidan.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>store/320153">暴动海胆</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">新鲜野生海胆  </span>
+                  
+                  </div>
+                 </li>
+				 -->
+				<!-- 
+				   <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>store/319985">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/ejiao.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>store/319985">澳洲阿胶糕</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">新鲜制成 多款制品  </span>
+                  
+                  </div>
+                 </li> -->
+				 <!--
+				   <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>store/320169">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/zinzino.png" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>store/320169">ZinZino</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">鱼油中的爱马仕  </span>
+                  
+                  </div>
+                 </li>-->
+				 
+            <!--
+			   <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>store/319557">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/360.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>store/319557">360澳洲</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">多款智能产品</span>
+                  
+                  </div>
+                 </li>
+				 -->
+				 
+				
+				 <!--
+				  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/319613">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/nongchang.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/319613">MK农场水果预售</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">农场采摘 Pinklady Gala 价格优惠，多自取点或送货到家</span>
+                  
+                  </div>
+                 </li> ->
+           	  
+				 <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/219842">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/tongpei.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/219842">Ubonus 旗舰统配店</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">多店合并统配 预定模式 新鲜价优 200+品类</span>
+                  
+                  </div>
+                 </li>
+				 
+				  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/219548">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/meixin.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/219548">美心食品</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">美心食品 周周特价 金牌商家 </span>
+                  
+                  </div>
+                  </li>
+				 
+				 <!--  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/218639">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/daishushengxian.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/218638">袋鼠蔬菜  超万单配送100%无延迟</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">预定模式 隔日发货 质优价廉 金牌商家 </span>
+                  
+                  </div>
+                  </li> -->
+                <!-- 
+				  <li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>restaurant/217093">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/dnl-meat1.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>restaurant/217093">DNL 精选肉店</a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                    <span  class='col-xs-12' style="color:#f30;text-align: left;font-size: 0.6rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">肉类 副食 精选供应商 金牌商家 </span>
+                  
+                  </div>
+                  </li>
+             
+-->
+				<li style="    width: 100%;">
+                    <div class="pic"style="    padding-top: 26%;">
+                        <a  href="<{$http_root_www}>store/25831">
+                        <img class="lazyload" data-src="<{$SKIN_PATH}>promotion/images/taihehang.jpg" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .5rem;height: auto;font-weight: 600;">
+					<a  href="<{$http_root_www}>store/25831">澳洲海参网 </a></h4>
+                      <div class='row' style="line-height: 25px;margin-left: -25px;">
+                     <span  class='col-xs-12' style="color:#cac2c0;text-align: left;font-size: 0.4rem;margin-left: 1rem;left: 0.2rem;font-weight: bold;">知名老字号 大批发商直售客服 </span>
+                  
+                  </div>
+                  </li>
+				  
+		
+               
+            </ul>
+        </div>
+		
+		 <{if $langStr=='zh-cn'}>  
+		
+		  <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+          <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i><{$lang->newest}></span></h3>
+
+                 <p><{$lang->newest_desc}></p>
+            </div>
+			
+            <ul class="g-ul ul-list8">
+                <{foreach from=$new_listing item=item}>
+             
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+						 <{if $item.EvoucherOrrealproduct=='restaurant_menu'}>
+                        <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic1|image:330:210:'cut'}>" alt="">
+						<{else}>
+						 <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210:'cut'}>" alt="">
+						<{/if}>
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.bonusType}><{$item.title|truncate_cn:65:'..'}></a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>  
+                </li>  
+             
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		<{/if}>
+		
+		 <{if $langStr=='zh-cn'}>  
+		 
+		        <!-- Ubonus推荐 -->
+       <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+         
+			<div id="target2">
+           <a href="/group_pin/index">
+            </a>
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/index-banner-food.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage007.jpg" style="  margin-bottom: 0.3rem;">
+             </div>
+			 <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i><{$lang->ubonus_recommend}></span></h3>
+
+                 <p><{$lang->ubonus_recommend_desc}></p>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==1}>
+                <li>
+                    <div class="pic">
+					
+						  <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+							 <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+								<img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic1|image:330:210:'cut'}>" alt="">
+						<{else}>
+								<img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210:'cut'}>" alt="">
+						<{/if}>
+                        </a>
+                    </div>
+                     <h4 style="    font-size: 0.5rem; margin-top: 0.5rem;margin-left: 0.1rem;">
+					
+					 <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+					
+
+					<div class='row' style="line-height: 25px;">
+					
+						<span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+					    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s>
+						<span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+					
+                   
+                    
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		  <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+         
+			<div id="target2">
+           <a href="">
+            </a>
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/index-banner-food.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage007.jpg" style="  margin-bottom: 0.3rem;">
+             </div>
+			 <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i>生鲜全城配送</span></h3>
+
+                 <p>汇集本地高端生鲜食品供应商</p>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==76}>
+                <li>
+                    <div class="pic">
+					 <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+                        <a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>">
+						  <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic1|image:220:140:'cut'}>" alt="">
+						 <{else}>
+						  <a  href="<{$http_root_www}><{$item.type}>/<{$item.id}>?reftag=<{$reftag}>">
+						    <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+						 <{/if}>
+                      
+                        </a>
+                    </div>
+                     <h4 style=" font-weight:600; height:1rem;  font-size: 0.5rem; margin-top: 0.5rem;margin-left: 0.1rem;">
+					 <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+					<a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                     <{else}>
+					 <a  href="<{$http_root_www}><{$item.type}>/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+					  <{/if}>
+
+					<div class='row' style="line-height: 25px;">
+					  <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+				<span class='col-xs-6' style="color:#00b7a5;text-align:left ;left:0.1rem;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+					<span  class='col-xs-6' style="color:#f30;text-align: right;right:0.4rem;font-size: 14px;font-weight: bold;"> <a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>">进入店铺>></a></span>
+							 <{else}>
+						<span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+					    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s>
+						<span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+					<{/if}>
+                   
+                    
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		
+		
+		
+ 
+		<{else}>
+		<div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+         			
+			 <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i><{$lang->ubonus_recommend}></span></h3>
+
+                 <p><{$lang->ubonus_recommend_desc}></p>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==1}>
+                <li style="    width: 100%;">
+                    <div class="pic">
+                        <a  href="<{$http_root_www}><{$item.type}>/<{$item.id}>?reftag=<{$reftag}>">
+						
+                        <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:440:280:'cut'}>" alt="">
+                        </a>
+                    </div>
+                   <h4 style="     font-size: 0.5rem; margin-top: 1.1rem;margin-left: 0.1rem;">
+					<a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+					
+					 <{$item.title|truncate_cn:150:'..'}>
+					
+					</a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 0.6rem;left: 0.2rem;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 0.4rem;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 0.4rem;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		
+		<{/if}>
+        <!-- Ubonus推荐 end-->
+
+		
+		
+		
+		<!--
+	   <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+          <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i><{$lang->newest}></span></h3>
+
+                 <p><{$lang->newest_desc}></p>
+            </div>
+			
+            <ul class="g-ul ul-list8">
+                <{foreach from=$new_listing item=item}>
+             
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+						 <{if $item.EvoucherOrrealproduct=='restaurant_menu'}>
+                        <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic1|image:330:210:'cut'}>" alt="">
+						<{else}>
+						 <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210:'cut'}>" alt="">
+						<{/if}>
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.bonusType}><{$item.title|truncate_cn:65:'..'}></a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>  
+                </li>  
+             
+                <{/foreach}>
+            </ul>
+        </div>
+		-->
+		
+		<{else}>
+		 <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+          <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i><{$lang->newest}></span></h3>
+
+                 <p><{$lang->newest_desc}></p>
+            </div>
+			
+            <ul class="g-ul ul-list8">
+                <{foreach from=$new_listing item=item}>
+             
+                <li>
+              
+				  
+				   <li style="    width: 100%;">
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                        <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:440:280:'cut'}>" alt="">
+                        </a>
+                    </div>
+                   <h4 style="    margin-top: 1.1rem;font-size: .6rem;">
+					<a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:150:'..'}></a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 0.6rem;left: 0.2rem;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 0.4rem;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 0.4rem;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+				  
+			 <li>
+              
+			   
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		
+		<{/if}>
+		
+		
+
+	 
+
+		
+	
+		
+		
+		  <!-- 通店折扣券 -->
+       
+        <!-- 通店折扣券 end-->
+		
+		
+		
+		
+		
+		
+		
+		<{if $langStr=='zh-cn'}>	
+        <!-- 餐饮美食 -->
+     <!--   <div class="index-row">
+            <div class="m-tit1" id="f3">
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>food1"></a>
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon11.png);"></i>餐饮美食</span></h3>
+                <p>每日优惠美食送不停</p>
+            </div>
+
+  <div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage006.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage006.jpg" style="
+    margin-bottom: 0.3rem;">
+            </a>
+            </div>
+          
+
+         <div class='promotion container'>
+          <div class='row'>
+            <{foreach from=$data item=item}>
+            <{if $item.panaltype==20}>
+            <div class='col-xs-6 promotion-item'>
+                <{if $item.priceOff}>
+                    <div class='price-off'>-<{$item.priceOff}>%</div>
+                <{/if}>
+                <a href="<{$http_root_www}>coupon7m/<{$item.id}>?id=<{$item.id}>">
+                   <img class="card-img-top" src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="<{$item.title|truncate_cn:65:'..'}>">  
+                </a>
+                
+                <div class="card-body">
+                  <p  style="overflow:hidden;font-size: 13px;font-weight: normal;height: 35px;" ><{$item.title|truncate_cn:65:'..'}></p>
+                 
+
+                  <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </div>
+
+            </div>
+            <{/if}>
+            <{/foreach}>
+           
+          </div>
+        </div>
+
+        </div>  -->
+		
+        <!-- 餐饮美食 end-->
+        
+
+        <!-- 活动票务 -->
+   <!--     <div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106119"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon20.png);"></i>活动票务</span></h3>
+
+                <p>想你所想,购你想购</p>
+
+            </div>
+			<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage003.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage003.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==21}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                   
+					  <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div> -->
+        <!-- 活动票务 end-->
+	
+		 <!-- 活动票务 -->
+       
+<!--	   <div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106127"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon42.png);"></i>丽人生活</span></h3>
+
+                <p></p>
+
+            </div>
+			<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage004.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage004.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==72}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                    <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div> -->
+        <!-- 活动票务 end-->
+		 <!-- 活动票务 -->
+     <!--   <div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106128"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon42.png);"></i>旅游休闲</span></h3>
+
+                <p></p>
+
+            </div>
+			<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage008.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage008.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==74}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                     <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div> -->
+  <div class="index-row" style="     overflow: unset;   margin-top: 0.1rem; ">
+
+         
+			<div id="target2">
+           <a href="/group_pin/index">
+            </a>
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/index-banner-food.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage007.jpg" style="  margin-bottom: 0.3rem;">
+             </div>
+			 <div class="m-tit1" id="f1" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon79.png);"></i>餐厅全城配送</span></h3>
+
+                 <p>汇集餐厅美食全城配送商</p>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==77}>
+                <li>
+                    <div class="pic">
+					 <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+                        <a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>">
+						 <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic1|image:220:140:'cut'}>" alt="">
+						 <{else}>
+						  <a  href="<{$http_root_www}><{$item.type}>/<{$item.id}>?reftag=<{$reftag}>">
+						   <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+						 <{/if}>
+                       
+                        </a>
+                    </div>
+                     <h4 style="font-weight:600; height:1rem;  font-size: 0.5rem; margin-top: 0.5rem;margin-left: 0.1rem;">
+					 <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+					<a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                     <{else}>
+					 <a  href="<{$http_root_www}><{$item.type}>/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+					  <{/if}>
+
+					<div class='row' style="line-height: 25px;">
+					  <{if ($item.type != 'coupon1' && $item.type != 'coupon')}>
+					<span class='col-xs-6' style="color:#00b7a5;text-align:left ;left:0.1rem;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+					<span  class='col-xs-6' style="color:#f30;text-align: right;right:0.4rem;font-size: 14px;font-weight: bold;"> <a  href="<{$http_root_www}><{$item.type}>/<{$item.createUserId}>?reftag=<{$reftag}>">进入店铺>></a></span>
+					
+					<{else}>
+						<span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+					    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s>
+						<span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+					<{/if}>
+                   
+                    
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+ <div class="index-row">
+
+            <div class="m-tit1" id="f2">  
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106105"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon8.png);"></i>百货商城</span></h3>  
+
+                <p></p> 	
+
+            </div>
+			<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage010.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage010.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==73}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                    <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+<!--	
+		<div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106129"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon21.png);"></i>教育移民</span></h3>
+
+                <p></p> 	
+
+            </div>
+			<!--<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage011.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage011.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==75}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+		
+		<div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106121"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon85.png);"></i>生活服务</span></h3>
+
+                <p></p> 	
+
+            </div>
+			<div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage011.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage011.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+            </div>
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==71}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                      <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div> 
+        	   <!-- 堂食点餐 -->
+      
+        <!-- 堂食点餐 end-->
+		
+  
+        <!-- 生鲜食品 
+        <div class="index-row">
+            <div class="m-tit1 m-tit1-1" id="f4">
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106124"></a>
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>生鲜食品</span></h3>
+                <p>想你所想，一站式服务</p>
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==10}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>"><{$item.title|truncate_cn:65:'..'}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+      生鲜食品 end-->
+
+       
+ <{/if}>
+ 
+
+     <div class="index-row">
+       <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106121"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon85.png);"></i><{$lang->read_more}></span></h3>
+
+                <p></p> 	
+
+            </div>
+		<!-- <div id="target2">
+            <a href="/group_pin/index">
+                <img class="lazyload" data-src="/themes/zh-cn/mobile/images/homepage011.jpg" alt="" src="/themes/zh-cn/mobile/images/homepage011.jpg" style="
+		margin-bottom: 0.3rem;">
+            </a>
+         </div> -->
+        <ul class="g-ul ul-list8" id='latest-coupon-load-more'>
+           
+        </ul>
+
+        <div style='text-align: center;font-size: 12px;font-family: "微软雅黑","Microsoft Yahei";'>
+            <span class='load-more-btn' data-currentpage='0'><{$lang->read_more}> </span>
+            <i class='fa fa-angle-down'></i>
+        </div>
+    </div>
+	
+	
+
+
+    <!-- 主内容 end-->
+
+	<{include file='mobile/mobile_footer_h1.htm'}>
+
+    <!-- 底部 -->
+        <{include file='mobile/mobile_footer.htm'}>
+    <!-- 底部 end-->
+
+
+    <!-- 搜索框 -->
+    <form action='.'>
+    <div class="box-so bg-1">
+
+        <div class="inner">
+
+            <div class="so-top so-top-2">
+
+                <input type="text" class="g-input sele" readonly="readonly" value="<{$lang->products}>">
+
+                <div class="sub">
+
+                    <span><{$lang->products}></span>
+
+                    <span><{$lang->store}></span>
+
+                </div>
+
+                <input autofocus="autofocus"  type="search" placeholder="<{$lang->please_input}>" class="g-input inp">
+
+            </div>
+
+            <a href="javascript:void(0);" class="a-txt"><{$lang->cancel}></a>
+
+        </div>
+
+        <div class="m-so">
+
+            <h4><{$lang->top_search}><a  class="a-update"></a></h4>
+  
+            <ul class="g-ul">
+                <{if $langStr=='zh-cn'}>
+                <li><a href="<{$http_root_www}>food1">美食
+                <li><a href="<{$http_root_www}>coupons/106126103?">火锅</a></li>
+                <li><a href="<{$http_root_www}>coupons/106126116?">海鲜套餐</a></li>
+                <li><a href="<{$http_root_www}>coupons/106119111">演唱会</a></li>
+               <{else}>
+			   
+			    <li><a href="<{$http_root_www}>coupons?key=masks&listType=product">masks</a></li>
+                <li><a href="<{$http_root_www}>coupons?key=Hand sanitizer&listType=product">hand sanitizer</a></li>
+                <li><a href="<{$http_root_www}>coupons?key=wool quilt&listType=product">wool quilt</a></li>
+               
+			   <{/if}>
+            </ul>
+		
+
+        </div>
+
+        <div class="so-pop">
+            <a  class="a-shop search-keyword-display"><!-- 店铺搜索&gt;手机 --></a>
+            <ul class="g-ul ul-screen" style="max-height: 83vh;overflow: scroll;">
+            </ul>
+        </div>
+    </div>
+    </form>
+    <!-- 搜索框 end-->
+
+    <!-- 侧边按钮 -->
+    <!-- sec float go top -->
+    <{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+    <!-- 侧边按钮-end -->
+
+
+    <script>
+        $(document).ready(function() {
+            //城市选择
+            $(".city-select .con").click(function() {
+                $('.city-select').find("ul").stop().slideToggle();
+            });
+
+            $(".city-select li").click(function() {
+                var _cont = $(this).text();
+                var _pare = $(this).parents(".city-select");
+                $(_pare).find('span').text(_cont);
+            });
+
+            //语言选择
+            $(".lang-select .con").click(function() {
+                $('.lang-select').find("ul").stop().slideToggle();
+            });
+
+            $(".lang-select li").click(function() {
+                $('.lang-select').find("ul").stop().hide();
+            });
+        });
+
+    </script>
+
+     <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script>
+        $(".m-notice").slide({mainCell:".bd ul",autoPlay:true,effect:"topLoop",vis:1});
+    </script>
+
+    <link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+
+    <script>
+
+        $(function(){
+
+            var swiper = new Swiper('#banner', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true,
+
+               autoplay:2000
+
+           });
+
+
+
+            var swiper = new Swiper('.m-adve', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true
+
+           });
+
+
+
+            //
+
+            $(".m-seckill").each(function(){
+
+                var swiper = new Swiper($(this).find(".swiper-container")[0], {
+
+                    slidesPerView: 3.7,
+
+                    paginationClickable: true,
+
+                    spaceBetween : 5,
+
+                    freeMode: true
+
+                });
+
+            });
+        })
+
+        
+
+
+
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+        //点击搜索框弹出+消失
+
+        $(".a-so,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".so-top-pop").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".box-so .a-txt").click(function(){
+
+            $("body").removeClass('open-so');
+
+        });
+
+        $('.box-so .so-top .inp').click(function(){
+
+            $('.so-pop').show();
+
+            $('.m-so').hide();
+
+        });
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        var searchEnterTimeoutClock;
+
+
+
+        $(function(){
+
+            // 搜索键盘事件
+
+            $('.inp').keyup(function(e) {
+
+                    if(e.keyCode == 13){
+                        // console.log('enter key');
+                        var listType = ($('.g-input.sele').val()=='<{$lang->products}>')?'product':'business';
+                        var key = $('.g-input.inp').val()
+                        window.location.href='<{$http_root_www}>coupons?key='+key+'&listType='+listType;
+                         
+                    }else{
+                         updateDisplay();
+
+                        clearTimeout(searchEnterTimeoutClock);
+
+                        searchEnterTimeoutClock= setTimeout(function(){
+
+                            getSearchHint();
+
+                         },500)
+
+                    }
+                   
+
+            });
+
+           $(window).scroll(function() {
+					
+     
+	
+    
+					if($(window).scrollTop() > 230 ) {
+					//alert('here');
+						//$('#hd').css('opacity',1);
+					}else{
+					//$('#hd').css('opacity',0.7);
+				}
+					});
+
+        });
+
+        
+
+
+
+        function getSearchHint(){
+
+            var _key = $('.inp').val();
+
+
+
+            $.ajax({url: '<{$http_root_www}>query?cmd=searchv2mobile', 
+
+                       data:{'key':_key}, 
+
+                       method: "POST",
+
+                       beforeSend: function(){
+
+                        //$('#search-hint').html("");
+
+                       },
+
+                       success: function(data){
+
+                        $('.ul-screen').html(data);
+
+                       }
+
+                    });
+
+        }
+
+
+
+
+
+        function gotoSearchItem(obj) {
+
+            var listType= $(obj).data('hint-type');
+
+            window.location.href ='<{$http_root_www}>coupons?listType='+listType+'&key=' +  $(obj).find('span.search-hint-text').html() ;
+
+        }
+
+
+
+        function updateDisplay(){
+
+            var html =  $('input.sele').val()+" <{$lang->search}>"+"&gt;" + $('input.inp').val();;
+
+            $('.search-keyword-display').html(html);
+
+
+
+        }
+
+
+
+    </script>
+	
+	<script type="text/javascript">
+
+    $(function () {
+
+
+        $('.load-more-btn').on('click', function () {
+
+            var page = $(this).data('currentpage');
+
+            var url = '<{$http_root_www}>query?cmd=getLatestCouponHtml_mobile&page=' + page;
+
+            $.ajax({
+
+                url: url,
+
+                method: "GET",
+
+                beforeSend: function () {
+
+                    $('.load-more-btn').html('<{$lang->loading}>');
+
+                },
+
+                success: function (data) {
+
+                    $('#latest-coupon-load-more').append(data);
+
+                    $('.load-more-btn').data('currentpage', page + 1);
+
+                },
+
+            }).always(function () {
+
+                $('.load-more-btn').html('<{$lang->read_more}>');
+
+            });
+
+        })
+
+        $('.load-more-btn').click();
+
+    })
+
+
+</script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('img.lazyload').unveil();
+    })
+
+</script>
+    <script src="<{$SKIN_PATH}>mobile/js/downCount.js"></script>
+    <script type="text/javascript">
+        function open_screen_mobile_close() {
+            $('.kp_main').fadeOut();
+        }
+
+        function leftTimer(year,month,day,hour,minute,second){
+            var leftTime = (new Date(year,month-1,day,hour,minute,second)) - (new Date()); //计算剩余的毫秒数
+            var days = parseInt(leftTime / 1000 / 60 / 60 / 24 , 10); //计算剩余的天数
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24 , 10); //计算剩余的小时
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+            var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+            days = checkTime(days);
+            hours = checkTime(hours);
+            minutes = checkTime(minutes);
+            seconds = checkTime(seconds);
+           
+        }
+        function checkTime(i){ //将0-9的数字前面加上0，例1变为01
+            if(i<10)
+            {
+                i = "0" + i;
+            }
+            return i;
+        }
+        setInterval("leftTimer(2018,2,1,20,00,00)",1000);
+
+        // 倒计时
+        //$("#fnTimeCountDown").fnTimeCountDown1();
+    </script>
+
+
+    <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{if $businessDisplayName}><{$businessDisplayName}>-明星商城<{/if}>';
+        var shareLink='<{$http_root_wx}>?bid=<{$businessUser.id}>';
+        var desc="<{if $businessDisplayName}><{$businessDisplayName}>-明星商城<{/if}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$businessUser.logo}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+</body>
+
+</html>

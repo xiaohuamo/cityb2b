@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style>
+	.main-form .input-box span label { width:200px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				
+				<div class="main-form form-style-green">
+					<form id="memberForm" action="<{$http_root_www}>payment/rechargepaymentprocess/checkout" method="post" target="post_frame">
+
+						<div class="input-box clearfix">
+							<h1><{$lang->recharge}></h1>
+						</div>
+
+
+						<div class="input-box clearfix">
+							<span><label><{$lang->recharge_amount}>(AUD)</label></span>
+							<input type="number" min='1' step="0.01" name="money" class="input-text"  /> 
+						</div>
+						<div class="input-box clearfix">
+							<span><label><{$lang->payment_option}></label></span>
+
+							<br>
+
+							<input type="radio" name="payment" value="paypal" id="payment_paypal" checked />
+							<label for="payment_paypal">Paypal <{$lang->payment}></label>
+							<em>
+								（paypal <{$lang->recharge_charge}><{$smarty.const.DEFAULT_PAYPAL_SURCHARGE*100}>%<{$lang->surcharge_fees}>）
+							</em>
+
+							<br>
+
+							<input type="radio" name="payment" value="royalpay" id="payment_royalpay" />
+							<label for="payment_royalpay">  <{$lang->pay_wechat}> Royal Pay</label>
+							<em>
+								（paypal <{$lang->recharge_charge}><{$smarty.const.DEFAULT_ROYALPAY_SURCHARGE*100}>%<{$lang->surcharge_fees}>）	
+							</em>
+							
+
+							<br>
+
+							<!-- <input type="radio" name="payment" value="banktransfer" id="payment_paypal" /><label for="payment_paypal">转账支付</label>
+							请提供转账凭证
+							<input type="text" class="input-text"  />  -->
+
+							<!--	<input type="radio" name="payment" value="eway" id="payment_eway" /><label for="payment_eway"><img src="<{$SKIN_PATH}>images/eway/eway_white100.gif" height="50" alt="eWay" /></label> -->
+						</div>
+						<div class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->recharge}></button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

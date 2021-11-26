@@ -1,0 +1,298 @@
+<h4 style="text-align: center; font-size :0.48rem;color:#333;"><{$lang->shopping_cart}></h5>
+<div class='m-cart' style="padding:0.2rem;padding-bottom: 2.5rem;">
+<ul class="g-ul">
+    <{foreach from=$items item=item}>
+	
+	<{if $item.business_name}>
+	<li>
+        <div class="content">
+            <div class="con" style="padding-bottom: 0.1rem;    padding-top: 1rem;">
+                
+               <div class="txt">
+                    <h4 style="font-weight: 600;    font-size: 0.45rem;">
+                        <{$item.business_name}>
+                    </h4>
+                        
+                    
+                </div>
+             </div>
+        </div>
+    </li>
+	<li style=" display:none;  border: 1px;    border-color: black;">
+        <div class="content">
+            <div class="con" style="padding-bottom: 0.1rem;padding-top: 1rem;background-color: #FD5001 ;left: 0.4re;">
+                
+               <div class="txt">
+                    <h4 style="font-weight: 500;font-size: 0.65rem;margin-left: 0.2rem;height: auto;white-space: pre-wrap;line-height: 0.95rem;">亲！蔬果店因独立打单、配货、打包，需要您最小订满20刀，谢谢亲，支持一下吧！。
+                    </h4>
+                        
+                    
+                </div>
+             </div>
+        </div>
+		<div class="row" style="width: inherit;z-index: 2">
+		  <div style="text-align: center;width: 47%;display: inline-block;line-height: 50px;color: #fff;background-color: #e82a1d;float: left;margin-left: 0.44rem;" onclick="$(this).parents('.inpageShoppingCart').hide();update_cart_countandsum();">
+			<span style="
+    /* left: -0.8rem; */
+">坚决就买这么多！</span>
+		  </div>
+		  
+		  <div style="float: left;text-align: center;width: 46%;display: inline-block;line-height: 50px;color: #fff;background-color: #449d44;">
+			<span onclick="add_carts()">再添加点凑到$20</span>
+		  </div>
+		</div>
+	<{/if}>
+	
+	
+	<{if $item.new_cat}>
+	<li>
+        <div class="content">
+            <div class="con" style="padding-bottom: 0.1rem;    padding-top: 1rem;">
+                
+               <div class="txt">
+                    <h4 style="font-weight: 600;    font-size: 0.45rem;color: #808080;">
+                        <{$item.category_cn_name}>
+                    </h4>
+                        
+                    
+                </div>
+             </div>
+        </div>
+    </li>
+	
+	<{/if}>
+    <li>
+        <div class="content">
+            <div class="con">
+                <div class="pic">
+                    <img src="<{$UPLOAD_PATH}><{$item.pic|image:100:100:'cut'}>" alt="">
+                </div>
+
+                <span class="s-price" data-couponid='<{$item.couponid}>'  data-id='<{$item.id}>'>
+                    <{$item.single_amount}>
+                </span>
+
+                <div class="txt">
+                    <p style="font-size:0.45rem;display: inline-block;width:90%">
+                        <{$item.coupon_name}>
+                    </p>
+                         <p style="font-size:13px;"><{$item.guige_des}></p>
+                       <!-- 数量 -->
+                        <div class="m-num">
+                            <a class="minusBtn" id ="min-<{$item.id}>" href="javascript:void(0);" onClick='cartItemQtyMinus(this)'>-</a>
+                            <input class="inp shopping-cart-item-qty" type="text" data-price ='<{$item.single_amount}>' value="<{$item.quantity}>" class="txt" data-id='<{$item.id}>' data-coupon_id='<{$item.main_coupon_id}>' data-single-amount='<{$item.single_amount}>' data-menu_id='<{$item.menu_id}>' readonly>
+                            <a class="plusBtn"  id ="<{$item.id}>"  href="javascript:void(0);" onClick='cartItemQtyPlus(this)'>+</a>
+                        </div>
+                        <!-- 数量 -->
+                    
+                </div>
+                <i class='fa fa-close item-remove-btn fa-lg' style="position: absolute;bottom: 16px;right: 0px" data-id='<{$item.id}>' data-menu_id='<{$item.menu_id}>' data-coupon_id='<{$item.main_coupon_id}>' onClick='removeItem(this)'></i>
+            </div>
+        </div>
+    </li>
+    <{/foreach}>
+
+</ul>
+</div>
+
+<div class='row' style="position: fixed;bottom: 0;width: inherit;z-index: 2">
+  <div style="text-align: center;width: 30%;display: inline-block;line-height: 50px;color: #fff;background-color: #FD5001 ;float: left;" onClick="$(this).parents('.inpageShoppingCart').hide();update_cart_countandsum();">
+    <span ><{$lang->continue_shopping}></span>
+  </div>
+  <div  style="float: left;text-align: center;width: 40%;display: inline-block;line-height: 50px;color: #000;background-color: #f3f4f6;" >
+    <span ><{$lang->total_amount}>：$</span><span id="cart_total_price" ><{$totalPrice}></span>
+  </div>
+
+  <div  style="float: left;text-align: center;width: 30%;display: inline-block;line-height: 50px;color: #fff;background-color: #FD5001 ;" >
+    <span  onClick='add_carts()'><{$lang->buy_now}></span>
+  </div>
+</div>
+  
+
+<script type="text/javascript">
+  function cartItemQtyPlus(obj){
+      var currentQty = $(obj).prev('input').val();
+      var  result1=0;
+      currentQty = parseInt(currentQty);
+
+      $(obj).prev('input').val(currentQty+1);
+	  
+	  
+	    var id = $(obj).prev('input').data('id');
+	   // alert(id);
+		$.ajax({
+			 url:'<{$http_root_www}>query?cmd=add_cart_item&id='+id,
+		}).done(function(result){
+	        if(result ==1) {
+			result1=result;
+			$(obj).prev('input').val(currentQty);
+			alert('当前库存达到最大值！');
+			get_cart_total();
+			}
+			if(result ==2) {
+			result1=result;
+			$(obj).prev('input').val(currentQty);
+			alert('当前超过限购数量！');
+			get_cart_total();
+			}
+		})
+		
+	     $('#min-' + id).css('color'," #FD5001");
+		 $('#min-' + id).css('border',"1px #FD5001 solid");
+		 get_cart_total();
+		
+  }
+
+  function cartItemQtyMinus(obj){
+      var currentQty = $(obj).next('input').val();
+
+      currentQty = parseInt(currentQty);
+
+      if(currentQty==1){
+	  
+        return false;
+      }else{
+        $(obj).next('input').val(currentQty-1);
+		if(currentQty==2) {
+			$(obj).css('color',"#fff");
+			$(obj).css('border',"0px");
+          }
+	  
+      }
+	
+	  var id = $(obj).next('input').data('id');
+	   // alert(id);
+		$.ajax({
+			 url:'<{$http_root_www}>query?cmd=min_cart_item&id='+id,
+		}).done(function(result){
+	        //alert(result);
+			
+		})
+	  
+	   get_cart_total();
+	  
+	
+	
+      
+  }
+  
+  
+  function get_cart_total() {
+  
+   var data=[];
+      var total_count=0;
+	  var total_price=0.00;
+      $('.m-cart input').each(function(index,value){
+        var qty= parseInt($(value).val());
+        var id = $(value).data('id');
+		var price =$(value).data('price');
+        data[id]=qty;
+		
+		
+		
+		
+		
+        //alert(id+'  ' +qty + ' ' + price);
+        total_count +=qty;
+		total_price +=qty*price;
+	   
+			
+        
+      })
+	    
+	  
+	
+	    $('#cart_total_price').html((total_price).toFixed(2));
+  
+  }
+  
+  function  update_cart_countandsum () {
+       var data=[];
+      var total_count=0;
+	  var total_price=0.00;
+      $('.m-cart input').each(function(index,value){
+        var qty= parseInt($(value).val());
+        var id = $(value).data('id');
+		var price =$(value).data('price');
+		//alert(id +price);
+        data[id]=qty;
+		
+		
+		var menu_id = $(value).data('menu_id');
+        var coupon_id = $(value).data('coupon_id');
+        if(menu_id>0)
+          $("input[data-menu_id="+menu_id+"][data-type=menu]").val(qty);
+        else
+          $("input[data-main_coupon_id="+coupon_id+"]").val(qty)
+		
+		
+		
+        //alert(id+'  ' +qty + ' ' + price);
+        total_count +=qty;
+		total_price +=qty*price;
+	   
+			
+        
+      })
+	    
+	  	$('#carts_count_id').html( total_count);
+		$('#tp').html("$"+(total_price).toFixed(2));
+	
+	  
+  
+  }
+  
+
+  function updateQty(){
+      var data=[];
+
+      $('.m-cart input').each(function(index,value){
+        var qty= $(value).val();
+        var id = $(value).data('id');
+        data[id]=qty;
+
+        var menu_id = $(value).data('menu_id');
+        var coupon_id = $(value).data('coupon_id');
+        if(menu_id>0)
+          $("input[data-menu_id="+menu_id+"][data-type=menu]").val(qty);
+        else
+          $("input[data-main_coupon_id="+coupon_id+"]").val(qty)
+      })
+      
+
+      data = JSON.stringify(data);
+
+      $.ajax({
+         url:'<{$http_root_www}>query?cmd=update_carts_with_result_back',
+         method :'POST',
+         data:{data:data,businessUserId:'<{$businessUserId}>'},
+         beforeSend:function(){
+          $('body').append('<p class="form_response_loader"></p>');
+         }
+       }).done(function(result){
+          updateCartDisplay(result);
+       }).always(function(){
+          $('.form_response_loader').remove();
+       })
+  }
+
+  function removeItem(obj){
+    var id = $(obj).data('id');
+	 $(obj).parents('li').remove();
+	 get_cart_total();
+    $.ajax({
+         url:'<{$http_root_www}>query?cmd=remove_cart_item&id='+id,
+    }).done(function(){
+      
+
+       var menu_id = $(obj).data('menu_id');
+       var coupon_id = $(obj).data('coupon_id');
+       if(menu_id>0)
+        $("input[data-menu_id="+menu_id+"][data-type=menu]").val(0);
+       else
+        $("input[data-main_coupon_id="+coupon_id+"]").val(0)
+		
+    })
+	 
+  }
+</script>

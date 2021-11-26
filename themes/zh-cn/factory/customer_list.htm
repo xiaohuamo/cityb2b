@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: center;
+	}
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+                    客户列表
+				</div>
+				<form>
+					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
+					<input type="submit" value="搜索">
+				</form>
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>用户ID</th>
+								<th>商家CODE</th>
+								<th>以此用户下单</th>
+								<th>登陆链接(due to: <{$expiredAt}>)</th>
+								<th>用户名</th>
+								<th>订单查询</th>
+								<th>手机号</th>
+								<th>已经审核</th>
+								<th>价格显示方式</th>
+								<th>设置营业时间</th>
+								
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$users item=user name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td>
+										<{$user.user_id}>
+									</td>
+									<td>
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="code-<{$user.idd}>" style="width:150px;" name="code"
+												   value="<{$user.code}>">
+											<span class='promote-ajax'></span>
+									
+										
+									<td>
+                                        <{if $user.approved}>
+											<a href="<{$http_root_www}>factorypage/order_for_customer?user_id=<{$user.id}>" target="_blank">下单</a>
+                                        <{else}>
+											尚未审核
+                                        <{/if}>
+									</td>
+									<td>
+										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
+									</td>
+									<td>
+                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+									</td>
+									<td>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
+									</td>
+									<td>
+                                        <{$user.phone}>
+									</td>
+									<td>
+                                        <{if $user.approved}>
+											是 <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
+										<{else}>
+											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
+										<{/if}>
+									</td>
+									<td>
+                                        <{if $user.show_origin_price}>
+											显示原价  <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/show_origin_price?user_id=<{$user.id}>&show_origin_price=0" class="button">修改</a>)
+                                        <{else}>
+											不显示价格  <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/show_origin_price?user_id=<{$user.id}>&show_origin_price=1" class="button">修改</a>)
+                                        <{/if}>
+									</td>
+									<td>
+                                      <{if $user.trading_hours}> <i class='fa fa-fw fa-check ' style='color:green'></i> <{/if}> <a target=_blank  href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$user.id}>">设置</a>
+									</td>
+<{*									<td>*}>
+<{*										<a href="<{$http_root_www}>factory/login_as_customer?user_id=<{$user.id}>">登陆</a>*}>
+<{*									</td>*}>
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+<script>
+    function copyToClip(value) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value",value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("已复制");
+    }
+</script>
+
+<script type="text/javascript">
+    var loading = false;
+
+    $('input[name=code]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+        
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_business_code",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+  
+
+   
+
+</script>
+<{include file = 'footer.htm'}>
+
+</body>
+</html>

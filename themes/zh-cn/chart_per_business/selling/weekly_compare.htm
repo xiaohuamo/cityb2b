@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+<meta charset="UTF-8">
+<script>
+window.onload = function () {
+	
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	
+	title:{
+		text:"商家销售对比分析"
+	},
+	axisX:{
+		interval: 1
+	},
+	axisY2:{
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)",
+		title: "销售单位AUD $1",
+	},
+	data: [{
+		type: "bar",
+		name: "商家名称",
+		axisYType: "secondary",
+		color: "#014D65",
+		dataPoints: [
+		
+		<{foreach from=$weekly_selling item=item}>
+		
+			{ y: <{$item.subtotal}>, label: '<{$item.name}>' },
+			<{/foreach}>
+
+		]
+	}]
+});
+chart.render();
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="<{$SKIN_PATH}>chart_per_business/canvasjs.min.js"></script>
+</body>
+</html>

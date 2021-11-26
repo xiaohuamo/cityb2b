@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style type="text/css">
+	  .index_panel{
+	  	position: relative;
+	  	color: #00b7ff;
+	  }
+
+	   /*over right global css*/
+	  .index_panel a:hover{
+	   	text-decoration: none;
+	  }
+	  /*END over right global css*/
+
+	  .panel_item{
+	  	width: 44%;
+	  	margin: 2%;
+	  	display: inline-block;
+	  	height: 200px;
+	  	border: 1px solid #00b7ff;
+	  	overflow: hidden;
+	  }
+	  .panel_item_top{
+	  	height: 165px;
+	  }
+	  .panel_item_top .panel_icon{
+	  	text-align: center;
+	  	padding-top: 10px;
+	  }
+	  .panel_item_top h1{
+	  	text-align: center;
+	  	line-height: 60px;
+	  	font-size: 20px;
+	  }
+	  .panel_item_top p{
+	  	text-align: center;
+	  }
+	  .panel_item_sub{
+	  	height: 35px;
+	  	display: table;
+	  	table-layout: fixed;
+	  	width: 101%;
+	  }
+
+	  .panel_sub_item{
+	  	line-height: 35px;
+	  	overflow: hidden;
+	  	border-top: 1px solid #00b7ff;
+	  	border-right: 1px solid #00b7ff;
+	  	color: #00b7ff;
+	  	text-align: center;
+	  	display: table-cell;
+	  }
+	 .panel_sub_item:hover{
+	  	color: #fff;
+	  	background-color: #00b7ff;
+	  	cursor: pointer;
+	  }
+	</style>
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}> 
+			<div class="m-side m-hide">
+				<div class="main clearfix">
+					<div class="box2">
+						<div class='index_panel'>
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class="fa fa-cogs fa-4x" aria-hidden="true"></i></div>
+									<h1>社群营销</h1>
+									<p>社群营销</p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>referal/manage_referral_rule" class='panel_sub_item'>社群营销</a>
+								</div>
+							</div>
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class="fa fa-cogs fa-4x" aria-hidden="true"></i></div>
+									<h1>推广套餐</h1>
+									<p>推广套餐</p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/ubonus_package" class='panel_sub_item'>推广套餐</a>
+								</div>
+							</div>
+
+
+							<{if $loginUser.is_managed_show}>
+<!--
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-bar-chart fa-4x'></i></div>
+									<h1><{$lang->redbag}></h1>
+									<p><{$lang->ubonus_community}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>redbag/redbag" class='panel_sub_item'><{$lang->hand_out_redbag}></a>
+									<a href="#" class='panel_sub_item'><{$lang->redbag_record}></a>
+								</div>
+							</div> -->
+                  <!--
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-archive fa-4x'></i></div>
+									<h1><{$lang->lottery}> </h1>
+								    <p><{$lang->ubonus_community}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>lottery/lotterys" class='panel_sub_item'><{$lang->edit_lottery}></a>
+									<a href="<{$http_root_www}>lottery/business_records_management" class='panel_sub_item'><{$lang->lottery_winning_record}></a>
+								</div>
+							</div>
+
+							-->
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa  fa-group fa-4x'></i></div>
+									<h1><{$lang->vote}> </h1>
+								    <p><{$lang->ubonus_community}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>voting/show?id=5" class='panel_sub_item'><{$lang->edit_vote}></a>
+								</div>
+							</div>
+							
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class="fa fa-cogs fa-4x" aria-hidden="true"></i></div>
+									<h1><{$lang->more_function}></h1>
+									<p><{$lang->comming_soon}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a  class='panel_sub_item'><{$lang->second_hand}></a>
+									<a  class='panel_sub_item'><{$lang->event}></a>
+								</div>
+							</div>
+
+							
+							<{/if}>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div>
+
+	</div>
+<{include file='footer.htm'}>
+</body>
+</html>

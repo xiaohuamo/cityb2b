@@ -1,0 +1,47 @@
+﻿/*******************************
+    -------[=首页]-------
+********************************/
+#banner .item {height: 650px;background-position: center center;background-repeat: no-repeat;background-size: cover;outline: none;}
+#banner .btn {position: absolute;top: 50%;margin-top: -22px;display: block;width: 26px;height: 44px;background-position: center center;background-repeat: no-repeat;z-index: 10;}
+#banner .slick-prev {left: 60px;background-image: url(../images/img-arrprev.png);}
+#banner .slick-next {right: 60px;background-image: url(../images/img-arrnext.png);}
+.index-row1 {padding: 136px 0 50px;}
+.index-row1 .tit {border-bottom: 8px solid #f37800;height: 112px;}
+.index-row1 .tit .col-name {float: left;border-top: 20px solid transparent;font-size: 30px;color: #48555b;font-weight: normal;}
+.index-row1 .tit .timer {float: right;}
+.index-row1 .tit .timer span {float: left;display: inline-block;width: 77px;height: 77px;line-height: 75px;border: 1px solid #d0d3d4;border-left: none;font-size: 26px;color: #48555b;text-align: center;}
+.index-row1 .tit .timer .tips {padding-left: 84px;width: 204px;border-color: #f37800;background: url(../images/img-countdown.png) 27px center no-repeat #f37800;color: #fff;font-size: 22px;font-weight: normal;text-align: left;}
+.ul-new-pro {margin-top: 48px;}
+.ul-new-pro li {position: relative;}
+.ul-new-pro a {padding: 44px;display: block;height: 560px;overflow: hidden;}
+.ul-new-pro a:hover {-webkit-box-shadow: 0 0 70px rgba(0, 0, 0, .05);
+box-shadow: 0 0 70px rgba(0, 0, 0, .05);}
+.ul-new-pro .new {position: absolute;top: 16px;left: 50%;margin-left: -100px;display: block;width: 84px;height: 43px;background: url(../images/img-xinpin.png) center center no-repeat;}
+.ul-new-pro .tag {position: absolute;bottom: 46px;left: 36px;display: block;width: 97px;height: 95px;}
+.ul-new-pro .tag.t1 {background: url(../images/img-card1.png) center center no-repeat;}
+.ul-new-pro .tag.t2 {background: url(../images/img-card2.png) center center no-repeat;}
+.ul-new-pro .tag.t3 {background: url(../images/img-card3.png) center center no-repeat;}
+.ul-new-pro .tag.t4 {background: url(../images/img-card4.png) center center no-repeat;}
+.ul-new-pro .tag.t5 {background: url(../images/img-card5.png) center center no-repeat;}
+.ul-new-pro .tag.t6 {background: url(../images/img-card6.png) center center no-repeat;}
+.ul-new-pro .img {float: left;width: 50%;}
+.ul-new-pro .txt {padding-top: 90px;float: right;width: 50%;text-align: center;}
+.ul-new-pro .txt .tit-pro {min-height: 145px;font-size: 40px;color: #48555b;font-weight: normal;}
+.ul-new-pro .txt .price .p1 {display: block;font-size: 22px;color: #48555b;}
+.ul-new-pro .txt .price .p2 {display: block;font-size: 36px;color: #48555b;}
+.ul-new-pro .txt .car em {margin: 12px auto;display: block;width: 68px;height: 68px;border-radius: 50%;background: url(../images/img-shopping.png) center center no-repeat #c20000;}
+.ul-new-pro a:hover .txt .car em {background-image: url(../images/img-arrgo.png);}
+.ul-new-pro .txt .car .tips {font-size: 18px;color: #48555b;}
+.index-row2 {padding: 118px 0 98px;background-color: #f7f9fb;}
+.index-row2 .tit {line-height: 42px;}
+.index-row2 .tit .col-name {font-size: 30px;color: #48555b;font-weight: normal;}
+.index-row2 .tit a {margin-left: 40px;display: inline-block;width: 92px;height: 42px;line-height: 42px;text-align: center;color: #fff;font-size: 20px;background-color: #5ecafb;border-radius: 21px;font-weight: normal;-webkit-box-shadow: 0 0 21px rgba(70, 166, 209, .46);
+box-shadow: 0 0 21px rgba(70, 166, 209, .46);}
+.index-row2 .tit a:hover {color: #efefef;}
+.index-row2 .ul-new-pro li {margin-top: 26px;background-color: #fff;}
+.index-row2 .ul-new-pro .txt {padding-top: 0;}
+.ul-new-pro .txt .tips-hd {padding-bottom: 30px;font-size: 20px;color: #48555b;}
+.ul-new-pro .txt .tips-hd em {color: #e64141;}
+.ul-new-pro li .sale {position: absolute;top: 24px;right: 16px;padding-top: 32px;display: block;width: 70px;height: 63px;background: url(../images/img-sale.png) center center no-repeat;color: #fff;font-size: 14px;text-align: center;line-height: 1;}
+.index-row2 .ul-new-pro a:hover {-webkit-box-shadow: inset 0 0 30px rgba(0, 0, 0, .05);
+box-shadow: inset 0 0 30px rgba(0, 0, 0, .05);}

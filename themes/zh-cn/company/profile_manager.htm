@@ -1,0 +1,122 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>.main-form .input-box span label { width:150px; </style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+            
+			<div class="box2">
+              
+				<div class="main-form">
+				<div class="colCurTit clearfix">
+						<h1>联系信息</h1>
+					</div>
+
+					<form id="memberForm" class ='form-style-green' action="<{$http_root_www}>company/profile_manager" method="post" target="post_frame">
+
+					  	<div class="input-box clearfix">	
+							<span><label><{$lang->user_name}></label></span>
+							<small><{$loginUser.name}></small>	
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+
+						<hr><br>
+
+						
+						<div class="input-box clearfix">	
+							<span><label><{$lang->nickename}></label></span>		
+							<input type="text" name="nickname" class="input-text" value="<{$loginUser.nickname}>" />	
+						</div>
+						
+					
+
+						<div class="input-box clearfix">
+							<span><label>商家电话</label></span>
+							<input type="text" name="tel" class="input-text" value="<{$loginUser.tel}>" />
+						</div>
+						
+						<div class="input-box clearfix">
+							<span><label><{$lang->mobile_phone}></label></span>
+                            <input type="text" name="phone" class="input-text" value="<{$loginUser.phone}>" data-varified='<{$loginUser.phone_verified}>'/>
+						</div>
+
+						<br>
+
+
+						<hr><br>
+	                    <div class="input-box clearfix">	
+							<span><label>登陆邮箱地址</label></span>		
+							<input type="text" name="email" class="input-text" value="<{$loginUser.email}>" />
+						</div>
+						<div class="input-box clearfix">
+							<span><label><{$lang->information_mailbox}></label></span>
+                            <input style="width: 50%" type="text" name="backupEmail" class="input-text" value="<{$loginUser.backupEmail}>" />
+						 <em>如不填与上面邮箱地址相同,某些商家注册邮箱与登陆邮箱不同,予以区别</em>
+						</div>
+
+						<input type='hidden' name='returnUrl' value = '<{$returnUrl}>'>
+					
+						<div class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->save_modification}></button>
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/sms_verify.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('input[name=phone]').verifySMS();
+	})
+</script>
+
+</body>
+
+</html>

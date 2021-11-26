@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+   <title><{$pageTitle}></title>
+
+    <meta name="keywords" content="<{$pageKeywords}>"/>
+
+    <meta name="description" content="<{$pageDescription}>"/>
+   
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />	
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/luobo.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/hl.css">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/qj.css">
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+</head>
+
+
+<script type="text/javascript">
+
+　function myfun()
+　　{
+ 　   // alert($('#search_button'));
+    $('#search_button').attr('onclick',"search_key();");
+   
+		
+　　}
+
+
+function search_key() {
+
+window.location.href='<{$http_root_www}>articlelist<{if $type}>/type=<{$type}><{/if}>?key='+ $('#search-input').val();
+
+
+
+}
+function search_key1() {
+alert('here');
+
+
+}
+
+　　/*用window.onload调用myfun()*/
+　　window.onload = myfun;//不要括号
+
+
+	
+	
+	
+</script>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+
+
+    <!-- inedx -->
+    <div class="main">
+        <div class="wp">
+            <!-- 全部结果 -->
+            <div class="crumbs-nav">
+                <div class="items btn-undo">
+                    <a class="btn" href="<{$http_root_www}>articlelist"><{$lang->repeal_all}></a>
+                </div>
+
+                <div class="items first-all">
+                    <a href="#"><{$lang->all_result}></a>
+                </div>
+
+                <{foreach from=$parents item=item name='ddl'}>
+                     <i class="crumbs-arrow">></i>
+                    <div class="items">
+                        <a class="crumbs-items" href="<{setpath obj=$catUrl path='coupons/' alias=$parents[$smarty.foreach.ddl.index-1].alias}>">
+                            <b><{$lang->category}>:</b><em><{$item.name}></em><i></i>
+                        </a>
+                    </div>
+                <{/foreach}>
+               
+              <{if $searchKeywords}>
+
+                <i class="crumbs-arrow">></i>
+                <div class="items">
+                    <strong class="search-key">"<{$searchKeywords}>"</strong>
+                </div>
+                <{/if}>
+
+            </div>
+            <!-- 商品个数 -->
+            <div class="selector-all">
+                <div class="sl-cont">
+                    <span>共<i> <{$pager.recordCount}>  </i>条</span>
+					<h1 style="    margin-top: -31px;    font-weight: 400;"><span style="padding-left:80px;    font-size: 12px; "> <{$cat_name}> </span></h1>
+                </div>
+            </div>
+            <!-- 搜索选择 -->
+            <div class="selector-nav">
+                <div class="selector-item open">
+                    <div class="sl-key">
+                        <span>分类：</span>
+                    </div>
+                    <div class="sl-btn">
+                        <span class="txt"><{$lang->collapse}></span>
+                    </div>
+                    <div class="sl-cont">
+                        <ul class="ul-value-sl">
+                           
+                           <li>
+                                 <a href="<{$http_root_www}>articlelist"><{$lang->all}></a>
+                            </li>
+            
+			
+		
+
+									
+			
+			
+                            <{foreach from=$article_type_list item=item name='dl'}>
+							
+							  <li>
+                                <a href="<{$http_root_www}>articlelist?type=<{$item.idd}>"<{if $item.idd==$type}> style='color:#FD5001 ;font-weight:bolder'<{/if}>><{$item.cat_name}></a>
+                              </li>
+							
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+				
+				 <div class="selector-item open">
+                    <div class="sl-key">
+                        <span>热搜：</span>
+                    </div>
+                    <div class="sl-btn">
+                        <span class="txt"><{$lang->collapse}></span>
+                    </div>
+                    <div class="sl-cont">
+                        <ul class="ul-value-sl">
+						    <li>
+							
+								 <a href="<{$http_root_www}>articlelist"> all</a> 
+                               
+								</li>
+
+                            <li>
+                                <a href="<{$http_root_www}>articlelist?key=川菜" <{if $searchKeywords=='川菜'}> style='color:#FD5001 ;font-weight:bolder'<{/if}> > 川菜</a> 
+                            </li>
+                             <li>
+                                <a href="<{$http_root_www}>articlelist?key=火锅" <{if $searchKeywords=='火锅'}>style='color:#FD5001 ;font-weight:bolder'<{/if}>> 火锅</a> 
+                            </li>
+                           
+						    <li>
+                                <a href="<{$http_root_www}>articlelist?key=麻辣烫" <{if $searchKeywords=='麻辣烫'}>style='color:#FD5001 ;font-weight:bolder'<{/if}>> 麻辣烫</a> 
+                            </li>
+							
+							  <li>
+                                <a href="<{$http_root_www}>articlelist?key=奶茶" <{if $searchKeywords=='奶茶'}>style='color:#FD5001 ;font-weight:bolder'<{/if}>> 奶茶</a> 
+                            </li>
+							
+							  <li>
+                                <a href="<{$http_root_www}>articlelist?key=自助" <{if $searchKeywords=='自助'}>style='color:#FD5001 ;font-weight:bolder'<{/if}>> 自助餐</a> 
+                            </li>
+							  <li>
+                                <a href="<{$http_root_www}>articlelist?key=烤" <{if $searchKeywords=='烤'}>style='color:#FD5001 ;font-weight:bolder'<{/if}>> 烧烤</a> 
+                            </li>
+							
+							
+                        </ul>
+                    </div>
+                </div>
+				
+				
+
+
+
+            </div>
+            <!-- 商品列表 -->
+            <div class="mbs-main">
+                <!-- 排序方式 -->
+                <div class="main-filter">
+                    <div class="filter-l">
+                       
+                       
+                    </div>
+                    <div class="filter-r">
+                        <ul class="ul-filter">
+                           <!--  <li>
+                                <form class="money-sort" action="">
+                                    <input class="min inp" type="munber" placeholder="￥">
+                                    <em>-</em>
+                                    <input class="max inp" type="munber" placeholder="￥">
+                                    <button>确认</button>
+                                </form>
+                            </li> -->
+                          
+                          
+                            <li>
+                                <i class="line"></i>
+                                <a class="<{if $orderby=='id'}>on reverse<{/if}>" href="<{$orderbyUrl}>orderby=id"><i class="ico"></i><{$lang->newest}></a>
+                            </li>
+                            <li>
+                                <i class="line"></i>
+                                <a class="<{if $orderby=='hits'}>on reverse<{/if}>" href="<{$orderbyUrl}>orderby=hits"><i class="ico"></i><{$lang->hot}></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                
+                <{block name=result_display}> <{/block}>
+               
+               
+
+                 <div class="pager">
+                    <{$pager.pageStr}>
+                 </div>
+
+            </div>
+    
+        </div>
+    </div>
+    <!-- inedx -->
+   <!-- 底部 -->
+    <{include file='index_inc_footer.htm'}>
+    <!-- 底部 end -->
+
+
+    <!-- 右边栏 -->
+
+<{include file='index_inc_right.htm'}>
+
+<!--右边栏 end-->
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+    <script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script src="<{$SKIN_PATH}>js/dong.js"></script>
+    <script>
+        $('.selector-nav .sl-btn .txt').click(function(){
+            if ($(this).hasClass('open')) {
+                $(this).removeClass('open');
+                $(this).parents('.sl-btn').siblings('.sl-cont').find('.ul-value-sl').css('height','24px');
+                $(this).text('<{$lang->more}>');
+            } else {
+                $(this).addClass('open');
+                $(this).parents('.sl-btn').siblings('.sl-cont').find('.ul-value-sl').css('height','auto');
+                $(this).text('<{$lang->collapse}>');
+            }
+        })
+    </script>
+
+    <script>
+        $('.btn-switch').click(function(){
+            if (!$(this).hasClass('open')) {
+                $(this).addClass('open');
+                $(this).siblings('.ul-sev').slideDown(200);
+                $(this).find('span').text('<{$lang->collapse}>');
+            } else {
+                $(this).removeClass('open');
+                $(this).siblings('.ul-sev').slideUp(200);
+                $(this).find('span').text('展开');
+            }
+        })
+    </script>
+
+    <script>
+        $(document).ready(function($) {
+            $('.star').each(function() {
+                $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+                var _val = $(this).find('dl').attr('value');
+                $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+</body>
+
+</html>

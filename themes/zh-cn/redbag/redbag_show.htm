@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+    <title><{$pageTitle}></title>
+
+   <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="format-detection" content="telephone=no" />
+	<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/reset.css">
+	<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/style.css">
+	<script type="text/javascript" src="<{$SKIN_PATH}>images/redbag/js/jquery.js"></script>
+	<script type="text/javascript">	
+    new function (){
+       var _self = this;
+       _self.width = 640;//设置默认最大宽度
+       _self.fontSize = 100;//默认字体大小
+       _self.widthProportion = function(){var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;return p>1?1:p<0.32?0.32:p;};
+       _self.changePage = function(){
+           document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+       }
+       _self.changePage(); 
+       window.addEventListener('resize',function(){_self.changePage();},false);
+    };
+	</script>
+</head>
+<body>
+
+<div  style="display:none;">
+
+<img  style= " width:300px; height:300px; " src="<{$SKIN_PATH}>images/redbag/images/bg3.jpg">
+
+</div>
+
+
+<!--
+<div class="list">
+	<div id="mess_share">
+		<div id="share_1">
+			<button class="button2" onclick="_system._guide(true)">
+			<img src="<{$SKIN_PATH}>images/redbag/img/icon_msg.png">&nbsp;发送给朋友</button>
+		</div>
+		<div id="share_2">
+<button class="button2" onclick="_system._guide(true)">
+			<img src="<{$SKIN_PATH}>images/redbag/img/icon_timeline.png">&nbsp;分享到朋友圈</button>
+		</div>
+		<div class="clr"></div>
+	</div>
+</div>
+-->
+<style type="text/css">
+button{width:100%;text-align:center;border-radius:3px;}
+.button2{font-size:16px;padding:8px 0;border:1px solid #adadab;color:#000000;background-color: #e8e8e8;background-image:linear-gradient(to top, #dbdbdb, #f4f4f4);background-image:-webkit-gradient(linear, 0 100%, 0 0, from(#dbdbdb),to(#f4f4f4));box-shadow: 0 1px 1px rgba(0,0,0,0.45), inset 0 1px 1px #efefef; text-shadow: 0.5px 0.5px 1px #ffffff;}
+.button2:active{background-color: #dedede;background-image: linear-gradient(to top, #cacaca, #e0e0e0);background-image:-webkit-gradient(linear, 0 100%, 0 0, from(#cacaca),to(#e0e0e0));}
+#mess_share{margin:2px 0;}
+#share_1{float:left;width:49%;}
+#share_2{float:right;width:49%;}
+#mess_share img{width:22px;height:22px;}
+#cover{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;opacity:0.7;}
+#guide{display:none;position:absolute;right:18px;top:px;z-index:19999;}
+#guide img{width:260px;height:180px;}
+</style>
+<script type="text/javascript">
+    var _system={
+        $:function(id){return document.getElementById(id);},
+   _client:function(){
+      return {w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight,bw:document.documentElement.clientWidth,bh:document.documentElement.clientHeight};
+   },
+   _scroll:function(){
+      return {x:document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft,y:document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop};
+   },
+   _cover:function(show){
+      if(show){
+     this.$("cover").style.display="block";
+     this.$("cover").style.width=(this._client().bw>this._client().w?this._client().bw:this._client().w)+"px";
+     this.$("cover").style.height=(this._client().bh>this._client().h?this._client().bh:this._client().h)+"px";
+  }else{
+     this.$("cover").style.display="none";
+  }
+   },
+   _guide:function(click){
+      this._cover(true);
+      this.$("guide").style.display="block";
+      this.$("guide").style.top=(_system._scroll().y+5)+"px";
+      window.onresize=function(){_system._cover(true);_system.$("guide").style.top=(_system._scroll().y+5)+"px";};
+  if(click){_system.$("cover").onclick=function(){
+         _system._cover();
+         _system.$("guide").style.display="none";
+ _system.$("cover").onclick=null;
+ window.onresize=null;
+  };}
+   },
+   _zero:function(n){
+      return n<0?0:n;
+   }
+}
+
+function redirect_to_redbag () {
+
+window.location.href = '<{$http_root_www}>redbag/redbag_list?type=7&bag_id=<{$redbag.id}>';
+
+}
+
+$(function(){
+	<{if $loginUser.id==$owner}>
+		_system._guide(true);
+	<{/if}>
+	
+   <{if $openAlready==1}> 
+  		_system._guide(true);
+   <{/if}>
+});
+
+
+</script>
+</div>
+<div id="cover"></div>
+<div id="guide"><img src="<{$SKIN_PATH}>images/redbag/img/guide1.png"></div>
+	<div class="cont1">
+	<div class="main-form">				
+
+    <form id="memberForm" class='form-style-green' action="<{$http_root_www}>redbag/redbag_open?redbag_id=<{$redbag.id}>" method="post" enctype="multipart/form-data">
+		<div class="header">
+			包好了
+		</div>
+		<div class="hbjs">
+			<p>哇哦！<{$redbag.userName}>红包诞生啦！快拆开看吧~</p>
+		</div>
+		<div class="hb_box">
+			<div class="number">
+				澳元
+			</div>
+			<{if $resend==1}>
+
+				<{if $openAlready==1}> 
+				   <button id='btn_send' type="button" class="chb-s"  onclick="_system._guide(true)"  >已拆,转发红包</button>
+				     <button id='btn_send' type="button" class="chb-s"  onclick="redirect_to_redbag();"  >查看红包</button>
+				<{else}>
+				  <button type="submit" class="chb  "  >拆红包</button>
+				<{/if}>
+			
+			<{else}>
+			
+				<{if $loginUser.id==$owner}>
+				  <button id='btn_send' type="button" class="chb-s"  onclick="_system._guide(true)"  >转发红包</button>
+				  <button type="submit" class="chb-s"  >先拆一个</button>
+				<{else}> 
+				  <button type="submit" class="chb"  >拆红包</button>
+				<{/if}>
+
+			<{/if}>
+			
+		</div>
+		<a href="" class="support">本红包由Ubonus美食生活（Ubonus）倾力打造</a>
+	</form>
+
+	</div>
+
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="$1000澳元红包,可以在Ubonus澳洲美食平台上购买任意餐厅套餐";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/images/redbag/images/bg3.jpg';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>

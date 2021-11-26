@@ -1,0 +1,16 @@
+<{foreach from=$list item=item name=section_coupons}>
+<div class="item">
+	<div class="pad">
+		<h3>商品</h3>
+		<div class="img">
+			<a href="<{$http_root_www}>coupon1/<{$item.id}>" target='_blank'>
+				<img src="<{$UPLOAD_PATH}><{$item.pic}>">
+			</a> 
+		</div>
+		<div class="txt">
+			<h4><{$item.title|truncate_cn:60:''}></h4>
+			<p><{$item.coupon_summery_description}></p>
+		</div>
+	</div>
+</div>
+<{/foreach}>

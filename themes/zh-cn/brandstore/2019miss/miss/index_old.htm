@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><{$pageTitle}></title>
+		<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+    <!-- zui -->
+    <link href="/themes/zh-cn/brandstore/2019miss/miss/css/zui.min.css" rel="stylesheet">
+	
+    <!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
+    <script src="/themes/zh-cn/brandstore/2019miss/miss/js/jquery-1.12.4.min.js"></script>
+    <!-- ZUI Javascript组件 -->
+    <script src="/themes/zh-cn/brandstore/2019miss/miss/js/zui.min.js"></script>
+	 <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	 <script type="text/javascript">
+		$(function(){
+						
+			  $('img.lazyload').unveil();
+			 //alert('<{$jump}>');
+              <{if $jump=='gift'}>
+			  			  var _targetTop = $('#gift').offset().top;//获取位置
+						jQuery("html,body").animate({scrollTop:_targetTop},1000);//跳转
+
+			  <{else if $jump=='shop'}>
+			  			  var _targetTop = $('#shopping').offset().top;//获取位置
+						jQuery("html,body").animate({scrollTop:_targetTop},1000);//跳转
+
+			  <{else}>
+			  <{/if}>
+
+		})
+	</script>
+    <style>
+    	.show{
+    		display: block;
+    	}
+    	a:hover,a:focus{
+    		color: #fff;
+    		text-decoration: none;
+    	}
+    	.font-white{
+    		 color: #a56d6d;
+    	}
+    	.a-menu{
+    		display: flex;
+			  height: 45px;
+				line-height: 45px;
+				background-color: #f6dad7;
+				border-radius: 5px;
+				text-align: center;
+    	}
+    	.flex-1{
+				flex: 1;
+			} 
+    	/*佳丽详情*/
+    	.beauty-detail{
+    		margin-top: 10%;
+    		border: 8px solid #f6dad7;
+    		border-radius: 5px;
+    	}
+    	.flex-beauty-detail{
+    		display: flex;
+    		text-align: center;
+    		color: #95494E;
+    	}
+    	.beauty-detail-info{
+    		background-image: url(/themes/zh-cn/brandstore/2019miss/miss/img/background.png);
+    		background-repeat:no-repeat;
+    		background-size: cover;
+    		padding: 10px;
+    		color: #514f4f;
+    	}
+    	.beauty-detail-img{
+    		width: 22px;
+    		height: 22px;
+    	}
+    	.flex-beauty-detail span{
+    		margin-left: 5px;
+    	}
+    	
+    	.btn-vote{
+    		color: #636263;
+		    height: 30px;
+		    line-height: 30px;
+		    background-color: #f6dad7;
+		    border-radius: 4px;
+		    margin-left: 20px;
+		    margin-right: 20px;
+		    margin-top: 20px;
+		    margin-bottom: 20px;
+    	}
+    	
+    	/*佳丽视频*/
+    	.beauty-video{
+    		margin-top: 20px;
+    		margin-bottom: 20px;
+		    height: 45px;
+		    border: 2px solid #ffadc4;
+		    border-radius: 3px;
+		    line-height: 45px;
+		    text-indent: 20px;
+		    color: #95494e;
+    	}
+    	.down{
+			  margin: 10px auto;
+			  display: block;
+			  width: 25px;
+			}
+		
+			.tip{
+				background-color: #ffadc4;
+		    border-radius: 3px;
+		    padding: 10px;
+		    margin-bottom: 15px;
+			}
+			
+			.more-product{
+				width: 100px;
+		    height: 35px;
+		    line-height: 35px;
+		    color: #636263;
+		    border: 2px solid #ffadc4;
+		    border-radius: 5px;
+		    text-align: center;
+		    margin: 0px auto;
+			}
+			
+			
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px){
+				.container {
+			    max-width: 740px;
+					font-size: 25px !important;
+				}
+				.a-menu{
+					height: 56px;
+					line-height: 56px;
+				}
+				/*佳丽详情*/
+				.beauty-detail{
+	    		margin-top: 6%;
+	    	}
+	    	.beauty-detail-info{
+	    		background-image: url(/themes/zh-cn/brandstore/2019miss/miss/img/background@3x.png);
+	    		padding: 25px;
+	    	}
+	    	.beauty-detail-img{
+	    		width: auto;
+	    		height: auto;
+	    	}
+	    	.flex-beauty-detail span{
+	    		margin-left: 8px;
+	    	}
+	    	
+	    	.btn-vote{
+			    height: 70px;
+			    line-height: 70px;
+			    border-radius: 10px;
+			    margin-left: 70px;
+			    margin-right: 70px;
+			    margin-top: 35px;
+			    margin-bottom: 35px;
+	    	}
+	    	/*佳丽视频*/
+	    	.beauty-video{
+	    		margin-top: 50px;
+	    		margin-bottom: 50px;
+			    height: 87px;
+			    line-height: 87px;
+	    	}
+	    	.down{
+				  margin: 15px auto;
+				  width: 40px;
+				}
+	    	.tip{
+	    		padding: 20px;
+	    		margin-bottom: 25px;
+	    	}
+	    	.more-product{
+	    		width: 180px;
+			    height: 60px;
+			    line-height: 60px;
+	    	}
+	    	
+	    	
+			}
+			
+			
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width: 992px){
+				.container {
+			    max-width: 960px;
+			    font-size: 25px;
+				}
+			}
+			@media (min-width: 1200px){
+    		.container {
+			    max-width: 960px !important;
+			    width: 960px !important;
+			    font-size: 25px;
+				}
+    	}
+			
+    </style>
+   
+  </head>
+  <body>
+	  <div class="container">
+	  	<div id="top">
+	  		<img src="/themes/zh-cn/brandstore/2019miss/miss/img/banner.png" />
+	  		
+	  		<div class="a-menu">
+			 <a class="flex-1 font-white" href="/2019miss">首页</a>
+				  <a class="flex-1 font-white" href="#vote">投票</a>
+	  			<a class="flex-1 font-white" href="#video">视频</a>
+	  			<a class="flex-1 font-white" href="#shopping">购物</a>
+	  			<a class="flex-1 font-white" href="#gift">奖金</a>
+	  			<a class="flex-1 font-white" href="#life">生活</a>
+				
+				</div>
+	  	</div>
+	  	<div id = "vote" class="beauty-detail">
+	  		<div class="beauty-detail-info">
+	  			<p><strong><{$miss_info.title}> </strong> <span style="color: #e95365;"><{$miss_info.id}>号</span><!--&nbsp;&nbsp;<strong>总人气:<span style="color: #e95365;"><{$miss_info.vote_count}></span> </strong> &nbsp;&nbsp;<strong>总排名:</strong> <span style="color: #e95365;">第1名</span>--></p>
+				<p></p>
+				<div><{$miss_info.description}></div>
+				<p></p>
+	  			<div class="flex-beauty-detail">
+	  			
+	  				<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/star.png"/><span>微信人气</span></p>
+	  				<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/prize.png"/><span>网站人气</span></p>
+					<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/prize.png"/><span>商业人气</span></p>
+					<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/prize.png"/><span>奖金人气</span></p>
+					
+	  			</div>
+	  			<div class="flex-beauty-detail">
+	  			    <p class="flex-1"><{$miss_info.vote_count-$web_vote_count-$sum_gift_count-$web_sale_count}></p>
+	  				<p class="flex-1"><{if $web_vote_count}><{$web_vote_count}><{else}>-<{/if}></p>
+	  				<p class="flex-1"><{if $web_sale_count}><{$web_sale_count}><{else}>-<{/if}></p>
+	  				<p class="flex-1"><{if $sum_gift_count}><{$sum_gift_count}><{else}>-<{/if}></p>
+	  			</div>
+				<div class="flex-beauty-detail">
+	  				<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/fire.png"/><span><strong>总人气</strong></span></p>
+	  				<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/star.png"/><span><strong>总排名</strong></span></p>
+	  				<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/prize.png"/><span><strong>总奖金</strong></span></p>
+					<p class="flex-1"><img class="beauty-detail-img" src="/themes/zh-cn/brandstore/2019miss/miss/img/prize.png"/><span><strong>总销售</strong></span></p>
+	  			</div>
+	  			<div class="flex-beauty-detail">
+	  				<p class="flex-1"><{$miss_info.vote_count}>票</p>
+	  				<p class="flex-1">-</p>
+	  				<p class="flex-1">$<{$voucher_sum_amount}></p>
+					<p class="flex-1">-</p>
+	  			</div>
+				<div  onclick="location.href='<{$http_root_www}>article/vote_weekly'" style=" text-align: center;font-size:16px;"  class="flex-1 btn-vote"><strong>佳丽周数据&nbsp;&nbsp;(周周大奖)</strong><br></div>
+				<div class="btn-saishi"><a href="/article/vote_weekly" style="color: #a56d6d;font-weight:600;"></a></div>
+				
+				<div  onclick="location.href='http://jclive.jingchang.tv/?camera_id=1059486&from=groupmessage'" style="font-size:16px;  text-align: center;"  class="flex-1 btn-vote"><strong>人气直播平台&nbsp;&nbsp </strong><br></div>
+				<div class="btn-saishi"><a href="/article/vote_weekly" style=" color: #a56d6d;font-weight:600;"></a></div>
+	  			
+	  			
+	  		</div>
+	  		
+	  		
+	  		<div id="myNiceCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+				  <!-- 轮播项目 -->
+				  <div class="carousel-inner">
+
+				    <div class="item active">
+				      <img alt="First slide" style="width:100%;" src="<{$UPLOAD_PATH}><{$miss_info.pic}>">
+				    </div>
+					
+					<{foreach from=$miss_info.pics item=item name='cpl'}>
+                      <div class="item">
+							<img alt="First slide" style="width:100%;" src="<{$UPLOAD_PATH}><{$item}>">
+				     </div>
+                     <{/foreach}>
+					
+					
+
+				  </div>
+				
+				  <!-- 项目切换按钮 -->
+				  <a class="left carousel-control" href="#myNiceCarousel" data-slide="prev">
+				    <span class="icon icon-chevron-left"></span>
+				  </a>
+				  <a class="right carousel-control" href="#myNiceCarousel" data-slide="next">
+				    <span class="icon icon-chevron-right"></span>
+				  </a>
+				</div>
+	  	</div>
+			
+			<div class="flex-beauty-detail ">
+				<div onclick="voteDaily()" style="height:60px;" class="flex-1 btn-vote"><strong>微信投票</strong><br>(每日一票)</div>
+				<div  onclick="location.href='<{$http_root_www}>coupon1/miss_vote?vote_id=<{$miss_info.id}>'" style="height:60px;"  class="flex-1 btn-vote"><strong>网站投票</strong><br>(仅一次投<strong style="color:blue;"><{$days}></strong>票)</div>
+			</div>	
+			
+			<div class="flex-beauty-detail ">
+				<div onclick="location.href='#shopping'" style="height:60px;" class="flex-1 btn-vote"><strong>商业人气</strong><br><{if $couponlist}><span style="color:red;">买$1赠15票</span><{else}>已经开通<{/if}></div>
+				<div  onclick="location.href='#gift'" style="height:60px;"  class="flex-1 btn-vote"><strong>奖金人气</strong><br>买$1赠25票</div>
+			</div>				
+		
+			
+			<div id="scanImg" style="margin-top: 1rem; margin-bottom: -1rem;"  hidden="hidden">
+								
+									<section data-role="outer" label="Powered by 135editor.com" style="font-size:16px;font-family:微软雅黑;"><section class="_135editor" data-tools="135编辑器" data-id="93677" style="border: 0px none; box-sizing: border-box;"><section style="padding: 0.5em; box-sizing: border-box;"><section data-width="100%" style="width: 100%; border-width: 0px; border-style: dashed; border-color: rgb(118, 85, 60); box-sizing: border-box;"><section style="margin-top: -1em; text-align: center;"><section style="padding: 5px 1em; display: inline-block; background: rgb(118, 85, 60); color: rgb(255, 255, 255); border-radius: 10px; box-sizing: border-box;"><section class="135brush" data-brushtype="text" style="font-size: 14px;">长按或扫码，参加投票</section></section><section style="padding: 0.8em 0.6em; box-sizing: border-box;"><section style="background: #f0c44e; color: #ffffff;"><section style="display: flex; justify-content: space-between; align-items: center; background: url(&quot;https://mmbiz.qpic.cn/mmbiz_png/6xXnThFcMTS7uOeH6KibH8yXRJApqgLklhy0acVJZvqFYJxWxAbJW4DzQrJ258a2oq2sPcX0GX9AfRvuhESB4icQ/640?wx_fmt=png&quot;) center center / cover;"><section data-width="100%" style="width: 100%; display: inline-block; font-size: 15px;"><section class="135brush" data-brushtype="text"><p style="max-width: 100%;"><span style="font-size: 16px; color: #0070c0;">关注-墨尔本美食生活 <strong style="font-size: 16px; color: #0070c0;"><br>回复&nbsp;<{$miss_info.id}></strong> 即可<br>(每天只能投一次,多投作废)</span></p></section></section><section style="padding: 10px; width: 150px; box-sizing: border-box;"><img class="" src="/themes/zh-cn/images/UbonusMel.jpg" data-type="jpg" data-w="258" data-width="100%" title="qrcode_for_gh_e82fc2596a04_258 (1)_看图王.jpg" style="display: block; width: 100%; height: auto; text-align: center;"></section></section></section></section></section></section></section></section></section>
+								</div>
+			
+				<div id="video" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">佳丽视频</span></div>
+			<div style="width: 100%;">
+				<video style="width: 100%;" controls>
+				 <{if $main_video}>
+					<source src="/themes/zh-cn/brandstore/2019miss/video/<{$main_video}>">
+					<{else}>
+						<source src="/themes/zh-cn/brandstore/2019miss/video/official1.mp4">
+					<{/if}>
+				</video>
+				<div class="panel-group" id="accordionPanels" aria-multiselectable="true">
+				  <div class="panel panel-default">
+				    <div class="panel-heading" id="headingOne">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordionPanels" href="#collapseOne">
+				          <!--<img onclick="loadMore()" class="down" src="/themes/zh-cn/brandstore/2019miss/miss/img/down.png" />-->
+									<img  class="down" src="/themes/zh-cn/brandstore/2019miss/miss/img/down.png" />
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseOne" class="panel-collapse collapse">
+				      <div class="panel-body">
+					  
+					  <{if $video_Info}>
+					  	<{foreach from=$video_Info item=item name='dl'}>
+						<{if $smarty.foreach.dl.index <>0}> 
+					  
+				      	<video class="showVideo"  style="width: 100%;" controls>
+									<source src="/themes/zh-cn/brandstore/2019miss/video/<{$item}>">
+								</video>
+								<{/if}>
+							  <{/foreach}>
+							  
+							  <{else}>
+							  	<video class="showVideo"  style="width: 100%;" controls>
+									<source src="/themes/zh-cn/brandstore/2019miss/video/official2.mp4">
+								</video>
+									<video class="showVideo"  style="width: 100%;" controls>
+									<source src="/themes/zh-cn/brandstore/2019miss/video/official3.mp4">
+								</video>
+							  
+							  <{/if}>
+								
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			
+			<div id= "shopping" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">佳丽商业人气投票</span><span style="color: #747077;">(商城销售：<{if $web_sale_count}>$<{$web_sale_count}><{else}>-<{/if}>)</span></div>
+			<div class="tip font-white">规则：在佳丽商城购买产品，每消费 $1，可以帮助佳丽增加15票，并累计在礼物总额中！购买后可以自己使用，也可以送给佳丽</div>
+			<img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/miss/img/vote.png" />
+			
+			<div class="cards cards-borderless">
+			
+				<{foreach from=$couponlist item=item}>
+				   
+			<div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$refTag}>">
+			      <img  class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:360:230}>" alt="<{$item.title}>">
+			      <div  style="height:60px;"class="card-heading text-center"><strong style="color: #424141;white-space: normal; "><{$item.title|truncate_cn:40:'..'}></strong></div>
+			     <div class="card-content text-center" style="    height: 24px;"><span style="color: #f1668f;">$<{$item.voucher_deal_amount}>&nbsp;&nbsp;每买一加<{(int)$item.voucher_deal_amount*15}>票</span></div>
+			    </a>
+			  </div>
+			  
+				<{/foreach}>
+			 
+			 
+			
+			</div>
+			<{if $couponlist}>
+			<div class="more-product" onclick="location.href='<{$http_root_www}>store/<{$business_id}>'"><span style="font-weight:700;color:#a56d6d;">更多产品</span></div>
+			<{/if}>
+			<div id="gift" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">佳丽奖金投票</span><span style="color: #747077;">(累计奖金：<{if $voucher_sum_amount}>$<{$voucher_sum_amount}><{else}>-<{/if}>)</span></div>
+			<div class="tip font-white">规则：为佳丽购买Ubouns购物券，每花费1$，可以为佳丽获得25个人气点。</div>
+			<div class="text-center">
+			<div class="cards cards-borderless">
+			 
+			  <div class="col-xs-6 col-md-6 ">
+			     <a class="card" href="<{$http_root_www}>coupon1/miss_gift_voucher?vote_id=<{$miss_info.id}>&couponid=7311">
+			      <img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/quan18dollae.jpg" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;white-space: normal;">$18礼券,佳丽可加450票,佳丽奖金增加$9</strong></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			     <a class="card" href="<{$http_root_www}>coupon1/miss_gift_voucher?vote_id=<{$miss_info.id}>&couponid=7312">
+			      <img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/quan68dollae.jpg" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;white-space: normal;">$68礼券,佳丽可加1700票,佳丽奖金增加$34</strong></div>
+			    </a>
+			  </div>
+			   <div class="col-xs-6 col-md-6 ">
+			    <a class="card" href="<{$http_root_www}>coupon1/miss_gift_voucher?vote_id=<{$miss_info.id}>&couponid=7310">
+			      <img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/quan168dollae.jpg" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;white-space: normal;"> $168礼券,佳丽可加4200票,佳丽奖金增加$84</strong></div>
+			    </a>
+			  </div>
+			  <div class="col-xs-6 col-md-6 ">
+			     <a class="card" href="<{$http_root_www}>coupon1/miss_gift_voucher?vote_id=<{$miss_info.id}>&couponid=7313">
+			      <img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/quan888dollae.jpg" alt="">
+			      <div class="card-heading text-center"><strong style="color: #f1668f;white-space: normal;">$888礼券,佳丽可加22200票,佳丽奖金增加$444</strong></div>
+			    </a>
+			  </div>			  
+			</div>
+			</div>
+			
+			<div id="life" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">佳丽生活</span></div>
+			
+			<div class="tip font-white"><{$miss_info.detail}></div>
+			
+			
+			<div id="sponsor" class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">赞助商及指定机构</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/sponsor1.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">协办机构</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xieban.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">媒体支持</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/meiti.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;    margin-left: 10px;">特别鸣谢</span></div>
+			<div class="text-center" ><img  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/mingxie.jpg" /></div>
+			<br>
+			<img class="text-center"  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/foot.jpg" />
+	  </div>
+ <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='https://ubonus365.com/coupon1/miss01?miss_id=<{$miss_info.id}>';
+        var desc='每购买$1礼品卡，我可以得到$0.5奖金，并获20票，每消费$1购买我代言的产品，我可以增加5票！';//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$miss_info.pic}>';
+    </script>
+
+   <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- WX jssdk share -->
+   
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+    <script>
+	
+	
+	
+    function	voteDaily(){
+    	$('#scanImg').addClass('show');
+    }
+	
+	
+    function loadMore(){
+    	alert('执行加载更多');
+    }
+    </script>
+  </body>
+</html>

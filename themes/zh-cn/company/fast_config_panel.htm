@@ -1,0 +1,77 @@
+<style type="text/css">
+.fast_config_panel{
+	position: relative;
+	padding: 30px;
+}
+
+.fast_config_panel .config_item{
+	position: relative;
+	display: inline-block;
+	width: 20%;
+	height:100px;
+	border: 1px solid #eee;
+	padding: 10px 2%;
+}
+
+.config_item .item_title{
+	text-align: center;
+	font-size: 16px;
+	line-height: 40px;
+}
+
+.config_item .item_title i{
+	color: #30af30;
+}
+
+.config_item .item_desc{
+	text-align: left;
+	font-size: 12px;
+	color: #a7a7a7;
+	height: 35px;
+	overflow: hidden;
+}
+
+.config_item .item_setting{
+	text-align: right;
+	font-size: 12px;
+}
+.config_item .item_setting a{
+	color: #8c8c8c;
+}
+</style>
+<div class='fast_config_panel'>
+	<div class='config_item'>
+		<p class='item_title'><{$lang->panding_email}> 
+			<{if $loginUser.email}><i class='fa fa-check-circle'></i><{/if}>
+		 </p>
+		<p class='item_desc'><{$lang->panding_email_desc}></p>
+		<p class='item_setting'><a href="<{$http_root_www}>company/profile_manager?returnUrl=<{$currentUrl}>" ><{$lang->setting}>></a></p>
+		
+	</div>
+
+	<div class='config_item'>
+		<p class='item_title'><{$lang->verification_mobile}>  	
+			<{if $loginUser.phone_verified=='true'}><i class='fa fa-check-circle'></i><{/if}>
+		</p>
+		<p class='item_desc'><{$lang->verification_mobile_desc}></p>
+		<p class='item_setting'><a href="<{$http_root_www}>company/profile_manager?returnUrl=<{$currentUrl}>" ><{$lang->setting}>></a></p>
+	</div>
+
+	<div class='config_item'>
+		<p class='item_title'><{$lang->panding_wx}>  
+			<{if $loginUser.wx_openID}><i class='fa fa-check-circle'></i><{/if}> 
+		</p>
+		<p class='item_desc'><{$lang->panding_wx_desc}></p>
+		<p class='item_setting'><a target='_blank' href="<{$http_root_www}>member/wx_manage_account?side=company" ><{$lang->setting}>></a></p>
+		
+	</div>
+
+	<div class='config_item'>
+		<p class='item_title'><{$lang->follow_offical_account}>  
+			<!-- <i class='fa fa-check-circle'></i> -->
+		</p>
+		<p class='item_desc'><{$lang->follow_offical_account_desc}></p>
+		<p class='item_setting'><a target='_blank' href="<{$http_root_www}>business/wx_official_account" ><{$lang->setting}>></a></p>
+		
+	</div>
+</div>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container" >
+	<div class="wrap clearfix">
+			<div class="box2" style='min-height:700px;'>
+				<div class="colCurTit"><{$info.title}></div>
+
+				<div class="main-form imagelimit">
+					<{$info.content}>
+				</div>
+
+				<a href="<{$previousLink}>">前一个</a>
+				<a href="<{$nextLink}>">下一个</a>
+				
+			</div>
+
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

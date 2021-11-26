@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+</head>
+<body class="bg-1">
+	<!-- wx share thumbnail Min 300x300-->
+	<img src="<{$UPLOAD_PATH}><{$coupon.pic}>" style='display:none;width: 300px;height: 300px;' >
+
+	<header id="hd">
+		<div class="left">
+				<!--	<a onClick='window.history.back()' class="a-back"> -->
+		</div>
+		<h1>
+			<a onCLick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');"><{$lang->commodities}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f2').offset().top-40},'slow');"><{$lang->details}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'slow');"><{$lang->customer_review}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'slow');"><{$lang->related_item}></a>
+		</h1>
+		<{include file ="mobile/coupon_detail/sec_more.htm"}>
+	</header>
+	<section id="bd">
+		<div class='sec-product'>
+			<div class="comm-pic">
+			    <div class="swiper-wrapper" style="    margin-top: 1.32rem;">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			   		
+			         <{if $coupon.pics}>
+			          <{foreach from=$coupon.pics item=item name='cpl'}>
+		              	 <div class="swiper-slide"><img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item|image:330:210}>" alt="<{$pageTitle}>" ></div>
+		              <{/foreach}>
+			         <{/if}>
+			    </div>
+			    <div class="swiper-pagination"></div>
+			    <{include file ="mobile/coupon_detail/referral_share.htm"}>
+			</div>
+			<div class="comm-tit">
+				<h3><{$coupon.title}>
+                <em> 
+                    <{if $coupon.perCustomerLimitQuantity!='0'}><{$lang->Limit_count}><{$coupon.perCustomerLimitQuantity}>个<{/if}>
+                    <{if $coupon.perCustomerMinLimitQuantity!='0'}><{$lang->purchese_limit_min}><{$coupon.perCustomerMinLimitQuantity}>个<{/if}>
+                </em>
+                </h3>
+				<h4><{$coupon.coupon_summery_description}></h4>
+
+				<{if $group_pin}>
+				    <a  style='background-color: #ff5f74;color: #fff;float: right;padding: 0px 15px' href="<{$http_root_www}>coupon1/<{$coupon.id}>?specialDisplay=group_pin">去拼单</a>
+                <{/if}>
+                
+				<p><{$coupon.price1}> <s><{$coupon.price2}></s> </p>
+					<{if $wholesaledata}>
+					<div style="display: inline;color: #FD5001;">
+						$<{$wholesaledata.price}>
+						≥<{$wholesaledata.amount}><{$lang->units}>
+					</div>
+					<{if $wholesaledata.price1!='0' && $wholesaledata.amount1!=0}>
+					<div style="display: inline;margin-left:16px;margin-right: 16px;color: #FD5001;">
+						$<{$wholesaledata.price1}>
+						≥<{$wholesaledata.amount1}><{$lang->units}>
+					</div>
+					<{/if}>
+					<{if $wholesaledata.price2!='0' && $wholesaledata.amount2!=0}>
+					<div style="display: inline;color: #FD5001;">
+						$<{$wholesaledata.price2}>
+						≥<{$wholesaledata.amount2}><{$lang->units}>
+					</div>
+					<{/if}>
+					<{/if}>
+			</div>
+
+			<{include file='mobile/coupon_detail/sec_explain.htm'}>
+		</div>
+
+
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class="comm-btn">
+			<div class="left">
+				<{include file='mobile/coupon_detail/sec_favandstore.htm'}>
+			</div>
+			<div class="right">
+				<a  onClick='direct_buy=false' style="width: 50%;"  class="a1 pop-spec-trigger"><{$lang->add_to_cart}></a>
+				<a  onClick='direct_buy=true' style="width: 50%;" class="a2 pop-spec-trigger"><{$lang->buy_now}></a>
+			</div>
+		</div>
+	</section>
+
+	<!-- 选择类型弹窗 -->
+	<div class="pop-spec">
+		<span class="spec-close"></span>
+		
+			<div class="top">
+				<div class="pic"><img id='image-display' src="<{$UPLOAD_PATH}><{$coupon.pic}>" alt=""></div>
+				<p>
+					<span id ='price-display'><{$coupon.price1}></span>
+					<s id ='o-price-display'><{$lang->original_price}>：<{$coupon.price2}></s>
+					<br>
+					<small><{$lang->stock}>：<em id='stock_display'><{if $coupon.qty<=0}><{$lang->soldout}><{else}><{$coupon.qty}><{/if}></em></small>
+					<{if $pendingQty>0}>
+                    <small style='color:red'>(<{$lang->buying_1}> <{$pendingQty}><{$lang->buying_2}>)</small>
+                    <{/if}>
+				</p>
+
+			</div>
+			<div class="spec-color">
+				<{foreach from=$guige item=item name='dl'}>
+					<h4><{$item.guige_name}></h4>
+						<ul class="g-ul">
+
+							<{foreach from=$item.guige_details item=sitem}>
+							<li <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> class='on'<{/if}>>
+								<span>
+									<label style='font-weight: normal;margin: 5px 10px'>
+										<input class='guige_radio_btn' type="radio" data-guige-name ='<{$item.guige_name}>' name="<{$item.guige_id}>" data-id="<{$sitem.id}>" value='<{$sitem.name}>' style='display: none;position: absolute;' id="sub<{$sitem.id}>"  <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> checked<{/if}> >
+										<{if !$item.is_pic_style}>
+											<{$sitem.name}>
+										<{else}>
+											<img src="<{$UPLOAD_PATH}><{$sitem.pic|image:35:35}>">
+										<{/if}>
+									</label>
+								</span>
+							</li>
+							<{/foreach}>
+							
+						</ul>
+				<{/foreach}>
+			</div>
+
+			<div class="spec-num">
+				<span><{$lang->buying_qty}></span>
+				<div class="num">
+					<a href="javascript:void(0);" class="minusBtn">-</a>
+					<input class='prucheseQty g-input' 
+					data-name='<{$coupon.title}>' 
+					data-item-id='<{$coupon.id}>' 
+					data-create-user-id='<{$coupon.createUserId}>' 
+					data-item-price = '<{$coupon.voucher_deal_amount}>' 
+					data-stock = '<{$coupon.qty}>' 
+					data-default-value='1'
+					type="text" value="1" readonly  >
+					<a href="javascript:void(0);" class="plusBtn">+</a>
+				</div>
+			</div>
+
+		
+
+		<a onClick='add_carts();' class="spec-btn confirm"><{$lang->confirm}></a>
+	</div>
+	<div class="pop-bg"></div>
+	<!-- 选择类型弹窗-end -->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script>
+	    $(document).ready(function($) {
+	        $('.ul-evaluate li').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	        $('.comm-spec,.pop-spec-trigger').click(function(event) {
+	        	if($(this).hasClass('a2'))if(alreadyAddCart){directBuyRedirect();return false;}
+	        	
+	        	$('.pop-spec').addClass('open');
+	        	$('.pop-bg').show();
+
+	        });
+	        $('.spec-close,.pop-bg,.spec-btn').click(function(event) {
+	        	$('.pop-spec').removeClass('open');
+	        	$('.pop-bg').hide();
+
+	        });
+	        
+	        $('.spec-close,.pop-bg').click(function(event) {
+	        	 if(typeof gotoguige ==="function")gotoguige();
+	        });
+
+	       
+            // 加减按钮
+            $('.minusBtn').each(function() {
+                var _val = $(this).next('input').val()*1 - 1;
+                if( _val>0 ){
+                    $(this).removeClass('disabled');
+                }else{
+                    $(this).addClass('disabled');
+                }
+            });
+            $('.minusBtn').click(function(){
+                var _val = $(this).next('input').val()*1 - 1;
+                if( _val > 1 ){
+                    $(this).removeClass('disabled').next('input').val(_val);
+                }else if( _val = 1 ){
+                    $(this).addClass('disabled').next('input').val(_val);
+                }else{
+                    $(this).addClass('disabled');
+                }
+            });
+            $('.plusBtn').click(function(){
+                var _val = $(this).prev('input').val()*1 + 1;
+                $(this).prev('input').val(_val);
+                $(this).prev('input').prev('.minusBtn').removeClass('disabled');
+            });
+	    });
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+			 $('img.lazyload').unveil();
+		})
+	</script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+	<script>
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			getQty();
+			$('.guige_radio_btn').on('click',function(){
+				$(this).parents('li').siblings().removeClass('on')
+				$(this).parents('li').addClass('on');
+				 getQty();
+				 crossGuigeDisplay();
+			})
+		})
+
+		function crossGuigeDisplay(){
+			$context = $('#embedHtmlSource');//from mdl.shop_guige.php
+			if($context.length){
+				var pic_src=$context.data('pic');
+				var price=$context.data('price');
+				var o_price=$context.data('o-price');
+
+				$('#image-display').attr("src",pic_src);
+				$('#price-display').html("$"+price);
+				$('#o-price-display').html('<{$lang->original_price}>'+"：$"+o_price);
+			}else{
+				var price = '<{$coupon.voucher_deal_amount}>';
+				var o_price = '<{$coupon.voucher_original_amount}>';
+				var pic_src ='<{$UPLOAD_PATH}><{$coupon.pic}>';
+
+				$('#image-display').attr("src",pic_src);
+				$('#price-display').html("$"+price);
+				$('#o-price-display').html('<{$lang->original_price}>'+"：$"+o_price);
+			}
+
+
+		}
+
+		function getGuigeQty(key){
+			var guigeData = JSON.parse('<{$guigeData}>');
+			var returnData = guigeData[key];
+			return returnData
+		}
+
+		function getQty(){
+			<{if $couponHasGuige}>
+			<{else}>
+				return false;
+			<{/if}>
+			var guige1Id=$('.guige_radio_btn:checked').eq(0).data('id');
+			var guige2Id=$('.guige_radio_btn:checked').eq(1).data('id');
+
+			var guigeKey=guige1Id+'#'+guige2Id;
+
+			var returnData = getGuigeQty(guigeKey);
+
+			if(returnData==null){
+				$('#stock_display').html("<{$lang->soldout}>");
+				$('.prucheseQty').data('stock',0);
+			}else{
+				$('#stock_display').html(returnData);
+				$('.prucheseQty').data('stock',returnData);
+			}
+
+		}
+
+	</script>
+
+	<script type="text/javascript">
+        function addToCart(qty){
+			$('.cartQty').show();
+			var currentTotal =parseInt($('.cartQty').html());
+			qty=parseInt(qty);
+			$('.cartQty').html(currentTotal+qty);
+		}
+    </script>
+
+	<script type="text/javascript">
+        $('#hd .right a.share').click(function(event) {
+            $('.share-box').stop().slideToggle();
+        });
+        $('.share-box .btn-remove').click(function(event) {
+            $('.share-box').stop().slideUp();
+        });
+	</script>
+
+	<script type="text/javascript">
+	var alreadyAddCart=false; 
+	function add_carts() { 
+		<{if !$loginUser}>
+			window.location.href = '<{$loginReturnUrl}>';
+		<{else}>
+
+		var main_coupon_id 	=$('.prucheseQty').data('item-id');
+		var qty= $('.prucheseQty').val();
+
+
+		var guigeObjs=$('.guige_radio_btn:checked');
+		if(guigeObjs.length==0){
+			var guige_ids = '';
+		}else if(guigeObjs.length==1){
+			var guige_ids = guigeObjs.eq(0).data('id')+','+guigeObjs.eq(1).data('id');
+			
+		}else if(guigeObjs.length==2){
+			var guige_ids = guigeObjs.eq(0).data('id')+','+guigeObjs.eq(1).data('id');
+		}
+
+		if($('#embedHtmlSource').length==1){
+			main_coupon_id=$('#embedHtmlSource').data('id');
+		}
+		
+		var stock = parseInt($('.prucheseQty').data('stock'));
+		if(isNaN(stock))stock=0;
+		if(qty<=0){
+			htmlMessage('<{$lang->alert_min_stocks}>');  return;
+		}
+		if(qty>stock){
+			htmlMessage('<{$lang->alert_no_enough_stocks}>');  return;
+		}
+				
+		$('body').append('<p class="form_response_loader"></p>');
+
+		var data ={
+			'main_coupon_id':main_coupon_id,
+			'quantity':qty,
+			'guige_ids':guige_ids,
+			};
+
+		$.post('<{$http_root_www}>query?cmd=add_carts', 
+			 data, 
+			  function(data){
+			  	$('.form_response_loader').remove();
+			  	
+			  	try {
+                    data = jQuery.parseJSON(data);
+                    if(data.status==200)alreadyAddCart=true;
+                }
+                catch(err) {
+                   htmlMessage("<{$lang->alert_network_problems}>");
+                   return;
+                }
+
+			 	if(data.status==200){
+			 		addToCart(qty);
+			 		htmlMessage(data.msg,function(){
+			 			directBuyRedirect();
+			 		});
+
+			 	}else{
+			 		htmlMessage(data.msg);
+			 	}
+			  }
+	  	);
+		<{/if}>
+	}
+
+	var directBuyRedirecting=false;
+	function directBuyRedirect(){
+		if(directBuyRedirecting)return;
+		if(direct_buy!=true)return;
+		directBuyRedirecting=true;
+		window.location.href = '<{$http_root_www}>member/showcart';
+	}
+
+
+
+	</script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+ <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+	
+</body>
+</html>
+

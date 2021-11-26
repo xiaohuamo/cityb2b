@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title><{if $businessDisplayName}><{$businessDisplayName}>-Ubonus美食生活  <{else}>Ubonus 美食生活<{/if}></title>
+
+    <meta name="keywords" content="墨尔本团购 | 墨尔本折扣 | 墨尔本商城 | 墨尔本开店" />
+    
+    <meta name="description" content="专注澳洲华人美食生活的电商平台,为10万+用户提供墨尔本团购, 折扣, 商城, 线上交易平台服务.商家可以快速开店,请联系 0425616988 " />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+</head>
+
+<body class="index index2">
+    <!-- wx share thumbnail -->
+    <img src="<{$SKIN_PATH}>images/wx_share.jpg" style='display: none'>
+
+
+    <!-- 开屏 -->
+    <{if $bannerOpened==false}>
+     <!-- include file='mobile/open_screen_mobile.htm' -->
+    <{/if}>
+    <!-- 开屏 end-->
+
+    <!-- 头部 -->
+
+    <header id="hd">
+
+        <div class="left">
+           
+            <!-- 城市选择 -->
+            <div class="m-city">
+
+                <span class="con" style="font-size: 12px"> 
+                    <span><{$city.name}></span>
+                    <i class='fa fa-angle-down '></i>
+                </span>
+
+                <ul class="g-ul">
+
+                    <{foreach from=$fullcitylist item=country}>
+                        <li><a href="<{$http_root_www}>?cityid=<{$country.id}>"><{$country.name}></a></li>
+                          <{foreach from=$country.child item=city}>
+                            <li><a href="<{$http_root_www}>?cityid=<{$city.id}>"><{$city.name}></a></li>
+                        <{/foreach}>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <!-- 城市选择 end-->
+        </div>
+
+        <div class='search'>
+            <span class='fa fa-search  a-so'>&nbsp;&nbsp;&nbsp;请输入...</span>
+        </div>
+        <!--h1 class='search-icon-assosiate'>Ubonus</h1-->
+
+        <div class="right">
+           <!--  <a class="a-new" href="<{$http_root_www}>message/index"><em>9+</em></a> -->
+            <a class="a-cart" href="<{$http_root_www}>member/showcart"></a>
+        </div>
+    </header>
+    <!-- 头部 end-->
+
+
+
+    <!-- 主内容 -->
+	<section id="bd" style="padding: 0px">
+        <!-- banner -->
+        <div id="banner" style="max-height: 235px;">
+            <div class="swiper-wrapper">
+            <{foreach from=$bannerDataMobile item=item}>
+                <div class="swiper-slide">
+                <a href="<{$http_root_www}><{$item.url}>"><img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>"></a>
+                </div>
+            <{/foreach}>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+		<!-- banner end-->
+
+        <!-- 列表 -->
+        <ul class="g-ul ul-newyearlist1">
+            <li>
+                <a href="<{$http_root_www}>food">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon1.png);"></i>线上餐厅
+                </a>
+            </li>
+            <li>
+                <a href="<{$http_root_www}>category/index?section=106124">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon2.png);"></i>食品好物
+                </a>
+            </li>
+        
+		   <li>
+                <a href="<{$http_root_www}>local_service">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon3.png);"></i>本地服务
+                </a>
+            </li>
+			
+			 
+            <li>
+                <a href="<{$http_root_www}>member/recharge">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/mobile-index-icon4.png);"></i>会员钱包
+                </a>
+            </li>
+            <!-- <li>
+                <a  href="<{$http_root_www}>coupons/106121102">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/food.png);"></i>餐饮美食
+                </a>
+            </li>
+
+            <li>
+                <a href="<{$http_root_www}>newyear">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon8.png);"></i>购物节
+                </a>
+            </li>
+
+            <li>
+                <a href="<{$http_root_www}>mall">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon3.png);"></i>商城
+                </a>
+            </li>
+            <li>
+                <a href="<{$http_root_www}>local_service">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon5.png);"></i>本地服务
+                </a>
+            </li>
+
+            <li>
+                <a onclick="$('html, body').animate({scrollTop: $('#f2').offset().top-$('#hd').height()}, 1000);">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon4.png);"></i>活动票务
+                </a>
+            </li> -->
+
+            <!-- <li>
+                <a onclick="$('html, body').animate({scrollTop: $('#f10').offset().top-$('#hd').height()}, 1000);">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon9.png);"></i>团购
+                </a>
+            </li> -->
+
+           <!--  <li>
+                <a href="<{$http_root_www}>store/23989">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon8.png);"></i>Ubonus自营
+                </a>
+            </li> -->
+
+            <!--li>
+                <a  href="<{$http_root_www}>category/index?section=106124">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/fresh.png);"></i>  生鲜食品
+                </a>
+            </li-->
+           <!--  <li>
+                <a href="<{$http_root_www}>coupons/?wholesale=1&">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon888.png);"></i>批发
+                </a>
+            </li> -->
+        </ul>
+        <!-- 列表 end-->
+
+       
+
+
+        <!-- 秒杀banner -->
+
+        <!--include file='inc_countdown.htm'-->
+
+        <!-- 秒杀banner end-->
+
+
+        <!-- 爆款 -->
+
+        <!-- 爆款 end-->
+
+        <!-- 店主推荐 -->
+
+        <!--div class="index-row">
+
+            <div class="m-reco">
+
+                <a  href="<{$http_root_www}>mall">
+                    <img class="img" src="<{$SKIN_PATH}>mobile/images/pic11.jpg" alt="">
+                </a>
+                <ul class="g-ul">
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2628"><img src="<{$SKIN_PATH}>mobile/images/ind-row3-2-8.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2628">dyson V8无线吸尘器</a></h4>
+
+                        <span class="s-price">$849.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2142"><img src="<{$SKIN_PATH}>mobile/images/hongjiaozhuang.png" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2142">2013庄园经典 梅洛赤霞珠/6瓶</a></h4>
+
+                        <span class="s-price">$90.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2824"><img src="<{$SKIN_PATH}>mobile/images/ff.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2824">Freeze Frame丰胸霜</a></h4>
+
+                        <span class="s-price">$36.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2150"><img src="<{$SKIN_PATH}>mobile/images/oscar.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2150">塔斯马尼亚野生鲍鱼3罐套装</a></h4>
+
+                        <span class="s-price">$100.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2556"><img src="<{$SKIN_PATH}>mobile/images/tuxun.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2556">Ｋ歌神唛 途讯Q7</a></h4>
+
+                        <span class="s-price">$130.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2168"><img src="<{$SKIN_PATH}>mobile/images/tvb.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2168">TVB Anywhere中文电视盒子</a></h4>
+
+                        <span class="s-price">$268.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2350"><img src="<{$SKIN_PATH}>mobile/images/champion.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2350">AusGolden金尊羊毛冬被SD80</a></h4>
+
+                        <span class="s-price">$125.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2613"><img src="<{$SKIN_PATH}>mobile/images/feilipu.jpeg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2613">飞利浦空气炸锅</a></h4>
+
+                        <span class="s-price">$369.00</span>
+
+                    </li>
+
+                    <li>
+
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/2588"><img src="<{$SKIN_PATH}>mobile/images/bingjiling.jpg" alt=""></a></div>
+
+                        <h4><a href="<{$http_root_www}>coupon1/2588">Sunbeam Snack Heroes冰激凌机</a></h4>
+
+                        <span class="s-price">$39.95</span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div-->
+
+        <!-- 店主推荐 end-->
+
+        <!-- 正在秒杀 -->
+        <!--div class="index-row" >
+            <div class="m-tit1 m-tit1-2">
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon13.png);" href="<{$http_root_www}>shoppingday"></a>
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon20.png);"></i>正在秒杀</span></h3>
+                <p>超值产品等你来 </p>
+            </div>
+            <ul class="g-ul ul-list7">
+                <li>
+                    <a href="<{$http_root_www}>coupon1/4444" class="a-btn"><span>立即<br>抢购</span></a>
+                    <div class="con">
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/4444"><img src="https://www.ubonus365.com/data/upload/2017-10/20171026175630120858.jpg" alt=""></a></div>
+                        <div class="txt">
+                            <span class="s-price">$<em>12.98</em>　限时抢购</span>
+                            <h4><a href="<{$http_root_www}>coupon1/4444">玫瑰滋养面膜贴 7片装</a></h4>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="<{$http_root_www}>coupon1/4433" class="a-btn"><span>立即<br>抢购</span></a>
+                    <div class="con">
+                        <div class="pic"><a href="<{$http_root_www}>coupon1/4433"><img src="https://www.ubonus365.com/data/upload/2017-10/20171025233827656823.jpg" alt=""></a></div>
+                        <div class="txt">
+                            <span class="s-price">$<em>8.98</em>　限时抢购</span>
+                            <h4><a href="<{$http_root_www}>coupon1/4433">儿童惯性工程车</a></h4>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="<{$http_root_www}>coupon1/4454" class="a-btn"><span>立即<br>抢购</span></a>
+                    <div class="con">
+                        <div class="pic">
+                            <a href="<{$http_root_www}>coupon1/4454">
+                                <img src="https://www.ubonus365.com/data/upload/2017-10/20171028180859185454.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="txt">
+                            <span class="s-price">$<em>19.98</em>　限时抢购</span>
+                            <h4><a href="<{$http_root_www}>coupon1/4454">头戴式台式电竞游戏耳麦带话筒</a></h4>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div-->
+        <!-- 正在秒杀 end-->
+
+        <!-- 新春嘉年华 -->
+        <!--div class="g-ul index-row-sz">
+            <div class="sz-pic-m"><img src="<{$SKIN_PATH}>mobile/newyear/images/s-pic1-m.png" alt=""></div>
+            <ul class="ul-sz-m">
+                <li><a href="<{$http_root_www}>store/199583"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p1.jpg" alt=""></a></li>
+                <li><a target="_blank" href="<{$http_root_www}>data/upload/s-img1.pdf"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p2.jpg" alt=""></a></li>
+                <li><a href="<{$http_root_www}>store/199544"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p3.jpg" alt=""></a></li>
+                <li><a href="<{$http_root_www}>coupon1/4656"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p4.jpg" alt=""></a></li>
+                <li><a href="<{$http_root_www}>store/199768"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p5.jpg" alt=""></a></li>
+                <li><a href="<{$http_root_www}>coupon1/4297"><img class="lazyload" data-src="<{$SKIN_PATH}>mobile/newyear/images/p6.jpg" alt=""></a></li>
+            </ul>
+        </div-->
+        <!-- 新春嘉年华 -->
+
+        <!-- <div class="m-adve">
+
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide"><a href="<{$http_root_www}>store/199768"><img src="<{$SKIN_PATH}><{('mobile/images/house_banner.jpg')|image:360:93:fill:true}>" alt=""></a></div>
+
+                <div class="swiper-slide"><a href="<{$http_root_www}>store/23945"><img src="<{$SKIN_PATH}><{('mobile/images/oscarbanner.jpg')|image:360:93:fill:true}>" alt=""></a></div>
+
+                <div class="swiper-slide"><a href="<{$http_root_www}>store/23270"><img src="<{$SKIN_PATH}><{('mobile/images/samsonitebanner.jpg')|image:360:93:fill:true}>" alt=""></a></div>
+
+                <div class="swiper-slide"><a href="<{$http_root_www}>store/24032"><img src="<{$SKIN_PATH}><{('mobile/images/ausunbanner.jpg')|image:360:93:fill:true}>" alt=""></a></div>
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+        </div> -->
+
+        <!-- 广告 end-->
+
+       
+
+       <{if $businessUser.id=='197639'}>
+             <a href="<{$http_root_www}>food?bid=197639&reftag=197639">
+		  <{else}>
+		     <a href="<{$http_root_www}>store/<{$businessUser.id}>">
+		  <{/if}>
+		  <!--  
+		       <{if !$businessUser.pic}>
+		              <img src="<{$UPLOAD_PATH}><{$businessUser.pic}>" style='position: relative;top: -20px'>
+                   
+                <{else}>
+                    <img src="<{$SKIN_PATH}>images/store_back3.jpg" style='position: relative;top: -20px'>
+                <{/if}> -->
+		  
+		 <!-- <div class="m-shop-inf" style="background-image:url(<{$SKIN_PATH}>images/store_back3.jpg);"> -->
+		  
+         <!-- <img src="<{$SKIN_PATH}>mobile/images/index-banner-mingxingdian.png" style='position: relative;top: -20px'> -->
+      
+		
+		  <{if $businessUser&&$businessCouponList|@count>0}>
+		  
+			  <div class="m-mingxingshop-inf">
+			
+                <div class="con">
+                   
+
+                    <div class="pic">
+                    
+                    </div>
+
+                    <div class="txt">
+                        <h4><{$businessDisplayName}></h4>
+                       
+                    </div>
+
+                   
+                    <div class="m-notice" style="border-top: 0px #fff dashed;">
+                        <div class="bd" style="overflow:hidden;position:relative;height:40px;margin-left: 1rem;margin-bottom: -0.3rem;">
+                            <ul>
+						    	<li><h1 style ="font-size: 0.44rem;"><a href="#">墨尔本团购 | 墨尔本折扣 | 墨尔本商城 | 墨尔本开店</a></h1></li>
+                                <{if $busienssNotice}>
+                                    <{foreach from=$busienssNotice item=item}>
+                                           <li><a href="#"><{$item}></a></li>
+										    
+                                    <{/foreach}>
+                                <{else}>
+                                  <li><h1 style ="font-size: 0.44rem;"><a href="#">墨尔本团购 | 墨尔本折扣 | 墨尔本商城 | 墨尔本开店</a></h1></li>
+                                    <li><a href="#">每日优惠美食送不停!</a></li>
+                                <{/if}>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+		  <{/if}>
+
+		
+        <!-- END 千人千面 -->
+
+        <a href="<{$http_root_www}>food"><img src="<{$SKIN_PATH}>mobile/images/index-banner-food.png"></a>
+
+
+        <!-- Ubonus推荐 -->
+       <div class="index-row" style="    margin-top: 0.1rem; ">
+
+          <div class="m-tit1" id="f1" style=" padding: 0.2rem;
+">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon18.png);"></i>Ubonus推荐</span></h3>
+
+                <p>美食美客 美好生活</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==1}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                        <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+        <!-- Ubonus推荐 end-->
+
+
+        <!-- 餐饮美食 -->
+        <div class="index-row">
+            <div class="m-tit1" id="f3">
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106121102"></a>
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon18.png);"></i>餐饮美食</span></h3>
+                <p>每日优惠美食送不停</p>
+            </div>
+
+
+            <style type="text/css">
+                 .promotion-item{
+                    position: relative;
+                    margin-top: 14px;
+                  }
+
+                  .promotion-item .price-off{
+                    position: absolute;
+                    top: -18px;
+                    left: 10px;
+                    height: 40px;
+                    width: 40px;
+                    line-height: 40px;
+                    border-radius: 20px;
+                    background: #FD5001 ;
+                    color: #fff;
+                    text-align: center;
+                    font-size: 14px;
+                  }
+				  
+				  
+				  
+		
+
+				  
+				  
+            </style>
+
+         <div class='promotion container'>
+          <div class='row'>
+            <{foreach from=$data item=item}>
+            <{if $item.panaltype==20}>
+            <div class='col-xs-6 promotion-item'>
+                <{if $item.priceOff}>
+                    <div class='price-off'>-<{$item.priceOff}>%</div>
+                <{/if}>
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                   <img class="card-img-top" src="<{$UPLOAD_PATH}><{$item.pic|image:660:420}>" alt="<{$item.title}>">  
+                </a>
+                
+                <div class="card-body">
+                  <p  style="overflow:hidden;font-size: 12px;font-weight: bolder;height: 35px;" ><{$item.title}></p>
+                 
+
+                  <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </div>
+
+            </div>
+            <{/if}>
+            <{/foreach}>
+           
+          </div>
+        </div>
+
+        </div>
+        <!-- 餐饮美食 end-->
+        
+
+        <!-- 活动票务 -->
+        <div class="index-row">
+
+            <div class="m-tit1" id="f2">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>coupons/106119111"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon18.png);"></i>活动票务</span></h3>
+
+                <p>想你所想,购你想购</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==21}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload"  data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+        </div>
+        <!-- 活动票务 end-->
+
+        
+
+        <!-- 生鲜食品 -->
+        <div class="index-row">
+            <div class="m-tit1 m-tit1-1" id="f4">
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106124"></a>
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>生鲜食品</span></h3>
+                <p>想你所想，一站式服务</p>
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==10}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+        <!-- 生鲜食品 end-->
+
+        <!-- 手机数码 -->
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-1" id="f5">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106105104"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>手机数码</span></h3>
+
+                <p>想你所想，一站式服务</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==11}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4>
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a>
+                    </h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+        <!-- 手机数码 end-->
+
+        <!-- 家具家居 -->
+		<!--
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-1" id="f6">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106105103"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>家具家居</span></h3>
+
+                <p>想你所想，一站式服务</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==12}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+		-->
+        <!-- 家具家居 end-->
+
+        <!-- 电器厨具 -->
+		<!--
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-1" id="f7">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106105105"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>电器厨具</span></h3>
+
+                <p>想你所想，一站式服务</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==13}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+		-->
+        <!-- 电器厨具 end-->
+
+        <!-- 女性世界 -->
+		<!--
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-1" id="f8">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106105101"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>女性世界</span></h3>
+
+                <p>想你所想，一站式服务</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==14}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+		-->
+        <!-- 女性世界 end-->
+
+		
+		
+        <!-- 服饰衣帽 -->
+		<!--
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-1" id="f9">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon12.png);"  href="<{$http_root_www}>coupons/106105107"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon19.png);"></i>服饰衣帽</span></h3>
+
+                <p>想你所想，一站式服务</p>
+
+            </div>
+
+            <ul class="g-ul ul-list8">
+                <{foreach from=$data item=item}>
+                <{if $item.panaltype==15}>
+                <li>
+                    <div class="pic">
+                        <a  href="<{$http_root_www}>coupon1/<{$item.id}>">
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                        </a>
+                    </div>
+                    <h4><a  href="<{$http_root_www}>coupon1/<{$item.id}>"><{$item.title}></a></h4>
+                    <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                </li>
+                <{/if}>
+                <{/foreach}>
+            </ul>
+
+        </div>
+		-->
+        <!-- 服饰衣帽 end-->
+
+
+        <!-- 团购 -->
+		<!--
+        <div class="index-row">
+
+            <div class="m-tit1 m-tit1-6" id="f10">
+
+                <a  class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon17.png);" href="<{$http_root_www}>group_pin/index"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon24.png);"></i>团购</span></h3>
+
+                <p>优惠多实惠多</p>
+            </div>
+
+            <ul class="g-ul ul-list5">
+                <{foreach from=$GroupPurchase item=item}>
+                <li style="min-height: 220px;">
+                    <div class="pic">
+                        <a href="<{$http_root_www}>coupon1/<{$item.coupon_id}>?specialDisplay=group_pin" target='_blank'>
+                            <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>">
+                        </a>
+                    </div>
+                    <div>
+                        <h4>
+                            <a  >进行中</a>
+                        </h4>
+                        <span><{$item.title|truncate:30}></span>
+                        <span class="s-price">$<{$item.voucher_deal_amount}></span>
+                    </div>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+   -->
+        <!-- 团购 end-->
+
+        <!-- 转盘 -->
+<!--
+        <div class="index-row" style="display: none">
+
+            <div class="m-tit1 m-tit1-5" id="f11">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon16.png);" href="<{$http_root_www}>lottery/lottery_show"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon23.png);"></i>幸运大转盘</span></h3>
+
+                <p>好运等你来</p>
+
+            </div>
+
+            <ul class="g-ul ul-list4">
+
+                <li><a href="<{$http_root_www}>lottery/lottery?id=89&uid=26326"><img src="<{$SKIN_PATH}><{('mobile/images/pic4.png')|image:129:129:cut:true}>" alt="">12生肖抽奖盘之宏“兔‘大展（Ubonus美食生活2018年货节）</a></li>
+
+                <li><a href="<{$http_root_www}>lottery/lottery?id=88&uid=26326"><img src="<{$SKIN_PATH}><{('mobile/images/pic4.png')|image:129:129:cut:true}>" alt="">12生肖抽奖盘之“虎”虎生威（Ubonus美食生活2018年货节）</a></li>
+
+                <li><a href="<{$http_root_www}>lottery/lottery?id=87&uid=26326"><img src="<{$SKIN_PATH}><{('mobile/images/pic4.png')|image:129:129:cut:true}>" alt="">12生肖抽奖盘之“牛”气冲天（Ubonus美食生活2018年货节）</a></li>
+
+                <li><a href="<{$http_root_www}>/lottery/lottery?id=86&uid=26326"><img src="<{$SKIN_PATH}><{('mobile/images/pic4.png')|image:129:129:cut:true}>" alt="">12生肖抽奖盘之乐不思”鼠“（Ubonus美食生活2018年货节）</a></li>
+
+            </ul>
+
+        </div>
+-->
+        <!-- 转盘 end-->
+
+
+
+        <!-- 合作伙伴 -->
+
+        <!--div class="index-row">
+
+            <ul class="g-ul ul-list2">
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23796"><img src="<{$SKIN_PATH}>mobile/images/logo1.png" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>coupon1/2126"><img src="<{$SKIN_PATH}>mobile/images/logo2.png" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>store/23945"><img src="<{$SKIN_PATH}>mobile/images/logo3.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23945"><img src="<{$SKIN_PATH}>mobile/images/logo4.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=25704"><img src="<{$SKIN_PATH}>mobile/images/logo5.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=25274"><img src="<{$SKIN_PATH}>mobile/images/logo6.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23965"><img src="<{$SKIN_PATH}>mobile/images/logo7.png" alt=""></a></li>
+
+                <li><a ><img src="<{$SKIN_PATH}>mobile/images/logo8.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=24065"><img src="<{$SKIN_PATH}>mobile/images/logo9.png" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23270"><img src="<{$SKIN_PATH}>mobile/images/logo10.png" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23961"><img src="<{$SKIN_PATH}>mobile/images/logo11.jpg" alt=""></a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=23924"><img src="<{$SKIN_PATH}>mobile/images/logo12.png" alt=""></a></li>
+            </ul>
+        </div-->
+        <!-- 合作伙伴 end-->
+
+	</section>
+
+    <!-- 主内容 end-->
+
+	
+
+    <!-- 底部 -->
+        <{include file='mobile/mobile_footer.htm'}>
+    <!-- 底部 end-->
+
+
+    <!-- 搜索框 -->
+    <form action='.'>
+    <div class="box-so bg-1">
+
+        <div class="inner">
+
+            <div class="so-top so-top-2">
+
+                <input type="text" class="g-input sele" readonly="readonly" value="产品">
+
+                <div class="sub">
+
+                    <span>产品</span>
+
+                    <span>店铺</span>
+
+                </div>
+
+                <input type="search" placeholder="输入关键字搜索" class="g-input inp">
+
+            </div>
+
+            <a href="javascript:void(0);" class="a-txt">取消</a>
+
+        </div>
+
+        <div class="m-so">
+
+            <h4>热门搜索<a  class="a-update"></a></h4>
+
+            <ul class="g-ul">
+
+                <li><a href="<{$http_root_www}>store/23270">箱包</a></li>
+
+                <li><a href="<{$http_root_www}>store/23961">羊毛被</a></li>
+
+                <li><a href="<{$http_root_www}>store/23945">海鲜</a></li>
+
+                <li><a href="<{$http_root_www}>store/25913">保健品</a></li>
+
+                <li><a href="<{$http_root_www}>index.php?ctl=template&act=template_show&id=25160">零食</a></li>
+
+                <li><a href="<{$http_root_www}>coupon1/2694">演唱会</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="so-pop">
+            <a  class="a-shop search-keyword-display"><!-- 店铺搜索&gt;手机 --></a>
+            <ul class="g-ul ul-screen" style="max-height: 83vh;overflow: scroll;">
+            </ul>
+        </div>
+    </div>
+    </form>
+    <!-- 搜索框 end-->
+
+    <!-- 侧边按钮 -->
+    <!-- sec float go top -->
+    <{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+    <!-- 侧边按钮-end -->
+
+
+    <script>
+
+        $(document).ready(function() {
+
+            //城市选择
+
+            $(".m-city .con").click(function() {
+
+                $('.m-city').find("ul").stop().slideToggle();
+
+            });
+
+            $(".m-city li").click(function() {
+
+                var _cont = $(this).text();
+
+                var _pare = $(this).parents(".m-city");
+
+                $(_pare).find('span').text(_cont);
+
+            });
+        });
+
+    </script>
+
+     <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script>
+        $(".m-notice").slide({mainCell:".bd ul",autoPlay:true,effect:"topLoop",vis:1});
+    </script>
+
+    <link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+
+    <script>
+
+        $(function(){
+
+            var swiper = new Swiper('#banner', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true,
+
+               autoplay:2000
+
+           });
+
+
+
+            var swiper = new Swiper('.m-adve', {
+
+               pagination: '.swiper-pagination',
+
+               paginationClickable: true
+
+           });
+
+
+
+            //
+
+            $(".m-seckill").each(function(){
+
+                var swiper = new Swiper($(this).find(".swiper-container")[0], {
+
+                    slidesPerView: 3.7,
+
+                    paginationClickable: true,
+
+                    spaceBetween : 5,
+
+                    freeMode: true
+
+                });
+
+            });
+        })
+
+        
+
+
+
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+        //点击搜索框弹出+消失
+
+        $(".a-so,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".so-top-pop").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".box-so .a-txt").click(function(){
+
+            $("body").removeClass('open-so');
+
+        });
+
+        $('.box-so .so-top .inp').click(function(){
+
+            $('.so-pop').show();
+
+            $('.m-so').hide();
+
+        });
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+        var searchEnterTimeoutClock;
+
+
+
+        $(function(){
+
+            // 搜索键盘事件
+
+            $('.inp').keyup(function(e) {
+
+                    if(e.keyCode == 13){
+                        // console.log('enter key');
+                        var listType = ($('.g-input.sele').val()=='产品')?'product':'business';
+                        var key = $('.g-input.inp').val()
+                        window.location.href='<{$http_root_www}>coupons?key='+key+'&listType='+listType;
+                         
+                    }else{
+                         updateDisplay();
+
+                        clearTimeout(searchEnterTimeoutClock);
+
+                        searchEnterTimeoutClock= setTimeout(function(){
+
+                            getSearchHint();
+
+                         },500)
+
+                    }
+                   
+
+            });
+
+           
+
+        });
+
+        
+
+
+
+        function getSearchHint(){
+
+            var _key = $('.inp').val();
+
+
+
+            $.ajax({url: '<{$http_root_www}>query?cmd=searchv2mobile', 
+
+                       data:{'key':_key}, 
+
+                       method: "POST",
+
+                       beforeSend: function(){
+
+                        //$('#search-hint').html("");
+
+                       },
+
+                       success: function(data){
+
+                        $('.ul-screen').html(data);
+
+                       }
+
+                    });
+
+        }
+
+
+
+
+
+        function gotoSearchItem(obj) {
+
+            var listType= $(obj).data('hint-type');
+
+            window.location.href ='<{$http_root_www}>coupons?listType='+listType+'&key=' +  $(obj).find('span.search-hint-text').html() ;
+
+        }
+
+
+
+        function updateDisplay(){
+
+            var html =  $('input.sele').val()+"搜索&gt;" + $('input.inp').val();;
+
+            $('.search-keyword-display').html(html);
+
+
+
+        }
+
+
+
+    </script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('img.lazyload').unveil();
+    })
+
+</script>
+    <script src="<{$SKIN_PATH}>mobile/js/downCount.js"></script>
+    <script type="text/javascript">
+        function open_screen_mobile_close() {
+            $('.kp_main').fadeOut();
+        }
+
+        function leftTimer(year,month,day,hour,minute,second){
+            var leftTime = (new Date(year,month-1,day,hour,minute,second)) - (new Date()); //计算剩余的毫秒数
+            var days = parseInt(leftTime / 1000 / 60 / 60 / 24 , 10); //计算剩余的天数
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24 , 10); //计算剩余的小时
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+            var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+            days = checkTime(days);
+            hours = checkTime(hours);
+            minutes = checkTime(minutes);
+            seconds = checkTime(seconds);
+            //document.getElementById("dayID").innerHTML = days;
+            //document.getElementById("hourID").innerHTML = hours;
+            //document.getElementById("miniID").innerHTML = minutes;
+            //document.getElementById("secID").innerHTML = seconds;
+        }
+        function checkTime(i){ //将0-9的数字前面加上0，例1变为01
+            if(i<10)
+            {
+                i = "0" + i;
+            }
+            return i;
+        }
+        setInterval("leftTimer(2018,2,1,20,00,00)",1000);
+
+        // 倒计时
+        //$("#fnTimeCountDown").fnTimeCountDown1();
+    </script>
+
+
+    <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{if $businessDisplayName}><{$businessDisplayName}>-明星商城<{/if}>';
+        var shareLink='<{$http_root_wx}>?bid=<{$businessUser.id}>';
+        var desc="<{if $businessDisplayName}><{$businessDisplayName}>-明星商城<{/if}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$businessUser.logo}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+					<span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>company/shop_guige_edit" class="link2"><i class='fa fa-plus'></i>添加一种新规格</a>
+					</span>
+				</div>
+				
+				<div class="main-list">
+
+					<{if $list}>
+						<form method="post" action="?">
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+									<tr>
+										<th>规格描述名</th>
+										<th>规格描述名(English)</th>
+									    <th>通用/关联产品</th>
+										<th>设置</th>
+										<th>管理</th>
+									<th>删除</th>
+									</tr>
+								</thead>
+								<tbody>
+									<{foreach from=$list item=item name='dl'}>
+								  	<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									    <td><{$item.name}></td>
+										<td><{$item.name_en}></td>
+										<{if $item.is_for_one_product}>
+										<td>关联产品 (<{$item.coupon_id}>)</td>
+										<{else}>
+										<td>通用，不关联</td>
+										<{/if}>
+
+
+										<td><a href="<{$http_root_www}>company/shop_guige_edit?id=<{$item.id}>">修改</a></td>
+										
+										<td><a href="<{$http_root_www}>company/shop_guige_details?guige_id=<{$item.id}>">编辑规格详情</a></td>
+										
+										<td><a href="<{$http_root_www}>company/shop_guige?id=<{$item.id}>" onClick="if (!window.confirm('您确定要删除这个商品描述定义吗？')) return false;">删除</a></td>
+									</tr>
+									<{/foreach}>
+								</tbody>
+							</table>
+						</form>
+					
+					<{else}>
+					<p>您还没有任何规格，需要您首先 <a href="<{$http_root_www}>company/shop_guige_edit" class="link2">添加一种新规格</a>，然后再编辑规格详情</p>
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

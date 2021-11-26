@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:120px; }
+	.block {
+		display: block;
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1>生成用户登陆链接
+						</h1>
+					</div>
+
+                    <{if $message}>
+						<p style="color:red"><{$message}></p>
+                    <{/if}>
+
+					<form method="post" enctype="multipart/form-data">
+						<div class="input-box  form-style-green block">
+							<span>
+							<label for="id">用户ID</label><{$user.id}>&nbsp;
+							</span>
+						</div>
+						<div class="input-box  form-style-green block">
+							<span>
+							<label for="username">用户名</label><{$user.name}>&nbsp;
+							</span>
+						</div>
+						<div class="input-box  form-style-green block">
+							<span>
+							<label for="mobile">手机号</label><{$user.mobile}>&nbsp;
+							</span>
+						</div>
+						<div class="input-box  form-style-green block">
+							<span>
+							<label for="expired-at">到期时间</label>
+							</span>
+							<input type="date" name="expired-at" id="expired-at" class="input-text" placeholder="请选择到期时间" required/>
+						</div>
+
+                        <{if $approved}>
+						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->generate}></button>
+						</div>
+                        <{/if}>
+
+                        <{if $link}>
+							<div class="input-box  form-style-green block">
+						<span>
+						<label for="login-link">登陆链接</label>
+						</span>
+								<input type="text" name="login-link" id="login-link" class="input-text" value="<{$link}>" disabled/>
+								<button type="button" onclick="copyToClip()">点击复制</button>
+							</div>
+                        <{/if}>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+<script>
+    function copyToClip() {
+        var content = document.getElementById('login-link');
+        var aux = document.createElement("input");
+        aux.setAttribute("value", content.value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("已复制到剪贴板");
+    }
+</script>
+</body>
+</html>

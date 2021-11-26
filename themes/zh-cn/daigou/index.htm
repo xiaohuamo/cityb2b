@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>代购首页</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/qj.css" />
+</head>
+
+<body>
+
+<!-- 头部 -->
+<div class="header header-buy">
+    <{include file='index_inc_header.htm'}>
+
+    <div class="head-con">
+        <div class="wp">
+            <div class="logo">
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-buy/logo-buy.png" alt="">
+                </a>
+            </div>
+            <div class="head-center">
+                <div class="search">
+                    <div class="form">
+                        <div ><!-- <form action=""> -->
+                            <div class="inner">
+                                <input type="text" class="inp" id='search-input' autocomplete="off">
+                                <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                            </div>
+                            <div class="search-list">
+                                <ul class="ul-search TAB" id="search-hint">
+                                    <!-- <li class="on"><a href="">手机壳</a></li>
+                                    <li><a href="">手机支架</a></li>
+                                    <li><a href="">手机架</a></li>
+                                    <li><a href="">手机车载支架</a></li>
+                                    <li><a href="">手机耳机</a></li>
+                                    <li><a href="">手机防水袋</a></li> -->
+                                </ul>
+                                <!--
+                                <div class="list-box">
+                                    <dl>
+                                        <dt>手机壳</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hot">
+                        <a target="_blank" href="https://www.ubonus365.com/lottery/lottery_show">抽奖</a>
+                        <a target="_blank" href="https://www.ubonus365.com/coupons?key=%E6%BC%94%E5%94%B1%E4%BC%9A">演唱会</a>
+                        <a target="_blank" href="https://www.ubonus365.com/coupons?key=%E7%AE%B1%E5%8C%85">箱包</a>
+                        <a target="_blank" href="https://www.ubonus365.com/lottery/lottery_show">电影票</a>
+                        <a target="_blank" href="https://www.ubonus365.com/coupons?key=%E7%94%9F%E9%B2%9C">生鲜</a>
+                        <a target="_blank" href="https://www.ubonus365.com/coupons?key=%E4%BA%B2%E5%AD%90">亲子</a>
+                        <a target="_blank" href="https://www.ubonus365.com/coupons?key=%E7%BE%8A%E6%AF%9B%E8%A2%AB">羊毛被</a>
+                    </div>
+                </div>
+            </div>
+            <div class="head-right">
+                <a class="shopping" target="_blank" href="https://www.ubonus365.com/member/showcart">我的购物车
+                    <{if $loginUser}>
+                    <em class='shopping-cart-qty-display'><{$carts_count}></em>
+                    <{/if}>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 头部 end -->
+
+<!-- 本地服务 -->
+<div class="wp">
+    <div class="buy-row buy-row1">
+        <div class="col-l">
+            <ul class="ul-nav_buy">
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f1').offset().top}, 1000);">保健品<span>Health products</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f2').offset().top}, 1000);">奶粉<span>Powdered Milk</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f3').offset().top}, 1000);">红酒<span>Red wine</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f4').offset().top}, 1000);">海产品<span>Seafood</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f5').offset().top}, 1000);">床品<span>bedding</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f6').offset().top}, 1000);">珠宝<span>jewejry</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f7').offset().top}, 1000);">洗浴护肤<span>Bath skin care</span></a><i>></i></li>
+                <li><a onclick="$('html, body').animate({scrollTop: $('#f8').offset().top}, 1000);">美妆<span>makeups</span></a><i>></i></li>
+            </ul>
+        </div>
+        <div class="col-c">
+            <div class="slide-buy">
+                <div class="hd">
+                    <ul></ul>
+                </div>
+                <div class="bd">
+                    <ul>
+                        <li><a target="_blank" href="https://www.ubonus365.com/store/26198" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/banner 1.jpg" /></a></li>
+                        <li><a target="_blank" href="https://www.ubonus365.com/coupon/2442" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/banner 2.jpg" /></a></li>
+                        <li><a target="_blank" href="https://www.ubonus365.com/store/23945" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/banner 3.jpg" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-r">
+            <ul class="ul-buy1">
+                <li><a target="_blank" href="https://www.ubonus365.com/store/23961" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/p1.jpg" alt="" /></a></li>
+                <li><a target="_blank" href="https://www.ubonus365.com/store/26162" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/p2.jpg" alt="" /></a></li>
+                <li><a target="_blank" href="https://www.ubonus365.com/store/26137" class="pic"><img src="<{$SKIN_PATH}>images/pc-buy/p3.jpg" alt="" /></a></li>
+            </ul>
+            <ul class="ul-buy2">
+                <li>
+                    <em>藏</em>BOOK MARK收藏
+                </li>
+                <li>
+                    <em>正</em>100%海外原装进口
+                </li>
+                <li>
+                    <em>服</em>100%无忧售后
+                </li>
+                <li>
+                    <em>时</em>客服服务时间：0:00-24:00
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="buy-row buy-row2">
+        <div class="col-l">
+            <div class="m-buy1">
+                <div class="g-tit_buy">
+                    <a  class="btn-more"></a>
+                    <h2>今日供求</h2>
+                </div>
+                <div class="pictxt">
+                    <div class="pic">
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2864"><img src="<{$SKIN_PATH}>images/pc-buy/hugg.jpg" alt="" /></a>
+                    </div>
+                    <div class="txt">
+                        <h4><a >JUMBO中筒雪地靴 最新到货</a></h4>
+                    </div>
+                </div>
+                <ul class="ul-buy3">
+                    <li>
+                        <i class="i1">热卖</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2865">OZWEAR UGG 草编渔夫鞋 现已上架</a>
+                    </li>
+                    <li>
+                        <i class="i2">疯抢</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2880">Clovel 系列 大号双肩背包</a>
+                    </li>
+                    <li>
+                        <i class="i3">特卖</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2350">AusGolden金尊羊毛冬被SD80</a>
+                    </li>
+                    <li>
+                        <i class="i4">卖场</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2862">Ever 豆豆鞋 全城独家</a>
+                    </li>
+                    <li>
+                        <i class="i5">特卖</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2188">AusGolden奢华贡缎羊毛被冬被SD60</a>
+                    </li>
+                    <li>
+                        <i class="i1">热卖</i>
+                        <a target="_blank" href="https://www.ubonus365.com/coupon/2902">55cm新秀丽 Octolite SPINNER旅行箱</a>
+                    </li>
+                </ul>
+                <div class="m-pic">
+                    <a  class="pic">
+                        <img src="<{$SKIN_PATH}>images/pc-buy/p5.jpg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-c">
+            <div class="m-logo">
+                <ul class="ul-logo_buy">
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo1.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo2.jpg"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo3.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo4.jpeg"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo5.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo6.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo7.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo8.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/font.png" alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo9.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo10.jpg"  alt="" /></a>
+                    </li>
+                </ul>
+                <ul class="ul-logo_buy ul-logo_buy1">
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo11.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo1.png"  alt="" /></a>
+                    </li>
+                    <li>
+
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/font1.png" alt="" /></a>
+
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo5.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo2.jpg"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo10.jpg"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo8.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo4.jpeg"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo7.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/logo6.png"  alt="" /></a>
+                    </li>
+                    <li>
+                        <a ><img src="<{$SKIN_PATH}>images/pc-buy/ico-new.png" alt="" /></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-r">
+            <div class="m-buy2">
+                <div class="g-tit_buy message">
+                    <a  class="btn-more"></a>
+                    <h2>拼团信息</h2>
+                </div>
+                <ul class="ul-buy4">
+                    <li>
+                        <div class="pic">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2900"><img src="<{$SKIN_PATH}>images/pc-buy/pintuan1.jpg" alt="" /></a>
+                        </div>
+                        <div class="txt">
+                            <h4><a target="_blank" href="https://www.ubonus365.com/coupon/2900">68cm新秀丽 Octolite SPINNER旅行箱</a></h4>
+                            <em>236人已看</em>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2896"><img src="<{$SKIN_PATH}>images/pc-buy/pintuan2.jpg" alt="" /></a>
+                        </div>
+                        <div class="txt">
+                            <h4><a target="_blank" href="https://www.ubonus365.com/coupon/2896">新秀丽OCTOLITE SPINNER 82cm 旅行箱</a></h4>
+                            <em>468人已看</em>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2231"><img src="<{$SKIN_PATH}>images/pc-buy/pintuan3.jpg" alt="" /></a>
+                        </div>
+                        <div class="txt">
+                            <h4><a target="_blank" href="https://www.ubonus365.com/coupon/2231">Easyrest至尊薰衣草舒缓羊毛枕头</a></h4>
+                            <em>108人已看</em>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2218"><img src="<{$SKIN_PATH}>images/pc-buy/pintuan4.jpg" alt="" /></a>
+                        </div>
+                        <div class="txt">
+                            <h4><a target="_blank" href="https://www.ubonus365.com/coupon/2218">Easyrest 500Gsm冬季羊毛被 QUEEN</a></h4>
+                            <em>55人已看</em>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="buy-row buy-row3">
+        <div class="col-l">
+            <div class="pic">
+                <img src="<{$SKIN_PATH}>images/pc-buy/pinpaixiu.jpg" alt="" />
+            </div>
+        </div>
+        <div class="col-r">
+            <ul class="ul-buy5">
+                <li>
+                    <div class="shop-name">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/store/26423"><img src="<{$SKIN_PATH}>images/pc-buy/cbs.png" alt="" /></a>
+                            </div>
+                        </div>
+                        <a target="_blank" href="https://www.ubonus365.com/store/26423" class="name">CBS国际旗舰店</a>
+                    </div>
+                    <div class="shop-probuct">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2989"><img src="<{$SKIN_PATH}>images/pc-buy/aomaer.jpg" alt=""/>
+                            </div>
+                            <strong>$35.12</strong>
+                        </div>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2967"><img src="<{$SKIN_PATH}>images/pc-buy/aomaer1.jpg" alt=""/>
+                            </div>
+                            <strong>$20.00</strong>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="shop-name">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/store/23945"><img src="<{$SKIN_PATH}>images/pc-buy/oscar.jpg" alt="" /></a>
+                            </div>
+                        </div>
+                        <a target="_blank" href="https://www.ubonus365.com/store/23945" class="name">Oscar海产旗舰店</a>
+                    </div>
+                    <div class="shop-probuct">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2150"><img src="<{$SKIN_PATH}>images/pc-buy/oscar1.jpg" alt=""/>
+                            </div>
+                            <strong>$100.00</strong>
+                        </div>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2435"><img src="<{$SKIN_PATH}>images/pc-buy/oscar2.jpg" alt=""/>
+                            </div>
+                            <strong>$88.00</strong>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="shop-name">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/store/23946"><img src="<{$SKIN_PATH}>images/pc-buy/yihaodian.png" alt="" /></a>
+                            </div>
+                        </div>
+                        <a target="_blank" href="https://www.ubonus365.com/store/23946" class="name">代购一号店旗舰店</a>
+                    </div>
+                    <div class="shop-probuct">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2664"><img src="<{$SKIN_PATH}>images/pc-buy/yihaodian1.jpg" alt=""/>
+                            </div>
+                            <strong>$1.00</strong>
+                        </div>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2436"><img src="<{$SKIN_PATH}>images/pc-buy/yihaodian2.jpg" alt=""/>
+                            </div>
+                            <strong>$4.00</strong>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="shop-name">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/store/23449"><img src="<{$SKIN_PATH}>images/pc-buy/sos.png" alt="" /></a>
+                            </div>
+                        </div>
+                        <a target="_blank" href="https://www.ubonus365.com/store/23449" class="name">Heritage旗舰店</a>
+                    </div>
+                    <div class="shop-probuct">
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2091"><img src="<{$SKIN_PATH}>images/pc-buy/sos1.jpg" alt=""/>
+                            </div>
+                            <strong>$58.05</strong>
+                        </div>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/coupon/2709"><img src="<{$SKIN_PATH}>images/pc-buy/sos2.jpg" alt=""/>
+                            </div>
+                            <strong>$18.99</strong>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="buy-row buy-row4 buy-row3">
+        <div class="col-l">
+            <div class="pic">
+                <img src="<{$SKIN_PATH}>images/pc-buy/p10.jpg" alt="" />
+            </div>
+        </div>
+        <div class="col-r">
+            <div class="m-buy4">
+                <ul class="ul-buy6">
+                    <li>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/lottery/lottery?id=26"><img src="<{$SKIN_PATH}>images/pc-buy/qj-pic1.png" alt="" /></a>
+                            </div>
+                            <p>Oscar海产 幸运抽大奖</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/lottery/lottery?id=23"><img src="<{$SKIN_PATH}>images/pc-buy/qj-pic1.png" alt="" /></a>
+                            </div>
+                            <p>澳新数码 幸运抽大奖</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pic-box">
+                            <div class="pic">
+                                <a target="_blank" href="https://www.ubonus365.com/lottery/lottery?id=19"><img src="<{$SKIN_PATH}>images/pc-buy/qj-pic1.png" alt="" /></a>
+                            </div>
+                            <p>新秀丽箱包 幸运抽大奖</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="txt-box">
+                    <i>限时抢优惠·欢乐抽大奖</i>
+                    <div class="txt">
+                        <strong>活动规则 : </strong>
+                        <p>1.登陆即可抽奖<br />
+                            2.每人每天最多可以抽奖8次<br />
+							3.若中奖，须填写基本信息</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buy-row buy-row5">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy1.png)"></a>
+        </div>
+        <ul class="ul-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2824"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao1.jpg" alt="" /></a>
+
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>freezeframe 丰胸霜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2890"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao3.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>81cm新秀丽Lite-shock拉杆箱旅行箱</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>525.00</strong></sapn>
+                                    <sapn class="old">$<strong>899.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/3031"><img src="<{$SKIN_PATH}>images/pc-buy/lali.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Lalisse手霜套装</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>18.00</strong></sapn>
+                                    <sapn class="old">$<strong>25.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2055"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao7.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>SOS DècoLift 頸霜 30mL</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>53.95</strong></sapn>
+                                    <sapn class="old">$<strong>59.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2876"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao4.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>68cm新秀丽 TRU-FRAME 旅行箱</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>239.00</strong></sapn>
+                                    <sapn class="old">$<strong>599.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2690"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao8.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Oil Garden 三瓶精油禮包組</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>20.00</strong></sapn>
+                                    <sapn class="old">$<strong>39.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2825"><img src="<{$SKIN_PATH}>images/pc-buy/cuxiao2.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>freezeframe 眼霜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/3082"><img src="<{$SKIN_PATH}>images/pc-buy/3082.jpg" alt="" />
+                            <i></i>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Ego QV婴儿沐浴乳液250ml</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>6.00</strong></sapn>
+                                    <sapn class="old">$<strong>10.65</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="buy-row buy-row6" id="f1">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy2.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2133"><img src="<{$SKIN_PATH}>images/pc-buy/bj1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>哈登蜂巢（350-400克）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>12.99</strong></sapn>
+                                    <sapn class="old">$<strong>16.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2134"><img src="<{$SKIN_PATH}>images/pc-buy/bj2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Jarrah红柳桉蜂蜜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>19.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2448"><img src="<{$SKIN_PATH}>images/pc-buy/bj3.jpeg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Prospan小绿叶</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>3.50</strong></sapn>
+                                    <sapn class="old">$<strong>6.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2447"><img src="<{$SKIN_PATH}>images/pc-buy/bj4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>BM西芹籽</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>8.99</strong></sapn>
+                                    <sapn class="old">$<strong>13.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2442"><img src="<{$SKIN_PATH}>images/pc-buy/bj5.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Swisse蔓越莓</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>9.50</strong></sapn>
+                                    <sapn class="old">$<strong>12.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2446"><img src="<{$SKIN_PATH}>images/pc-buy/bj6.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>BM无腥味鱼油</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>18.99</strong></sapn>
+                                    <sapn class="old">$<strong>24.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2438"><img src="<{$SKIN_PATH}>images/pc-buy/bj7.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Voost泡腾片</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>1.00</strong></sapn>
+                                    <sapn class="old">$<strong>4.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2440"><img src="<{$SKIN_PATH}>images/pc-buy/bj8.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Unichi玫瑰果精华</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>24.00</strong></sapn>
+                                    <sapn class="old">$<strong>34.99</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="buy-row buy-row7" id="f2">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy3.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2906"><img src="<{$SKIN_PATH}>images/pc-buy/naifen1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Ozi Choice儿童成长奶粉 1kg</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>12.00</strong></sapn>
+                                    <sapn class="old">$<strong>14.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2909"><img src="<{$SKIN_PATH}>images/pc-buy/naifen2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Ozi Choice中老年营养奶粉 1kg</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>12.00</strong></sapn>
+                                    <sapn class="old">$<strong>14.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2908"><img src="<{$SKIN_PATH}>images/pc-buy/naifen3.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Ozi Choice脱脂奶粉 1kg</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>10.00</strong></sapn>
+                                    <sapn class="old">$<strong>12.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2907"><img src="<{$SKIN_PATH}>images/pc-buy/naifen4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Ozi Choice全脂奶粉 1kg</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>10.00</strong></sapn>
+                                    <sapn class="old">$<strong>12.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <!--li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <img src="<{$SKIN_PATH}>images/pc-buy/qj-pic2.png" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Swisse 葡萄籽精华片</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>68.6</strong></sapn>
+                                    <sapn class="old">￥<strong>98.6</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <img src="<{$SKIN_PATH}>images/pc-buy/qj-pic2.png" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Swisse 葡萄籽精华片</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>68.6</strong></sapn>
+                                    <sapn class="old">￥<strong>98.6</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <img src="<{$SKIN_PATH}>images/pc-buy/qj-pic2.png" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Swisse 葡萄籽精华片</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>68.6</strong></sapn>
+                                    <sapn class="old">￥<strong>98.6</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <img src="<{$SKIN_PATH}>images/pc-buy/qj-pic2.png" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Swisse 葡萄籽精华片</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>68.6</strong></sapn>
+                                    <sapn class="old">￥<strong>98.6</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li-->
+        </ul>
+    </div>
+    <div class="buy-row buy-row8" id="f3">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy4.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2851"><img src="<{$SKIN_PATH}>images/pc-buy/hj1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2014 塞缪尔麦克伦山谷 歌海娜干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>1800.00</strong></sapn>
+                                    <sapn class="old">￥<strong>3108.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2850"><img src="<{$SKIN_PATH}>images/pc-buy/hj2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2014 翰斯科亨利七干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>1800.00</strong></sapn>
+                                    <sapn class="old">￥<strong>2880.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2849"><img src="<{$SKIN_PATH}>images/pc-buy/hj3.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2013腾塔堡男爵赤霞珠干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>1560.00</strong></sapn>
+                                    <sapn class="old">￥<strong>4344.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2848"><img src="<{$SKIN_PATH}>images/pc-buy/hj4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2014 塞缪尔麦克伦山谷 西拉干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>3108.00</strong></sapn>
+                                    <sapn class="old">￥<strong>1800.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2847"><img src="<{$SKIN_PATH}>images/pc-buy/hj5.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2012 翰斯科肯勒屯乐队干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>2400.00</strong></sapn>
+                                    <sapn class="old">￥<strong>3294.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2846"><img src="<{$SKIN_PATH}>images/pc-buy/hj6.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2014 罗斯顿 瑞佩尔湾 西拉 赤霞珠干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>2880.00</strong></sapn>
+                                    <sapn class="old">￥<strong>4776.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2845"><img src="<{$SKIN_PATH}>images/pc-buy/hj7.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2014 罗斯顿 好牧人马尔贝克 赤霞珠干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>3480.00</strong></sapn>
+                                    <sapn class="old">￥<strong>5976.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2844"><img src="<{$SKIN_PATH}>images/pc-buy/hj8.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>2013 罗斯顿 黑珍 西拉干红葡萄酒</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">￥<strong>3480.00</strong></sapn>
+                                    <sapn class="old">￥<strong>7188.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="buy-row buy-row9" id="f4">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy5.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2433"><img src="<{$SKIN_PATH}>images/pc-buy/hx1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>塔斯马尼亚红岩龙虾（2kg）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>196.00</strong></sapn>
+                                    <sapn class="old">$<strong>258.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2435"><img src="<{$SKIN_PATH}>images/pc-buy/hx2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>塔斯马尼亚野生青边鲍鱼/只</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>88.00</strong></sapn>
+                                    <sapn class="old">$<strong>128.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2150"><img src="<{$SKIN_PATH}>images/pc-buy/hx3.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>塔斯马尼亚野生鲍鱼罐头3罐（2只/罐）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>100.00</strong></sapn>
+                                    <sapn class="old">$<strong>200.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2434"><img src="<{$SKIN_PATH}>images/pc-buy/hx4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>特级花胶/kg</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>300.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2699"><img src="<{$SKIN_PATH}>images/pc-buy/hx5.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>新西兰特级花胶(20-28片)</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>260.00</strong></sapn>
+                                    <sapn class="old">$<strong>300.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2162"><img src="<{$SKIN_PATH}>images/pc-buy/hx6.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>澳洲糖⼼⼤網鮑魚（1KG）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>990.00</strong></sapn>
+                                    <sapn class="old">$<strong>1080.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2953"><img src="<{$SKIN_PATH}>images/pc-buy/maika.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>唛咖牌野生红烧鲍鱼罐头 （三罐）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>240.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2064"><img src="<{$SKIN_PATH}>images/pc-buy/hx8.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>日本北海道江瑶柱（单位:1kg）</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>390.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="buy-row buy-row10" id="f5">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy6.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2350"><img src="<{$SKIN_PATH}>images/pc-buy/cp1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>AusGolden金尊羊毛冬被SD80</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>125.00</strong></sapn>
+                                    <sapn class="old">$<strong>253.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2188"><img src="<{$SKIN_PATH}>images/pc-buy/cp2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>（AusGolden）奢华贡缎羊毛被冬被SD60</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>125.00</strong></sapn>
+                                    <sapn class="old">$<strong>165.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2241"><img src="<{$SKIN_PATH}>images/pc-buy/cp3.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest健康卫士球纤维可机洗趴睡枕头</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>35.00</strong></sapn>
+                                    <sapn class="old">$<strong>49.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2235"><img src="<{$SKIN_PATH}>images/pc-buy/cp4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest健康卫士云系列欧标方枕</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>35.00</strong></sapn>
+                                    <sapn class="old">$<strong>49.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2231"><img src="<{$SKIN_PATH}>images/pc-buy/cp5.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest至尊薰衣草舒缓羊毛枕头</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>68.00</strong></sapn>
+                                    <sapn class="old">$<strong>89.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2219"><img src="<{$SKIN_PATH}>images/pc-buy/cp6.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest 500Gsm冬季羊毛被 KING 240*210</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>418.00</strong></sapn>
+                                    <sapn class="old">$<strong>599.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2211"><img src="<{$SKIN_PATH}>images/pc-buy/cp7.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest 300Gsm四季羊毛被Single 140*210</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>210.00</strong></sapn>
+                                    <sapn class="old">$<strong>299.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2210"><img src="<{$SKIN_PATH}>images/pc-buy/cp8.jpg" alt="" ></a>
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>Easyrest 300Gsm四季羊毛被 Dounble 180*210</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>248.00</strong></sapn>
+                                    <sapn class="old">$<strong>359.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="buy-row buy-row12" id="f7">
+        <div class="g-buy-tit">
+            <a  style="background-image:url(<{$SKIN_PATH}>images/pc-buy/g-tit_buy8.png)"></a>
+        </div>
+        <ul class="ul-buy g-buy">
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2824"><img src="<{$SKIN_PATH}>images/pc-buy/hf1.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>freezeframe 丰胸霜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2825"><img src="<{$SKIN_PATH}>images/pc-buy/hf2.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>freezeframe 眼霜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2822"><img src="<{$SKIN_PATH}>images/pc-buy/hf3.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>freezeframe 睫毛增长液</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2823"><img src="<{$SKIN_PATH}>images/pc-buy/hf4.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4> freezeframe 收腹瘦身霜</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>36.00</strong></sapn>
+                                    <sapn class="old">$<strong>38.00</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2091"><img src="<{$SKIN_PATH}>images/pc-buy/hf5.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>SOS Breast Volume 豐胸霜 90mL</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>58.05</strong></sapn>
+                                    <sapn class="old">$<strong>64.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2058"><img src="<{$SKIN_PATH}>images/pc-buy/hf6.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>SOS 萬能護膚噴霧 150mL</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>17.95</strong></sapn>
+                                    <sapn class="old">$<strong>19.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2056"><img src="<{$SKIN_PATH}>images/pc-buy/hf7.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>SOS CorrecTone 淡斑面霜 25mL</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>53.95</strong></sapn>
+                                    <sapn class="old">$<strong>59.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a >
+                    <div class="inner">
+                        <div class="pic-box">
+                            <a target="_blank" href="https://www.ubonus365.com/coupon/2055"><img src="<{$SKIN_PATH}>images/pc-buy/hf8.jpg" alt="" />
+                        </div>
+                        <div class="txt-box">
+                            <div class="top">
+                                <em>HOT</em>
+                                <h4>SOS DècoLift 頸霜 30mL</h4>
+                            </div>
+                            <div class="bot">
+                                <em><i></i>特惠</em>
+                                <div class="price">
+                                    <sapn class="new">$<strong>53.95</strong></sapn>
+                                    <sapn class="old">$<strong>59.95</strong></sapn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- index-row10 -->
+    <div class="ind-row10">
+        <div class="g-ind-tit1">
+            <img src="<{$SKIN_PATH}>images/row10-tit.png" alt="" />
+        </div>
+
+
+        <ul class="ul-row10" id ='latest-coupon-load-more'>
+
+            <{foreach from=$data_List item=item}>
+            <li>
+                <a href="<{$http_root_www}>coupon/<{$item.id}>" class="inner">
+
+                    <div class="pic">
+                        <img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="" />
+                    </div>
+                    <div class="txt">
+                        <p><{$item.title|truncate_cn:90:'...'}></p>
+                        <div class="price">
+                            <span class="new"><{$item.price1}></span>
+                            <span class="old"><{$item.price2}></span>
+                        </div>
+                        <span class="collect"><i></i><{$item.hits}></span>
+                    </div>
+                </a>
+            </li>
+            <{/foreach}>
+        </ul>
+        <div style='text-align: center;font-size: 12px;font-family: "微软雅黑","Microsoft Yahei";'>
+            <span class='load-more-btn' data-currentpage='1'>点击这里，查看更多</span>
+            <i class='fa fa-angle-down'></i>
+        </div>
+
+
+    </div>
+    <!-- index-row10 -->
+    <!--div class="g-logolist">
+        <ul class="ul-logo">
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a >
+                    <img src="<{$SKIN_PATH}>images/pc-serve/qj-logo1.jpg" alt="" />
+                </a>
+            </li>
+        </ul>
+    </div>
+</div!-->
+<!-- 代购首页 end-->
+
+<!-- 底部 -->
+
+<{include file='index_inc_footer.htm'}>
+
+<!-- 底部 end -->
+
+<!-- 右边栏 -->
+
+<{include file='index_inc_right.htm'}>
+
+<!--右边栏 end-->
+
+<!-- 浮动导航-->
+<ul class="default-outer">
+    <li class="floor f1"><a href="#f1"><em>保健品</em></a></li>
+    <li class="floor f2"><a href="#f2"><em>奶粉</em></a></li>
+    <li class="floor f3"><a href="#f3"><em>红酒</em></a></li>
+    <li class="floor f4"><a href="#f4"><em>海产品</em></a></li>
+    <li class="floor f5"><a href="#f5"><em>床品</em></a></li>
+    <li class="floor f6"><a href="#f6"><em>珠宝</em></a></li>
+    <li class="floor f7"><a href="#f7"><em>洗浴<br/>护肤</em></a></li>
+    <li class="floor f8"><a href="#f8"><em>美妆</em></a></li>
+</ul>
+<!-- 浮动导航end-->
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+<script src="<{$SKIN_PATH}>js/dong.js"></script>
+<script type="text/javascript">
+    jQuery(".slide-buy").slide({
+        mainCell:".bd ul",
+        autoPlay:true,
+        autoPage:true,
+        effect:"leftLoop",
+        titCell:".hd ul"
+    });
+    $(".ul-nav_left li:last-child()").css('border', 'none');
+    $(".ul-nav_buy li:last-child()").css('height', '40px');
+    $(".g-tit-sev ul li:last-child() a").css('border', 'none');
+    $(".ul-logo_buy li:eq(8)").addClass('li9');
+    $(".ul-logo_buy1 li:eq(2)").addClass('li3');
+    $(".ul-buy5 li:eq(1)").addClass('li2');
+    $(".ul-buy5 li:eq(2)").addClass('li2');
+</script>
+    <script type="text/javascript">
+        $(function(){
+
+            $('.load-more-btn').on('click',function(){
+                var page = $(this).data('currentpage');
+                var url = '<{$http_root_www}>query?cmd=getDaigouList&page='+page;
+                $.ajax({
+                    url:url,
+                    method:"GET",
+                    beforeSend:function(){
+                        $('.load-more-btn').html('加载更多...');
+                    },
+                    success:function(data){
+                        $('#latest-coupon-load-more').append(data);
+                        $('.load-more-btn').data('currentpage',page+1);
+                    },
+                }).always(function(){
+                    $('.load-more-btn').html('点击这里，查看更多');
+                });
+            })
+        })
+
+    </script>
+</body>
+</html>

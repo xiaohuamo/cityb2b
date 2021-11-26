@@ -1,0 +1,601 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>StickyTable/css/component.css" />
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+<style type="text/css">
+	.guigeqtyedit{
+
+	}
+
+	.guigeqtyedit .title{
+		text-align: center;
+	    background: #43d1af;
+	    color: #fff;
+	    line-height: 50px;
+	    font-size: 17px;
+	}
+
+	
+	.guigeqtyedit #guigeList label{
+	    background: #FD5001 ;
+	    color: #555;
+	    margin: 4px;
+	    display: inline-block;
+	    line-height: 30px;
+	    padding: 0px 10px;
+	    border-radius: 5px;
+	}
+
+	.guigeqtyedit #guigeList1 label{
+	    background: #31bc86;
+	    color: #555;
+	    margin: 4px;
+	    display: inline-block;
+	    line-height: 30px;
+	    padding: 0px 10px;
+	    border-radius: 5px;
+	}
+
+	.guigeqtyedit #guigeList2 label{
+	    background: #2ea879;
+	    color: #555;
+	    margin: 4px;
+	    display: inline-block;
+	    line-height: 30px;
+	    padding: 0px 10px;
+	    border-radius: 5px;
+	}
+
+	.guigeqtyedit #stockTableEditLock{
+	    display: inline-block;
+	    color: #fff;
+	    padding: 10px 20px;
+	    border-radius: 5px;
+	    width: 100px;
+	    text-align: center;
+	    transition: background-color 0.25s ease;
+	}
+
+	.guigeqtyedit #stockTableEditLock.lock{
+	    background: #de3636;
+	}
+
+	.guigeqtyedit #stockTableEditLock.unlock{
+	   	background: #00bb00;
+	}
+
+	.wholesaleBlock{
+		background-color: #eee;
+		padding: 5px 15px;
+    	margin: 10px 0px;
+	}
+
+	.wholesaleBlock input{
+		width: 100px;
+	}
+
+	
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >4</span>
+					<div class="colCurTit clearfix">
+						<h1>第四步：价格与库存</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+					
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box clearfix">
+							<span>
+							<label>原价</label>
+							</span>
+							<input type="text" class="input-text" value="<{$data.voucher_original_amount}>"  name ="voucher_original_amount"  /> <em>澳元（主要作为一种营销手段）</em>
+						</div>
+						<div class="input-box clearfix">
+							<span>
+							<label >售价</label>
+							</span>
+							<input type="text" class="input-text" value="<{$data.voucher_deal_amount}>"  name ="voucher_deal_amount" /> <em>澳元（客户实际需支付的金额）</em>
+					  	</div>
+
+						<div class="input-box clearfix">
+							<span>
+							<label >含税</label>
+							</span>
+
+							<label>
+								是否包含GST
+								<input type="checkbox" name="include_gst" <{if $data.include_gst}>checked<{/if}>>
+							</label>
+						</div>
+
+					  	<div class="input-box clearfix">
+							<span>
+							<label >批发价</label>
+							</span>
+							
+							<label>
+								使用批发价
+								<input type="checkbox" name="useWholesale" <{if $wholesaleData}>checked<{/if}>>		
+							</label>
+
+							<div class='wholesaleSection' <{if !$wholesaleData}>style='display:none'<{/if}>>
+
+								<em class='em-btn-yellow wholesaleBlockAdd'><i class='fa fa-plus'>增加一个批发价</i></em><em>目前支持最多3个批发价</em>
+							</div>
+
+							<script type="text/javascript">
+								$(function(){
+									function addWholesaleBlockHtml(amount,price){
+										var wholesaleBlockHtml="<div class='wholesaleBlock'><em>当购买超过</em><input type='number' min='0' step='1' name='wholesaleAmount[]' value='"+amount+"'> <em>个，产品售价$</em> <input type='number' min='0' step='0.01' name='wholesalePrice[]' value='"+price+"'><i class='fa fa-close wholesaleBlockRemove' style='color:red;' onClick='$(this).parent(\".wholesaleBlock\").remove();'></i></div>";
+
+										$('.wholesaleBlockAdd').before(wholesaleBlockHtml);
+									}
+
+									$('.wholesaleBlockAdd').on('click',function(){
+										if($('.wholesaleBlock').length>=3)return;
+										addWholesaleBlockHtml();
+									})
+
+									$('input[name=useWholesale]').on('click',function(){
+										if($(this).attr('checked')){
+											$('.wholesaleSection').show(200);
+										}else{
+											$('.wholesaleSection').hide(200);
+										}
+									})
+
+									<{if $wholesaleData}>
+										addWholesaleBlockHtml('<{$wholesaleData.amount}>','<{$wholesaleData.price}>');
+										addWholesaleBlockHtml('<{$wholesaleData.amount1}>','<{$wholesaleData.price1}>');
+										addWholesaleBlockHtml('<{$wholesaleData.amount2}>','<{$wholesaleData.price2}>');
+									<{else}>
+										addWholesaleBlockHtml();
+									<{/if}>
+								})
+							</script>
+									
+					  	</div>
+						
+
+						<br><hr><br>
+
+						<div class="input-box clearfix ">
+							<span><label>产品规格</label></span>
+							
+							<label>
+								使用规格	
+								<input type="checkbox" name="useguige" value='1' <{if $data.useguige}> checked <{/if}>>
+								<em>如果修改规格参数，已经存在的相应规格链接将会自动失效清除</em>
+							</label>
+						</div>
+
+						<script type="text/javascript">
+							$(function(){
+								function useGuigeViewToggle(){
+									if($("input[name='useguige']").is(":checked")){
+										$('.normalqtyedit').hide(200);
+										$('.guigeqtyedit').show(200);
+									}else {
+										$('.guigeqtyedit').hide(200);
+										$('.normalqtyedit').show(200);
+									}
+								}
+								$("input[name='useguige']").on('click',function(){
+									useGuigeViewToggle();
+								})
+								useGuigeViewToggle()
+							})	
+						</script>
+
+						<!-- table list Start -->
+						<div class='guigeqtyedit'>
+							<div class='title'>请从可用规格中选择</div>
+							<{if $list}>
+							<div id='guigeList'>
+								<{foreach from=$list item=item name=guigeList}>
+									<label>
+										<input type="checkbox" class='checkList' name="guige_list[]" data-index="<{$smarty.foreach.guigeList.index}>" value="<{$item.id}>"/>
+										<{$item.name}>
+									</label>
+								<{/foreach}>
+								<span>种类最多选择2种。</span>
+							</div>
+
+							<div  id='guigeList1' ></div>
+
+							<div  id='guigeList2' ></div>
+
+							<br>
+
+							<div id ='stockTableEditLock' data-statu='unlock'></div>
+
+							<!-- table list End -->
+							<input id='stripcode' name='stirpcode' type='hidden' value=''>
+							<!-- table Start -->
+
+							<div class="component" id='guige_table'></div>
+
+							<{else}>
+							<span>您还没有任何规格，请编辑完成规格数据后刷新该页面  <a target="_blank" href="<{$http_root_www}>company/shop_guige">编辑</a></span>
+							<{/if}>
+							<!-- table END -->
+						</div>
+						
+						<div class='normalqtyedit'>
+							<div class="input-box clearfix ">
+								<span><label >库存数量</label></span>
+								<input type="number" min='0' name="qty" class="input-text" value="<{$data.qty}>" style="width:120px;" />
+								<em></em>
+							</div>
+						</div>
+
+
+						<br><hr><br>
+
+
+						<div class="input-box clearfix">
+							<span><label >每个订单最多限购</label></span>
+							<input type="number" min='0' name="perCustomerLimitQuantity" class="input-text" value="<{$data.perCustomerLimitQuantity}>" style="width:120px;" />
+							<em>0为不限购</em>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label >每个订单最少限购</label></span>
+							<input type="number" min='0' name="perCustomerMinLimitQuantity" class="input-text" value="<{$data.perCustomerMinLimitQuantity}>" style="width:120px;" />
+							<em>0为不限购</em>
+						</div>
+						
+						<{include file='company/coupons_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+
+
+
+<script type="text/javascript">
+
+	var guige_data=[
+		<{foreach from=$list item=item name=guigelooplevel1}>
+			[
+				<{foreach from=$item.guige_details item=sitem name=guigelooplevel2}>
+					{name:'<{$sitem.name}>',id:'<{$sitem.id}>'}
+					<{if not $smarty.foreach.guigelooplevel2.last}>,<{/if}>
+				<{/foreach}>
+				
+			]
+			<{if not $smarty.foreach.guigelooplevel1.last}>,<{/if}>
+		<{/foreach}>
+			
+	];
+	var currentTrArray,currentTdArray;
+	function refreshGuigeTable(trArray,tdArray){
+		if(trArray.length==0)trArray=[{name:'库存',id:'-1'}];
+		if(tdArray.length==0)tdArray=[{name:'库存',id:'-1'}];
+		currentTdArray=tdArray;
+		currentTrArray=trArray;
+		preSaveStripcode();
+		removeGuigeTable();
+		$('#guige_table').html(formGuigeTable(trArray,tdArray));
+		initStickyHeaderTable();
+	}
+	function removeGuigeTable(){
+		$('#guige_table').html('');
+	}
+
+	function formGuigeTable(trArray,tdArray){
+		var html = new Array();
+		html.push('<table class="">');
+		html.push('<thead><tr>');
+			html.push('<th>','库存管理','</th>');
+			for (var i = 0; i < trArray.length ; i++) {
+				html.push('<th>',trArray[i].name,'</th>');
+			};
+		html.push('</tr></thead>');
+
+		html.push('<tbody>');
+			for (var n =0; n <  tdArray.length ; n++) {
+				html.push('<tr>');
+				html.push('<th>',tdArray[n].name,'</th>');
+					for (var i = 0; i < trArray.length ; i++) {
+						html.push('<td><input class="stockInput" data-trarrayindex="',trArray[i].id,'" data-tdarrayindex="',tdArray[n].id,'" disabled="true" type="text"  size="5" onChange="updateStockAjax(this)"></td>');
+					};
+				html.push('</tr>');
+			};
+		html.push('</tbody>');
+		html.push('</table >');
+		return html.join('');
+	}
+
+	function updateGuigeList(obj){
+		if($(obj).is(':checked')){
+			addSubGuigeList($(obj).data('index'));
+		}else{
+			removeSubGuigeList($(obj).data('index'));
+		}
+	}
+	function addSubGuigeList(index){
+		var context=null;
+		var label=null;
+		if($('#guigeList1').html().trim()==''){
+			context=$('#guigeList1');
+		}else if($('#guigeList2').html().trim()=='') {
+			context=$('#guigeList2');
+		}else{
+			contaxt=null;
+		}
+
+		var html = new Array;
+		for (var i = 0; i < guige_data[index].length ; i++) {
+			html.push('<label class="guige-item-select"><input type="checkbox" name="guige_list_sub[]" value="',guige_data[index][i].id,'"class="subchecklist" data-index="',i,'" />',guige_data[index][i].name,' </label>');
+		};
+
+		$(context).html(html.join(''));
+		$(context).data('guigeindex',index);
+		initSubcheckListAction();
+	}
+	function removeSubGuigeList(index){
+		var index1 = $('#guigeList1').data('guigeindex');
+		var index2 = $('#guigeList2').data('guigeindex');
+
+		if(index1==index){
+			$('#guigeList1').html('');
+		}
+
+		if(index2==index){
+			$('#guigeList2').html('');
+		}
+	}
+
+	function initSubcheckListAction(){
+		$(':checkbox.subchecklist').change(function(){
+			var $cs = $(':checkbox.checkList:checked');
+			
+				updateStockTableStructure();
+			
+		});
+	}
+	function updateStockTableStructure(){
+			var $cs1 = $('#guigeList1 :checkbox.subchecklist:checked');
+	 		var $cs2 = $('#guigeList2 :checkbox.subchecklist:checked');
+			var index1 = $('#guigeList1').data('guigeindex');
+			var index2 = $('#guigeList2').data('guigeindex');
+			var data1=guige_data[index1];
+			var data2=guige_data[index2];
+
+			refreshGuigeTable(modifyGuigeData(data1,$cs1),modifyGuigeData(data2,$cs2));
+	}	
+
+	function modifyGuigeData(data,checklist){
+		var newData=[];
+		checklist.each(function(){
+			newData.push(data[$(this).data('index')]);
+		});
+		return newData;
+	}
+	
+	$(':checkbox.checkList').change(function () {
+		var $cs = $(':checkbox.checkList:checked');
+	    if ($cs.length > 2) {
+	        this.checked = false;
+	    }else{ 
+	    	updateGuigeList(this);
+	    	updateStockTableStructure();
+		}
+	});
+
+	$('#stockTableEditLock').on('click',function(){
+		if($(this).data('statu')=='lock'){
+			stockTableEditUnlock();
+		}else if($(this).data('statu')=='unlock'){
+			stockTableEditLock();
+		}
+	});
+	function stockTableEditLock(){
+		$(':checkbox.checkList').attr("disabled", true);
+		$(':checkbox.subchecklist').attr("disabled", true);
+		
+		$.ajax({
+		   url: '<{$http_root_www}>index.php?ctl=stock_ajax&act=init_stock_table',
+		   data: {
+		   		couponId: <{$data.id}>,
+		      trArray: currentTrArray,
+		      tdArray: currentTdArray
+		   },
+		   beforeSend : function (){
+               $('#stockTableEditLock').html('<i class="fa fa-spinner fa-spin"></i>');
+            },
+            success : function (returnData) {
+                //if ajax initTable successed
+                if(returnData.trim()=='success'){
+                	$('#stockTableEditLock').html('编辑');
+					$('.stockInput').removeAttr("disabled");
+					$('#stockTableEditLock').data('statu','lock');
+					$('#stockTableEditLock').addClass('lock').removeClass('unlock');
+					retrieveStockData();
+                }else{
+                	 stockTableEditUnlock();
+                }
+				
+            },
+            error : function (xhr, textStatus, errorThrown) {
+                stockTableEditUnlock();
+            },
+		   dataType: "text"
+		});
+	}
+
+	function preSaveStripcode(){
+		var stripcode='';
+
+		$(':checkbox.checkList:checked').each(function(){
+			stripcode +=$(this).val()+',';
+		})
+		//remove last ',' and add a seperator '#'
+		stripcode = stripcode.slice(0, -1) +'#';
+
+		$(':checkbox.subchecklist:checked').each(function(){
+			stripcode +=$(this).val()+',';
+		});
+		//remove last ','
+		stripcode = stripcode.slice(0, -1)
+
+		$('#stripcode').val(stripcode);
+	}
+
+	function stockTableEditUnlock(){
+		$('#stockTableEditLock').html('应用');
+		
+		$(':checkbox.checkList').removeAttr("disabled");
+		$(':checkbox.subchecklist').removeAttr("disabled");
+		$('.stockInput').attr("disabled", true);
+		$('#stockTableEditLock').data('statu','unlock');
+		$('#stockTableEditLock').addClass('unlock').removeClass('lock');
+	}
+
+	function updateStockAjax(obj){
+		if(!$.isNumeric($(obj).val()))return;
+
+		$.ajax({
+		   url: '<{$http_root_www}>index.php?ctl=stock_ajax&act=update_stock',
+		   data: {
+		   		couponId: <{$data.id}>,
+		      	guige1Id: $(obj).data('trarrayindex'),
+		      	guige2Id: $(obj).data('tdarrayindex'),
+		      	qty:$(obj).val()
+		   },
+		   beforeSend : function (){
+              $(obj).before('<i class="fa fa-spinner fa-lg fa-spin" style="position:absolute;margin:5px;color:#31BC86"></i>');
+              $(obj).attr("disabled", true);
+            },
+            success : function (returnData) {
+            	$(obj).prev('i').remove();
+            	$(obj).removeAttr("disabled");
+            	if(returnData.trim()=='success'){
+					$(obj).effect("highlight",{color:'#54F422'},2000 );
+            	}else{
+					$(obj).effect("highlight",{color:'#FA002E'},5000 );
+            	}
+            },
+            error : function (xhr, textStatus, errorThrown) {
+                
+            },
+		   dataType: "text"
+		});
+		
+	}
+	function retrieveStockData(){
+		$.ajax({
+		   url: '<{$http_root_www}>index.php?ctl=stock_ajax&act=retrieve_stock_data',
+		   data: {
+		   		couponId: <{$data.id}>,
+		   },
+		   beforeSend : function (){
+              $('.stockInput').before('<i class="fa fa-spinner fa-lg fa-spin" style="position:absolute;margin:5px;color:#31BC86"></i>');
+              $('.stockInput').attr("disabled", true);
+            },
+            success : function (returnData) {
+                //if ajax initTable successed
+                var stockData=JSON.parse(returnData);
+
+                for (var i = 0; i<stockData.length;i++){
+                	var trarrayindex=stockData[i].guige1Id;
+                	var tdarrayindex=stockData[i].guige2Id;
+
+                	$(".stockInput[data-trarrayindex='"+trarrayindex+"'][data-tdarrayindex='"+tdarrayindex+"']").val(stockData[i].qty);
+                }
+
+                 $('.stockInput').prev('i').remove();
+            	 $('.stockInput').removeAttr("disabled");
+            },
+		   dataType: "text"
+		});
+	}
+
+	//reading saved data and init stock table
+	$(function(){
+		//getdata
+		var stripCode = "<{$data.stripCode}>";
+		if(stripCode!=""){
+			var parts=stripCode.split('#');
+			
+			var guige_ids=parts[0];
+			var guige_ids_sub=parts[1];
+
+			if(guige_ids){
+				var guige_ids_array=guige_ids.split(',');
+			}else{
+				var guige_ids_array=[];
+			}
+
+			if(guige_ids_sub){
+				var guige_ids_sub_array=guige_ids_sub.split(',');
+			}else{
+				var guige_ids_sub_array=[];
+			}
+			
+
+			//init checklist
+			$(':checkbox.checkList').each(function(){
+				if(guige_ids_array.includes($(this).val())){
+					$(this).prop("checked", true);
+					addSubGuigeList($(this).data('index'));
+				}
+			});
+			$(':checkbox.subchecklist').each(function(){
+				$(this).prop("checked", false);
+				if(guige_ids_sub_array.includes($(this).val())){
+					$(this).prop("checked", true);
+				}
+			});
+		}
+		//active stock table;
+		updateStockTableStructure();
+
+		if(stripCode){
+			stockTableEditLock();
+		}else{
+			stockTableEditUnlock();
+		}
+	});
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="<{$STATIC_PATH}>StickyTable/js/jquery.stickyheader.js"></script>
+
+
+</body>
+</html>

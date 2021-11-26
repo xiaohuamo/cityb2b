@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+    <title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+	<header id="hd" style="height: 47px;">
+		<div class="left">
+			<a class="a-face"><img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:200:200}>" alt="">
+			<span><{$businessDisplayName}></span></a>
+		</div>
+		<div class="right">
+			<a href="<{$http_root_www}>message/index" class="a-new"><!-- <em>13</em> --></a>
+		</div>
+	</header>
+
+	<section id="bd">
+		<ul class="g-ul m-chart">
+			<li>
+				<div class="pic"><img src="<{$SKIN_PATH}>mobile/images/p8.jpg" alt=""></div>
+				<div class="txt">
+					<p><i class="ico1"></i>账户资金</p>
+					<span>$<{if $balance<=0}>0<{else}><{$balance}><{/if}></span>
+				</div>
+			</li>
+			<li>
+				<div class="pic"><img src="<{$SKIN_PATH}>mobile/images/p9.jpg" alt=""></div>
+				<div class="txt">
+					<p><i class="ico2"></i>Sale in 30 days</p>
+					<span>$<{if $totalSales<=0}>0<{else}><{$totalSales}><{/if}></span>
+				</div>
+			</li>
+		</ul>
+
+		<ul class="g-ul m-list11 m-list11-1">
+			
+			<li class="i3">
+				<a target = "_blank" href="<{$http_root_www}>factorypage/order_for_customer" class="con">
+					<span></span>
+					<h4>下订单</h4>
+				</a>
+			</li>
+
+			<li class="i3">
+				<a target = "_blank" href="<{$http_root_www}>factory/customer_orders" class="con">
+					<span></span>
+					<h4>订单管理</h4>
+				</a>
+			</li>
+
+			<li class="i1">
+				<a target = "_blank" href="<{$http_root_www}>factory_2c/factroy_order_summery" class="con">
+					<span><!-- <em> <b></b></em> --></span>
+					<h4>打印备货单</h4>
+				</a>
+			</li>
+
+			<li class="i4">
+				<a target = "_blank" href="<{$http_root_www}>factory/add_new_customer" class="con">
+					<span></span>
+					<h4>添加新客户</h4>
+				</a>
+			</li>
+			<li class="i5">
+				<a target = "_blank" href="<{$http_root_www}>factory/customer_list" class="con">
+					<span></span>
+					<h4>客户列表</h4>
+				</a>
+			</li>
+			<li class="i5">
+				<a target = "_blank" href="<{$http_root_www}>company/customer_orders_logistic" class="con">
+					<span></span>
+					<h4>打印装箱单</h4>
+				</a>
+			</li>
+			<li class="i2">
+				<a  href="<{$http_root_www}>factory/publish" class="con">
+					<span></span>
+					<h4>发布中心</h4>
+				</a>
+			</li>
+			
+			<li class="i2">
+				<a  href="<{$http_root_www}>factory/packaging" class="con">
+					<span></span>
+					<h4>配货中心</h4>
+				</a>
+			</li>
+			
+			<li class="i6">
+				<a target = "_blank" href="<{$http_root_www}>company/business_setting_main" class="con">
+					<span></span>
+					<h4>设置</h4>
+				</a>
+			</li>
+			
+			<li class="i6">
+				<a target = "_blank" href="<{$http_root_www}>member/index" class="con">
+					<span></span>
+					<h4>个人中心</h4>
+				</a>
+			</li>
+			
+		</ul>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<script type="text/javascript">
+	    getMessage();
+	    function getMessage()
+	    {
+	        $.ajax({
+	            //获取商家未读信息
+	            url: "http://livechatserver.ubonus365.com:1500?RequestNo=8709&cid=<{$clientChatId}>",
+	            type: 'GET',
+	            dataType: 'jsonp',
+	            success: function (data) {
+	                if (data.Code == "9613") {
+	                    $(".getMessage").html("");
+	                    //消息块的样式
+	                    //var vChatUrl="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID="+data.ListData.bid+"";
+	                    var vChatUrl="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID=25201";
+	                    //聊天地址
+	                    var vLiHtml = $('.getMessage').html() + "<a target=\"_blank\"  href=\""+vChatUrl+"\"><i class=\"ico7\"><em class=\"after\">"+data.ListData.count+"</em></i>消息</a>";
+	                    $(".getMessage").html(vLiHtml);
+	                }
+	            },
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+	                alert("error");
+	            }
+	        });
+	    }
+	</script>
+
+</body>
+</html>

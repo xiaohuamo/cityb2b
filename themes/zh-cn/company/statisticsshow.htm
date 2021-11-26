@@ -1,0 +1,23 @@
+<table style='width:100%'>
+	<{foreach from=$static item = item name =l}>
+	<{if $smarty.foreach.l.index==0}>
+	<thead style='background-color:#00A1E9;color:white'>
+		<tr>
+			<{foreach from=$item key=key item=data}>
+			<th><{$key}></th>
+			<{/foreach}>
+		</tr>
+	</thead>
+	<{/if}>
+	<tr<{if $smarty.foreach.l.index%2==0}> class="odd"<{/if}>>		
+		<{foreach from=$item key=key item=data}>
+		<{if $key=='规格'}>
+			<td style='text-align:center'><a href="<{$http_root_www}>company/customer_orders?guige=<{$item[$key]}>&status=all"><{$item[$key]}></a></td>
+		<{else}>
+			<td style='text-align:center'><{$item[$key]}></td>
+		<{/if}>
+		<{/foreach}>
+	</tr>
+	<{/foreach}>
+</table>
+

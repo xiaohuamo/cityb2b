@@ -1,0 +1,493 @@
+<!doctype html><html><head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title><{if $pageKeywords}>
+<meta name="keywords" content="<{$pageKeywords}>" /><{/if}><{if $pageDescription}>
+<meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+ <link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert.css'>
+ <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+<style>
+	.main-form .input-box span label { width:100px; }
+
+	.totalDeliveryfee div span:nth-child(1), .totalGoodsSales  div span:nth-child(1),.totalInSec div span:nth-child(1),.totalamend div span:nth-child(1),.totalOutSec div span:nth-child(1){
+		display: inline-block;
+		width: 150px;
+	}
+
+	.totalInSec,.totalOutSec,.totalamend,.totalGoodsSales,.totalDeliveryfee{
+		max-width: 350px;
+		padding: 10px;
+		margin:10px;
+	}
+
+	.money-statistics .space-step1{
+		margin-left: 30px;
+	}
+	.money-statistics .space-step2{
+		margin-left: 60px;
+	}
+	.money-statistics .fontBlod {
+		font-weight: bolder;
+		color: #333;
+	}
+
+</style>
+</head>
+<body>
+	<{include file='header.htm'}>
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}>
+			<div class="main">
+				<div class="box2">
+
+						<div class="colCurTit clearfix">
+						<h1>导出报表</h1>
+				    	</div>
+
+						<div style='padding: 10px;margin:10px;'>
+						
+							<span class="links">
+								<a class='btn-yellow' onclick="showRedeemedPdf_settlement();">结算周报</a>
+							</span>
+
+<{*							<span class="links">*}>
+<{*								<a class='btn-yellow' onclick="showRedeemedPdf();">导出结算资金流水</a>*}>
+<{*							</span>*}>
+
+                            <span class="links">
+								<a class='btn-yellow' onclick="showsellingDetailsPdf();">导出销售明细</a>
+							</span>
+
+							 <span class="links">
+								<a class='btn-yellow' onclick="showMissingORDamageDetailsPdf();">导出报损明细</a>
+							</span>
+
+							<span class="links">
+								<a class='btn-yellow' onclick="settlement();">手动申请资金结算</a>
+							</span>
+						</div>
+						<div class='main-list'>
+						<form action='<{$http_root_www}>company/money_review' method='get' style='padding: 10px;margin:10px;'>
+
+
+
+
+						<br><br>
+
+
+							<label>
+								结算点结算
+								<input type="radio" name="settlement_type" value='system' onclick="location.href='<{$http_root_www}>company/money_review?settlement_type=system'" <{if $settlement_type=='system'}>checked <{/if}>>
+							</label>
+
+							<label>
+								自定义结算
+								<input type="radio" name="settlement_type" value='custom' onclick="location.href='<{$http_root_www}>company/money_review?settlement_type=custom'" <{if $settlement_type=='custom'}>checked <{/if}>>
+							</label>
+
+							<br><br>
+
+							<h1>
+							上一结算点：<{$lastSettlementPoint.settle_to}>
+							<a href="<{$http_root_www}>company/settlement_log">详情</a>
+							</h1>
+
+							<br>
+
+							<{if $settlement_type=='system'}>
+
+								<h1>系统结算点自动结算</h1>
+								<p>系统结算点自动结算，只结算已经兑付的订单。自动从上一次结算时间点结算至今日0点（昨日24点）。今日的订单需要明天才可以结算</p>
+
+								<br>
+
+								<h1>
+								商家款项结算方式：<{if $loginUser.settlement_type=='b01'}>仅结算已兑付订单<{else}>结算所有已购买订单<{/if}> (如果需要修改需要联系系统管理员)
+								</h1>
+
+								<br>
+
+								<label>开始时间：</label>
+								<input type="text" class="input-text" style="width:150px;" id="st" name="startTime" value="<{$from}>" readonly>
+								<label>结束时间：</label>
+								<input type="text" class="input-text" style="width:150px;" id="et" name="endTime" value="<{$to}>" readonly >
+
+								<select name='status' id='ss' readonly>
+									<{if $status=='c01'}>
+										<option value='c01' selected >
+											未兑付订单
+										</option>
+									<{/if}>
+
+									<{if $status=='b01'}>
+										<option value='b01' selected >
+											已兑付订单
+										</option>
+									<{/if}>
+									<!-- <option value='all' <{if $status=='all'}> selected <{/if}> >
+										未兑付和已兑付订单
+									</option> -->
+								</select>
+
+							<{/if}>
+
+
+							<{if $settlement_type=='custom'}>
+									<h1>自定义结算</h1>
+									<p style='color:red'>自定义结算可能会导致订单重复结算。您需要自行确认结算的时间没有重叠，否则系统审批时可能不予通过</p>
+
+									<br>
+
+									<label>开始时间：</label>
+									<input type="text" class="input-text" style="width:150px;" id="st" name="startTime" value="<{$from}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+									<label>结束时间：</label>
+									<input type="text" class="input-text" style="width:150px;" id="et" name="endTime" value="<{$to}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+
+									<select name='status' id='ss'>
+
+										<option value='b01' <{if $status=='b01'}> selected <{/if}> >
+											已兑付订单
+										</option>
+										<option value='c01' <{if $status=='c01'}> selected <{/if}>>
+											未兑付订单
+										</option>
+										<option value='all' <{if $status=='all'}> selected <{/if}> >
+											未兑付和已兑付订单
+										</option>
+									</select>
+							<{/if}>
+
+							<button tyle='sumbit'>查看可结算金额</button>
+
+						</form>
+
+						<div style='padding: 10px;margin:10px;'>
+							<h1>结算</h1>
+							<span>开始日期：<{$from}> 00:00:00</span>
+							--
+							<span>结束日期：<{$to}> 00:00:00</span>
+							<br>
+							<em>由于系统数据原因，只能查询2017年7月27日以后的订单。否则数据不准确</em>
+							<br>
+							<em>由于系统数据原因，2017年8月26日以前的订单，涉及钱包支付数据不准确</em>
+						</div>
+
+
+<{*						<div class=" money-statistics" >*}>
+<{*							<div class='totalInSec'>*}>
+<{*								<div class='fontBlod'>*}>
+<{*									<span style='width: 250px;'>销售总营收</span><span><{$dataSet1.totalIn}></span>*}>
+<{*								</div>*}>
+
+<{*								<div style='border-bottom: 1px dashed #999'></div>*}>
+
+
+<{*								<div >*}>
+
+<{*								</div>*}>
+
+
+<{*								<br>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>用户付款总额</span>*}>
+<{*									<span><{$dataSet3.transactionBalanceOnline}>(<{$dataSet2.transactionBalance}>)</span>*}>
+<{*								</div>*}>
+<{*									<br>*}>
+<{*								<div>*}>
+<{*									<span class='space-step2'>(Paypal支付</span><span><{$dataSet3.paypal}>)</span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step2'>(Wechat支付</span><span><{$dataSet3.royalpay}>)</span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step2'>(Alipay支付</span><span><{$dataSet3.alipay}>)</span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step2'>(Credit Card支付</span><span><{$dataSet3.creditcard}>)</span>*}>
+<{*								</div>*}>
+<{*								<div >*}>
+<{*									<span class='space-step2'>(Hcash支付</span><span><{$dataSet3.hcash}>)</span>*}>
+<{*								</div>*}>
+
+<{*								<div style="color:#f00">*}>
+<{*									<span class='space-step2'>(线下支付</span><span><{$dataSet3.offline}>)</span>*}>
+<{*								</div>*}>
+<{*								  <br>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step2'>商家自收款</span>*}>
+<{*									<span>*}>
+<{*										<{$dataSet1.TRANSACTION_BALANCE-$dataSet3.transactionBalanceOnline}>*}>
+<{*										<!--$dataSet3.transactionBalanceOnline 为CC order中总线上交易额  -->*}>
+<{*										<!--$dataSet1.TRANSACTION_BALANCE 为CC recharge中平台负责收款后给商家的交易额的转款  -->*}>
+<{*										<!--差值为商家自行收款的部分  -->*}>
+<{*									</span>*}>
+<{*								</div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step2'>平台折扣码返还</span><span>+<{$dataSet1.PROMOTION_REFOUND}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step2'>平台补贴三方手续费</span><span>+<{$dataSet1.TRANSACTION_FEE_PLATFORM_REFOUND}></span>*}>
+<{*								</div>*}>
+
+<{*								<br>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>钱包支付进账</span><span>+<{$dataSet1.MONEYPAY_BALANCETRANSFER}></span>*}>
+<{*								</div>*}>
+
+<{*								<br>*}>
+<{*									<div style='border-bottom: 1px dashed #999'></div>*}>
+<{*								<br>*}>
+
+<{*                         </div>*}>
+<{*                    <div class='totalGoodsSales'>*}>
+<{*								<div class='fontBlod'>*}>
+<{*									<span style='width: 250px;'>总商品销售</span><span>+<{$dataSet2.totalGoodsSales-$dataSet2.totalamend}></span>*}>
+<{*								</div>*}>
+
+<{*								<div style='border-bottom: 1px dashed #999'></div>*}>
+
+<{*							<div>*}>
+
+<{*									<span class='space-step1'>销售总营收</span><span>$<{$dataSet1.totalIn}></span>*}>
+<{*								</div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>(+)折扣码减免</span><span>$<{$dataSet2.promotionTotal}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>(-)总运费</span><span>$<{$dataSet2.deliveryFee}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>(-)平台预订费代收</span><span>$<{$dataSet2.platformFee}></span>*}>
+<{*								</div>*}>
+
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>(-)三方支付手续费</span><span>$<{$dataSet2.transactionFee}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>(-)本期销售退货及报损</span><span>$<{$dataSet2.totalamend}></span>*}>
+<{*								</div>*}>
+<{*								<br>*}>
+
+
+<{*							</div>*}>
+
+
+
+
+<{*							<div class='totalOutSec'>*}>
+<{*								<div class='fontBlod'>*}>
+<{*									<span style='width: 250px;'>收取平台佣金</span><span><{$dataSet2.commissionOfsales}></span>*}>
+<{*								</div>*}>
+
+<{*								<div style='border-bottom: 1px dashed #999'></div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>平台佣金</span><span><{$dataSet2.commissionOfsaleswithoutGst}></span>*}>
+<{*								</div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>平台佣金GST</span><span><{$dataSet2.commissionOfsalesGst}></span>*}>
+<{*								</div>*}>
+
+
+<{*							</div>*}>
+
+<{*							<div class='totalDeliveryfee'>*}>
+<{*								<div class='fontBlod'>*}>
+<{*									<span style='width: 250px;'>商家收取运费</span><span>+<{$dataSet2.deliveryFee}></span>*}>
+<{*								</div>*}>
+
+<{*								<div style='border-bottom: 1px dashed #999'></div>*}>
+
+
+
+<{*							</div>*}>
+
+<{*							<div class='personal totalOutSec'>*}>
+<{*								<div class='fontBlod'>*}>
+<{*									<span style='width: 250px;'>其它</span><span><{$dataSet4.personalTransactionTotal}></span>*}>
+<{*								</div>*}>
+
+<{*								<div style='border-bottom: 1px dashed #999'></div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>个人取现</span>*}>
+<{*									<span><{$dataSet4.withdraw}></span>*}>
+<{*								</div>*}>
+
+<{*								<div>*}>
+<{*									<span class='space-step1'>红包</span>*}>
+<{*									<span><{$dataSet4.redbag}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>使用钱包</span>*}>
+<{*									<span><{$dataSet4.usemoneypay}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>用户介绍费</span>*}>
+<{*									<span><{$dataSet4.CUSTOMER_REF_COMMISSION}></span>*}>
+<{*								</div>*}>
+<{*								<div>*}>
+<{*									<span class='space-step1'>商家介绍费</span>*}>
+<{*									<span><{$dataSet4.BUSINESS_REF_COMMISSION}></span>*}>
+<{*								</div>*}>
+
+<{*							</div>*}>
+
+
+<{*							<div class='totalBalanceSec'>*}>
+<{*								<div class='fontBlod' style=''>*}>
+<{*									<span style='display: inline-block; width: 250px;margin-left: 20px;'>Total</span><span><{$dataSet1.totalBalance}></span>*}>
+<{*								</div>*}>
+<{*							</div>*}>
+<{*						</div>*}>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+<script type="text/javascript">
+
+
+ 	 function showRedeemedPdf() {
+            var vFrom=$('#st').val();
+            var vTo=$('#et').val();
+            var status=$('#ss').val();
+            var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf';
+            window.open(vUrl);
+        }
+
+
+
+	function showsellingDetailsPdf() {
+
+
+
+
+
+
+			 var vFrom=$('#st').val();
+			vFrom =vFrom.substring(0,10);
+			var vTo=$('#et').val();
+			var oDateto = new Date(vTo);
+			var  oDateto1=oDateto.setDate(oDateto.getDate()-1);
+            var  oDateto2 = new Date(oDateto1);
+
+
+
+
+			Date.prototype.Format = function(fmt)
+			{
+			//author:wangweizhen
+			  var o = {
+				"M+" : this.getMonth()+1,                 //月份
+				"d+" : this.getDate(),                    //日
+				"h+" : this.getHours(),                   //小时
+				"m+" : this.getMinutes(),                 //分
+				"s+" : this.getSeconds(),                 //秒
+				"q+" : Math.floor((this.getMonth()+3)/3), //季度
+				"S"  : this.getMilliseconds()             //毫秒
+			  };
+			  if(/(y+)/.test(fmt))
+				fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+			  for(var k in o)
+				if(new RegExp("("+ k +")").test(fmt))
+			  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+			  return fmt;
+			  };
+
+
+
+			//alert(oDateto2.Format('yyyy-MM-dd'));
+			vTo=oDateto2.Format('yyyy-MM-dd');
+
+
+           // var status=$('#ss').val();
+           // var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf';
+			 var vUrl='<{$http_root_www}>company/customer_orders?output=pdf&status=b01&startTime='+vFrom+'&endTime='+vTo;
+            window.open(vUrl);
+        }
+
+		 function showMissingORDamageDetailsPdf() {
+            var vFrom=$('#st').val();
+			vFrom =vFrom.substring(0,10);
+            var vTo=$('#et').val();
+           // var status=$('#ss').val();
+           // var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf';
+			 var vUrl='<{$http_root_www}>company/customer_orders_amend?output=pdf&status=b01&startTime='+vFrom+'&endTime='+vTo;
+			 window.open(vUrl);
+        }
+
+
+
+
+		 function showRedeemedPdf_settlement() {
+            var vFrom=$('#st').val();
+            var vTo=$('#et').val();
+            var status=$('#ss').val();
+			var dispatching_id ='<{$dispatch_or_individual}>';
+			if(dispatching_id) {
+			  var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf_settlement_dispatching_supplier';
+
+			}else{
+			  var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf_settlement';
+
+			}
+           // var vUrl='<{$http_root_www}>company/money_review?startTime='+vFrom+'&endTime='+vTo+'&status='+status+'&output=pdf_settlement';
+            window.open(vUrl);
+        }
+
+
+        function settlement(){
+        	var vFrom=$('#st').val();
+            var vTo=$('#et').val();
+            var status=$('#ss').val();
+            var balance=parseFloat('<{$dataSet1.totalBalance}>');
+
+            var vUrl='<{$http_root_www}>company/manual_settlement?from='+vFrom+'&to='+vTo+'&status='+status+'&balance='+balance;
+
+            if(balance>0){
+            	htmlConfirm('本次结算 '+balance+'澳元，点击确认后Ubonus将进行核对检查，无误后将向您转款相应金额。',
+	        	 	function(){
+	                      window.open(vUrl);
+	                }
+	                );
+
+            }else if(balance<0){
+            	htmlConfirm('本次结算 '+balance+'澳元，点击确认后您将需要支付相应金额。',
+	        	 	function(){
+	                      window.open(vUrl);
+	                }
+	                );
+            }else if(balance==0){
+            	htmlAlert('金额为零无需结算',
+	        	 	function(){
+	                     console.log('无需结算');
+	                }
+	                );
+            }
+
+        }
+
+</script>
+<{include file='footer.htm'}>
+
+</body>
+</html>

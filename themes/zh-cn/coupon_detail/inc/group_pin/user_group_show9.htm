@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Ubonus美食生活 - 拼单 - 用户自开团 </title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/lib.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>coupon_detail/inc/group_pin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/luobo.css" />
+
+</head>
+<body>
+ <!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+  <div class="head-con">
+        <div class="wp">
+            <div class="logo">
+                <a href="<{$http_root_www}>">
+                    <img src="<{$SKIN_PATH}>images/pc-main/logo.jpg"  alt="">
+                </a>
+            </div>
+            <div class="head-center">
+                <div class="search">
+                    <div class="form">
+                        <div ><!-- <form action=""> -->
+                            <div class="inner">
+                                <input type="text" class="inp" id='search-input' autocomplete="off">
+                                <input type="submit" value='' onClick = "window.location.href='<{$http_root_www}>coupons?key='+ $('#search-input').val();" class="sub"  >
+                            </div>
+                            <div class="search-list">
+                                <ul class="ul-search TAB" id="search-hint">
+                                    <!-- <li class="on"><a href="">手机壳</a></li>
+                                    <li><a href="">手机支架</a></li> -->
+                                </ul>
+                                <!-- 
+                                <div class="list-box">
+                                    <dl>
+                                        <dt>手机壳</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="list-box dn">
+                                    <dl>
+                                        <dt>手机支架</dt>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                        <dd>
+                                            <ul class="ul-list-s">
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">卡通</a></li>
+                                                <li><a href="">日韩</a></li>
+                                                <li><a href="">日韩</a></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hot">
+                        <a target="_blank" href="<{$http_root_www}>lottery/lottery_show"><{$lang->lottery}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E6%BC%94%E5%94%B1%E4%BC%9A"><{$lang->concert}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%AE%B1%E5%8C%85"><{$lang->luggage}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%94%9F%E9%B2%9C"><{$lang->fresh_food}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E4%BA%B2%E5%AD%90"><{$lang->family}></a>
+                        <a target="_blank" href="<{$http_root_www}>coupons?key=%E7%BE%8A%E6%AF%9B%E8%A2%AB"><{$lang->wool_quilt}></a>
+                    </div>
+                </div>
+
+                <{include file='index_inc_title.htm'}>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+<!-- 头部 end -->
+
+    <!-- 主体  -->
+    <div class="main" style="background-color:#f1f1f1;">
+        <div class="wp">
+            <div class="m-cur">
+                <a target='_blank' href="<{$http_root_www}>coupon/<{$coupon.id}>" class="btn-look">查看原商品>> </a>
+                <div class="cur">
+                    <a href="<{$http_root_www}>group_pin/index"><span>全部团购</span></a>
+                    &gt;<a href="<{$http_root_www}>coupon/<{$coupon.id}>?specialDisplay=group_pin">商品团-<{$coupon.title}></a>
+                    &gt;<a >用户自开团</a>
+                </div>
+            </div>
+            <div class="m-group1">
+                <div class="pic">
+                    <img src="<{$UPLOAD_PATH}><{$coupon.pic|image:660:420}>" alt="" />
+                </div>
+                <div class="txt-box">
+                    <div class="tit">
+                        <h3><{$coupon.title}></h3>
+                        <em style="background-color:#e02e24"><{$user_list[0].user_name}>的团</em>
+
+                        <em style="background-color:#13b5b1"><{$group.group_size_each}>人团</em>
+
+
+                        <{if $user_group.status==0}>
+                            <em style="background-color:#ff8a2f">正在进行中</em>
+                        <{elseif $user_group.status==1}>
+                            <em style="background-color:#439e07">已经完成</em>
+                        <{elseif $user_group.status==2}>
+                            <em style="background-color:#b8b8b8">已过期</em>
+                        <{/if}>
+
+                       
+                    </div>
+                    <ul>
+                        <li><{$coupon.coupon_summery_description}></li>
+                    </ul>
+
+
+                    <div class="style-lb">
+                        <ul class="ul-style-lb">
+                            <{foreach from=$guige item=item}>
+                            <li>
+                                <dl>
+                                    <dt><{$item.guige_name}>：</dt>
+                                    <dd>
+                                    <{if !$item.is_pic_style}>
+                                        <{foreach from=$item.guige_details item=sitem}>
+                                        <label <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> class='on'<{/if}> ><input style='display: none' class='guige_radio_btn' type="radio" id="sub<{$sitem.id}>" name="<{$item.guige_id}>" data-id="<{$sitem.id}>" value="<{$sitem.name}>" <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> checked<{/if}>> <{$sitem.name}></label>
+                                        <{/foreach}>
+                                    <{else}>
+                                        <{foreach from=$item.guige_details item=sitem}>
+                                        <label <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> class='on'<{/if}>><input style='display: none' type="radio" class='guige_radio_btn' id="sub<{$sitem.id}>"  data-id="<{$sitem.id}>" name="<{$item.guige_id}>" value="<{$sitem.name}>" <{if $sitem.id==$guige2Id||$sitem.id==$guige1Id}> checked<{/if}>> <img src="<{$UPLOAD_PATH}><{$sitem.pic|image:35:35}>"></label>
+                                        <{/foreach}>
+                                    <{/if}>
+                                        
+                                    </dd>
+                                </dl>
+                            </li>
+                            <{/foreach}>
+                            
+                            <li>
+                                <dl>
+                                    <dt>数量：</dt>
+                                    <dd class="g-num">
+                                        <span>
+                                            <i class="min">-</i><input style='height: 30px;' value="1" class="num" id="quantity_<{$coupon.id}>" name="quantities[]"><i class="add">+</i>
+                                        </span>
+                                        <i class="invent">
+                                        库存 
+                                        <em id='stock_display'><{$coupon.qty}></em>
+                                        件 
+                                        <{if $pendingQty>0}>
+                                        <small style='color:red'>(正在购买 <{$pendingQty}>人)</small>
+                                        <{/if}>
+                                        </i>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="buy-box">
+                        <div class="buy">
+                             <{if $user_group.status==0}>
+                                <a data-value="<{$coupon.id}>" data-availablestock='<{$coupon.qty}>' onClick="group_pin(this);"  data-user-group-id='<{$user_group.id}>' class="btn-buy <{$coupon.id}>">马上<br />去拼</a>
+
+                                <div class="time">
+                                    倒计时<span class="time-c1" endDate="<{date('Y-m-d H:i:s',$group.time_limit+$user_group.gen_date)}>"></span>
+                                </div>
+                            <{elseif $user_group.status==1}>
+                                <a href="javascript:void(0)" class="btn-buy">已经<br />完成</a>
+                               
+                            <{elseif $user_group.status==2}>
+                                <a href="javascript:void(0)" class="btn-buy">已经<br />过期</a>
+                                
+                            <{/if}>
+                        </div>
+
+                        <div class="price">
+                            <strong>
+                                 <{if $group.reward_type=='percent'}>
+                                    $<{($coupon.voucher_deal_amount*(100-$group.reward_value)/100)|string_format:"%.2f"}>
+                                <{elseif $group.reward_type=='flat'}>
+                                    $<{$coupon.voucher_deal_amount-$group.reward_value}>
+                                <{/if}>
+                            </strong>
+                            <em>$<{$coupon.voucher_deal_amount}></em>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="m-group2">
+                <div class="col-l">
+                    <div class="m-item">
+
+                        <{foreach from=$user_list item=u}>
+                            <div class="item on">
+                                <div class="img">
+                                    <img src="<{$UPLOAD_PATH}><{$u.user_logo|image:46:46}>" />
+                                </div>
+                            </div>
+                        <{/foreach}>
+
+                    </div>
+                    <div class="tip">
+                        已有<em><{$user_list|@count}></em>人参团，仅缺<em><{$group.group_size_each-($user_list|@count)}></em>人
+                    </div>
+                </div>
+                <div class="col-r">
+                    <ul class="ul-level">
+                        <li>Level 1 条件：<em><{$group.group_size_each}></em>人 奖励：<em><{$group.reward_value}></em> <{if $group.reward_type=='percent'}>%<{else}>Dollar<{/if}> OFF</li>
+                       
+                    </ul>
+                    <p>团购奖励说明：如果逾期未成团，商家逐一退款</p>
+                </div>
+            </div>
+            <div class="m-group3">
+                <ul>
+                   
+                    <li class="on"><a >凑团游戏规则</a></li>
+                    <li ><a  target='_blank' href="<{$http_root_www}>coupon/<{$coupon.id}>">商品详情</a></li>
+                </ul>
+
+
+                <div class="con rule">
+                     <img src="http://cdn.pinduoduo.com/assets/img/NewerGuide.png">
+
+                     <br><br><br><br><br><br><br><br><br>
+                    <h3>
+                        Ubonus拼单商城您参团并成功后除特殊商品外，商家将在48小时内发货。以下情况除外：
+                    </h3>
+                    <p>1.预售及其他特殊情形商品，商品会在约定发货时间内安排发货，发货时间以商家商品描述页面为准</p>
+                    <p>2.海淘直供类目产品，将在成团后7天内安排发货</p>
+
+                    <br>
+                    <h3>
+                        已成团未发货如何退款
+                    </h3>
+                    <p>未超过发货时间的订单退款，请联系Ubonus拼单平台客服。</p>
+
+                     <br>
+                    <h3>
+                        没有收到货/商家发错地址了怎么办？
+                    </h3>
+                    <p>买家可在已发货订单里查看物流单号，并点击查看物流，查看发货信息。物流信息不准确可以联系卖家客服核实并要求处理，若商家拒绝处理，可以要求Ubonus拼单客服介入处理。</p>
+
+                     <br>
+                    <h3>
+                       收到商品有问题怎么办？
+                    </h3>
+                    <p>买家可以先联系卖家客服，并提供实物图片确认问题是否属实。如果确认商品问题，或无法说明商品是否合格，卖家应与买家协商解决；若因商品问题商家拒绝处理，可以要求Ubonus拼单客服介入处理。</p>
+
+                     <br>
+                    <h3>
+                        收到的商品能退换货么？
+                    </h3>
+                    <p>在不影响第二次销售的情况下，可以要求商家无理由退换货。因为商品的特殊性，7天无理由退货换不支持生鲜/虚拟/海淘直供类目。</p>
+
+
+                     <br>
+                    <h3>
+                        自己开团如何操作？
+                    </h3>
+                    <p>在不影响第二次销售的情况下，可以要求商家无理由退换货。因为商品的特殊性，7天无理由退货换不支持生鲜/虚拟/海淘直供类目。</p>
+
+                     <br>
+                    <h3>
+                        加入已经开的团如何操作？
+                    </h3>
+                    <p>用户选择【去拼单】，即表明用户加入该团，可以直接按照团购价格购买。加入别人的团可以最快速度让拼团成功，比如一个2人团，已经有一个人开团，如果您加入，则表明拼团成功。</p>
+
+                     <br>
+                    <h3>
+                        拼团有效时间是多久？
+                    </h3>
+                    <p>拼团正常为48小时。48小时后，拼团自动失效。</p>
+
+                     <br>
+                    <h3>
+                        如果我拼的团失败了？
+                    </h3>
+                    <p>如果您拼的团失败了，会做如下处理：商家会决定是否以拼团价销售，如果不能，商家会自动退款到您的账户。退款时间周期通常3-5个工作日。</p>
+                   
+                </div>    
+
+            </div>
+
+                  
+
+            <div class="h42"></div>
+        </div>
+    </div>
+    <!-- 主体 end -->
+    <!-- 底部 -->
+    <div class="footer">
+        <ul class="fd-service">
+            <li>
+                <span><i class="ico ico1"></i>品类齐全 轻松购物</span>
+            </li>
+            <li>
+                <span><i class="ico ico2"></i>多仓直发 极速配送</span>
+            </li>
+            <li>
+                <span><i class="ico ico3"></i>正品行货 精致服务</span>
+            </li>
+            <li>
+                <span><i class="ico ico4"></i>天天低价 畅选无忧</span>
+            </li>
+        </ul>
+        <div class="fd-nav">
+            <a target="_blank" href="<{$UPLOAD_PATH}>about_ubonus.pdf">关于我们</a> 
+            <a target="_blank" href="<{$http_root_www}>business/intro">商家入驻</a> 
+            <a target="_blank" href="<{$http_root_www}>business/logowall">合作伙伴</a> 
+            <a target="_blank" href="<{$http_root_www}>company/help?id=91">联系我们</a>
+        </div>
+    </div>
+    <!-- 底部 end -->
+    
+    <div class="m-toolbar">
+        <ul class="ul-toolbar">
+            <li>
+                <div class="inner">
+                    <i class="i1"></i>
+                    <p>我的团购</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i2"></i>
+                    <p>我的关注</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i3"></i>
+                    <p>我的优惠券</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i4"></i>
+                    <p>我的足迹</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i5"></i>
+                    <p>我的JIMI</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i6"></i>
+                    <p>联系卖家</p>
+                </div>
+            </li>
+            <li class="car">
+                <div class="inner">
+                    <i class="i7"></i>
+                    <span>购物车</span>
+                    <em>0</em>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i8"></i>
+                    <div class="qr-box">
+                        <img src="<{$SKIN_PATH}>coupon_detail/inc/group_pin/images/eq.png" alt="" />
+                        <em>微信扫码享优惠</em>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i9"></i>
+                    <p>加关注</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>coupon_detail/inc/group_pin/js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>coupon_detail/inc/group_pin/js/lib.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+
+    <script>
+        // 倒计时
+        $('.time-c1').each(function() {
+            $(this).countDown();
+        });
+        $('.time-c2').each(function() {
+            $(this).countDown();
+        });
+    </script>
+
+
+
+    <link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+   
+    <script>
+   
+    $(".m-tuxun .combo li").click(function(event) {
+        $(this).addClass('on').siblings('li').removeClass('on');
+    });
+    $(".ul-style-lb dd label").click(function(event) {
+        $(this).addClass('on').siblings('label').removeClass('on');
+    });
+
+    //数量变化
+    $(".g-num .add").click(function(event) {
+        var num = $(this).siblings('.num').attr("value");
+        var num2 = parseInt(num);
+        $(this).siblings('.num').attr("value",num2+1);
+    });
+    $(".g-num .min").click(function(event) {
+        var num = $(this).siblings('.num').attr('value');
+        var num2 = parseInt(num);
+        if(num2>1){
+            $(this).siblings('.num').attr("value",num2-1);
+        }
+        
+    });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            <{if $coupon.bonusType=='9'}>getQty();<{/if}>
+            $('.guige_radio_btn').on('click',function(){
+                getQty();
+                if(typeof gotoguige ==="function")gotoguige();
+            });
+        })
+
+        function getQty(){
+            var guigeData = JSON.parse('<{$guigeData}>');
+            var couponId =<{$coupon.id}>;
+            var guige1Id=$('.guige_radio_btn:checked').eq(0).data('id');
+            var guige2Id=$('.guige_radio_btn:checked').eq(1).data('id');
+
+            if(guige1Id==null)guige1Id='undefined';
+            if(guige2Id==null)guige2Id='undefined';
+            
+            var guigeKey=guige1Id+'#'+guige2Id;
+
+            var returnData = guigeData[guigeKey];
+         
+            $('#stock_display').html(returnData);
+            
+            $("."+couponId).data('availablestock',returnData);
+        }
+
+        var processingLock = false;
+
+        function group_pin(obj) {
+            if(processingLock==true)return;
+
+            <{if !$loginUser}>
+                htmlAlert('<{$lang->login_in_before_buy}>',function(){
+                     window.location.href = '<{$loginReturnUrl}>';
+                });
+
+            <{else}>
+
+            var id='<{$coupon.id}>';
+            var newamount ='<{$coupon.id}>'
+            var available_stock = parseInt($(obj).data('availablestock'));
+
+            if(isNaN(available_stock))available_stock=0;
+            var quantity =  $('#quantity_'+id).val();
+            if(quantity==0){
+                htmlAlert('<{$lang->minimun_1_item}>');
+                return;
+            }
+            if(available_stock<quantity || available_stock==0){
+                htmlAlert('<{$lang->sold_out_too_slow}>');
+                return;
+            }
+
+           
+            var guige_des='';
+            <{if $guige}>
+                <{foreach from=$guige item=item name='dl'}>
+                guige_des +='(<{$item.guige_name}>)';
+                var val=$('input:radio[name="<{$item.guige_id}>"]:checked').val();   
+                guige_des +=val +' ' ;
+
+                <{/foreach}>
+            <{/if}> 
+
+            var guige_ids = $('.guige_radio_btn:checked').eq(0).data('id')+','+$('.guige_radio_btn:checked').eq(1).data('id');
+
+            var user_group_id=$(obj).data('user-group-id');
+
+            processingLock=true;
+
+            var url="<{$http_root_www}>member/showcart";
+            url +="?specialGroupBuyCheckoutCode=<{$group.reward}>";
+            url +="&specialGroupPinCheckoutGuigeId="+guige_ids;
+            url +="&specialGroupPinCheckoutGuigeDes="+guige_des;
+            url +="&specialGroupPinCheckoutQty="+quantity;
+            url +="&specialGroupPinCheckoutUserGroupId="+user_group_id;
+
+            window.location.href=url;
+                
+
+            <{/if}>
+        }
+
+        $(function(){
+             $('.time-count-down').each(function() {
+                $(this).countDown();
+            });
+        })
+
+    </script>
+</body>
+</html>

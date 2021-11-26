@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+   <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+   <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body>
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+	</header>
+
+	<section id="bd">
+		<div class="g-news">
+			<dl class="g-ul">
+				<dt>
+					<a href="">
+						<div class="face"><img src="<{$SKIN_PATH}>mobile/images/ico-58.png" alt=""></div>
+						<h4>系统消息</h4>
+					</a>
+				</dt>
+				<{foreach from=$data item=item name='dl'}>
+				<dd>
+					<div style="padding: 10px">
+						<div style="font-size: 0.5rem;font-weight: bolder;"><{$item.subject}></div>
+						<p style="font-size: 0.4rem"><{$item.content}></p>
+						<em style="font-size: 0.3rem"><{$item.from}></em>
+						<em style="font-size: 0.3rem;float: right;"><{date('m-d H:i:s', $item.sendTime)}></em>
+					</div>
+				</dd>
+				<{/foreach}>
+				
+			</dl>
+			<a href="<{$http_root_www}>message/write" class="a-more"></a>
+		</div>
+		
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>

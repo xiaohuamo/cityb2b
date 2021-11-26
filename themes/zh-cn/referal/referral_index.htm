@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='referal/side_referal_menu.htm'}>
+
+				<{if $ref}>
+					<{if $ref.isApproved}>
+						<!-- Dashboard-->
+
+						<div class="main-form form-style-green">
+								<div class="input-box clearfix">
+									<h1>分享中心 Welcome</h1>
+									<p>Ubonus的介绍人机制是一种为网红，主流媒体以及任何个人共同搭建的盈利生态</p>
+									<p>任何人成为加入到介绍人后都可以通过分享产品的链接，在用户通过分享链接达成交易后，得到交易金额的相应提成</p>
+									<p>提成资金自动添加到用户的钱包中，可以随时取现或者在Ubonus美食生活中消费</p>
+								</div>
+
+								<div class="input-box clearfix">
+									<p>您的介绍编号为：<{$ref.userId}>，审核通过时间：<{date('Y-m-d H:i', $ref.auditTime)}></p>
+								</div>
+
+								<div class="input-box clearfix">
+									<p>如何发展商家下线：用户在申请成为商家的时候需要手动输入您的ID (<{$ref.userId}>)</p>
+									<p>如何发展用户下线：复制你希望分享的产品页面的链接，在链接尾部增加  ?reftag=<{$ref.userId}>,其他用户在登录状态下浏览了您的链接，就成为您的下线。
+									例子：https://ubonus365.com/coupon/3500<span style='color:red'>?reftag=<{$ref.userId}></span></p>
+									<p>用户下线关系持续24小时。期间该用户购买的该产品，Ubonus会提供利益分成</p>
+								</div>
+
+								<div class="input-box input-submit clearfix">
+									<a class='link' href="<{$http_root_www}>referal/referrals?type=business" >商家下线</a>
+									<a class='link' href="<{$http_root_www}>referal/referrals?type=user" >用户下线</a>
+								</div>
+
+						</div>
+					<{else}>
+						<!-- Application Pending-->
+						<div class="main-form form-style-green">
+								<div class="input-box clearfix">
+									<h1>申请审核中</h1>
+									<p>您的介绍编号为：<{$ref.userId}></p>
+									<p>您在<{date('Y-m-d H:i', $ref.createTime)}>提交了申请，目前还没有通过管理员审核，请等待。</p>
+								</div>
+
+								<div class="input-box clearfix">
+									<p>成为介绍人正常审批速度为24小时，如果您填写了email,结果会在24小时之内发送至您的email.如果您未填写Email，请稍后再检查该页面（最长等待时间为24小时）。如有任联系Ubonus商家服务中心</p>
+								</div>
+						</div>
+
+					<{/if}>
+					
+				<{else}>
+					<!-- Welcome Page -->
+					<div class="main-form form-style-green">
+							<div class="input-box clearfix">
+								<h1>介绍人中心</h1>
+								<p>Ubonus的介绍人机制是一种为网红，主流媒体以及任何个人共同搭建的盈利生态</p>
+								<p>任何人成为加入到介绍人后都可以通过分享产品的链接，在用户通过分享链接达成交易后，得到交易金额的相应提成</p>
+								<p>提成资金自动添加到用户的钱包中，可以随时取现或者在Ubonus美食生活中消费</p>
+							</div>
+
+							<div class="input-box clearfix">
+								<p>成为介绍人正常审批速度为24小时，如果您填写了email,结果会在24小时之内发送至您的email.如果您未填写Email，请稍后再检查该页面（最长等待时间为24小时）。如有任联系Ubonus商家服务中心</p>
+							</div>
+
+							<div class="input-box input-submit clearfix">
+								<a  class='link' href="<{$http_root_www}>referal/referrals_reg" >成为介绍人申请信息表格</a>
+							</div>
+
+					</div>
+
+				<{/if}>
+
+				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

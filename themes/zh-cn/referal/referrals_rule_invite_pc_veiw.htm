@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="Ubonus美食生活 墨尔本  " />
+	<meta name="description" content="专注墨尔本华人美食生活的电商平台 " />
+    <meta content="telephone=no" name="format-detection" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+	<!-- inedx -->
+		<div style="text-align: center;padding: 50px 0px">
+
+				<!-- <img src="<{$UPLOAD_PATH}><{$business.logo}>" alt='商家LOGO-<{$business.businessName}>'> -->
+				<h1 style="color:#31708f;font-size: 40px;margin: 10px">产品推广邀请</h1>
+				<br>
+				<p>商家：<{$business.businessName}></p>
+				<br>
+				<p>产品：<a href="<{$http_root_www}>coupon/<{$coupon.id}>"><{$coupon.title}></a></p>
+				<br>
+				<p>如何加入推广?</p>
+				<p>识别下面二维码，即可获得推广信息，进项推广</p>
+				<p>
+					<img src="<{$applyqrcode}>">
+				</p>
+				<br>
+				<p>
+					OR
+				</p>
+				<br>
+				<p>直接点击链接，即可获得推广信息，进行推广（Ubonus新用户需要填写用户信息）</p>
+				<p>
+				 <a href="<{$applyUrl}>"> <small><{$applyUrl}></small></a>
+				</p>
+
+				<br>
+
+				<!-- <p>
+	            	<strong>邀请码</strong>
+	            </p>
+
+	            <br>
+
+	            <p>
+	            	<strong><{$data.apply_code}></strong>
+	            </p> -->
+
+		</div>
+	<!-- inedx -->
+
+	<!-- 底部 -->
+	<{include file='index_inc_footer.htm'}>
+	<!-- 底部 end -->
+
+
+	<!-- 右边栏 -->
+	<{include file='index_inc_right.htm'}>
+	<!--右边栏 end-->
+
+	
+	<!-- 浮动导航end-->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+	<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+	<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+	<script src="<{$SKIN_PATH}>js/dong.js"></script>
+	
+</body>
+</html>

@@ -1,0 +1,23 @@
+ <!--<div id = "pic-menu" class="pic-menu"><img data-cid="106" class="loading-btn" src="/themes/zh-cn/mobile/images/pic336.jpg" alt=""></div> -->
+                <ul class="g-ul s-nav" >
+				  <{if $coupon_list}>
+					  <li>
+					     <a id ='cate_href-menu-section'  data-target-id='abc' onclick="change_category('menu-section');" data-cid="abc" class="s1 loading-btn">Package Sale
+ 						<i style="   font-style: normal;   top: 8px;	font-size:13px;    margin-left: 2px;    display: inline-block;    padding: 0px 5px;    border-radius: 10px;    background: red;    color: white;    line-height: 17px;"><span id="">Hot</span></i>
+
+						
+						 </a>  
+					  </li>
+	               <{/if}>
+
+				<{foreach from=$restaurant_category item=gitem}>
+                    <li>
+						<a  id="cate_href-<{$gitem.restaurant_id}>-<{$gitem.category_id}>"  onclick="change_category('<{$gitem.restaurant_id}>-<{$gitem.category_id}>');	" data-target-id='<{$gitem.restaurant_id}>-<{$gitem.category_id}>'  data-cid="<{$gitem.id}>" class="	s1 loading-btn"><{$gitem.category_en_name}>
+						<{if $gitem.hot}> <i style="   font-style: normal;   top: 8px;	font-size:13px;    margin-left: 2px;    display: inline-block;    padding: 0px 5px;    border-radius: 10px;    background: red;    color: white;    line-height: 17px;"><span id="">Hot</span></i>
+
+				<{/if}>
+						</a>  
+                    </li>
+              	<{/foreach}>
+                  
+				</ul>

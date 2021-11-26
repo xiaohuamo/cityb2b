@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='referal/side_referal_menu.htm'}>
+						
+						<div class="colCurTit">
+							<span class="links">
+								<a class='btn-yellow' href="<{$applyUrl}>">使用媒体码</a>
+							</span>
+						</div>
+
+						<div class="main-list">
+							<{if $list}>
+								<form method="post" >
+									<table cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th>产品</th>
+												<th>媒体码</th>
+												<th>描述</th>
+												<th>时间</th>
+
+												<th>订单数</th>
+												<th>佣金</th>
+
+												<th>状态</th>
+												<th>参与说明</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<{foreach from=$list item=item name='dl'}>
+
+											<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+												<td>
+													<a href="<{$http_root_www}>coupon/<{$item.coupon_id}>"><{$item.coupon_id}></a>
+												</td>
+
+												<td>
+													<{$item.apply_code}>
+												</td>
+
+												<td>
+													<{$item.desc}>
+												</td>
+
+												<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+
+
+												<td><{$item.orderCount}></td>
+												<td>$<{$item.commissionTotal}></td>
+
+												<td>
+													<{if $item.rule_status==0}>
+														<{if $item.status==1}>
+															<span style='color:green'>使用中</span>
+														<{elseif $item.status==0}>
+															<span style='color:#f30'>被禁用</span>
+														<{/if}>
+													<{elseif $item.rule_status==1}>
+														<span style='color:#f30'>规则整体禁用</span>
+													<{/if}>
+													
+												</td>
+
+												<td>
+													<a href="<{$http_root_www}>referal/apply_new_rule_success?referal_rule_code=<{$item.apply_code}>">说明</a>
+												</td>
+											</tr>
+											<{/foreach}>
+										</tbody>
+									</table>
+								</form>
+							<{else}>
+								还没有介绍记录
+							<{/if}>
+						</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>商业人气-2019澳洲华裔小姐大赛-墨尔本赛区-</title>
+		  <meta name="keywords" content="商业人气-2019澳洲华裔小姐大赛-墨尔本赛区" />
+   <meta name="description" content="商业人气-2019澳洲华裔小姐大赛-墨尔本赛区" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/themes/zh-cn/brandstore/2019miss/css/bootstrap.css" />
+		 <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	</head>
+	<body>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/jquery-1.12.4.min.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/bootstrap.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/vue.min.js" ></script>
+			<script type="text/javascript">
+		$(function(){
+						
+			  $('img.lazyload').unveil();
+			  
+			  	   $(window).scroll(function() {
+					
+
+    
+					if($(window).scrollTop() > $(window).height() ) {
+					
+					$('#g-top').css('display','block');
+					
+					}else{
+					$('#g-top').css('display','block');
+					
+				}
+				
+				
+				
+					});
+		})
+		
+		
+		function display_jiali (id) {
+		
+		
+		//  alert('here');
+		  //
+         var obj=document.getElementById(id);
+		 
+		
+		  
+         $("div[name='jialilist']").css('display','none');
+
+			$(obj).css('display','');
+			 var obj1=document.getElementById(id+'-sign');
+		  $("html, body").scrollTop(0).animate({scrollTop: $(obj1).offset().top});
+		  
+		
+	}
+	
+	function display_jiali1 (id) {
+		
+		
+		//  alert('here');
+		  //
+         var obj=document.getElementById(id);
+		 
+		
+		  
+         $("div[name='jialilist']").css('display','none');
+
+			$(obj).css('display','');
+		
+		  
+		
+	}
+	</script>
+		<style>
+			/*手机*/
+			#top{
+				/*height: 440px;*/
+				width: 100%;
+				background-image: url(//themes/zh-cn/brandstore/2019miss/img/haibao.png);
+				background-repeat: no-repeat;
+				background-size: 100%;
+			}
+			.demo-nav{
+				height: 56px;
+				line-height: 56px;
+				display: flex;
+				text-align: center;
+				background-color: #f6dad7;
+				color: white;				
+			}
+			.demo-nav a{
+				 color: #a56d6d;
+			}
+			.demo-nav a:hover,.demo-nav a:focus{
+				color: white;
+			}
+			.flex-1{
+				flex: 1;
+			}
+			
+			
+			
+
+			.saishi{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+				/*border: 1px solid #000000;*/
+				
+			}
+			.btn-saishi{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    border-radius: 13px;
+			    background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+			    margin-top: 20px;
+			    color: #a56d6d;
+			    letter-spacing: 3px;
+			    font-size: 16px;
+				font-weight:600;
+			}
+			.saishi-content{
+				text-align: center;
+				margin-top: 10px;
+			}
+			.content-top{
+				width: 70%;
+				/*height: 20px;
+				background-color:#f6dad7 ;*/
+				display: inline-block;
+				/*border-radius: 15px 15px 0 0;*/
+			}
+			.content-top img{
+				height: 13px;
+			}
+			.content-con{
+				width: 89%;
+				height: auto;
+				display: inline-block;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+			}
+			.pingwei-introduce{
+				margin: 25px 0px;
+				text-align: justify;
+			}
+			.a-style{
+				color: #ad666b;
+			}
+			.sign{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+			}
+			.sign-img img{
+				width: 25%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 0px;
+			}
+			.vote-img img{
+				width: 16%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote-all{
+				width: 89%;
+				height: 450px;
+				overflow: scroll;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+				margin: 0px auto;
+			}
+			.row-bottom{
+				margin-bottom: 13px;
+			}
+			.vote-img-top{
+				/*height: 50px;*/
+				width: auto;
+				border-radius: 25px;
+			}
+			.vote-img-top img{
+				width: 100%;
+				height: 71px;
+				border-radius: 35px;
+			}
+			.vote-btn{
+				margin-top: 10px;
+				display: block;
+				height: 49px;
+				line-height: 27px;
+				width: 100%;
+				background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+				border-radius: 10px;
+				color: #a56d6d;
+				
+			}
+			
+			.banner{
+				width: 98%;
+				height: auto;
+				margin-bottom: 20px;
+				background-color: #f6dad7;
+				border-radius: 15px;
+				margin: 0px auto;
+				text-align: center;
+			}
+			.beauty{
+				width: 100%;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+			}
+			.beauty-content{
+				margin: 0px auto;
+				width: 89%;
+				height: auto;
+			}
+			.beauty-title{
+				text-align: left;
+				color: #95494e;
+			    height: 45px;
+			    margin-bottom: 10px;
+			    border-bottom: 1px solid #f6dad7;
+			}
+			.row-bottom{
+				margin-bottom: 18px;
+			}
+			.row-style{
+				height: auto;
+				width: 100%;
+				/*background-color: #f6dad7;*/
+				margin: 0px;
+				margin-bottom: 10px;
+			}
+			.col-item {
+				/*height: 100%;*/
+				/*border:1px solid #f6dad7;*/
+				/*background-color: #f6dad7;*/
+			    /*width: 45%;*/
+			    /*margin-left: 10px;*/
+			    /*margin-top: 10px;*/
+			}
+			#video1{
+				width: 100%;
+			}
+			.member-top-img{
+				height: auto;
+				width: 100%;
+			}
+			.member-top-img img{
+				height: auto;
+				width: 100%;
+				border-radius: 80px;
+			}
+			.mamber-name{
+				margin-top: 10px;
+			}
+			.goods{
+				width: 100%;
+				text-align: center;
+				margin-bottom: 20px;
+				border: none;
+			}
+			.goods-content{
+				width: 89%;
+				height: auto;
+				border: 0px solid #f6dad7;
+				margin: 0px auto;
+			}
+			.goods-title{
+				color: #95494e;
+				margin-bottom: 20px;
+			}
+			.goods-inner{
+				width: 100%;
+				height: auto;
+			}
+			.discount{
+				display: block;
+			    height: 30px;
+			    width: 85%;
+			    line-height: 30px;
+			    background-color: #ff6600;
+			    margin: 10px auto;
+			}
+			.price{
+				color: red;
+			}
+			.live{
+				width: 100%;
+				height: auto;
+				border: 0px solid #1B6D85;
+				text-align: center;
+			}
+			.live-live{
+				width: 89%;
+				margin: 0px auto;
+				
+			}
+			.live-btn{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    background: -webkit-linear-gradient(right ,  #ebc4c7 ,  #f5d3d6); /* Safari 5.1 - 6.0 */
+			    background: -o-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Opera 11.1 - 12.0 */
+			    background: -moz-linear-gradient(right, #ebc4c7 ,  #f5d3d6); /* Firefox 3.6 - 15 */
+			    background: linear-gradient(to right, #ebc4c7  ,  #f5d3d6); /* 标准的语法（必须放在最后） */
+				border-radius: 13px;		    
+			    margin-top: 20px;
+			    color: #a56d6d;
+			    letter-spacing: 3px;
+    			font-size: 16px;
+				font-weight:600;
+			}
+			.live-content{
+				margin-top: 20px;
+			}
+			.footer{
+				
+				background-color: #f6dad7; 
+				margin-top: 20px;
+			}
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px){ 
+				body{
+					font-size: 25px;
+				}
+				.btn-saishi{
+					width: 190px;
+				    height: 65px;
+				    line-height: 65px;
+				    margin-top: 25px;
+				    border-radius: 20px;
+				    font-size: 25px;
+				}
+				.saishi-content{
+					margin-top: 15px;
+				}	
+				.content-top img{
+					height: 25px;
+				}
+				.content-con{
+					height: auto;
+				}
+				.pingwei-introduce{
+					margin: 50px 0px;
+				}
+				.vote{
+					padding-bottom: 45px;
+				}
+				.vote-all{
+					height: 460px;
+					overflow: scroll;
+				}
+				.vote-img-top{
+					/*height: 130px;*/
+					width: auto;
+					border-radius: 75px;
+				}
+				.vote-img-top img{
+					width: 100%;
+					height: 145px;
+					border-radius: 75px;
+				}
+				.vote-btn{
+					height: 50px;
+					line-height: 50px;
+					border-radius: 20px;
+				}
+				.beauty{
+					margin-top: 40px;
+					margin-bottom: 40px;
+				}
+				.beauty-title{
+					font-size: 25px;
+				}
+				.row-style{
+					margin: 0px;
+					margin-bottom: 15px;
+				}
+				.col-item{
+				    /*margin-left: 20px;*/
+				    /*margin-top: 20px;*/
+				}
+				.mamber-name{
+					margin-top: 15px;
+					font-size: 25px;
+				}
+				
+				.member-top-img img{
+					border-radius: 260px;
+				}
+				.goods{
+					margin-bottom: 40px;
+				}
+				.goods-title{
+					font-size: 25px;
+					color: #95494e;
+				}
+				.goods-inner{
+					width: 100%;
+					height: auto;
+				}
+				.discount{
+				    height: 50px;
+				    line-height: 50px;
+				}
+				.live-btn{
+					width: 190px;
+				    height: 65px;
+				    line-height: 65px;
+				    margin-top: 25px;
+				    border-radius: 20px;
+				    font-size: 25px;	
+				}
+				.footer{
+					height: 100px; 
+				}
+			}
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width:992px){ 
+				#div-max{
+					width: 65%;
+					margin: 0px auto;
+				}
+				.vote-img-top img{
+					height: 188px;
+					border-radius: 95px;
+				}
+				.member-top-img img{
+					border-radius: 150px;
+				}
+
+			}
+		</style>
+	<div id="div-max">
+	  	<div id="top">
+	  		<img width="100%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/haibao@2x.png" />
+	  	</div>
+	  	<div role="navigation">
+		  <div class="demo-nav">
+		  	<a class="flex-1" href="<{$http_root_www}>2019miss">选美首页</a>
+  			<a class="flex-1" href="#ubonus002">周排行榜</a>
+  			<a class="flex-1" href="<{$http_root_www}>article/70">总排行榜</a>
+			<a class="flex-1" href="#shanghaihuiguan002" accesskey="">决赛票务</a>
+		  </div>
+		</div>
+		
+		
+				<br>
+			 <a href = "javascript:;" onclick = "display_jiali('ubonus001');">
+           	<div class="cards cards-borderless" style="margin-left:5px;" >
+					<img width="98%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/ubonus001.png" />
+				</div>
+		
+		 </a>
+		
+		
+		<div class="saishi">
+			<div class="btn-saishi" onclick="showInfo()">		
+				赞助商品牌
+			</div>
+		
+			<div class="saishi-content">
+				<div class="content-top">
+					<img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/yuanjiao@3x.png" />
+				</div>
+				<div id="show-info" class="content-con" style="width:95%;    background: #f6dad7;">
+				
+				<div id="show-mean" class="content-con " style="background: #fff;width: 100%;">
+			      		<p style="font-weight:600">规则说明</p>
+						<p>每消费<strong>$1</strong>, 可以为佳丽增加<strong>15</strong>票。</p>
+						<p style="font-weight:600">方法</p>
+						<p>点击商家logo,会滑动到商家页面，点击下方您支持佳丽头像，即可开始购买。</p>
+			
+					
+				</div>
+				    	<div class="beauty">
+			<div class="beauty-content" style="width:100%;">
+				
+				
+				
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 member-item">
+					  <a href = "javascript:;" onclick = "display_jiali('jianliyimei001');">
+						<div class="member-top-img" >
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/jianliyimei-logo.jpg" />
+						</div>
+						<div class="mamber-name">$49 体验原价￥298 90分钟美白养护</div>
+						</a>
+					</div>
+					
+					
+					  
+					<div class="col-xs-6 col-sm-6 member-item">
+					<a href = "javascript:;" onclick = "display_jiali('xinxiuli001');">
+						<div class="member-top-img">
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xinxiuli-logo1.jpg" />
+						</div>
+						<div class="mamber-name">新秀丽国际箱包品牌3折起</div>
+							</a>
+					</div>
+				
+					
+					<div class="col-xs-6 col-sm-6 member-item">
+					  <a href = "javascript:;" onclick = "display_jiali('shanghaihuiguan001');">
+						<div class="member-top-img" >
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/shhg-logo.jpg" />
+						</div>
+						<div class="mamber-name">上海会馆 精致4人餐 原价$280 现价$258</div>
+						</a>
+					</div>
+					
+					
+			       	<div class="col-xs-6 col-sm-6  member-item">
+					 <a href = "javascript:;" onclick = "display_jiali('ubonus001');">
+						<div class="member-top-img" >
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/ubonus_mobile_shop-log0.jpg" />
+						</div>
+						<div class="mamber-name">Ubonus微奖网 全场1折起 </div>
+						</a>
+					</div>
+			
+					<div class="col-xs-6 col-sm-6 member-item">
+					 <a href = "javascript:;" onclick = "display_jiali('youxiao001');">
+						<div class="member-top-img" >
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/youxiao-logo.png" />
+						</div>
+						<div class="mamber-name">优销地产 墨尔本最豪宅区公寓40万起</div>
+						</a>
+					</div>
+					
+					
+					<div class="col-xs-6 col-sm-6 member-item">
+					 <a href = "javascript:;" onclick = "display_jiali('iconic001');">
+						<div class="member-top-img" >
+							<img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/iconic.png" />
+						</div>
+						<div class="mamber-name">Iconic 精品轻奢买手店 仙女的私人衣橱 </div>
+						</a>
+					</div>
+				
+				</div>
+			
+				</div>
+			</div>
+					
+					
+				</div>
+				<div id="show-mean" class="content-con hidden">
+			      		购买佳丽代言商品，为佳丽增加人气，每消费<strong>$1</strong>, 可以为佳丽增加<strong>5</strong>个人气点。本页面产品均为赞助商提供的超低特价商品，低至2折，非常超值。购买方法，点击佳丽图标，出现产品列表后购买即可。
+			
+					
+				</div>
+			
+		</div>
+		</div>
+		</div>
+		
+		<br>	<br>
+		
+		<div id="xinxiuli001-sign" class="sign" >			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/samsonite.jpg"/></div>
+			
+			<div class="content-con" style="text-align: center; width:100%;">
+			
+	
+			
+				新秀丽是世界最大的箱包品牌之一，新秀丽为本次2019澳大利亚华裔小姐竞选指定箱包提供商和赞助商！<br>
+				<div class="cards cards-borderless"  >
+					   <a href = "javascript:;" onclick = "display_jiali1('xinxiuli001');">
+							<div class="col-xs-12 col-md-12 ">
+								
+								  <img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xinxiuli.jpg" style="    width: 100%;    height: auto;
+				" alt="" >
+				
+								  <div style="height:60px;margin-top: 10px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">Samsonite/新秀丽低至2-5折,多大8种产品超级特价！</strong></div>
+								 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+								
+							  </div>
+				</a>
+				</div>
+					
+				<div id="xinxiuli001" name="jialilist" class="vote-all" style="text-align: center; width: 100%; display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="<{$http_root_www}>store/213321?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="<{$http_root_www}>store/213321?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+			
+		</div>	
+		</div>
+		</div>
+			<br>
+			<div id="shanghaihuiguan001-sign" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/shanghaihuiguan-logo.jpg"/></div>
+<br>
+			<div class="content-con" style="text-align: center; width:100%;">
+			  <a href = "javascript:;" onclick = "display_jiali1('shanghaihuiguan001');">
+			<div class="banner">
+		
+				<img img width="90%" height="auto;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/shanghaihuiguan.jpg" style="    border-radius: 15px;    width: 100%;" /></a>
+			
+			</div>
+			</a>
+			
+				“上海会馆”惊现墨尔本！是来自1920年纯正血统本帮菜传承的“小外滩风情”！<br>
+				<div class="cards cards-borderless">
+		  <a href = "javascript:;" onclick = "display_jiali1('shanghaihuiguan001');">
+							<div class="col-xs-12 col-md-12 ">
+								
+								  <img class="lazyload" data-src="https://www.ubonus365.com/data/upload/thumbnails/2019-05/20190517123123163929_660x420_fill.jpg" style="    width: 100%;    height: auto;
+				" alt="" >
+				
+								  <div style="height:60px;margin-top: 10px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">上海会馆4人养颜套餐原价$280,现价只需$258.00</strong></div>
+							 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+								
+							  </div> 
+				</a>
+				</div>
+					
+				<div class="vote-all" name="jialilist"  id="shanghaihuiguan001" style="text-align: center; width: 100%;display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="<{$http_root_www}>coupon1/7318?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="<{$http_root_www}>coupon1/7318?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+			
+		</div>
+			</div>
+	
+		<br>
+		<br>
+			<div id="jianliyimei001-sign" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/kinly.jpg"/></div>
+			
+			<div class="content-con" style="text-align: center; width:100%;">
+			  <a href = "javascript:;" onclick = "display_jiali1('jianliyimei001');">
+			<div class="banner">
+						
+				<img img width="90%" height="auto;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/kinly1.jpg" style="    border-radius: 15px;    width: 100%;" /></a>
+			
+			
+			</div>
+			</a>
+			<br>
+				我们在墨尔本CBD的最中心，拥有750平方米的超大营业面积，我们提供贴心细致的服务，匠人之心就是我们秉承的宗旨。<br>
+				<div class="cards cards-borderless">
+					     <a href = "javascript:;" onclick = "display_jiali1('jianliyimei001');">
+							<div class="col-xs-12 col-md-12 ">
+						
+								  <img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/jianliyimei.jpg" style="    width: 100%;    height: auto;
+				" alt="">
+								  <div style="height:60px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">$298澳元 美容券 仅售 $59澳元，为您喜欢的佳丽增加118 票，自己可以使用也可以送给佳丽</strong></div>
+								 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+							
+							  </div>
+				</a>
+				</div>
+					
+				<div class="vote-all" name="jialilist" id="jianliyimei001" style="text-align: center; width: 100%; display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="/coupon1/7397?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="/coupon1/7397?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+			</div>
+		</div>
+		<br>
+		<br>
+			<div id="youxiao001-sign" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/youxiao-logo.png"/></div>
+			
+			<div class="content-con" style="text-align: center; width:100%;">
+			
+			
+			<br>
+				<br>
+				<div class="cards cards-borderless">
+			我 們是一群有夢想，有幹勁，有活力與熱誠的年輕人。懷揣著對澳洲房地產的熱情，對未來的憧憬，共同的理想和抱負把我們的手和心牽在一起，結伴踏上了開拓澳洲 地產追夢之旅，為澳洲房產注入了年輕的活力。優銷地產以墨爾本為中心，在香港，中國，馬來西亞，印尼等地都有親密的業務合作夥伴。		   
+						
+					     <a href = "javascript:;" onclick = "display_jiali1('youxiao001');">
+						<div class="col-xs-12 col-md-12 ">
+						
+								  <img class="lazyload" data-src="https://ubonus365.com/data/upload/thumbnails/2019-06/20190618174345153880_660x420_fill.jpg" style="    width: 100%;    height: auto;
+				" alt="">
+								  <div style="height:40px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">豪宅区公寓40万起</strong></div>
+								 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+							
+							  </div>
+							  </a>
+				
+				</div>
+					
+				<div class="vote-all" name="jialilist" id="youxiao001" style="text-align: center; width: 100%; display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="/coupon1/7396?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="/coupon1/7396?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+			</div>
+		</div>
+		<br>
+		<br>
+			<div id="ubonus001-sign" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/ubonus_mobile_shop.jpg"/></div>
+			
+			<div class="content-con" style="text-align: center; width:100%;">
+								     <a href = "javascript:;" onclick = "display_jiali1('ubonus001');">
+			<div class="banner">
+					
+				<img img width="90%" height="auto;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/ubonus001.png" style="    border-radius: 15px;    width: 100%;" /></a>
+			
+			
+			</div></a>
+			<br>
+				5年澳洲华人电商平台，500+商家， 全面支持2019澳洲华裔小姐竞选。在网站上每消费$1 ,可以为支持的佳丽增加2票  "<br>
+				<div class="cards cards-borderless">
+					   					     <a href = "javascript:;" onclick = "display_jiali1('ubonus001');">
+							<div class="col-xs-12 col-md-12 ">
+								
+								  <img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/ubonus_home.jpg" style="    width: 100%;    height: auto;
+				" alt="">
+								  <div style="height:60px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">购买后只需留言你支持的佳丽编号即可 "佳丽编号 000（000是佳丽编号）</strong></div>
+								 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+							
+							  </div>
+				</a>
+				</div>
+					
+				<div class="vote-all" name="jialilist" id="ubonus001" style="text-align: center; width: 100%; display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="<{$http_root_www}>?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="<{$http_root_www}>?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+</div>
+		</div>		
+<br>
+		<br>
+			<div id="iconic001-sign" class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/iconic.png"/></div>
+			
+			<div class="content-con" style="text-align: center; width:100%;">
+			
+			
+						     <a href = "javascript:;" onclick = "display_jiali1('iconic001');">
+			<div class="banner">
+					
+				<img img width="90%" height="auto;" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/iconic-logo.jpg" style="    border-radius: 15px;    width: 100%;" /></a>
+			
+			
+			</div></a>
+				<br>
+				<div class="cards cards-borderless">
+			CONIC BOUTIQUE创立于2015年，至今已是墨尔本一家颇有名气的全球设计师品牌集合店。在过去的数年里，我们寻找全球优质独立设计师品牌时装以及明星热爱的单品，与全球四十多个品牌、时尚博主、明星建立了合作关系，为客人提供私人穿搭优质服务，至今获得了数以万计粉丝的青睐。									     <a href = "javascript:;" onclick = "display_jiali1('iconic001');">
+						
+     <a href = "javascript:;" onclick = "display_jiali1('iconic001');">
+						<div class="col-xs-12 col-md-12 ">
+						
+								  <img class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/iconic003.jpg" style="    width: 100%;    height: auto;
+				" alt="">
+								  <div style="height:40px;" class="card-heading text-center"><strong style="color: #424141;white-space: normal; ">全店热销，优惠多多</strong></div>
+								 <div class="card-content text-center" style="    height: 35px;"><span style="font-weight:600;color: #f1668f;"></span>点击佳丽图标即可购买</div>
+							
+							  </div></a>
+				
+				</div>
+<br>
+				<div class="vote-all" name="jialilist" id="iconic001" style="text-align: center; width: 100%; display:none;">
+			
+			         		 <{foreach from=$miss_list item=item name='dl'}>
+				 
+				 <{if $smarty.foreach.dl.index%3==0}> <div class="row row-bottom"> <{/if}>
+					
+						<div class="col-sm-4 col-xs-4">
+						<div class="vote-img-top"> <a class="card" href="<{$http_root_www}>store/213325?reftag=<{$item.couponid}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"/></a></div>
+						<a href="<{$http_root_www}>store/213325?reftag=<{$item.couponid}>" class="vote-btn"><{$item.title}></a>
+					</div>
+				
+				 <{if ($smarty.foreach.dl.index+1)%3==0 && $smarty.foreach.dl.index>0}> </div> <{/if}>	
+					
+				
+				<{/foreach}>
+					<{if $div_sign}></div><{/if}>
+		
+				</div>
+			</div>
+			</div>
+		</div>
+<!--
+		
+		<div id = "zanzhu" class="live">
+			<div class="live-live">
+				<div class="live-btn">
+					赞助商方案
+				<img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo1@2x.png" />
+				</div>
+				<div class="live-content">
+				<a href="#"><img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/sponsor.jpg" /></a>
+				</div>
+			</div>
+				<div id="reg" class="sign">			
+			
+			<div class="content-con" style="text-align: center;">
+					欢迎赞助上加盟!<br>
+					
+					<div class="btn-saishi"><a href="/themes/zh-cn/brandstore/2019miss/img/2019miss-business-sponsor.pdf" style="color: #a56d6d;font-weight:600;">中文版</a></div>&nbsp;&nbsp;<div class="btn-saishi"><a href="/themes/zh-cn/brandstore/2019miss/img/2019miss-business-sponsor-en.pdf" style="color: #a56d6d;font-weight:600;">英文版</a></div>
+			</div>
+			
+		</div>
+		</div>
+		
+	-->	
+	
+
+	
+		<br>
+		
+		
+		<div id ="ticket" class="live">
+			<div class="live-live">
+				<div class="live-btn">
+					票务·购买
+					
+				</div>					
+					
+				<div class="live-content">
+					<a href="<{$http_root_www}>coupon1/7389?reftag=<{$reftag}>"><img img width="100%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/ticket.jpg" /></a>
+				</div>
+			</div>
+		</div>	
+	
+			<div class="content-con pingwei-introduce" style="margin-left:5px;width:98%;" >
+		<div id="sponsor" class="beauty-video"><span style="font-weight:700;color:#a56d6d;">赞助商及指定机构</span></div>
+			<div class="text-center" ><img width="98%"  class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/sponsor1.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">协办机构</span></div>
+			<div class="text-center" ><img width="98%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/xieban.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">媒体支持</span></div>
+			<div class="text-center" ><img width="98%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/meiti.jpg" /></div>
+			
+			<div class="beauty-video"><span style="font-weight:700;color:#a56d6d;">特别鸣谢</span></div>
+			<div class="text-center" ><img width="98%" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/mingxie.jpg" /></div>
+			<br>
+		<footer class="footer" style="">
+		
+	  		<img width="100%" height="auto" class="lazyload" data-src="/themes/zh-cn/brandstore/2019miss/img/foot.jpg" />
+	  	
+		</footer>
+		
+		</div>
+		
+		
+	</div>
+	
+	
+	
+		<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+ <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<!-- WX jssdk share -->
+	<div id="g-top"  onclick="$('html,body').animate({scrollTop: $('#div-max').offset().top-40},'slow');" style=" width: 1.2rem;height: 1.2rem;position: fixed;z-index: 999;border-radius: 50%;
+    right: .7rem;bottom: 2.2rem;display: none;
+    background: url(/themes/zh-cn/mobile/images/ico-top.png) no-repeat center center rgba(59,180,199,.6);
+    -o-background-size: .6rem auto;
+    -ms-background-size: .6rem auto;
+    -moz-background-size: .6rem auto;
+    -webkit-background-size: .6rem auto;
+    background-size: .6rem auto; bottom:0.7rem;       right: 0.2rem; width: 1rem;
+    height: 1rem;"></div>
+	<script>
+	function showInfo(){
+		$('#show-info').removeClass('hidden');
+		$('#show-mean').addClass('hidden')
+	}
+	function showMeaning(){
+		$('#show-mean').removeClass('hidden');
+		$('#show-info').addClass('hidden');
+	}
+	function changeInfo1(){
+		$('#info1').removeClass('hidden');
+		$('#info2').addClass('hidden');
+		$('#info3').addClass('hidden');
+	}
+	function changeInfo2(){
+		$('#info2').removeClass('hidden');
+		$('#info1').addClass('hidden');
+		$('#info3').addClass('hidden');
+	}
+	function changeInfo3(){
+		$('#info3').removeClass('hidden');
+		$('#info1').addClass('hidden');
+		$('#info2').addClass('hidden');
+	}
+	function replaceInfo1(){
+		$('#infos1').removeClass('hidden');
+		$('#infos2').addClass('hidden');
+		$('#infos3').addClass('hidden');
+	}
+	function replaceInfo2(){
+		$('#infos2').removeClass('hidden');
+		$('#infos1').addClass('hidden');
+		$('#infos3').addClass('hidden');
+	}
+	function replaceInfo3(){
+		$('#infos3').removeClass('hidden');
+		$('#infos1').addClass('hidden');
+		$('#infos2').addClass('hidden');
+	}
+	</script>
+    <script type="text/javascript">
+        var shareTitle='购物攒人气！-2019澳洲华裔小姐大赛-墨尔本赛区';
+        var shareLink='https://ubonus365.com/missshop';
+        var desc='澳洲华裔小姐大赛是一项倍受全球华人华侨瞩目的国际赛事。由TV MEDIA AUSTRALIA 授权，墨尔本“大上海联合总会”全权主办';//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/brandstore/2019miss/img/haibao@3x.png';
+    </script>
+
+   <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<!-- WX jssdk share -->
+   
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+	
+	</body>
+</html>

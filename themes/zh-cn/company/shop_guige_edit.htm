@@ -1,0 +1,109 @@
+<!doctype html><html><head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+<{/if}><link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<style>	
+	.main-form .input-box span label { width:150px; }
+</style>
+<script>
+	function show_coupon_option(obj) {
+		var is_show =$(obj).val();
+		if(is_show =='1') {
+			$('#coupons').css('display','');
+
+		}else{
+			$('#coupons').css('display','none');
+			$('#coupon_id').val('0');
+		}
+	}
+
+	$(function(){
+		var is_show ='<{$data.is_for_one_product}>';
+		if(is_show =='1') {
+			$('#coupons').css('display','');
+		}else{
+			$('#coupons').css('display','none');
+		}
+	});
+</script>
+</head>
+<body>
+	<{include file='header.htm'}>
+	<div class="container">	
+		<div class="wrap clearfix">	
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+				<div class="box2">	
+					<div class="main-form">			
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/shop_guige_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+
+							<div class="input-box clearfix">	
+								<h1>规格</h1>
+								<p>规格为商品的细分，比如颜色，重量，尺寸，功能等等。</p>
+							</div>		
+
+							<div class="input-box clearfix">	
+								<span>
+									<label>规格名称</label>
+								</span>		
+								<input type="text" name="name" id="name"  class="input-text" value="<{$data.name}>" />	
+							</div>		
+							<div class="input-box clearfix">	
+								<span>
+									<label>规格名称(English）</label>
+								</span>		
+								<input type="text" name="name_en" id="name_en"  class="input-text" value="<{$data.name_en}>" />	
+							</div>		
+							<!-- <div class="input-box multi-select clearfix">
+								<span><label>是否使用图片描述</label></span>
+								<select name="is_pic_style">
+									<option value="0"<{if $data.is_pic_style=='0'}> selected<{/if}>>不使用</option>
+									<option value="1"<{if $data.is_pic_style=='1'}> selected<{/if}>>使用</option>
+								</select>
+							</div> -->
+
+							<div class="input-box multi-select clearfix">
+								<span><label>是否关联某个产品</label></span>
+								<select name="is_for_one_product" onChange="show_coupon_option(this);">
+
+									<option value="0"<{if $data.is_for_one_product=='0'}> selected<{/if}>>通用，不关联产品</option>
+									<option value="1"<{if $data.is_for_one_product=='1'}> selected<{/if}>>关联某个产品</option>
+								</select>
+							</div>
+
+							<div class="input-box clearfix" id="coupons">
+
+								<span>
+									<label >选择关联的商品：</label>
+								</span>
+
+								<select  id="coupon_id" onChange="" name="coupon_id">
+									<option value="0" selected>不选择</option>
+									<{foreach from=$data_coupon item=item}>
+									<option value="<{$item.id}>"<{if $item.id==$data.coupon_id}>&nbsp; selected="selected" <{/if}>><{$item.title|truncate_cn:70:'...'}></option>
+									<{/foreach}>
+								</select>	
+
+
+							</div> 
+							
+							<div class="input-box input-submit clearfix">		
+								<button type="submit">保存</button>	
+							</div>		
+						</form>	
+
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+					</div>		
+				</div>	
+			</div>
+
+		</div>
+	</div><{include file='footer.htm'}></body></html>

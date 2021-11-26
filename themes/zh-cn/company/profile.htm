@@ -1,0 +1,368 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+<script>
+
+
+	$(function(){
+
+		CKEDITOR.replace('companyDescription', {
+
+		height : 200,
+
+		toolbar: 'Basic',
+
+		filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic'
+
+		});
+
+	});
+	
+	$(function(){
+
+		CKEDITOR.replace('companyDescription_en', {
+
+		height : 200,
+
+		toolbar: 'Basic',
+
+		filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic'
+
+		});
+
+	});
+
+
+</script>
+
+<style>
+
+	.main-form .input-box span label { width:150px; }
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+						<div class="main-form">				
+							<div class="colCurTit clearfix">
+						<h1>商家描述</h1>
+					</div>
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/profile" method="post" target="post_frame" enctype="multipart/form-data">
+
+						
+
+
+						<div class="input-box clearfix">
+
+							<span><label>店铺名<!--<{$lang->showing_company_name}>--></label></span>
+
+							<input type="text" class="input-text" value="<{$loginUser.displayName}>" name="displayName" />
+                       <em>trading name  如: 天府川菜管</em>
+						</div>
+						<div class="input-box clearfix">
+
+							<span><label><{$lang->showing_company_name_en}></label></span>
+
+							<input type="text" class="input-text" value="<{$loginUser.displayName_en}>" name="displayName_en" />
+                       <em>trading name  </em>
+						</div>
+
+
+						<div id="city_list" class="input-box clearfix " >
+							<span><label>商家位置</label></span>
+
+							<{foreach from=$fullcitylist item=country}>
+								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
+							<{/foreach}>
+
+							
+
+							<{foreach from=$fullcitylist item=country}>
+								<div class='country<{$country.id}>' style='display: none;margin-left: 170px;'>
+									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
+									<{foreach from=$country.child item=city}>
+									<em style="display: inline-block;min-width: 150px">
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+									</em>
+									<!--
+										<{if $city.child}>
+										<div class='cl3 well' data-parentid='<{$city.id}>' style='display: none'>
+											<input type="checkbox" class='checkallsuburb'><strong>全选</strong>
+
+											<{foreach from=$city.child item=suburb}>
+											<em>
+												<input id ='suburb<{$suburb.id}>' type="checkbox" name="city[]" value="<{$suburb.id}>" <{if in_array($suburb.id, explode(',', $loginUser.cityId))}> checked<{/if}> >
+												<label for='suburb<{$suburb.id}>'><{$suburb.name}></label>
+											</em>
+											<{/foreach}>	
+										</div>
+										<{/if}> -->
+									<{/foreach}>
+								</div>
+							<{/foreach}>
+						</div>
+						
+						<script type="text/javascript">
+
+						function dd(obj) {
+								if($(obj).is(':checked')){
+									$(".country"+$(obj).val()).show(100);
+								}else{
+									$(".country"+$(obj).val()).hide(100);
+									$(".country"+$(obj).val()+" .cl2").prop('checked',false);
+								}
+							}
+
+							function cc(obj) {
+								if($(obj).is(':checked')){
+									$(".cl3[data-parentid="+$(obj).val()+"]").show(100);
+								}else{
+									$(".cl3[data-parentid="+$(obj).val()+"]").hide(100);
+									$(".cl3[data-parentid="+$(obj).val()+"]").find('input').prop('checked',false);
+								}
+							}
+
+							$(function(){
+								$('.cl1').on('click',function(){
+									dd($(this));
+								})
+
+								$('.cl1').each(function(){
+									dd($(this));
+								})
+							})
+
+							$(function(){
+								$('.cl2').on('click',function(){
+									cc($(this));
+								})
+
+								$('.cl2').each(function(){
+									cc($(this));
+								})
+							})
+
+							$(function(){
+								$('.checkall').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('.cl2').prop('checked',true);
+										$(this).siblings('.cl3').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('.cl2').prop('checked',false);
+										$(this).siblings('.cl3').find('input').prop('checked',false);
+									}
+
+									$('.cl1').each(function(){
+										dd($(this));
+									})
+
+									$('.cl2').each(function(){
+										cc($(this));
+									})
+
+								})
+							})
+
+							$(function(){
+								$('.checkallsuburb').on('click',function(){
+									if($(this).is(':checked')){
+										$(this).siblings('em').find('input').prop('checked',true);
+									}else{
+										$(this).siblings('em').find('input').prop('checked',false);
+									}
+								})
+							})
+						</script>
+
+
+					
+
+								<div class="input-box clearfix">
+								
+								<span><label>地址</label></span>
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="请输入地址"    value="<{$loginUser.googleMap}>" name="googleMap" size="80" />
+								<input id="find" type="hidden" value="find" />
+							</div>				
+							
+							<div class="input-box clearfix " >
+								<div  class="map_canvas" style ='width:100%;height:400px;'></div>		
+							</div>
+
+							<div>
+								latitude:<{$loginUser.latitude}>
+								longitude:<{$loginUser.longitude}>
+							</div>
+							
+							<div style="display: none;">
+								<div class="input-box clearfix " >
+									<span><label>坐标位置</label></span>
+									<input  id ="google_location" type="text" class="input-text" value="<{$loginUser.google_location}>" name="location"  style="width:202px;"  />
+								</div>
+								<div class="input-box clearfix"  >
+
+									<span><label>号码</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrNumber}>" name="street_number" style="width:160px;" />
+									街道<input type="text" class="input-text" value="<{$loginUser.addrStreet}>" name="route"  style="width:202px;" />
+								</div>
+								<div class="input-box clearfix"  >
+									<span><label>城市</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrSuburb}>" name="locality"  style="width:160px;" />
+									邮编<input type="text" class="input-text" value="<{$loginUser.addrPost}>" name="postal_code"  style="width:202px;" />
+								</div>
+								<div class="input-box clearfix" >
+									<span><label>州</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.addrState}>" name="administrative_area_level_1"  style="width:160px;" />
+									国家代码<input type="text" class="input-text" value="<{$loginUser.countryCode}>" name="country_short" style="width:202px;" />
+								</div>
+								<div class="input-box clearfix"  >
+									<span><label>国家</label></span>
+									<input type="text" class="input-text" value="<{$loginUser.country}>" name="country"  style="width:160px;" />
+									
+								</div>
+								
+								<div class="input-box clearfix" >
+									<span><label>地图链接</label></span>
+									<input  type="text" class="input-text" value="<{$loginUser.googleMapUrl}>" name="url"  />
+								</div>
+							</div>
+							
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries&libraries=places"></script>
+							<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+							
+							<script>
+							$(function(){
+								$("#geocomplete").geocomplete({
+									map: ".map_canvas",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$loginUser.googleMap}>"
+								});
+								
+								$("#find").click(function(){
+									$("#geocomplete").trigger("geocode");
+								});
+								var map = $("#geocomplete").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							</script>				
+							
+						
+						<div class="input-box clearfix" style="    margin-top: 20px;">
+
+							<span><label><{$lang->legal_company_name}>（option)</label></span>
+							
+							<input type="text" class="input-text" value="<{$loginUser.businessName}>" name="businessName" />
+                          <em>注册的公司名称 xxx Pty Ltd etc.</em>
+						</div>
+						<div id="div03" class="input-box clearfix">
+
+							<span>
+
+							<label>商家介绍（选填）</label>
+
+							</span>
+
+						</div>
+
+						<textarea name="companyDescription" class="input-textarea"><{$loginUser.companyDescription}></textarea>
+						
+						<div id="div03" class="input-box clearfix">
+
+							<span>
+
+							<label>Business info（option）</label>
+
+							</span>
+
+						</div>
+
+						<textarea name="companyDescription_en" class="input-textarea"><{$loginUser.companyDescription_en}></textarea>
+
+				
+						
+						<div id="div00" ></div>
+
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit" style='float:right'> <{$lang->save_modification}></button>
+
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

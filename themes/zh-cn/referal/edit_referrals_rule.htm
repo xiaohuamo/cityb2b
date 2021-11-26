@@ -1,0 +1,156 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2" >
+				<div class="main-form" >
+
+					<form id="memberForm" class='form-style-green' action="<{$editUrl}>" method="post" target="post_frame">
+					  <div class="input-box clearfix">	
+
+					 	<div class="input-box clearfix">
+							<h1>生成媒体码</h1>
+                            <p>生成并分发媒体码给指定用户可以给出特定的分享抽成，以此激励媒体和商家之间的互惠互利</p>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>产品</label></span>
+                                <select name='coupon_id' style='max-width: 70%'>
+                                <option value='0'>请选择</option>
+	                            	<{foreach from=$coupon_list item=item}>
+	                            		<option value='<{$item.id}>' data-cprice='<{$item.voucher_deal_amount}>' data-crate='<{$item.platform_commission_rate}>' data-cbase='<{$item.platform_commission_base}>'><{$item.id}> - <{$item.title}></option>
+	                            	<{/foreach}>
+	                            </select>
+						</div>
+						<div class='coupon-info-display' style='text-align: center;padding: 0px 0px 45px 0px;'>
+							
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>分享者优惠提成</label></span>
+                            <select name='type'>
+                            	<option value='percent'>按百分比提成</option>
+                            	<option value='fixed'>按固定金额提成</option>
+                            </select>
+
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>推广机构提成</label></span>
+                               <input type="number" name="special_rate" class="input-text"  step='any' required="true" style="width: 100px;" />
+						</div>
+
+						<div class="input-box clearfix">
+                            <p><small>奖励方式一：按照产品标价的百分比在销售完成后给予提成。输入50，表示Ubonus美食生活提成的50%分配给推广机构。如果填写100，表示Ubonus美食生活提成的100%都分配给推广机构，Ubonus美食生活没有任何收入</small></p>
+
+                            <p><small>奖励方式二：按固定金额在销售完成后给予提成，提成金额不会大于平台销售的提成</small></p>
+                            
+                            <small>Ubonus平台销售默认提成为产品售价的5%。合作商家可以享受更低的比率</small>
+						</div>
+
+						
+
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit">生成</button>
+
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		$("select[name='coupon_id']").on('change',function(){
+			var id = $(this).find('option:selected').val();
+
+			if(id>0){
+				var cprice = $(this).find('option:selected').data('cprice');
+				var cbase = $(this).find('option:selected').data('cbase');
+				var crate = $(this).find('option:selected').data('crate');
+
+				var msg= "<p>主产品标价：$"+cprice+"</p>";
+
+				if(cbase>0){
+					msg+= "<p>Ubonus美食生活佣金：$"+cbase+" + "+crate*100+"%的产品标价</p>";
+				}else{
+					msg+= "<p>Ubonus美食生活佣金："+crate*100+"%的产品标价</p>";
+				}
+
+				msg+= "<small>如有疑问请与Ubonus美食生活客服联系</small>";
+
+				$('.coupon-info-display').html(msg);
+			}else{
+				$('.coupon-info-display').html(' ');
+			}
+
+		})
+	})
+</script>
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+<{include file='header.htm'}>
+<div class="container">
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				<div class="main-form">
+
+					<div class="colCurTit">管理投票
+						<span class="links" >
+						 <a class='btn-yellow' href="<{$http_root_www}>voting/voting_create"><i class="fa fa-plus"></i>添加新投票</a>
+						</span>
+					</div>
+
+					<table style='width:100%'>
+						<thead style='width:100%;background:#00A1E9;color:white'>
+							<th>标题</th>
+							<th>状态</th>
+							<th>管理</th>
+							<th>查看</th>
+						</thead>
+						<tbody style="text-align: center;">
+							<{foreach from=$list item=item}>
+								<tr>
+									<td><{$item.title}></td>
+									<td><{$item.status}></td>
+									<td><a href="<{$http_root_www}>voting/manage_item?id=<{$item.id}>">管理</a></td>
+									<{if $item.preview_link}>
+									<td><a href="<{$http_root_www}><{$item.preview_link}>">查看</a></td>
+									<{else}>
+									
+									<td><a href="<{$http_root_www}>voting/show?id=<{$item.id}>">查看</a></td>
+									<{/if}>
+								</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+					
+					<script type="text/javascript">
+						
+					</script>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

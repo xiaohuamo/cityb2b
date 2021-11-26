@@ -1,0 +1,124 @@
+<IfModule deflate_module>
+    # Enable compression for the following file types.
+    AddOutputFilterByType            \
+     DEFLATE                         \
+      application/javascript         \
+      text/css                       \
+      text/html                      \
+      text/javascript                \
+      text/plain                     \
+      text/xml
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+#RewriteBase /
+
+RewriteRule ^admin/? admin/index.php [NC]
+RewriteRule ^verifycode.gif$ index.php?con=admin&ctl=verifycode&%{QUERY_STRING} [NC]
+
+RewriteRule ^payment/adpaymentprocess/([^\/?.]+)?/?$ index.php?ctl=payment/adpaymentprocess&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^payment/orderpaymentprocess/([^\/?.]+)?/?$ index.php?ctl=payment/orderpaymentprocess&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^payment/rechargepaymentprocess/([^\/?.]+)?/?$ index.php?ctl=payment/rechargepaymentprocess&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^query/?$ index.php?ctl=query&%{QUERY_STRING} [NC]
+
+RewriteRule ^category/([^?.]+)$ index.php?ctl=category&act=$1&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^aisanpacific/([^?.]+)$ index.php?ctl=aisanpacific&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^company/([^?.]+)$ index.php?ctl=company&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^category_new/([^?.]+)$ index.php?ctl=category_new&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^factory/([^?.]+)$ index.php?ctl=factory&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^freshfood/([^?.]+)$ index.php?ctl=freshfood&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^factory_2c/([^?.]+)$ index.php?ctl=factory_2c&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^promotion/([^?.]+)$ index.php?ctl=promotion&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^dispute_center/([^?.]+)$ index.php?ctl=dispute_center&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^test/([^?.]+)$ index.php?ctl=test&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon_event_management/([^?.]+)$ index.php?ctl=coupon_event_management&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^member/([^?.]+)$ index.php?ctl=member&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^cinema/([^?.]+)$ index.php?ctl=cinema&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^show/([^?.]+)$ index.php?ctl=show&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^group_pin/([^?.]+)$ index.php?ctl=group_pin&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^group_buy/([^?.]+)$ index.php?ctl=group_buy&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^voting/([^?.]+)$ index.php?ctl=voting&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^business/([^?.]+)$ index.php?ctl=business&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^chart/([^?.]+)$ index.php?ctl=chart&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^chart_per_business/([^?.]+)$ index.php?ctl=chart_per_business&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^system/([^?.]+)$ index.php?ctl=system&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^customizable_category/([^?.]+)$ index.php?ctl=customizable_category&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^referal/([^?.]+)$ index.php?ctl=referal&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^message/?$ index.php?ctl=message&act=index&%{QUERY_STRING} [NC]
+RewriteRule ^message/([^?.]+)$ index.php?ctl=message&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^store/([0-9]+)$ index.php?ctl=template&act=index&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^food$ index.php?ctl=food&act=index&%{QUERY_STRING} [NC]
+RewriteRule ^voucher_subscription$ index.php?ctl=voucher_subscription&act=index&%{QUERY_STRING} [NC]
+RewriteRule ^restaurant/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=restaurant&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^factorypage/([^?.]+)$ index.php?ctl=factorypage&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^r/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^restaurant/([^?.]+)$ index.php?ctl=restaurant&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^article/([0-9]+)$ index.php?ctl=article&act=index&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^article/([^?.]+)$ index.php?ctl=article&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^articlelist$ index.php?ctl=article&act=list&%{QUERY_STRING} [NC]
+
+RewriteRule ^coupon1/chinese_pageant$  index.php?ctl=coupon&act=miss [NC]
+RewriteRule ^coupons/?$ index.php?ctl=coupon&act=index&%{QUERY_STRING} [NC]
+RewriteRule ^coupons/list/([^?.]+)/?$ index.php?ctl=coupon&act=index&type=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon/buy/([0-9]+)$ index.php?ctl=coupon&act=buy&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupons/([^?.]+)/?$ index.php?ctl=coupon&act=index&alias=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon/([0-9]+)$ index.php?ctl=coupon&act=show&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon1/([0-9]+)$ index.php?ctl=coupon&act=show&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon/([^?.]+)$ index.php?ctl=coupon&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^coupon1/([^?.]+)$ index.php?ctl=coupon&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^daigou/([^?.]+)$ index.php?ctl=daigou&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^local_service/([^?.]+)$ index.php?ctl=local_service&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^mall/([^?.]+)$ index.php?ctl=mall&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^shoppingday/([^?.]+)$ index.php?ctl=shoppingday&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^ticketvalidation/([^?.]+)$ index.php?ctl=ticketvalidation&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^redbag/([^?.]+)$ index.php?ctl=redbag&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^lottery/([^?.]+)$ index.php?ctl=lottery&act=$1&%{QUERY_STRING} [NC]
+
+RewriteRule ^samsonite$ index.php?ctl=business&act=samsonite&{QUERY_STRING} [NC]
+RewriteRule ^newhomepage$ index.php?ctl=business&act=newindex&{QUERY_STRING} [NC]
+RewriteRule ^daigou$ index.php?ctl=daigou&act=daigou&{QUERY_STRING} [NC]
+RewriteRule ^local_service index.php?ctl=local_service&act=local_service&{QUERY_STRING} [NC]
+RewriteRule ^mall index.php?ctl=mall&act=mall&{QUERY_STRING} [NC]
+RewriteRule ^shoppingday index.php?ctl=shoppingday&act=shoppingday&{QUERY_STRING} [NC]
+RewriteRule ^newyear index.php?ctl=newyear&act=newyear&{QUERY_STRING} [NC]
+RewriteRule ^help index.php?ctl=help&act=help&{QUERY_STRING} [NC]
+RewriteRule ^brandstore index.php?ctl=brandstore&act=index&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^store_navigation index.php?ctl=brandstore&act=index&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^sitemap.xml$ sitemap.xml [NC]
+RewriteRule ^index1$ /themes/zh-cn/mobile/index1.htm [NC]
+RewriteRule ^food1$ index.php?ctl=food&act=index&%{QUERY_STRING} [NC]
+RewriteRule ^2019澳洲华裔小姐$ /article/70 [NC]
+
+RewriteRule ^2019miss88$  index.php?ctl=coupon&act=miss [NC]
+RewriteRule ^2019miss$  index.php?ctl=coupon&act=miss [NC]
+
+RewriteRule ^missshop$  index.php?ctl=coupon&act=miss_busi [NC]
+RewriteRule ^2019reg$  /coupon1/chinese_pageant [NC]
+
+RewriteRule ^restaurant2/([^?.]+)$ /themes/zh-cn/mobile/restaurant/index.htm [NC]
+
+RewriteRule ^coupon7m/([^?.]+)$ /themes/zh-cn/mobile/couponhtm/coupon7m.htm [NC]
+RewriteRule ^info/([^?.]+)$ index.php?ctl=info&alias=$1&%{QUERY_STRING} [NC]
+</IfModule>
+
+
+ErrorDocument 404 /404.php
+
+
+<IfModule mod_security.c>
+SecFilterEngine Off
+SecFilterScanPOST Off
+</IfModule>
+

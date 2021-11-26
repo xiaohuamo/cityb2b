@@ -1,0 +1,49 @@
+				<div class='index_panel'>
+							<div class='panel_item'style="height:auto;">
+									<div class='panel_item_top'>
+										<div class='panel_icon'><i class="fa fa-share fa-4x" ></i></div>
+										<h1><{$lang->product_management}></h1>
+										<p><{$lang->publish_information}></p>
+									</div>
+									
+									
+								<div class='panel_item_sub' >
+								
+								<a href="<{$http_root_www}>company/coupons?coupon_type=9" <{if $submenu=='shop'}> class="current"<{/if}> class='panel_sub_item'>
+									<{$lang->products}>	</a>
+								<a href="<{$http_root_www}>customizable_category/edit" class='panel_sub_item' <{if $submenu=='category_edit'}> class="current"<{/if}>>
+									<{$lang->custome_classification}>
+								</a>
+								<a href="<{$http_root_www}>company/coupons?coupon_type=4" class='panel_sub_item' <{if $submenu=='voucher'}> class="current"<{/if}>>
+								<{$lang->offline_voucher}>
+								</a>
+								
+								<a href="<{$http_root_www}>company/promotion_code_manage" class='panel_sub_item'><{$lang->pormotion_code}></a>
+												
+								</div>
+								
+								<div class='panel_item_sub' >
+								
+								<a href="<{$http_root_www}>company/shop_guige" class='panel_sub_item' <{if $submenu=='shop_guige'}> class="current"<{/if}>>
+									<{$lang->specification}>
+								</a>
+								<a href="<{$http_root_www}>company/guige_link_edit" class='panel_sub_item' <{if $submenu=='guige_link_edit'}> class="current"<{/if}>>
+									<{$lang->edit_specification_link}>
+								</a>		
+									
+										<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='1234'}> class=" current"<{/if}>  class='panel_sub_item'><{$lang->preview_password}></a>
+									<a href="" class='panel_sub_item'></a>
+								</div>
+								
+							</div>
+							
+							
+						<{include file='company/index_panel_section_customer_centre.htm'}>
+						<{include file='company/index_panel_section_money_account.htm'}>
+						<{include file='company/index_panel_basic_setting.htm'}>
+						<{include file='company/index_panel_section_advanced_setting.htm'}>		
+						<{include file='company/index_panel_business_store.htm'}>		
+						<{include file='company/index_panel_online_promotion.htm'}>			
+						<{include file='company/index_panel_tools.htm'}>			
+						
+						</div>

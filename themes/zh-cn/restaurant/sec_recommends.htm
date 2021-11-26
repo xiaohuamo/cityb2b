@@ -1,0 +1,64 @@
+
+
+
+<{if $selfProduct}>
+<div class="comm-express toggle-txt">
+ <h3 style="    font-size: 15px;">相关产品</h3>
+ </div>
+<{foreach from=$selfProduct item=item}>
+<div class="well" style="background-color: #FFFFFF;width:100%;float: left;padding: 4px;    margin-top: -11px; ">
+      <div class="overflow-hidden">
+		<a href="<{$http_root_www}>coupon1/<{$item.id}>"</a>
+          <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:660:420:'cut'}>" alt="<{$item.title}>" style="border-radius: 4px;    width: 100%; border:0px;" >
+        </a> 
+      </div>
+    <div class="caption">
+        <h5 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><{$item.title}></h5>
+        <!--small ><{$item.coupon_summery_description}></small-->
+        <span style="display: block;font-size: 13px;color: #f23030;font-weight: bold;">$<{$item.voucher_deal_amount}></span>
+    </div>
+</div>
+
+<{/foreach}>
+
+<{/if}>
+
+
+
+
+<{if $recommends}>
+
+<{foreach from=$recommends item=item}>
+
+	<div class="well" style="background-color: #FFFFFF;width:50%;padding: 4px;float: left; ">
+	      <div class="overflow-hidden">
+			<a href="<{$http_root_www}>coupon1/<{$item.id}>">
+	          <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210:'cut'}>" style=" border-radius: 4px;   width: 100%;border:0px;" alt="<{$item.title}>"  >
+	        </a> 
+	      </div>
+	    <div class="caption">
+	        <h5 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><{$item.title}></h5>
+	      
+	        <span style="display: block;font-size:13px;color: #f23030;font-weight: bold;">$<{$item.voucher_deal_amount}></span>
+	    </div>
+	</div>
+
+<{/foreach}>
+
+<{/if}>
+<!--
+<{foreach from=$guessYouLike item=item}>
+<div class="well" style="background-color: #FFFFFF;width:48%;float: left; height: 200px;margin: 1%">
+      <div class="overflow-hidden">
+		<a href="<{$http_root_www}>coupon1/<{$item.id}>"</a>
+          <img src="<{$UPLOAD_PATH}><{$item.pic|image:140:89:'cut'}>" alt="<{$item.title}>" border="0" >
+        </a> 
+      </div>
+    <div class="caption">
+        <h5 style='text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'><{$item.title}></h5>
+       
+        <span style="display: block;font-size: .44rem;color: #f23030;font-weight: bold;">$<{$item.voucher_deal_amount}></span>
+    </div>
+</div>
+<{/foreach}>
+-->

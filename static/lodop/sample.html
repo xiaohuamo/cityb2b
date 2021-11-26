@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ubonus 打印机预览</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<script language="javascript" src="LodopFuncs.js"></script>
+<body>
+
+<div id = 'printpreview' style="width: 300px">
+	<p><small>offline | 已支付 | 商家递送</small></p>
+	<br><br>
+	<!-- space for QR CODE -->
+
+	<div>
+		<label>Order ID:</label>
+		<span style="float:right;">202009291224124111231</span>
+	</div>
+	<div>
+		<label>Name:</label>
+		<span style="float:right;">Jack Zhang</span>
+	</div>
+	<div>
+		<label>Phone:</label>
+		<span style="float:right;">0433813332</span>
+	</div>
+
+	<br><br>
+	<label>Deliver Address:</label>
+	<br>
+	<div style="border: 3px solid black; padding: 5px">
+		<span style="font-weight: bolder;">27 signature blvd pointcook 墨尔本 澳大利亚</span>
+	</div>
+
+	<div>
+		<label>Note:</label> 
+		<small>程序员测试，paypal支付</small>
+	</div>
+	<br><br>
+
+	<hr><br>
+	<div>
+		<label>Deliver Date:</label>
+		<span style="float:right;">2020-10-01</span>
+	</div>
+	<div style="border: 3px solid black; line-height: 30px">
+		<label>Sequence No:</label>
+		<span style="float:right; font-size: 30px">01</span>
+	</div>
+	<div>
+		<label>Truck No:</label>
+		<span style="float:right;">D1</span>
+	</div>
+	<div>
+		<label>Stop No:</label>
+		<span style="float:right;">S01</span>
+	</div>
+
+	<br><hr><br>
+
+	<div>
+		<label>Suppliers Count:</label>
+		<span style="float:right;">2</span>
+	</div>
+
+	<label>Suppliers Name:</label>
+	<div style="border: 1px solid black; padding: 5px">
+		<span >Meat(Y)2_Cook(N)_FreshChous(Y)2_Seafood(Y)1</span>
+	</div>
+
+	<br><hr><br>
+
+	<div>
+		<label>Box:</label>
+		<span style="float:right;"> 1 of 2</span>
+	</div>
+
+	<table style="width: 300px;" cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="border-width: 2px 1px 1px 2px;border-style:solid;text-align: center;">1</td>
+			<td style="border-width: 2px 2px 1px 1px;border-style:solid;text-align: center;">2</td>
+		</tr>
+		<tr>
+			<td style="border-width: 1px 2px 2px 2px;border-style:solid;text-align: center;" colspan="2">3</td>
+		</tr>
+	</table>
+</div>
+<button onClick = 'preview();'>preview</button>
+<button onClick = 'print();'>print</button>
+
+<script type="text/javascript">
+	var LODOP;
+
+	function init() {
+		LODOP = getLodop();  
+		LODOP.PRINT_INIT("Ubonus-打印机预览");
+		LODOP.SET_PRINT_PAGESIZE(1, '3.6 in', '7 in', "");
+
+		for (var i = 2; i >= 0; i--) {
+			addOnePage();
+		}
+
+		// LODOP.SET_PRINT_MODE("PRINT_PAGE_PERCENT","Full-Page");
+	}
+
+	function addOnePage() {
+		LODOP.NewPage();
+		//QR CODE
+		LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
+		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body leftmargin=0 topmargin=0>"+document.getElementById('printpreview').innerHTML+"</body>");
+	}
+
+	function preview() {
+		init();
+		LODOP.PREVIEW();
+	}
+
+	function print() {
+		init();
+		LODOP.PRINT();
+	}
+</script>
+
+</body>
+
+
+</html>

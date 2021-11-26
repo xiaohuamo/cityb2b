@@ -1,0 +1,95 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home"></i>
+				<a href="<{$http_root_www}>factory/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfoodFactory}></strong></a>
+
+			</div>
+		</li>
+
+
+		
+
+
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit"></i>
+				<a <{if $menu=='customer_management'}> class="current"<{/if}>><{$lang->customer_management}></a>
+			</div>
+
+			<div class='second-level'>
+
+				<a href="<{$http_root_www}>factory/add_new_customer"<{if $submenu=='add_new_customer'}> class="current"<{/if}>>
+					<{$lang->add_new_customer}>
+				</a>
+
+				<a href="<{$http_root_www}>factory/customer_list"<{if $submenu=='customer_list'}> class="current"<{/if}>>
+					<{$lang->customer_list}>
+				</a>
+
+
+			</div>
+		</li>
+
+
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-line-chart"></i>
+				<a <{if $menu=='online_center'}> class="current"<{/if}>><{$lang->order_management}></a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>factorypage/order_for_customer"<{if $submenu=='customer_list'}> class="current"<{/if}> target="_blank">
+						<{$lang->add_new_order}>
+				</a>
+
+				<a href="<{$http_root_www}>factory/customer_orders"<{if $submenu=='customer_coupon_process'}> class="current"<{/if}>>
+                    <{$lang->order_management}>
+				</a>
+
+				<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+                    <{$lang->order_management_amend}>
+				</a>
+
+
+			</div>
+		</li>
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='selling'}> class="current"<{/if}>>销售分析</a>
+			</div>
+
+			<div class='second-level'>
+				
+				
+				
+				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
+					按周销售分析
+				</a>
+					<a href="<{$http_root_www}>chart_per_business/selling_daily"<{if $submenu=='selling_daily'}> class="current"<{/if}>>
+					按日销售分析
+				</a>
+				
+				
+			</div>
+		</li>
+		
+		<li>
+	
+
+
+    <{if !$loginUser.wx_openID}>
+		<div style='    margin: 5px;padding: 20px;text-align:center'>
+			<h1><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+			<small><{$lang->bind_wx_desc}></small>
+			<div>
+				<a href="<{$http_root_www}>member/wx_manage_account">
+					<img src="<{$bindWxQRCode}>" style='width:100px'>
+				</a>
+			</div>
+		</div>
+    <{/if}>
+
+</div>

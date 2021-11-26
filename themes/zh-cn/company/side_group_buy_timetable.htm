@@ -1,0 +1,19 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='basic_setting'}> class="current"<{/if}>>团购设置</a>
+	</div>
+	<div class='second-level'>
+		
+	<a href="<{$http_root_www}>company/dispcenter?type=single" <{if $submenu=='dispcenter'}> class="current"<{/if}>>
+			开启团购模式
+		</a>
+		<{if $showDelivery_date_setting_menu}>
+			
+				
+				<a href="<{$http_root_www}>company/dispcenter_schedule"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
+					<{$lang->delivery_date_open_end_time_setting}>
+				</a>
+				<{/if}>
+	</div>
+</li>

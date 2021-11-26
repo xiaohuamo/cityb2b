@@ -1,0 +1,17 @@
+<{assign var="nbsp" value="&nbsp;&nbsp;&nbsp;&nbsp;"}>
+<{foreach from=$tr_list item=item}>
+	<tr class='citem' data-pid='<{$item.parent_id}>' data-id='<{$item.id}>' >
+		<td>
+			<{$nbsp|str_repeat:$item.level}>
+			<{if $item.hasChild>0}>	
+			<span class='load_child load_child_btn' onClick='loadChild(this);'><i class='fa fa-plus-square-o'></i></span>
+			<{else}>
+			<span class='load_child_btn'><i class='fa fa-square'></i></span>
+			<{/if}>
+			<span><{$item.name}></span>
+		</td>
+		<td>
+			 <input type="checkbox" name="cCategoryId[]" value="<{$item.id}>" /><br />
+		</td>		
+	<tr >
+<{/foreach}>

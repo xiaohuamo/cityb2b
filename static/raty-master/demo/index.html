@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="author" content="Washington Botelho">
+<meta name="description" content="A Star Rating Plugin">
+<meta name="google" content="notranslate">
+<meta name="keywords" content="jquery,rating,raty,voto,star,staring,classificacao,classificar,votar,plugin,javascript,library">
+<meta name="robots" content="ALL">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+
+<link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+<title>jQuery Raty | A Star Rating Plugin - Washington Botelho</title>
+
+<meta content="authenticity_token" name="csrf-param">
+
+
+  <link href="stylesheets/labs.css" media="screen" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="../lib/jquery.raty.css">
+<style>.functions .demo {
+  margin-bottom: 10px;
+}
+
+.functions .item {
+  background-color: #FEFEFE;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+}
+
+.functions .item a {
+  border: 1px solid #CCC;
+  margin-left: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.functions .item input {
+  display: inline-block;
+  margin-left: 2px;
+  padding: 5px 6px;
+  width: 120px;
+}
+
+.functions .item label {
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.hint {
+  text-align: center;
+  width: 160px
+}
+
+div.hint {
+  font-size: 1.4em;
+  height: 46px;
+  margin-top: 15px;
+  padding: 7px
+}
+</style>
+
+<script src="../vendor/jquery.js"></script><script src="../lib/jquery.raty.js"></script>
+<script src="javascripts/labs.js" type="text/javascript"></script>
+
+</head>
+<body>
+  <div class="content">
+    <div role="banner" class="header">
+  <h1><a href="/raty">jQuery Raty</a></h1>
+
+  <div>A Star Rating Plugin</div>
+</div>
+
+    <nav role="navigation" class="navigation">
+  <a href="http://github.com/wbotelhos/archive/2.7.0.zip" class="download" title="Download version 2.7.0"><i class="i-file-zip"></i> v2.7.0</a>
+  <a href="http://github.com/wbotelhos/raty" class="i-github" target="blank" title="Github &lt;http://github.com/wbotelhos/raty&gt;"></a>
+  <a href="http://wbotelhos.com/labs" class="labs i-labs" target="blank" title="Labs &lt;http://wbotelhos.com/labs&gt;"></a>
+
+  <i class="i-heart" title="Thank you! &lt;3"></i>
+
+<div id="donations">
+  <a href="http://gittip.com/wbotelhos" target="_blank">Git tip</a>
+  <span>•</span>
+  <a href="http://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=X8HEP2878NDEG&amp;item_name=jQuery%20Raty" target="_blank">Paypal</a>
+</div>
+
+</nav>
+
+
+    <div class="clearfix"></div>
+
+<article>
+
+  <div class="body">
+    <h1>Default</h1>
+
+
+<p>Move the mouse to the given score point position.</p>
+
+<h1>Functions demo</h1>
+
+<div class="functions">
+  <div class="demo">
+    <div id="functions"></div>
+    <div id="functions-hint" class="input hint"></div>
+  </div>
+
+   
+
+  <div class="item">
+    <label for="cancel-function">cancel:</label>
+    <input id="cancel-function" type="text" value="true" class="input">
+    <a id="cancel-function-run" href="javascript:void(0);" title="cancel">run</a>
+  </div>
+
+
+</div>
+
+<h1>Tests</h1>
+
+<p>This plugin is tested to work better. <a href="spec/run.html">Check it out!</a></p>
+
+  </div>
+</article>
+
+<div class="share">
+  <p>Share it!</p>
+
+  <div class="twitter"><a href="https://twitter.com/intent/tweet?text=%22jQuery+Raty+-+A+Star+Rating+Plugin%22+%7E&amp;url=http%3A%2F%2Fwbotelhos.com%2Fraty&amp;via=wbotelhos" target="_blank" title="via Twitter"><i class="i-twitter"></i></a></div>
+</div>
+
+
+
+
+
+
+<script>
+  $(function() {
+   
+  });
+</script>
+
+
+  </div>
+
+  <script>
+  $.fn.raty.defaults.path = '../lib/images';
+
+  $(function() {
+
+
+
+
+
+
+$('#functions').raty({
+  cancel     : true,
+  cancelOff  : 'cancel-off.png',
+  cancelOn   : 'cancel-on.png',
+  path       : 'demo/images',
+  precision  : true,
+  starHalf   : 'star-half.png',
+  starOff    : 'star-off.png',
+  starOn     : 'star-on.png',
+  target     : '#functions-hint',
+  targetKeep : true,
+  click: function(score, evt) {
+    alert('ID: ' + this.id + "\nscdddddddddddddore: " + score + "\nevent: " + evt.type);
+  },
+  hints: [
+    ['bad 1'      , 'bad 2'      , 'bad 3'      , 'bad 4'      , 'bad 5'      , 'bad 6'      , 'bad 7'      , 'bad 8'      , 'bad 9'      , 'bad'      ], 
+    ['poor 1'     , 'poor 2'     , 'poor 3'     , 'poor 4'     , 'poor 5'     , 'poor 6'     , 'poor 7'     , 'poor 8'     , 'poor 9'     , 'poor'     ], 
+    ['regular 1'  , 'regular 2'  , 'regular 3'  , 'regular 4'  , 'regular 5'  , 'regular 6'  , 'regular 7'  , 'regular 8'  , 'regular 9'  , 'regular'  ], 
+    ['good 1'     , 'good 2'     , 'good 3'     , 'good 4'     , 'good 5'     , 'good 6'     , 'good 7'     , 'good 8'     , 'good 9'     , 'good'     ], 
+    ['gorgeous 1' , 'gorgeous 2' , 'gorgeous 3' , 'gorgeous 4' , 'gorgeous 5' , 'gorgeous 6' , 'gorgeous 7' , 'gorgeous 8' , 'gorgeous 9' , 'gorgeous' ]
+  ]
+});
+
+
+  });
+</script>
+
+  
+</body>
+</html>

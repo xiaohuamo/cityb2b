@@ -1,0 +1,84 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><{$lang->business_center_mall}></a> 
+				
+			</div>
+
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/choose_business_type"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+					<{$lang->console_switch}>
+				</a>
+			</div>
+
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><{$lang->publish_center}></a>
+			</div>
+
+
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/coupons?coupon_type=9"<{if $submenu=='shop'}> class="current"<{/if}>>
+					<{$lang->product_management}>
+				</a>
+				<a href="<{$http_root_www}>customizable_category/edit?"<{if $submenu=='category_edit'}> class="current"<{/if}>>
+					<{$lang->custome_classification}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/coupons?coupon_type=4"<{if $submenu=='offline_voucher'}> class="current"<{/if}>>
+					<{$lang->offline_voucher}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/promotion_code_manage"<{if $submenu=='promotion_code_manage'}> class="current"<{/if}>>
+					<{$lang->pormotion_code}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/shop_guige"<{if $submenu=='shop_guige'}> class="current"<{/if}>>
+					<{$lang->specification}>
+				</a>
+				<a href="<{$http_root_www}>company/guige_link_edit"<{if $submenu=='guige_link_edit'}> class="current"<{/if}>>
+					<{$lang->edit_specification_link}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>
+			</div>
+		</li>
+		
+		<{include file='company/side_customer_centre.htm'}>
+		<{include file='company/side_money.htm'}>
+		
+		<{include file='company/side_basic_setting.htm'}>
+		<{include file='company/side_advanced_setting.htm'}>
+		
+		<{include file='company/side_store.htm'}>
+		
+		
+		
+		
+	</ul>
+	
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

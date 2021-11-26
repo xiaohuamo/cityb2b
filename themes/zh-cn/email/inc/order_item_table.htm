@@ -1,0 +1,21 @@
+<table style='width:100%'>
+	<thead style='background-color:#00A1E9'>
+		<th><{$lang->title}></th>
+		<th style='min-width:60px'><{$lang->description}></th>
+		<th style='min-width:60px'><{$lang->quantity}></th>
+		<th style='min-width:60px'><{$lang->unit_price}></th>
+	</thead>
+	<tbody>
+		
+		<{foreach from=$data  item=item}>
+		<tr>
+			<td><{$item.bonus_title}></td>
+			<!-- <td><{$item.bonus_type_name}></td> -->
+			<td><{$item.guige_des}></td>
+			<td><{$item.customer_buying_quantity}></td>
+			<td><{$item.voucher_deal_amount}></td>
+		</tr>
+		<{/foreach}>
+		
+	</tbody>
+</table>

@@ -1,0 +1,176 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfood}></strong></a> 
+					
+				</div>
+			</li>
+			
+			
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/choose_business_type"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+						<{$lang->console_switch}>
+					</a>
+				</div>
+
+			</li>
+	    	<{if $loginUser.id==26326}>
+			
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>chart/index"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+						数据分析
+					</a>
+				</div>
+
+			</li>
+			<{/if}>
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><{$lang->publish_center}></a>
+			</div>
+
+			<div class='second-level'>
+				
+			
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					<{$lang->shop_card}>
+				</a>
+				
+				<a href="<{$http_root_www}>factorypage/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					<{$lang->category_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>factorypage/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				<!--
+				<a href="<{$http_root_www}>company/coupons?coupon_type=7"<{if $submenu=='local'}> class="current"<{/if}>>
+					<{$lang->package_sale}>
+				</a> 
+				<a href="<{$http_root_www}>company/coupons?coupon_type=18"<{if $submenu=='daijinquan'}> class="current"<{/if}>>
+					<{$lang->cash_gift_voucher}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/coupons?coupon_type=4"<{if $submenu=='offline_voucher'}> class="current"<{/if}>>
+					<{$lang->offline_voucher}>
+				</a>  -->
+				
+				
+				<{if $customer_id == $this->loginUser.id && count($authoriseBusinessList)==1}>
+				<a href="<{$http_root_www}>factorypage/refresh_menu?business_id=<{$customer_id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->refresh_store}>
+				</a>
+				<{/if}>
+				
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>
+				<{if $showDelivery_date_setting_menu}>
+				
+				<a href="<{$http_root_www}>company/dispcenter"<{if $submenu=='dispcenter'}> class="current"<{/if}>>
+					集合店管理
+				</a>
+				
+				<a href="<{$http_root_www}>company/dispcenter_schedule"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
+					<{$lang->delivery_date_open_end_time_setting}>
+				</a>
+				<{/if}>
+				
+				<{if $loginUser.id == 76664444 || $loginUser.id == 5555555444}>
+				<a href="<{$http_root_www}>company/freshx_price"<{if $submenu=='freshx_price'}> class="current"<{/if}>>
+					Freshx 最新价格
+				</a>
+				<{/if}>
+
+				<{if $loginUser.id == 5555444444}>
+				<a href="<{$http_root_www}>company/freshx_order_import"<{if $submenu=='freshx_order_import'}> class="current"<{/if}>>
+					Freshx 订单导入
+				</a>
+				<{/if}>
+				<{if $customer_id && $customer_id == $loginUser.id}>
+				<a href="<{$http_root_www}>company/promotion_code_manage"<{if $submenu=='promotion_code_manage'}> class="current"<{/if}>>
+					<{$lang->pormotion_code}>
+				</a>
+				<{/if}>
+				<a href="<{$http_root_www}>factorypage/restaurant_refresh_preview_management"<{if $submenu=='preview_refresh'}> class="current"<{/if}>>
+					<{$lang->preview_store}>
+				</a>
+			</div>
+		</li>
+		
+		
+
+
+			
+		<{include file='company/side_customer_centre.htm'}>
+		
+		<{include file='company/side_dispatching_management.htm'}>
+		
+		<{include file='company/side_logistic_management.htm'}>
+		
+		
+		<{include file='company/side_money.htm'}>
+		
+		<{include file='company/side_basic_setting.htm'}>
+		<{include file='company/side_advanced_setting.htm'}>
+		
+		<{include file='company/side_store.htm'}>
+		
+
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>company/ubonus_package"<{if $menu=='community'}> class="current"<{/if}>><{$lang->online_promotion}></a>
+			</div>
+		</li>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>member/index"<{if $menu=='community'}> class="current"<{/if}>><{$lang->my_account}></a>
+			</div>
+		</li>
+		
+	<!--	
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='article_vote'}> class="current"<{/if}>>文章/社群</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/article"<{if $submenu=='article'}> class="current"<{/if}>>美文</a>
+				
+				<a href="<{$http_root_www}>voting/voting_manage"<{if $submenu=='voting_manage'}> class="current"<{/if}>>
+					人气及投票
+				</a>
+				
+			</div>
+			
+		</li>
+	-->	
+		
+	</ul>
+	
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

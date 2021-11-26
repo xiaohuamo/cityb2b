@@ -1,0 +1,155 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style type="text/css">
+	 
+	.my-order-filter {
+	  list-style-type: none;
+	   height:20px; 
+	   margin: 0px 0px 10px 14px;
+	   display: block;
+	}
+	 
+	.my-order-filter li {
+	  float: left;
+	  margin-right: 0px;
+	  border-right: 1px solid #aaa;
+	  padding: 0 20px;
+	}
+	 
+	.my-order-filter li:last-child {
+	  border-right: none;
+	}
+	 
+	.my-order-filter li a {
+	  text-decoration: none;
+	  color: #666;
+	  font: 18px ;
+	}
+	 
+	.my-order-filter li a:hover {
+	  color: #FD5001 ;
+	}
+
+	.my-order-filter li a.on {
+	  color: #FD5001 ;
+	}
+	 
+	.my-order-filter li.active a {
+	  font-weight: bold;
+	  color: #666;
+	}
+</style>
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='member/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				    <{include file='member/my_order_submenu.htm'}>
+
+				<div class="main-list">		
+					<{if $data}>			
+
+						<ul class='my-order-filter'>
+							<li><a <{if $filter=='all'}>class="on" <{/if}> href="<{$listUrl}>filter=all"><{$lang->all}></a></li>
+							<li><a <{if $filter=='unpaid'}>class="on" <{/if}> href="<{$listUrl}>filter=unpaid"><{$lang->unpaid}></a></li>
+							<li><a <{if $filter=='paid'}>class="on" <{/if}> href="<{$listUrl}>filter=paid"><{$lang->paid}></a></li>
+							<li><a <{if $filter=='waiting'}>class="on" <{/if}> href="<{$listUrl}>filter=waiting"><{$lang->waiting}></a></li>
+							<li><a <{if $filter=='send'}>class="on" <{/if}> href="<{$listUrl}>filter=send"><{$lang->send}></a></li>
+							<li><a <{if $filter=='pleaseRate'}>class="on" <{/if}> href="<{$listUrl}>filter=pleaseRate"><{$lang->please_rate}></a></li>
+							<li><a <{if $filter=='cancel'}>class="on" <{/if}> href="<{$listUrl}>filter=cancel"><{$lang->canceled}></a></li>
+						</ul>	
+
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th><{$lang->order_id}></th>		
+									<th><{$lang->status}></th>	
+									<th><{$lang->payment}></th>			
+									<th><{$lang->submission_time}></th>
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td>
+									<span><{$item.order_name}></span><br>
+									<a target='_blank' href="<{$http_root_www}>member/exchange_detail?id=<{$item.orderId}>">(<{$item.orderId}>)</a>
+									</td>
+									
+									<td><{$lang-><{$item.coupon_status}>}></td>
+
+									<td>
+										<{if $item.status==1}>
+										<span style="color:#58964E;"><{$lang->paid}></span>
+										<{else}>
+										<span style="color:#F30;"><{$lang->unpaid}></span>
+										<{/if}>	
+									</td>
+
+									<td><{date('Y-m-d H:i', $item.createTime)}></td>
+								</tr>		
+
+								<{/foreach}>			
+							</tbody>		
+						</table>			
+					<{if $pager}>
+					<div class="pager"><{$pager}></div>
+					<{/if}>				
+					<{else}>				
+					<{$lang->no_data}>	
+					<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

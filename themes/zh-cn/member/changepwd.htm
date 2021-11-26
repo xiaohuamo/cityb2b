@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+
+	.main-form .input-box span label { width:170px; }
+
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+          <{if $side=='company' || !$side}>
+		 
+				<{include file='company/side.htm'}>		 
+			<{else}>
+
+	        <{include file='member/side.htm'}>		 
+
+			<{/if}>
+
+		  <div class="main" style="background-color:#fff;" >
+
+			<div class="box2">
+
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1><{$lang->change_password}></h1>
+					</div>
+					<form id="memberForm" style ="margin-top: 30px;" class='form-style-green' action="<{$http_root_www}>member/changepwd" method="post" target="post_frame">
+					
+						<div style="margin-left:10px;" class="input-box clearfix">
+							<input type="password" name="oldpwd" class="input-text" placeholder="<{$lang->old_password}>" />
+						</div>
+
+						<div style="margin-left:10px;" class="input-box clearfix">
+							<input type="password" name="password" class="input-text" placeholder="<{$lang->new_password}>"/>
+						</div>
+
+						<div style="margin-left:10px;" class="input-box clearfix">
+							<input type="password" name="password2" class="input-text" placeholder="<{$lang->confirm_password}>" />
+						</div>
+
+						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->save_modification}></button>
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+﻿* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input[type=button],input[type=submit],input[type=file],select{
+  -webkit-appearance:none;
+  outline:none;
+}
+
+h1,h2,h3,h3,h4,h5,h6{font-weight: normal;}
+
+body{
+  font-family:"微软雅黑","Microsoft Yahei";
+  background-color: #fff;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+img{
+    max-width: 100%;
+}
+.viewport {
+    padding: 0;
+    min-width: 303px;
+    max-width: 640px;
+    margin: 0 auto;
+    background-color: #fff;
+    overflow: hidden;
+}
+a{color: #757575;}
+a:hover{color: #ff6900;}
+a:active{
+    opacity: .8;-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity= 80)';
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80);}
+
+.wp{width: 96%;margin: 0 auto;}
+
+
+/*头部*/

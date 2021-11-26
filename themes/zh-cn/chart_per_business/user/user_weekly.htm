@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", {
+	title:{
+		text: "周用户增长分析"
+	},
+	axisX:{
+		valueFormatString: "MMM DD"
+	},
+	axisY:[{
+		title: "用户数-按周",
+		lineColor: "#C24642",
+		tickColor: "#C24642",
+		labelFontColor: "#C24642",
+		titleFontColor: "#C24642",
+		suffix: ""
+	}],
+	
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [{
+		type: "line",
+		name: "<{$titleName}>",
+		color: "#369EAD",
+		showInLegend: true,
+		axisYIndex: 1,
+		dataPoints: [
+			<{foreach from=$new_user_weekly item=item}>
+			{ x: new Date(<{$item.weekday}>), y: <{$item.user_count}> }, 
+			
+			<{/foreach}>
+		]
+	},
+	]
+});
+chart.render();
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="<{$SKIN_PATH}>chart_per_business/canvasjs.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>StickyTable/css/component.css" />
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+<style type="text/css">
+	.coupon_item{
+		display: inline-block;
+		height: 40px;
+		line-height: 40px;
+		margin:5px;
+		background: #2bb8aa;
+		color: white;
+		padding-left: 10px;
+	}
+
+	.coupon_item i{
+		margin-left: 15px;
+		color: black;
+		width: 40px;
+		height:40px;
+		background: #FD5001 ;
+		line-height: 40px;
+		text-align: center;
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form form-style-green">
+
+					<div class="inputbox clearfix">
+						<h1>规格链接编辑</h1>
+						<p>使用同组规格的产品，在规格没有重叠的情况下，可以合并链接成一个规格链接组。用户在选择相应的规格时，页面会跳转到相应的产品</p>
+					</div>
+
+					<div class='form_response_inline'></div>
+					<form id="memberForm" action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class='coupon-ready'></div>
+						<select class='choose-coupon'>
+							<option class='pleaseSelect'>请选择</option>
+							<{foreach from=$c_list item=item}>
+								<option data-text = '<{$item.id}>#<{$item.title}>' value='<{$item.id}>'><{$item.id}>#<{$item.title}></option>
+							<{/foreach}>
+						</select>
+
+						<button tyle='submit'>合并创建规格链接</button>
+					</form>
+
+					<div class="main-list">
+						<{if $list}>
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+									<tr>
+										<th>规格链接组</th>
+									    <th>创建时间</th>
+										<th>内含产品</th>
+									    <th>状态</th>
+										<th>删除</th>
+									</tr>
+								</thead>
+								<tbody>
+									<{foreach from=$list item=item name='dl'}>
+								  	<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									    <td><{$item.link_id}></td>
+										<td><{$item.link_id|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+										<td>
+											<{foreach from=','|explode:$item.coupon_list item=i}>
+											<a href="<{$http_root_www}>coupon/<{$i}>" target='_blank'><{$i}></a>
+											<{/foreach}>
+										</td>
+										<td>启用</td>
+										<td><a href="<{$http_root_www}>company/guige_link_edit?link_id=<{$item.link_id}>" onClick="if (!window.confirm('您确定要删除吗？')) return false;">删除</a></td>
+									</tr>
+									<{/foreach}>
+								</tbody>
+							</table>
+						<{/if}>	
+					</div>
+
+					
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style='display:none'></iframe>
+					<script type="text/javascript">
+						//disable submit on enter
+						$(document).on("keypress", "#memberForm,.memberForm", function(event) { return event.keyCode != 13;});
+
+						// this is attached to the end of each form to handle response
+						$('#memberForm,.memberForm').submit(function(){
+							var _form = $(this);
+							_form.find(':submit').attr('disabled', true);
+
+							$('.form_response_alert').remove();
+							_form.before('<p class="form_response_loader"></p>');
+
+							$('#post_frame').unbind('load').load(function(){
+
+								$('.form_response_alert').remove();
+								_form.find(':submit').attr('disabled', false);
+
+								var result = $(this).contents().find('body').html();
+								var data=[];
+								try{
+									data = JSON.parse(result);
+								}catch(err){
+									data['msg'] = result;
+								}
+
+								var further_action_delay=0;
+								
+								$('.form_response_loader').remove();
+
+								//Further action
+								if (data.status==200) {
+									_form.before('<div class="form_response_alert">'+ data.msg +'</div>');
+									setTimeout(function(){
+										if(data.redirect=='SELF'){
+											window.location.reload();
+										}else{
+											window.location.href = data.redirect.replace('&amp;', '&');
+										}
+										
+									}, further_action_delay);
+								}else{
+									$('.form_response_inline').html(data.msg);
+								}
+							});
+						});
+					</script>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("select.choose-coupon").on('change',function(){
+		var id = $(this).val();
+		if($(this).hasClass('pleaseSelect'))return;
+		var text = $(this).find('option:selected').data('text');
+
+		addCoupon(id,text);
+		$(this).find('option:selected').remove();
+	})
+
+	function addCoupon(id,text){
+		var html = "<span class='coupon_item' data-id ='"+id+"' data-text='"+text+"'>"+text+" <input type='hidden' name='coupon_list[]' value='"+id+"'><i class='fa fa-close' onclick='removeCoupon(this)'></i></span>"
+		$('.coupon-ready').append(html);
+	}
+
+	function removeCoupon(obj){
+		$target = $(obj).parent();
+		var id = $target.data('id');
+		var text = $target.data('text');
+		$('.choose-coupon').append("<option data-text = '"+text+"' value='"+id+"'>"+text+"</option>");
+		$target.remove();
+	}
+</script>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

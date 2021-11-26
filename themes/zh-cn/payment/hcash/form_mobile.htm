@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding:20px">
+	<h1 class='text-info'>订单确认成功!</h1>
+	<p>订单编号：<{$orderId}></p>
+	<p >Hcash 支付： <span style='color:red'><{$money}> HSR</span></p>
+
+	<p  style="text-align:center">
+         商家钱包地址
+         <label class='label label-info'>HP34XL7oy9bznTZHHK1s4kaqQcHHnxNndx</label>
+    </p>
+
+    <form action="<{$http_root_www}>payment/orderpaymentprocess/hcash_success?orderId=<{$orderId}>" method='POST'>
+		  <div class="form-group">
+		    <label for="hcashOrderId">钱包转账交易号:</label>
+		    <input type="text" class="form-control" name="hcashOrderId" required="">
+		  </div>
+		  <div class="form-group">
+		    <label for="hcashOrderTag">请输入提示标签:</label>
+		    <input type="text" class="form-control" name="hcashOrderTag" required="">
+		  </div>
+		 
+		  <button type="submit" class="btn btn-success">确认提交</button>
+		  <a  class="btn btn-warning" href="<{$http_root_www}>member/showcart">取消订单</a>
+	</form>
+
+	<p style="color:#aaa"><small>提示：Hcash支付一般需要30分钟-2天到账,商家会在确认支付到账后为您发货,如果您的支付信息有误，客户会主动联系您，订单可能会被取消。</small></p>
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+</body>
+</html>

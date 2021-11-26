@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+					<{include file='company/side_person.htm'}>
+			
+				<div class="main-form">
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/avatar" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box-image clearfix">
+							<div class='label'><{$lang->avatar}></div>
+
+							<div class='image-outline' style='display: inline-block;width: 200px;height: 200px;border: dotted;'>
+								<img src="<{$UPLOAD_PATH}><{$loginUser.avatar}>" id="main_pic" style='max-height: 200px;max-width: 200px;margin: 0px;padding:0px'/>	
+							</div>
+							
+							<input type="hidden" name="avatar"/>
+						</div>
+						<p class='validationResult' style='color:red'></p>
+						<p><{$lang->image}><{$lang->size}>:200 x 200</p>
+						<div class="input-box input-submit clearfix">
+							<button type="submit" class='submit' disabled='true'><{$lang->save_modification}></button>
+
+							<button onclick='ckfinder();return false;'><{$lang->upload_image}></button>
+						</div>
+					</form>
+
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script src="<{$STATIC_PATH}>ckfinder/ckfinder.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#main_pic').on('load',function(){
+		validation();
+	});
+})
+
+function ckfinder() {
+	CKFinder.modal( {
+		width: 800,
+    	height: 600,
+		connectorInfo:"user=<{$loginUser.id}>",
+
+	    onInit: function( finder ) {
+	    	finder.on( 'file:choose:resizedImage', function( evt ) {
+	    		var imageurl = imagePathInsideUpload(evt.data.resizedUrl);
+			    $('#main_pic').attr('src',"<{$UPLOAD_PATH}>"+imageurl);
+			    $("input[name='avatar']").val(imageurl);
+
+			    finder.request( 'dialog:destroy' );
+			} );
+
+	        finder.on( 'files:choose', function( evt ) {
+			    var files = evt.data.files;
+			    files.forEach( function( file, i ) {
+			        var imageurl = imagePathInsideUpload(file.getUrl());
+			        $('#main_pic').attr('src',"<{$UPLOAD_PATH}>"+imageurl);
+			    	$("input[name='avatar']").val(imageurl);
+			    } );
+			} );
+	    }
+	} );
+}
+
+function validation() {
+	 try{
+	 	var naturalWidth = $('#main_pic').get(0).naturalWidth;
+	 	var naturalHeight= $('#main_pic').get(0).naturalHeight;
+
+    	if(imageSizeValidation(naturalWidth,naturalHeight)){
+    		$('.image-outline').css('color','green');
+    		$('.validationResult').html();
+    		$(':input[type="submit"]').prop('disabled', false);
+    	}
+
+    }catch(error){
+    	$('.image-outline').css('color','red');
+    	$('.validationResult').html(error);
+    	$(':input[type="submit"]').prop('disabled', true);
+    }
+}
+function imagePathInsideUpload(str){
+	console.log(str);
+	var re = /(userfiles\/).+/;	
+	var found = str.match(re);
+	console.log(found);
+	return found[0];
+}
+
+function imageSizeValidation(width,height){
+	console.log(width);
+	console.log(height);
+
+	var validationPass=true;
+
+	var allowMinWidth = 200;    //define
+	var allowMinHeight= 200;    //define
+	var allowDistortionRatio=1.2; //长边比短边的比例最大可以是
+
+	if(width<allowMinWidth)
+	{
+		validationPass=false;
+		throw "图片太小了，宽度不够";
+	}
+	if(height<allowMinHeight)
+	{
+		validationPass=false;
+		throw "图片太小了，高度不够";
+	}
+	if( Math.max(width,height)/Math.min(width,height)>allowDistortionRatio)
+	{	
+		console.log(Math.max(width,height)/Math.min(width,height));
+		validationPass=false;
+		throw "图片比例不对，差的太多了";
+	}
+	return validationPass;
+}
+</script>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

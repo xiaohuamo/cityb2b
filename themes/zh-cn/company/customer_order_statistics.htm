@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				 <div class='statics'>
+				 <div class='staticContainer' >
+						<form class='ajaxform ' data-display='#ajaxformresult' data-action='<{$http_root_www}>company/statistics' method="post">
+							<label>查询订单总数：</label>
+							<span>
+								 <input type ='checkbox' name='product'> 产品
+							</span>
+
+							<span>
+								 <input type ='checkbox' name='status'> 交易状态
+							</span>
+
+							<span>
+								 <input type ='checkbox' name='guige'> 规格
+							</span>
+
+							<span>
+								 <input type ='checkbox' name='user'> 用户
+							</span>
+
+							<span>
+								 <input type ='checkbox' name='staff'> 员工
+							</span>
+
+							<span>
+								起始日期 <input name='fromdate' type='text' style="width:75px" onClick='WdatePicker()'>
+							</span>
+
+							<span>
+								结束日期 <input name='todate'  type='text'  style="width:75px" onClick='WdatePicker()'>
+							</span>
+							<input type='submit' value="查询">
+						</form>
+						<div class='result' id ='ajaxformresult'>
+							
+						</div>
+
+					</div>
+						<script type="text/javascript">
+							$('form.ajaxform').on('submit',function(e){
+							e.preventDefault();
+							var displaydiv=$(this).data('display');
+							$.ajax({
+								type     : "POST",
+								cache    : false,
+								url      : $(this).data('action'),
+								data     : $(this).serialize(),
+								success  : function(data) {
+									console.log(data);
+									$(displaydiv).empty().append(data).css('visibility','visible');
+								},
+								beforeSend: function(){
+									$(displaydiv).empty().append('<span style="color:#2bb8aa"><i class="fa fa-refresh fa-spin fa-lg fa-fw"></i>Loading...</span>');
+								}
+							});
+							});
+						</script>
+					</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+
+</html>

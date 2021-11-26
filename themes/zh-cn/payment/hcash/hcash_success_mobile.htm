@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding: 50px 20px">
+	<h1 class='text-info'>购买成功!</h1>
+	<br>
+	<p>订单编号：<{$orderId}></p>
+	<p>您选择的支付方式是Hcash支付!</p>
+
+	<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+
+	<br><br>
+
+	<div>
+	<a class='btn btn-default' href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>">查看订单</a>
+	<a class='btn btn-default' href="<{$http_root_www}>">返回首页</a>
+	</div>
+
+	<br><br>
+
+	<p style="color:#aaa"><small>提示：Hcash支付一般需要30分钟-2天到账,商家会在确认支付到账后为您发货,如果您的支付信息有误，客户会主动联系您，订单可能会被取消。</small></p>
+</div>
+<{include file ="payment/mobile_success_footer.htm"}>
+<{include file ="mobile/coupon_detail/sec_extend.htm"}>
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<div class='row'>
+
+	<{foreach from=$couponData item=item}>
+	<div class='col-sm col-3' style="text-align: center;">
+		<img src="<{$item.qrCode}>" atl='qrcode' style='width: 100px;height: 100px;'>
+		<div style="height: 100px;overflow: hidden;font-size: 0.8rem"><{$item.title}></div>
+		<div style="color:#f30">$<strong><{$item.voucher_deal_amount}></strong></div>
+		<div>
+			<span style='color: #FD5001 '><{(($item.voucher_original_amount-$item.voucher_deal_amount)/$item.voucher_original_amount*100)|string_format:"%d"}>% off</span> <small><s style="color:#888">$<{$item.voucher_original_amount}></s></small>
+		</div>
+	</div>
+	<{/foreach}>
+</div>
+<br><br>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+     <title>澳中博览会购物节</title>
+
+    <meta name="keywords" content="墨尔本美食 墨尔本团购 "/>
+
+    <meta name="description" content=" 专注墨尔本华人美食生活的电商平台 "/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/cui.css" />
+
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/style.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+    <script type="text/javascript" src="<{$SKIN_PATH}>shoppingday/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+</head>
+<body class="index">
+
+        <div class="viewport">
+        <!-- 头部 -->
+        <div id="hd" style="background-color: #e71d0f;">
+            <a href="<{$http_root_www}>" class="back"></a>
+
+            <a href="<{$http_root_www}>member/showcart" class="i1"></a>
+            <a href="<{$http_root_www}>category/index?section=106125" class="i2">澳中博览会购物节</a>
+        </div>
+        <!-- 头部 end -->
+        <!-- banner -->
+        <div class="banner">
+            <div  class="slider"><!--class="slider"-->
+			
+		
+						
+			
+			
+             
+                    <div class="item" style="height: 200px;">
+                        <div class="img">
+                            <a target="_blank" href="/coupon1/7403">
+                                <img src="<{$SKIN_PATH}>shoppingday/images/banner01.jpeg" alt="科大讯飞翻译机">
+                            </a>
+                        </div>
+                    </div>
+					 <div class="item" style="height: 200px;">
+                        <div class="img">
+                            <a target="_blank" href="/store/214563">
+                                <img src="<{$SKIN_PATH}>shoppingday/images/banner02.jpg" alt="肯辛顿红酒2瓶$2.99">
+                            </a>
+                        </div>
+                    </div>
+               
+            </div>
+        </div>
+
+        <style type="text/css">
+            .category_float{
+                position: fixed;
+                top: 45px;
+                width: 100%;
+                padding: 3px;
+                background-color: rgba(251, 194, 61,0.8);
+                color: #000;
+                z-index: 99;
+                display: none;
+                border-bottom: 1px solid #eee
+            }
+            .category_float span{
+               display: inline-block;
+                width: 18%;
+               text-align: center;
+               font-size: 16px;
+                height: 27px;
+            }
+
+        </style>
+        <script type="text/javascript">
+        $(function(){
+            $(document).scroll(function() {
+                  var y = $(this).scrollTop();
+                  if (y > 500) {
+                    $('.category_float').fadeIn();
+                  } else {
+                    $('.category_float').fadeOut();
+                  }
+                });
+        })
+        </script>
+        <div class='category_float'>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target0').offset().top-115},'slow');">品牌</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target1').offset().top-115},'slow');">秒杀</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target2').offset().top-115},'slow');">爆款</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target4').offset().top-115},'slow');">0元</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target5').offset().top-115},'slow');">丽人</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target6').offset().top-115},'slow');">美食</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target7').offset().top-115},'slow');">百货</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target8').offset().top-115},'slow');">抽奖</span>
+            <span onCLick="$('html,body').animate({scrollTop: $('#target9').offset().top-115},'slow');">代购</span>
+            <!--span onCLick="$('html,body').animate({scrollTop: $('#target10').offset().top-115},'slow');">转盘</span-->
+            <!--span onCLick="$('html,body').animate({scrollTop: $('#target11').offset().top-115},'slow');">票务</span-->
+            <!--span onCLick="$('html,body').animate({scrollTop: $('#target12').offset().top-115},'slow');">美食</span-->
+            <!--span onCLick="$('html,body').animate({scrollTop: $('#target13').offset().top-115},'slow');">本地</span-->
+            <!--span onCLick="$('html,body').animate({scrollTop: $('#target14').offset().top-115},'slow');">海淘</span-->
+        </div>
+
+         <!-- 列表 -->
+        <ul class="g-ul ul-list1">
+
+            <!--li>
+                <a onCLick="$('html,body').animate({scrollTop: $('#target0').offset().top-115},'slow'">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon78.png);"></i>品牌
+                </a>
+            </li-->
+
+          
+
+            <li>
+                <a onCLick="$('html,body').animate({scrollTop: $('#target1').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon80.png);"></i>秒杀
+                </a>
+            </li>
+			
+			 <li>
+                <a onCLick="$('html,body').animate({scrollTop: $('#target2').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon10.png);"></i>爆款
+                </a>
+            </li>
+            
+			<li>
+                <a  onCLick="$('html,body').animate({scrollTop: $('#target4').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon45.png);"></i>0元
+                </a>
+            </li>
+           
+			<li>
+                <a  onCLick="$('html,body').animate({scrollTop: $('#target5').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon8_07.png);"></i>丽人
+                </a>
+            </li>
+			
+			   <li>
+                <a  onCLick="$('html,body').animate({scrollTop: $('#target6').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/fresh.png);"></i>美食
+                </a>
+            </li>
+			<li>
+                <a  onCLick="$('html,body').animate({scrollTop: $('#target7').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon5_06.png);"></i>百货
+                </a>
+            </li>
+			
+				 <li>
+                <a onCLick="$('html,body').animate({scrollTop: $('#target8').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon23.png);"></i>抽奖
+                </a>
+            </li>
+			
+			<li>
+                <a  onCLick="$('html,body').animate({scrollTop: $('#target9').offset().top-115},'slow');">
+                    <i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon3.png);"></i>代购
+                </a>
+            </li>
+       
+        </ul>
+
+       
+		
+		    <div style="margin-top: 1px;">
+		    <{include file='mobile/inc_countdown.htm'}>
+               
+            </div>
+			
+		
+			
+             
+           
+     
+		      <div class="wp">
+		   <div class="m-tit1" id="target0" style=" padding: 0.2rem;">
+
+                <a class="a-det" style="background-image:url(<{$SKIN_PATH}>mobile/images/icon11.png);" href="<{$http_root_www}>shoppingday"></a>
+
+                <h3><span><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon80.png);"></i>品牌导航</span></h3>
+
+                 <p>一线品牌 品质保障</p>
+            </div>
+           
+            <ul class="ul-con-lb" >
+			
+
+				<li style="    width: 33%;margin-bottom:0px;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7403">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/214563">
+								<div class="img" style="padding-top: 48%;">
+									 <img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/kunxindun.jpg" alt="" >
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/214754">
+							<div class="img" style="padding-top: 48%;">
+								<img class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/weiaijia.jpg" alt="" > 
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7425">
+							<div class="img" style="padding-top: 48%;">
+										<img  src="<{$SKIN_PATH}>shoppingday/images/brand/chenguan.jpg" alt="" >         
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/209171">
+							<div class="img" style="padding-top: 48%;">
+								<img  src="<{$SKIN_PATH}>shoppingday/images/brand/dyson.png" alt="" > 
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank"  onClick="htmlMessage('现场有各种促销优惠！')">
+							<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/yanwotang.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/25831">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/taihehang.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7426">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/xiaolongkan.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/205514">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/dongjing.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/214664">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/ani.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7424">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/mig.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/214813">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/jianli.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7318">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/shanghaihuiguan.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/213321">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/samsonite.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7115">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001changqing.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/5284">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001chihuochun.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/210397">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001dor24k.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/204720">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001gongdelin.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/210336">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001jili.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/4942">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001niubaba.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/208632">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001nokubeautify.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7451">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001oscar.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7454">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001sambakinghig.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/store/204093">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001tontine.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7424">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/mig.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<!--
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/23989">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001ubonus.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					-->
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7316">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001xiaoshijigou.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7453">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001jhy.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/26198">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/choice0001.jpg" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>coupon1/7461">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/0001dingjian.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					<li style="    width: 33%;">
+						<div class="items">
+							<a target="_blank" href="<{$http_root_www}>store/214811">
+								<div class="img" style="padding-top: 48%;">
+									<img style ="    border-radius: 4px;" class="lazyload" data-src="<{$SKIN_PATH}>shoppingday/images/brand/logo_landscape.png" alt=""">
+								</div>
+								
+							</a>
+						</div>
+						
+					</li>
+					
+
+			</ul>
+        </div>
+		
+		</div>
+
+        <div class="viewport" style="padding-top: 15px; ">
+        <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayorange1.png) no-repeat left center;">
+            <div class="box_hd_col1">
+                <h3 class="box_tit" id='target1'>限时秒抢</h3>
+            </div>
+            <div class="box_hd_col2">
+                <div class="time1">
+                    秒抢倒计时<span class="time-c1 imgDiv" enddate="<{$smarty.const.SPECIAL_EVENT_TIME_START}>"><em>00</em><em>00</em><em>00</em></span>
+                </div>
+            </div>
+        </div>
+        <div>
+                <a>
+                    <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/mobile04.jpg')}>"  style="width:100%;" alt="" />
+                </a>
+            </div>
+        <div class="wp">
+            <div class="g-tit1">
+
+            </div>
+            <ul class="ul-con-lb">
+                <{foreach from=$buy_List item=item}>
+                    <li id="<{$item.id}>">
+                        <div class="items">
+                            <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                <div class="img">
+                                    <img  class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>">
+                                </div>
+                                <div class="txt">
+                                    <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="left">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                                <div class="right">
+                                    <{if $item.totalQty==0}>
+                                         <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy soldout">Sold Out</a>
+                                    <{else}>
+                                         <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                    <{/if}>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        </div>
+
+         
+        <div class="viewport" style="padding-top: 1px;">
+        <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayskyblue.png) no-repeat left center;">
+            <div class="box_hd_col1">
+                <div class="box_hd_col1">
+                    <h3 class="box_tit"  id='target2'>博览会爆款</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <a href="">
+                        <span class="button_more"></span>
+                    </a>
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>00</em><em>00</em><em>00</em></span>
+                    </div-->
+                </div>
+            </div>
+        <div id="target2">
+            <a href="<{$http_root_www}>group_pin/index">
+                <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/mobile05-shoppingday.jpg')}>"  style="width:100%;" alt="" />
+            </a>
+        </div>
+        <div class="wp">
+            <div class="g-tit1">
+                <!--a href="">更多爆款 ></a-->
+                <!--span style="background-image: url(<{$SKIN_PATH}>mobile/images/y-i2.png)">Ubonus线上$0.99购</span-->
+            </div>
+            <ul class="ul-con-lb">
+                <{foreach from=$list5 item=item}>
+                <li>
+                            <div class="items">
+                                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                    <div class="img">
+                                        <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                    </div>
+                                    <div class="txt">
+                                        <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="seckill-box">
+                                <div class="con">
+                                    <div class="left">
+                                        <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                        <span class="old">$<{$item.voucher_original_amount}></span>
+                                    </div>
+                                    <div class="right">
+                                        <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                        <div class="c"></div>
+                                        <{if $item.proportion!=0}>
+                                        <div class="jdt">
+                                            已售<{$item.proportion|string_format:"%d"}>%
+                                            <i><b style="width:<{$item.proportion}>%"></b></i>
+                                        </div>
+                                        <{/if}>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                <{/foreach}>
+            </ul>
+        </div>
+        </div>
+
+        <div class="viewport" style="padding-top: 1px;">
+                <div id="target4">
+                      <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayskyblue.png) no-repeat left center;">
+                        <div class="box_hd_col1">
+                            <h3 class="box_tit"  id='target4'>$0免费送</h3>
+                        </div>
+                        <div class="box_hd_col2">
+                            <a href="<{$http_root_www}>category/index?section=106125111">
+                                <span class="button_more"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="<{$http_root_www}>category/index?section=106125111">
+                        <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/mobile47-shoppingday.jpg')}>" style="width:100%;" alt="" />
+                    </a>
+                </div>
+                <div class="wp">
+                    <div class="g-tit1">
+                    </div>
+                    <ul class="ul-con-lb">
+                        <{foreach from=$list47 item=item}>
+                        <li>
+                            <div class="items">
+                                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                    <div class="img">
+                                        <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                    </div>
+                                    <div class="txt">
+                                        <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="seckill-box">
+                                <div class="con">
+                                    <div class="left">
+                                        <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                        <span class="old">$<{$item.voucher_original_amount}></span>
+                                    </div>
+                                    <div class="right">
+                                        <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                        <div class="c"></div>
+                                        <{if $item.proportion!=0}>
+                                        <div class="jdt">
+                                            已售<{$item.proportion|string_format:"%d"}>%
+                                            <i><b style="width:<{$item.proportion}>%"></b></i>
+                                        </div>
+                                        <{/if}>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="viewport" style="padding-top: 1px;">
+                <div id="target5">
+                     <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdaypurple.png) no-repeat left center;">
+                        <div class="box_hd_col1">
+                            <h3 class="box_tit"  id='target5'>丽人</h3>
+                        </div>
+                        <div class="box_hd_col2">
+                            <a href="<{$http_root_www}>coupons/106127">
+                                <span class="button_more">更多></span>
+                            </a>
+                            <!--div class="time1">
+                                秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>00</em><em>00</em><em>00</em></span>
+                            </div-->
+                        </div>
+                    </div>
+                    <a href="<{$http_root_www}>category/index?section=106125113">
+                        <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/liren.png')}>" style="width:100%;" alt="" />
+                    </a>
+                </div>
+                <div class="wp">
+                    <div class="g-tit1">
+                    </div>
+                    <ul class="ul-con-lb">
+                        <{foreach from=$list6 item=item}>
+                        <li>
+                            <div class="items">
+                                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                    <div class="img">
+                                        <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                    </div>
+                                    <div class="txt">
+                                        <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="seckill-box">
+                                <div class="con">
+                                    <div class="left">
+                                        <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                        <span class="old">$<{$item.voucher_original_amount}></span>
+                                    </div>
+                                    <div class="right">
+                                        <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                        <div class="c"></div>
+                                        <{if $item.proportion!=0}>
+                                        <div class="jdt">
+                                            已售<{$item.proportion|string_format:"%d"}>%
+                                            <i><b style="width:<{$item.proportion}>%"></b></i>
+                                        </div>
+                                        <{/if}>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="viewport" style="padding-top: 1px;">
+            <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayblue.png) no-repeat left center;">
+                <div class="box_hd_col1">
+                    <h3 class="box_tit"  id='target6'>美食</h3>
+                </div>
+                <div class="box_hd_col2">
+                    <a href="<{$http_root_www}>food">
+                        <span class="button_more">更多></span>
+                    </a>
+                    <!--div class="time1">
+                        秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>00</em><em>00</em><em>00</em></span>
+                    </div-->
+                </div>
+            </div>
+            <div id="target6">
+                <a href="<{$http_root_www}>category/index?section=106125106">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/mobile15.jpg')}>" style="width:100%;" alt="" />
+                </a>
+            </div>
+            <div class="wp">
+                <div class="g-tit1">
+                </div>
+                <ul class="ul-con-lb">
+                    <{foreach from=$list39 item=item}>
+                    <li>
+                        <div class="items">
+                            <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                <div class="img">
+                                    <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                </div>
+                                <div class="txt">
+                                    <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="left">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                                <div class="right">
+                                    <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                    <div class="c"></div>
+                                    <{if $item.proportion!=0}>
+                                    <div class="jdt">
+                                        已售<{$item.proportion|string_format:"%d"}>%
+                                        <i><b style="width:<{$item.proportion}>%"></b></i>
+                                    </div>
+                                    <{/if}>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <{/foreach}>
+                </ul>
+            </div>
+        </div>
+
+       
+          
+
+        <div class="viewport" style="padding-top: 1px;">
+            <div id="target7">
+               <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdaygreen.png) no-repeat left center;">
+			
+                    <div class="box_hd_col1">
+                        <h3 class="box_tit"  id='target7'>日用百货</h3>
+                    </div>
+                    <div class="box_hd_col2">
+                        <a href="<{$http_root_www}>coupons/106105">
+                            <span class="button_more">更多></span>
+                        </a>
+                        <!--div class="time1">
+                            秒抢倒计时<span class="time-c1 imgDiv" enddate="2017/10/01 08:00"><em>00</em><em>00</em><em>00</em></span>
+                        </div-->
+                    </div>
+                </div>
+                <a href="<{$http_root_www}>category/index?section=106125104">
+                    <img class='lazyload' data-src="<{$SKIN_PATH}><{('mobile/shoppingday/images/mobile11.jpg')}>" style="width:100%;" alt="" />
+                </a>
+            </div>
+            <div class="wp">
+                <div class="g-tit1">
+                </div>
+                <ul class="ul-con-lb">
+                    <{foreach from=$list38 item=item}>
+                    <li>
+                        <div class="items">
+                            <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                <div class="img">
+                                    <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                </div>
+                                <div class="txt">
+                                    <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="seckill-box">
+                            <div class="con">
+                                <div class="left">
+                                    <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                    <span class="old">$<{$item.voucher_original_amount}></span>
+                                </div>
+                                <div class="right">
+                                    <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                    <div class="c"></div>
+                                    <{if $item.proportion!=0}>
+                                    <div class="jdt">
+                                        已售<{$item.proportion|string_format:"%d"}>%
+                                        <i><b style="width:<{$item.proportion}>%"></b></i>
+                                    </div>
+                                    <{/if}>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <{/foreach}>
+                </ul>
+            </div>
+        </div>
+
+        <div class="viewport" style="padding-top: 1px;">
+            <div id="target8">
+                 <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayskyblue.png) no-repeat left center;">
+				
+                    <div class="box_hd_col1">
+                        <h3 class="box_tit"  id='target8'>幸运转盘</h3>
+                    </div>
+                    <div class="box_hd_col2">
+                        <a href="<{$http_root_www}>lottery/lottery_show">
+                            <span class="button_more">更多></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wp">
+                <div class="g-tit1">
+                </div>
+                <ul class="ul-con-lb">
+                    <{foreach from=$bonus item=item}>
+                    <li >
+                        <div class="items">
+                            <a href="<{$http_root_www}>lottery/lottery?id=<{$item.id}>">
+                                <div class="img" style="height: 180px;">
+                                    <img class='lazyload' data-src="<{$SKIN_PATH}>images/lottery/<{$item.pic1}>" alt="">
+                                </div>
+                                <div class="txt">
+                                    <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <{/foreach}>
+                </ul>
+            </div>
+        </div>
+
+      
+
+        <div class="viewport" style="padding-top: 1px;">
+                <div id="target9">
+                     <div class="box_hd" style="    background: url(<{$SKIN_PATH}>images/shoppingdayorange1.png) no-repeat left center;">
+                        <div class="box_hd_col1">
+                            <h3 class="box_tit" id='target9'>代购海淘</h3>
+                        </div>
+                        <div class="box_hd_col2">
+                            <a href="<{$http_root_www}>coupons/106120">
+                                <span class="button_more">更多></span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="<{$http_root_www}>category/index?section=106125108">
+                        <img style="width: 100%" class='lazyload' data-src="<{$SKIN_PATH}>mobile/shoppingday/images/931.jpg" alt="" />
+                    </a>
+                </div>
+                <div class="wp">
+                    <div class="g-tit1">
+                    </div>
+                    <ul class="ul-con-lb">
+                        <{foreach from=$list41 item=item}>
+                        <li>
+                            <div class="items">
+                                <a href="<{$http_root_www}>coupon1/<{$item.id}>">
+                                    <div class="img">
+                                        <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="">
+                                    </div>
+                                    <div class="txt">
+                                        <h4><{$item.title|truncate_cn:60:'...'}></h4>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="seckill-box">
+                                <div class="con">
+                                    <div class="left">
+                                        <span class="new"><em>$</em><{$item.voucher_deal_amount}></span>
+                                        <span class="old">$<{$item.voucher_original_amount}></span>
+                                    </div>
+                                    <div class="right">
+                                        <a href="<{$http_root_www}>coupon1/<{$item.id}>" class="buy">立即抢购</a>
+                                        <div class="c"></div>
+                                        <{if $item.proportion!=0}>
+                                        <div class="jdt">
+                                            已售<{$item.proportion|string_format:"%d"}>%
+                                            <i><b style="width:<{$item.proportion}>%"></b></i>
+                                        </div>
+                                        <{/if}>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+
+        <div class="c"></div>
+        <div class="space1"></div>
+    </div>
+    <{include file='mobile/mobile_footer.htm'}>
+
+    <!-- 侧边按钮 -->
+    <a href="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>"><div id="g-chat"></div></a>
+    <div onclick="$('html,body').animate({scrollTop:0},'slow');" id="g-top" style="display: block;">
+    </div>
+    <!-- 侧边按钮-end -->
+
+
+    <link rel="stylesheet" href="<{$STATIC_PATH}>slick/slick.css">
+    <script type="text/javascript" src="<{$STATIC_PATH}>slick/slick.min.js"></script>
+    
+    <script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+        <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('img.lazyload').unveil();
+            });
+        </script>
+    <script type="text/javascript">
+        //点击搜索框弹出+消失
+        $(".i2,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.banner .slider').slick({
+                dots:true,
+                arrows:false,
+                autoplay:true,
+                infinite: true,
+                slidesToShow: 1,
+                autoplaySpeed: 5000,
+                pauseOnHover:false,
+                lazyLoad: 'ondemand'
+            });
+        });
+    </script>
+    <script>
+        $('.time-c1').each(function() {
+            $(this).countDown();
+        });
+    </script>
+
+    <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='微奖网Ubonus-2019澳中博览会线上购物节';
+        var shareLink='<{$http_root_wx}>shoppingday?reftag=<{$loginUser.id}>';
+        var desc=shareTitle;//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>themes/zh-cn/mobile/images/logo_superweekend.png';
+    </script>
+
+
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+</body>
+</html>

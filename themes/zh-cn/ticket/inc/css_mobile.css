@@ -1,0 +1,62 @@
+<style type="text/css">
+.contain-ticket{width: 100%;position: relative;margin: 0px auto;background-color: #fff;padding: 30px 0px;}
+
+.seat_map{margin-left: auto;margin-right: auto; }
+
+.seatCharts-cell {color: #182C4E;height:9px;width: 9px;line-height: 9px;margin: 1px;float:right;text-align: center;outline: none;font-size:4px;}
+.seatCharts-seat {color: #fff;cursor: pointer;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;}
+.seatCharts-container {display: inline-block; margin-top: 65px;}
+.seatCharts-row{height: 18px; }
+
+.seatCharts-seat.available {background-color: #25BA00;}
+.seatCharts-seat.focused {background-color: #2FEF00;border: none;}
+.seatCharts-seat.selected {background-color: #FFAB00;}
+.seatCharts-seat.unavailable {background-color: #aaa;cursor: not-allowed;}
+
+.buyInfo .title{
+	background: #2bb8aa;
+    color: white;
+    line-height: 1.5rem;
+    text-align: center;
+}
+.buyInfo #totalPrice{
+	text-align: center;
+    color: #ff4040;
+    margin-bottom: 20px;
+    border: #FD5001  2px solid;
+    line-height: 1.5rem;
+}
+
+.data-loading, .data-loading-fail{
+	text-align:center;position:absolute;width: 100%;top:-20px;background: #337ab7;border-radius: 10px;color: #fff;
+}
+
+.btnCont{ text-align:center;}
+.btnCont button{ width:25%; padding:2% 0; border:none; background-color:#2980B9; color:#fff; font-family:Microsoft YaHei; border-radius:5px; margin:0 10%;}
+
+#selected-seats {max-height: 150px;overflow-y: auto;overflow-x: none;padding:0;}
+#selected-seats li{float:left; width:38%; height:54px; line-height:26px; border:1px solid #d3d3d3;  margin:6px 15px; font-size:14px;text-align:center;list-style: none; position: relative;background-color: #FD5001 }
+.ticket-remove{position: absolute;height: 54px;width: 20px;background-color: #ff4040;color: white;top: -1px;right: -20px;line-height: 54px;cursor: pointer;}
+
+.shadow{ width:100%;background-color:rgba(0,0,0,0.7); position:absolute; top:0; left:0;z-index: 49}
+.CForm{ background-color:#eee;margin: 0px auto; z-index:50;overflow: scroll;}
+
+.CForm .theForm{ min-width: 320px; width:100%; height:100%; position:relative;text-align: center;}
+.CForm b{ display:block; font-weight:normal;text-align: center; width:100%; margin:0 auto; padding:10px 0; font-size:14px; color:#fff;  background-color:#0165AD;}
+
+.CForm .btns{ position:absolute; bottom:0; width:100%; text-align:center; padding-bottom:5px;}
+.CForm .btns button{ width:20%; padding:1% 0; font-family:Microsoft YaHei; border:none; background-color:#2980B9; color:#fff; border-radius:5px; margin:0 10%;}
+.show_seat_info{position: absolute;color:#FD5001 ;top:27px;font-size:10px;right: 0px;left: 0px}
+
+.ticket-mask-layer{position: absolute;width: 100%;top: 1.5rem; z-index: 60;display: none;border-bottom: 1px solid #000;box-shadow: 0px 20px 60px #000;}
+.seatCharts-header{display: none}
+.stage_direction{height: 20px;line-height: 20px;text-align: center;margin: auto;background-color: #ec971f;color: #fff;
+            position: absolute;width: 100px;left: 0 ;right:0;}
+<{if $stageDirection=='bottom'}>.stage_direction{bottom: 40px;}<{/if}>
+
+.choice {position: relative;}
+.choice img{width: 100%;position: relative;}
+.choices a{position:absolute;width: 22px;height: 22px;background-color: #01BD05;display:inline-block;line-height: 22px;color:#fff;border-radius: 20px !important;text-align: center;font-weight: 900}
+.choices a:hover{cursor: pointer;text-decoration: none;}
+
+</style>

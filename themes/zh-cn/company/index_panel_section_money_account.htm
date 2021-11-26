@@ -1,0 +1,27 @@
+	<div class='panel_item' style="height:auto;">
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-share-alt-square fa-4x'></i></div>
+									<h1><{$lang->money_account}></h1>
+									<p><{$lang->money_account_desc}></p>
+								</div>
+								<div class='panel_item_sub'>
+									
+									
+								<a href="<{$http_root_www}>company/account_balance" class='panel_sub_item'<{if $submenu=='recharge'}> class="current"<{/if}>>
+									<{$lang->transaction}>
+								</a>
+								<a href="<{$http_root_www}>company/money_review" class='panel_sub_item'<{if $submenu=='money_review'}> class="current"<{/if}>>
+									<{$lang->settlement_center}>
+								</a>
+								<a href="<{$http_root_www}>member/withdraw_account&side=company" class='panel_sub_item'<{if $submenu=='withdraw_account'}> class="current"<{/if}>>
+									<{$lang->withdraw_account_management}>
+								</a>
+								<a class='panel_sub_item'> </a>
+								</div>
+								<div class='panel_item_sub'>
+									
+									
+								<a class='panel_sub_item'> </a><a class='panel_sub_item'> </a><a class='panel_sub_item'> </a>
+								<a class='panel_sub_item'> </a>
+								</div>
+							</div>

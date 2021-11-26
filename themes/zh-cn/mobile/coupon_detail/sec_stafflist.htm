@@ -1,0 +1,25 @@
+<!-- 商家员工 -->
+<{if $coupon.staff_list}>
+    <div class="list-group"  id="f1">
+    <{foreach from=$coupon.staff_list item=item}>
+       <div  class="list-group-item">
+        <h5 class="list-group-item-heading"> <{$lang->branch}>：<strong><{$item.contactPersonNickName}></strong></h5>
+       
+        <{if $item.tel}>
+        <p class="phone list-group-item-text"><{$lang->telephone}>：<{$item.tel}></p>
+        <{/if}>
+		
+					
+        <{if $item.phone || $item.contactMobile}>  
+        <p class="phone list-group-item-text"><{$lang->mobile_phone}>：<{if $item.phone}><{$item.phone}><{else}><{$item.contactMobile}><{/if}></p>
+        <{/if}>
+        <{if $item.email}>
+         <p class="email list-group-item-text">Email：<{$item.email}></p>
+        <{/if}>
+		 <{if $item.googleMap}>
+                <div class="city">address：<{$item.googleMap}></div>
+            <{/if}>
+      </div>
+    <{/foreach}>
+     </div>
+ <{/if}>

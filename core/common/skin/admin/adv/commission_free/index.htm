@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script type="text/javascript">
+function searchSubmit ()
+{
+	var type	= '';
+	var keyword	= document.getElementsByName('keyword')[0].value;
+	var onlyCommissionFree	= document.getElementsByName('onlyCommissionFree')[0].checked ? 1 : 0;
+
+	window.location.href = '<{$searchUrl}>type=' + type + '&keyword=' + encodeURI(keyword )+ '&onlyCommissionFree=' + onlyCommissionFree;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="search">
+			<input type="text" class="text" style="width:200px;" maxlength="50" name="keyword" value="<{$search.keyword}>" placeholder='ID/中文名/英文名' />
+			<a onClick="searchSubmit()" class="lnkSearch"><{$lang->search}></a>
+			<input type="checkbox" onclick="searchSubmit()" name="onlyCommissionFree" id="onlyCommissionFree"<{if $search.onlyCommissionFree == 1}> checked<{/if}> id="onlyNotApproved" /><label for="onlyCommissionFree">仅显示免佣金产品</label>
+		</div>
+		<table class="listTable">
+			<tr class="listHdTr">
+				<th>ID</th>
+				<th>状态</th>
+				<th>是否收取佣金</th>
+				<th>特价价格</th>
+				<th>菜单单价</th>
+				<th>库存</th>
+				<th>菜单名-中文</th>
+				<th>菜单名-英文</th>
+				<th>描述</th>
+				<th>管理</th>
+			</tr>
+			<{foreach from=$data item=item key=key}>
+				<tr class="<{if $key % 2 == 0}>Alternating<{/if}>">
+					<td><{$item.id}></td>
+					<{if $item.visible==1}>
+					<td><span style="color:#58964E;">产品发布</span></td>
+					<{else}>
+					<td><span style="color:#F30;">产品下线</span></td>
+					<{/if}>
+					<{if $item.commission_free==1}>
+					<td><span style="color:#58964E;">不收取</span></td>
+					<{else}>
+					<td><span style="color:#F30;">收取</span></td>
+					<{/if}>
+					<td><{$item.speical_price}></td>
+					<td><{$item.price}></td>
+					<td><{$item.qty}></td>
+					<td><{$item.menu_cn_name}></td>
+					<td><{$item.menu_en_name}></td>
+					<td><{$item.menu_desc}></td>
+					<td>
+						<{if $item.commission_free==1}>
+						<form action="<{$listUrl}>act=edit&id=<{$item.id}>&commission_free=0" method="post" enctype="multipart/form-data">
+							<input type="submit" value="收取佣金"/>
+						</form>
+						<{else}>
+						<form action="<{$listUrl}>act=edit&id=<{$item.id}>&commission_free=1" method="post" enctype="multipart/form-data">
+							<input type="submit" value="免收取佣金"/>
+						</form>
+						<{/if}>
+					</td>
+				</tr>
+			<{/foreach}>
+			<tr class="listFtTr">
+				<td colspan="10" align="right"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

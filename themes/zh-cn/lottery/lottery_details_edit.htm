@@ -1,0 +1,143 @@
+<!doctype html><html><head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+<{/if}><link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.form.js"  ></script>
+
+
+
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style>	
+	.main-form .input-box span label { width:120px; }
+
+</style>
+</head>
+<body>
+<{include file='header.htm'}>
+	<div class="container">	
+	  <div class="wrap clearfix">	
+	  	<{include file='company/side.htm'}>	
+	
+	<div class="main">	
+	 <div class="box2">	
+		<div class="main-form">		
+		<{if $data}>
+			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>lottery/lottery_details_edit?id=<{$data.id}>&lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+		<{else}>
+			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>lottery/lottery_details_new?lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+		<{/if}>	
+		
+		
+			
+			<div class="input-box clearfix">	
+					<span>
+					<label>编号</label>
+					</span>		
+					<input type="text" name="lottery_sub_id" id="lottery_sub_id"  class="input-text" value="<{$data.lottery_sub_id}>" />	
+					（不能重复如1，2，3...）
+					</div>
+			<div class="input-box clearfix">	
+					<span>
+					<label>奖品名</label>
+					</span>		
+					<input type="text" name="lottery_sub_name" id="lottery_sub_name"  class="input-text" value="<{$data.lottery_sub_name}>" />	
+					（如：一等奖，二等奖，鲍鱼，100员代金券）
+					<input type="hidden" name="lottery_id"  class="input-text" value="<{$lottery_id}>" />	
+			</div>	
+			
+			<div class="input-box clearfix">	
+					<span>
+					<label>奖品描述</label>
+					</span>		
+					<input type="text" name="lottery_sub_details" id="lottery_sub_details"  class="input-text" value="<{$data.lottery_sub_details}>" />	
+					（如：上面填写一等奖的话：这里可以说：海外双人游！ 二等奖：国内双人游等）
+					
+			</div>	
+			
+			<div class="input-box clearfix">	
+					<span>
+					<label>数量</label>
+					</span>		
+					<input type="text" name="qty" id="qty"  class="input-text" value="<{if $data.qty}><{$data.qty}><{else}>1<{/if}>" />	
+					（如：5）
+					
+			</div>	
+			
+           <div class="input-box clearfix">	
+					<span>
+					<label>中奖概率次数</label>
+					</span>		
+					<input type="text" name="Probability" id="Probability"  class="input-text" value="<{$data.Probability}>" />	
+					（如：在10000次抽奖中，被抽中的次数。 如1等奖 ，15次，此处填写15 ；2等奖 20次 ，填写 20 ，不中奖9965次，填写9965 .）
+					
+			</div>	
+
+           	<div class="input-box multi-select clearfix">
+				<span><label>是否为中奖</label></span>
+
+				<select name="is_award" class="ahibw">
+					<option value="1" <{if $data.is_award==1}>selected<{/if}>>是中奖</option>	
+					<option value="0" <{if $data.is_award==0}>selected<{/if}>>不是中奖</option>
+				</select>
+			</div>		
+
+			<div class="input-box multi-select clearfix">
+				<span><label>奖品类型</label></span>
+
+				<select name="is_online_discount" class="ahibw">
+					<option value="1" <{if $data.online_discount==1}>selected<{/if}>>是打折码</option>	
+					<option value="0" <{if $data.online_discount==0}>selected<{/if}>>不是打折码</option>
+				</select>
+			</div>			
+
+			<div class='is_online_discount_input' <{if $data.online_discount==0}>style="display: none" <{/if}>>
+				<div class="input-box clearfix">
+					<span><label>打折码抵用金额</label></span>
+					<input type="text" name="online_discount_amount" id="online_discount_amount"  class="input-text" value="<{$data.online_discount_amount}>" />	
+				</div>		
+
+				<div class="input-box clearfix">
+					<span><label>最小消费金额</label></span>
+					<input type="text" name="min_spending" id="min_spending"  class="input-text" value="<{$data.min_spending}>" />	
+				</div>		
+
+				<div class="input-box clearfix">
+					<span><label>有效期</label></span>
+					<input type="text" name="expireindays" id="expireindays"  class="input-text" value="<{$data.expireindays}>" />
+				</div>			
+			</div>
+					
+			<div class="input-box input-submit clearfix">		
+			
+				<button type="submit">保 存</button>	
+			</div>		
+		</form>	
+		
+		<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+		<script type="text/javascript" src='<{$SKIN_PATH}>js/form_response.js'></script>
+
+		<script type="text/javascript">
+			$(function(){
+				$("select[name='is_online_discount']").bind('change',function(){
+					if ($(this).val()==1) {
+						$('.is_online_discount_input').show();
+					}else if($(this).val()==0){
+						$('.is_online_discount_input').hide();
+					}
+				})
+			});
+		</script>	
+		</div>		
+		</div>	
+		</div>
+		
+		</div>
+		</div><{include file='footer.htm'}></body></html>

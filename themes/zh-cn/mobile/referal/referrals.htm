@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body>
+
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+		<h1>我的分享</h1>
+	</header>
+
+	<section id="bd">
+		<div class="m-so">
+			<input type="text" class="g-input inp">
+		</div>
+		<div class="m-riends">
+			<div class="select">
+				<{if $ref_list}>
+					 <script  type="text/javascript">
+					    var oldfirstChar ='';
+						var newfirstChar='';
+					 </script>
+
+					<{foreach from=$ref_list item=item name='dl'}>
+						<dl class="g-ul">
+						  <script  type="text/javascript">
+						     newfirstChar ='<{$item.pinyin}>';
+							if(newfirstChar != oldfirstChar){
+							// alert('<{$item.pinyin}>');
+							 document.write('<dt ><a name="letter<{$item.pinyin}>"></a><{$item.pinyin}></dt>');
+							 oldfirstChar=newfirstchar;
+							}
+						 </script>
+							<!--<dt><{$item.pinyin}></dt>-->
+							<dd>
+								<ul class="g-ul">
+									<li>
+										<a href="#">
+											<div class="face"><img src="<{$UPLOAD_PATH}><{$item.userAvatar}>" alt="头像"></div>
+												<p class="name"><{$item.userName}></p>
+												<div style="float: right;">
+													<small ><a href="<{$http_root_www}>coupon1/<{$item.couponId}>">查看了产品<{$item.couponId}> Hits:<{$item.hits}></a></small>
+												</div>
+												<!-- <small><{date('Y-m-d', $item.time)}></small> -->
+										</a>
+									</li>
+									
+								</ul>
+							</dd>
+						</dl>
+				
+					<{/foreach}>
+					<dt><{$item.pinyin}></dt>
+
+				<{else}>
+						还没有介绍记录
+				<{/if}>
+			</div>
+			<ul class="g-ul screen">
+				<li><a href="#letterA">A</a></li>
+				<li><a href="">B</a></li>
+				<li><a href="">C</a></li>
+				<li><a href="#letterD">D</a></li>
+				<li><a href="">E</a></li>
+				<li><a href="">F</a></li>
+				<li><a href="">G</a></li>
+				<li><a href="#letterH">H</a></li>
+				<li><a href="">I</a></li>
+				<li><a href="">J</a></li>
+				<li><a href="">K</a></li>
+				<li><a href="">L</a></li>
+				<li><a href="">M</a></li>
+				<li><a href="">N</a></li>
+				<li><a href="">O</a></li>
+				<li><a href="#letterP">P</a></li>
+				<li><a href="">S</a></li>
+				<li><a href="">T</a></li>
+				<li><a href="">W</a></li>
+				<li><a href="">X</a></li>
+				<li><a href="">Y</a></li>
+				<li><a href="">Z</a></li>
+			</ul>
+		</div>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+<{include file="mobile/mobile_footer.htm"}>
+</body>
+</html>

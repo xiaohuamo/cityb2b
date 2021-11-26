@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}>  </title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
+<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
+
+<style type="text/css">
+	.image_view{
+		position: relative;
+		right: 0;
+		left: 0;
+		margin: 30px auto;
+
+	}
+	.image_item{
+		border: 2px solid #ddd;
+	}
+	.image_mask{
+		position: absolute;
+		text-align: center;
+		top: 1px;
+		left: 1px;
+		opacity: 0;
+		background-color: #eee;
+	}
+	.image_mask:hover{
+		opacity: 0.6;
+	}
+
+	.image_view_remove{
+		position: absolute;
+		display: inline-block;
+		bottom: 0;
+		right: 0;
+		cursor: pointer;
+	}
+
+	.image_view_add{
+		color: #fff;
+	    border: 1px solid #e0b123;
+	    background: #FD5001 ;
+	    padding: 10px;
+	    display: inline-block;
+	}
+
+	@media screen and (max-width:640px) {
+		.image_view,.image_item,.image_mask{
+			width: 100%!important;
+			height: auto!important;
+		}
+	}
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >3</span>
+					
+					<div class="colCurTit clearfix">
+						<h1>第三步：主图片信息</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+					
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						
+						<div class="input-box clearfix">
+							<p>请上传尺寸最小为 660 X 420 的图片。 尺寸过小会导致图片不清晰</p>
+						</div>
+
+						<div class='upload_image_list' data-cropsize='660,420' data-listsize='1'>
+							<span class='image_view_add' >添加一张图片</span>
+						</div>
+
+
+						<{include file='company/coupons_edit_step_menu.htm'}>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	var cropsize = $('.upload_image_list').data('cropsize');
+	var cs = cropsize.split(',');
+	var w=cs[0];
+	var h=cs[1];
+
+	$('.image_uploader input[name="resize"]').val(cropsize);
+
+	var listsize=$('.upload_image_list').data('listsize');
+
+	var displayTarget;
+
+	addImageView('<{$data.pic}>');
+	
+	<{foreach from=$data.pics|@unserialize item=item}>
+		addImageView('<{$item}>');
+	<{/foreach}>
+
+	$('.image_view_add').on('click',function(){
+		addImageView();
+	})
+
+	function addImageView(src){
+		if(!src)src='default/image_upload.jpg';
+		$newdiv = $("<div></div>").addClass('image_view')
+					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"点击编辑"))
+					.append($("<input name='images[]' type='hidden'>").val(src))
+					.append($("<div>x</div>").addClass('image_view_remove'));
+
+		$newdiv.on('click',function(){
+			$(".image_uploader").find('input[name="image"]').click();
+			displayTarget = $(this).find('.image_item');
+		})
+
+		$newdiv.find('.image_view_remove').on('click',function(){
+			$(this).parent().remove();
+		})
+
+		$('.image_view_add').before($newdiv);
+
+		$('.image_view').css('width',w).css('height',h);
+		$('.image_item').css('width',w).css('height',h);
+		$('.image_mask').css('width',w).css('height',h).css('line-height',h+'px');
+	}
+</script>
+
+<script>
+	var jcrop_api;
+
+	function initJcrop(){
+		if(jcrop_api){
+			jcrop_api.destroy();
+			$('.preview').removeAttr('style');
+		}
+
+		$('.preview').Jcrop({
+			boxWidth:  $(window).width()*0.9, 
+			boxHeight: $(window).height()*0.8,
+			onSelect:    function(c){
+				$('input[name="bounds"]').val(c.x+','+c.y+','+c.x2+','+c.y2);
+			},
+			onChange: function(c){
+				$('.selected_size_display').html(c.w.toFixed(0) + " x " +c.h.toFixed(0));
+			},
+			onRelease:   function(){
+				$('input[name="bounds"]').val('');
+			},
+			//onChange:    showCoords,
+			//bgColor:     'black',
+			//bgOpacity:   .4,
+			//setSelect:   [ 100, 100, 50, 50 ],
+			aspectRatio: w / h
+		},function(){
+			var bounds = this.getWidgetSize();
+			$('.image_uploader').css('width',bounds[0]);
+			jcrop_api=this;
+		});
+	}
+
+    function openFile(event) {
+		var input =event.target;
+
+		var reader = new FileReader();
+
+		reader.onload = function(){
+			var dataURL = reader.result;
+			$('.preview').attr('src',dataURL);
+			initJcrop();
+			$(".image_uploader").show();
+		};
+
+		if(input.files.length>0)
+			reader.readAsDataURL(input.files[0]);
+	};
+
+	$(function(){
+		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪，补白缩放</label><button type='button' class='close'>x</button></form>");
+	})
+
+	$(function(){
+		$('input[name="image"]').on('change',function(event){
+			openFile(event);
+		})
+	})
+
+	$(function(){
+		$('button.close').on('click',function(){
+			$(this).parent().hide();
+		})
+	})
+
+	$(function(){
+		$("form.image_uploader").on('submit', function(e){
+			e.preventDefault();
+			$.ajax({
+	            type: 'POST',
+	            url: "<{$http_root_www}>test/save_image",
+	            data: new FormData(this),
+	            enctype: 'multipart/form-data',
+	            contentType: false,       
+				cache: false,             
+				processData:false,  
+				beforeSend:function(){
+					console.log('uploading');
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+	            success: function(result) {
+	               result=String(result).trim();
+	               $(displayTarget).attr('src',"<{$UPLOAD_PATH}>"+result);
+	               $(displayTarget).siblings('input').val(result);
+
+	               jcrop_api.destroy();
+				   $('.preview').removeAttr('style').removeAttr('src');
+	               $(".image_uploader").hide();
+	            },
+	            complete:function(){
+	            	console.log('complete');
+	            	$('.form_response_loader').remove();
+	            },
+	            error:function(){
+	            	console.log('error');
+	            }
+	        })
+		})
+	})
+</script>
+
+</body>
+</html>

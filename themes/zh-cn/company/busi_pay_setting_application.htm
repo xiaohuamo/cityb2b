@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='company/side_business_option_menu.htm'}>
+				<div class="main-form">				
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/busi_pay_setting_application" method="post" target="post_frame" enctype="multipart/form-data">
+					
+					<{if $data.isApproved==2}>
+						<!-- processing -->
+						<div class="input-box clearfix" style="margin-left:20px;">
+							<h1>商家支付设置申请成功提交</h1>
+							<p>商家支付设置申请成功提交，正常审批速度为24小时，如果您填写了email,结果会在24小时之内发送至您的email.如果您未填写Email，请稍后再检查该页面（最长等待时间为24小时）。如有任联系Ubonus商家服务中心</p>
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="button" onClick="window.location.href='<{$http_root_www}>company/index';" > 返回</button>
+							<button type="button" onClick="window.location.href='<{$http_root_www}>message/write';" > 发消息给Ubonus</button>
+						</div>
+					<{elseif $data.isApproved==0}>
+						<!-- Not submit yet -->
+						
+						<div class="input-box clearfix">
+							<h1 >商家支付设置申请</h1>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>公司名称</label></span>
+							<{if $loginUser.businessName}><{$loginUser.businessName}> <em style="font-size:14px; color:#C00;"></em><{/if}>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>paypal收款账户</label></span>
+							<input type="text" class="input-text" value="<{$data.paypal_email}>" name="pmxhpemail" />
+							
+						</div>
+						
+						<!-- <div class="input-box clearfix">
+							<span><label>epay收款账户</label></span>
+							<input type="text" class="input-text" value="<{$data.epay_account}>" name="emxhway" />
+						</div> -->
+
+						<div class="input-box clearfix" >
+							<input name="confirm" type="checkbox" onClick="if (this.checked) $('#memberForm :submit').attr('disabled', false).removeClass('disabled'); else $('#memberForm :submit').attr('disabled', true).addClass('disabled');" value="1" checked /> 
+							我已阅读
+							<a href="<{$http_root}>company/help?id=3" target="_blank" class="link2">Ubonus关于商家支付账户申请声明</a>				
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit"> 提交商家支付账户申请</button>
+							<button type="button" onClick="window.location.href='<{$http_root_www}>message/write';" > 发消息给Ubonus</button>
+					
+						</div>
+
+					<{elseif $data.isApproved==1}>
+						<div class="input-box clearfix">
+							<h1>商家支付设置申请成功</h1>
+							<p>您所申请的账户正在接收用户支付的账款</p>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>paypal收款账户</label></span>
+							<{$data.paypal_email}>
+						</div>
+						
+						<!-- <div class="input-box clearfix">
+							<span><label>epay收款账户</label></span>
+							<{$data.epay_account}>
+						</div> -->
+
+						<div class="input-box input-submit clearfix">
+							<button type="button" onClick="window.location.href='<{$http_root_www}>company/busi_pay_setting_destory';" > 注销申请</button>
+						</div>
+					<{/if}>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

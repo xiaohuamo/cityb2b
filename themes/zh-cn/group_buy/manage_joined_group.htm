@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='group_buy/group_buy_top_menu.htm'}>
+				<div class="main-form main-list">	
+					<table style='width:100%' >
+						<thead>
+							<tr>
+								<th>团名</th>
+								<th>当前人数</th>
+								<th>状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<{foreach from=$groups item=item name='dl'}>
+								<tr data-id='<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}>>
+									<td><a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a></td>
+
+										<{if $item.allow_user_group==0&&$item.parentId==0}>
+											<!-- 商家团 -->
+										<{elseif $item.allow_user_group==1&&$item.parentId==0}>
+											<!-- Master 用户团 -->
+											<!-- 你不应该参加Master用户团Report BUG。 -->
+										<{elseif $item.allow_user_group==0&&$item.parentId!=0}>
+											<!-- Child 用户团 -->
+											<!-- 用户团 -->
+										<{/if}>
+
+									<td><{$item.current}>人 <a onClick='showGroupList(<{$item.id}>)'>  查看</a></td>
+									<{if $item.status==0}>
+									<!-- <td>Ready</td> -->
+									<td>您不应该看到该团,请report该bug</td>
+									<{elseif $item.status==1}>
+									<!-- <td>Running</td> -->
+									<td>进行中</td>
+									<{elseif $item.status==2}>
+									<!-- <td>Closed</td> -->
+									<td>商家关闭</td>
+									<{elseif $item.status==3}>
+									<!-- <td>Stageing</td> -->
+									<td>商家随时发放奖励</td>
+									<{elseif $item.status==4}>
+									<!-- <td>Finalizing</td> -->
+									<td>等待发放奖励</td>
+									<{elseif $item.status==5}>
+									<!-- <td>Complete</td> -->
+									<td>奖励已经发放</td>
+									<{else}>
+									Error
+									<{/if}>
+									
+								</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+
+					<div class='group_list_popup' ></div>
+					<script type="text/javascript">
+						function showGroupList(id){
+							console.log(id);
+							$.ajax({
+								   method:"GET",
+								   url: '<{$http_root_www}>group1_buy/group_list_show_ajax',
+								   data: {
+								   		id: id,
+								   		type:'user'
+								   },
+							   beforeSend : function (){
+					              $('.group_list_popup').html('<i class="fa fa-spinner fa-lg fa-spin" style="color:#31BC86"></i>').show();
+					            },
+					            success : function (returnData) {
+					              $('.group_list_popup').html(returnData);
+					            }
+							});
+						}
+
+						function closeGroupList(){
+							$('.group_list_popup').hide();
+						}
+					</script>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

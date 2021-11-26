@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='company/side_business_option_menu.htm'}>
+				
+				<div class="colCurTit">
+					<span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>company/staff_edit" class="link2"><i class='fa fa-plus'></i>新建分店</a>
+					</span>
+				</div>
+				<div class="main-form">			
+				<form id="memberForm" class='form-style-green' action="" method="post" target="post_frame" enctype="multipart/form-data">
+
+				<div class="input-box multi-select clearfix">
+
+							<h1>分店设置</h1>
+
+						</div> </form> </div>
+				<div class="main-list">
+					<table cellspacing="0" cellpadding="0" width="100%" >
+						<thead>
+							<tr>
+								<th>分店*</th>
+								<th>分店名称</th>
+								<th>管理员</th>
+								<th>电话</th>
+								<th>地址</th>
+								<th>编辑</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<{foreach from=$list item=item name='dl'}>
+							<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td><{$item.businessName}></td>
+								
+								<td>
+									<{$item.name}>
+									<br>
+									<small>(<{$item.contactPersonFirstname}> <{$item.contactPersonLastname}>)</small>
+								</td>
+
+								<td><{$item.contactPersonNickName}> </td>
+
+								<td><{$item.contactMobile}></td>
+
+								<td><{$item.googleMap}></td>
+								
+								<td><a href="<{$http_root_www}>company/staff_edit?id=<{$item.id}>">编辑</a></td>
+							
+							</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

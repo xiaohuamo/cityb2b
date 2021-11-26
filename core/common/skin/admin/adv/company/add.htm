@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function check (form)
+{
+	name = document.getElementsByName('data[password]')[0];
+	if (name.value != '')
+	{
+		if (name.value.length < 8)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			name.select();
+			return false;
+		}
+
+		var name1 = document.getElementsByName('data[password2]')[0];
+		if (name.value == '')
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			return false;
+		}
+
+		if (name.value != name1.value)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			name.select();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function addline(obj) {
+	$(obj).before('<p><input type="file" name="pic[]" /></p>');
+}
+function delline(obj) {
+	$(obj).parent().remove();
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=add" method="post" onsubmit="return check(this);" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2">创建会员</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->email}></td>
+					<td class="editRtTd"><input name="data[email]" value="<{$data.email}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->password}></td>
+					<td class="editRtTd"><input name="data[password]" value="" type="password" size="30" class="text" /> <{$lang->password_tips}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->confirm_password}></td>
+					<td class="editRtTd"><input name="data[password2]" value="" type="password" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->status}></td>
+					<td class="editRtTd">
+						<input id="isApproved" name="data[isApproved]" value="1" type="checkbox" checked /><label for="isApproved"><{$lang->audit}></label>
+					</td>
+				</tr>
+						
+				<tr class="editTr">
+					<td class="editLtTd">重要推荐</td>
+					<td class="editRtTd"> 从此处到下面所有的字段内容，不推荐在后台操作。直接到前台操作即可，直接存储，然后从后台以该商家的身份自动登陆后，管理商家的内容。</td>
+				</tr>		
+						
+				<tr class="editTr">
+					<td class="editLtTd">Business Name</td>
+					<td class="editRtTd"><input name="data[businessName]" value="<{$data.businessName}>" type="text" size="60" class="text" /></td>
+				</tr>
+								
+				<tr class="editTr">
+					<td class="editLtTd">联系电话</td>
+					<td class="editRtTd"><input name="data[phone]" value="<{$data.phone}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">手机号码</td>
+					<td class="editRtTd"><input name="data[tel]" value="<{$data.tel}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+				
+				
+			
+				<tr class="editTr">
+					<td class="editLtTd">Website Link</td>
+					<td class="editRtTd"><input name="data[websiteLink]" value="<{$data.websiteLink}>" type="text" size="60" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Company Description</td>
+					<td class="editRtTd"><textarea name="data[companyDescription]" class="text" style="width:90%; height:200px;"><{$data.companyDescription}></textarea></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">Pics</td>
+					<td class="editor">
+						<{if count($data.pics)>0}>
+							<{foreach from=$data.pics item=item}>
+								<{if $item.pic}>
+								<p><input type="hidden" name="op[]" value="<{$item.pic}>" /><input type="hidden" name="opn[]" value="<{$item.name}>" /><a href="<{$UPLOAD_PATH}><{$item.pic}>" target="_blank"><img src="<{$UPLOAD_PATH}><{$item.pic}>" height="100" alt="" /> <{$item.name}></a> <a href="javascript:;" onclick="delline(this); return false;">删除X</a></p>
+								<{/if}>
+							<{/foreach}>
+						<{/if}>
+						<button type="button" onclick="addline(this); return false;" style="margin:0 5px;">添加一行</button>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Video</td>
+					<td class="editRtTd"><input name="data[video]" value="<{$data.video}>" type="text" size="60" class="text" /></td>
+				</tr>
+
+				
+				<tr class="editTr">
+					<td class="editLtTd">信用级别</td>
+					<td class="editRtTd"><input name="data[trustLevel]" value="<{$data.trustLevel}>" type="text" size="30" class="text" /> <em>0-4</em></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">客户申请信息保密</td>
+					<td class="editRtTd"><input name="data[visibleForBusiness]" id="visibleForBusiness1" value="0" type="checkbox"<{if !$data.visibleForBusiness}> checked<{/if}> /><label for="visibleForBusiness1">是</label></td>
+				</tr>
+				
+			
+				
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

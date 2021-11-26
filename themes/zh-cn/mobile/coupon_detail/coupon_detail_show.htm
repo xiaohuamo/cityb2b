@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=yes">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+</head>
+<body class="bg-1">
+	<!-- wx share thumbnail Min 300x300-->
+	<img src="<{$UPLOAD_PATH}><{$coupon.pic}>" style='display:none;width: 300px;height: 300px'>
+
+
+	<header id="hd">
+		<div class="left">
+				<!--	<a onClick='window.history.back()' class="a-back"> -->
+		</div>
+		<h1>
+			<a onCLick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');">商品</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f2').offset().top-40},'slow');">说明</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'slow');">评价</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'slow');">相关</a>
+		</h1>
+		<{include file ="mobile/coupon_detail/sec_more.htm"}>
+	</header>
+	<div style='position:relative;top: 50px;' class='action_alert'></div>
+	<section id="bd">
+		<div class='sec-product'>
+			<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:660:420}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			   		
+			         <{if $coupon.pics}>
+			          <{foreach from=$coupon.pics item=item name='cpl'}>
+		             	 <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$item|image:660:420}>" ></div>
+		              <{/foreach}>
+			         <{/if}>
+			    </div>
+			    <div class="swiper-pagination"></div>
+
+			    <{include file ="mobile/coupon_detail/referral_share.htm"}>
+
+			    
+			</div>
+			<div class="comm-tit">
+				<h3><{$coupon.title}>
+                <em> 
+                    <{if $coupon.perCustomerLimitQuantity!='0'}>单笔限购<{$coupon.perCustomerLimitQuantity}>个<{/if}>
+                    <{if $coupon.perCustomerMinLimitQuantity!='0'}>最少购买<{$coupon.perCustomerMinLimitQuantity}>个<{/if}>
+                </em>
+                </h3>
+                
+				<h4><{$coupon.coupon_summery_description}></h4>
+
+				<div class="infonote">
+				<span class='item'><i class='icon icon1'></i>
+				<{if $soldRate > 0.3}>
+				<em> <{($soldRate*100)|string_format:"%d"}>% </em>Sold
+				<{else}>
+					火爆销售中
+				<{/if}>
+				</span>
+				<span class='item'><i class='icon icon2'></i><em> <{$dayLeft}> </em> Day Left</span>
+				<span class='item'><i class='icon icon3'></i><em> </em><{$stadiumName}></span>
+				<span class='item'><i class='icon icon4'></i><em><{$evaluation|@count}></em> 人 评论</span>
+			</div>
+			</div>
+
+			
+
+			<a href="javascript:void(0);"  value="m<{$coupon.id}>" class='ticket-mask-layer-btn-show toTop comm-spec'>进入详细座位页面</a>
+			<script type="text/javascript">
+			var business_userid='<{$coupon.createUserId}>';
+			var main_coupon_id='<{$coupon.id}>';
+			var quantity='1';
+			</script>
+
+			<{include file='mobile/coupon_detail/sec_explain.htm'}>
+		</div>
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class="comm-btn">
+			<div class="left">
+
+				<{include file='mobile/coupon_detail/sec_favandstore.htm'}>
+				
+			</div>
+			<div class="right">
+				<a   class="a1 " style='width: 50%; visibility: hidden;'>加入购物车</a>
+				<a   class="a2 ticket-mask-layer-btn-show" style="width: 50%;">立即选座</a>
+			</div>
+		</div>
+	</section>
+
+	
+	<div class="pop-bg"></div>
+	<!-- 选择类型弹窗-end -->
+
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+		})
+	</script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	</script>
+
+	<{include file=$ticketPageFileMobile}>
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+
+	<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+	
+</body>
+</html>
+

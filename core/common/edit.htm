@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+function check (form)
+{
+	name = document.getElementsByName('data[password]')[0];
+	if (name.value != '')
+	{
+		if (name.value.length < 8)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			name.select();
+			return false;
+		}
+
+		var name1 = document.getElementsByName('data[password2]')[0];
+		if (name.value == '')
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			return false;
+		}
+
+		if (name.value != name1.value)
+		{
+			alert('<{$lang->password_length_error_or_not_match}>');
+			name.focus();
+			name.select();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function addline(obj) {
+	$(obj).before('<p><input type="file" name="pic[]" /></p>');
+}
+function delline(obj) {
+	$(obj).parent().remove();
+}
+
+function changePasswordClick(obj) {
+	if ( obj.checked ) $('.passwordTr').show().find('input').attr('disabled', false);
+	else $('.passwordTr').hide().find('input').attr('disabled', true);
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post" onSubmit="return check(this);" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2"><{$lang->edit_user}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->user_name}></td>
+					<td class="editRtTd"><input name="name" value="<{$data.name}>" type="text" size="30" class="text" disabled /> <input type="checkbox" id="changePassword" onClick="changePasswordClick(this);" /><label for="changePassword">修改密码</label></td>
+				</tr>
+				<tr class="editTr passwordTr" style="display:none;">
+					<td class="editLtTd"><{$lang->password}></td>
+					<td class="editRtTd"><input name="data[password]" value="" type="password" size="30" class="text" disabled /> <{$lang->edit_password_tips}></td>
+				</tr>
+				<tr class="editTr passwordTr" style="display:none;">
+					<td class="editLtTd"><{$lang->confirm_password}></td>
+					<td class="editRtTd"><input name="data[password2]" value="" type="password" size="30" class="text" disabled /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->email}></td>
+					<td class="editRtTd"><input name="data[email]" value="<{$data.email}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->status}></td>
+					<td class="editRtTd">
+						<input id="isApproved" name="data[isApproved]" value="1" type="checkbox"<{if $data.isApproved==1}> checked<{/if}> /><label for="isApproved"><{$lang->audit}></label>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">头像</td>
+					<td class="editor">
+						<{if $data.avatar}>
+							<img src="<{if substr($data.avatar,0,7)=='http://'}><{$data.avatar}><{else}><{$UPLOAD_PATH}><{$data.avatar}><{/if}>" width="200" height="200" />
+							<div style="padding-top:5px;"><input type="file" name="avatar" /> 尺寸: 200x200px</div>
+						<{else}>
+							<input type="file" name="avatar" /> 尺寸: 200x200px
+						<{/if}>
+					</td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">Backup Email</td>
+					<td class="editRtTd"><input name="data[backupEmail]" value="<{$data.backupEmail}>" type="text" size="60" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Business Name</td>
+					<td class="editRtTd"><input name="data[businessName]" value="<{$data.businessName}>" type="text" size="60" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">ABN/ACN</td>
+					<td class="editRtTd"><input name="data[abn]" value="<{$data.abn}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">城市</td>
+					<td class="editRtTd">
+						<select name="country">
+							<option value="">澳洲</option>
+						</select>
+						<select name="data[cityId]">
+						<option value="">请选择所在城市</option>
+						<{foreach from=$citylist item=item}>
+						<option value="<{$item.id}>"<{if $item.id==$data.cityId}> selected<{/if}>><{$item.name}></option>
+						<{/foreach}>
+					</select></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">联系电话</td>
+					<td class="editRtTd"><input name="data[phone]" value="<{$data.phone}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">手机号码</td>
+					<td class="editRtTd"><input name="data[tel]" value="<{$data.tel}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">号码/街道</td>
+					<td class="editRtTd"><input name="data[addrNumber]" value="<{$data.addrNumber}>" type="text" size="15" class="text" style="width:60px;" /><input name="data[addrStreet]" value="<{$data.addrStreet}>" type="text" size="40" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">邮编/城市</td>
+					<td class="editRtTd"><input name="data[addrPost]" value="<{$data.addrPost}>" type="text" size="15" class="text" style="width:60px;" /><input name="data[addrSuburb]" value="<{$data.addrSuburb}>" type="text" size="40" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Title</td>
+					<td class="editRtTd"><select name="title" class="ahibw">
+						<option value="MR"<{if $data.title=='MR'}> selected<{/if}>>MR</option>
+						<option value="MRS"<{if $data.title=='MRS'}> selected<{/if}>>MRS</option>
+						<option value="etc"<{if $data.title=='etc'}> selected<{/if}>>etc</option>
+					</select></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Firstname</td>
+					<td class="editRtTd"><input name="data[contactPersonFirstname]" value="<{$data.contactPersonFirstname}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Lastname</td>
+					<td class="editRtTd"><input name="data[contactPersonLastname]" value="<{$data.contactPersonLastname}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Nickname</td>
+					<td class="editRtTd"><input name="data[contactPersonNickName]" value="<{$data.contactPersonNickName}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Mobile</td>
+					<td class="editRtTd"><input name="data[contactMobile]" value="<{$data.contactMobile}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">所属行业</td>
+					<td class="editRtTd multi-select"><select name="categoryId[]" multiple="true" style="width:430px;">
+						<option value="" child="2">请选择行业分类</option>
+						<{foreach from=$categories_all item=item}>
+							<option value="<{$item.id}>" child="<{count($item.child)}>"<{if count($item.child)==0 && in_array($item.id, explode(',',$data.categoryId))}> selected<{/if}>><{$item.name}></option>
+							<{foreach from=$item.child item=sitem}>
+								<option value="<{$sitem.id}>" child="<{count($sitem.child)}>"<{if count($sitem.child)==0 && in_array($sitem.id, explode(',',$data.categoryId))}> selected<{/if}>>　　<{$sitem.name}></option>
+								<{foreach from=$sitem.child item=ssitem}>
+									<option value="<{$ssitem.id}>" child="<{count($ssitem.child)}>"<{if in_array($ssitem.id, explode(',',$data.categoryId))}> selected<{/if}>>　　　　<{$ssitem.name}></option>
+								<{/foreach}>
+							<{/foreach}>
+						<{/foreach}>
+					</select></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Website Link</td>
+					<td class="editRtTd"><input name="data[websiteLink]" value="<{$data.websiteLink}>" type="text" size="60" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Company Description</td>
+					<td class="editRtTd"><textarea name="data[companyDescription]" class="text" style="width:90%; height:200px;"><{$data.companyDescription}></textarea></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">Pics</td>
+					<td class="editor">
+						<{if count($data.pics)>0}>
+							<{foreach from=$data.pics item=item}>
+								<{if $item.pic}>
+								<p><input type="hidden" name="op[]" value="<{$item.pic}>" /><input type="hidden" name="opn[]" value="<{$item.name}>" /><a href="<{$UPLOAD_PATH}><{$item.pic}>" target="_blank"><img src="<{$UPLOAD_PATH}><{$item.pic}>" height="100" alt="" /> <{$item.name}></a> <a href="javascript:;" onClick="delline(this); return false;">删除X</a></p>
+								<{/if}>
+							<{/foreach}>
+						<{/if}>
+						<button type="button" onClick="addline(this); return false;" style="margin:0 5px;">添加一行</button>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Video</td>
+					<td class="editRtTd"><input name="data[video]" value="<{$data.video}>" type="text" size="60" class="text" /></td>
+				</tr>
+
+				
+				<tr class="editTr">
+					<td class="editLtTd">商家介绍人设置及比率</td>
+					<td class="editor">
+						<input name="data[isBusinessReferalExist]" id="isBusinessReferalExist1" value="1" type="checkbox"<{if $data.isBusinessReferalExist}> checked<{/if}> onclick="if ( this.checked ) $(this).nextAll('input').attr('disabled', false); else $(this).nextAll('input').attr('disabled', true);" /><label for="isBusinessReferalExist1">Is Business Referal Exist</label>
+						<br />
+						<input name="data[referralId]" value="<{$data.referralId}>" type="text" size="30" class="text"<{if !$data.isBusinessReferalExist}> disabled<{/if}> /> <em>Referral Id</em>
+						<br />
+						<input name="data[businessRefPointPercent]" value="<{$data.businessRefPointPercent}>" type="text" size="30" class="text"<{if !$data.isBusinessReferalExist}> disabled<{/if}> /> <em>Business Ref Point Percent, 5%-30%</em>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">客户介绍人分成比率</td>
+					<td class="editRtTd"><input name="data[customerRefPointPercent]" value="<{$data.customerRefPointPercent}>" type="text" size="30" class="text" /> <em>5%-30%</em></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">信用级别</td>
+					<td class="editRtTd"><input name="data[trustLevel]" value="<{$data.trustLevel}>" type="text" size="30" class="text" /> <em>0-4</em></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">客户申请信息保密</td>
+					<td class="editRtTd"><input name="data[visibleForBusiness]" id="visibleForBusiness1" value="0" type="checkbox"<{if !$data.visibleForBusiness}> checked<{/if}> /><label for="visibleForBusiness1">是</label></td>
+				</tr>
+			
+				
+				<tr class="editTr">
+					<td class="editLtTd">语言服务类型</td>
+					<td class="editRtTd"><select name="data[languageType]" class="ahibw">
+						<option value="">请选择</option>
+						<option value="en"<{if $data.languageType=='en'}> selected<{/if}>>english only</option>
+						<option value="zh"<{if $data.languageType=='zh'}> selected<{/if}>>chinese only</option>
+						<option value="zh-en"<{if $data.languageType=='zh-en'}> selected<{/if}>>chinese&english</option>
+					</select></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">审批状态</td>
+					<td class="editor">
+						<input name="data[applcationStatus]" value="1" type="radio" id="applcationStatus1"<{if $data.applcationStatus==1}> checked<{/if}> /><label for="applcationStatus1">运营商填写等待用户激活</label><br />
+						<input name="data[applcationStatus]" value="2" type="radio" id="applcationStatus2"<{if $data.applcationStatus==2}> checked<{/if}> /><label for="applcationStatus2">用户填写申请中</label><br />
+						<input name="data[applcationStatus]" value="3" type="radio" id="applcationStatus3"<{if $data.applcationStatus==3}> checked<{/if}> /><label for="applcationStatus3">处理中</label><br />
+						<input name="data[applcationStatus]" value="4" type="radio" id="applcationStatus4"<{if $data.applcationStatus==4}> checked<{/if}> /><label for="applcationStatus4">审批通过</label><br />
+						<input name="data[applcationStatus]" value="5" type="radio" id="applcationStatus5"<{if $data.applcationStatus==5}> checked<{/if}> /><label for="applcationStatus5">用户自动激活</label>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">商家是否被挂起</td>
+					<td class="editRtTd"><input name="data[isSuspended]" id="isSuspended1" value="1" type="checkbox"<{if $data.isSuspended}> checked<{/if}> /><label for="isSuspended1">是</label></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">编辑后是否需要重新审核（优惠券）</td>
+					<td class="editRtTd"><input name="data[needReapprovedAfterEdit]" id="needReapprovedAfterEdit1" value="1" type="checkbox"<{if $data.needReapprovedAfterEdit}> checked<{/if}> /><label for="needReapprovedAfterEdit1">是</label></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">审批者</td>
+					<td class="editRtTd"><{if $data.applcationStatus>=4}><{if $data.adultUser}><{$data.adultUser.displayName}> (<{$data.adultUser.name}>)<{/if}><{/if}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">审批日期</td>
+					<td class="editRtTd"><{if $data.applcationStatus>=4}><{if $data.adultDate}><{date('Y-m-d H:i:s', $data.adultDate)}><{/if}><{/if}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">挂起操作者</td>
+					<td class="editRtTd"><{if $data.isSuspended}><{if $data.suspendUser}><{$data.suspendUser.displayName}> (<{$data.suspendUser.name}>)<{/if}><{/if}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">挂起日期</td>
+					<td class="editRtTd"><{if $data.isSuspended}><{if $data.suspendDate}><{date('Y-m-d H:i:s', $data.suspendDate)}><{/if}><{/if}></td>
+				</tr>
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

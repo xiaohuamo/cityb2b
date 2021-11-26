@@ -1,0 +1,377 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 <script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+	
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style type="text/css">
+.onoffswitch {
+    position: relative; width: 70px;margin: auto;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 22px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 0px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 8px; margin: 11px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 36px;
+    border: 2px solid #999999; border-radius: 22px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+.main-form .input-box span label { width:120px; }
+	</style>
+	
+	<script> 
+
+var cats = [];
+<{foreach from=$categoriesAll item=item}>
+cats.push(['<{$item.id}>', '<{$item.name}>', <{$item.childCount}>]);
+<{/foreach}>
+
+
+function setBonusType(obj) {
+ 	bonusType=$(obj).val();
+	 $('.coupon-tyle-select-box-body').hide();
+	 $('.coupon-tyle-select-box-head').css('background-color','#B4DFE3');
+	 if($(obj).is(':checked')){
+	 	$(obj).parent().parent().css('background-color','#FFDB3F');
+	 	$(obj).parent().parent().next('.coupon-tyle-select-box-body').show();
+	 }
+}
+
+$(function(){
+	$("input[name='bonusType']").on('click',function(){
+		setBonusType(this);
+	})
+	$("input[name='bonusType']:checked").click();
+	// 如果各个类别选项有数据则进行回复选项显示处理
+	
+	
+})
+
+
+
+function catChg(obj) {
+	var vv = $(obj).val(); 
+
+	var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+	if (isNaN(cc)) cc = 0;
+
+	var cat_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd')
+	
+
+	if (vv == '' || cc <= 0) {
+		$(obj).next().nextAll().remove();
+
+		if($(".nice-check-box input[value='"+vv+"']").length>0){
+			$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
+		}else{
+			
+		}
+
+	}else {
+		$(obj).next().nextAll().remove();
+		//alert(vv);
+		if( vv.length ==6) {
+		var c = $('<select sec_id="'+ vv +'"   name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		}else if( vv.length ==9) {
+		var c = $('<select third_id="'+ vv +'"   name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		}else{
+		var c = $('<select fourth_id="'+ vv +'"   name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		}
+		c.append('<option value="'+ vv +'" cc="0" ddd="全部">全部</option>');
+		for (var i = 0; i < cats.length; i++) {
+			if ( cats[i][0].substring(0, vv.length) == vv && cats[i][0].length == vv.length + 3 ) {
+				c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
+			}
+		}
+		$(obj).next().after(c);
+		setDroplist(c);
+	}
+}
+
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{if $coupon_type=='11'}>
+					<{include file='cinema/top_menu.htm'}>
+				<{elseif $coupon_type=='10'}>
+					<{include file='show/show_management_menu.htm'}>
+				<{/if}>
+				
+				<div class="colCurTit">
+					<{$pagename}> 
+					<span class="links "> 
+						
+					</span>
+				</div>
+	<div class="main-form" style ="padding: 2px 0;">
+				<form  method="get" action="<{$postUrl}>" class="search-form" style="width:900px;">
+						
+												
+						<div class="input-box clearfix" style="line-height: 20px;" >
+								<select  id="bigcategoryid" name="allCategoryId[]" class="ahibw" onChange="catChg(this);">
+								    <option value="106" cc="全部" <{if substr($item.id,0,3)==$category}>selected<{/if}> >全部   </option>
+									<{foreach from=$categories item=item}>
+											<option value="<{$item.id}>" cc="<{$item.childCount}>" <{if substr($item.id,0,6)==$allCategoryId[0]}>selected<{/if}> ><{$item.name}>   </option>
+									<{/foreach}>
+							</select>
+							</div>
+							<div class="input-box clearfix" style="width:300px;line-height: 20px;">	
+							<input type="hidden" name="coupon_type" value='<{$coupon_type}>'>
+				     	<input type="text" class="searchTerm" name="sk" value="<{$sk}>" placeholder="输入您想找的商品..." style="width:300px;line-height: 20px;" >
+				      	<button type="submit" class="searchButton" style="position: inherit;margin: 0px 0px 0px -49px;"><i class="fa fa-search" ></i></button>
+					
+						</div>
+						
+					
+				    </form>
+					</div>
+				    <iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									
+								  	<th><{$lang->image}></th>
+									<th><{$lang->title}></th>
+									<th><{$lang->price}></th>
+									<th><{$lang->type}></th>
+									<th><{$lang->edit}></th>
+									
+								</tr>
+							</thead>
+							<tbody>
+						  <{foreach from=$data item=item name='dl'}>
+
+									<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+									
+
+										<td><img src="<{$UPLOAD_PATH}><{$item.pic|image:66:42}>"></td>
+
+										<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.id}>"><{$item.title}></a></td>
+
+										<td>
+											$<{$item.voucher_deal_amount}>
+							  				<br>
+							  				<small>$<s><{$item.voucher_original_amount}></s></small>
+						  				</td>
+
+						  				<td>
+						  					<{$item.coupontype.name}>
+
+						  					<{if $item.EvoucherOrrealproduct=='evoucher'}>
+						  					<i class='fa fa-ticket' style='color:#FD5001 '></i>
+						  					<{elseif $item.EvoucherOrrealproduct=='realproduct'}>
+						  						
+						  						<{if $item.pickup_avaliable}>
+						  							<i class='fa fa-archive' style='color:green'></i>
+						  						<{/if}>
+
+						  						<{if $item.deliver_avaliable}>
+						  							<i class='fa fa-truck' style='color:green'></i>
+						  						<{/if}>
+						  					<{/if}>
+						  				</td>
+
+						  				
+
+										<td>
+										<{if $item.idd}>
+												  已添加
+												<{else}>
+												<input class='promote' type="checkbox" data-id="<{$item.id}>" data-idd = "<{$item.idd}>" <{if $item.promote==1}>checked<{/if}> >
+												
+												<span class='promote-ajax'></span>
+												<{/if}>
+												
+											</td>
+                                         
+										
+									</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+
+						<div>
+							<i class='fa fa-ticket' style='color:#FD5001 '></i>电子券无需递送
+							<i class='fa fa-archive' style='color:green'></i>支持自取
+							<i class='fa fa-truck' style='color:green'></i>支持递送
+						</div>
+
+					<{else}>
+
+						<{$lang->no_data}>
+						<a href="<{$http_root_www}>company/coupons_edit?coupon_type=<{$coupon_type}>" ><{$lang->add_product}></a>
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var loading=false;
+	$('input[name=onoffswitch]').on('click',function(){
+		var couponId=$(this).data('id')
+		var context =$('.publish_icon[data-id='+couponId+']');
+
+		if(loading)return false;
+		$.ajax({
+			type:"GET",
+			url: "<{$http_root_www}>company/coupons_publish_ajax", 
+			data:{"id":couponId},
+			beforeSend: function( xhr ) {
+				loading=true;
+				context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+			},
+			success: function(result){
+				result=jQuery.parseJSON( result );
+				if(result.coupon_status=='1'){
+					context.html("<span style='color:#F30;'>产品下线</span>");
+				}else if(result.coupon_status=='4'){
+					context.html("<span style='color:#58964E;'>产品上线</span>");
+				}
+			}
+		}).always(function(){
+			loading=false;
+		})
+	})
+</script>
+
+<script type="text/javascript">
+	$('.template-toggle').on('click',function(){
+		var context = $(this).parent().next('.template-toggle-list');
+		$(this).toggleClass('fa-angle-double-down');
+		$(this).toggleClass('fa-angle-double-up');
+		$(this).parent().toggleClass('bg-color-yellow');
+
+		context.toggle();
+		ajaxShow(context);
+	});
+
+	function ajaxShow(context){
+		if($.trim(context.html()).length==0){//if its empty
+			$.ajax({
+				type:"GET",
+				url: "<{$http_root_www}>company/coupons_template_ajax", 
+				data:{"cid":context.data('category-id')},
+				beforeSend: function( xhr ) {
+					context.html("<div style='text-align:center;line-height:300px;'><i style='color:#FD5001 ' class='fa fa-spinner fa-3x fa-pulse'></i></div>");
+				},
+				success: function(result){
+					if($.trim(result).length==0){
+						$(context).html("<div style='text-align:center;line-height:300px;'><i  class='fa fa-frown-o fa-3x'>Empty</i></div>");
+					}else{
+						$(context).html(result);
+					}
+    			}
+    		}).fail(function(){
+    			$(context).html();
+    		});	
+		}
+		
+	}
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+		
+
+		$('.promote').on('click',function(){
+			var ajax_result = $(this).next('.promote-ajax');
+			var ajax_input= $(this).next('.promote');
+
+			if($(this).is(':checked')){
+				var promote = 1;
+			}else{
+				var promote = 0;
+			}
+
+			var id = $(this).data('id');
+   
+			console.log(promote);
+
+				$.ajax({
+				  method: "POST",
+				  type:'post',
+				  url: "<{$http_root_www}>company/referral_product_ajax_add_item",
+				  data: { id:id ,promote:promote},
+				  beforeSend:function(){
+				  	$(ajax_result).html(iconLoading);
+				  }
+				})
+				  .done(function( msg ) {
+				   $(ajax_result).html(successIcon);
+				   $(ajax_input).css("visibility","hidden");
+				  })
+				  .fail(function(msg){
+				  	$(ajax_result).html(errorIcon);
+				  });
+		})
+	})
+</script>
+
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<{include file='footer.htm'}>
+
+</body>
+</html>

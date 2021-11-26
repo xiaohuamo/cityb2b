@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no" />
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/reset.css">
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/style.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>images/redbag/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>images/redbag/js/payfor.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>images/redbag/js/myself.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript">
+    new function (){
+       var _self = this;
+       _self.width = 640;//设置默认最大宽度
+       _self.fontSize = 100;//默认字体大小
+       _self.widthProportion = function(){var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;return p>1?1:p<0.32?0.32:p;};
+       _self.changePage = function(){
+           document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+       }
+       _self.changePage(); 
+       window.addEventListener('resize',function(){_self.changePage();},false);
+    };
+	</script>
+</head>
+<body>
+<div class="header2"> 包红包 </div>
+<div class="cont3">
+  <div class="qcz">
+      <{if $message}><p><{$message}></p><{/if}>
+      <p>账户余额： $<{if $balance<0}>0<{else}><{$balance}><{/if}>澳元</p>    
+       <a href="<{$http_root_www}>member/recharge_add">立即充值</a>
+  </div>
+
+  <div class="cont3_nr">
+  	<div class="main-form">				
+					<form id="redbagForm" class='form-style-green' action="<{$http_root_www}>redbag/redbag" method="post"  enctype="multipart/form-data">
+            <div class="slds">
+              <p>数量:</p>
+               <div class="add_chose"> <a class="reduce" onClick="setAmount.reduce('#qty_item_1')" href="javascript:void(0)"> -</a>
+        	   <input   style="  font-size:.32rem; color: #727171;" type="text" name="qty" value="10" id="qty_item_1" onKeyUp="setAmount.modify('#qty_item_1')" />
+                <a class="add" onClick="setAmount.add('#qty_item_1')" href="javascript:void(0)"> +</a> </div>
+            </div>
+            <div class="zje">
+              <p>金额:</p>
+              <input name="amount_total"  type="text" value="" class="wby1"  placeholder="1.88">
+              <span >澳元</span> </div>
+            <div class="hbzl">
+                <div class="select_down" name="amount_ramdon_or_same" id="sel" >
+          	   <p>种类:
+            	  <select name="amount_ramdon_or_same"  >
+  								<option value="1" selected>拼手气红包</option>
+  								<option value="0">普通等值红包</option>
+  							</select>
+              </p>
+            </div>
+          </div>
+    	  <div class="clear"></div>
+        <div class="massage">
+          <p>红包名:&nbsp;&nbsp;</p>
+    	     <input  name="name" type="text" value ="" class="wby2" placeholder="<{if $loginUser.nickname}><{$loginUser.nickname}><{else}>我的<{/if}>红包，一起助攻澳洲本土双11！">
+        </div>
+
+       <{if $data}>
+       <div class="hbzl">
+          <div class="select_down"  id="sel" >
+        	   <p>产品:
+                <select name="couponid"  >
+                  <{foreach from=$data item=item}>
+                  <option value="<{$item.id}>" selected><{$item.title}></option>
+                  <{/foreach}>
+                </select>
+              </p>
+          </div>
+        </div>	
+        <{/if}>
+	     <button type="submit" class="input-submit finsh  " style="font-family: 'Microsoft YaHei', Arial, Helvetica, sans-serif;" >包好啦！</button>
+	 	</form>
+</div>
+</div>
+</body>
+</html>

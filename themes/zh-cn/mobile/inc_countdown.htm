@@ -1,0 +1,170 @@
+<section class='countdown' >
+  <div id="clockdiv" style="margin-left: 2.0rem;
+    margin-top: 5.6rem;
+    font-size: 20px;
+	background: #776e6e;
+    font-weight: 600;" >
+    <div >
+      倒计时：
+      <span class="days"></span>天
+      
+    </div>
+    <div >
+      <span class="hours"></span>小时
+      
+    </div>
+    <div ><span class="minutes"></span>分
+    </div>
+
+    <div >
+      <span class="seconds"></span>秒
+    </div>
+
+  
+  </div>
+
+  
+    <div id="running" style="width:100%;
+    padding: 20px;
+   background: #f5f1f1;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 5.5rem;
+    background-size: 100%;
+    margin: auto;">
+
+  
+    <p style="color:#2bb8aa;font-weight: bold;">秒抢火爆进行中!</p>
+
+    <p>
+      <small>通知：2019年澳中博览会购物季于7月9日晚8点开始抢购,7月11日晚8点再次补库存。售光为止</small>
+    </p>
+
+    <p>
+      <small>提示：当您从购物车检出时商品才会为您锁定，请在30分钟内完成购物，否则订单会被取消。</small>
+    </p>
+
+
+  </div>
+    
+
+  
+
+  <a target="_blank" href="<{$http_root_www}>shoppingday">
+   <{if $ua!='desktop'}>
+    <img src="<{$SKIN_PATH}>images/2019bolanhui.jpg"  style="width:100%;">
+    <{else}>
+    <img src="<{$SKIN_PATH}>images/2019bolanhui.jpg"  style="width:100%;"  >
+    <{/if}>
+  </a>
+</section>
+
+<style type="text/css">
+.countdown{
+ 
+  font-weight: 100;
+}
+
+.countdown h1 a{
+  text-decoration: none;
+   color: #fff;
+  font-weight: 100;
+}
+
+.countdown div, #running p{
+  <{if $ua!='desktop'}>
+  font-size: 0.5rem;
+  font-weight:bold;
+  <{else}>
+  font-size: 1rem;
+  <{/if}>
+}
+
+.countdown #clockdiv{
+  background: rgba(0,0,0,0.5);
+  padding: 5px 20px;
+  border-radius: 10px;
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  
+}
+
+.countdown #clockdiv > div{
+  display: inline-block;
+}
+
+.countdown #clockdiv div > span{
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.countdown .smalltext{
+  padding-top: 5px;
+  font-size: 16px;
+}
+
+
+</style>
+
+<script type="text/javascript">
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
+}
+var dateStr = '<{$smarty.const.SPECIAL_EVENT_TIME_START}>';
+
+var dateValues=dateStr.split(/[^0-9]/),
+    hours = parseInt(dateValues[0], 10),
+    minutes = parseInt(dateValues[1], 10),
+    seconds = parseInt(dateValues[2], 10),
+    year = parseInt(dateValues[3], 10),
+    month = parseInt(dateValues[4], 10) - 1, // Month is zero based, so subtract 1
+    day = parseInt(dateValues[5], 10);
+
+var deadline = new Date(year, month, day, hours, minutes, seconds);
+
+initializeClock('clockdiv', deadline);
+
+var now = new Date();
+
+if(now.getTime()-deadline.getTime()>0){
+    document.getElementById('clockdiv').style.display='none';
+    document.getElementById('running').style.display='block';
+}
+
+</script>

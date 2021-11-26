@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	 <title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	
+</head>
+<body>
+
+	<header id="hd">
+		<div class="left">
+			<div class="left">
+			<a href="<{$http_root_www}>company/index" class="a-back"></a>
+		</div>
+		</div>
+		<h1>发布中心</h1>
+		<div class="right">
+			<a href="javascript:void(0);" class="a-so"></a>
+		</div>
+	</header>
+
+	<section id="bd">
+		<div class="m-menu">
+		    <div class="swiper-container">
+		        <div class="swiper-wrapper">
+				    <div class="swiper-slide"><a <{if $submenu==all}> class="on" <{/if}> href="  <{$http_root_www}>company/coupons?coupon_type=0">全部</a></div>
+					<div class="swiper-slide"><a <{if $submenu==product_show}> class="on" <{/if}>   href="<{$http_root_www}>company/coupons?coupon_type=1">产品展示</a></div>
+					<div class="swiper-slide"><a <{if $submenu==youhui}> class="on" <{/if}>  href="<{$http_root_www}>company/coupons?coupon_type=4">优惠券</a></div>
+					<div class="swiper-slide"><a <{if $submenu==tuangou}> class="on" <{/if}>  href="  <{$http_root_www}>company/coupons?coupon_type=7">代金卡</a></div>
+
+					<div class="swiper-slide"><a style="color:#FD5001 " href="<{$http_root_www}>company/coupons?coupon_type=9">商城</a></div>
+		        </div>
+				
+		    </div>
+		</div>
+		<ul class="g-ul m-list1 m-list1-1">
+		 <{foreach from=$data item=item name='dl'}>
+			<li>
+				<div class="con">
+					<div class="pic">
+						<a href="<{$http_root_www}>coupon1/<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt=""></a>
+						<div class="oper">
+						 
+						    <a href="<{$editUrl}>id=<{$item.id}>" class="edit"><i>&nbsp;</i>编辑</a>
+						
+							<{if $item.status==4}>
+							<a href="" class="up publish_icon " data-id='<{$item.id}>' ><i>&nbsp;</i>下架</a>
+							<{else}>
+							<a href="" class="up publish_icon " data-id='<{$item.id}>' ><i>&nbsp;</i>上架</a>
+							<{/if}>
+						</div>
+						<div class="oper">
+							<a href="<{$http_root_www}>company/coupons_copy?id=<{$item.id}>&type=shop" onClick="return window.confirm('确定要复制这个商品吗？');" class="edit"><i>&nbsp;</i>复制</a>
+							<a href="<{$http_root_www}>company/shops?id=<{$item.id}>" onClick="return window.confirm('确定要删除这个商品吗？');" class="up"><i>&nbsp;</i>删除</a>
+							
+						</div>
+					</div>
+					<h4><{$item.title}></h4>
+					<span></span>
+				</div>
+			</li>
+		<{/foreach}>
+		
+		</ul>
+		
+		<div class="h140"></div>
+
+		<a href="<{$http_root_www}>company/coupons_edit?coupon_type=<{$coupon_type}>" class="btn-release">发布新商品</a>
+	</section>
+
+	<!-- 搜索框 -->
+
+	<div class="box-so bg-1">
+	
+	    <div class="inner">
+	        <div class="so-top so-top-2">
+	            <input type="text" class="g-input sele" readonly="readonly" value="产品">
+	            <div class="sub">
+	                <span>商品</span>
+					<span>折扣码</span>
+					<span>优惠券</span>
+					<span>本地服务</span>
+										
+	            </div>
+           <input type="text" placeholder="输入关键字搜索" class="g-input inp"> 
+	        </div>
+	        <a href="javascript:void(0);" class="a-txt">取消</a>
+	    </div>
+	    <div class="m-so">
+	        <h4>热门搜索<a href="" class="a-update"></a></h4>
+	        <ul class="g-ul">
+			
+	            <li><a href="#">热门关键字</a></li>
+	           
+	        </ul>
+	    </div>
+	    <div class="so-pop">
+	         <a  class="a-shop search-keyword-display"><!-- 店铺搜索&gt;手机 --></a>
+            <ul class="g-ul ul-screen" style="max-height: 83vh;overflow: scroll;">
+	           
+	        </ul>
+	    </div>
+	</div>
+
+	<!-- 搜索框 end-->
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+		$(".m-menu").each(function(){
+		    var swiper = new Swiper($(this).find(".swiper-container")[0], {
+		        slidesPerView: 4.5,
+		        paginationClickable: true,
+		        spaceBetween : 5,
+		        freeMode: true
+		    });
+		});
+	</script>
+ <script type="text/javascript">
+	$('.publish_icon').on('click',function(){
+		var couponId=$(this).data('id')
+		var context =$(this);
+		$.ajax({
+			type:"GET",
+			url: "<{$http_root_www}>company/coupons_publish_ajax", 
+			data:{"id":couponId},
+			beforeSend: function( xhr ) {
+				context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+			},
+			success: function(result){
+				result=jQuery.parseJSON( result );
+				if(result.coupon_status=='1'){
+					//console.log('unpublished');
+					context.html("上架");
+					//context.css('color','#58964E');
+				}else if(result.coupon_status=='4'){
+					//console.log('publishend');
+					context.html("下架");
+					//context.css('color','#F30');
+				}
+			}
+		})
+	});
+
+	$('.template-toggle').on('click',function(){
+		var context = $(this).parent().next('.template-toggle-list');
+		$(this).toggleClass('fa-angle-double-down');
+		$(this).toggleClass('fa-angle-double-up');
+		$(this).parent().toggleClass('bg-color-yellow');
+
+		context.toggle();
+		ajaxShow(context);
+	});
+
+	function ajaxShow(context){
+		if($.trim(context.html()).length==0){//if its empty
+			$.ajax({
+				type:"GET",
+				url: "<{$http_root_www}>company/coupons_template_ajax", 
+				data:{"cid":context.data('category-id')},
+				beforeSend: function( xhr ) {
+					context.html("<div style='text-align:center;line-height:300px;'><i style='color:#FD5001 ' class='fa fa-spinner fa-3x fa-pulse'></i></div>");
+				},
+				success: function(result){
+					if($.trim(result).length==0){
+						$(context).html("<div style='text-align:center;line-height:300px;'><i  class='fa fa-frown-o fa-3x'>Empty</i></div>");
+					}else{
+						$(context).html(result);
+					}
+    			}
+    		}).fail(function(){
+    			$(context).html();
+    		});	
+		}
+		
+	}
+</script>
+
+ <script type="text/javascript">
+        //点击搜索框弹出+消失
+        $(".a-so,.search-icon-assosiate").click(function(){
+            $("body").addClass('open-so');
+        });
+        $(".so-top-pop").click(function(){
+            $("body").addClass('open-so');
+        });
+        $(".box-so .a-txt").click(function(){
+            $("body").removeClass('open-so');
+        });
+        $('.box-so .so-top .inp').click(function(){
+            $('.so-pop').show();
+            $('.m-so').hide();
+        });
+    </script>
+
+    <script type="text/javascript">
+        var searchEnterTimeoutClock;
+
+        $(function(){
+            // 搜索键盘事件
+            $('.inp').keyup(function(e) {
+                    updateDisplay();
+                    clearTimeout(searchEnterTimeoutClock);
+                    searchEnterTimeoutClock= setTimeout(function(){
+                        getSearchHint();
+                     },500)
+            });
+           
+        });
+        
+
+        function getSearchHint(){
+            var _key = $('.inp').val();
+
+            $.ajax({url: '<{$http_root_www}>query?cmd=searchUserCoupons', 
+                       data:{'key':_key}, 
+                       method: "POST",
+                       beforeSend: function(){
+                        //$('#search-hint').html("");
+                       },
+                       success: function(data){
+                        $('.ul-screen').html(data);
+                       }
+                    });
+        }
+
+
+        function gotoSearchItem(obj) {
+            var itemId=  $(obj).data('hint-type');
+            window.location.href ='<{$http_root_www}>company/shops_edit?id=' + itemId ;
+        }
+
+        function updateDisplay(){
+            var html =  $('input.sele').val()+"搜索&gt;" + $('input.inp').val();;
+            $('.search-keyword-display').html(html);
+
+        }
+
+    </script>
+</body>
+</html>

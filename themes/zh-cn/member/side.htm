@@ -1,0 +1,120 @@
+
+<style type="text/css">
+	.mutil-level-menu{
+		margin-left: 20px;
+	}
+
+	.mutil-level-menu a{
+		color:#515253;
+	}
+
+	.mutil-level-menu a:hover{
+		color: #00A1E9;
+	}
+
+
+	.mutil-level-menu .top-level{
+		height: 40px;
+		line-height: 40px;
+		font-size: 15px;
+	}
+
+	.top-level i{
+		color: #00A1E9;
+	}
+
+	.top-level a{
+		text-decoration: none;
+		cursor: default;
+	}
+
+	.top-level a.current{
+		color: #00A1E9;
+	}
+
+	.mutil-level-menu .second-level{
+		padding-left: 50px;
+		display: none;
+	}
+
+	.second-level a{
+		text-decoration: none;
+		display: block;
+		font-size:13px;
+		height: 40px;
+		line-height: 40px;
+		cursor: default;
+	}
+
+	.second-level a.current{
+		color: #00A1E9;
+	}
+
+</style>
+
+<div class="side m-hide">
+	<div class="box">
+
+    	<{if $loginUser.role==3}>
+
+		 <a  style="text-align: center;color:#fff;display: block; line-height: 60px;background-image: url('<{$SKIN_PATH}>images/bg-h17.jpg');height: 60px;background-position: center;font-size: 15px;" href="<{$http_root_www}>company/index"><{$lang->business_center}></a>
+		<{else}>
+
+		 <a  style="text-align: center;color:#fff;display: block; line-height: 60px;background-image: url('<{$SKIN_PATH}>images/bg-h17.jpg');height: 60px;background-position: center;font-size: 15px;" href="<{$http_root_www}>company/become_business_user"><{$lang->open_store}></a>
+		<{/if}>
+
+		<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>member/index"<{if $menu=='index'}> class="current"<{/if}>><{$lang->member_center}></a>
+				</div>
+			</li>
+
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-check-square-o" ></i>
+					<a href="<{$http_root_www}>member/myorders"<{if $menu=='myorder'}> class="current"<{/if}>><{$lang->my_orders}></a>
+				</div>
+			</li>
+
+		
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-folder-open-o" ></i>
+					<a href="<{$http_root_www}>member/fav"<{if $menu=='fav'}> class="current"<{/if}>><{$lang->fav}></a>
+				</div>
+			</li>
+
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-money" ></i>
+					<a href="<{$http_root_www}>member/recharge"<{if $menu=='recharge'}> class="current"<{/if}>><{$lang->wallet}></a>
+				</div>
+			</li>
+	<{if $langStr=='zh-cn'}>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-book" ></i>
+					<a href="<{$http_root_www}>referal/index"<{if $menu=='referal'}> class="current"<{/if}>><{$lang->promotion}></a>
+				</div>
+			</li>
+			<{/if}>
+
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-gear" ></i>
+					<a href="<{$http_root_www}>member/profile"<{if $menu=='user_setting'}> class="current"<{/if}>><{$lang->user_setting}></a>
+				</div>
+			</li>
+
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-weixin" ></i>
+					<a href="<{$http_root_www}>member/wx_manage_account"<{if $menu=='wx_manage_account'}> class="current"<{/if}>><{$lang->wx_setting}></a>
+				</div>
+			</li>
+			
+		</ul>
+	</div>
+</div>

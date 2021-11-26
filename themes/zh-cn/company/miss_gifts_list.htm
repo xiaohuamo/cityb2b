@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th>订单流水号</th>		
+									<th>助攻信息</th>		
+									<th>日期</th>	
+									<th>增加选票</th>	
+									<th>佳丽获奖金</th>
+									<th>留言</th>
+									<th>IP</th>
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td>
+										<{$item.orderId}>
+
+									</td>
+									
+									<td>
+									
+									<{$item.order_name}>   
+									
+									</td>
+									<td>
+									<{date('Y-m-d H:i', $item.createTime)}>
+									
+									</td>
+									<td> <{$item.vote_count}></td>
+									<td> <{$item.user_spend_money/2}></td>
+									<td> <{$item.message}><br> 
+									投诉加微信 micalmxh</td>
+									<td> <{$item.ipaddress}></td>
+									
+									
+									
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						暂时没有哦	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

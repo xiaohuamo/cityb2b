@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="<{$pageKeywords}>" />
+	<meta name="description" content="<{$pageDescription}>" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+
+    <style type="text/css">
+        .customizableCategory{
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 70%;
+            z-index: 2;
+            height: 100%;
+            background: #fff;
+            overflow-y: scroll;
+            box-shadow: 1px 1px 20px #000;
+        }
+
+        .customizableCategory .list-group{
+
+        }
+    </style>
+	
+</head>
+<body class="index-app">
+    <header id="hd" >
+	<div class="left">
+		<a  class="a-back go-back-btn"></a>
+	</div>
+	<h1 style="color: #555;"><{$h1}></h1>
+
+	<div class="right">
+		<!-- <sapn style='line-height: 1.5rem' class='resend_btn' ><{$lang->send_email_again}></span>	-->
+	<!-- <span class='search-icon' style="margin-right: 10px;line-height: 1.5rem;"><img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;padding-right: 5px;'>  </span> -->
+	         <span class='search-icon' style="margin-right: 10px;">
+
+          <img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;    padding-top: 9px;'>  
+
+      </span>
+	</div>
+
+	
+</header>
+    <!-- 主内容 -->
+	<section id="bd" >
+        
+        <header>
+                <{if $businessUser.pic}>
+                    <div class="m-shop-inf" style="background-image:url(<{$UPLOAD_PATH}><{$businessUser.pic}>);">
+                <{else if  $businessUser.business_type_miss==1}>
+				     <div class="m-shop-inf" style="background-image:url(<{$SKIN_PATH}>images/2019miss_jiali.jpg);">
+				<{else}>
+                    <div class="m-shop-inf" style="background-image:url(<{$SKIN_PATH}>images/ubonus_mobile_shop.jpg);">
+                <{/if}>
+
+          
+                <div class="con">
+                    <div class="follow">
+                        <a class="a-btn fav_faved" style="display: none;">+ <{$lang->follow}></a>
+                        <a class="a-btn fav_not_faved" style="display: none;"><{$lang->followed}></a>
+                        <!-- <p><span>645万</span>粉丝数</p> -->
+                    </div>
+
+                    <div class="pic">
+                    <a href="#">
+                        <{if $businessUser.logo}>
+                            <img src="<{$UPLOAD_PATH}><{$businessUser.logo|image:100:100}>" alt="Business Logo">
+                        <{else}>
+                             <img src="<{$SKIN_PATH}>mobile/images/pic31.jpg" alt="business Logo">
+                        <{/if}>
+                        
+                    </a>
+                    </div>
+
+                    <div class="txt">
+                        <h4>
+						<{if  $businessUser.business_type_miss==1}>
+						    <{$businessUser.person_first_name}>
+						<{else}>
+							<{$businessDisplayName}>
+						<{/if}>
+						
+						</h4>
+                        <p>
+                            <{section name=em loop=5}>
+                                <{if $smarty.section.em.index<$score_avg}>
+                                    <img src="<{$SKIN_PATH}>mobile/images/icon62.png">
+                                <{else}>
+                                    <img src="<{$SKIN_PATH}>mobile/images/icon63.png">
+                                <{/if}>
+                            <{/section}>
+                            
+                        </p>
+                    </div>
+
+                   
+                    <div class="m-notice">
+                        <div class="bd">
+                            <ul>
+                                <{if $busienssNotice}>
+                                    <{foreach from=$busienssNotice item=item}>
+                                           <li><a href="#"><{$item}></a></li>
+                                    <{/foreach}>
+                                <{else}>
+                                    <li><a href="#"></a></li>
+                                  
+                                <{/if}>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <ul class="g-ul m-tab3">
+                <li style='width:33%' class='nav-btn on' data-target='product'><a ><i class="icon1"></i></a></li>
+                <li style='width:33%' class='nav-btn' data-target='voucher'><a ><i class="icon2"></i></a></li>
+                <li style='width:33%' class='nav-btn' data-target='business'><a ><i class="icon4"></i></a></li>
+            </ul>
+        </nav>
+        
+         <div class='customizableCategory' >
+            <div class="list-group list-group-root well">
+                <a href="<{$ccUrl}>cc=<{$citem.id}>" class="list-group-item">
+                    <h4><{$lang->category}></h4>
+                </a>
+				
+				<{if  !$businessUser.business_type_miss}>
+				 <div class="list-group-item">
+                        <a href="<{$ccUrl}>"> <{$lang->all}></a>
+
+                        <a href="<{$ccUrl}>"  data-toggle="collapse" style='float: right;'>
+                            <i class="fa fa-chevron-right"></i> 
+                        </a>
+                  </div>
+				  <{/if}>
+                <{foreach from=$customizableCategory item=item key=k}>
+                
+                
+                  <{if $item.child}>
+                  <div class="list-group-item">
+                        <a href="<{$ccUrl}>cc=<{$item.id}>"> <{$item.name}></a>
+
+                        <a href="#item-<{$k}>"  data-toggle="collapse" style='float: right;'>
+                            <i class="fa fa-chevron-right"></i> 
+                        </a>
+                  </div>
+                    
+
+                    <div class="list-group collapse" id="item-<{$k}>">
+                        <{foreach from=$item.child item=citem key=l}>
+                             <a href="<{$ccUrl}>cc=<{$citem.id}>" class="list-group-item">
+                             <!--  <i class="fa fa-chevron-right"></i> -->
+                             <{$citem.name}>
+                            </a>
+
+                           <!--  <{if $citem.child}>
+                                <div class="list-group collapse" id="item-<{$k}>-<{$l}>">
+                                    <{foreach from=$citem.child item=ccitem}>
+                                        <a href="#" class="list-group-item">Item 1.1.1</a>
+                                    <{/foreach}>
+                                 </div>
+                            <{/if}> -->
+
+                        <{/foreach}>
+                     </div>
+                    <{else}>
+					<{if $item.count>0}>
+                     <a href="<{$ccUrl}>cc=<{$item.id}>" class="list-group-item" >
+                       <!--  <i class="fa fa-chevron-right"></i> --><{$item.name}>
+                      </a>
+					  <{/if}>
+
+                  <{/if}>
+
+                <{/foreach}>      
+            </div>
+        </div>
+
+
+        <section class='section-bd product' >
+           
+
+            <!-- SECTION 商品 -->
+            <div class="index-row">
+                <ul class="g-ul m-tab4 m-tab4-1">
+				
+				    <li <{if $cc}>class="on"<{/if}>><a onClick='$(".customizableCategory").toggle()'><{$lang->category}></a></li>
+                    <li <{if $orderBy=='hits'}>class="on"<{/if}> ><a href="<{$orderByUrl}>orderBy=hits"><{$lang->over_all}></a></li>
+                    <li <{if $orderBy=='buy'}>class="on"<{/if}>><a href="<{$orderByUrl}>orderBy=buy"><{$lang->sales_volume}></a></li>
+                    <li <{if $orderBy=='id'}>class="on"<{/if}>><a href="<{$orderByUrl}>orderBy=id"><{$lang->newest}></a></li>
+
+                </ul>
+
+                
+
+                <!-- 显示模式 -->
+                <ul class="g-ul m-pattern">
+                    <{if $selectedCustomizableCategory}>
+                     <span  style="line-height: 0.6rem;float: right;margin: 5px 15px;color: #fff;background-color: #b9b9b9;padding: 0px 15px;border-radius: 10px;font-size: 0.4rem;">
+                     <{$lang->category}>：<{$selectedCustomizableCategory.name}>
+                     </span>
+                     <{/if}>
+                </ul>
+                <!-- 显示模式 end-->
+
+
+                <ul class="g-ul ul-list14 pattern-list">
+
+                    <style type="text/css">
+                         .promotion-item{
+                            position: relative;
+                            margin-top: 0px;
+                            padding: 2px;
+                          }
+
+                          .promotion-item .price-off{
+                            position: absolute;
+                            top: 0px;
+                            left: 0px;
+                            height: 40px;
+                            width: 40px;
+                            line-height: 40px;
+                            border-radius: 20px;
+                            background: #FD5001 ;
+                            color: #fff;
+                            text-align: center;
+                            font-size: 15px;
+                          }
+                    </style>
+
+                     <div class='promotion container'>
+                      <div class='row'>
+                        <{foreach from=$referral_product_list item=item}>
+                        <div class='col-xs-6 promotion-item'>
+                <{if $item.priceOff}>
+                    <div class='price-off'>-<{$item.priceOff}>%</div>
+                <{/if}>
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                   <img class="card-img-top" src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="<{$item.title}>">  
+                </a>
+                
+                <div class="card-body">
+                  <p  style="overflow:hidden;font-size: 12px;font-weight: bolder;height: 35px;" ><{$item.title}></p>
+                 
+
+                  <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{if $item.price1=='$0.00'}>$0.00<{else}><{$item.price1}><{/if}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </div>
+
+            </div>
+            <{/foreach}>
+          </div>
+        </div>
+         <div class='promotion container'>
+          <div class='row'>
+            <{foreach from=$coupon item=item}>
+          
+            <div class='col-xs-6 promotion-item'>
+                <{if $item.priceOff}>
+                    <div class='price-off'>-<{$item.priceOff}>%</div>
+                <{/if}>
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                   <img class="card-img-top" src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="<{$item.title}>">  
+                </a>
+                
+                <div class="card-body">
+                  <p  style="overflow:hidden;font-size: 12px;font-weight: bolder;height: 35px;" ><{$item.title}></p>
+                 
+
+                  <div class='row' style="line-height: 25px;">
+                    <span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{if $item.price1=='$0.00'}>$0.00<{else}><{$item.price1}><{/if}></span>
+                    <s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+                    <span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+                  </div>
+                </div>
+
+            </div>
+        
+            <{/foreach}>
+          
+          </div>
+        </div>
+                </ul>
+            </div>
+            <!-- SECTION 商品 END -->
+        </section>
+ <br>
+		   <br>
+
+ <br>
+		   <br>
+        <section class='section-bd voucher' style="display: none;">
+            <!-- SECTION 优惠 -->
+             <div class="index-row">
+                <ul class="g-ul TAB_CLICK m-tab4 m-tab4-2" id=".tabshow1">
+                    <li class="on"><a href="javascript:void(0);">线下优惠券</a></li>
+                    <li><a href="javascript:void(0);">线上折扣码</a></li>
+                </ul>
+                <div class="tabshow1">
+                    <ul class="g-ul ul-list15">
+                        <{foreach from=$voucher item=item}>
+                         <li>
+                            <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>" style="background-image:url(<{$UPLOAD_PATH}><{$item.pic}>);background-size: 140px;background-position: left;position: relative;">
+                                <div style="position: absolute;right: 0;bottom: 0">$<{$item.voucher_deal_amount}></div>
+                                <div style="position: absolute;right: 0;top: 0;width: 50%"><{$item.title}> </div>
+                            </a>
+                        </li>
+                        <{/foreach}>
+                       
+                    </ul>
+                </div>
+
+                <div class="tabshow1 dn">
+                    <ul class="g-ul ul-list15">
+                         <{foreach from=$promotion_code item=item}>
+                             <li>
+                                <a  style="background-image:url(<{$SKIN_PATH}>mobile/images/bg15.png);">
+                                    <div class="price">
+                                        <span>
+                                        <{if $item.type=='percent'}>
+                                            <{$item.value}>% 
+                                        <{elseif $item.type=='fixed'}>
+                                            $<{$item.value}>
+                                        <{/if}>
+                                        </span>
+                                        OFF
+                                    </div>
+                                    <div class="det">
+                                        <h5 ><{$item.promotion_des}></h5>
+                                        <p><{$item.promotion_code}></p>
+                                    </div>
+                                </a>
+                            </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+             <!-- SECTION 优惠 END-->
+         </section>
+
+         <section class='section-bd business' style="display: none;">
+             <!-- SECTION 商家 -->
+
+             <div class="m-news ">
+                <h4><i></i>新闻</h4>
+                <ul class="g-ul">
+                    <{foreach from=$busienssNotice item=item}>
+                         <li><a><{$item}></a></li>
+                    <{/foreach}>
+                  
+                </ul>
+            </div>
+
+
+              <!-- 所获奖项 -->
+            <div class="index-row">
+
+                <div class="m-tit3">
+                    <h3>
+                        <img src="<{$SKIN_PATH}>mobile/images/icon56.png" alt="">关于商家
+                        <em style="background-image:url(<{$SKIN_PATH}>mobile/images/bg9.png);">About</em>
+                    </h3>
+                </div>
+                
+                <div class="m-about">
+                    <{$businessUser.companyDescription}>
+                </div>
+            </div>
+
+
+            <!-- 关于我们 -->
+            <div class="m-tit2">
+                <h3><img src="<{$SKIN_PATH}>mobile/images/icon50.png" alt="">联系商家<img src="<{$SKIN_PATH}>mobile/images/icon50.png" alt=""></h3>
+            </div>
+            <div class="index-row">
+                <div class="m-cont">
+                    <div class="txt">
+                        <p><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon72.png);"></i><{$pickupLocationName}></p>
+                        <p><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon72.png);"></i><{$businessUser.contactMobile}></p>
+                        <p><i style="background-image:url(<{$SKIN_PATH}>mobile/images/icon73.png);"></i><{$businessUser.googleMap}></p>
+                    </div>
+                </div>
+            </div>
+            <!-- 关于我们 end-->
+
+            <!-- SECTION 商家 END-->
+        </section>
+
+        <section class='section-bd community' style="display: none;">
+            <!-- SECTION 社区 -->
+             <div class="index-row">
+                <ul class="g-ul m-tab4">
+                    <li  class="on"><a href="#">团购</a></li>
+                    <li><a href="#">抽奖</a></li>
+                    <li><a href="#">红包</a></li>
+                    <li><a href="#">投票</a></li>
+                    <li><a href="#">二手</a></li>
+                </ul>
+                <!-- 显示模式 -->
+                <ul class="g-ul m-pattern">
+                    <li class="pattern-list on"><i class="icon1"></i></li>
+                    <li class="pattern-grid "><i class="icon2"></i></li>
+                </ul>
+                <!-- 显示模式 end-->
+                <ul class="g-ul ul-list14 pattern-list">
+                    <{foreach from=$group item=item}>
+                         <li>
+                            <div class="pic"><a href="<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>" alt=""></a></div>
+                            <div class="txt">
+                                <h4><{$item.name}></h4>
+                                <{if $item.allow_user_group==1}>
+                                    <span>用户自开团</span>
+                                <{else}>
+                                    <span><{$item.size}>人团</span>
+                                <{/if}>
+                                
+                            </div>
+                        </li>
+
+                    <{/foreach}>
+                   
+                </ul>
+            </div>
+            <!-- SECTION 社区 END -->
+        </section>
+
+
+	</section>
+    <!-- 主内容 end-->
+
+
+    <style type="text/css">
+        .just-padding {
+          padding: 15px;
+        }
+
+        .list-group.list-group-root {
+          padding: 0;
+          overflow: hidden;
+        }
+
+        .list-group.list-group-root .list-group {
+          margin-bottom: 0;
+        }
+
+        .list-group.list-group-root .list-group-item {
+          border-radius: 0;
+          border-width: 1px 0 0 0;
+        }
+
+        .list-group.list-group-root > .list-group-item:first-child {
+          border-top-width: 0;
+        }
+
+        .list-group.list-group-root > .list-group > .list-group-item {
+          padding-left: 30px;
+        }
+
+        .list-group.list-group-root > .list-group > .list-group > .list-group-item {
+          padding-left: 45px;
+        }
+
+        .list-group-item .fa {
+          margin-right: 5px;
+        }
+    </style>
+
+
+    <!-- 弹窗：加入购物车 -->
+    <div class="m-pop" id="m-add-cart">
+        <div class="bg"></div>
+        <div class="inner">
+            <div class="btn-close"></div>
+            <div class="m-add-cart">
+                <form action="">
+                    <h4>请选择分类</h4>
+                    <div class="det">
+                        <p>颜色</p>
+                        <ul class="g-ul">
+                            <li class="on">橘色</li>
+                            <li>白色</li>
+                            <li>黑色</li>
+                        </ul>
+                    </div>
+                    <div class="det">
+                        <p>材质</p>
+                        <ul class="g-ul">
+                            <li class="on">橘色</li>
+                            <li>白色</li>
+                            <li>黑色</li>
+                        </ul>
+                    </div>
+                    <div class="det last">
+                        <p>尺码</p>
+                        <ul class="g-ul">
+                            <li class="on">47码</li>
+                            <li>46码</li>
+                            <li>45码</li>
+                            <li>47码</li>
+                            <li>46码</li>
+                            <li>45码</li>
+                            <li>47码</li>
+                            <li>46码</li>
+                            <li>45码</li>
+                            <li>45码</li>
+                        </ul>
+                    </div>
+                    <input class="sub" type="submit" value="确定">
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 弹窗：加入购物车 end-->
+
+    <style type="text/css">
+         .static{
+            position: fixed;
+            left: 10px;
+            text-align: center;
+            background: #67c9d8;
+            opacity: 0.7;
+            line-height: 1.5rem;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .static_top{
+            display: none;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            background: #fff;
+            line-height: 1.5rem;
+            height: 1.5rem;
+            width: 100%;
+            border-bottom: 1px solid #cecece;
+        }
+       
+         .static_top span{
+           float: right;
+           margin-right: 5px;
+        }
+    </style>
+
+     <div class="static_top" >
+        <!-- <a style='background: #FD5001 ;color: #fff;border-radius: 5px;padding: 5px 10px;' href="<{$http_root_www}>business/intro"><small>我要开店</small></a> -->
+        <a onClick='window.history.back();'>
+            <img style="height: 1.1rem;" src="<{$SKIN_PATH}>mobile/images/ico-back.png">
+        </a>
+
+        <span>
+           <a href="<{$http_root_www}>member/index">
+                <img style="height: 1.1rem;" src="<{$SKIN_PATH}>mobile/images/fix-05.png">
+           </a>
+        </span>
+
+         <span>
+           <a href="<{$http_root_www}>member/showcart">
+                <img style="height: 1.3rem;" src="<{$SKIN_PATH}>mobile/images/fix-08.png">
+           </a>
+        </span>
+
+     </div>
+
+    <div class="static" style="bottom: 2rem">
+           <a href="#"><i class='fa fa-arrow-circle-up fa-lg'></i></a>
+     </div>
+
+     <{if $open_shop}>
+        <{include file='mobile/mobile_share_footer.htm'}>
+        <{else}>
+        <{include file='mobile/mobile_footer.htm'}>
+    <{/if}>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+    <script type="text/javascript">
+        $('.resend_btn').on('click',function(){
+            var couponId=$(this).data('id');
+            var context =$(this);
+
+            if(confirm('<{$lang->send_email_again}><{$data.email}>')){
+                $.ajax({
+                    url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>", 
+                    beforeSend: function( xhr ) {
+                        context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+                    },
+                    success: function(result){
+                        context.html("<{$lang->sent}>");
+                        context.css('color','#fc0');
+                    }
+                })
+            }
+        })
+        
+        
+           $(".a-so,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".so-top-pop").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".box-so .a-txt , .g-ul li").click(function(){
+
+            $("body").removeClass('open-so');
+
+        });
+
+        $(".g-ul li").click(function(){
+          $(window).scrollTop($(".category-icon").position().top);
+        });
+    </script>
+
+     <script type="text/javascript">
+        $(function() {
+		
+		    $('.go-back-btn').on('click',function(){
+                if($(this).hasClass('disabled'))return;
+                if($('.checkout-confirmation').is(":visible")){
+                    $('.shopping-cart').show();
+                    $('.checkout-confirmation').hide();
+                }else{
+                     window.history.back();
+                }
+
+            });
+			
+			
+			 $('.share-btn').on('click',function(){
+                $('.referral-share .share-display').show();
+              })
+
+              $('.referral-share .share-display').on('click',function(){
+                $(this).hide();
+              })
+          $('.list-group-item').on('click', function() {
+            $('.fa', this)
+              .toggleClass('fa-chevron-right')
+              .toggleClass('fa-chevron-down');
+          });
+        });
+    </script>
+    
+
+    <script>
+        $(document).ready(function() {
+            $(".m-pattern li").click(function(){
+                var $class = $(this).attr("class");
+                $(this).siblings('li').removeClass('on');
+                $(this).addClass('on');
+                $(this).parent().next(".ul-list14").removeClass("pattern-grid pattern-list").addClass($class);
+            });
+
+            $(".m-add-cart ul li").click(function(){
+                $(this).siblings('li').removeClass('on');
+                $(this).addClass('on');
+            });
+
+             $(".btn-open").click(function(){
+                $(this).toggleClass('up');
+                $(this).prev(".ul-list13").toggleClass('open');
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+     $(function(){
+        $('.nav-btn').on('click',function(){
+            $('.nav-btn').removeClass('on');
+            $('.section-bd').hide();
+
+            var targetClassName = $(this).data('target');
+            $('section.'+targetClassName).show();
+            $(this).addClass('on');
+        })
+     })
+    </script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+
+    <script>
+        jQuery(".m-notice").slide({mainCell:".bd ul",autoPlay:true,effect:"topLoop",vis:1});
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            <{if $faved}>
+                $('.fav_faved').show();
+                $('.fav_not_faved').hide();
+            <{else}>
+                $('.fav_faved').hide();
+                $('.fav_not_faved').show();
+            <{/if}>
+
+            <{if $loginUser}>
+                $('.fav_faved').on('click',function(){
+                    removeFav();
+                });
+
+                $('.fav_not_faved').on('click',function(){
+                    addFav();
+                });
+            <{/if}>
+        });
+
+        function addFav(){
+            $.get(
+                "<{$http_root_www}>query?cmd=fav_add", 
+                {'itemId': '<{$businessUser.id}>','userId':'<{$loginUser.id}>','type':'store'}, 
+                function(data){
+                    $('.fav_faved').show();
+                    $('.fav_not_faved').hide();
+             });
+        }
+
+        function removeFav(){
+            $.get(
+                "<{$http_root_www}>query?cmd=fav_remove", 
+                {'itemId': '<{$businessUser.id}>','userId':'<{$loginUser.id}>','type':'store'}, 
+                function(data){
+                    $('.fav_faved').hide();
+                    $('.fav_not_faved').show();
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(window).scroll(function() {
+            if ($(this).scrollTop()) {
+                $('.static_top').stop(true, true).fadeIn(1000);
+            } else {
+                $('.static_top').stop(true, true).fadeOut(1000);
+            }
+        });
+    </script>
+
+     <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$businessDisplayName}> - 我在Ubonus开明星店了,请多多关注';
+        var shareLink='<{$http_root_wx}>store/<{$businessUser.id}>';
+        var desc="<{$businessUser.businessName}> -关注Ubonus美食生活平台,每日都有超出预期的优惠特价!";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$businessUser.logo}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<ul class="ul-cost-lb">
+    <li>
+        <span class='fav_not_faved' style='display: none'>
+             <a ><i class='fa fa-heart-o fa-2x'></i></a>
+            <span><{$lang->watch}></span>
+        </span>
+
+        <span class='fav_faved' style='display: none'>
+             <a ><i class='fa fa-heart fa-2x' style='color:#FD5001 ' ></i></a>
+            <span><{$lang->watched}></span>
+        </span>
+       
+    </li>
+    <li class='share-btn'>
+        <a ><i class='fa fa-share-alt fa-2x'></i></a>
+        <span ><{$lang->share}></span>
+    </li>
+</ul>
+
+<script type="text/javascript">  
+
+    $(function(){
+        $('.share-btn').on('click',function(){
+            htmlAlert("分享二维码<br><img style='margin:20px;width:150px' src='<{$shareQRCode}>'>");
+        })
+    })
+
+    $(function(){
+        <{if $faved}>
+            $('.fav_faved').show();
+            $('.fav_not_faved').hide();
+        <{else}>
+            $('.fav_faved').hide();
+            $('.fav_not_faved').show();
+        <{/if}>
+
+        <{if $loginUser}>
+            $('.fav_faved').find('i').on('click',function(){
+                removeFav();
+            });
+
+            $('.fav_not_faved').find('i').on('click',function(){
+                addFav();
+            });
+        <{/if}>
+    });
+
+    function addFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_add", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+                
+                $('.fav_faved').show();
+                $('.fav_not_faved').hide();
+
+         });
+    }
+
+    function removeFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_remove", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+
+                $('.fav_faved').hide();
+                $('.fav_not_faved').show();
+        });
+    }
+</script>
+

@@ -1,0 +1,200 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$http_root_www}>chart_per_business/selling_daily">
+					
+
+						<label><{$lang->filter}>:</label>
+						
+						<select id="list_month" name="list_month" >
+						
+						<{foreach from=$list_months item=item}>
+						<option value="<{$item.year_month}>" <{if $list_month==$item.year_month}> selected<{/if}>  ><{$item.year_month}> </option>
+						<{/foreach}>
+					
+						
+						
+					</select>
+					 <{if $loginUser['role']!=101}>
+					<select id="business_id" name="business_id" >
+						
+					
+						<{foreach from=$lastest_business_list item=item}>
+						
+						<option value="<{$item.id}>" <{if $business_id==$item.id}> selected<{/if}>><{if !$item.name}><{$item.id}><{else}><{$item.name}><{/if}></option>
+						
+						<{/foreach}>
+						
+						
+					</select>
+					
+					<{/if}>
+	               
+						
+						<button type="submit"><{$lang->search}></button>
+						
+						<br>
+                    <br>
+					</form>
+				</div>
+				
+
+				<div >		
+					<{include file='chart_per_business/selling/daily.htm'}>	
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+function showPdf(type)
+{	
+	if ($('#customer_delivery_option option:selected').length > 0){
+		var vCustomerDeliveryOption= $('#customer_delivery_option option:selected').val();
+	}else {
+		var vCustomerDeliveryOption='all';
+	}
+	
+	if ($('#staff option:selected').length > 0){
+		var vStaff= $('#staff option:selected').val();
+	}else {
+		var vStaff= 'all';
+	}
+	
+	
+	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
+	
+	var vlogistic_truck_No= $('#logistic_truck_No option:selected').val();
+	
+	var vStatus= $('#status option:selected').val();
+	var vSk=$('#id_sk').val();
+	var vSt=$('#st').val();
+	var vEt=$('#et').val();
+
+	var fitInPage=$('#fitInPage').prop('checked');
+	
+   
+	var vUrl='<{$http_root_www}>company/customer_orders_logistic?output='+type+'&status='+vStatus+'&customer_delivery_date='+vcustomer_delivery_date+'&logistic_truck_No='+vlogistic_truck_No+'&sk='+vSk+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+function export_csv() {
+
+  window.location.assign='<{$http_root_www}>company/export_csv_fresh_and_restaurant';
+
+}
+</script>
+
+
+</body>
+
+</html>

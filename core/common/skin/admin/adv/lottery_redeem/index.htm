@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+function DeleteSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('<{$lang->are_you_sure_delete_selected_records}>')) $('#listForm').attr('action', '?con=admin&ctl=adv/lottery&act=delete').submit();
+}
+function AuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要将当前选中记录的状态设置为审核通过吗？')) $('#listForm').attr('action', '<{$doUrl}>act=audit').submit();
+}
+
+function RedeemDone4 ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定产品已经兑付了吗？')) $('#listForm').attr('action', '<{$doUrl}>act=RedeemDone4').submit();
+}
+
+
+function UnAuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要产品已经兑付？')) $('#listForm').attr('action', '<{$doUrl}>act=unaudit').submit();
+}
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+
+function searchSubmit ()
+{
+	var keyword	= document.getElementsByName('keyword')[0].value;
+	var status_id	= document.getElementsByName('status_id')[0].value;
+	var lottery_id	= document.getElementsByName('lottery_id')[0].value;
+	var onlyNotApproved	= document.getElementsByName('onlyNotApproved')[0];
+	if (onlyNotApproved.checked) onlyNotApproved = 1;
+	else onlyNotApproved = 0;
+
+	window.location.href = '<{$searchUrl}>keyword=' + encodeURI(keyword)  + '&lottery_id=' + lottery_id + '&status_id=' + status_id + '&onlyNotApproved=' + onlyNotApproved;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+			<a onclick="AuditSome();">批量设置状态->处理中</a>
+			<a onclick="UnAuditSome();">已兑付</a>
+		</div>
+		<div class="search">
+			<input type="text" class="text" style="width:200px;" maxlength="50" name="keyword" value="<{$search.keyword}>" placeholder="抽奖/用户名/手机/email/兑换码" />
+			
+			<a onclick="searchSubmit()" class="lnkSearch"><{$lang->search}></a>		
+			
+			<select  name ="lottery_id" value="<{$search.lottery_id}>" style="width:300px;"  >
+			<option value="">--请选择状态--</option>
+												<{foreach from=$lottery_list item=list}>
+												<option 
+												value='<{$list.id}>' 
+												<{if $search.lottery_id==$list.id}>selected<{/if}> 
+												>
+													<{$list.title}>
+												</option>
+												<{/foreach}>
+											</select>
+			
+			<select  name ="status_id" value="<{$search.status_id}>" >
+			<option value="">--请选择状态--</option>
+												<{foreach from=$status_list item=list}>
+												<option 
+												value='<{$list.status_id}>' 
+												<{if $search.status_id==$list.status_id}>selected<{/if}> 
+												>
+													<{$list.status_cn_name}>
+												</option>
+												<{/foreach}>
+											</select>	
+									
+			<input type="checkbox" onclick="searchSubmit()" name="onlyNotApproved"<{if $search.onlyNotApproved}> checked<{/if}> id="onlyNotApproved" /><label for="onlyNotApproved">仅显示未审核的记录</label>
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td width="40"><input type="checkbox" id="checkAll" /></td>
+				<td>中奖用户</td>
+				<td>火力指数</td>
+				<td>联系方式</td>
+				<td>商家名称</td>
+				<td>抽奖名称</td>
+				<td>奖项</td>
+				<td>奖品</td>
+				<td>兑换码</td>
+				
+				<td>状态</td>
+				<td>中奖时间</td>
+				<td>客户留言</td>
+				
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+			<{foreach from=$data item=item key=key}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><input type="checkbox" name="ids[]" value="<{$item.id}>" class="listChk" /></td>
+					
+					<td><{$item.person_first_name}> <{$item.person_last_name}>  (ID:<{$item.userId}>)</td>
+					<td><{$item.total_speed}></td>
+					<td><{$item.phone}>
+						<br />
+					<{$item.email}></td>
+					<td><{$item.businessName}></td>
+					<td><{$item.title}></td>
+					<td><{$item.lottery_sub_name}></td>
+					<td><{$item.lottery_sub_details}></td>
+					<td><{$item.redeem_code}></td>
+					
+					
+					<td style='position:relative'>
+											<span class='status_updating' style='position:absolute;left: -10px'></span>
+											<select class='status_update' data-record-id = '<{$item.id}>'>
+												<{foreach from=$status_list item=list}>
+												<option 
+												value='<{$list.status_id}>' 
+												<{if $item.status==$list.status_id}>selected<{/if}> 
+												>
+													<{$list.status_cn_name}>
+												</option>
+												<{/foreach}>
+											</select>	
+											
+										</td>
+					<td><{date('Y-m-d H:i', $item.createtime)}></td>
+					<td><a href="<{$editUrl}>id=<{$item.id}>" ><{if $item.note}>查看备注<{else}>无备注<{/if}><{$note}></a></td>
+				</tr>
+			<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="11" align="right"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.status_update').bind('change',function(){
+		var record_id = $(this).data('record-id');
+		var selected_status= $('.status_update :selected').val();
+
+		var iconupdate= new IconUpdate();
+
+		var request = $.ajax({
+		  url: "<{$http_root_www}>lottery/business_records_update",
+		  type: "POST",
+		  data: { id : record_id,status:selected_status },
+		  beforeSend:function(){
+		  	iconupdate.iconUpdating();
+		  }
+		});
+		 
+		request.done(function( msg ) {
+		  if(msg.trim()=='success'){
+		  	iconupdate.iconUpdateSuccess();
+		  }else{
+		  	iconupdate.iconUpdateFail();
+		  }	
+		});
+		 
+		request.fail(function( jqXHR, textStatus ) {
+		  iconupdate.iconUpdateFail();
+		});
+	});
+
+	function IconUpdate () {
+		this.target = $('.status_updating');
+	}
+		
+		IconUpdate.prototype.iconUpdating = function(){
+			this.target.html('<i style="color:#fc3" class="fa fa-spinner fa-spin"></i>');
+		}
+		IconUpdate.prototype.iconUpdateSuccess = function(){
+			this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+		}
+		IconUpdate.prototype.iconUpdateFail = function(){
+			this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+		};
+		IconUpdate.prototype.iconUpdateNone = function () {
+			this.target.html('');
+		};
+
+	
+
+</script>
+
+</body>
+</html>

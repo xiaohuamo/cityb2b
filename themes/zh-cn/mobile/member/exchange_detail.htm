@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+	<script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+        .moneyDetail span:nth-child(3) {
+            display: inline-block;
+            width: 100px;
+        }
+
+        .text-white {
+            color: #fff
+        }
+
+        .a-back {
+           /* filter:brightness(0%) invert(100%);*/
+        }
+	</style>
+
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>member/myorders" class="a-back"></a>
+	</div>
+	<h1><{$lang->my_orders}></h1>
+
+	<div class="right" style="right: 10px;">
+		<sapn style='line-height: 1.5rem;' class='resend_btn '><{$lang->send_email_again}></span>
+	</div>
+
+	<script type="text/javascript">
+        $('.resend_btn').on('click', function () {
+            var context = $(this);
+
+            if (confirm('<{$lang->send_email_again}><{$data.email}>')) {
+                $.ajax({
+                    url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>",
+                    beforeSend: function () {
+                        context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+                    },
+                    success: function () {
+                        context.html("<{$lang->sent}>");
+                        context.css('color', '#fc0');
+                    }
+                })
+            }
+        })
+
+	</script>
+</header>
+
+<section id="bd" style="background-color: #FFF">
+	<!-- Header info -->
+	<div>
+		 <{if $data.coupon_status=='b01'}>
+		<span class="badge" style="margin-top: 1rem;    margin-left: 2rem;font-size:25px;background-color: #5bc0de;"><{$lang-><{$data.coupon_status}>}></span>
+			
+			
+		</span>
+		 <{else}>
+		
+		<span style="padding-left: 3px;line-height: 100px;  font-size: 15px; color: red;">
+			
+				<{$lang->barcode_redeem_desc}>
+			
+		</span>
+		 <{/if}>
+		
+		<span><img style='width:100px;float:right;' src='<{$redeemQRCode}>'></span>
+
+	</div>
+
+	<table class="table table-sm">
+		<tbody>
+		<tr>
+			<th scope="row" style="width: 2.9rem"><{$lang->order_id}></th>
+			<td><{$data.orderId}>
+
+
+                <{if $data.coupon_status=='c01'}>
+					<span class="badge" style="background-color: #5bc0de;"><{$lang-><{$data.coupon_status}>}></span>
+                <{elseif $data.coupon_status=='b01'}>
+				<!--	<span class="badge" style="background-color: #5bc0de;"><{$lang-><{$data.coupon_status}>}></span> -->
+                <{elseif $data.coupon_status=='d01'}>
+					<span class="badge" style="background-color: #5bc0de;"><{$lang-><{$data.coupon_status}>}></span>
+                <{/if}>
+
+                <{if $data.coupon_status=='d01'}>
+					<a href="<{$http_root_www}>member/recharge"> <span class="badge" style='background-color: #d9534f'><{$lang->wallet}></span></a>
+                <{/if}>
+
+                <{if $data.status==1}>
+					<span class="badge" style="background-color: #5cb85c"><{$lang->paid}></span>
+                <{elseif $data.status==0}>
+					<span class="badge" style="background-color: #d9534f"><{$lang->unpaid}></span>
+                <{elseif $data.status==2}>
+					<span class="badge" style="background-color: #d9534f">Pending</span>
+                <{/if}>
+
+				<br>
+				<span style="color:#aaa"><{date('Y-m-d H:i:s', $data.createTime)}></span>
+			</td>
+		</tr>
+
+        <{if $userGroup}>
+			<tr>
+				<th scope="row">拼单状态</th>
+				<td>
+                    <{if $userGroup.status==0}>
+						<span class="badge" style="background-color:#FD5001 ">拼单还未完成</span>
+                    <{elseif $userGroup.status==1}>
+						<span class="badge" style="background-color:green">拼单已经完成</span>
+                    <{elseif $userGroup.status==2}>
+						<span class="badge" style="background-color:#f30">拼单已经过期</span>
+                    <{/if}>
+
+					<a href="<{$http_root_www}>group_pin/user_group_show?id=<{$userGroup.id}>">查看</a>
+				</td>
+			</tr>
+        <{/if}>
+
+
+		<tr>
+			<th scope="row">配送日期</th>
+			<td style='font-weight :600; color:#f30'>    <{if $data.logistic_delivery_date}><{date('Y-m-d ', $data.logistic_delivery_date)}><{else}><{$lang->follow_deliver_intr}><{/if}> </td>
+		</tr>
+		<tr>
+			<th scope="row"><{$lang->order_name}></th>
+			<td>    <{$data.order_name}> </td>
+		</tr>
+
+        <{if $data.multi_use>1}>
+			<tr>
+
+
+				<th scope="row"><{$lang->multi_order}></th>
+				<td>    <{$lang->multi_order1}> <{$data.multi_use}><{$lang->multi_order2}>,<{$lang->multi_order3}><{$data.multi_used}><{$lang->multi_order2}>, <span class="badge"
+																																									 style='font-size:16px;background-color: #5bc0de'><{$lang->multi_order4}><{$data.multi_use-$data.multi_used}><{$lang->multi_order2}></span>
+				</td>
+			</tr>
+        <{/if}>
+		<tr>
+			<th scope="row"><{$lang->redeem_number}></th>
+			<td><{$data.redeem_code}></td>
+		</tr>
+
+		<tr>
+			<th scope="row"><{$lang->total_amount}></th>
+			<td><{$data.money}></td>
+		</tr>
+
+		<tr>
+			<th scope="row"><{$lang->payment}></th>
+			<td>
+                <{if $data.status==0}>
+					<span><{$lang->unpaid}></span>
+                <{elseif $data.status==1}>
+					<span><{$lang->paid}></span>
+                <{elseif $data.status==2}>
+					<span>Pending</span>
+                <{/if}>
+				(<{$lang->payment_type}><{$data.payment}>)
+			</td>
+		</tr>
+
+        <{if $data.payment_note}>
+			<tr>
+				<th scope="row">Hcash</th>
+				<td>
+					<small><{$lang->amount}> : <{$data.payment_note.hcash}></small>
+					<small>单号 : <{$data.payment_note.hcash_order_id}></small>
+					<small>标签 : <{$data.payment_note.hcash_order_tag}></small>
+
+                    <{if $data.payment_note.note}>
+						<br>
+						<span>客服 Note : <{$data.payment_note.note}></span>
+                    <{/if}>
+
+				</td>
+			</tr>
+        <{/if}>
+
+
+        <{if $data.payment=='offline'}>
+			<tr>
+				<th scope="row"><{$lang->underline_payment}></th>
+				<td><{$data.offline_pay_des}></td>
+			</tr>
+        <{/if}>
+
+
+        <{if $data.customer_delivery_option==2}>
+			<tr>
+				<th scope="row"><{$lang->deliver_option}></th>
+				<td><{$lang->pick_up}></td>
+			</tr>
+			<tr>
+				<th scope="row"><{$lang->pickup_nickname}></th>
+				<td><{$data.pickupname}></td>
+			</tr>
+			<tr>
+				<th scope="row"><{$lang->pickup_address}></th>
+				<td><{$data.pickupaddress}></td>
+			</tr>
+			<tr>
+				<th scope="row"><{$lang->mobile_phone}></th>
+				<td><{$data.pickupphone}></td>
+			</tr>
+			<tr>
+				<th scope="row"><{$lang->userself_pickinguo_description}></th>
+				<td><{$data.pickup_des}></td>
+			</tr>
+        <{elseif $data.customer_delivery_option==1}>
+			<tr>
+				<th scope="row"><{$lang->deliver_option}></th>
+				<td><{$lang->business_deliver}></td>
+			</tr>
+            <{if $data.tracking_id}>
+				<tr>
+					<th scope="row"><{$lang->tracking_number}></th>
+					<td>
+
+                        <{if $data.tracking_operator=='fastway'}>
+							<a style='color:green' target='_blank' href="https://www.fastway.com.au/tools/track?l=<{$data.tracking_id}>"><{$data.tracking_id}></a><{$lang->query}>
+                        <{elseif $data.tracking_operator=='auspost'}>
+							<a style='color:green' target='_blank' href="https://auspost.com.au/parcels-mail/track.html#/track?id=<{$data.tracking_id}>"><{$data.tracking_id}></a>
+							(<{$lang->query}>)
+                        <{/if}>
+
+					</td>
+				</tr>
+            <{/if}>
+			<tr>
+				<th scope="row"><{$lang->description}></th>
+				<td> <{$data.delivery_description}></td>
+			</tr>
+        <{/if}>
+
+        <{if $data.message_to_business}>
+			<tr>
+				<th scope="row"><{$lang->message_to_business}></th>
+				<td><{$data.message_to_business}></td>
+			</tr>
+        <{/if}>
+
+		</tbody>
+	</table>
+
+	<div style="background-color: #eee;border-radius: 5px;padding: 10px 20px;margin: 10px">
+		<div class="input-box clearfix">
+			<span><label><{$lang->customer_name}></label></span>
+            <{$data.first_name}>&nbsp;<{$data.last_name}>
+		</div>
+
+        <{if $data.id_number}>
+			<div class="input-box clearfix">
+				<span><label>身份证号</label></span>
+                <{$data.id_number}>&nbsp;<{$data.id_number}>
+			</div>
+        <{/if}>
+
+		<div class="input-box clearfix">
+			<span><label><{$lang->address}></label></span>
+            <{$data.address}>
+		</div>
+
+		<div class="input-box clearfix">
+			<span><label><{$lang->mobile_phone}></label></span>
+            <{$data.phone}>
+		</div>
+
+		<div class="input-box clearfix">
+			<span><label><{$lang->mail}></label></span>
+            <{$data.email}>
+		</div>
+
+	</div>
+
+
+	<div class='well'>
+		<span class='label label-info'><{$lang->products}></span>
+		<!-- product -->
+		<table class='table'>
+			<thead>
+			<tr>
+				<th><{$lang->products}></th>
+				<th><{$lang->specification}></th>
+
+				<th><{$lang->quantity}></th>
+				<th><{$lang->price}></th>
+			</tr>
+			</thead>
+			<tbody>
+            <{foreach from=$items item=item name='dl'}>
+				<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+					<td><a href="<{$http_root_www}>coupon1/<{$item.bonus_id}>"><{$item.bonus_title}></a></td>
+					<td><{$item.guige_des}></td>
+
+					<td>X <{$item.customer_buying_quantity}></td>
+					<td><{$item.voucher_deal_amount}></td>
+				</tr>
+            <{/foreach}>
+			</tbody>
+		</table>
+
+		<div class='moneyDetail' style="text-align: right; padding-right: 18px">
+            <{if $moneyDetail.goodsTotal}>
+				<div style="color: #f00;font-weight: bolder;">
+					<span><{$lang->total_amount}></span><span>:</span><span><{$moneyDetail.goodsTotal}></span>
+				</div>
+            <{/if}>
+
+            <{if $moneyDetail.deliveryFee>0}>
+				<div>
+					<span><{$lang->deliver_fee}></span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
+				</div>
+            <{/if}>
+            <{if $moneyDetail.platformFee>0}>
+				<div>
+					<span><{$lang->platform_reservation_fee}></span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
+				</div>
+            <{/if}>
+
+
+            <{if $moneyDetail.promotionTotal>0}>
+				<div>
+					<span><{$lang->enter_promotion_code}></span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
+				</div>
+            <{/if}>
+
+            <{if $moneyDetail.useMoney>0}>
+				<div>
+					<span><{$lang->wallet}></span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
+				</div>
+            <{/if}>
+
+            <{if $moneyDetail.transactionSurcharge>0}>
+				<div>
+					<span><{$lang->surcharge_fees}></span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
+				</div>
+            <{/if}>
+
+            <{if $moneyDetail.transactionBalance}>
+				<div style="color: #f00;font-weight: bolder;">
+					<span><{$lang->total_amount}></span><span>:</span><span><{$moneyDetail.transactionBalance}></span>
+				</div>
+            <{/if}>
+		</div>
+
+	</div>
+
+	<div class='well'>
+        <{if $data.businessContactPhone}>
+			<p>
+                <{$lang->business}><{$lang->telephone}>：<{$data.businessContactPhone}>
+			</p>
+        <{/if}>
+
+        <{if $data.businessAddress}>
+			<p>
+                <{$lang->business}><{$lang->address}>：<{$data.businessAddress}>
+			</p>
+        <{/if}>
+	</div>
+
+    <{if $data.finePrint}>
+		<div class='well'>
+			<span class='label label-info'><{$lang->warm_prompt}></span>
+			<p>
+                <{$data.finePrint}>
+			</p>
+		</div>
+    <{/if}>
+
+    <{if $data.redeemProcedure}>
+		<div class='well'>
+			<span class='label label-info'><{$lang->how_to_use}></span>
+			<p>
+                <{$data.redeemProcedure}>
+			</p>
+		</div>
+    <{/if}>
+
+    <{if $data.refund_policy}>
+		<div class='well'>
+			<span class='label label-info'><{$lang->refund_policy}></span>
+			<p>
+                <{$data.refund_policy}>
+			</p>
+		</div>
+    <{/if}>
+
+
+	<div class='well'>
+		<span class='label label-info'><{$lang->operation_log}></span>
+		<table class='table'>
+			<thead>
+			<tr>
+				<th><{$lang->activities}></th>
+				<th><{$lang->details}></th>
+			</tr>
+			</thead>
+
+			<tbody>
+            <{foreach from=$log item=item name='dl'}>
+				<tr>
+
+					<td>
+                        <{$lang-><{$item.coupon_status}>}>
+						<!-- (<{$item.en_description}>) -->
+					</td>
+
+					<td>
+						<span style="font-size:11px;">
+							<{$item.action_user_name}>
+							<br>
+							<{date('Y-m-d H:i:s', $item.gen_date)}>
+						</span>
+					</td>
+				</tr>
+            <{/foreach}>
+			</tbody>
+		</table>
+	</div>
+
+	<div class='well'>
+		<p style="text-align: center;">
+            <{$lang->wechat_code}>
+			<br>
+			<img src="<{$SKIN_PATH}>images/ubonus_support.jpeg" width="100px">
+			<br>
+			contact_customer_services：please SMS to 0425 616 988
+		</p>
+	</div>
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>
+
+
+

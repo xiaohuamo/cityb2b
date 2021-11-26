@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+	<header id="hd" >
+		<div class="left">
+			<a onClick='window.history.back();' class="a-back"></a>
+		</div>
+		<h1>
+			<a href="<{$http_root_www}>member/recharge" ><{$lang->wallet}></a>
+		</h1>
+	</header>
+
+	<section id="bd">
+
+		<div class="m-integral" >
+			<span ><{$lang->available_fund}>：$<{if $available_fund<=0}>0<{else}><{$available_fund}><{/if}></span>
+			<br>
+			<span>Balance: $<{if $balance==0}>0<{else}><{$balance}><{/if}></span>
+			<br>
+			<span>Pending: $<{if $pending_fund==0}>0<{else}><{$pending_fund}> ( +<{$pending_fund_in}> | <{$pending_fund_out}> ) <{/if}> </span>
+		</div>
+		<ul class="g-ul g-tab2 g-tab2-1">
+			<li><a href="<{$http_root_www}>member/withdraw"><i class="ico1">&nbsp;</i><{$lang->withdraw}></a></li>
+			<li><a href="<{$http_root_www}>member/recharge_add"><i class="ico2">&nbsp;</i><{$lang->recharge}></a></li>
+			<!--<li><a href="<{$http_root_www}>redbag/redbag"><i class="ico2">&nbsp;</i>包红包</a></li> -->
+		</ul>
+    <{if $data}>	
+		<ul class="g-ul m-list4 m-list4-1">
+		<{foreach from=$data item=item name='dl'}>	
+			<li>
+			   
+				<div class="top">
+					<p><{$lang->order_id}>:<{$item.orderId}>
+
+						<{if $item.status==1}>
+							<span style="color:#58964E;"><{$lang->settled}></span>
+						<{elseif $item.status==0}>
+							<span style="color:#F30;"><{$lang->processing}></span>
+						<{elseif $item.status==2}>
+							<span style="color:#999;"><{$lang->canceled}></span>
+						<{elseif $item.status==3}>
+							<span style="color:#FD5001 ;"><{$lang->action_needed}>
+
+								<select class='btn btn-info' style="font-size: 25px!important" style='font-size: 15px;' onchange="if(this.value!='NONE')if(confirm('确定？'))location = this.value;">
+
+									<option value='NONE'><{$lang->operating}></option>
+									<option disabled>－－－－</option>
+									
+									<option value="<{$http_root_www}>payment/rechargepaymentprocess/pay?payment=paypal&orderId=<{$item.orderId}>">paypal</option>
+									<option value="<{$http_root_www}>payment/rechargepaymentprocess/pay?payment=royalpay&orderId=<{$item.orderId}>">WeChat Payment</option>
+									<option value="<{$http_root_www}>member/update_recharge_void?orderId=<{$item.orderId}>"><{$lang->undo}></option>
+								</select>
+
+							</span>
+						<{else}>
+							<span style="color:#FD5001 ;"><{$lang->submit_error}></span>
+						<{/if}>
+
+					</P>
+				</div>
+				
+				<div class="top">
+					<em class="e1">$<{number_format($item.money,2)}></em>
+					<span><{date('Y-m-d H:i', $item.createTime)}></span>
+				</div>
+				<p><{$lang->desc}>：
+					<{if $item.payment=='redbag'}>
+						<a href="<{$http_root_www}>redbag/redbag_list?id=<{$item.coupon_id}>" target="_blank" class="link2"><{$item.coupon_name}></a>		
+					<{else}>
+						<{$item.coupon_name}>		
+					<{/if}>
+				</p>
+				<{if $item.note}>
+				<p><small>Note：<{$item.note}></small></p>
+				<{/if}>
+			</li>
+		<{/foreach}>
+			
+		</ul>
+		<{/if}>
+
+		<br><br><br><br><br><br><br><br><!-- bottom margin -->
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+<{include file="mobile/mobile_footer.htm"}>
+</body>
+</html>

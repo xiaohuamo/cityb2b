@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+   <meta name="keywords" content="<{$pageKeywords}>" />
+   <meta name="description" content="<{$pageDescription}>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+	<style type="text/css">
+		.coupon_option{
+			border: 1px solid #FD5001 ;
+			padding: 5px 5px;
+			margin: 0px 0px;
+		}
+
+		.coupon_option .title{
+			color: #000;
+    		font-size: 0.45rem;
+		}
+		.coupon_option .price{
+			
+		}
+
+		.coupon_option .quantity{
+
+		}
+
+		.coupon_option .quantity i{
+			color:#FD5001 ;
+			font-size: 20px;
+		}
+
+		.coupon_option .quantity .input-quantity{
+			width: 30px;
+			text-align: center;
+			border:none;
+			font-size: 15px;
+		}
+		.coupon_option .quantity .stock{
+			font-size: 10px;
+			color: #999;
+			text-align: right;
+		}
+
+		.coupon_option .description{
+			border-top: 1px solid #ddd;
+			line-height: 17px;
+			padding-top: 10px;
+			color: #999;
+			font-size: 12px;
+
+		}
+		.coupon_option .spec-num{
+		
+		}
+		.h2, h2{
+		font-size: .45rem;  
+		text-align: center;  
+		line-height: 1.5rem; 
+		margin: 0;  
+		font-weight: normal;
+		
+		}	
+		#hd{
+		    background-color: rgba(251, 194, 61,0.75);
+			}
+		.h1, h1 {
+    font-size: 17px;
+	    margin-top: 5px;
+    margin-bottom: 5px;
+    }
+    .comm-pic {
+      
+   }
+	</style>
+
+</head>
+<body class="bg-1">
+	
+
+	<header id="hd">
+		<div class="left">
+			<!--<a onClick='window.history.back()' class="a-back"></a> -->
+		</div>
+	
+		<h2>
+			<a onCLick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;" ><{$lang->products}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f2').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;" ><{$lang->mobile_product_description}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;"><{$lang->product_comment}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;"><{$lang->related_product}></a>
+		</h1>
+		<{include file ="mobile/coupon_detail/sec_more.htm"}>
+	</header>
+	<section id="bd">
+		<div class='sec-product'>
+
+			<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:252:'cut'}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			   		 
+					
+			         <{if $coupon.pics}>
+			          <{foreach from=$coupon.pics item=item name='cpl'}>
+		             	 <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$item|image:396:252:'cut'}>" ></div>
+		              <{/foreach}>
+			         <{/if}>
+			    </div>
+			    <div class="swiper-pagination"></div>
+
+			
+
+			      <{include file ="mobile/coupon_detail/daijinquan_show_amount.htm"}>
+			</div>
+          
+			
+			
+			
+			
+			
+
+			<div class="comm-tit">
+			<h3 id="item-select" style=" margin-bottom: .3rem;font-weight: 600;">购买选项</h3>
+				<div class="coupon_option" >
+					<div style="display: inline-block;width: 70%">
+						<p class='title'>
+							<{$coupon.title|truncate_cn:120:'..'}>
+						</p>
+
+						<p class='price'>
+							<span><{$coupon.price1}> &nbsp; <s><{$coupon.price2}></s></span>
+						</p>	
+					</div>
+
+					<div style="float:right;" class="quantity">
+							<i class='fa fa-minus-square'></i>
+							<input class='input-quantity' type="text" name="quantity[]" value='<{if $sub_coupon}>0<{else}>1<{/if}>' readonly 
+								data-item-id='<{$coupon.id}>' 
+								data-stock = '<{$coupon.qty}>' >
+							<i class='fa fa-plus-square'></i>
+
+							<div class='stock'>
+								<{if $coupon.qty<=0}>
+									Sold Out
+								<{elseif $coupon.qty>10}>
+									<{$lang->stock}>:充足
+								<{else}>
+									仅剩:<{$coupon.qty}>
+								<{/if}>
+							</div>
+					</div>
+
+					<p class='description'>
+						<{$coupon.coupon_summery_description}> 
+					</p> 
+					
+				</div>
+
+
+				<{foreach from=$sub_coupon item=citem}>
+					<div class="coupon_option"  >
+
+						<div style="display: inline-block;width: 70%">
+							<p class='title'>
+								<{$citem.title|truncate_cn:120:'..'}>
+							</p>
+
+							<p class='price'>
+								<span>$<{$citem.customer_amount}>&nbsp;&nbsp;<s>$<{$citem.original_amount}></s></span>
+							</p>	
+						</div>
+
+						<div style="float:right;" class="quantity">
+								<i class='fa fa-minus-square'></i>
+								<input class='input-quantity' type="text" name="quantity[]" value='0' readonly 
+									data-item-id='<{$citem.id}>' 
+									data-stock = '<{$citem.quantity}>'>
+								<i class='fa fa-plus-square'></i>
+								
+
+								<div class='stock'>
+									<{if $citem.quantity<=0}>
+										Sold Out
+									<{elseif $citem.quantity>100}>
+										<{$lang->stock}>:充足
+									<{else}>
+										仅剩:<{$citem.quantity}>
+									<{/if}>
+								</div>
+						</div>
+                 
+						<p class='description'>
+							<{$citem.product_description}> 
+						</p> 
+					</div>
+
+				<{/foreach}>
+
+			</div>
+			<{include file='mobile/coupon_detail/sec_explain.htm'}>
+			<div class="comm-tit" >
+				<h1 style="font-size:12px;"><{$h1}></h1>
+				
+		          
+			</div>
+		</div>
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class="comm-btn">
+			<div class="left">
+				<{include file='mobile/coupon_detail/sec_favandstore.htm'}>
+			</div>
+			<div class="right">
+				
+				<a  onClick='add_carts();' style="width: 100%;" class="a1 "><{$lang->buy_now}></a>
+			</div>
+		</div>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+	<script>
+	    $(document).ready(function($) {
+	        $('.ul-evaluate li').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	       
+	    });
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+
+			$('.fa-plus-square').on('click',function(){
+				$target = $(this).prev('.input-quantity');
+				var qty = parseInt($target.val());
+				var stock =parseInt($target.data('stock'));
+				if(qty>=stock){htmlMessage('库存不足'); return;}
+
+				$target.val(qty+1);
+			})
+
+			$('.fa-minus-square').on('click',function(){
+				$target = $(this).next('.input-quantity');
+				var qty = parseInt($target.val());
+				if(qty>0)$target.val(qty-1);
+			})
+		})
+	</script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script>
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	</script>
+
+	
+
+	<script type="text/javascript">
+
+	function add_carts() { 
+
+		var code_str=[];
+
+		var main_coupon_id 	='<{$coupon.id}>';
+
+		$target = $('.input-quantity');
+		
+		var totalQty=0;
+
+		$target.each(function(){
+			var qty= $(this).val();
+			var coupon_id = $(this).data('item-id');
+
+			if(qty>0)code_str.push(main_coupon_id+','+coupon_id+','+qty);
+
+			totalQty+=qty;
+		})
+
+		if(totalQty==0){
+			$('html, body').animate({
+		        scrollTop: $("#item-select").offset().top-50
+		    }, 1000);
+		    htmlMessage('请选择产品');
+			return false;
+		}
+		
+		code_str=code_str.join('#');
+
+		console.log(code_str);
+
+
+		<{if !$loginUser}>
+			var u = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/member/showcart?business_userid=<{$coupon.createUserId}>&code_str="+encodeURIComponent(code_str)+"#directCheckout");
+			console.log(u);
+			window.location.href = u;
+		<{else}>
+
+        $('body').append('<p class="form_response_loader"></p>');
+
+		$.post('<{$http_root_www}>query?cmd=add_carts_batch', 
+			 	{code_str:code_str}, 
+				function(data){
+					$('.form_response_loader').remove();
+					
+				  	try {
+				        data = jQuery.parseJSON(data);
+				    }
+				    catch(err) {
+				       htmlMessage("<{$lang->alert_network_problems}>");
+				       return;
+				    }
+
+				  	if(data.status==200){
+				 		window.location.href = '<{$http_root_www}>member/showcart?business_userid=<{$coupon.createUserId}>#directCheckout';
+		 		
+				  	}else{
+				  		htmlMessage(data.msg);
+				  	}
+				}
+	    );
+	
+		<{/if}>
+	}
+
+
+	</script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+
+	<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>
+

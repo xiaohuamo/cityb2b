@@ -1,0 +1,135 @@
+
+
+
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>>佳丽中心</a> 
+				
+			</div>
+		</li>
+			
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='miss_page'}> class="current"<{/if}>>佳丽主页</a>
+			</div>
+			<div class='second-level'>
+				<a target="_blank" href="<{$http_root_www}>coupon1/miss01?miss_id=<{$vote_id}>"<{if $submenu=='miss_homepage'}> class="current"<{/if}>>佳丽主页</a>
+				
+				<a href="<{$http_root_www}>voting/item_create"<{if $submenu=='voting_manage'}> class="current"<{/if}>>
+					内容编辑
+				</a>
+				
+			</div>
+			
+		</li>
+	
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-building" ></i>
+				<a <{if $menu=='business_setting'}> class="current"<{/if}>>商铺设置</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/logo"<{if $submenu=='logo'}> class="current"<{/if}>>
+					头像
+				</a>
+				
+				
+				<a href="<{$http_root_www}>company/profile_pic"<{if $submenu=='profile_pic'}> class="current"<{/if}>>
+					店铺主图
+				</a>
+			
+			
+				<a href="<{$http_root_www}>member/profile?side=company"<{if $submenu=='profile_manager'}> class="current"<{/if}>>
+					用户信息
+				</a>
+				<a href="<{$http_root_www}>company/profile"<{if $submenu=='profile'}> class="current"<{/if}>>
+					店铺信息
+				</a>
+					
+				
+			</div>
+		</li>
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='my_mingxingshop'}> class="current"<{/if}>>选货及分享</a>
+			</div>
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/mingxing_coupons"<{if $submenu=='yijianbanjia'}> class="current"<{/if}>>
+					选货
+				</a>
+				<a href="<{$http_root_www}>company/referral_product_program"<{if $submenu=='referral_product_program1'}> class="current"<{/if}>>
+					归类与置顶
+				</a>
+				<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' ><{$lang->preview_store}></a>
+				<a href="<{$http_root_www}>company/referral_product_program_share"<{if $submenu=='send_share'}> class="current"<{/if}>>
+					转发与分享
+				</a>
+
+				<a href="<{$http_root_www}>customizable_category/edit?type=mingxingdian"<{if $submenu=='category_edit'}> class="current"<{/if}>>
+					商品分类
+				</a>
+			
+			</div>
+		</li>
+		<{include file='company/side_money.htm'}>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='miss_zhugong'}> class="current"<{/if}>>助攻榜单</a>
+			</div>
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/miss_quick_vote_list"<{if $submenu=='miss_quick_vote_list'}> class="current"<{/if}>>
+					一次网页助攻榜单
+				</a>
+					<a href="<{$http_root_www}>company/miss_gifts_list"<{if $submenu=='miss_gifts_list'}> class="current"<{/if}>>
+					购买礼券榜单
+				</a>
+				
+			
+			</div>
+		</li>
+		
+	
+		
+	</ul>
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+	
+	
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$missLink}>">佳丽页面分享二维码</a></h1>
+		<small>佳丽页面分享二维码</small>
+		<div >
+			<a href="<{$missLink}>">
+				<img src="<{$missQrCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	
+	
+</div>
+
+
+
+
+

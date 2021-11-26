@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+<script src="<{$STATIC_PATH}>crop/crop.js"></script>
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>crop/crop.css">
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>crop/Jcrop/jquery.Jcrop.css">
+<script type="text/javascript" src="<{$STATIC_PATH}>crop/Jcrop/jquery.Jcrop.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+	
+	$('input[name="pic"]').crop();
+		$('input[name="pics[]"]').crop();
+			
+		CKEDITOR.replace('note', {
+			height : 600,
+			filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic'
+		});
+				
+	});
+
+	var cats = [];
+	<{foreach from=$categories2 item=item}>
+		cats.push(['<{$item.id}>', '<{$item.name}>', <{$item.childCount}>]);
+	<{/foreach}>
+
+	var citylist = [];
+	<{foreach from=$citylist item=item}>
+		citylist.push([<{$item.id}>, <{$item.parentId}>, <{$item.level}>, <{$item.hasSon}>, '<{$item.name}>', '<{$item.map}>']);
+	<{/foreach}>
+
+	function catChg(obj) {
+		var vv = $(obj).val();
+		var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+		if (isNaN(cc)) cc = 0;
+		if (vv == '' || cc <= 0) {
+			$(obj).next().nextAll().remove();
+			$.get('?con=admin&ctl=adv/coupons&act=type', { 'cid': vv, 'id': '<{$data.id}>' }, function(data){
+				$('#bonusTypeWrapper').html(data);
+			});
+		}
+		else {
+			$(obj).next().nextAll().remove();
+			var c = $('<select name="categoryId[]" class="ahibw" onchange="catChg(this);"><option value="">请选择</option></select>');
+			for (var i = 0; i < cats.length; i++) {
+				if ( cats[i][0].substring(0, vv.length) == vv && cats[i][0].length == vv.length + 3 ) {
+					c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2] +'">'+ cats[i][1] +'</option>');
+				}
+			}
+			$(obj).next().after(c);
+			setDroplist(c);
+		}
+	}
+
+	function cityChg(obj) {
+		var vv = $(obj).val();
+		var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+		if (isNaN(cc)) cc = 0;
+		if (vv == '' || cc <= 0) {
+			$(obj).next().nextAll().remove();
+		}
+		else {
+			$(obj).next().nextAll().remove();
+			var c = $('<select name="city[]"  style="width:400px;" class="ahibw" onchange="catChg(this);"><option value="">请选择商家所在城市</option></select>');
+			for (var i = 0; i < citylist.length; i++) {
+				if ( citylist[i][1] == vv ) {
+					c.append('<option value="'+ citylist[i][0] +'" cc="'+ citylist[i][3] +'">'+ citylist[i][4] +'</option>');
+				}
+			}
+			$(obj).next().after(c);
+			setDroplist(c);
+		}
+	}
+
+	$(function(){
+		var cat;
+		var categoryId = $('select[name="categoryId[]"]').attr('val');
+		for (var i = 6; i <= categoryId.length; i = i + 3) {
+			cat = $('select[name="categoryId[]"]').eq(i/3-2);
+			cat.next().remove();
+			cat.find('option[value="'+ categoryId.substring(0, i) +'"]').attr('selected', true);
+			setDroplist(cat);
+			catChg(cat.get(0));
+		}
+
+		/*
+		var city = [];
+		var cityid = parseInt( $('#cityId').val() );
+		if (isNaN(cityid)) cityid = 0;
+		if ( cityid > 0 ) {
+			for (var i = 0; i < citylist.length; i++) {
+				if (citylist[i][0] == cityid) {
+					city = citylist[i];
+					break;
+				}
+			}
+			if ( city ) {
+				var citymap = city[5].split('-');
+				for (var i = 0; i < citymap.length; i++) {
+					sele = $('select[name="city[]"]').eq(i);
+					sele.next().remove();
+					sele.find('option[value="'+ citymap[i] +'"]').attr('selected', true);
+					setDroplist(sele);
+					catChg(sele.get(0));
+				}
+			}
+		}*/
+	});
+
+	function addline(obj) {
+		$(obj).before('<p><input type="file" name="pics[]"  cropsize="620,440" /></p>');
+		$(obj).prev('p').find('input[name="pics[]"]').crop();
+	}
+	function delline(obj) {
+		$(obj).parent().remove();
+	}
+	
+	
+	
+</script>
+
+
+
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post" onSubmit="return check(this);" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2">潜在商家编辑</td>
+				</tr>
+				
+               <tr class="editTr">
+					<td class="editLtTd">商家名称</td>
+					<td class="editRtTd"><input name="data[business_name]" id="business_name" value="<{$data.business_name}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+				<tr class="editTr">
+					<td class="editLtTd">更新进展</td>
+					<td class="editor">
+					<{foreach from=$status_list item=list}>
+						<input name="data[status_id]" value="<{$list.status_id}>" type="radio" id="status_id"<{if $list.status_id==$data.status_id}> checked<{/if}> /><{$list.status_cn_name}><br />
+					<{/foreach}>
+					</td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">指定客户专员</td>
+					<td class="editor">
+						<input name="data[createUserId]" value="1" type="radio" id="createUserId"<{if $data.createUserId==1}> checked<{/if}> />销售<{$data.createUserId}>总监<br />
+					<{foreach from=$user_list item=list}>
+						<input name="data[createUserId]" value="<{$list.createUserId}>" type="radio" id="createUserId"<{if $list.createUserId==$data.createUserId}> checked<{/if}> /><{$list.name}><br />
+					<{/foreach}>
+					</td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">行业</td>
+					<td class="editor">
+					<{foreach from=$cat_list item=list}>
+						<input name="data[category]" value="<{$list.category_id}>" type="radio" id="category"<{if $list.category_id==$data.category}> checked<{/if}> /><{$list.category_cn_name}><br />
+					<{/foreach}>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">有效城市</td>
+					<td class="editRtTd" style="width:400px;">
+						<!--input type="hidden" id="cityId" name="cityId" value="<{$data.cityId}>" /-->
+						<select name="city[]" class="ahibw" multiple="multiple" style="width:400px;">
+							<option value="" child="2" style="width:400px;">请选择商家所在城市</option>
+							<{foreach from=$citylist item=item}>
+								<{if $item.parentId==0}>
+									<option value="<{$item.id}>" child="<{$item.hasSon}>"<{if in_array($item.id, explode(',', $data.city))}> selected<{/if}>><{$item.name}></option>
+									<{foreach from=$citylist item=sitem}>
+										<{if $sitem.parentId==$item.id}>
+											<option value="<{$sitem.id}>" child="<{$sitem.hasSon}>"<{if in_array($sitem.id, explode(',', $data.city))}> selected<{/if}>>　　<{$sitem.name}></option>
+										<{/if}>
+									<{/foreach}>
+								<{/if}>
+							<{/foreach}>
+						</select>
+					</select></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">来源</td>
+					<td class="editRtTd"><input name="data[resource]" id="resource" value="<{$data.resource}>" type="text" size="100" class="text"  /></td>
+				</tr>
+				
+					<tr class="editTr">
+					<td class="editLtTd">微信</td>
+					<td class="editRtTd"><input name="data[weixin]" value="<{$data.weixin}>" type="text" size="50" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">电话</td>
+					<td class="editRtTd"><input name="data[telephone]" value="<{$data.telephone}>" type="text" size="50" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">网站</td>
+					<td class="editRtTd"><input name="data[website]" value="<{$data.website}>" type="text" size="200" class="text" /></td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">email</td>
+					<td class="editRtTd"><input name="data[email]" value="<{$data.email}>" type="text" size="100" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">备注</td>
+					<td class="editRtTd"><textarea name="data[note]"  id="note" class="text" style="width:90%; height:200px;"><{$data.note}></textarea></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Priority</td>
+					<td class="editRtTd"><input name="data[priority]" value="<{$data.priority}>" type="text"  class="text" /></td>
+				</tr>
+
+			
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

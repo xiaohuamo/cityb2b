@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-list main-form">
+						
+						<div class="colCurTit clearfix">
+							<h1>用户中奖信息</h1>
+						</div>
+
+						<form action="<{$searchUrl}>">
+							<input type="text" name="search" placeholder="用户姓名/电话/邮件/中奖编码" value="<{$search}>">
+							<button>查询</button>
+						</form>
+
+						<table width='100%'>
+							<thead>
+								<tr>
+									<th>中奖用户</th>
+									<th>中奖编号</th>
+									<th>联系方式</th>
+									<th>奖项</th>
+									<th>奖品</th>
+								    <th>状态</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+								<{foreach from=$data item=item name='dl'}>
+									<tr  <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										<td>
+											<{$item.person_first_name}> <{$item.person_last_name}>
+											<small>  (ID:<{$item.userId}>)</small>
+										</td>
+										<td>
+											<{$item.id}>  
+											<br>
+											<small><{$item.redeem_code}></small>
+										</td>
+										<td>
+											<{$item.phone}>
+											<br />
+											<{$item.email}>
+										</td>
+										<td>
+											<{$item.lottery_sub_name}>
+										</td>
+										<td>
+											<{$item.lottery_sub_details}>
+										</td>
+										<td style='position:relative'>
+											<span class='status_updating' style='position:absolute;left: -10px'></span>
+											<select class='status_update' data-record-id = '<{$item.id}>' style='width: 110px'>
+												<{foreach from=$status_list item=list}>
+												<option 
+												value='<{$list.status_id}>' 
+												<{if $item.status==$list.status_id}>selected<{/if}> 
+												>
+													<{$list.status_cn_name}>
+												</option>
+												<{/foreach}>
+											</select>	
+											
+										</td>
+									</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<div class="pager" >
+							<{$pager}>
+						</div >
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('.status_update').bind('change',function(){
+		var record_id = $(this).data('record-id');
+		var selected_status= $(this).val();
+
+		var iconupdate= new IconUpdate(this);
+
+		var request = $.ajax({
+		  url: "<{$http_root_www}>lottery/business_records_update",
+		  type: "POST",
+		  data: { id : record_id,status:selected_status},
+		  beforeSend:function(){
+		  	iconupdate.iconUpdating();
+		  }
+		});
+		 
+		request.done(function( msg ) {
+		  if(msg.trim()=='success'){
+		  	iconupdate.iconUpdateSuccess();
+		  }else{
+		  	iconupdate.iconUpdateFail();
+		  }	
+		});
+		 
+		request.fail(function( jqXHR, textStatus ) {
+		  iconupdate.iconUpdateFail();
+		});
+	});
+
+	function IconUpdate (obj) {
+		this.target = $(obj).prev('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+
+	
+
+</script>
+
+<{include file='footer.htm'}>
+
+</body>
+
+</html>

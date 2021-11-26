@@ -1,0 +1,61 @@
+<!-- 底部 -->
+
+	<{if $langStr=='zh-cn'}>
+			<ul class="g-ul fixMenu" style="max-width: 768px;    margin: auto;">
+			   <li class="">
+					<a href="<{$http_root_www}>"><i class="ico1">&nbsp;</i><{$lang->home}></a>
+				</li>
+			
+			   <li class="">
+					<a href="<{$http_root_www}>category/index"><i class="ico3">&nbsp;</i><{$lang->site_category}></a>
+				</li>
+				<!--<li class="">
+					<a href="<{$http_root_www}>food"><i class="ico2">&nbsp;</i><{$lang->catering_cate}></a>
+				</li> -->
+				<li class="">
+					<a href="<{$http_root_www}>member/myorders"><i class="ico2">&nbsp;</i>订单</a>
+				</li>
+				
+				<li class="">
+					<a href="<{$http_root_www}>member/showcart<{$freshfood_link}>"><i class="ico8">&nbsp;</i><{$lang->shopping_cart}></a>
+				</li>
+				
+			<!--
+				 <li class=" ">
+					<a href="<{$http_root_www}>member/mingxingdian_index"><i class="ico2">&nbsp;</i>开店</a>
+				</li> -->
+
+			   
+
+				<li class="">
+					<a href="<{$http_root_www}>member/index"><i class="ico5">&nbsp;</i><{$lang->footer_my}></a>
+				</li>
+
+			</ul>
+	<{else}>
+		<ul class="g-ul fixMenu" style="max-width: 768px;    margin: auto;">
+			  <li class="" style="    width: 24.5%;">
+					<a href="<{$http_root_www}>"><i class="ico1">&nbsp;</i><{$lang->home}></a>
+				</li>
+				
+			   <li class="" style="    width: 24.5%;">
+					<a href="<{$http_root_www}>category/index"><i class="ico3">&nbsp;</i><{$lang->site_navigation}></a>
+				</li>
+				 <li class="" style="    width: 24.5%;">
+					<a href="<{$http_root_www}>member/showcart<{$freshfood_link}>"><i class="ico8">&nbsp;</i><{$lang->shopping_cart}></a>
+				</li>
+			   
+
+				 <li class="" style="    width: 24.5%;">
+					<a href="<{$http_root_www}>member/index"><i class="ico5">&nbsp;</i><{$lang->footer_my}></a>
+				</li>
+
+			</ul>
+
+	<{/if}>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>

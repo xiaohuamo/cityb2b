@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style>
+	.main-form .input-box span label { width:130px; }
+	</style>
+</head>
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">
+		<div class="wrap clearfix">
+			<div class="main clearfix" style="width: 100%">
+				<div class="box2">
+					<div class="main-form">
+						<form id="memberForm" action="<{$http_root_www}>coupon/buy/<{$coupon.id}>" method="post" target="post_frame" enctype="multipart/form-data" style='width: 610px;margin: auto;'>
+							
+							<div class="input-box clearfix">
+								
+								<div >
+									<div class="main-list" style="padding:0;">
+										<table style='width: 100%;'>
+											<thead>
+												<th>选项</th>
+												<th>售价</th>
+												<th>面值</th>
+											</thead>
+											<tbody>		
+												<tr>
+													<td >  
+														<label>
+															<input type="radio" name="sub" value="<{$coupon.id}>"  data-price='<{$coupon.voucher_deal_amount}>' checked /><{$coupon.title}>
+														</label>
+													</td>
+
+													<td>
+														$<{$coupon.voucher_deal_amount}>
+													</td>
+
+													<td>
+														$<{$coupon.voucher_original_amount}>
+													</td>
+												</tr>
+
+												<{foreach from=$sub_coupon item=item name='dl'}>
+												<tr>
+													<td >  
+														<label ><input type="radio" name="sub" value="<{$item.id}>" data-price='<{$item.customer_amount}>'/><{$item.title}></label>
+													</td>
+
+													<td>
+														$<{$item.customer_amount}>
+													</td>
+
+													<td>
+														$<{$item.original_amount}>
+													</td>
+												</tr>
+												<{/foreach}>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								</div>
+
+								<{if $staff_list}>
+									<div class="staff-list">
+										<{foreach from=$staff_list item=item name='sll'}>
+										<div class="item">
+											
+											<{if $item.avatar}><div><img src="<{$UPLOAD_PATH}><{$item.avatar|image:50:50}>" alt="<{$item.contactPersonNickName}>" /></div><{/if}>
+				                            
+											<label class="name">
+												<input type="radio" name="staff_id" value='<{$item.id}>' />
+												<{$coupon.sub_sales_name}>：<{$item.contactPersonNickName}>
+												<small style="float: right;"><{$item.googleMap}></small>
+											</label>
+
+											<div class="phone">电话：<{$item.tel}></div>
+											<div class="email">Email：<{$item.email}></div>
+										</div>
+										<{/foreach}>
+									</div>
+								<{/if}>
+								
+
+								<div class='userinfo-panel form-style-green' style='margin: auto;text-align: center;padding: 20px 10px;'>
+									<h1 >请填写个人信息</h1>
+									<div  class="input-box multi-select clearfix">
+										<span><label>姓</label></span>
+										<input id="delivery_last_name" type="text" class="input-text" value="<{$loginUser.person_last_name}>" name="delivery_last_name" />
+									</div>
+									
+									<div  class="input-box multi-select clearfix">
+										<span><label>名</label></span>
+										<input id="delivery_first_name" type="text" class="input-text" value="<{$loginUser.person_first_name}>" name="delivery_first_name" />
+									</div>
+
+									<div  class="input-box clearfix">
+										<span><label>电话</label></span>
+										<input id="delivery_phone" type="text" class="input-text" value="<{$loginUser.phone}>" name="delivery_phone" />
+										
+									</div>
+									<div   class="input-box multi-select clearfix">
+										<span>
+											<label>Email</label>
+										</span>
+										<input type="text" id="delivery_email" class="input-text" value="<{$loginUser.email}>" name="delivery_email" />
+									</div>	
+
+									<div   class="input-box multi-select clearfix">
+										<span>
+											<label>数量</label>
+										</span>
+										<input type="number"  min='0' class="input-text" value="1" name="qty"  />
+									</div>	
+
+
+									<div   class="input-box multi-select clearfix">
+										<span>
+											<label>留言</label>
+										</span>
+										<textarea type="text"  class="input-text" placeholder="还有什么要嘱咐的？" name="msgToBusiness" style="height: 150px"></textarea>
+									</div>	
+
+
+									<div class='payment'>
+										 <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+			                               <label><input name='payment' type='radio' class='payment-option' value='creditcard'><{$lang->pay_creditcard}></label>
+			                              <{/if}>
+			                              
+			                            <{if $business_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+			                              <label><input name='payment' type='radio' class="payment-option" value='paypal'><{$lang->pay_online}></label>
+			                            <{/if}>
+
+			                            <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+			                              <label><input name='payment' type='radio' class='payment-option' value='offline'><{$lang->pay_offline}></label>
+			                            <{/if}>
+
+			                             <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+			                              <label><input name='payment' type='radio' class='payment-option' value='royalpay'><{$lang->pay_wechat}></label>
+			                            <{/if}>
+
+			                             <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+			                             <!--  <label><input name='payment' type='radio' class='payment-option' value='hcash'><{$lang->pay_hcahs}></label> -->
+			                             <{/if}>
+
+			                             <div class='credit_card_from'>
+											<input type="text" name="card_number" placeholder="Card Number" style="width: 250px;">
+											<input type="text" name="card_security_code" placeholder="Security Code" style="width: 100px;">
+											<span>Expires:</span>
+											<select name='card_expire_month'>
+													<option>Month</option>
+												 <{for $m=1 to 9}>
+		                                            <option value="<{$m}>">0<{$m}></option>
+		                                          <{/for}>
+		                                            <option value="10">10</option>
+		                                            <option value="11">11</option>
+		                                            <option value="12">12</option>
+											</select>
+
+											<select name='card_expire_year'>
+													<option>Year</option>
+												  <{for $y=16 to 46}>
+		                                            <option value="<{$y}>"><{$y}></option>
+		                                          <{/for}>
+											</select>
+										</div>
+
+										<script type="text/javascript">
+											$(function(){
+												$('.payment-option').on('click',function(){
+													if($(this).val()=='creditcard'){
+														$('.credit_card_from').show(100);
+													}else{
+														$('.credit_card_from').hide(100);
+													}
+												})
+
+												$('.payment-option').first().click();
+
+												$("input[name='sub']").on('click',function(){
+													if($(this).data('price')>0){
+														$('.payment').show(100);
+													}else{
+														$('.payment').hide(100);
+													}
+												})
+
+												$("input[name='sub']").first().click();
+
+											})
+										</script>
+									</div>
+
+									<div class="input-box input-submit clearfix">
+										<button  style="padding: 5px 100px;font-size: 27px" type="submit">立刻领取</button>
+									</div>
+								</div>
+
+							</form>
+							<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+							
+							<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<{include file='footer.htm'}>
+
+	</body>
+	</html>

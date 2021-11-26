@@ -1,0 +1,107 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript">
+	function freshx_price_db_update() {
+		$.ajax({
+				url:"/company/freshx_price_db_update_ajax",
+				type:"GET",
+				beforeSend:function(){
+					$('.ajax-status').html("<i class='fa fa-spinner fa-spin'></i>");
+				},
+
+			}).done(function(d){
+				$('.ajax-status').html("success");
+			})
+	}
+</script>
+
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class='box2'>
+			 <button style="padding: 10px 5px;background: #FD5001 " onClick ='freshx_price_db_update();'>
+				更新至数据库
+			</button> 
+			<span class='ajax-status'></span>
+
+			<button style="padding: 10px 5px;background: #2bb8aa" >
+				<a href="<{$http_root_www}>company/freshx_price_export">Export CSV</a>
+			</button>
+		</div>
+		<div class="main">
+			<div class="main-form">
+				<div class='main-list'>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<thead>				
+							<tr>			
+								<th>ID</th>
+								<th>Category</th>
+								<th>Name</th>
+								<th>Image</th>
+								<th>Price</th>
+								<th>Unit</th>
+								<th>last Update</th>
+							</tr>			
+						</thead>		
+						<tbody>		
+							<{foreach from=$list item=item name='dl'}>	
+							<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td><{$item->product_id}></td>
+								<td><{$item->category_name}></td>
+								<td><{$item->product_name}></td>
+								<td><img style="width:75px" src="<{$item->image_url}>"></td>
+								<td><{$item->price}></td>
+								<td><{$item->unit_name}></td>
+								<td><{$item->price_confirmed_date}></td>
+							</tr>
+							<{/foreach}>	
+						</tbody>		
+					</table>	
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

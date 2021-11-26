@@ -1,0 +1,106 @@
+<div class='index_panel'>
+							<div class='panel_item'>
+									<div class='panel_item_top'>
+										<div class='panel_icon'><i class="fa fa-share fa-4x" ></i></div>
+										<h1><{$lang->publish}></h1>
+										<p><{$lang->publish_information}></p>
+									</div>
+								<div class='panel_item_sub'>
+										<a href="<{$http_root_www}>company/coupons?coupon_type=7" class='panel_sub_item'>活动</a>
+										<a href="<{$http_root_www}>company/coupons?coupon_type=7" class='panel_sub_item'>本地服务</a>
+										<a href="<{$http_root_www}>company/coupons?coupon_type=4" class='panel_sub_item'>线下优惠</a>
+											<a href="<{$http_root_www}>company/promotion_code_manage" class='panel_sub_item'>线下优惠</a>
+								</div>
+							</div>
+
+
+							<{if $langStr=='zh-cn'}>
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-edit fa-4x'></i></div>
+									<h1><{$lang->business_store}></h1>
+									<p><{$lang->business_store_description}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<!-- <a href="<{$http_root_www}>index.php?ctl=template&act=template_edit" target='_blank'class='panel_sub_item'>店铺编辑</a> -->
+									<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' class='panel_sub_item'><{$lang->preview_store}></a>
+								</div>
+							</div>
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-bar-chart fa-4x'></i></div>
+									<h1><{$lang->management}></h1>
+									<p><{$lang->order_management_and_user_feedback}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/customer_orders" class='panel_sub_item'><{$lang->order_management}></a>
+									
+								</div>
+							</div>
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-share-alt-square fa-4x'></i></div>
+									<h1>我要推广</h1>
+									<p><{$lang->online_promotion}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>referal/manage_referral_rule" class='panel_sub_item'>推广管理</a>
+								   <a href="<{$http_root_www}>company/ubonus_package" class='panel_sub_item'>Ubonus推广套餐</a>
+								</div>
+								
+							</div>
+							<{/if}>
+
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-cog fa-4x'></i></div>
+									<h1><{$lang->setting}> </h1>
+								    <p><{$lang->business_setting}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/profile_manager" class='panel_sub_item'><{$lang->basic_setting}></a>
+									<a href="<{$http_root_www}>company/staff" class='panel_sub_item'><{$lang->advance_setting}></a>
+								</div>
+							</div>
+
+							<{if $langStr=='zh-cn'}>
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-files-o fa-4x'></i></div>
+									<h1><{$lang->tools}> </h1>
+								    <p><{$lang->helpful_editing_tool}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/bulkedit" class='panel_sub_item'><{$lang->batch_editor}></a>
+								</div>
+							</div>
+
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-files-o fa-4x'></i></div>
+									<h1><{$lang->help_center}> </h1>
+								    <p><{$lang->novice_document}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a href="<{$http_root_www}>company/business_start_guide" class='panel_sub_item'><{$lang->novice_document}></a>
+								</div>
+							</div>
+							<{/if}>
+
+							<{if $loginUser.is_managed_show}>
+							<div class='panel_item'>
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class="fa fa-cogs fa-4x" aria-hidden="true"></i></div>
+									<h1><{$lang->more_function}></h1>
+									<p><{$lang->application_for_activation}></p>
+								</div>
+								<div class='panel_item_sub'>
+										<a href="<{$http_root_www}>show/show_area_row_seats_add" class='panel_sub_item'><{$lang->concert_management}></a>
+										<a href="<{$http_root_www}>cinema/cinema_edit" class='panel_sub_item'><{$lang->movie_management}></a>
+								</div>
+							</div>
+							<{/if}>
+						</div>

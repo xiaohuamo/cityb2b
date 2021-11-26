@@ -1,0 +1,173 @@
+<!doctype html><html><head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}>
+<meta name="keywords" content="<{$pageKeywords}>" />
+<{/if}>
+<{if $pageDescription}>
+<meta name="description" content="<{$pageDescription}>" />
+<{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<style>	.main-form .input-box span label { width:100px; }</style>
+
+</head>
+<body>
+	<{include file='header.htm'}>
+	<div class="container">
+		<div class="wrap clearfix">		
+			<{include file='company/side.htm'}>	
+			<div class="main">
+				<div class="box2">
+
+
+					<div>
+						<form action='<{$http_root_www}>coupon_event_management/add_to_list' method='get'>
+							<label>选择您的产品加入活动</label>
+							<select name='coupon_id' required>
+								<{foreach from=$couponList item=item}>
+									<option value='<{$item.id}>'><{$item.title}></option>
+								<{/foreach}>
+							</select>
+							<button>加入托管</button>
+						</form>
+					</div>
+					<div class="main-list">		
+						<{if $list}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th>产品编号</th>	
+									<th>产品名</th>		
+									<th>状态</th>	
+									<th>反馈</th>				
+									<th>操作</th>				
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$list item=item}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td>
+									<a href="<{$http_root_www}>coupon/<{$item.coupon_id}>"><{$item.coupon_id}></a>
+									</td>
+
+									<td>
+									<{$item.coupon_title}>
+									</td>
+									<td>
+										<{if $item.status==0}>
+										<span>未参加</span>
+
+										<{elseif $item.status==1}>
+										<span style="color:#f00;">申请审查中</span>
+
+										<{elseif $item.status==2}>
+										<span style="color:#58964E;">通过</span>
+
+										<{elseif $item.status==3}>
+										<span style="color:#ebbd33;">退回</span>
+
+										<{/if}>
+									</td>
+									<td><{$item.note}></td>
+									<td>
+										<select onchange="if(this.value!='NONE')if(confirm('确定？'))location = this.value;">
+										<option value='NONE'>操作</option>
+										<option disabled>－－－－</option>
+										
+										<{if $item.status==0}>
+										<!-- <span>未参加</span> -->
+										<option value="<{$http_root_www}>coupon_event_management/edit_coupon?coupon_id=<{$item.coupon_id}>">更新产品</option>
+
+										<option value="<{$http_root_www}>coupon_event_management/submit_for_approval?coupon_id=<{$item.coupon_id}>">提交送审</option>
+
+										<option value="<{$http_root_www}>coupon_event_management/remove_from_list?coupon_id=<{$item.coupon_id}>">取消托管</option>
+
+										<{elseif $item.status==1}>
+										<!-- <span style="color:#f00;">申请审查中</span> -->
+
+										<option value="<{$http_root_www}>coupon_event_management/withdraw_from_event?coupon_id=<{$item.coupon_id}>">退出活动</option>
+
+										<option value="<{$http_root_www}>coupon_event_management/remove_from_list?coupon_id=<{$item.coupon_id}>">取消托管</option>
+
+										<{elseif $item.status==2}>
+										<!-- <span style="color:#58964E;">通过</span> -->
+
+										<option value="<{$http_root_www}>coupon_event_management/withdraw_from_event?coupon_id=<{$item.coupon_id}>">退出活动</option>
+
+										<option value="<{$http_root_www}>coupon_event_management/remove_from_list?coupon_id=<{$item.coupon_id}>">取消托管</option>
+
+										<{elseif $item.status==3}>
+										<!-- <span style="color:#ebbd33;">退回</span> -->
+										<option value="<{$http_root_www}>coupon_event_management/edit_coupon?coupon_id=<{$item.coupon_id}>">更新产品</option>
+										
+										<option value="<{$http_root_www}>coupon_event_management/submit_for_approval?coupon_id=<{$item.coupon_id}>">提交送审</option>
+
+										<option value="<{$http_root_www}>coupon_event_management/remove_from_list?coupon_id=<{$item.coupon_id}>">取消托管</option>
+
+										<{/if}>
+
+									</select>
+									</td>
+									
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+					</table>			
+					<{if $pager}>
+					<div class="pager"><{$pager}></div>
+					<{/if}>				
+					<{else}>				
+					还没有充值记录		
+					<{/if}>			
+				</div>	
+
+				<div>
+					<h2>活动产品托管说明：</h2>
+					<ul>
+						<li>
+							1.产品加入托管后正常销售停止，您不能修改托管产品, 如需修改请先取消托管后在商家中心中编辑相应产品。
+						</li>
+						<li>
+							2.产品审批通过后立刻上线可见, 但是会并于活动时间的限制无法购买
+						</li>
+						<li>
+							3.活动当天产品会自动销售并在活动结束后下线,商家无需操作
+						</li>
+
+						<li>
+							5.被托管的产品 商家将不会收到任何销售通知,也无法查询销售记录,平台有权利根据需要修改产品细节
+						</li>
+
+						<li>
+							6.如果不希望参加本次活动请选择 退出活动
+						</li>
+
+						<li>
+							7.如果希望重新正常销售产品, 请先择取消托管。
+						</li>
+
+						<li>
+							8.请确保您于Ubonus客服取得联系并且提前准备销售产品到位。
+						</li>
+
+						<li>
+							9.参加活动后您将授权ubonus协助兑付,ubonusshop会自动成为您的兑付员工。
+						</li>
+					</ul>
+				</div>	
+			</div>	
+		</div>	
+	</div>
+</div>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+<{include file='footer.htm'}>
+
+
+</body>
+</html>

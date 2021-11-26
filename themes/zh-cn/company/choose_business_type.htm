@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}>
+	<meta name="keywords" content="<{$pageKeywords}>"/>
+	<{/if}>
+	<{if $pageDescription}>
+	<meta name="description" content="<{$pageDescription}>"/>
+	<{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+        .main-form .input-box span label {
+            width: 250px;
+        }
+	</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{if $business_type =='business_type_factory'}>
+		<{include file='factory/side.htm'}>
+		<{else}>
+		<{include file='company/side.htm'}>
+		<{/if}>
+		<div class="main" <{if $fullscreen}>style="width:100%;"<{/if}>>
+			<div class="box2"><a name="pagename"></a>
+
+				<div class="main-form" >
+
+					<div class="colCurTit clearfix">
+						<h1><{$lang->setting_business_type}></h1>
+					</div>
+
+					<form id="memberForm" action="<{$http_root_www}>company/choose_business_type" method="post" target="post_frame" enctype="multipart/form-data">
+
+
+						<div id="all_category" class="input-box clearfix">
+							<div class=' form-style-green '>
+								<span><label><{$lang->choose_type}> </label></span>
+							</div>
+							<em><{$lang->business_pannel_desc}></em>
+							<br>
+
+							<div style='padding-left: 80px;padding-right:30px;'>
+
+                                <{if !$loginUser.business_type_factory_2c && !$loginUser.business_type_factory}>
+							<!--	<div>
+									<input id="business_type_restaurant" type="radio" name="business_type" value="business_type_restaurant"
+									<{if $loginUser.business_type_restaurant ==1}>checked<{/if}> />
+									<label for="business_type_restaurant"><strong><{$lang->business_type_restaurant}></strong></label>
+								</div> -->
+									
+									<div>
+									<input id="business_type_freshfood" type="radio" name="business_type" value="business_type_freshfood"
+									<{if $loginUser.business_type_freshfood ==1}>checked<{/if}> />
+									<label for="business_type_freshfood"><strong><{$lang->business_type_freshfood}></strong></label>
+								</div>
+								<div>
+									<input id="business_type_shop" type="radio" name="business_type" value="business_type_shop"
+									<{if $loginUser.business_type_shop ==1}>checked<{/if}> />
+									<label for="business_type_shop"><strong><{$lang->business_type_mall}></strong></label>
+								</div>
+							<div>
+									<input id="business_type_service" type="radio" name="business_type" value="business_type_service"
+									<{if $loginUser.business_type_service ==1}>checked<{/if}> />
+									<label for="business_type_service"><strong><{$lang->business_type_service}></strong></label>
+								</div> 
+							<!--
+								<div>
+									<input id="business_type_media" type="radio" name="business_type" value="business_type_media"
+									<{if $loginUser.business_type_media ==1}>checked<{/if}> />
+									<label for="business_type_media"><strong><{$lang->business_type_media}></strong></label>
+								</div> -->
+                                <{/if}>
+
+							<!--	<div>
+									<input id="business_type_factory" type="radio" name="business_type" value="business_type_factory"
+									<{if $loginUser.business_type_factory ==1}>checked<{/if}> />
+									<label for="business_type_factory"><strong><{$lang->business_type_factory}></strong></label>
+								</div>
+
+								<div>
+									<input id="business_type_factory_2c" type="radio" name="business_type" value="business_type_factory_2c"
+									<{if $loginUser.business_type_factory_2c ==1}>checked<{/if}> />
+									<label for="business_type_factory_2c"><strong><{$lang->business_type_factory_2c}></strong></label>
+								</div> -->
+
+							</div>
+						</div>
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit" style="float:right;">
+								前往
+							</button>
+						</div>
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

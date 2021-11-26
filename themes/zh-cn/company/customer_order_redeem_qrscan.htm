@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="position: absolute;">
+	<select onchange="window.location.href=$(this).children(':selected').data('url')" style=" margin: 0.2rem 0.2rem;">
+		<option><{$lang->switch_lang}></option>
+		<option data-url='<{$langSwitchUrl}>lang=zh-cn'><{$lang->lang_cn}></option>
+		<option data-url='<{$langSwitchUrl}>lang=en'><{$lang->lang_en}></option>
+	</select>
+</div>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<{if $data}>
+<div style="text-align: center;padding: 50px 000px">
+	<h1 class='text-info'><{$lang->order_founded}>!</h1>
+
+	<p><{$lang->order_id}>:<{$data.orderId}></p>
+	<p><{$lang->order_name}>:<{$data.order_name}></p>
+	<p><{$lang->time}>：<{date('Y-m-d H:i:s', $data.createTime)}></p>
+
+	<p>
+			<{if $data.multi_use>1}>
+				<span style="color:red;font-size:18px;">多次使用，共<{$data.multi_use}>次,已使用<{$data.multi_used}>次</span><br>
+				<span >还可使用<strong style="color:red;font-size:22px;"><{$data.multi_use-$data.multi_used}>次</strong></span><br>
+				
+			<{/if}>
+	
+		<{if $data.status==1}>
+		<span style="color:#58964E;"><{$lang->paid}></span><br>
+		
+		<{if $data.payment=='creditcard'}>
+		<span style="color:red;">重要提醒!重要提醒!</span><br>
+		<span>本次订单为信用卡支付,需要</span><span style="color:red;">核兑及记录持卡人信息!</span><br><br>
+		<small >请核兑用户信用卡或Photo ID 上的个人信息是否与订单信息一致,如果不一致,通知用户不能使用.用户可以拨打 0425 616 988 联系我们 </small><br>
+		<small style="color:red;">购买用户信息为:<{$data.first_name}> &nbsp; <{$data.last_name}> </small>
+		<{/if}>
+		<small>(<{date("Y-m-d H:i:s", $data.paytime)}>)</small>
+		<{else}>
+		<span style="color:#F30; font-size:20px;"><{$lang->unpaid}></span>
+		<{/if}>
+	</p>
+	
+
+	<{if $data.coupon_status=='c01'}>
+		<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+	<{elseif $data.coupon_status=='b01'}>
+		<i class='fa fa-exclamation-triangle fa-5x' style ='color:#f30'></i>
+		<p><{if $langStr=='zh-cn'}>该订单已经被兑付<{else}>The order has already been redeemed<{/if}></p>
+	<{elseif $data.coupon_status=='d01'}>
+		<i class='fa fa-exclamation-triangle fa-5x' style ='color:#f30'></i>
+		<p><{if $langStr=='zh-cn'}>该订单已经被取消<{else}>This order has already been canceled<{/if}></p>
+	<{/if}>
+	
+	<br /><br />
+
+	<div>
+	<{if $data.coupon_status=='c01' && !$isFreshFoodSupplier}>
+	<a class='btn btn-warning' href="<{$http_root_www}>company/customer_coupon_approving?id=<{$data.orderId}>"  onClick="return window.confirm(<{if $data.status==0}>'订单还未支付!!!!!!,请收款后再点击确认[ok]按钮!!,否则点击取消[cancel]按钮!!'<{else}>'确定该订单已使用?'<{/if}>);"><{$lang->redeem_now}></a>
+	<{/if}>
+	<a class='btn btn-default' href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$data.orderId}>"><{$lang->order_detail}></a>
+	<a class='btn btn-info' href="<{$http_root_www}>"><{$lang->back_to_home}></a>
+	</div>
+	<br>
+	<{if $data.multi_use>1}>
+   <span style="color:red;font-size:16px;">每次点击【立即兑付】按钮，只核销一次</strong></span><br><{/if}>
+	<p style="color: #aaa;font-size: 12px">
+
+	<{if $langStr=='zh-cn'}>
+		<{if $role=='owner'}>
+			操作者：商家（<{$businessName}>）
+		<{elseif $role=='staff'}>	
+			作为员工，商家（<{$businessName}>）授权您查看并处理该订单。
+		<{elseif $role=='redeem_staff'}>
+			作为兑付员工，商家（<{$businessName}>）授权您查看并处理该订单。
+		<{/if}>
+	<{else}>
+		<{if $role=='owner'}>
+			Operator：Business（<{$businessName}>）
+		<{elseif $role=='staff'}>	
+			As a staff，you are authorized to process this order by（<{$businessName}>）.
+		<{elseif $role=='redeem_staff'}>
+			As a redeem staff，you are authorized to process this order by（<{$businessName}>).
+		<{/if}>
+	<{/if}>
+	</p>
+
+</div>
+<{else}>
+<div style="text-align: center;padding: 100px 000px">
+	<h1 class='text-info'><{$lang->order_not_found}>!</h1>
+	<p><{$lang->please_rescan_qr_code}></p>
+
+	<i class='fa fa-close fa-5x' style ='color:#f23030'></i>
+
+	<div>
+	<a class='btn btn-default' href="<{$http_root_www}>company/customer_orders"><{$lang->order_management}></a>
+	<a class='btn btn-default' href="<{$http_root_www}>"><{$lang->back_to_home}></a>
+	</div>
+
+</div>
+<{/if}>
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+</body>
+</html>

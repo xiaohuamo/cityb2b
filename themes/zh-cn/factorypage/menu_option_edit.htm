@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	
+	
+	<script>
+	
+		
+	</script>
+	
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				 <{include file='company/side_restaurant_info.htm'}>
+				<div class="colCurTit">
+					<{$pagename}> 
+				</div>
+
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="菜单名称" style="width:250px; margin-right:5px;" />
+						
+						<br><br>
+
+						<label>菜单分类选择:</label>
+						
+						<select name="category" id='category'>
+ 
+						    <option value="all"<{if $category=='all'}> selected<{/if}>>全部</option> 
+						
+						  <{foreach from=$restaurant_menu_option_category item=item}>
+						  
+							<option value="<{$item.id}>"<{if $item.id==$category}> selected<{/if}>>
+								<{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+								<{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+								<{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+							</option>
+
+							
+                          <{/foreach}>
+						  
+						</select>
+
+						<button type="submit"><{$lang->search}></button>
+						<p>
+							[1]点击<strong>[菜单分类选项]</strong>选区类别,[2]再点击<strong>[搜索]按钮</strong>将<strong style="color="blue">自动生成</strong>新的菜品表格,填写即可.				
+						</p>
+						
+					</form>
+				</div>
+				    
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th>图片</th>
+									<th>菜单编号</th>
+					                <th>菜单名-中文</th>
+					                <th>单价</th>
+									<th>菜单名-英文</th>
+									<th>描述</th>
+								</tr>
+							</thead>
+							<tbody>
+						  <{foreach from=$data item=item name='dl'}>
+
+									<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+									<td>
+										<{if $item.menu_pic}>
+											<img src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>">
+											<a  target="_blank" href="<{$http_root_www}>factorypage/menu_pic?id=<{$item.id}>" >修改</a>
+											<{else}>
+											<a  target="_blank" href="<{$http_root_www}>factorypage/menu_pic?id=<{$item.id}>" >添加</a>
+											<{/if}>
+						  				</td>
+										
+										 <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>"  style="width:50px;" name="menu_id" value="<{$item.menu_id}>" >
+											<span class='promote-ajax'></span>
+							  				<br>
+										</td>
+										
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>"  style="width:250px;" name="menu_cn_name" value="<{$item.menu_cn_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
+
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>"  style="width:50px;" name="price" value="<{if $item.price >0}><{$item.price}><{/if}>" >
+											<span class='promote-ajax'></span>
+										</td>
+
+
+										<td>
+										
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>"  style="width:250px;" name="menu_en_name" value="<{$item.menu_en_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
+									
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>"  style="width:200px;" name="menu_desc" value="<{$item.menu_desc}>" >
+											<span class='promote-ajax'></span>
+										</td>
+									</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+
+						<div>
+						<{if $category}>
+						<!--  <a href="<{$http_root_www}>factorypage/add_restaurant_menu?category=<{$category}>&qty=10" >再添加菜单(10个)</a> -->
+						<{/if}>
+						</div>
+
+					<{else}>
+                       
+						
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var loading=false;
+	
+	$('input[name=menu_en_name],input[name=menu_desc],input[name=price],input[name=menu_cn_name],input[name=menu_id]').on('change',function(){
+			
+  		    var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		    var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		    var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+			
+			var id =$(this).data('id');
+			var value =	$(this).val();
+			var update_field_name=$(this).attr('name');
+			var updateData ={};
+
+			updateData['id']=id;
+			updateData[update_field_name]=value;
+			
+            var ajax_result = $(this).next('.promote-ajax');
+		 	$.ajax({
+			  url: "<{$http_root_www}>factorypage/update_menu_option_item",
+			  type: "POST",
+			  data: updateData,
+			  beforeSend:function(){
+			  		$(ajax_result).html(iconLoading);
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					   $(ajax_result).html(successIcon);
+					//alert('yes');
+				}else if(data.status==500){
+					alert(data.msg);
+						$(ajax_result).html(errorIcon);
+				}else{
+				alert(data.msg);
+						$(ajax_result).html(errorIcon);
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+		
+		
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+	    alert(this.target);
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+	
+</script>
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<{include file='footer.htm'}>
+
+</body>
+</html>

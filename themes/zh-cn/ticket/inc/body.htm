@@ -1,0 +1,65 @@
+
+<div class='ticket-mask-layer'>
+    <div class="shadow" style="display:none;">
+
+    </div>
+
+    <div class="contain-ticket" >
+        <div class="buyCont">
+            <div class="choice">
+                <div class='main-image'>
+                    <img src="<{$SKIN_PATH}>ticket/images/<{$imageFile}>">
+                    <div class='data-loading' ><i class="fa fa-spinner fa-spin " style="color:#FD5001 ;"></i>努力加载中...</div>
+                    <div class='data-loading-fail' style="display:none"><i class="fa fa-exclamation " style="color:#d9534f;"></i>网络问题，请稍后再试</div>
+                </div>
+
+                <div class="choices">
+
+                </div>
+            </div>
+
+            <div class="buyInfo">
+               
+                <div class="sites flex-display">
+                     <div class="title ">
+                        座位号
+                    </div>
+                    
+                    <div style="clear: both"></div>
+                    <ul  id="selected-seats" >
+                    </ul>
+                    <div id ='totalPrice' data-total='0'>总额：</div>
+
+                </div>
+              
+            </div>
+        </div>
+        <div class="payCont btnCont">
+        <button type="button"  id="btn-ticket-buy" onClick='ticketBuyConfirm()'>加入购物车</button>
+        <button type="button" id="btn-cancel" class='ticket-mask-layer-btn-cancel' >取消</button>
+     </div>
+ </div>
+</div>
+
+ <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.seat-charts.min.js"></script>
+
+ <script>
+<{include file ="ticket/inc/ticket_lib.js"}>
+
+$(function(){
+    $('.contain-ticket').width(950);
+});
+
+function adjustCformSize(){
+        $('.CForm').each(function(){
+            var width=$(this).find('.seatCharts-header').children().length*35+100;
+            var length=$(this).find('.seatCharts-container').children().length*52+120;
+            if(width<640)width=640;//min
+            if(length<400)length=400;//min
+            $(this).width(width);
+            $(this).height(length);
+        });
+}
+
+</script>

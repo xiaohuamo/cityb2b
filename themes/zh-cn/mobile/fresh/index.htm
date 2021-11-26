@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta http-equiv="Cache-Control" content="no-transform"/>
+	<meta http-equiv="Cache-Control" content="no-siteapp"/>
+	<meta name="applicable-device" content="mobile">
+	 <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>mobile/fresh/swiper-5.4.5/package/css/swiper.min.css"/>
+	<link type="text/css" rel="stylesheet" href="<{$SKIN_PATH}>mobile/fresh/css/m-reset.css"/>
+	<link type="text/css" rel="stylesheet" href="<{$SKIN_PATH}>mobile/fresh/css/public.css"/> 
+	<link rel="stylesheet" type="text/css" href="/static/font-awesome-4.3.0/css/font-awesome.min.css">
+	<script src="<{$SKIN_PATH}>mobile/js/jquery.min.js"></script>
+	<script src="<{$SKIN_PATH}>mobile/js/restaurant.js"></script>
+	
+	<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<title><{$pageTitle}></title>
+	
+
+
+	
+</head>
+
+<body>
+<div class="shop-details">
+
+
+	<div class="header">
+		<img class="header-bg"
+			 src="<{$UPLOAD_PATH}><{$coupon.pic|image:450:179:'cut'}>"
+			 alt="">
+		<div class="header-title">
+		
+		<div class="leftarrow" >
+			<a onclick="window.history.back();" class="a-back" style="
+    background: url(../themes/zh-cn/mobile/images/ico-back.png) no-repeat center center;
+    -o-background-size: 100% auto;
+    -ms-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+"></a>
+		</div>
+			<div class="date-select"><!--<{$lang->logistic_delivery_date}>-->日期：<span class="deliver-date-display"></span>
+				<i class="drop-down"></i>
+			</div>
+			<div class="search-right" style="    margin-top: 4px;">
+				<i class="iconfont icon-search-line"></i>
+				
+				<input type="search" name="search" id="search-input" class="header-search" style="display: block;
+					height: 30px;
+					width: 129px;
+					font-size: 12px;
+					font-weight: 600;
+					color: #595959;
+					line-height: 30px;
+					padding-left: 29px;
+					background: #FFFFFF;
+					border-radius: 15px;" placeholder="搜索">
+				<!--<a href="javascript:;"><{$lang->search}></a> -->
+			</div>
+		</div>
+		<div class="header-info" id="header-info" >
+			<img class="info-logo"
+				 src="<{$UPLOAD_PATH}><{$coupon.business.logo|image:200:200:'cut'}>"
+				 alt="">
+			<div class="title"><{$coupon.business.displayName}></div>
+            			<div class="sales">
+           		<span class="best-sellers">热卖</span>
+           			<{if $sales_count>0}><span class="sales-num">销量&nbsp;<strong><{$sales_count}></strong>份</span> <{/if}>
+           			<span class="support-card"><{if $business_user.deliver_avaliable}><i class="fa fa-fw fa-check " style="color:green"></i><{else}><i class="fa fa-fw fa-exclamation-triangle" style="color:red"></i><{/if}>配送</span>
+            			<span class="support-card"><{if $business_user.pickup_avaliable}><i class="fa fa-fw fa-check " style="color:green"></i><{else}><i class="fa fa-fw fa-exclamation-triangle" style="color:red"></i><{/if}>自取</span>
+            	</div>
+           
+
+
+			<div class="serviceSum-description">
+					  <span>服务项目</span>
+					  <span class="serviceSum-description-text">	<{if $business_user.amount_for_minimum_delivery>0}>起送$<{round($business_user.amount_for_minimum_delivery,0)}>&nbsp;<{/if}>
+				<{if $business_user.flat_rates_to_local_city>0}>运费$<{$business_user.flat_rates_to_local_city}>&nbsp;<{/if}>
+				<{if $business_user.amount_for_free_delivery>0}>$<{round($business_user.amount_for_free_delivery,0)}>免运<{/if}></span>
+					<span class="serviceSum-description-text" style="
+						position: absolute;
+						right: 15px;
+						color: :red;
+						color: #2f17af;
+					">更多</span>
+					  <i class="icon-right-line"></i>
+					</div> 
+    
+<!--
+			<{if $business_user.deliver_avaliable}>
+				<p class="offer-description" style =" font-size:16px;" >配送说明：</p>
+				<p><{if $delivery_fee_desc}><{$delivery_fee_desc}> <{/if}> </p>
+				<p ><{if $business_user.delivery_description}><{$business_user.delivery_description}> <{/if}></p>
+
+			<{/if}>
+			
+			<{if $business_user.pickup_avaliable}>
+				<p class="offer-description" >自提说明：<{if $business_user.pickup_des}><{$business_user.pickup_des}> <{/if}> </p>
+				
+
+			<{/if}>
+			
+		
+-->
+		
+			  <{if $restaurant_promotion_manjian.promotion_desc}>  
+					<div class="companyDescription" >
+				
+				<span class="service-description-text">  <{$restaurant_promotion_manjian.promotion_desc|truncate_cn:220:'...'}>  </span> 
+				
+			</div>
+			<{/if}>
+			
+			  <{if strlen($restaurant_promotion_manjian.promotion_desc)>220}>  
+			<div class="companyDescription" style=" margin-top: 5px;margin-bottom: 10PX;">
+				<span style="    position: absolute;    right: 15px;    color: :red;    color: #2f17af;">更多</span>
+					<span class="service-description-text">  </span> <i class="icon-right-line"></i>
+				
+			</div>
+			<{/if}>
+			
+			
+			
+	
+			
+			<!--
+			
+			  <{if $business_user.companyDescription}>  
+			<div class="companyDescription">
+				
+				<span class="service-description-text">  <{$business_user.companyDescription|truncate_cn:220:'...'}>  </span> 
+				
+			</div>
+			<{/if}>
+			
+			  <{if strlen($business_user.companyDescription)>220}>  
+			<div class="companyDescription" style=" margin-top: 5px;">
+				<span>更多商家描述</span>
+				<span class="service-description-text">  </span> <i class="icon-right-line"></i>
+				
+			</div>
+			<{/if}>
+			-->
+			<!--
+			<div class="serviceSum-description">
+          <span>服务说明：</span>
+          <span class="serviceSum-description-text">店铺规则 自取配送 联系方式</span>
+          <i class="icon-right-line"></i>
+        </div> -->
+		</div>
+	</div>
+	<div class="banner" id="banner"><img
+				src="<{$UPLOAD_PATH}><{$coupon.pic}>" 
+				alt=""></div>
+	<div class="content">
+        <!--      <ul class="title-ul">
+                <li class="active">
+                 <img src="img/details-icon1.png" alt="">
+                  <span>新鲜果蔬</span>
+                </li>
+               <li>
+                <img src="img/details-icon2.png" alt="">
+                <span>乳品烘焙</span>
+               </li>
+                <li>
+                  <img src="img/details-icon3.png" alt="">
+                  <span>熟食面点</span>
+                </li>
+                <li>
+                 <img src="img/details-icon4.png" alt="">
+                  <span>美护百货</span>
+               </li>
+                <li>
+                  <img src="img/details-icon5.png" alt="">
+                 <span>肉蛋水产</span>
+                </li>
+               <li>
+                 <img src="img/details-icon6.png" alt="">
+                 <span>新鲜果蔬</span>
+              </li>
+             </ul> -->
+		<ul id="startpos" class="content-ul">
+			<li class="content-ul-li ul-li-active">
+				<ul class="left-ul" style ="margin-top:0.2rem;">
+                    <{if $menu_bought_list}>
+						<li id="category-bought" class="category" onclick="changeCategory(`bought`)">
+							<i class="iconfont icon-tuijian-block"></i>
+                            <{$lang->bought_history_shop}>
+						</li>
+                    <{/if}>
+                    <{foreach from=$restaurant_category item=category}>
+                        <{if !$category.parent_category_id}>
+							<li id="category-<{$category.id}>" class="category" onclick="changeCategory(`<{$category.id}>`)">
+                                <{if $category.hot == 1}><i class="iconfont icon-tuijian-block"></i><{/if}>
+                                <{$category.category_name|truncate_cn:33}>
+							</li>
+                        <{/if}>
+                    <{/foreach}>
+				</ul>
+				<ul class="right-ul" style ="margin-top:0.2rem;" >
+				
+				
+                    <{if $menu_bought_list}>
+						<li class="right-li" id="category-list-bought">
+							<ul class="commodity-details finished" id="menu-bought">
+                                <{foreach from=$menu_bought_list item=bought}>
+									<li>
+									<{if $bought.onSpecial}>	<em class="rexiao"><{$lang->hot}></em> <{/if}>
+										<img <{if $lazyload}> class="lazyload data-" <{/if}>src="<{$UPLOAD_PATH}><{$bought.menu_pic|image:150:150:'cut'}>" data-src-retina= "<{$UPLOAD_PATH}><{$bought.menu_pic|image:150:150:'cut'}>">
+										<div class="commodity-info"
+											 data-main_coupon_id='<{$restaurant_couponID}>'
+											 data-menu_id='<{$bought.id}>'
+											 data-price='<{$bought.price}>'
+											 data-onspecial='<{$bought.onSpecial}>'
+											 data-pic='<{$bought.menu_pic}>'
+											 data-pics='<{$bought.menu_pics}>'
+											  data-menu_name='<{$bought.menu_name}>'
+											   data-menu_desc='<{$bought.menu_desc}>'
+											  >
+											 
+											<p class="commodity-name"><{$bought.menu_name}></p>
+											<p class="commodity-time-limit"><{$bought.unit}>&nbsp; $<{$bought.original_price}></p>
+											<div class="commodity-price"><span class="real">$<{$bought.price}></span><span class="commodity-old-price">
+               </span></div>
+										<!--	<p class="commodity-restrictions"><{$lang->limit_buy}><{$bought.limit_buy_qty}></p> -->
+											<i class="iconfont icon-cart-block menu-add-cart-<{$bought.id}>" onclick="add_new_product(this)"></i>
+											<div class="calculation menu-calculation-<{$bought.id}>">
+												<i class="iconfont icon-jian-line" onclick="remove_product(this)"></i>
+												<span class="menu-quantity-<{$bought.id}>">0</span>
+												<i class="iconfont icon-jia-block" onclick="add_product(this)"></i>
+											</div>
+										</div>
+									</li>
+                                <{/foreach}>
+							</ul>
+						</li>
+                    <{/if}>
+							
+					
+                    <{foreach from=$restaurant_category item=category}>
+                        <{if !$category.parent_category_id}>
+							<li class="right-li" id="category-list-<{$category.id}>">
+								<ul class="lable">
+								  <li id="sub-category-<{$category.id}>" class="sub-category sub-category-parent-<{$category.id}>"
+												onclick="changeSubCategory(`<{$category.id}>`)">全部</li>
+												
+                                    <{foreach from=$restaurant_category item=sub_category}>
+                                        <{if $sub_category.parent_category_id == $category.id}>
+											<li id="sub-category-<{$sub_category.id}>" class="sub-category sub-category-parent-<{$category.id}>"
+												onclick="changeSubCategory(`<{$sub_category.id}>`)"><{$sub_category.category_name}></li>
+                                        <{/if}>
+                                    <{/foreach}>
+								</ul>
+
+								<ul class="commodity-details" id="menu-<{$category.id}>">
+								</ul>
+                                <{foreach from=$restaurant_category item=sub_category}>
+                                    <{if $sub_category.parent_category_id == $category.id}>
+										<ul class="commodity-details" id="menu-<{$sub_category.id}>">
+                                            <{*											<li>*}>
+                                            <{*												<em class="rexiao">上新</em>*}>
+                                            <{*												<img src="img/details-icon1.png" alt="">*}>
+                                            <{*												<div class="commodity-info">*}>
+                                            <{*													<p class="commodity-name">苹果-1kg</p>*}>
+                                            <{*													<p class="commodity-time-limit">限时10.25-11.22</p>*}>
+                                            <{*													<div class="commodity-price"><span class="real">$0.99</span><span class="commodity-old-price">*}>
+                                            <{*								$2.49</span></div>*}>
+                                            <{*													<p class="commodity-restrictions">限购1件</p>*}>
+                                            <{*													<i class="iconfont icon-cart-block"></i>*}>
+                                            <{*													<div class="calculation">*}>
+                                            <{*														<i class="iconfont icon-jian-line"></i>*}>
+                                            <{*														<span>1</span>*}>
+                                            <{*														<i class="iconfont icon-jia-block"></i>*}>
+                                            <{*													</div>*}>
+                                            <{*												</div>*}>
+                                            <{*											</li>*}>
+                                            <{*											<li>*}>
+                                            <{*												<em class="rexiao">热销</em>*}>
+                                            <{*												<img src="img/details-icon1.png" alt="">*}>
+                                            <{*												<div class="commodity-info">*}>
+                                            <{*													<p class="commodity-name">苹果-1kg</p>*}>
+                                            <{*													<p class="commodity-time-limit">限时10.25-11.22</p>*}>
+                                            <{*													<div class="commodity-price"><span class="real">$0.99</span><span class="commodity-old-price">*}>
+                                            <{*								$2.49</span></div>*}>
+                                            <{*													<p class="commodity-restrictions">限购1件</p>*}>
+                                            <{*													<i class="iconfont icon-cart-block"></i>*}>
+                                            <{*													<div class="calculation">*}>
+                                            <{*														<i class="iconfont icon-jian-line"></i>*}>
+                                            <{*														<span>1</span>*}>
+                                            <{*														<i class="iconfont icon-jia-block"></i>*}>
+                                            <{*													</div>*}>
+                                            <{*												</div>*}>
+                                            <{*											</li>*}>
+										</ul>
+                                    <{/if}>
+                                <{/foreach}>
+							</li>
+                        <{/if}>
+                    <{/foreach}>
+					
+					<li class="right-li" id="category-list-search">
+							<ul class="commodity-details" id="menu_search">
+									</ul>
+							</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!-- <div class="fixed-buttom">
+	  <i class="iconfont icon-cart-circular"></i>
+	  <div class="info">
+		<p class="title">未选购商品</p>
+		<p class="delivery-fee">另需配送费$8.00</p>
+	  </div>
+	  <div class="settlement qisong">$20起送</div>
+	</div> -->
+	<div class="settlements fixed-buttom">
+		<div class="cart-price">
+			<div class="cart-out">
+				<i class="iconfont icon-cart-circular"></i>
+				<em class="cart-quantity">1</em>
+			</div>
+			<div class="settlement-price">
+				<div class="set-pri-c">
+					<span>$<span class="cart-total-price"></span></span>
+                    <{*					<em>$14.99</em>*}>
+				</div>
+				<div class="set-pri-c-no">未选购商品</div>
+				<div class="other-price other-price-no">
+				<{if $business_user.amount_for_minimum_delivery>0}>起送$<{round($business_user.amount_for_minimum_delivery,0)}>&nbsp;<{/if}>
+				<{if $business_user.flat_rates_to_local_city>0}>运费$<{$business_user.flat_rates_to_local_city}>&nbsp;<{/if}>
+				<{if $business_user.amount_for_free_delivery>0}>$<{round($business_user.amount_for_free_delivery,0)}>免运<{/if}>
+				
+				</div> 
+			</div>
+		</div>
+		<!-- <div class="settlement-btn ">去结算</div> -->
+		<!-- 如果商品价格超过起送价格则移除settlement-btn-no类名 -->
+		<div class="settlement-btn " onclick="creat_new_order()"><{$lang->buy_now}></div>
+	</div>
+</div>
+
+
+<div class="mask"></div>
+<!-- 日期框 -->
+<div class="delivery-date">
+	<div class="del-top">
+		<div class="del-top-data"><{$lang->logistic_delivery_date}>：<span class="deliver-date-display"></span></div>
+		<div class="del-top-btn"><span>收起</span><i class="iconfont icon-down-block"></i></div>
+	</div>
+	<div class="del-con">
+		<div class="del-con-t1">
+			<div class="del-con-tit"><{$lang->logistic_checkarea}></div>
+		</div>
+		<div class="del-con-t2">
+			<div class="t2-outer">
+				<input class='postcode-validation' type="number" placeholder="&nbsp;<{$lang->input_post_code}>...">
+				<span></span>
+			</div>
+		</div>
+		<div class="del-con-t1">
+			<div class="del-con-tit"><{$lang->logistic_choosedate1}></div>
+		</div>
+		<div class="del-con-t2">
+			<div class="t2-outer">
+				<ul class="t2-week">
+                    <{foreach from=$businessDispSchedule item=item}>
+						<li>
+							<span class="week"><{$item->getOrderDeliveryWeekDisplay($lang['lang'][0])}></span>
+							<span class="week-data"><{$item->getOrderDeliveryDateDisplay()}></span>
+							<span class="week-select date-options
+								<{if $dispCenterUserSelectedDeliveryDate|strpos:$item->orderDeliveryTimestamp !== false && $item->isAvaliable == true}> selected
+								<{elseif $item->isAvaliable}> active
+								<{else}> unavailable
+								<{/if}>"
+								  data-delivery-anytime='<{$item->delivery_anytime}>'
+								  data-delivery-morning='<{$item->delivery_morning}>'
+								  data-delivery-afternoon='<{$item->delivery_afternoon}>'
+								  data-order-delivery-timestamp='<{$item->orderDeliveryTimestamp}>'><{$item->getOrderDeliveryOptionalDisplay($lang['lang'][0])}></span>
+						</li>
+                    <{/foreach}>
+				</ul>
+			</div>
+			<div class="del-con-t2tit">
+				<div class="del-con-tit"><{$lang->logistic_schedule_time}></div>
+			</div>
+		</div>
+		
+		
+	
+					<div  style="">
+						<div class="business-box">
+							<p class="business-box-start-shopping-btn" 
+							onclick="$('.deliver-center-user-panel').hide();" 
+							style="text-align: center; margin-top: 2rem;"><em id="promote_shop_details" style="background: #FD5001;color: #fff;padding: 10px 20px;font-size: 16px;">
+							日常订货时间，及取货或配送时间表</em>
+							
+							</p>
+						</div>		
+					<br>
+					<div style="pading: 20px;width: 88%;margin-left: 6%;">
+						
+						<table class="table" style="width: 100%;text-align: center;background: #eee;">
+							<thead>
+							<tr>
+								<th>下单时间</th>
+								
+								<th>交货时间</th>
+							</tr>
+							</thead>
+							
+							<tbody>
+								
+								 								 
+									 <{foreach from=$current_business_tuangou_time item=item}>
+								 
+									 <tr class="odd">
+									 
+										 <{if $langStr=='zh-cn'}>
+											<td><{$item.ordertime_cn}></td>
+											
+											<td><{$item.delivery_date_of_week_cn}></td>
+										<{else}>
+											<td><{$item.ordertime}></td>
+											
+											<td><{$item.delivery_date_of_week}></td>
+										<{/if}>
+									</tr>
+									 
+								 <{/foreach}>
+									 
+								 	
+								 								
+								
+								
+							</tbody>
+						 </table>
+						
+					</div>
+					<div class="business-box del-top-btn">
+							<p class="business-box-start-shopping-btn" onclick="$('.deliver-center-user-panel').hide();" style="text-align: center; margin-top: 2rem;"><em style="background: #FD5001;color: #fff;padding: 10px 20px;font-size: 15px;">返回</em>
+							</p>
+						</div>
+					
+				</div>
+			
+			
+			
+			
+			
+				
+			
+				
+		
+		
+		
+		
+		<div class="del-con-t3">
+			<div class="t3-outer">
+				<ul class="t3-time">
+					<li class="delivery-option-anytime <{if $dispCenterUserSelectedDeliveryDate|strpos:'anytime' !== false}>active<{/if}>"
+						data-val='anytime'>
+						<span class="time-name"><{$lang->any_time}></span>
+						<span class="time-nums">8:00-20:00</span>
+						<span class="time-select time-options"></span>
+					</li>
+					<li class=" delivery-option-morning <{if $dispCenterUserSelectedDeliveryDate|strpos:'morning' !== false}>active<{/if}>"
+						data-val='morning'>
+						<span class="time-name"><{$lang->morning}></span>
+						<span class="time-num">8:00 - 12:00</span>
+						<span class="time-select time-options"></span>
+					</li>
+					<li class="delivery-option-afternoon <{if $dispCenterUserSelectedDeliveryDate|strpos:'afternoon' !== false}>active<{/if}>"
+						data-val='afternoon'>
+						<span class="time-name"><{$lang->afternoon}></span>
+						<span class="time-num">12:00 - 20:00</span>
+						<span class="time-select time-options"></span>
+					</li>
+				</ul>
+			</div>
+            <{*			<div class="del-con-t2tit">*}>
+            <{*				<div class="del-con-tit">改时间递送的其他商家</div>*}>
+            <{*			</div>*}>
+		</div>
+        <{*		<div class="del-con-t4">*}>
+        <{*			<div class="t4-outer">*}>
+        <{*				<ul class="t4-business">*}>
+        <{*					<li>*}>
+        <{*						<a href="javascript:void(0);">*}>
+        <{*							<img src="img/测试.jpg">*}>
+        <{*							<span class="ellipsis-1">MK蔬菜</span>*}>
+        <{*						</a>*}>
+        <{*					</li>*}>
+        <{*					<li>*}>
+        <{*						<a href="javascript:void(0);">*}>
+        <{*							<img src="img/测试.jpg">*}>
+        <{*							<span class="ellipsis-1">澳生鲜</span>*}>
+        <{*						</a>*}>
+        <{*					</li>*}>
+        <{*					<li>*}>
+        <{*						<a href="javascript:void(0);">*}>
+        <{*							<img src="img/测试.jpg">*}>
+        <{*							<span class="ellipsis-1">妙生鲜蔬果</span>*}>
+        <{*						</a>*}>
+        <{*					</li>*}>
+        <{*				</ul>*}>
+        <{*			</div>*}>
+        <{*		</div>*}>
+	</div>
+</div>
+<!-- 购物车 -->
+
+<div class="shopping-cart">
+	<div class="cart-t1">
+		<div class="commodity"><span class="cart">购物车</span><span class="comm cart-quantity"></span></div>
+        <{*		<div class="empty"><i class="iconfont icon-delete-line"></i><span>清空购物车</span></div>*}>
+	</div>
+	<ul class="commodity-con" id="cart-item-list">
+	</ul>
+	<div class="settlements">
+		<div class="cart-price">
+			<div class="cart-out">
+				<i class="iconfont icon-cart-circular"></i>
+				<em class="cart-quantity">1</em>
+			</div>
+			<div class="settlement-price">
+				<div class="set-pri-c">
+					<span><span class="cart-total-price"></span></span>
+                    <{*					<em>$14.99</em>*}>
+				</div>
+				<div class="other-price">配送费$10.00，$59元免运！</div>
+			</div>
+		</div>
+		<div class="settlement-btn " onclick="creat_new_order();" ><{$lang->buy_now}></div>
+	</div>
+</div>-->
+
+<!-- 商品详情 -->
+	<div class="commodity-Det" style ="display:none;bottom:0%;">
+		<i class="commodity-Det-close iconfont icon-close-line"></i>
+		<div  style="max-height:94vh;overflow-y:auto;overscroll-behavior: none;">
+		<div class="com-det-img">
+			<div class="swiper-container">
+			    <div class="swiper-wrapper">
+			      <div  class="swiper-slide"><img id="large_image" src="" ></div>
+			      <div  class="swiper-slide"><img id="multi_pics1" src="" ></div>
+				  <div  class="swiper-slide"><img id="multi_pics2" src="" ></div>
+				  <div  class="swiper-slide"><img id="multi_pics3" src="" ></div>
+				  <div  class="swiper-slide"><img id="multi_pics4" src="" ></div>
+				 
+				  
+			    </div>
+			    <!-- Add Pagination -->
+			    <div class="swiper-pagination"></div>
+			  </div>
+		</div>
+		
+		<div class="comm-express toggle-txt" style="background:#fff">
+      
+	 
+        <div  id='contentofitem' class="txt content-image-fullsize" style="display: block;"></div>
+    
+    	</div>
+	
+		
+		
+		
+		<div class="com-det-con" >
+		
+		
+			<div class="com-det-con-t1"  data-main_coupon_id='coupon_id'
+                         data-menu_id='menu_id'
+                         data-price='price'
+					    data-onspecial='onspecial' >
+				<div class="con-t1-price-tips">
+					<div class="con-t1-price">
+						<span id="large_pic_price"></span>
+						<em id="large_pic_price_org" ></em>
+					</div>
+					<div class="con-t1-tips"></div>
+				</div>
+				
+				<div class="con-t1-join-cart_new" onclick="add_new_product(this,1)" >
+					<i class="iconfont icon-jia-line"></i>
+					<span>加购物车</span>
+				</div>
+				
+				<div class="con-t1-join-cart_old" onclick="add_product(this,1)" >
+					<span class="menu-quantity-ubonus">0</span>&nbsp;
+					<i class="iconfont icon-jia-line"></i>
+					<span>加购物车</span>
+				</div>
+				
+				
+			</div>
+			<div class="com-det-con-t2">
+				<div class="con-t2-tit">
+					<div class="com-tit-l">
+						<span class="com-tit-name"  id="large_pic_title" ></span>
+						<div class="com-tit-tips">
+							<span id="large_pic_onSpecial"></span>
+							<em class="ellipsis-1"></em>
+						</div>
+					</div>
+					<div class="com-img"><img src="" ></div>
+				</div>
+				<p class="offer-description" id="large_pic_desc"></p>
+				<div class="service-description">
+					<div class="ser-des-l"><span>服务：</span><em>信用卡购买声明·退货政策</em></div>
+					<i class="iconfont icon-right-line"></i>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- 购买声明和退款政策 -->
+	<div class="statement">
+		<i class="statement-close iconfont icon-close-line"></i>
+		<div class="statement-list">
+			<span>信用卡购买声明</span>
+			<p>使用信用卡支付购买本产品，必须在消费时出示PhotoID及信用卡, 并与您购买时信息一致。否则,商家会拒绝提供相关服务。</p>
+		</div>
+	
+	
+
+	</div>
+	
+	
+		<div class="statementSum">
+		<i class="statementSum-close iconfont icon-close-line"></i>
+		<div class="statementSum-list">
+			
+			
+			
+			
+			
+
+		<{if $business_user.deliver_avaliable}>
+			
+				
+			<br>
+			<span>配送规则</span>
+			<p><{if $delivery_fee_desc}><{$delivery_fee_desc}> <{/if}><{if $business_user.delivery_description}><{$business_user.delivery_description}><{/if}></p>
+			
+
+			<{/if}>
+			
+			
+			
+				
+			<{if $business_user.pickup_avaliable}>
+				
+				<{if $business_user.pickup_des}>
+			<br>
+			<span>自取规则</span>
+			<p><{$business_user.pickup_des}></p>
+			<{/if}>
+
+			<{/if}>
+			
+			
+			
+			
+		
+			<{if $business_user.refund_policy}>
+			<br>
+			<span>退货规则</span>
+			<p><{$business_user.refund_policy}></p>
+			<{/if}>
+			
+		
+			<{if $coupon.finePrint}>
+			<br>
+			<span>店铺规则</span>
+			<p><{$coupon.finePrint}></p>
+			<{/if}>
+		
+		</div>
+	
+	
+
+	</div>
+	
+	<div class="statement_companyDescription">
+		<i class="statement_companyDescription-close iconfont icon-close-line"></i>
+		<div class="statement_companyDescription-list">
+			<span>活动说明</span>
+			<p> <{$restaurant_promotion_manjian.promotion_desc}>  </p>
+	
+		
+		
+		<span>联系信息</span>	
+			<p>地址：<{$business_user.googleMap}></p>
+			<p>电话：<{$business_user.tel}></p>
+			<p>微信：<{if $business_user.busi_weixin_nametel}> <{$business_user.busi_weixin_nametel}><{else}>ubonus003<{/if}></p>
+		
+		<br>
+		<img class="info-logo" src="<{$SKIN_PATH}>images/ubonus006.jpg" alt="" style="
+    height: 200px;
+    width: 200px;
+    /* text-align: center; */
+"><br>
+			<p style="    font-size: 16px;    color: #333333;  font-weight: 600;  line-height: 23px;">商家信息</span>
+			<p> <{$business_user.companyDescription}>  </p>
+	
+		
+		</div>
+
+	</div>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/fresh/js/fastclick.min.js"></script>
+<script src="<{$SKIN_PATH}>mobile/fresh/swiper-5.4.5/package/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/fresh/js/public.js"></script>
+<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+
+
+<script type="text/javascript">
+
+
+   $(function () {
+	
+
+  
+  // alert(startpos);
+        $('img.lazyload').unveil();
+		
+		<{if $cart}>
+		
+		   $('.shopping-cart').css('bottom','0px');
+		   $('.mask').fadeIn(400);
+	   
+        <{/if}>
+		
+		})
+
+
+
+	var docTop = 0;
+	$(document).scroll(function (e) {
+	  // let t = $('body, html').scrollTop();
+	  let t = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+	  let p = $('.content').offset().top;
+	 // console.log('当前屏幕的top值'+ t);
+	  if (t +40 > p) {
+	    docTop = p;
+	    $('.content').addClass('box-active')
+	  } else if (t != 0) {
+	    docTop = t;
+	  }
+	})
+	
+	// $('.right-ul').scroll(function (e) {//这个废弃，不可绑定未来元素
+	//   let top = $('.right-ul').scrollTop();
+	//   console.log(top)
+	//   if (top <= 0) {
+	//     $('.content').removeClass('box-active');
+	//     $('body, html').scrollTop(docTop);
+	//   }
+	// })
+	// })
+	function listenForScrollEvent(el){
+	    el.on("scroll",function(e){
+	        el.trigger("custom-scroll");
+	    })
+	}
+	listenForScrollEvent($(".right-ul"));//这一句放到创建完未来元素后执行
+	
+	var scrollTimer = null
+	$(document).on('custom-scroll', '.right-ul', function(e) {
+		if (scrollTimer) {
+		  return;
+		}
+		scrollTimer = setTimeout(function () {
+
+		  $('img.lazyload').unveil();
+		  let top = $('.right-ul').scrollTop();
+		 //  console.log(top)
+		  if (top <= 0) {
+		   $('.content').removeClass('box-active');
+		 
+			 $('#header-info').css("display","");
+			$('#banner').css("display","");
+	    $('body, html').scrollTop(docTop-40);
+		  }
+		  scrollTimer = null
+		}, 16)
+	});
+	
+	
+	
+	// function listenForScrollEvent(el) {
+	//   el.on("scroll", function (e) {
+	//     if (scrollTimer) {
+	//       return;
+	//     }
+	//     scrollTimer = setTimeout(function () {
+	//       let top = $('.right-ul').scrollTop();
+	//       console.log(top)
+	//       if (top <= 0) {
+	//         $('.content').removeClass('box-active');
+	//         $('body, html').scrollTop(docTop);
+	//       }
+	//       scrollTimer = null
+	//     }, 16)
+	
+	//     // el.trigger("custom-scroll");
+	//   })
+	// }
+	
+	
+	$("body").on("touchstart", function (e) {
+	  // 判断默认行为是否可以被禁用
+	  // if (e.cancelable) {
+	  //   // 判断默认行为是否已经被禁用
+	  //   if (!e.defaultPrevented) {
+	  //     e.preventDefault();
+	  //   }
+	  // }
+	  startY = e.originalEvent.changedTouches[0].pageY;
+	});
+	$("body").on("touchend", function (e) {
+	  // 判断默认行为是否可以被禁用
+	  // if (e.cancelable) {
+	  //   // 判断默认行为是否已经被禁用
+	  //   if (!e.defaultPrevented) {
+	  //     e.preventDefault();
+	  //   }
+	  // }
+	  moveEndY = e.originalEvent.changedTouches[0].pageY,
+	    Y = moveEndY - startY;
+		//alert('y大于300');
+		
+	  //下滑
+	  if (Y >300) {//这个300是上滑300px的距离触发（防止custom-scroll执行不起作用时，滑动可以解除吸顶效果）
+	  //  $('.content').removeClass('box-active');
+		// $('#header-info').css("display","");
+	// $('#banner').css("display","");
+	 //  $('body, html').scrollTop(docTop-40);
+	    // alert('下滑');    
+	  }
+	});
+	
+	
+	/*
+	var swiper = new Swiper('.swiper-container', {
+		loop : true,
+	    pagination: {
+	        el: '.swiper-pagination',
+	        dynamicBullets: true,
+	    },
+	});
+	*/
+
+
+	
+	// 点击商品弹出商品详情
+	$(document).on('click','.commodity-details>li>img',function(){
+	
+	
+		$('.commodity-Det').css("display", "block");
+	  // alert($(this).next('.commodity-info').data('pic'));
+	  var pic_path =$(this).next('.commodity-info').data('pic');
+	  var multi_pics =$(this).next('.commodity-info').data('pics');
+	  
+	   var menu_id = $(this).next('.commodity-info').data('menu_id');
+	   $('.com-det-con-t1').attr("data-menu_id",menu_id);
+	      $('.com-det-con-t1').data("menu_id",menu_id);
+	  // alert($(this).next('.commodity-info').data('menu_id'));
+	   $('.com-det-con-t1').attr("data-main_coupon_id",$(this).next('.commodity-info').data('main_coupon_id'));
+	   $('.com-det-con-t1').attr("data-price",$(this).next('.commodity-info').data('price'));
+	   $('.com-det-con-t1').attr("data-onspecial",$(this).next('.commodity-info').data('onspecial'));
+	  
+	  // alert($('.com-det-con-t1').data('main_coupon_id'));
+	   
+	   $("#large_pic_price").html('$'+ $(this).next('.commodity-info').data('price')); 
+	  // alert($(this).next('.commodity-info').data('menu_desc'));
+	   $("#large_pic_title").html($(this).next('.commodity-info').data('menu_name')); 
+	   
+	   $("#large_pic_desc").html($(this).next('.commodity-info').data('menu_desc')); 
+	   
+	   
+	   var current_item_buy_qty = $('.menu-quantity-'+ menu_id).html();
+	  // alert('id is:'+ menu_id + " and qty is: " + current_item_buy_qty);
+	   if(current_item_buy_qty>=1) {
+	   
+	    $('.con-t1-join-cart_new').css("display",'none');
+		$('.con-t1-join-cart_old').css("display",'');
+		$('.menu-quantity-ubonus').html(current_item_buy_qty);
+	  
+	   }else{
+	     $('.con-t1-join-cart_new').css("display",'');
+		 $('.con-t1-join-cart_old').css("display",'none');
+	   }
+	
+		 var onspecial = $(this).next('.commodity-info').data('onspecial');
+		 if(onspecial) {
+		   $("#large_pic_onSpecial").html('特价'); 
+		 }
+	   
+	
+		$(".commodity-Det img").each(function(){
+		
+		$(this).attr('src','<{$UPLOAD_PATH}>' + pic_path);
+		//alert(img_url);
+		})
+		
+		// 加入更多pictures
+		
+		append_more_pictures(multi_pics);
+		
+		// 获得商品详情内容
+		
+		append_detail_content(menu_id); 
+		
+		
+		 
+		// alert($('#large_image').attr("src"));
+		$('.commodity-Det').css('bottom','0%');
+	//	$('.fixed-buttom').css('background','transparent');
+		$('.mask').fadeIn(400);
+		var swiper = new Swiper('.swiper-container', { 
+		loop : true,
+	    pagination: {
+	        el: '.swiper-pagination',
+	        dynamicBullets: true,
+	    },
+	});
+		
+	})
+	
+	// 点击商品叉号
+		$(document).on('click','.mask,.commodity-Det-close,.swiper-slide',function(){
+		
+		
+	
+	$(".swiper-slide img").each(function(){
+		
+		$(this).attr('src','');
+		//alert(img_url);
+		})
+		
+		  $('.com-det-con-t1').attr("data-menu_id",'000000');
+	$('.commodity-Det').css('bottom','-80%');
+	$('.fixed-buttom').css('background','#F6F6F6');
+    
+	
+	
+	$('.shopping-cart').css('bottom','-80%');
+	
+	$('.commodity-Det').css("display", "none");
+	$('.mask').fadeOut(400);
+})
+
+
+function  append_detail_content(menu_id) {
+var data_content ;
+  var menu_idd= menu_id;
+	  $.ajax({
+					url: `<{$http_root_www}>test/get_item_content?id=`+menu_idd,
+					beforeSend: function () {
+						//menu.addClass(loadingClass);
+					},
+					success: function (data) {
+					//alert('here');
+						//menu.removeClass(loadingClass);
+						//menu.addClass(finishClass);
+					
+						//var data = JSON.parse(data);
+						//return data;
+						 
+					data_content=data;
+					  
+						
+					} 
+		  
+				}).done(function () {                
+		 $("#contentofitem").html(data_content); 
+						})
+		   
+ 
+}
+
+
+function  append_more_pictures(multi_pics){
+  //  alert( multi_pics );
+  
+ 
+var arr=multi_pics.split(";");
+ //alert( arr );
+for(var i=1;i<arr.length+1;i++){
+          if(i==0)continue;
+		  if(i>8)continue;
+		  
+		  if(arr[i-1].indexOf('://') !=-1 ){
+		   $("#multi_pics"+i).attr("src",arr[i-1]);
+		//	 alert( 'FIND'+  arr[i] );
+		  }else{
+		   $("#multi_pics"+i).attr("src",'<{$UPLOAD_PATH}>' +  arr[i-1]);
+		    
+		//	 alert(  'NOFIND'+   arr[i] );
+		  }
+		
+       }
+   }
+	
+</script>
+<script type="text/javascript">
+    $(function () {
+	
+
+        $('img.lazyload').unveil();
+  
+        if ($('.date-options.selected').length == 1 && $('.time-options.selected').length == 1) {
+            setDeliverDateTime();
+        }else{
+		
+		}
+
+        function toggleDeliverOptionForDate(target) {
+            if ($(target).data('delivery-afternoon') == 1) {
+                $('.delivery-option-afternoon').show();
+            } else {
+                $('.delivery-option-afternoon').hide();
+            }
+
+            if ($(target).data('delivery-anytime') == 1) {
+                $('.delivery-option-anytime').show();
+            } else {
+                $('.delivery-option-anytime').hide();
+            }
+
+            if ($(target).data('delivery-morning') == 1) {
+                $('.delivery-option-morning').show();
+            } else {
+                $('.delivery-option-morning').hide();
+            }
+
+            if ($('.time-options :visible').length == 1) {
+                $('.time-options :visible').first().addClass('selected');
+                setDeliverDateTime();
+            }
+        }
+
+        function setDeliverDateTime() {
+		   
+            var time = $($('.date-options.selected')).data('order-delivery-timestamp');
+            var option = $($('.time-options.selected')).parent().data('val');
+
+            document.cookie = "DispCenterUserSelectedDeliveryDate=" + time + "@" + option + "; path=/";
+			
+        }
+
+        function isPostcodeSupported(postcode) {
+            if (postcode.length != 4) return -1;
+            var postcodeSupported = "<{$postcodeSupported}>";
+            return postcodeSupported.indexOf(postcode);
+        }
+
+        function toggleHeaderReady() {
+            var currentDateTime = new Date();
+            //夏令时判断
+            var d1 = new Date(currentDateTime.toISOString().slice(0, 10) + ' 00:00:00 AEST');
+            var d2 = new Date(currentDateTime.getYear() + '-06-01 00:00:00 AEST');
+            var timezoneOffset = 60;
+            if (d1.getTimezoneOffset() !== d2.getTimezoneOffset()) {
+                timezoneOffset *= -11;
+            } else {
+                timezoneOffset *= -10;
+            }
+
+            var time = $($('.date-options.selected')).data('order-delivery-timestamp');
+			
+            var currentDate = new Date((time + (currentDateTime.getTimezoneOffset() - timezoneOffset) * 60) * 1000)
+          
+            <{if $langStr=='zh-cn'}>
+            var week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            <{else}>
+            var week = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"];
+            <{/if}>
+            var month = currentDate.getMonth() + 1;
+            var dayOfMonth = currentDate.getDate();
+            var dayOfWeek = week[currentDate.getDay()];
+            <{if $langStr=='zh-cn'}>
+            deliverDateDisplay = dayOfWeek + '(' + month + '月' + dayOfMonth + '日)';
+            <{else}>
+            deliverDateDisplay = dayOfWeek + '(' + dayOfMonth + '/' + month + ')';
+            <{/if}>
+
+            if ($('.date-options.selected').length == 1 || $('.time-options.selected').length == 1) {
+               if(time) {
+			
+					$('.deliver-date-display').html(deliverDateDisplay);
+			   }else{
+					$('.deliver-date-display').html('<{$lang->groupbuy_end}>');
+					$('.delivery-date').css('top','0px');
+					$('#promote_shop_details').html('团购已截团，或还未开始，请检查下面时间表');
+					
+			   }
+
+
+			   
+			
+            } else {
+			
+                $('.deliver-date-display').html('<{$lang->logistic_choosedate1}>');
+            }
+			//alert(deliverDateDisplay);
+        }
+
+        function alertEmptyingShoppingCartOnDateChange() {
+            var cartQty = parseInt($('.cartQty').text());
+            if (cartQty > 0) {
+                var answer = confirm("您的购物车里仍有商品，更改递送时间将会清空购物车，请问您要继续吗?");
+
+                if (answer) {
+                    $.ajax({
+                        url: '/query?cmd=empty_cart',
+                        success: function (data) {
+                            if (data.trim() == 'success') {
+                                $('.cartQty').html('0');
+                                $('.input-quantity').val(0);
+                                updateShoppingCart('menu', '<{$coupon.createUserId}>');
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                    })
+                }
+
+                return answer;
+            } else {
+                return true;
+            }
+        }
+
+        function selectThisItem(obj) {
+            $(obj).siblings().removeClass('selected');
+            $(obj).addClass('selected');
+            // update little available text
+            $(obj).html('<{$lang->logistic_selected}>');
+        }
+
+        $('.date-options').not('.unavailable').on('click', function () {
+            if (alertEmptyingShoppingCartOnDateChange()) {
+                $('.date-options.selected').html('<{$lang->logistic_selectable}>');
+                $('.time-options.selected').html('<{$lang->logistic_selectable}>');
+                $('.date-options').removeClass('selected');
+                $('.time-options').removeClass('selected');
+                selectThisItem(this);
+                toggleDeliverOptionForDate(this);
+                toggleHeaderReady();
+				$('.delivery-date').css('top','-100%');
+				
+				
+            }
+
+        })
+        $('.time-options').on('click', function () {
+            selectThisItem(this)
+            setDeliverDateTime();
+            toggleHeaderReady();
+			
+        })
+        $('.panel-header .fa-close').on('click', function () {
+            $('.deliver-center-user-panel').hide();
+        })
+        $('.postcode-validation').on('keyup', function () {
+            if (isPostcodeSupported($(this).val()) >= 0) {
+                $(this).next('span').html("<em class='fa fa-check-circle fa-lg' style='color:green'></em><{$lang->support}>");
+            } else {
+                $(this).next('span').html("<em class='fa fa-times-circle-o fa-lg' style='color:red'></em><{$lang->not_support}>");
+            }
+        })
+
+        //默认选择第一个 available date 和 delver anytime if none selected from cookie
+        if ($('.date-options.selected').length == 0)
+            selectThisItem($('.date-options').not(".unavailable").first());
+        if ($('.time-options.selected').length == 0)
+            selectThisItem($('.delivery-option-anytime').find('.time-options'));
+
+        toggleDeliverOptionForDate($('.date-options.selected'));
+
+        setDeliverDateTime();
+        toggleHeaderReady();
+		
+		$('.commodity-Det').css("display", "none");
+    })
+</script>
+
+<script type="text/javascript">
+    function changeCategory(categoryId) {
+        $('.category').removeClass('active');
+        $(`#category-${categoryId}`).addClass('active');
+        $('.right-li').removeClass('right-li-active');
+        $(`#category-list-${categoryId}`).addClass('right-li-active');
+
+        let childCategory = $(`.sub-category-parent-${categoryId}`);
+        if (childCategory.length === 0) {
+            changeSubCategory(categoryId);
+        } else {
+            //childCategory[0].click();
+			  changeSubCategory(categoryId);
+        }
+		// var startpos =$('#startpos').position().top;
+		//  $('body, html').scrollTop(startpos);
+		
+		if($('.content').hasClass("box-active")){
+   setTimeout(function(){
+    $('.content').addClass('box-active');
+   },50)
+  }
+    }
+
+    function changeSubCategory(subCategoryId) {
+	if($('.content').hasClass("box-active")){
+   setTimeout(function(){
+    $('.content').addClass('box-active');
+   },50)
+  }
+        $('.sub-category').removeClass('lable-active');
+        $(`#sub-category-${subCategoryId}`).addClass('lable-active')
+        $('.commodity-details').removeClass('commodity-details-active');
+        $(`#menu-${subCategoryId}`).addClass('commodity-details-active');
+        loadMenuList(subCategoryId);
+    }
+	
+
+    function loadMenuList(categoryId) {
+        let menu = $(`#menu-${categoryId}`);
+        let loadingClass = 'loading';
+        let finishClass = 'finished';
+        if (menu.hasClass(loadingClass) || menu.hasClass(finishClass)) {
+            return 1 ;
+        }
+		
+        $.ajax({
+            url: `<{$http_root_www}>restaurant/get_menu_by_category?id=<{$coupon.createUserId}>&category_id=${categoryId}`,
+            beforeSend: function () {
+                menu.addClass(loadingClass);
+            },
+            success: function (data) {
+			//alert('here');
+                menu.removeClass(loadingClass);
+                menu.addClass(finishClass);
+			
+                JSON.parse(data).forEach(item => {
+				//alert(item.onSpecial );return;
+                   if(item.onSpecial){
+				     var display_hot ='  <em class="rexiao"><{$lang->hot}></em>';
+					// alert(item.id);
+				   }else{
+				     var display_hot ='';
+				   }
+				   var pic_str =item.menu_pic;
+				   var new_pic_str ="";
+				   if(!pic_str) {
+				   
+				     var  indexofdot =pic_str.indexOf('.');
+				     new_pic_str ="./no-image_100x100_cut.gif";
+					 
+					 
+				   }else{
+				     var  indexofdot =pic_str.indexOf('.');
+				     new_pic_str = pic_str.slice(0,indexofdot) + '_150x150_cut' +  pic_str.slice(indexofdot);
+				   }
+				  
+				  /**/
+				   menu.append(`
+                      <li>
+					     ` + display_hot + `
+                        <img  class="lazyload" data-src="<{$UPLOAD_PATH}>thumbnails/${new_pic_str}"   >
+                        <div class="commodity-info"
+                       	 data-main_coupon_id='<{$restaurant_couponID}>'
+                         data-menu_id='${item['id']}'
+                         data-price='${item['price']}'
+						 data-pic='${item['menu_pic']}'
+						 data-pics='${item['menu_pics']}'
+                         data-onspecial='${item['onSpecial']}'
+						 data-menu_name='${item['menu_name']}'
+						  data-menu_desc='${item['menu_desc']}'
+						 >
+                          <p class="commodity-name">${item['menu_name']}</p>
+						    
+                       <p class="commodity-time-limit">${item['unit']}&nbsp; $${item['original_price']}</p> 
+                          <div class="commodity-price"><span class="real">$${item['price']}</span><span class="commodity-old-price">
+               </span></div>
+                         <!-- <p class="commodity-restrictions"><{$lang->limit_buy}>${item['limit_buy_qty']}</p> -->
+                          <i class="iconfont icon-cart-block menu-add-cart-${item['id']}" onclick="add_new_product(this)"></i>
+                          <div class="calculation menu-calculation-${item['id']}">
+                            <i class="iconfont icon-jian-line" onclick="remove_product(this)"></i>
+                            <span class="menu-quantity-${item['id']}">0</span>
+                            <i class="iconfont icon-jia-block" onclick="add_product(this)"></i>
+                          </div>
+                        </div>
+                      </li>  <div class="commodity-info"> <p class="commodity-desc">${item['menu_desc']}</p></div>`);
+                });
+				
+				 
+			
+                get_temp_cart();
+				
+            } 
+  
+        }).done(function () {
+                  $('img.lazyload').unveil(); 
+             //      $('.content').addClass('box-active');
+                })
+		   
+  
+  }
+ </script>
+ 
+ 
+
+<script>
+
+  function loadMenuList_keyword(keyword) {
+  
+  
+  
+    $('.category').removeClass('active');
+       
+        $('.right-li').removeClass('right-li-active');
+        $(`#category-list-search`).addClass('right-li-active');
+		
+		 $('.sub-category').removeClass('lable-active');
+       
+        $('.commodity-details').removeClass('commodity-details-active');
+        $(`#menu_search`).addClass('commodity-details-active');
+  
+  
+  
+          
+        //alert(keyword);
+        let menu = $(`#menu_search`);
+		// alert(menu);
+        let loadingClass = 'loading';
+        let finishClass = 'finished';
+        
+        $.ajax({
+            url: `<{$http_root_www}>restaurant/get_menu_by_keyword?id=<{$coupon.createUserId}>&keyword=`+keyword,
+            beforeSend: function () {
+                menu.addClass(loadingClass);
+            },
+            success: function (data) {
+			//alert(data.length);
+			if(data.length<=20){
+			 // alert('未发现数据');return;
+			}
+                menu.removeClass(loadingClass);
+                menu.addClass(finishClass);
+			     menu.find("li").remove();
+                JSON.parse(data).forEach(item => {
+				//alert(item.onSpecial );return;
+                   if(item.onSpecial){
+				     var display_hot ='  <em class="rexiao"><{$lang->hot}></em>';
+					// alert(item.id);
+				   }else{
+				     var display_hot ='';
+				   }
+				   var pic_str =item.menu_pic;
+				   
+				   
+				    if(!pic_str) {
+				   
+				     var  indexofdot =pic_str.indexOf('.');
+				     new_pic_str ="./no-image_100x100_cut.gif";
+					 
+					 
+				   }else{
+				     var  indexofdot =pic_str.indexOf('.');
+				     new_pic_str = pic_str.slice(0,indexofdot) + '_150x150_cut' +  pic_str.slice(indexofdot);
+				   }
+				  
+				   
+				   
+				   
+				   
+				  // var  indexofdot =pic_str.indexOf('.');
+				  // var new_pic_str = pic_str.slice(0,indexofdot) + '_150x150_cut' +  pic_str.slice(indexofdot);
+				  
+				   menu.append(`
+                      <li>
+					     ` + display_hot + `
+                        <img <{if $lazyload}> class="lazyload data-" <{/if}>src="<{$UPLOAD_PATH}>thumbnails/${new_pic_str}" data-src-retina= "<{$UPLOAD_PATH}>thumbnails/${new_pic_str}">
+                         <div class="commodity-info"
+                       	 data-main_coupon_id='<{$restaurant_couponID}>'
+                         data-menu_id='${item['id']}'
+                         data-price='${item['price']}'
+						 data-pic='${item['menu_pic']}'
+						 data-pics='${item['menu_pics']}'
+                         data-onspecial='${item['onSpecial']}'
+						 data-menu_name='${item['menu_name']}'
+						 data-menu_desc='${item['menu_desc']}'
+							
+						 >
+                          <p class="commodity-name">${item['menu_name']}</p>
+						 
+                          <p class="commodity-time-limit">${item['unit']}&nbsp; $${item['original_price']}</p>
+                          <div class="commodity-price"><span class="real">$${item['price']}</span><span class="commodity-old-price">
+               </span></div>
+                        <!--  <p class="commodity-restrictions"><{$lang->limit_buy}>${item['limit_buy_qty']}</p> -->
+                          <i class="iconfont icon-cart-block menu-add-cart-${item['id']}" onclick="add_new_product(this)"></i>
+                          <div class="calculation menu-calculation-${item['id']}">
+                            <i class="iconfont icon-jian-line" onclick="remove_product(this)"></i>
+                            <span class="menu-quantity-${item['id']}">0</span>
+                            <i class="iconfont icon-jia-block" onclick="add_product(this)"></i>
+                          </div>
+                        </div>
+                      </li> <div class="commodity-info"> <p class="commodity-desc">${item['menu_desc']}</p></div> `);
+                });
+			 
+                get_temp_cart();
+            } 
+  
+        }).done(function () {
+                    $('img.lazyload').unveil();
+                  //  $('.content').addClass('box-active');
+                })
+		   
+  
+  }
+  
+  
+</script>
+
+<script>
+    var realTotalPrice = 0;
+    var oldTotalPrice = 0;
+    var spNum = 0;
+
+    function add_new_product(buttonDom,level) {
+        <{if !$loginUser}>
+        window.location.href = "<{$http_root_www}>member/login?returnUrl=" + encodeURIComponent("/restaurant/<{$restaurant_id}>");
+        return;
+        <{/if}>
+        var button = $(buttonDom);
+		 var product = button.parent();
+		if(level) {
+		  product = $('.com-det-con-t1');
+		}
+        var postData = {};
+        postData['type'] = 'menu';
+        postData['main_coupon_id'] = product.data('main_coupon_id');
+        postData['menu_id'] = product.data('menu_id');
+        postData['quantity'] = 1;
+        postData['onspecial'] = product.data('onspecial');
+
+        $.ajax({
+            type: 'POST',
+            url: '/query?cmd=restaurant_menu_add_carts',
+            data: postData,
+            success: function (data) {
+			   $('.con-t1-join-cart_new').css("display",'none');
+				$('.con-t1-join-cart_old').css("display",'');
+				$('.menu-quantity-ubonus').html(1);
+                get_temp_cart();
+                let cartData = JSON.parse(data);
+                if (cartData['msg']) {
+                    if (cartData['msg']['code'] == '0') {
+                        window.location.href = "/member/login?returnUrl=" + encodeURIComponent("/restaurant2/" + businessUserId + "?id=" + businessUserId);
+                        return 0;
+                    } else {
+                        alert(cartData['msg']['error']);
+                        return 0;
+                    }
+                }
+            }
+        })
+    }
+
+    function add_product(buttonDom,level) {
+        <{if !$loginUser}>
+        window.location.href = "<{$http_root_www}>member/login?returnUrl=" + encodeURIComponent("/restaurant/<{$restaurant_id}>");
+        return;
+        <{/if}>
+        var button = $(buttonDom);
+       let num =0;
+      	    var product = button.parent().parent();
+	  if(level){
+        
+	    product = $('.com-det-con-t1');
+		  num =  $('.menu-quantity-ubonus').html();
+		
+        num++;
+	   }else{
+	    num = button.siblings('span').text();
+        num++;
+	    
+	   }
+     
+        var postData = {};
+        postData['type'] = 'menu';
+        postData['main_coupon_id'] = product.data('main_coupon_id');
+        postData['menu_id'] = product.data('menu_id');
+        postData['quantity'] = num;
+        postData['onspecial'] = product.data('onspecial');
+
+        $.ajax({
+            type: 'POST',
+            url: '/query?cmd=restaurant_menu_add_carts',
+            data: postData,
+            success: function (data) {
+			    $('.menu-quantity-ubonus').html(num);
+                get_temp_cart();
+                let cartData = JSON.parse(data);
+                if (cartData['msg']) {
+                    if (cartData['msg']['code'] == '0') {
+                        window.location.href = "/member/login?returnUrl=" + encodeURIComponent("/restaurant2/" + businessUserId + "?id=" + businessUserId);
+                        return 0;
+                    } else {
+                        alert(cartData['msg']['error']);
+                        return 0;
+                    }
+                }
+            }
+        })
+    }
+
+    function remove_product(buttonDom) {
+        <{if !$loginUser}>
+        window.location.href = "<{$http_root_www}>member/login?returnUrl=" + encodeURIComponent("/restaurant/<{$restaurant_id}>");
+        return;
+        <{/if}>
+        var button = $(buttonDom);
+        let num = button.siblings('span').text();
+        num--;
+
+        var product = button.parent().parent();
+        var postData = {};
+        postData['type'] = 'menu';
+        postData['main_coupon_id'] = product.data('main_coupon_id');
+        postData['menu_id'] = product.data('menu_id');
+        postData['quantity'] = num;
+        postData['onspecial'] = product.data('onspecial');
+
+        $.ajax({
+            type: 'POST',
+            url: '/query?cmd=restaurant_menu_add_carts',
+            data: postData,
+            success: function (data) {
+                get_temp_cart();
+                let cartData = JSON.parse(data);
+                if (cartData['msg']) {
+                    if (cartData['msg']['code'] == '0') {
+                        window.location.href = "/member/login?returnUrl=" + encodeURIComponent("/restaurant2/" + businessUserId + "?id=" + businessUserId);
+                        return 0;
+                    } else {
+                        alert(cartData['msg']['error']);
+                        return 0;
+                    }
+                }
+
+                if (num == 0) {
+                    button.parent().hide().siblings('.icon-cart-block').show()
+                    $(`.menu-quantity-${product.data('menu_id')}`).text(0)
+                } else {
+                    $(`.menu-quantity-${product.data('menu_id')}`).text(num);
+                }
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript">
+    function creat_new_order() {
+        <{if !$loginUser}>
+        var u = "<{$http_root_www}>member/login?returnUrl=" + encodeURIComponent("/member/showcart?business_userid=<{$coupon.createUserId}>&code_str=" + encodeURIComponent(code_str) + "#directCheckout");
+        window.location.href = u;
+        <{else}>
+
+        window.location.href = '<{$http_root_www}>member/showcart?dy=1&business_userid=<{$coupon.createUserId}>#directCheckout';
+        <{/if}>
+    }
+
+    function get_temp_cart() {
+        <{if !$loginUser}>
+        return;
+        <{/if}>
+        $.ajax({
+            url: `<{$http_root_www}>restaurant/get_temp_cart?restaurant_id=<{$coupon.createUserId}>`,
+            success: function (data) {
+                $('#cart-item-list').html('');
+                let cartData = JSON.parse(data);
+                cartData['items'].forEach(item => {
+                    $('#cart-item-list').append(`
+        <li class="commodity-list"
+                         data-id='${item.id}'
+                       	 data-main_coupon_id='<{$restaurant_couponID}>'
+                         data-menu_id='${item.menu_id}'
+                         data-price='${item.single_amount}'
+                         data-onspecial='${item.onSpecial}'>
+            <div class="list-con">
+                <img src="<{$UPLOAD_PATH}>${item.pic}" alt="">
+                <div class="comm-det">
+                    <h3 class="ellipsis-1">${item.coupon_name}</h3>
+<!--                    <span class="comm-num">限购1件</span>-->
+                    <div class="comm-det-price">
+						<span>$${item.single_amount}</span>
+<!--						<em>$2.49</em>-->
+					</div>
+                </div>
+            </div>
+            <div class="list-num-out">
+                <span class="jian" onclick="remove_product(this)"><i class="iconfont icon-jian-line"></i></span>
+                <span class="list-num menu-quantity-${item.id}">${item.quantity}</span>
+                <spam class="jia" onclick="add_product(this)"><i class="iconfont icon-jia-block"></i></spam>
+            </div>
+        </li>`)
+                    $(`.menu-add-cart-${item.menu_id}`).hide();
+                    $(`.menu-calculation-${item.menu_id}`).show();
+                    $(`.menu-quantity-${item.menu_id}`).text(item.quantity);
+                })
+                $('.cart-total-price').html(cartData.totalPrice);
+                $('.cart-quantity').html(cartData.totalQuantity);
+                $('.fixed-buttom').addClass('commod-yes')
+                if (cartData.totalQuantity > 0) {
+                    $('.fixed-buttom .set-pri-c').html(`<span>$${cartData.totalPrice.toFixed(2)}</span>`)
+                } else {
+                    $('.fixed-buttom').removeClass('commod-yes');
+                    $('.fixed-buttom .other-price').addClass('other-price-no');
+                }
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript">
+    //监听搜索动作
+    $('#search-button').on('click', function () {
+        filterProduct($('#search-input').val());
+    });
+    //按回车后收回键盘
+    
+	var searchEnterTimeoutClock;
+ $('input.header-search').on('keyup', function (event) {
+	if(event.keyCode == 38){
+		//up key
+		alert('up');
+	}else if(event.keyCode == 40){
+		//down key
+		alert('down');
+		
+
+	}else if(event.keyCode == 13){
+		  filterProduct($('#search-input').val());
+	}else{
+		//other key
+		
+		clearTimeout(searchEnterTimeoutClock);
+		searchEnterTimeoutClock= setTimeout(function(){
+			filterProduct($('#search-input').val());
+		 },200)
+	}
+	
+	
+	  })
+	
+    //点击搜索框体后清空之前搜索
+    $('input.header-search').on('click', function () {
+        $(this).val('')
+        filterProduct($(this).val());
+    })
+</script>
+
+<script type="text/javascript">
+
+
+	
+
+    window.onload = function () {
+        $('.category').first().click();
+		  $('img.lazyload').unveil();
+		  	get_temp_cart();
+    }
+	
+	function filterProduct(search_txt){
+	 // alert(search_txt);exit;
+	 $('#header-info').css("display","none");
+	 $('#banner').css("display","none");
+	 
+	   $('.category').removeClass('active');
+       // $(`#category-${categoryId}`).addClass('active');
+     //   $('.right-li').removeClass('right-li-active');
+     //   $(`#category-list-${categoryId}`).addClass('right-li-active');
+
+      //  let childCategory = $(`.sub-category-parent-${categoryId}`);
+     //   if (childCategory.length === 0) {
+          //  changeSubCategory(categoryId);
+     //   } else {
+            //childCategory[0].click();
+			//  changeSubCategory(categoryId);
+      //  }
+	  
+	  if(search_txt) {
+	  loadMenuList_keyword(search_txt);
+	  }
+	}
+</script>
+
+<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$pageDescription}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+	
+</body>
+
+
+</html>

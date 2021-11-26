@@ -1,0 +1,204 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+
+				
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/staff_sales_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员登录用户名</label></span>		
+
+								<{if $data.id}> 
+								<small><{$data.name}></small>
+								<{else}>
+								<input type="text" name="username" id="username"  class="input-text" value="<{$data.name}>" />	
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>
+								<{/if}>	
+								
+
+								<{if $data.id}> 
+									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>重置密码</label>
+									<input type="checkbox" name="change_password" value="1" id="change_password1" onClick="if (this.checked) $('.pwd').show(200); else $('.pwd').hide(200);" />
+								<{/if}>	
+
+							</div>	
+
+							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
+
+								<span><label>密码</label></span>	
+
+								<input type="password" name="password" class="input-text" value="" />	
+
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>	
+
+							</div>		
+
+							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
+
+								<span><label>确认密码</label></span>		
+
+								<input type="password" name="password2" class="input-text" value="" />	
+
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>
+
+							</div>		
+
+
+
+							<!-- <div class="input-box clearfix">	
+
+								<span><label>管理员邮箱</label></span>	
+
+								<input type="text" name="email"  class="input-text" value="<{$data.email}>" />
+
+							</div>	
+
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员姓</label></span>	
+
+								<input type="text" name="person_last_name" class="input-text" value="<{$data.person_last_name}>" />
+
+							</div>	
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员名</label></span>		
+
+								<input type="text" name="person_first_name" class="input-text" value="<{$data.person_first_name}>" />
+
+								
+
+							</div>   
+
+
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员电话</label></span>	
+
+								<input type="text" name="tel" class="input-text" value="<{$data.tel}>" />						            
+
+							</div>	
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员手机</label></span>	
+
+								<input type="text" name="phone" class="input-text" value="<{$data.phone}>" />						            
+
+							</div>	 -->
+
+							<br>
+							<hr>
+							<br>
+
+
+							<div class="input-box multi-select clearfix">
+								<span><label>销售员名称</span>
+								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder='Eg:Jason'/>
+							</div>
+							
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人姓</label></span>
+								<input type="text" class="input-text" value="<{$data.contactPersonLastname}>" name="contactPersonLastname" />
+							</div>
+
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人名</label></span>
+								<input type="text" class="input-text" value="<{$data.contactPersonFirstname}>" name="contactPersonFirstname" />
+							</div>
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人电话</label></span>
+								<input type="text" class="input-text" value="<{$data.contactMobile}>" name="contactMobile" />
+							</div>
+
+
+									
+
+
+						
+
+
+								
+
+							
+
+						
+							
+
+
+
+							<div class="input-box input-submit clearfix">		
+
+								<button type="submit" style='float:left'>保存</button>	
+
+								<a onClick='return confirm("删除员工会导致订单中自取点信息缺失，确认要删除该员工？")' href ="<{$http_root_www}>factory/staff_sales_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除该员工</a>	
+
+
+							</div>		
+
+
+							
+
+						</form>	
+
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+					</div>		
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div><{include file='footer.htm'}></body></html>

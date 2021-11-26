@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+
+<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+
+function AuditSome ()  
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要将当前选中记录的状态设置为忽略吗？')) $('#listForm').attr('action', '<{$readUrl}>').submit();
+}
+
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+
+</script>
+
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+			<a onclick="AuditSome();">批量忽略</a>
+		</div>
+		
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td width="40"><input type="checkbox" id="checkAll" /></td>
+				<td>商品名称</td>
+				<td>商家</td>
+				<td>领取时间</td>
+				<td>发货延迟</td>
+			</tr>
+			<form id="listForm" name="listForm" action="" method="post">
+			<input type="hidden" name="actionFrom" value='warning1'>
+			<{foreach from=$data item=item key=key}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><input type="checkbox" name="ids[]" value="<{$item.orderId}>" class="listChk" /></td>
+					<td>
+					<{$item.order_name}>
+							<br>
+					<a href="<{$viewUrl}>id=<{$item.orderId}>&type=warning1"><{$item.orderId}></a>
+					</td>
+					<td><{$item.business_name}></td>
+					<td><{date('Y-m-d H:i:s', $item.createTime)}></td>
+					<td>
+						<span style="color:red;"><{floor($item.operation_delay/3600/24)}>天</span>
+						<a href='#' onClick="ignore(this);return false;" value="<{$readUrl}>id=<{$item.orderId}>">忽略</a>
+					</td>
+					
+				</tr>
+			<{/foreach}>
+			</form
+			>
+			<script type="text/javascript">
+				function ignore(obj){
+					var url = $(obj).attr('value');
+					$.get(url,function( data ){
+						$(obj).html('已忽略');
+					})
+				}
+			</script>
+
+			<tr class="listFtTr">
+				<td colspan="10"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>

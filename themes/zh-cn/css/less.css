@@ -1,0 +1,44 @@
+﻿/*Common For Max 1366*/
+@media only screen and (max-width: 1499px) {
+   
+
+
+}
+/*Common For Max 1200*/
+@media only screen and (max-width: 1365px) {
+    
+    
+
+}
+/*Common For Max 960*/
+@media only screen and (max-width: 1199px) {
+
+
+
+}
+
+
+
+/*Common For Max 768*/
+@media only screen and (max-width: 959px) {
+
+
+
+}
+
+
+
+/*Common For Max 480*/
+@media only screen and (max-width: 767px) {
+
+
+	
+}
+
+
+/*Common For Max 320*/
+@media only screen and (max-width: 479px) {
+
+
+
+}

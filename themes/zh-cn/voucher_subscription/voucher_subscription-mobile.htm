@@ -1,0 +1,2145 @@
+<!doctype html>
+<html>
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127764298-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127764298-1');
+</script>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>墨尔本 美食 | 墨尔本 餐厅</title>
+<meta name="keywords" content="墨尔本 美食 | 墨尔本 餐厅" />
+<meta name="description" content="Ubonus 美食生活 为您搜罗最棒的墨尔本美食以及墨尔本餐厅, 并且提供多样的美食券折扣信息。新用户有很多优惠赠送，快来注册吧。" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+<style type="text/css">
+  .con{
+    max-width: 786px;
+    margin: auto;
+    background-color: #eee;
+  }
+
+  .header{
+   
+    width: 100%;
+    top: 0px;
+    z-index: 99;
+    background-color: #FD5001;
+    height: 1.33rem;
+    align-items: center;
+   
+  }
+
+  .header .back-icon{
+    width: 1.33rem;
+    line-height: 1.33rem;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .header .search-box{
+   width:70%;
+    height: 0.66rem;
+    line-height: 0.66rem;
+    vertical-align: middle;
+    border: 1px solid #eee;
+    padding: 4px 11px;
+    border-radius: 15px;
+    margin-left: 1.5rem;
+  }
+
+  .header .user-icon, .header .search-icon{
+     width: 0.9rem;
+    line-height: 1.33rem;
+    float: right;
+    text-align: center;
+  }
+
+
+  .category-icon{
+    padding: 0.168rem 0;
+    text-align: center;
+    background-color: #fff;
+  }
+  .category-icon .item{
+    display: inline-block;
+    width: 23%;
+    position: relative;
+    text-align: center;
+  }
+
+  .category-icon .item img{
+    width: 40%;
+  }
+
+  .category-icon .item p{
+    text-align: center;
+    font-size: 13px;
+  }
+
+
+  .search-filter{
+    background-color: #FD5001;
+ }
+
+  .search-filter.fixed{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 99;
+	height: 1.15rem;
+    background-color: #FD5001;
+  }
+  .search-filter-menu{
+    padding: 0.2rem 0.2rem;
+    margin-top: 0.1rem;
+    
+  }
+
+  .search-filter-menu .filter-menu{
+     color: #4e4e4e;
+    width: 24%;
+    text-align: center;
+    display: inline-block;      
+  }
+
+  .search-filter-menu .filter-menu.active{
+    color:#06c1ae;
+  }
+
+  .search-filter-menu .filter-menu span{
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 80%;
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      font-size: 13px;
+  }
+
+  .search-by-list{
+    max-height: 70vh;
+    overflow-y: scroll;
+    display: none;
+    background-color: #fff;
+  }
+
+  .search-by-list .item{
+    height: 1.4rem;
+    line-height: 1.4rem;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+  }
+
+  .search-by-list  a{
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .search-by-list .item i{
+    width: 1.17rem;
+    text-align: center;
+    visibility: hidden;
+  }
+
+  .search-by-list .item span{
+    float: right;
+    font-size: 10px;
+    color: #aaa;
+    margin-right: 0.66rem;
+  }
+
+  .search-by-list .item.active{
+    color: #06c1ae;
+  }
+  .search-by-list .item.active i{
+    visibility: visible;
+  }
+
+  .filter-section{
+    border-bottom: 1px solid #ddd;
+  }
+
+  .filter-section p{
+    font-size: 13px;
+    display: inline-block;
+    width: 133px;
+    padding-left: 13px;
+    margin: 0px;
+  }
+  .filter-section span{
+   display: inline-block;
+    text-align: center;
+    height: 1rem;
+    line-height: 1rem;
+    border-radius: 3px;
+    width: 20%;
+    border: 1px solid #ddd;
+    margin: 2%;
+    font-size: 12px;
+  }
+
+  .filter-section span.selected{
+    color:#06c1ae;
+    border-color: #06c1ae;
+    background-color: #06c1ae24;
+  }
+
+  .search-result{
+    background-color: #fff;
+    min-height: 600px;
+    margin-left:15%;
+    position: relative;
+  }
+
+  .search-result .fixed-search-by-category{
+    position: absolute;
+    top: 0px;
+    left: -17%;
+    width: 17%;
+    padding-bottom: 50px;
+  }
+
+  .fixed-search-by-category .fixed-category-item{
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    padding: 10px 0px;
+  }
+  .fixed-category-item.active{
+    background-color: #FD5001 ;
+    color: #fff;
+  }
+
+  .search-result .loading{
+    display: none;
+    text-align: center;
+    line-height: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .search-result .loading i{
+    text-align: center;
+    line-height: 1rem;
+    width: 1rem;
+    float: left;
+    color: #06c1ae;
+  }
+
+  .clr-green{
+    color: #06c1ae;
+  }
+
+  .clr-red{
+    color:#e5393c;
+  }
+
+  .search-result .item{
+    border-bottom: 1px solid #eee;
+    height:5.5rem;
+	margin-left: 8px;
+	padding-top: 0.4rem;
+  }
+
+   .search-result .item .top-sec .left-sec1{
+   float:left;
+	    padding-left: 0.2rem;
+		color: #FF9800;
+	 
+  }
+  .search-result .item .top-sec .right-sec1{
+   float:right;
+  
+  color: #a59696;
+  padding-right: 0.9rem;
+	 
+  }
+  .search-result .item .top-sec{
+    height:1.1rem;
+	width:100%;
+    font-size: 0.4rem;
+	 
+  }
+ 
+  .search-result .item .left-sec{
+    display: inline-block;
+    width: 95px;
+    float: left;
+    padding: 1%;
+  }
+
+  .search-result .item .left-sec img{
+    width: 100%;
+	padding: 0px;
+  }
+
+  .search-result .item .right-sec{
+    /*width: 72%;*/
+    padding: 2%;
+    margin-left: 90px;
+    position: relative;
+  }
+
+  .recommend{
+    background-color: #fff;
+  }
+  .recommend .item{
+    border-bottom: 1px solid #eee;
+    
+  }
+
+  .recommend .item .left-sec{
+    display: inline-block;
+    width: 95px;
+    float: left;
+    padding: 1%;
+  }
+
+  .recommend .item .left-sec img{
+    width: 100%;
+	padding: 10px;
+  }
+
+  .recommend .item .right-sec{
+    width: 72%;
+    padding: 2%;
+    margin-left: 90px;
+    position: relative;
+  }
+
+  .item .recommend-icon{
+       position: absolute;
+    color: #fff;
+    background-color: rgba(255, 204, 51, 1);
+    height: 25px;
+    line-height: 25px;
+    width: 25px;
+    text-align: center;
+    border-radius: 25px;
+    top: 0px;
+    left: 0px;
+    font-size: 10px; }
+  
+
+  .item .right-sec .title{
+    font-size: 0.4rem;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    height: 1.4rem; 
+    margin-top: 0.1rem;	
+  }
+
+  .item .right-sec .title a{
+      text-decoration: none;
+      color: inherit;
+  }
+
+  .item .right-sec .businessName{
+    font-size: 0.60rem;
+    color: #06c1ae;
+    font-weight: 700;
+    margin-top: -0.3rem;
+  }
+
+  .item .right-sec .rating{
+    display: inline-block;
+  }
+
+   .item .right-sec .rating img{
+    width: 0.4rem;
+  }
+
+  .item .right-sec .price{
+   font-size: 0.62rem;
+   color: #FF9800;
+    font-weight: 600;
+	
+	
+  }
+
+  .item .right-sec .price s{
+    color: #726262;
+    font-size: 0.37rem;
+    font-weight: 200;
+	padding-left: 0.2rem;
+  }
+
+  .item .right-sec .price em{
+    width: 2rem;
+    height: 1rem;
+    border: 1px #FF9800 solid;
+    color: #FF9800;
+    font-size: 0.37rem;
+    padding-left: 0.2rem;
+  }
+   .item .right-sec .price em1{
+  
+	
+    color: #FD5001 ;
+    font-size: 16px;
+    float:right;
+  }
+
+.advance-filter-sec-btn .filter-btn{
+  padding: 5px 12px;
+  background-color: #2bb8aa;
+  color: #fff;
+  border-radius: 3px;
+  margin: 0px 25px;
+}
+
+.coupon-addon{
+  padding: 3px 12px 3px 90px;
+  border-bottom: 1px solid #eee;
+}
+
+.coupon-addon span{
+    padding: 0px 5px;
+    border-radius: 10px;
+    color: #aaa;
+    font-size: 0.4rem;
+}
+
+.filter-display{
+  padding: 5px;
+}
+.filter-display span{
+    line-height: 0.8rem;
+    white-space: nowrap;
+    padding: 1px 10px;
+    border-radius: 3px;
+    background-color: #2bb8aa;
+    color: #fff;
+    margin: 3px;
+    font-size: 0.35rem;
+    display: inline-block;
+}
+
+.filter-display-clear{
+    display: inline-block;
+    background-color: #ef5858;
+    color: #fff;
+    padding: 1px 5px;
+    margin: 3px;
+    border-radius: 10px;
+}
+
+.swiper-pagination{
+  z-index: 9;
+}
+
+.search-by-location-sec h5{
+  font-weight: bolder;
+    padding-left: 1.3rem;
+}
+
+.search-by-location-sec .item-inline{
+    display: inline-block;
+    height: auto;
+    border: none;
+    line-height: 1rem;
+}
+
+.add_fav.faved{
+  background-color: #f30;
+  color:#fff;
+}
+
+.fixed-footer{
+  position: fixed;
+  height: 1.6rem;
+  width: 100%;
+  bottom: 0px;
+  right: 0px;
+  background-color: rgb(251, 194, 61);
+  padding:0.1rem 0px; 
+}
+.fixed-footer a{
+  display: inline-block;
+  color: #ddd;
+  width: 18%;
+  text-align:center; 
+  text-decoration: none;
+}
+.fixed-footer a img{
+  width: 28%;
+}
+.fixed-footer a p{
+  color:#000;
+  font-size: 0.37rem;
+}
+
+.subcoupon_display .item{
+ height:3.5rem;
+}
+.subcoupon_display .item .left-sec{
+    display: none;
+}
+.subcoupon_display .item .right-sec{
+  padding:1%;
+}
+.subcoupon_display .item .right-sec .title a{
+    font-size: 12px;
+    color: #505050;
+}
+
+.subcoupon_display .item .right-sec .price,.subcoupon_display .item .right-sec .price em{
+    font-size: 12px;
+}
+
+.subcoupon_display .item .right-sec .businessName{
+    display: none;
+}
+.subcoupon_display .item .price em small{
+    display: none;
+}
+.subcoupon_display .item .right-sec .add_fav {
+    display: none;
+}
+.subcoupon_display .coupon-addon{
+    display: none;
+}
+
+.subcoupon-toggle {
+  display: block;
+  text-align:  center;
+  line-height: 50px;
+}
+
+.subcoupon_display_group .subcoupon_display:nth-child(n+3) 
+{
+    display: none;
+}
+</style>
+
+
+
+<script type="text/javascript">
+	
+  </script>
+</head>
+<body>
+   <img src="<{$SKIN_PATH}>images/wx_share.jpg" style='display: none'>
+<div class='con'>
+  <div id='food_header' class='header' >
+
+     
+       
+      <span class='search-box search-icon-assosiate'>
+          <i class='fa fa-search' style="color:#fff"></i>
+          <small style="color:#fff;margin: 0.3rem;display: inline-block;width: 55vw"><h1 style="border-radius: 10px;<{if !$searchKeywords}>margin: 0.00rem;<{/if}>border-radius: 10px;padding: 5px 15px;color: #4e4e4e;font-size: 13px;"><{if $searchKeywords}><{$searchKeywords}><{else}>  墨尔本 美食 | 墨尔本 餐厅     
+  <{/if}></h1></small>
+          <img src="<{$SKIN_PATH}>mobile/images/search-icon-logo.png" style='width:0.5rem'>
+      </span>
+
+
+       <span class='search-icon' style="margin-right: 10px;">
+
+       <!--   <img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;'>  
+-->
+      </span>
+
+  </div>
+
+  <!-- banner -->
+  <div id="banner" style="   border-bottom: 1px solid #ddd;">
+      <div class="swiper-wrapper">
+      <{foreach from=$bannerData item=item}>
+
+          <div class="swiper-slide">
+          <a href="<{$http_root_www}><{$item.url}>">
+            <img src="<{$UPLOAD_PATH}><{$item.bigImageUrl}>" alt="<{$item.title}>">
+          </a>
+          </div>
+      <{/foreach}>
+      </div>
+      <div class="swiper-pagination"></div>
+  </div>
+  <!-- banner end-->
+
+
+   <!--
+	
+	     <{if $businessUser&&$businessCouponList|@count>0}>
+		  
+			 <div style="    margin-top: -0.5rem;    margin-bottom: 0.2rem;">
+			
+                <div class="con" style="background-size: 100% 100%;background-position: center center;background-repeat: no-repeat;margin: -1.5rem 0 0;background-image: url(/themes/zh-cn/mobile/images/index-banner-mingxingdian.png);overflow: hidden;padding: 2rem 0.5rem 0;margin-top: 0.1rem;">
+                   
+                    <div class="txt">
+                        <h4 style="font-size: .48rem;color: #fff;text-align: center;margin-bottom: 0.85rem;padding-left: 22px;">
+							 <{$businessDisplayName}>
+						</h4>
+                    </div>
+
+                   
+                    <div class="m-notice" style="border-top: 0px #fff dashed;">
+                        <div class="bd" style="overflow:hidden;position:relative;height:40px;margin-left: 1rem;margin-bottom: -0.3rem;">
+                            <ul>
+                                <{if $busienssNotice}>
+                                    <{foreach from=$busienssNotice item=item}>
+                                           <li><a href="#"><{$item}></a></li>
+                                    <{/foreach}>
+                                <{else}>
+                                    <li><a href="#">关注Ubonus美食生活</a></li>
+                                    <li><a href="#">每日优惠美食送不停!</a></li>
+                                <{/if}>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+		  <{/if}>
+		 <style type="text/css">
+		
+				  .m-mingxingshop1-inf{
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: -1.5rem 0 0;
+}
+.m-mingxingshop1-inf .con{
+       overflow: hidden;
+    padding: 2rem 0.5rem 0;
+    margin-top: 1.6rem;
+}
+.m-mingxingshop1-inf .pic{
+    float: left;
+    width: 1.36rem;
+    height: 1.20rem;
+    margin-right: 4.1rem;
+}
+.m-mingxingshop-inf1 .pic img{
+    display: block;width: 100%;height: 100%;
+}
+.m-mingxingshop1-inf .txt{
+    overflow: hidden;
+}
+.m-mingxingshop1-inf .txt h4{
+    margin: 0;
+    font-size: .48rem;color: #fff;font-weight: normal;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.m-mingxingshop1-inf .txt p{margin: 0;}
+.m-mingxingshop-inf .txt p img{
+    display: inline-block;vertical-align: middle;
+    height: .6rem;
+}
+
+
+
+
+		 </style>
+-->
+
+  <div class='category-icon'>
+       <div class='item'>
+        <a class='ajaxlink' href="alias=106126132&cityid=556&">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon008.png">
+        <p>麻辣烫</p>
+        </a>
+      </div>
+
+
+	 <div class='item'>
+        <a class='ajaxlink' href="alias=106126125">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon001.png">
+        <p>代金券</p>
+        </a>
+      </div>
+      
+      <div class='item'>
+        <a class='ajaxlink' href="alias=106126103">
+          <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon002.png">
+          <p>火锅</p>
+          </a>
+      </div>
+      <div class='item'>
+        <a class='ajaxlink' href="alias=106126104">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon003.png">
+        <p>自助餐</p>
+        </a>
+      </div>
+     
+       <div class='item'>
+        <a class='ajaxlink' href="alias=106126106">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon004.png">
+        <p>日韩料理</p>
+        </a>
+      </div>
+
+       <div class='item'>
+        <a class='ajaxlink' href="alias=106126105">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon006.png">
+        <p>烧烤烤肉</p>
+        </a>
+      </div>
+     
+      <div class='item'>
+        <a class='ajaxlink' href="alias=106126116">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon005.png">
+        <p>海鲜</p>
+        </a>
+      </div>
+     
+      <div class='item'>
+        <a class='ajaxlink' href="alias=106126109">
+        <img src="<{$SKIN_PATH}>mobile/images/mobile-food-icon/mobile-food-icon007.png">
+        <p>川湘菜</p>
+        </a>
+      </div>
+
+      
+      
+  </div>
+
+   <{if $userMoneyBalance>0}>
+      <div class='money-display' style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;background-color: #ef5858;padding: 5px 15px;color: #fff;">
+          <i class='fa fa-money'></i> 您的钱包余额为：$<{$userMoneyBalance|number_format:2:".":","}>
+      </div>
+  <{/if}>
+   <!--  <div class='money-display' style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;font-size: 12px; background-color: #ef5858;padding: 5px 15px;color: #fff;">
+  
+  -->
+
+  <div id = 'search-filter' class='search-filter' style="    background-color: #FD5001;">
+        <div class='search-filter-menu'>
+          <span class='filter-menu search-by-category' data-target='search-by-category-sec'> 
+            <span data-default='菜系'><{if $category.name}>
+                  <{if $category.name=='餐饮美食'}>菜系<{else}><{$category.name}><{/if}>
+                  <{else}>
+                  菜系
+                  <{/if}></span>
+            <i class='fa fa-caret-down'></i>
+          </span>
+
+          <span class='filter-menu search-by-location' data-target='search-by-location-sec'>
+            <span data-default='位置'>位置</span>
+            <i class='fa fa-caret-down'></i>
+          </span>
+
+          <span class='filter-menu search-order-by' data-target='search-order-by-sec'>
+            <span data-default='热度'><{if $orderby=='default'}>热度<{elseif $orderby=='hits'}>热门<{elseif $orderby=='buy'}>销量<{else}>热度<{/if}></span>
+            <i class='fa fa-caret-down'></i>
+          </span>
+
+          <span class='filter-menu advanced-filter' data-target='advance-filter-sec'>
+            <span>筛选</span>
+            <i class='fa fa-caret-down'></i>
+          </span>
+      </div>
+
+      <div class='search-by-list search-by-category-sec'>
+        <a href="alias=<{$parent.alias}>" class='ajax' data-name='<{$parent.name}>' data-value='<{$parent.alias}>'>
+          <div class='item'>
+               <i class='fa fa-check '></i>全部<{$parent.name}>
+          </div>
+        </a>
+        <{foreach from=$childs item=item}>
+        <a href="alias=<{$item.alias}>" class='ajax' data-name='<{$item.name}>' data-value='<{$item.alias}>'>
+          <div class='item  <{if $item.id==$category.id}> active<{/if}>'>
+               <i class='fa fa-check '></i><{$item.name}><!-- <span>10231</span> -->
+          </div>
+        </a>
+        <{/foreach}>
+
+
+      </div>
+
+      <div class=' search-by-list search-by-location-sec' style="padding-right: 2rem;">
+
+         <a href="nearme" class='nearme ajax' data-name='离我最近' data-value='nearme'>
+         <div class='item '>
+            <i class='fa fa-check '></i> 离我最近
+          </div>
+         </a>
+
+        <a href="cityid=556" class='ajax' data-name='墨尔本' data-value='556'>
+          <div class='item'>
+            <i class='fa fa-check '></i> 墨尔本
+          </div>
+        </a> 
+
+       <!--  foreach from=$citylist item=item
+        <a href="cityid=<{$item.id}>" class='ajax' data-name='<{$item.name}>' data-value='<{$item.id}>'>
+          <div class='item <{if $city.id==$item.id}>active<{/if}>' >
+             <i class='fa fa-check '></i> <{$item.name}>
+          </div>
+        </a> 
+        /foreach -->
+        <!-- 手动设计样式 -->
+
+        <h5>热区</h5>
+
+         <a href="cityid=639" class='ajax' data-name='CBD' data-value='639'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> CBD
+          </div>
+        </a> 
+
+
+         <a href="cityid=640" class='ajax' data-name='BOX HILL ' data-value='640'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> BOX HILL 
+          </div>
+        </a> 
+
+         <a href="cityid=641" class='ajax' data-name='GLEN WAV' data-value='641'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> GLEN WAV
+          </div>
+        </a> 
+
+
+        <h5>A - D</h5>
+
+        <a href="cityid=645" class='ajax' data-name='Balwyn/kew附近' data-value='645'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Balwyn/kew附近
+          </div>
+        </a> 
+
+         <a href="cityid=640" class='ajax' data-name='BOX HILL ' data-value='640'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> BOX HILL 
+          </div>
+        </a> 
+
+
+        <a href="cityid=657" class='ajax' data-name='Carlton' data-value='657'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Carlton
+          </div>
+        </a> 
+
+        <a href="cityid=653" class='ajax' data-name='Carnegie' data-value='653'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Carnegie
+          </div>
+        </a> 
+
+         <a href="cityid=639" class='ajax' data-name='CBD' data-value='639'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> CBD
+          </div>
+        </a> 
+
+         <a href="cityid=655" class='ajax' data-name='Chadstone' data-value='655'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Chadstone
+          </div>
+        </a> 
+
+         <a href="cityid=644" class='ajax' data-name='Clayton附近' data-value='644'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Clayton附近
+          </div>
+        </a> 
+
+         <a href="cityid=649" class='ajax' data-name='Dandenong附近' data-value='649'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Dandenong附近
+          </div>
+        </a> 
+
+         <a href="cityid=654" class='ajax' data-name='Dockland' data-value='654'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Dockland
+          </div>
+        </a> 
+
+        <h5>E - H</h5>
+
+         <a href="cityid=652" class='ajax' data-name='Foodscary/sunshine附近' data-value='652'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Foodscary/sunshine附近
+          </div>
+        </a> 
+
+         <a href="cityid=650" class='ajax' data-name='Frankston 附近' data-value='650'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Frankston 附近
+          </div>
+        </a> 
+
+        <h5>I - L</h5>
+
+         <a href="cityid=641" class='ajax' data-name='GLEN WAV' data-value='641'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> GLEN WAV
+          </div>
+        </a> 
+
+
+        <h5>M - P</h5>
+
+        <a href="cityid=646" class='ajax' data-name='Malvern附近' data-value='646'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Malvern附近
+          </div>
+        </a> 
+
+         <a href="cityid=642" class='ajax' data-name='Preston周边' data-value='642'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Preston周边
+          </div>
+        </a> 
+
+        <h5>Q - T</h5>
+
+         <a href="cityid=651" class='ajax' data-name='Richmond附近' data-value='651'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Richmond附近
+          </div>
+        </a> 
+
+         <a href="cityid=643" class='ajax' data-name='Ringwood附近' data-value='643'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Ringwood附近
+          </div>
+        </a> 
+
+        <a href="cityid=648" class='ajax' data-name='SpringVale附近' data-value='648'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> SpringVale附近
+          </div>
+        </a> 
+
+         <a href="cityid=647" class='ajax' data-name='ST Kilda附近' data-value='647'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> ST Kilda附近
+          </div>
+        </a> 
+
+        <a href="cityid=656" class='ajax' data-name='Toorak' data-value='656'>
+          <div class='item item-inline' >
+             <i class='fa fa-check '></i> Toorak
+          </div>
+        </a> 
+
+
+        <h5>U - Z</h5>
+      </div>
+
+      <div class='search-by-list search-order-by-sec'>
+          
+
+          <a href="orderby=hits" class='ajax' data-name='热门' data-value='hits'>
+            <div class='item <{if $orderby=="hits"}>active<{/if}>'>
+              <i class='fa fa-check '></i>热门
+            </div>
+          </a>
+
+          <a href="orderby=buy" class='ajax' data-name='销量' data-value='buy'>
+            <div  class='item <{if $orderby=="buy"}>active<{/if}>'>
+              <i class='fa fa-check '></i>销量
+            </div>
+          </a>
+
+           <a href="orderby=id" class='ajax' data-name='最新' data-value='id'>
+            <div  class='item <{if $orderby=="id"}>active<{/if}>'>
+              <i class='fa fa-check '></i>最新
+            </div>
+          </a>
+         <a href="orderby=pricelow" class='ajax' data-name='价格（从低到高）' data-value='pricelow'>
+            <div  class='item <{if $orderby=="pricelow"}>active<{/if}>'>
+              <i class='fa fa-check '></i>价格（从低到高）
+            </div>
+          </a>
+          <a href="orderby=pricehigh" class='ajax' data-name='价格（从高到低）' data-value='pricehigh'>
+            <div  class='item <{if $orderby=="pricehigh"}>active<{/if}>'>
+              <i class='fa fa-check '></i>价格（从高到低）
+            </div>
+          </a>
+
+        
+      </div>
+
+      <div class='search-by-list advance-filter-sec'>
+          <div class='filter-section' data-name='meal_type'>
+             <p>用餐时段</p><br>
+             <span data-value='breakfast'>早餐</span>
+             <span data-value='lunch'>午餐</span>
+             <span data-value='dinner'>晚餐</span>
+             <span data-value='midnight'>夜宵</span>
+          </div>
+
+          <div class='filter-section' data-name='guest_limit'>
+             <p>用餐人数</p><br>
+             <span data-value='1'>单人</span>
+             <span data-value='2-3' >2-3人</span>
+             <span data-value='4-5' >4-5人</span>
+             <span data-value='6-8' >6-8人</span>
+             <span data-value='9' >9人以上</span>
+          </div>
+
+          <div class='filter-section single-selection' data-name='apportmant_required'>
+             <p>是否需要预约</p>
+             <span data-value='apportmant_require'>需要预约</span>
+             <span data-value='apportmant_not_required'>不需要预约</span>
+          </div>
+
+          <div class='filter-section single-selection' data-name='time_limit'>
+             <p>是否限时</p>
+             <span data-value='no_time_limit'>不限时</span>
+             <span data-value='time_limit'>限时</span>
+          </div>
+
+          <div class='filter-section single-selection' data-name='available_on_holiday'>
+             <p>公共假期是否可用</p>
+             <span data-value='available_on_holiday'>可用</span>
+             <span data-value='not_available_on_holiday'>不可用</span>
+          </div>
+
+          <div class='filter-section single-selection' data-name='sharable'>
+             <p>是否和其它优惠同享</p>
+             <span data-value='sharable'>同享</span>
+             <span data-value='not_sharable'>不同享</span>
+          </div>
+
+          <div class='filter-section single-selection' data-name='private_room'>
+             <p>是否有包间</p>
+             <span data-value='has_private_room'>有</span>
+             <span data-value='no_private_room'>没有</span>
+          </div>
+
+      </div>
+
+       <div class='advance-filter-sec-btn' style="display: none; line-height: 50px;text-align: center;width: 100%;background-color: #f7f7f7;">
+              <span class='filter-btn btn-confirm'>确定</span><span class='filter-btn btn-reset'>重置</span>
+              <span class='filter-btn btn-cancel' style="background-color: #b0c2c0">返回</span>
+      </div>
+  </div>
+
+  <div class='filter-display'>
+  </div>
+
+  
+  <div class='recommend'>
+      <{foreach from=$recommend item=item}>
+        <div class='item'>
+
+              <div class='left-sec' style="position: relative;">
+                <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                  <img src="<{$UPLOAD_PATH}><{$item.pic|image:200:200:'cut'}>">  
+                </a>
+                <span class='recommend-icon'>推广</span>
+              </div>
+              
+              <div class='right-sec' >
+			     <div class='businessName'>
+                  <i class='fa fa-home'></i><{$item.businessDisplayName}>
+                    
+
+                   <{if $item.distance<100000&&$item.distance>0}>
+                   <em style='color:#f30'>&nbsp;<{number_format($item.distance/1000,2,'.','')}>km</em>
+                   <{/if}>
+
+                   <span class='rating'>
+                      <{section name=em loop=5}>
+                          <{if $smarty.section.em.index<$item.ratting_score}>
+                              <img src="<{$SKIN_PATH}>mobile/images/icon62.png">
+                          <{else}>
+                              <img src="<{$SKIN_PATH}>mobile/images/icon63.png">
+                          <{/if}>
+                      <{/section}>
+                      
+                  </span>
+
+                </div>
+                <div class='title'>
+                   <a href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+                    <{$item.title}>
+                   </a>
+                 </div>
+
+                <div class=' '></div>
+                 <div class='price'> <{$item.price1}>  <s> <{$item.price2}></s> 
+                  <em> <{if $item.priceOff>0}>-<{$item.priceOff}>%<{/if}> 
+                  <small><i class='fa fa-heart' style="color:#ff8b8b"><{$item.hits}></i></small>
+                </em>
+              </div>
+               
+              </div>
+        </div>
+        <{/foreach}>
+  </div>
+  <div class='search-result' id='search-result' >
+
+      <{$result_section}>
+ 
+      <div class='loading' >
+        <i class='fa fa-spinner fa-pulse'></i>
+        <em>加载中...</em>
+      </div>
+
+      <div class='fixed-search-by-category'>
+        <a href="alias=<{$parent.alias}>" class='ajax' data-name='<{$parent.name}>' data-value='<{$parent.alias}>'>
+          <div class='fixed-category-item'>
+               全部<{$parent.name}>
+          </div>
+        </a>
+        <{foreach from=$childs item=item}>
+        <a href="alias=<{$item.alias}>" class='ajax' data-name='<{$item.name}>' data-value='<{$item.alias}>'>
+          <div class='fixed-category-item  <{if $item.id==$category.id}> active<{/if}>'>
+            <{$item.name}><!-- <span>10231</span> -->
+          </div>
+        </a>
+        <{/foreach}>
+      </div>
+	 
+  </div>
+
+  <!-- 搜索框 -->
+    <form onsubmit=" return false;">
+    <div class="box-so bg-1">
+
+        <div class="inner">
+
+            <div class="so-top so-top-2" style="margin-right: 3.8rem;">
+
+                <input type="search" placeholder="请输入..." class="g-input inp search-input" style="padding-left: 10px">
+
+            </div>
+            <i class='fa fa-search fa-lg search-input-associate-icon' style="position: absolute;top: 0;right: 2.5rem;line-height: 1.5rem;"></i>
+            <a href="javascript:void(0);" class="a-txt">返回</a>
+
+        </div>
+
+        <div class="m-so">
+		
+		  <h4>CBD精选搜索<!-- <a  class="a-update"></a> --></h4>
+
+            <ul class="g-ul">
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=2-3&alias=106126&cityid=639">CBD 2-3人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=2-3&alias=106126&cityid=639">CBD 2-3人晚餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=4-5&alias=106126&cityid=639">CBD 4-5人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=4-5&alias=106126&cityid=639">CBD 4-5人晚餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=1&alias=106126&cityid=639">CBD单人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=1&alias=106126&cityid=639">CBD单人晚餐</a></li>
+			   <li><a class='ajaxlink' href="alias=106126103&cityid=639">CBD火锅</a></li>
+              <li><a class='ajaxlink' href="alias=106126104&cityid=639">CBD自助餐</a></li>
+              
+            </ul>
+
+            <h4>人数及就餐时间<!-- <a  class="a-update"></a> --></h4>
+
+            <ul class="g-ul">
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=1">单人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=1">单人晚餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=2-3">2-3人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=lunch&guest_limit=4-5">4-5人午餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=2-3">2-3人晚餐</a></li>
+              <li><a class='ajaxlink' href="meal_type=dinner&guest_limit=4-5">4-5人晚餐</a></li>
+            </ul>
+             <h4>地点<!-- <a  class="a-update"></a> --></h4>
+
+             <ul class="g-ul">
+                <li><a class='ajaxlink' href="alias=106126&cityid=639">CBD</a></li>
+                <li><a class='ajaxlink' href="alias=106126&cityid=640">BOX HILL</a></li>
+                <li><a class='ajaxlink' href="alias=106126&cityid=641">GLEN</a></li>
+                <li><a class='ajaxlink' href="alias=106126&cityid=653">CARNIGIE</a></li>
+                <li><a class='ajaxlink' href="alias=106126&cityid=654">DOCKLANDS</a></li>
+            </ul>
+
+            <h4>特色</h4>
+            <ul class="g-ul">
+              <li><a class='ajaxlink' href="alias=106126103">火锅</a></li>
+              <li><a class='ajaxlink' href="alias=106126104">自助餐</a></li>
+              <li><a class='ajaxlink' href="key=小龙虾">小龙虾</a></li>
+              <li><a class='ajaxlink' href="key=羊肉串">羊肉串</a></li>
+              <li><a class='ajaxlink' href="alias=106126107">咖啡</a></li>
+              <li><a class='ajaxlink' href="alias=106126105">烧烤</a></li>
+              <li><a class='ajaxlink' href="alias=106126111">干锅香锅</a></li>
+              <li><a class='ajaxlink' href="alias=106126124">奶茶</a></li>
+              <li><a class='ajaxlink' href="alias=106126116">海鲜</a></li>
+            </ul>
+
+
+             <h4>菜系<!-- <a  class="a-update"></a> --></h4>
+             <ul class="g-ul">
+                <li><a class='ajaxlink' href="alias=106126125">代金券</a></li>
+                <li><a class='ajaxlink' href="alias=106126109">川湘菜</a></li>
+                <li><a class='ajaxlink' href="alias=106126112">粤菜</a></li>
+                <li><a class='ajaxlink' href="alias=106126127">湖北菜</a></li>
+                <li><a class='ajaxlink' href="alias=106126106">日韩料理</a></li>
+                <li><a class='ajaxlink' href="alias=106126110">江浙菜</a></li>
+                <li><a class='ajaxlink' href="alias=106126108">东北菜</a></li>
+            </ul>
+
+             <h4>推荐餐厅<!-- <a  class="a-update"></a> --></h4>
+             <ul class="g-ul">
+                <li><a href="<{$http_root_www}>coupon1/5011">水井坊</a></li>
+                <li><a href="<{$http_root_www}>coupon1/4984">老炭长</a></li>
+                <li><a href="<{$http_root_www}>coupon1/4997">老好吃烧烤</a></li>
+                <li><a href="<{$http_root_www}>coupon1/5008">酒精烤焰</a></li>
+                <li><a href="<{$http_root_www}>coupon1/5018">赤宴</a></li>
+                <li><a href="<{$http_root_www}>coupon1/5016">龙的传人</a></li>
+                <li><a href="<{$http_root_www}>coupon1/5012">洞庭鱼米</a></li>
+                <li><a href="<{$http_root_www}>coupon1/5001">菜根香</a></li>
+            </ul>
+      
+        </div>
+
+        <div class="so-pop">
+            <a  class="a-shop search-keyword-display"><!-- 店铺搜索&gt;手机 --></a>
+            <ul class="g-ul ul-screen" style="max-height: 83vh;overflow: scroll;">
+            </ul>
+        </div>
+    </div>
+    </form>
+    <!-- 搜索框 end-->
+
+
+</div>
+ 
+
+<div class='fixed-footer'>
+    <a href="<{$http_root_www}>">
+      <img src="<{$SKIN_PATH}>mobile/images/fix-01.png"  >  
+        <p>首页</p>
+    </a>
+
+     <a  onclick="window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>','singleChat')">
+      <img src="<{$SKIN_PATH}>mobile/images/food-footer/4.png" >  
+        <p>客服</p>
+    </a>
+
+     <a href="<{$http_root_www}>member/mingxingdian_index">
+      <img src="<{$SKIN_PATH}>mobile/images/fix-02.png" >  
+        <p>开店</p>
+    </a>
+
+     <a href="<{$http_root_www}>member/showcart">
+      <img src="<{$SKIN_PATH}>mobile/images/food-footer/5.png" >  
+        <p>购物车</p>
+    </a>
+
+     <a href="<{$http_root_www}>member/index">
+      <img src="<{$SKIN_PATH}>mobile/images/food-footer/3.png" >  
+        <p>我的</p>
+    </a>
+</div>
+
+
+<div class='referral-share'>
+<div class='share-display'>
+  <div class='top'>
+    <img src="<{$SKIN_PATH}>images/redbag/img/guide1.png">
+  </div>
+  <{if $loginUser}>
+    <div class='qrcode'>
+      <img src="<{$shareQRCode}>">
+    </div>
+    <div class='bottom'>
+      <a href="<{$http_root_www}>referal/referrals?type=user" target="_blank" class='manage-share-link'><{$lang->my_sharing}></a>
+    </div>
+  <{else}>
+  
+    <h2><{$lang->login_and_sharing}></h2>
+    
+  <{/if}>
+</div>
+</div>
+
+<style type="text/css">
+.referral-share .share-btn{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgba(255,191,0,0.7);
+  padding: 5px 15px;
+  z-index: 12;
+}
+
+.referral-share .share-display{
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width:100%;
+  height: 100%;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.referral-share .share-display h2{
+    color: #fff;
+    padding: 30px;
+    line-height: 100px;
+    text-align: center;
+}
+
+.referral-share .top{
+  height: 120px;
+}
+.referral-share .top img{
+  width: 170px;
+  position: absolute;
+  right: 0px;
+}
+.referral-share .qrcode{
+  text-align: center;
+  padding: 50px 0px;
+}
+.referral-share .qrcode img{
+  display: inline-block;
+  width: auto;
+}
+.referral-share .bottom{
+  text-align: center;
+  width: 100%;
+  height: 50px;
+}
+.referral-share .bottom .manage-share-link{
+  background-color: #FD5001 ;
+  padding: 10px 20px;
+}
+</style>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+
+<script type="text/javascript" src="<{$STATIC_PATH}>jquery-cookie.js"></script>
+
+<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+<script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+<script>
+    $(function(){
+
+        var swiper = new Swiper('#banner', {
+
+           pagination: '.swiper-pagination',
+
+           paginationClickable: true,
+
+           autoplay:2000
+
+       });
+
+    })
+</script>
+
+<script type="text/javascript">
+  function saveCurrentAncher(obj) {
+      $.cookie("food_search_remember_page",currentPage,{ expires : 1/24/12 });
+      $.cookie("food_search_remember_item",$(obj).data('id'),{ expires : 1/24/12 });
+  }
+ 
+</script>
+
+<script type="text/javascript">
+  $(function(){
+     $('.search-input').keyup(function(e) {
+          if(e.keyCode == 13){
+              e.stopPropagation();
+              keywordsSearch()
+              $('.recommend').fadeOut(1000);
+          }
+     });
+
+     $('.search-input-associate-icon').on('click',function(){
+            keywordsSearch();
+            $('.recommend').fadeOut(1000);
+     });
+
+    function keywordsSearch(){
+          var key = $('.search-input').val()
+
+          currentUrl='<{$searchUrl}>key='+key;
+
+          fetching = false;
+          currentPage=1;
+          endOfPage=false;
+          $('.subcoupon_display_group,.subcoupon-toggle').remove();
+
+           $("body").removeClass('open-so');
+           $(window).scrollTop($(".category-icon").position().top);
+
+          ajaxLink(currentUrl)
+      }
+
+     $('.filter').on('click',function(){
+      $('.search-nav').toggleClass('on');
+      //$('#bd').toggleClass('search-nav-on')
+     })
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('.search-filter-menu .filter-menu').on('click',function(){
+
+      if($(this).hasClass('active')){
+        $(this).removeClass('active')
+        $('.search-by-list').hide();
+        $('.advance-filter-sec-btn').hide();
+
+        $('.search-filter').removeClass('fixed');
+      }else{
+        $('.filter-menu').removeClass('active');
+        $(this).addClass('active')
+
+        $('.search-filter').addClass('fixed');
+
+        $('.search-by-list').hide();
+
+        var target=$(this).data('target');
+
+        $('.'+target).show();
+
+        if(target =='advance-filter-sec'){
+           $('.advance-filter-sec-btn').show();
+        }
+
+      }
+    })
+
+
+    $('.btn-cancel').on('click',function(){
+        $('.search-filter-menu .filter-menu').removeClass('active')
+        $('.search-by-list').hide();
+        $('.advance-filter-sec-btn').hide();
+
+        $('.search-filter').removeClass('fixed');
+    })
+  })
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    var top = $('.search-filter').position().top;
+	var before = $(window).scrollTop();
+    $(window).scroll(function(){
+
+        if($(window).scrollTop()>top && $('.search-result .item').length>10){
+          $('.search-filter').addClass('fixed');
+        }else{
+          $('.search-filter').removeClass('fixed');
+        }
+		
+		 var after = $(window).scrollTop();
+                    if (before<after || after<200) {
+                       // console.log('上');
+                        before = after;
+						  $('#food_header').css('position','');
+						  $('.search-filter').css('top','0');
+                    };
+                    if (before>after ) {
+                      //  console.log('下');
+                        before = after;
+						  $('#food_header').css('position','fixed');
+						    $('.search-filter').css('top','1.33rem');
+                    };
+		
+		
+    })
+  })
+</script>
+
+
+<script type="text/javascript">
+  $(function(){
+    $('.filter-section span').on('click',function(){
+        if($(this).parent().hasClass('single-selection')){
+          $(this).siblings('span').removeClass('selected');
+          $(this).toggleClass('selected');
+        }else{
+          $(this).toggleClass('selected');
+        } 
+    })
+
+    $('.filter-btn.btn-reset').on('click',function(){
+        $('.filter-section span').removeClass('selected');
+    })
+    
+  })
+
+  function filterDisplayClear(){
+        $(".search-by-list .item").removeClass('active')
+        $('.filter-btn.btn-reset').trigger('click');
+        $('.filter-btn.btn-confirm').trigger('click');
+  }
+
+  function filterDisplayRemove(obj){
+    var key = $(obj).data('okey');
+    var value = $(obj).data('ovalue');
+
+
+    $("a.ajax[data-value='"+value+"'] .item").removeClass('active');
+    $(".filter-section span[data-value='"+value+"']").removeClass('selected');
+
+    $(obj).remove();
+    $('.filter-btn.btn-confirm').trigger('click');
+  }
+</script>
+
+<script type="text/javascript">
+    function add_fav(obj){
+      var coupon_id = $(obj).data('id');
+
+      if($(obj).hasClass('faved')){
+        $(obj).removeClass('faved');
+        $.get(
+          "<{$http_root_www}>query?cmd=fav_remove", 
+          {'itemId': coupon_id,'userId':'<{$loginUser.id}>','type':'coupon'}, 
+          function(data){
+             $(obj).find('small').html('收藏')
+        });
+
+      }else{
+        $(obj).addClass('faved');
+        $.get(
+          "<{$http_root_www}>query?cmd=fav_add", 
+          {'itemId': coupon_id,'userId':'<{$loginUser.id}>','type':'coupon'}, 
+          function(data){
+             $(obj).find('small').html('已收藏')
+        });
+      }
+      
+    }
+</script>
+
+<script type="text/javascript">
+
+    var fetching = false;
+
+    var currentPage=2;
+
+    var endOfPage=false;
+
+    var currentUrl = '<{$currentUrl}>';
+
+    $(function(){
+        var remember_url=$.cookie('food_search_remember');
+        var remember_page=$.cookie('food_search_remember_page');
+        if(remember_url){
+          currentUrl=remember_url;
+            fetching = false;
+            currentPage=1;
+            endOfPage=false;
+           $('.subcoupon_display_group,.subcoupon-toggle').remove();
+           console.log('loading from rememberurl')
+
+           if(remember_page>1){
+            currentPage=remember_page;
+             ajaxLink(currentUrl,false,remember_page);
+           }else{
+             ajaxLink(currentUrl)
+           }
+          
+        }
+    })
+
+  $(function(){
+    $(window).scroll(function() {
+      if(endOfPage)return;
+      scroll_height =0.7* $(document).height();
+	
+       if($(window).scrollTop() + $(window).height()> scroll_height ) {
+         ajaxLink(currentUrl);
+         $('.recommend').fadeOut(500);
+       }
+	 
+  });
+
+  })
+</script>
+
+<script type="text/javascript">
+  $('a.ajaxlink').on('click',function(e){
+      e.preventDefault();
+
+      fetching = false;
+      currentPage=1;
+      endOfPage=false;
+
+      currentUrl='<{$http_root_www}>'+'food?'+$(this).attr('href');
+      $('.subcoupon_display_group,.subcoupon-toggle').remove();
+
+      ajaxLink(currentUrl);
+
+      $('.recommend').fadeOut(500);
+
+      $(window).scrollTop($(".category-icon").position().top);      
+  })
+</script>
+
+<script type="text/javascript">
+
+  $('.nearme').on('click',function(){
+      $('.search-order-by-sec .item').removeClass('active');
+      getLocation();
+  })
+
+  $('.search-order-by-sec .item').on('click',function(){
+      $('.nearme .item').removeClass('active');
+  })
+
+  $('a.ajax,.filter-btn.btn-confirm').on('click',function(e){
+    e.preventDefault();
+
+    fetching = false;
+    currentPage=1;
+    endOfPage=false;
+
+    $('.subcoupon_display_group,.subcoupon-toggle').remove();
+
+    $('.search-filter-menu .filter-menu.active').trigger('click');
+
+    $(this).siblings('a').find('.item').removeClass('active');
+    $(this).find('.item').addClass('active');
+
+    $(this).siblings('a').find('.fixed-category-item').removeClass('active');
+    $(this).find('.fixed-category-item').addClass('active');
+
+    $(window).scrollTop($(".category-icon").position().top);
+
+    try{
+       var c = $(this).parent('.search-by-list').attr('class').split(' ').pop();
+        $('.filter-menu[data-target='+c+']').find('span').html($(this).data('name'));
+    }catch(e){
+      //doing nothing
+    }
+
+    currentUrl='<{$http_root_www}>'+'food?';
+    if ($(this).parent().hasClass('fixed-search-by-category')) {
+      $('.fixed-search-by-category').find('.fixed-category-item.active').parent('a').each(function(k,v){
+        currentUrl = currentUrl + "&"+ $(v).attr('href');
+      });
+
+    }else if ($(this).parent().hasClass('search-by-list')) {
+      $('.search-by-list').find('.item.active').parent('a').each(function(k,v){
+        currentUrl = currentUrl + "&"+ $(v).attr('href');
+      });
+    }
+
+    var url='';
+    $('.filter-section').each(function(key,obj){
+        var name = $(obj).data('name');
+        if($(obj).hasClass('single-selection')){
+          var value = $(obj).find('span.selected').data('value');
+        }else{
+          var value=[];
+          $(obj).find('span.selected').each(function(k,v){
+              value.push($(v).data('value'));
+          })
+          value=value.join();
+        }
+        if(value)url = url+"&"+name+"="+value;
+    })
+
+    currentUrl=currentUrl+url;
+
+    ajaxLink(currentUrl);
+
+    $('.recommend').fadeOut(1000);
+  })
+
+ function ajaxLink(url,append=false,wholepage=0){
+    if(fetching)return;
+    $.cookie("food_search_remember",url,{ expires : 1/24/12 });
+
+    var a =url.indexOf("/food");
+    menu_reverse_highlight(url.substring(a));
+
+    var gotoItem=0;
+    if(wholepage>1){
+      url= url+'&wholepage=true';
+      gotoItem = $.cookie("food_search_remember_item");
+    }
+     url =url + '&reftag=' + '';
+    $.ajax({
+          type: "GET",
+          url: url+"&ajax=1",
+          data: { page: currentPage},
+          beforeSend:function(){
+            fetching=true;
+            $('.loading').html(" <i class='fa fa-spinner fa-pulse'></i><em>加载中...</em>").show()
+          }
+        }).done(function(msg){
+          $(msg).insertBefore('.loading');
+          if(msg.trim()==''){
+          endOfPage=true;
+            $('.loading').html('全部都在这里了亲');
+          }else{
+		        $('.loading').hide();
+          }
+          currentPage++;
+
+          if(gotoItem!=0){
+            $(window).scrollTop($("div[data-id='"+gotoItem+"']").first().position().top-200);
+          }
+
+          initcouponGroupToggle();
+
+        }).always(function(){
+          fetching=false;
+
+          $.cookie("food_search_remember_page",0,{ expires : 1/24/12 });
+          $.cookie("food_search_remember_item",0,{ expires : 1/24/12 });
+    });
+   
+
+  }
+  
+  function display_search_filter(list) {
+     
+     var html='';
+     for (var i = list.length - 1; i >= 0; i--) {
+        var data = list[i];
+        if(data.length<=0)continue;
+
+        var searchArg=data.split('=');
+        var value = searchArg.pop();
+        var key=searchArg.pop();
+
+        var originalKey = key;
+        var originalValue = value;
+
+        var filter_list ={};
+
+        if(!key)continue;
+
+        if(key!='key'&&key!='orderby'&&key!='cityid'&&key!='alias'&&key!='latitude'&&key!='longitude'){
+            key=key.replace('meal_type','用餐时段')
+			 key=key.replace('restaurant_menu','线上点餐')
+            key=key.replace('guest_limit','用餐人数')
+            key=key.replace('apportmant_required','预定')
+            key=key.replace('time_limit','限时')
+            key=key.replace('available_on_holiday','公共假期')
+            key=key.replace('sharable','同享')
+            key=key.replace('private_room','包间')
+
+            value=value.replace('breakfast','早餐');
+			value=value.replace('restaurant_menu','餐厅列表');
+			
+            value=value.replace('lunch','午餐');
+            value=value.replace('dinner','晚餐');
+            value=value.replace('midnight','夜宵');
+            value=value.replace('1','单人');
+            value=value.replace('2-3','2-3人');
+            value=value.replace('4-5','4-5人');
+            value=value.replace('6-8','6-8人');
+            value=value.replace('9','9人以上');
+            value=value.replace('apportmant_require','需要预约');
+            value=value.replace('apportmant_not_required','不需要预约');
+            value=value.replace('no_time_limit','不限时');
+            value=value.replace('time_limit','限时');
+            value=value.replace('available_on_holiday','可用');
+            value=value.replace('not_available_on_holiday','不可用');
+            value=value.replace('sharable','同享');
+            value=value.replace('not_sharable','不同享');
+            value=value.replace('has_private_room','有');
+            value=value.replace('no_private_room','没有');
+        }
+
+        if(value=='106126')continue;
+        if(key=='alias'){
+          key='菜系';
+          switch(value){
+            case "106126125":
+                value='代金券';
+                break;
+              case "106126102":
+                value='蛋糕甜点';
+                break;
+              case "106126103":
+                value='火锅';
+                break;
+              case "106126104":
+                value='自助餐';
+                break;
+              case "106126105":
+                value='烧烤烤肉烤串';
+                break;
+              case "106126106":
+                value='日韩料理';
+                break;
+              case "106126107":
+                value='西餐';
+                break;
+              case "106126108":
+                value='东北菜';
+                break;
+              case "106126109":
+                value='川湘菜';
+                break;
+              case "106126110":
+                value='江浙菜';
+                break;
+              case "106126111":
+                value='香锅烤鱼';
+                break;
+              case "106126112":
+                value='粤菜';
+                break;
+              case "106126113":
+                value='西北菜';
+                break;
+              case "106126114":
+                value='云贵菜';
+                break;
+              case "106126115":
+                value='东南亚菜';
+                break;
+              case "106126116":
+                value='海鲜';
+                break;
+              case "106126117":
+                value='酱菜卤菜';
+                break;
+              case "106126118":
+                value='汤粥炖菜';
+                break;
+              case "106126119":
+                value='咖啡酒吧';
+                break;
+              case "106126120":
+                value='创意菜';
+                break;
+              case "106126121":
+                value='聚餐宴请';
+                break;
+              case "106126128":
+                value='北京菜';
+                break;
+              case "106126122":
+                value='素食';
+                break;
+              case "106126124":
+                value='奶茶';
+                break;
+              case "106126126":
+                value='粥';
+                break;
+              case "106126127":
+                value='湖北菜';
+                break;
+              case "106126123":
+                value='更多美食';
+                break;
+          }
+        }
+
+        if(value=='556')continue;
+        if(key=='cityid'){
+            key='位置';
+            switch(value){
+              case "639": 
+                value='CBD';
+                break;
+              case "640": 
+                value='BOX HILL ';
+                break;
+              case "641": 
+                value='GLEN WAV';
+                break;
+              case "645": 
+                value='Balwyn/kew附近';
+                break;
+              case "640": 
+                value='BOX HILL ';
+                break;
+              case "657": 
+                value='Carlton';
+                break;
+              case "653": 
+                value='Carnegie';
+                break;
+              case "639": 
+                value='CBD';
+                break;
+              case "655": 
+                value='Chadstone';
+                break;
+              case "644": 
+                value='Clayton附近';
+                break;
+              case "649": 
+                value='Dandenong附近';
+                break;
+              case "654": 
+                value='Dockland';
+                break;
+              case "652": 
+                value='Foodscary/sunshine附近';
+                break;
+              case "650": 
+                value='Frankston 附近';
+                break;
+              case "641": 
+                value='GLEN WAV';
+                break;
+              case "646": 
+                value='Malvern附近';
+                break;
+              case "642": 
+                value='Preston周边';
+                break;
+              case "651": 
+                value='Richmond附近';
+                break;
+              case "643": 
+                value='Ringwood附近';
+                break;
+              case "648": 
+                value='SpringVale附近';
+                break;
+              case "647": 
+                value='ST Kilda附近';
+                break;
+              case "656": 
+                value='Toorak';
+                break;
+            }
+
+            if(html.indexOf(value)>0)continue;
+          }
+
+        if(key=='orderby'){
+            key='热度';
+            switch(value){
+              case "default": value='综合';
+                break;
+              case "hits": value='热门';
+                break;
+              case "buy": value='销量';
+                break;
+              case "id": value='最新';
+                break;
+			 case "pricelow": value='价格（从低到高）';
+                break;
+              case "pricehigh": value='价格（从高到低）';
+                break;
+              
+            }
+        }
+
+        if(key=='longitude'||key=='latitude'){
+              key='离我最近';
+              value=" ";
+
+              originalKey='nearme';
+              originalValue='nearme'
+              if(html.indexOf(key)>0)continue;
+        }
+
+        html= html +"<span onClick='filterDisplayRemove(this);' data-okey='"+originalKey+"' data-ovalue='"+originalValue+"'>"+key+":"+value+"<i class='fa fa-close'  ></i></span>";
+     }
+    
+
+     if(html){
+      $('.filter-display').html('筛选：'+html+"<small class='filter-display-clear' onClick='filterDisplayClear();'>清空 <i class='fa fa-close'></i> </small>");
+     }else{
+      $('.filter-display').html(' ');
+     }
+  }
+
+  function menu_reverse_highlight(url) {
+      //reset all highlight
+      $('a.ajax .item').removeClass('active');
+      $('a.ajax .fixed-category-item').removeClass('active');
+      
+      $('.filter-section span').removeClass('selected');
+      $('.filter-menu span').each(function(k,v){
+        $(v).html($(v).data('default'));
+      })
+
+      var search = url.slice(url.indexOf('?')+1);
+
+      var searchArgList = search.split('&');
+      
+      display_search_filter(searchArgList);
+
+      for (var i = searchArgList.length - 1; i >= 0; i--) {
+        if(searchArgList[i].length<=0)continue;
+
+        var searchArg=searchArgList[i].split('=');
+        var value = searchArg.pop();
+        var key=searchArg.pop();
+
+        if(key=='longitude'||key=='latitude'){
+          $target = $('.nearme');
+          $target.find('.item').addClass('active');
+        }else{
+
+          if(key=='meal_type'||key=='guest_limit'){
+            var valueList = value.split(',');
+            for (var n = valueList.length - 1; n >= 0; n--) {
+              $target=$('.ajax[data-value='+valueList[n]+']');
+
+              $target.find('.item').addClass('active');
+              $('.filter-section span[data-value='+valueList[n]+']').addClass('selected');
+            }
+          }else if(key=='key'){
+              $('.search-box small').html(value);
+          }else{
+            $target=$('.ajax[data-value='+value+']');
+            $target.find('.item').addClass('active');
+            $target.find('.fixed-category-item').addClass('active');
+            $('.filter-section span[data-value='+value+']').addClass('selected');
+          }
+          
+        }
+
+         try{
+            var c = $target.parent('.search-by-list').attr('class').split(' ').pop();
+            $('.filter-menu[data-target='+c+']').find('span').html($target.data('name'));
+          }catch(e){
+            //doing nothing
+          }
+      }
+  }
+</script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+<script>
+    $(".m-notice").slide({mainCell:".bd ul",autoPlay:true,effect:"topLoop",vis:1});
+</script>
+
+<script type="text/javascript">
+  
+    $(".a-so,.search-icon-assosiate").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".so-top-pop").click(function(){
+
+            $("body").addClass('open-so');
+
+        });
+
+        $(".box-so .a-txt , .g-ul li").click(function(){
+
+            $("body").removeClass('open-so');
+
+        });
+
+        $(".g-ul li").click(function(){
+          $(window).scrollTop($(".category-icon").position().top);
+        });
+
+</script>
+
+
+
+<script type="text/javascript">
+function searchNearMe(position) {
+    var latitude=position.coords.latitude;
+    var longitude=position.coords.longitude;
+
+    var date = new Date();
+    date.setTime(date.getTime() + (5 * 60 * 1000));
+
+    $.cookie("latitude",latitude,{ expires : date });
+    $.cookie("longitude",longitude,{ expires : date });
+
+    var url = '&latitude='+latitude+'&longitude='+longitude;
+    $('.nearme').attr('href',url);
+    $('#pageloading').remove();
+
+    $('.nearme.ajax').trigger('click');
+}
+
+function getLocationDeny(error) {
+  console.log(error);
+  $('#pageloading').remove();
+}
+
+function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+
+function getLocation() {
+    var latitude = $.cookie("latitude");
+    var longitude = $.cookie("longitude");
+
+    if(isNumber(latitude)&&isNumber(longitude)){
+      console.log('location from cookie');
+      
+      var url = '&latitude='+latitude+'&longitude='+longitude;
+      $('.nearme').attr('href',url);
+
+    }else{
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(searchNearMe,getLocationDeny);
+        $('body').append("<i id='pageloading' class='fa fa-spinner fa-pulse fa-5x' style='position:fixed;top:50%;left:40%;z-index:9999;color:#FD5001 '></i>");
+      } else {
+          alert("Geolocation is not supported by this browser.");
+      }
+    }
+    
+}
+
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+  $('.share-btn').on('click',function(){
+    $('.referral-share .share-display').show();
+  })
+
+  $('.referral-share .share-display').on('click',function(){
+    $(this).hide();
+  })
+
+   $(document).on('click',".subcoupon-toggle",function(){
+      console.log('click');
+      $(this).prev(".subcoupon_display_group").children("div:nth-child(n+4)").toggle();
+    });
+
+   initcouponGroupToggle();
+})
+</script>
+
+<script type="text/javascript">
+  
+  function initcouponGroupToggle() {
+    $('.subcoupon_display_group').each(function(){
+
+      var childLength = $(this).children().length;
+
+      if(childLength >3 && !$(this).hasClass('toggle-hide')) {
+        $(this).after("<a class='subcoupon-toggle' href='javascript:'>更多</div>");
+        $(this).addClass('toggle-hide');
+      }
+    })
+  }
+
+
+  
+
+</script>
+
+<!-- WX jssdk share -->
+<script type="text/javascript">
+ var shareTitle='Ubonus-美食生活';
+ var shareLink='<{$http_root_wx}>food?bid=<{$businessUser.id}>';
+ var desc="搜索墨尔本最好吃的线上餐厅,线上购买,就在墨尔本美食-Ubonus美食生活";//onMenuShareAppMessage
+ var shareImg='<{$http_root_wx}>themes/zh-cn/images/wx_share.jpg';
+</script>
+<{include file='wx_share_js.htm'}>
+<!-- WX jssdk share -->
+
+</body>
+</html>
+
+
+

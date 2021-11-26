@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>member/index" class="a-back"></a>
+	</div>
+	<h1>优惠/返现券</h1>
+</header>
+
+<section id="bd">
+	<div class="m-menu">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><a class="on" href="<{$http_root_www}>member/discount_voucher?type=c01">未使用</a></div>
+			    <div class="swiper-slide"><a href="<{$http_root_www}>member/discount_voucher">全部</a></div>
+				<div class="swiper-slide"><a href="<{$http_root_www}>member/discount_voucher?type=b01">已使用</a></div>
+				<!--<div class="swiper-slide"><a href="<{$http_root_www}>coupons?">更多</a></div> -->
+			</div>
+		</div>
+	</div>
+
+	<{if $data}>
+	<{foreach from=$data key=key item=itemset name='dl'}>
+	<div class="order-num order-num-1">
+	 
+		<span>订单:<{substr($itemset[0].order_id,0,8)}>-<{substr($itemset[0].order_id,8,6)}>-<{substr($itemset[0].order_id,13,6)}></span>
+		<em></em>
+	</div>
+	<div class="order-num order-num-1">
+		<span><{if ($itemset[0].business_staff_userid!=0 && $itemset[0].business_staff_userid!=$itemset[0].business_id)}>分店：&nbsp;<{$itemset[0].company.nickname}><{else}>商家：&nbsp;<{$itemset[0].company.businessName}><{/if}></span>
+	</div>
+	<div class="order-num order-num-1">
+		<span>状态:<{$itemset[0].cn_coupon_status_name}></span>
+		
+	</div>
+	<div class="order-info order-info-1">
+		<ul class="g-ul m-list2">
+			<{foreach from=$itemset item=item}>
+			<li>
+				<div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic}>" alt=""></div>
+				<div class="con">
+					<h4><a href="<{$viewUrl}>id=<{$item.id}>"><{$item.bonus_title}></a></h4>
+					<span><{$item.guige_des}></span>
+					<p><em>
+						<{$item.voucher_deal_amount}>
+						</em></p>
+				</div>
+				<em class="num">X<{$item.customer_buying_quantity}></em>
+			</li>
+		<{/foreach}>
+		</ul>
+		<div class="payment">
+			<p>合计:<span>$<{$itemset[0].money}></span></p>
+
+				<{if !$itemset[0].is_paid}>
+					<!-- 如果该订单已经支付了，则客户不能删除-->
+					<a href="<{$http_root_www}>member/cancel_order?orderId=<{$itemset[0].order_id}>">取消</a>
+				<{/if}>
+				
+				<a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&orderId=<{$itemset[0].order_id}>','singleChat')"  >联系我们</a>
+				
+
+				<a href="<{$http_root_www}>company/customers_rating_edit?orderId=<{$itemset[0].order_id}>">评价</a>
+		</div>
+	</div>
+	<{/foreach}>
+	<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+	<{else}>
+	<div class="order-num order-num-1">
+		<span>未查找到相关数据</span>
+	</div>
+
+	<{/if}>
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+
+<script>
+    $(".m-menu").each(function(){
+        var swiper = new Swiper($(this).find(".swiper-container")[0], {
+            slidesPerView: 5,
+            paginationClickable: true,
+            spaceBetween : 5,
+            freeMode: true
+        });
+    });
+</script>
+</body>
+</html>

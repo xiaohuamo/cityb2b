@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='referal/side_referal_menu.htm'}>
+				
+						<div class="main-list">
+
+							<{if $ref_list}>
+								<form method="post" action="#">
+									<table cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th>产品/用户</th>
+												<th>介绍时间</th>
+												<th>状态</th>
+												<th>总提成</th>
+												<th>点击</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<{foreach from=$ref_list item=item name='dl'}>
+											<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+												<td><!-- (<{$item.couponId}>)/ --><{$item.userName}></td>
+												<td><{date('Y-m-d H:i:s', $item.time)}></td>
+
+												<td>
+												<{if $item.userId}>
+													<{if $item.currentSuccessor==$loginUser.id}>
+														<span style='color:#2bb8aa'>您是介绍人</span>
+														<span style='color:green'>
+															<{((mdl_referral_relation::ValidTimeLength+$item.time-$smarty.now)/(3600*24))|ceil}> Days Left
+														</span>
+
+													<{elseif $item.currentSuccessor}>
+														<span style='color:#9c9c9c'>该用户当前介绍人为
+														<{$item.currentSuccessor}></span>
+														<span style='color:green'>
+															<{((mdl_referral_relation::ValidTimeLength+$item.time-$smarty.now)/(3600*24))|ceil}> Days Left
+														</span>
+													
+													<{else}>
+														<span style='color:#2bb8aa'>该用户当前没有介绍人
+														</span>
+													<{/if}>
+												<{else}>
+													<span>所有为登录的页面访问</span>
+												<{/if}>
+												</td>
+											
+												<td>
+													<{if $item.userId}>
+														<{if $item.totalCommission}>
+															$<{$item.totalCommission}>
+														<{else}>
+															0
+														<{/if}>
+													<{/if}>
+												</td>
+
+												<td>
+													<{$item.hits}>
+												</td>
+												
+											</tr>
+											<{/foreach}>
+										</tbody>
+									</table>
+								</form>
+							<{else}>
+								还没有介绍记录
+							<{/if}>
+						</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

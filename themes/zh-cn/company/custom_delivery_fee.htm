@@ -1,0 +1,244 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+<style>
+
+	.main-form .input-box span label { width:280px; }
+
+</style>
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+			<div class="main-form" style="background: #fff;">
+
+	    
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/custom_delivery_fee_add" method="post" target="post_frame" enctype="multipart/form-data">
+
+					<div class="input-box t clearfix">
+						<h1>高级运费设置管理</h1>
+						<p>可以设置多个订单价格区间，并为每个价格区间按照路程远近设置多个运费价格。</p>
+						<p>实现典型的定制运费规则如：订单起步价$30, $30-$50之间 ，5公里之内免运；5-10公里之间，5刀运费；10公里-30公里区间，5刀基本运费，之后每公里加0.6刀运费，超过30公里不配送.....</p>
+						
+					
+			
+					</div>
+<br><br>
+						<h2 style="size:16px;">开始定制运费</h2>
+						
+						<{if $start_amount>=9999}>
+							<div class="input-box  clearfix">
+							  <label>订单金额已设置到最大值，不能再添加。下方表格可以查看运费设置信息，如需要更改，可删除后重新设置。</label>
+							</div>
+						<{else}>
+							<div class="input-box  clearfix">
+							  <label>订单金额在&nbsp;$<{$start_amount}>-$</label><input style="width:100px;"    type="text" name="end_amount1" placeholder="金额1" required>
+								<label>之间(不限金额只需输入&nbsp;<strong>9999</strong>&nbsp;），</label>
+								<br>1）距离在
+								<input style="width:100px;"  type="text" onchange="cal_farestdistance()" id="distance1" name="distance1" placeholder="公里数" required>公里之内&nbsp;(路程范围1），基本运费为$
+								<input style="width:100px;"  type="text" name="delivery_fees1" placeholder="输入运费" required>,
+								并从0公里开始加收$<input style="width:80px;"  type="text" name="plus_fees_per_km_1" placeholder="0" >/km的额外运费。
+								<br>
+								2）（选填）距离在<label style="display:none; "id="distance1copy"></label>
+								<input style="width:100px;" onchange="cal_farestdistance()" id="distance2"  type="text" name="distance2" placeholder="公里数" >公里之内&nbsp;(路程范围2），基本运费为$
+								<input style="width:100px;"  type="text" name="delivery_fees2" placeholder="输入运费" >,
+								并从<label style="display:none; "id="distance11copy"></label>公里开始加收$<input style="width:80px;"  type="text" name="plus_fees_per_km_2" placeholder="0" >/km的额外运费。
+								<br>
+								3）（选填）距离在<label style="display:none; "id="distance2copy"></label>
+								<input style="width:100px;"  type="text" onchange="cal_farestdistance()" id="distance3" name="distance3" placeholder="公里数" >公里之内&nbsp;(路程范围3），基本运费为$
+								<input style="width:100px;"  type="text" name="delivery_fees3" placeholder="输入运费" >,
+								并从<label style="display:none; "id="distance22copy"></label>公里开始加收$<input style="width:80px;"  type="text" name="plus_fees_per_km_3" placeholder="0" >/km的额外运费。
+								<br>
+								4)超过<input style="width:100px;"  disabled type="text" id="farest_distance"  name="farest_distance"  placeholder="最远距离"  >公里不送货(最远距离)。
+							</div>
+						<{/if}>
+						
+						
+						
+						<div class="input-box  clearfix">
+							
+							
+							<button type="submit" class="btn btn-default btn-success" id="">添加</button>
+						</div>
+						
+					
+					
+				</form>
+				
+				<script type="text/javascript"> 
+				
+				 function  cal_farestdistance(){
+				 
+				 
+				 var d1= parseFloat($("#distance1").val());
+				 if(!d1) {
+					d1=0;
+					 $("#distance1copy").css('display','none');
+				    $("#distance11copy").css('display','none');
+				 }
+				 if(d1>0) {
+				    $("#distance1copy").html(' '+d1 +'-');
+					$("#distance11copy").html(d1 );
+				    $("#distance1copy").css('display','');
+					$("#distance11copy").css('display','');
+				 }else{
+				   $("#distance1copy").css('display','none');
+				    $("#distance11copy").css('display','none');
+				 }
+				 
+				 var d2 = parseFloat($("#distance2").val());
+				 
+				 if(!d2) {
+				    $("#distance2copy").css('display','none');
+				    $("#distance22copy").css('display','none');
+				   d2=0;
+				 }
+				
+				if(d2>0) {
+				    $("#distance2copy").html(' '+d2 +'-');
+					$("#distance22copy").html(d2 );
+					 $("#distance2copy").css('display','');
+					 $("#distance22copy").css('display','');
+				 }else{
+				   $("#distance2copy").css('display','none');
+				    $("#distance22copy").css('display','none');
+				 }
+				 
+				 
+				 var d3= parseFloat($("#distance3").val());
+				 if (!d3) d3=0;
+				 if(d3>0) {
+				 
+				 }
+				 
+				 if(d2 && d2<d1) {
+				   alert('距离范围2必须大于距离范围1');
+				    $("#distance2").val(0);
+				 }
+				 
+				 if(d3 && d3<d2 ) {
+				   alert('距离范围3必须大于距离范围2');
+				    $("#distance3").val(0);
+				 }
+				 
+			
+				
+				
+				 var maxdistance =Math.max(d1, d3, d2);
+				// alert(maxdistance);
+				 $("#farest_distance").val(maxdistance);
+				  
+				 
+				 }
+				
+				</script>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+            
+				
+				<div class='main-list'>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<thead>				
+							<tr>			
+								
+								<th>金额范围</th>
+								
+								<th>距离范围</th>
+								<th>基本运费</th>
+								<th>附加运费<br>每公里</th>
+								
+								<th>距离范围</th>
+								<th>收取运费</th>
+								<th>附加运费<br>每公里</th>
+								
+								<th>距离范围</th>
+								<th>收取运费</th>
+								<th>附加运费<br>每公里</th>
+								
+								<th>超过该距离<br>不送货</th>
+								
+								<th>删除</th>
+							</tr>			
+						</thead>		
+						<tbody>		
+							<{foreach from=$freight_fees item=item name='dl'}>	
+							<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								
+								<td><{$item.end_amount11}></td>
+								<td><{$item.distance1}>km</td>
+								<td>$<{$item.delivery_fees1}></td>
+								<td><{if $item.plus_fees_per_km_1>0}>$<{$item.plus_fees_per_km_1}><{else}>-<{/if}></td>
+								<td><{if $item.distance2>0}><{$item.distance1}>km-<{$item.distance2}>km<{else}>-<{/if}></td>
+								<td>$<{$item.delivery_fees2}></td>
+								<td><{if $item.plus_fees_per_km_2>0}>$<{$item.plus_fees_per_km_2}><{else}>-<{/if}></td>
+								<td><{if $item.distance3>0}><{$item.distance2}>km-<{$item.distance3}>km<{else}>-<{/if}></td>
+								<td>$<{$item.delivery_fees3}></td>
+								<td><{if $item.plus_fees_per_km_3>0}>$<{$item.plus_fees_per_km_3}><{else}>-<{/if}></td>
+								<td><{$item.farest_distance}>km</td>
+								<th>
+									<a href="<{$http_root_www}>company/custom_delivery_fee_delete?deleteid=<{$item.id}>">删除</a>
+								</th>
+							</tr>
+							<{/foreach}>	
+						</tbody>		
+					</table>	
+				</div>
+
+				<div class="input-box t clearfix">
+						
+						<h1>运费说明汇总：</h1>
+						<p><{$delivery_desc}></p>
+			
+					</div>
+				
+				
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+	<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body class="bg-1">
+
+<header id="hd" >
+	<div class="left">
+		<a href="<{$http_root_www}>member/index" class="a-back"></a>
+	</div>
+	<h1><{$lang->my_orders}></h1>
+</header>
+
+<section id="bd" style="padding-bottom: 70px">
+	<div class="m-menu">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+			    <div class="swiper-slide"><a <{if $filter=='all'}>class="on" <{/if}> href="<{$listUrl}>filter=all"><{$lang->all}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='unpaid'}>class="on" <{/if}> href="<{$listUrl}>filter=unpaid"><{$lang->unpaid}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='paid'}>class="on" <{/if}> href="<{$listUrl}>filter=paid"><{$lang->paid}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='waiting'}>class="on" <{/if}> href="<{$listUrl}>filter=waiting"><{$lang->waiting}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='send'}>class="on" <{/if}> href="<{$listUrl}>filter=send"><{$lang->send}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='cancel'}>class="on" <{/if}> href="<{$listUrl}>filter=cancel"><{$lang->canceled}></a></div>
+				<div class="swiper-slide"><a <{if $filter=='pleaseRate'}>class="on" <{/if}> href="<{$listUrl}>filter=pleaseRate"><{$lang->please_rate}></a></div>
+			</div>
+		</div>
+	</div>
+
+
+	<{if $data}>
+	<{foreach from=$data key=key item=item name='dl'}>
+	<div class="order-num order-num-1">
+	 	<a href="<{$http_root_www}>member/exchange_detail?&id=<{$item.orderId}>">
+		<span><{substr($item.orderId,0,8)}>-<{substr($item.orderId,8,6)}>-<{substr($item.orderId,14)}></span>
+		<span style="float:right;"><{$item.order_name|truncate_cn:21}></span>
+		
+		
+		</a>
+
+		
+		
+	</div>
+	<div class="order-num order-num-1">
+		<span><span style="color:#d9534f;margin-left: 10px;"><{$lang-><{$item.action_id}>}></span>
+		
+		
+		<{if $item.status==1}>
+		<em style="float:left; left:2rem; color:#0db40f"><{$lang->paid}></em>
+		<{elseif $item.status==0}>
+		<em style="float:left; left:2rem; color:#d9534f"><{$lang->unpaid}></em>
+		<{elseif $item.status==2}>
+		<em style="float:left; left:2rem; color:#d9534f">Pending</em>
+		<{/if}>
+		<span style="float:right ; right:10px;">$<{$item.money}></span></span>
+		
+	</div>
+	
+	<div class="order-info order-info-1">
+		<!--<ul class="g-ul m-list2">
+			<{foreach from=$item.items item=sitem}>
+			<li>
+				<div class="pic"><img src="<{$UPLOAD_PATH}><{$sitem.pic}>" alt=""></div>
+				<div class="con">
+					<h5><{$sitem.bonus_title}></h5>
+					<span><{$sitem.guige_des}></span>
+					<p><em>$<{$sitem.voucher_deal_amount}></em></p>
+				</div>
+				<em class="num">x <{$sitem.customer_buying_quantity}></em>
+			</li>
+			<{/foreach}>
+		</ul> -->
+
+		<div class="payment">
+			
+
+
+				<{if $item.coupon_status=='c01'}>
+					<!-- 如果该订单已经支付了，则客户不能删除-->
+					<{if $item.no_refundable==0}>
+					 <{if $hours>12}>
+					 
+					 <{else}>
+					 <a href="<{$http_root_www}>member/cancel_order?orderId=<{$item.orderId}>"><{$lang->cancel_order}></a>
+					 <{/if}>
+					
+					<{else}>
+					<a href="<{$http_root_www}>member/myorders"><{$lang->not_support_return}></a>
+					<{/if}>
+				<{/if}>
+				<!--
+				<{if $item.coupon_status=='b01' && $item.bonus_type=='9'}>
+					
+					 <a href="<{$http_root_www}>dispute_center/create?type=customer">我要退货</a>
+				<{/if}>  -->
+               
+				<a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$item.businessChatId}>&orderId=<{$item.orderId}>','singleChat')"  ><{$lang->contact_us}></a>
+
+				<{if $item.rated==1}>
+				<a><{$lang->rated}></a>
+				<{else}>
+				<a href="<{$http_root_www}>company/customers_rating_edit?orderId=<{$item.orderId}>"><{$lang->please_rate}></a>
+                <{/if}>
+
+                <a href="<{$viewUrl}>exchange_detail?type=member&id=<{$item.orderId}>"><{$lang->see_detail}></a>
+			
+		</div>
+	</div>
+	<{/foreach}>
+	<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+	<{else}>
+	<div class="order-num order-num-1">
+		<span><{$lang->no_related_records}></span>
+	</div>
+
+	<{/if}>
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+
+<script>
+    $(".m-menu").each(function(){
+        var swiper = new Swiper($(this).find(".swiper-container")[0], {
+            slidesPerView: 5,
+            paginationClickable: true,
+            spaceBetween : 5,
+            freeMode: true
+        });
+    });
+</script>
+</body>
+</html>

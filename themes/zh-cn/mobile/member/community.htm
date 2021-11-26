@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title><{if $pageKeywords}>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="<{$pageKeywords}>" /><{/if}><{if $pageDescription}>
+    <meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+		<h1>Ubonus社区</h1>
+	</header>
+
+	<section id="bd">
+		<!--div-- class="m-txt1">
+			<div class="pic"><img src="<{$SKIN_PATH}>mobile/images/p-logo.jpg" alt=""></div>
+			<div class="txt">
+				<b></b>
+				<p>Ubonus社区</p>
+			</div>
+		</div-->
+		<ul class="g-ul g-tab3">
+			<li <{if $current_submenu==groupbuy}>class="on"<{/if}>><a href="<{$http_root_www}>member/community?type=groupbuy"><b></b><p>团购</p></a></li>
+		<!--	<li <{if $current_submenu==lottery}>class="on"<{/if}>><a href="<{$http_root_www}>member/community?type=lottery"><b></b><p>抽奖</p></a></li> -->
+
+			<!-- <li <{if $current_submenu==vote}>class="on"<{/if}>><a href="<{$http_root_www}>member/community?type=vote"><b></b><p>投票</p></a></li> -->
+
+			<!--<li><a href=""><b></b><p>二手市场</p></a></li>-->
+			<!--li <{if $current_submenu==secondhands}>class="on"<{/if}>><a href="<{$http_root_www}>member/community?type=secondhands"><b></b><p>二手</p></a></li-->
+			<!--li <{if $current_submenu==redbag}>class="on"<{/if}>><a href="<{$http_root_www}>member/community?type=redbag"><b></b><p>红包</p></a></li-->
+
+		</ul>
+		<div class="tab-show1">
+		<{if $heads}>
+			<ul class="g-ul m-list6">
+			<{foreach from=$heads item=item}>
+				<li>
+				     <{if $type=='events'}>
+
+						<a href="<{$http_root_www}>coupon1/<{$item.id}>" class="con">
+						<div class="pic">
+								<a href="<{$http_root_www}>coupon1/<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>" alt=""></a>
+							</div>
+							<h4><{$item.title|truncate_cn:140:'...'}></h4>
+							<!-- <span><{$item.description|truncate_cn:40:''}></span> -->
+						</a>
+
+					<{elseif $type=='lottery'}>
+
+						<a  class="con">
+						<div class="pic">
+								<a href="<{$http_root_www}>lottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic|image:495:315}>" alt=""></a>
+							</div>
+							<h4><{$item.title|truncate_cn:140:'...'}></h4>
+							<span><{$item.businessName|truncate_cn:40:''}></span>
+						</a>
+
+					<{elseif $type=='vote'}>
+					<!-- missing a main pic to display -->
+					<a class="con">
+						<div class="pic">
+								<a href="<{$http_root_www}>voting/show?id=<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>" alt=""></a>
+							</div>
+							<h4><{$item.title|truncate_cn:140:'...'}></h4>
+							<span><{$item.description|truncate_cn:40:''}></span>
+						</a>
+
+					<{elseif $type=='groupbuy'}>
+
+						<a  class="con">
+							<div class="pic">
+								<a href="<{$http_root_www}>group1_buy/index_mobile?group1_buy_id=<{$item.id}>"><img src="<{$UPLOAD_PATH}><{$item.pic}>"></a>
+							</div>
+							<h4>
+								<{if $item.status==0}>
+								<!-- group_ready -->
+								<a  >筹备中</a>
+								<{elseif $item.status==1}>
+								<!-- group_running -->
+								<a  >进行中</a>
+								<{elseif $item.status==2}>
+								<!-- group_close -->
+								<a  >临时中止</a>
+								<{elseif $item.status==3}>
+								<!-- group_staging -->
+								<a  >即将完成</a>
+								<{elseif $item.status==4}>
+								<!-- group_finalizing -->
+								<a  >商家审核</a>
+								<{elseif $item.status==5}>
+								<!-- group_complete -->
+								<a  >奖励达成</a>
+								<{else}>
+								<!-- group_error -->
+								<a  >出错了</a>
+								<{/if}>
+							</h4>
+							<span><{$item.name}></span>
+						</a>
+
+					<{/if}>
+				</li>
+			<{/foreach}>
+
+			</ul>
+			<{else}>
+				还没记录
+			<{/if}>
+		</div>
+
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>

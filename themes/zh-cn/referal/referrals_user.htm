@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	
+	
+		<{if $submenu=='referrals_business'}>
+			     	<{include file='company/side.htm'}>
+			<{else}>
+		        
+					<{include file='member/side.htm'}>
+			<{/if}>
+	
+		<div class="main">
+			<div class="box2">
+		
+				<{include file='referal/side_referal_menu.htm'}>
+				
+						<div class="main-list">
+							<div class="input-box clearfix">
+								<p>成交订单：<{$totalOrderCount}> 总收益：$<{$totalCommission}> (Beta) <a href="<{$http_root_www}>member/recharge?type=CUSTOMER_REF_COMMISSION">详情</a></p>
+							</div>
+
+							<{if $ref_list}>
+								<form method="post" action="#">
+									<table cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th>产品</th>
+												<th> </th>
+												<th>点击</th>
+												<th>订单</th>
+												<th>佣金</th>
+												<th>查看产品</th>
+												<th>查看用户</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<{foreach from=$ref_list item=item name='dl'}>
+											<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+												<td>
+													<{$item.couponId}>-<{$item.couponTitle}> 
+												</td>
+												<td>
+													<{if $item.referralRule}>
+														<small>
+															合作推广优惠
+															<a href="<{$http_root_www}>referal/apply_new_rule_success?referal_rule_code=<{$item.referralRule.apply_code}>" target='_blank'>
+																<{$item.referralRule.apply_code}>
+															</a>
+														</small>
+													<{/if}>
+												</td>
+												<td><{$item.hits}></td>
+												<td><{$item.orderCount}></td>
+												<td><{$item.totalCommission}></td>
+												<td><a href="<{$http_root_www}>coupon/<{$item.couponId}>">查看产品</a></td>
+												<td><a href="<{$http_root_www}>referal/shared_coupon_detail?couponId=<{$item.couponId}>">查看用户</a></td>
+											</tr>
+											<{/foreach}>
+										</tbody>
+									</table>
+								</form>
+								
+							<{else}>
+								还没有介绍记录
+							<{/if}>
+						</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>2019 澳洲华裔小姐竞选(墨尔本赛区) ( 2019 Australia Miss Melbourne)</title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	 <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style>
+		.double_label{
+			display: inline-block;
+			position: relative;
+		}
+		.double_label span{
+			display: block;
+		}
+		.double_label span.top{
+			font-weight: bolder;
+		}
+		.double_label span.bottom{
+		}
+
+		.application .double_label{
+			vertical-align: middle;
+			margin-bottom: 5px;
+			margin-top: 10px;
+		}
+
+		input{
+			border:1px solid black;
+		}
+		.application h2 {
+			font-weight: bolder;
+			font-size: 20px;
+		}
+
+		.double_label input[type='checkbox']{
+			transform: scale(2.3);
+			position: absolute;
+			left: 5px;
+			top: 13px;
+		}
+
+		.checkbox-label{
+			padding-left: 40px;
+		}
+
+
+		.sec_city label{
+			width: 90%;
+		}
+
+
+		.enrollbtn {
+		  background: #3498db;
+		  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+		  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+		  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+		  -webkit-border-radius: 28;
+		  -moz-border-radius: 28;
+		  border-radius: 28px;
+		  font-family: Courier New;
+		  color: #ffffff;
+		  font-size: 20px;
+		  padding: 10px 20px 10px 20px;
+		  text-decoration: none;
+		}
+
+		.enrollbtn:hover {
+		  background: #3cb0fd;
+		  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+		  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+		  text-decoration: none;
+		}
+
+		.legal p{
+			padding: 10px;
+		}
+		
+
+	</style>
+
+	<script type="text/javascript">
+		$(function(){
+			$("input[name='city']").on('click',function(){
+				$("input[name='city']").prop('checked', false);
+    			$(this).prop('checked', true);
+			});
+			$("input[name='resident_status']").on('click',function(){
+				$("input[name='resident_status']").prop('checked', false);
+    			$(this).prop('checked', true);
+			})
+		});  
+	</script>
+</head>
+<body>
+
+	
+
+	<div class="container">
+		<div class="wrap clearfix">
+			<div class="main clearfix" style="width: 100%">
+				<div class="box2">
+					<div class="main-form">
+						<form id="memberForm"  method="post" target="post_frame" enctype="multipart/form-data" style='margin: auto;'>
+
+								<div class='application'>
+								<h1 style="line-height: 100px;text-align:center;font-size: 30px;">报名表Application</h1>
+									<div><img  src="<{$SKIN_PATH}>/images/tvbmiss2019_new01.jpg" style="  width: 100%;"></div> 
+									
+									<p style="margin-top: 49px;text-align: right;"><a style="font-size: 14px;font-weight:500;" href="/coupon1/7176">海选选手必读参赛说明&gt;&gt;</a></p>	
+									<p style="margin-top: 49px;text-align: center;color: red;"><a style="font-size: 20px;font-weight:700;color: red;" href="/coupon1/7176">澳洲各州包括在澳洲探亲访友的均欢迎报名!!</a></p>	
+									<p style="margin-top: 49px;text-align: center;color: red;"><a style="font-size: 14px;font-weight:700;color: red;" href="/coupon1/7176">All Australian states, including visiting relatives and friends in Australia, are welcome to register</a></p>	
+																		<br>
+
+									<h2>报名地区 Application Region</h2><br>
+									
+									<div width="100%">
+										<label class='double_label checkbox-label ' >
+											<input type="checkbox" value='Sydeny' name="city">
+											<span class='top'>悉尼</span><span class='bottom'>Sydeny</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Melbourne' name="city" checked>
+											<span class='top'>墨尔本</span><span class='bottom'>Melbourne</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Brisbane' name="city">
+											<span class='top'>布里斯班</span><span class='bottom'>Brisbane</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Adelaide' name="city">
+											<span class='top'>阿德莱德</span><span class='bottom'>Adelaide</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Perth' name="city">
+											<span class='top'>珀斯</span><span class='bottom'>Perth</span></label>	
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Canberra' name="city">
+											<span class='top'>堪培拉</span><span class='bottom'>Canberra</span></label>	
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Hobart' name="city">
+											<span class='top'>霍巴特</span><span class='bottom'>Hobart</span></label>	
+											<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Darwin' name="city">
+											<span class='top'>达尔文</span><span class='bottom'>Darwin</span></label>	
+											<label class='double_label checkbox-label' >
+											<input type="checkbox" value='other city' name="city">
+											<span class='top'>其它地区</span><span class='bottom'>other cities</span></label>	
+												
+
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>中文姓名<em style='color:red'>*</em></span><span class='bottom'>Name</span></label>
+										<input required style="width: 100%" type="text" name="name">
+									</div>
+
+									<div>
+										<label class='double_label'><span class='top'>英文姓名<em style='color:red'>*</em></span><span class='bottom'>Name En</span></label>
+										<input required style="width: 100%" type="text" name="name_en">
+										<input   type="hidden" name="istoday" value='<{$istoday}>'>
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>地址(可选)</span><span class='bottom'>Address</span></label>
+										<input  style="width: 100%" type="text" name="address">
+									</div>
+
+
+									<div >
+										<label class='double_label'><span class='top'>电话<em style='color:red'>*</em></span><span class='bottom'>Telephone Number</span></label>
+										<input required style="width: 100%" type="text" name="phone">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>邮箱<em style='color:red'>*</em></span><span class='bottom'>Email</span></label>
+										<input required style="width: 100%" type="text" name="email">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>出生日期<em style='color:red'>*</em></span><span class='bottom'>Date of birth</span></label>
+										
+										</div>
+
+									<div >
+										<label class='double_label'><span class='top'>日</span><span class='bottom'>Day</span></label>
+										&nbsp;&nbsp;
+										<select name='dob_day'>
+											<{for $day= 1 to 31}>
+											<option><{$day}></option>
+											<{/for}>
+										</select>
+										&nbsp;&nbsp;
+										
+										<label class='double_label'><span class='top'>月</span><span class='bottom'>Month</span></label>
+										&nbsp;&nbsp;
+										<select name='dob_month'>
+											<{for $month= 1 to 12}>
+											<option><{$month}></option>
+											<{/for}>
+										</select>
+										&nbsp;&nbsp;
+
+										<label class='double_label'><span class='top'>年</span><span class='bottom'>Year</span></label>
+										&nbsp;&nbsp;
+										<select name='dob_year'>
+											<{for $year= 1980 to 2002}>
+											<option><{$year}></option>
+											<{/for}>
+										</select>
+										&nbsp;&nbsp;
+
+										<label class='double_label'><span class='top'>年龄<em style='color:red'>*</em></span><span class='bottom'>Age</span></label>
+										&nbsp;&nbsp;
+										<input required style="width: 100%" type="text" name="age">
+
+									</div>
+
+
+									<div >
+										<label class='double_label'><span class='top'>出生地点<em style='color:red'>*</em></span><span class='bottom'>Place of birth</span></label>
+										<input required style="width: 100%" type="text" name="place_of_birth">
+									</div>
+
+									<div>
+										<label class='double_label'><span class='top'>国籍<em style='color:red'>*</em></span><span class='bottom'>Nationality</span></label>
+										<input required style="width: 100%" type="text" name="nationality">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>婚姻状况<em style='color:red'>*</em></span><span class='bottom'>Marital Status</span></label>
+										<select name='marital_status'>
+											
+											<option>未婚</option>
+											<option>已婚</option>
+											<option>离异</option>
+											<option>其他</option>
+										</select>
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>语言及中国方言<em style='color:red'>*</em></span><span class='bottom'>Language</span></label>
+										<input required style="width: 100%" type="text" name="language">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>抵澳日期（可选）</span><span class='bottom'>Date of arrival</span></label>
+										<input style="width: 100%" type="text" name="date_of_arrival">
+										<label class='double_label'><span class='top'>居留时间（可选）</span><span class='bottom'>Length of residence</span></label>
+										<input style="width: 100%" type="text" name="length_of_residence">
+									</div>
+<br>
+									<h2>居留身份 	Resident status</h2>
+									<div >
+										<label class='double_label checkbox-label ' >
+											<input type="checkbox" value='citizen' name="resident_status" checked>
+											<span class='top'>澳洲公民</span><span class='bottom'>Citizen</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='perment_resident' name="resident_status">
+											<span class='top'>永久居民</span><span class='bottom'>Perment Resident</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='temporary_resident' name="resident_status">
+											<span class='top'>临时居民</span><span class='bottom'>Temporary Resident</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='student' name="resident_status">
+											<span class='top'>学生</span><span class='bottom'>Student</span>
+										</label>
+
+										<label class='double_label checkbox-label' >
+											<input type="checkbox" value='Other' name="resident_status">
+											<span class='top'>其他</span><span class='bottom'>Other</span></label>	
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>旅行证件<em style='color:red'>*</em></span><span class='bottom'>Travel Document</span></label>
+										<input required style="width: 100%" type="text" name="travel_document">
+										
+									</div>
+									
+									<div >
+										
+										<label class='double_label'><span class='top'>证件号码<em style='color:red'>*</em></span><span class='bottom'>Travel Doc No.</span></label>
+										<input required style="width: 100%" type="text" name="travel_document_number">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>中国籍贯<em style='color:red'>*</em></span><span class='bottom'>Chinese Origin(Province)</span></label>
+										<input required style="width: 100%" type="text" name="province">
+									</div>
+<br>
+									<h2>教育程度 	Education Attainment</h2>
+									<div >
+										<label class='double_label'><span class='top'>中学<em style='color:red'>*</em></span><span class='bottom'>High School</span></label>
+										<input required style="width: 100%" type="text" name="highschool">
+										<br>
+										<label class='double_label'><span class='top'>学院(可选)</span><span class='bottom'>College</span></label>
+										<input  style="width: 100%" type="text" name="college">
+										<br>
+										<label class='double_label'><span class='top'>大学(可选)</span><span class='bottom'>University</span></label>
+										<input  style="width: 100%" type="text" name="university">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>毕业年份/现就读年级<em style='color:red'>*</em></span><span class='bottom'>Year graduated/Current year of study</span></label>
+										<input required style="width: 100%" type="text" name="year_graduated">
+									</div>
+<br>
+									<h2>履历 Employmnt history</h2><br>
+									<div >
+										<label class='double_label'><span class='top'>现任雇主（可选）</span><span class='bottom'>Name of current employer</span></label>
+										<input style="width: 100%" type="text" name="employer_name">
+										<label class='double_label'><span class='top'>职位（可选）</span><span class='bottom'>Job Title</span></label>
+										<input style="width: 100%" type="text" name="job_title">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>开始受雇日期（可选）</span><span class='bottom'>Commencement date of employment</span></label>
+										<input style="width: 100%" type="text" name="employment_start">
+									</div>
+
+<br>
+									<h2>身高尺码 Measurements</h2>
+
+									<div >
+										<label class='double_label'><span class='top'>身高<em style='color:red'>*</em></span><span class='bottom'>Height</span></label>
+										<input required style="width: 10%" type="text" name="height">m
+										<label class='double_label'><span class='top'>体重<em style='color:red'>*</em></span><span class='bottom'>Weight</span></label>
+										<input required style="width: 10%" type="text" name="weight">kg
+									
+										<label class='double_label'><span class='top'>腰围<em style='color:red'>*</em></span><span class='bottom'>Waist</span></label>
+										<input required style="width: 10%" type="text" name="waist">cm
+										<label class='double_label'><span class='top'>胸围<em style='color:red'>*</em></span><span class='bottom'>Bust</span></label>
+										<input required style="width: 10%" type="text" name="bust">cm
+										<label class='double_label'><span class='top'>臀围<em style='color:red'>*</em></span><span class='bottom'>Hips</span></label>
+										<input required style="width: 10%" type="text" name="hips">cm
+									</div>
+<br>
+									<h2>参赛者资料 Applicant Details</h2>
+									<div>
+										<label class='double_label'><span class='top'>是否参加过选美<em style='color:red'>*</em></span><span class='bottom'>Have you ever participated in a beauty contest?</span></label>
+										<select name='ever_participated_in_a_beauty_contest'>
+											<option>No</option>
+											<option>Yes</option>
+										</select><br>
+
+										<label class='double_label'><span class='top'>何时</span><span class='bottom'>When</span></label>
+										<input style="width: 100%" type="text" name="when">
+
+										<label class='double_label'><span class='top'>参赛名称 地点及荣誉(可选)</span><span class='bottom'>If so, name of contest,city,title(optional)</span> </label>
+										<textarea style=" width: 100%;height: 100px;    margin-top: 23px;    margin-left: 7px;" name='name_of_contest'></textarea>	
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>眼睛颜色<em style='color:red'>*</em></span><span class='bottom'>Color of eye</span></label>
+										<input required style="width: 100%" type="text" name="color_of_eye">
+										<br>
+										<label class='double_label'><span class='top'>头发颜色<em style='color:red'>*</em></span><span class='bottom'>Color of Hair</span></label>
+										<input required style="width: 100%" type="text" name="color_of_hair">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>嗜好<em style='color:red'>*</em></span><span class='bottom'>Hobbies</span></label>
+										<input required style="width: 100%" type="text" name="hobbies">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>特殊才艺(可选)</span><span class='bottom'>Special Talents</span></label>
+										<input style="width: 100%" type="text" name="telents">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>抱负(可选)</span><span class='bottom'>Ambition</span></label>
+										<input style="width: 100%" type="text" name="ambition">
+									</div>
+									
+									<div >
+										<label class='double_label'><span class='top'>是否患过严重疾病<em style='color:red'>*</em></span><span class='bottom'>Have you ever been seriously ill</span></label>
+										<select name='illness'>
+											<option>No</option>
+											<option>Yes</option>
+										</select>
+
+										<label class='double_label'><span class='top'>病症名称(可选)</span><span class='bottom'>If so, name of affliction</span></label>
+										<input style="width: 100%" type="text" name="name_of_affliction">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>是否吸烟(可选)</span><span class='bottom'>DO you smoke</span></label>
+										<select name='smoke'>
+											<option>No</option>
+											<option>Yes</option>
+										</select>
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>是否有敏感症<em style='color:red'>*</em></span><span class='bottom'>Do you Have any allergies</span></label>
+										<select name='allergies'>
+											<option>No</option>
+											<option>Yes</option>
+										</select>
+
+										<label class='double_label'><span class='top'>对什么敏感(可选)</span><span class='bottom'>If so, what are you allergic for</span></label>
+										<input style="width: 100%" type="text" name="name_of_allergies">
+									</div>
+									<br>
+									<h2>如有紧急事故请联络 Emergency Contact Detail</h2>
+									<div >
+										<label class='double_label'><span class='top'>姓名<em style='color:red'>*</em></span><span class='bottom'>Name</span></label>
+										<input style="width: 100%"  required  type="text" name="emergency_contact_name">
+
+										<br>
+
+										<label class='double_label'><span class='top'>与参赛者关系<em style='color:red'>*</em></span><span class='bottom'>Relation With Applicant</span></label>
+										<input style="width: 100%"  required  type="text" name="emergency_contact_relation">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>电话<em style='color:red'>*</em></span><span class='bottom'>Phone</span></label>
+										<input required style="width: 100%" type="text" name="emergency_contact_phone">
+									</div>
+
+									<div >
+										<label class='double_label'><span class='top'>地址<em style='color:red'>*</em></span><span class='bottom'>Address</span></label>
+										<input required style="width: 100%" type="text" name="emergency_contact_address">
+									</div>
+
+								</div>
+
+
+								<div>
+									
+								</div>
+								<br>
+									<h2>本人現證實 Applicant Declaration:</h2>
+
+									<ul style="list-style: disc;">
+										<li>
+											<p>本人經已細閱「2019 澳洲華裔小姐競選地區選拔」報名表並同意遵守上述條文之約定。而上述填報之數據均屬正確無誤。</p>
+											<p>I certify that I have read the Application Form for the “Miss Australia Chinese Pageant 2019 (Regional Recruitment)” and hereby agree to abide by all the aforesaid terms and conditions and that the answers given abide by me are true and correct.</p>
+										</li>
+
+										<li>
+											<p>本人同意主辦機構及澳洲 TVB 就本人在報名表上所提供的個人資料用於宣傳、推廣、申請贊助及進行比賽作電視廣播之用及發行該節目到世界各地。本人並同意主辦機構及澳洲 TVB 可將本人之個人資料發放予新聞界、其他傳媒、廣告商、比賽評判團及公眾人士。</p>
+
+											<p>I agree that the personal data provided in the Application Form can be used by the organiser and TVB Australia for purposes in relation to the promotion, marketing, obtaining sponsorship and conduct of the contest for broadcasting on television and exploitation of such programmes throughout the world and may be disclosed by the organiser and TVB Australia to journalists, other media, advertisers, panel judges for the Contest and the public.
+											</p>	
+										</li>
+
+										<li>
+											<p>本人從未結婚，目前並非懷孕，亦從未生育嬰兒。</p>
+											<p>
+											I confirm that I have never been married, am not pregnant and have never given birth to a child.
+											</p>
+										</li>
+
+										<li>
+											<p>本人從未在澳洲或海外有任何犯罪紀錄。</p>
+											<p>
+											I confirm that I have no criminal record in and outside of Australia.
+											</p>
+										</li>
+
+										<li>
+											<p>本人擁有華人血統。</p>
+											<p>I confirm that I am of Chinese descent.</p>
+										</li>
+
+										<li>
+											<p>本人已細閱參加表，已完全明白其內容，並同意如獲選參加決賽時，簽署一份服務合約。</p>
+											<p>I confirm that I have read the application form and I fully understand that if chosen to take part in the final of the Pageant, I will sign the Contract of Services.
+											</p>
+										</li>
+										<li>
+											<p>任何报名中出现的故障问题,请联系TVB 2019 墨尔本海选报名处  Amy  +61 422 352 886  or 微信 yikiamy </p>
+											<p>Any problems for making application please do not hesitate to contact Amy  +61 422 352 886  or wechat yikiamy.
+											</p>
+										</li>
+									</ul>
+
+
+								<div>
+									<label><input required type="checkbox" name=""><em style='color:red'>*</em>我已经阅读并同意</label>
+
+									<button class='enrollbtn'>报名</button>
+								</div>
+								
+
+							</form>
+							
+							<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+							
+							<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+	</body>
+	</html>

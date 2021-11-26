@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}>  </title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.form.js"  ></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:120px; }
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<{include file='show/show_management_menu.htm'}>
+				<div class="colCurTit clearfix">
+						演唱会关联场馆
+					</div>
+				<div class="main-form">
+					<form id="memberForm" action="<{$http_root_www}>show/show_link_stadium" method="post" target="post_frame" enctype="multipart/form-data">
+						
+						<div class="input-box clearfix">
+							<span>
+							<label>演唱会：</label>
+							</span>
+							<select name="show_id" class="ahibw" onChange="catChg(this);">
+							<{foreach from=$show item=item}>
+								<option value="<{$item.id}>" ><{$item.name}></option>
+							<{/foreach}>
+							</select>
+							
+						</div>
+						<div class="input-box clearfix">
+							<span>
+							<label>场馆：</label>
+							</span>
+							<select name="stadium_id" class="ahibw" onChange="catChg(this);">
+							<{foreach from=$show_stadium item=item}>
+								<option value="<{$item.id}>" ><{$item.name}></option>
+							<{/foreach}>
+							</select>
+							
+						</div>
+						
+					
+						<div class="input-box input-submit clearfix">
+							<button type="submit">关联</button>
+					  </div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script>
+						$('#memberForm').submit(function(){
+							var _form = $(this);
+							_form.find(':submit').attr('disabled', true);
+							$('.response').remove();
+							_form.before('<p class="response">Loading...</p>');
+							$(window).scrollTop($('.box2').offset().top);
+							$('#post_frame').unbind('load').load(function(){
+								_form.find(':submit').attr('disabled', false);
+								var data = $(this).contents().find('body').html();
+								$('.response').remove();
+								data = eval('('+ data +')');
+								_form.before('<p class="response">'+ data.msg +'</p>');
+								if (data.status==200) {
+									_form.slideUp(10, function(){
+										$(this).remove();
+										//setTimeout(function(){
+											window.location.href ='<{$http_root_www}>show/show_link_stadium';
+										//}, 2000);
+									});
+								}
+							});
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

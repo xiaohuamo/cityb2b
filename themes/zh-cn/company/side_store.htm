@@ -1,0 +1,21 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-building" ></i>
+		<a <{if $menu=='store_setting'}> class="current"<{/if}>><{$lang->online_store}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a href="<{$http_root_www}>company/store_banner_edit"<{if $submenu=='store_banner_edit'}> class="current"<{/if}>>
+			<{$lang->banner_edit}>
+		</a>
+		
+		<a href="<{$http_root_www}>company/notice"<{if $submenu=='notice'}> class="current"<{/if}>>
+			<{$lang->store_notice}>
+		</a>
+		<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' ><{$lang->preview_store}></a>
+		
+		<a href="<{$http_root_www}>company/referral_product_program_share"<{if $submenu=='send_share'}> class="current"<{/if}>>
+			<{$lang->my_share}>
+		</a>			
+	</div>
+</li>

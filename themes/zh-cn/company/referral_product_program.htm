@@ -1,0 +1,285 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='company/side_business_option_menu.htm'}>
+				<div class="main-form">				
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/referral_product_program" method="get">
+					
+						<!-- processing -->
+						
+					<div class="input-box clearfix">
+						<h1>推广商场</h1>
+						<p>您推广其它商家的产品，在自己的店铺页销售，产生销售获得提成。</p>
+					</div>
+
+
+					<div class="input-box input-submit clearfix">
+						<input type="text" name="search" placeholder="产品ID"><button type="submit" >查询</button>
+					</div>
+
+					<div class='search-result main-list'>
+						<{if $preview}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+								<tbody>
+										<tr>
+
+											<td><img src="<{$UPLOAD_PATH}><{$preview.pic|image:66:42}>"></td>
+
+											<td><a target='_blank' href="<{$http_root_www}>coupon/<{$preview.id}>"><{$preview.title}></a></td>
+
+											<td>
+												<{$preview.businessName}>
+											</td>
+
+											<td>
+												$<{$preview.voucher_deal_amount}>
+								  				<br>
+								  				<small>$<s><{$preview.voucher_original_amount}></s></small>
+							  				</td>
+
+							  				<td>
+							  					<{$preview.coupontype.name}>
+
+							  					<{if $preview.EvoucherOrrealproduct=='evoucher'}>
+							  					<i class='fa fa-ticket' style='color:#FD5001 '></i>
+							  					<{elseif $preview.EvoucherOrrealproduct=='realproduct'}>
+							  						
+							  						<{if $preview.pickup_avaliable}>
+							  							<i class='fa fa-archive' style='color:green'></i>
+							  						<{/if}>
+
+							  						<{if $preview.deliver_avaliable}>
+							  							<i class='fa fa-truck' style='color:green'></i>
+							  						<{/if}>
+							  					<{/if}>
+							  				</td>
+
+											<td>
+												<{if $preview.isApproved==1}>
+													<span style="color:#58964E;">已审核</span>
+												<{else}>
+													<span style="color:#F30;">未审核</span>
+												<{/if}>
+											</td>
+
+											<td>
+												<{if $preview.status==4}>
+													<span class = 'publish_icon' data-id='<{$preview.id}>' >
+														<span style="color:#58964E;">产品发布</span>
+													</span>
+												<{else}>
+													<span  class = 'publish_icon' data-id='<{$preview.id}>' >
+														<span style="color:#F30;">产品下线</span>
+													</span>
+												<{/if}>
+
+												<br>
+
+												<{if $preview.autoOffline}>
+							  						<{if time()<$preview.startTime&&time()<$preview.endTime}>
+							  							<small style="color:#FD5001 ;">
+							  								<{<{date('Y-m-d', $preview.startTime)}>}>自动上线
+							  							</small>
+							  						<{elseif time()>$preview.startTime&&time()<$preview.endTime}>
+							  							<small style="color:#58964E;">
+							  								<{<{date('Y-m-d', $preview.endTime)}>}>自动下线
+							  							</small>
+							  						<{else}>
+							  							<small style="color:#f30;">已过期</small>
+							  						<{/if}>
+							  					<{else}>
+							  						<!-- <small style="color:#888;">无限期</small> -->
+							  					<{/if}>
+											</td>
+
+											<td>
+												<a href="<{$http_root_www}>company/referral_product_program?add=<{$preview.id}>">
+													<i class='fa fa-plus fa-lg' style="color:#FD5001 "></i>添加
+												</a>
+											</td>
+										</tr>
+								</tbody>
+							</table>
+							<{/if}>
+					</div>
+
+					
+					<div class="main-list">
+						<{if $data}>
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+									<tr>
+										
+									  	<th><{$lang->image}></th>
+										<th><{$lang->title}></th>
+										<th>商家</th>
+										<th><{$lang->price}></th>
+										<th><{$lang->approve}></th>
+										<th><{$lang->status}></th>
+										<th>删除</th>
+										<th>自定义分类</th>
+										<th>推荐置顶</th>
+									</tr>
+								</thead>
+								<tbody>
+							  <{foreach from=$data item=item name='dl'}>
+
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+											<td><img src="<{$UPLOAD_PATH}><{$item.pic|image:66:42}>"></td>
+
+											<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.id}>"><{$item.title}></a></td>
+
+											<td>
+												<{$item.businessName}>
+											</td>
+
+											<td>
+												$<{$item.voucher_deal_amount}>
+								  				<br>
+								  				<small>$<s><{$item.voucher_original_amount}></s></small>
+							  				</td>
+
+							  				
+
+											<td>
+												<{if $item.isApproved==1}>
+													<span style="color:#58964E;">已审核</span>
+												<{else}>
+													<span style="color:#F30;">未审核</span>
+												<{/if}>
+											</td>
+
+											<td>
+												<{if $item.status==4}>
+													<span class = 'publish_icon' data-id='<{$item.id}>' >
+														<span style="color:#58964E;">产品发布</span>
+													</span>
+												<{else}>
+													<span  class = 'publish_icon' data-id='<{$item.id}>' >
+														<span style="color:#F30;">产品下线</span>
+													</span>
+												<{/if}>
+
+												<br>
+
+												<{if $item.autoOffline}>
+							  						<{if time()<$item.startTime&&time()<$item.endTime}>
+							  							<small style="color:#FD5001 ;">
+							  								<{<{date('Y-m-d', $item.startTime)}>}>自动上线
+							  							</small>
+							  						<{elseif time()>$item.startTime&&time()<$item.endTime}>
+							  							<small style="color:#58964E;">
+							  								<{<{date('Y-m-d', $item.endTime)}>}>自动下线
+							  							</small>
+							  						<{else}>
+							  							<small style="color:#f30;">已过期</small>
+							  						<{/if}>
+							  					<{else}>
+							  						<!-- <small style="color:#888;">无限期</small> -->
+							  					<{/if}>
+											</td>
+
+											<td>
+												<a href="<{$http_root_www}>company/referral_product_program?delete=<{$item.id}>">
+													<i class='fa fa-close fa-lg' style="color:#f30"></i>删除
+												</a>
+											</td>
+
+											<td>
+												<a href="<{$http_root_www}>company/referral_product_category?productId=<{$item.id}>">
+													编辑自定义分类
+												</a>
+											</td>
+
+											<td>
+												<input class='promote' type="checkbox" data-id="<{$item.id}>" <{if $item.promote==1}>checked<{/if}> >
+												
+												<span class='promote-ajax'></span>
+											</td>
+
+										</tr>
+									<{/foreach}>
+								</tbody>
+							</table>
+
+						<{else}>
+							<{$lang->no_data}>
+						<{/if}>
+					</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+		$('.promote').on('click',function(){
+			var ajax_result = $(this).next('.promote-ajax');
+
+			if($(this).is(':checked')){
+				var promote = 1;
+			}else{
+				var promote = 0;
+			}
+
+			var id = $(this).data('id');
+
+			console.log(promote);
+
+				$.ajax({
+				  method: "POST",
+				  type:'post',
+				  url: "<{$http_root_www}>company/mark_promotion_item",
+				  data: { id:id ,promote:promote},
+				  beforeSend:function(){
+				  	$(ajax_result).html(iconLoading);
+				  }
+				})
+				  .done(function( msg ) {
+				   $(ajax_result).html(successIcon);
+				  })
+				  .fail(function(msg){
+				  	$(ajax_result).html(errorIcon);
+				  });
+		})
+	})
+</script>
+
+</body>
+</html>

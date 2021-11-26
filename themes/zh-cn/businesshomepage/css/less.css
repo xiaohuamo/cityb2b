@@ -1,0 +1,108 @@
+﻿
+/*Common For Max 960*/
+@media only screen and (max-width: 1199px) {
+    /*******************************
+        -------[=公用]-------
+    ********************************/
+	.wp{width: 98%;}
+    #nav li {padding: 0 18px;}
+    .copyright div {float: none !important;text-align: center;}
+    /*******************************
+        -------[=首页]-------
+    ********************************/
+    .ul-order .mask {padding: 232px 16px 0;}
+    
+}
+
+
+
+/*Common For Max 768*/
+@media only screen and (max-width: 959px) {
+    /*******************************
+        -------[=公用]-------
+    ********************************/
+    #nav {display: none;}
+    #hd {background-color: rgba(0, 0, 0, .6);}
+    .menuBtn {display: block;}
+    .copyright {padding: 20px 0;}
+    #fd {padding-top: 30px;}
+    .ul-fd-menu {padding-bottom: 20px;}
+    /*******************************
+        -------[=首页]-------
+    ********************************/
+    #banner .item {text-align: center;}
+    #banner .item .more {margin: 34px auto 0;}
+    #banner .item .tit {font-size: 60px;}
+    #banner .item .tips1 {font-size: 50px;}
+    .ul-order li {margin-right: 0 !important;margin-bottom: 10px;width: 49%;}
+    .ul-order li:nth-child(2n+1) {margin-right: 2% !important;}
+    .ul-order .mask {position: relative;padding: 0;}
+    .ul-order .txt {position: absolute;top: 50%;left: 50%;
+        -o-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+    }
+    #sec6 {padding: 30px 0 60px;}
+    .box-fee .slick-list {padding: 30px 0 !important;}
+    #sec4 {padding: 30px 0 20px;}
+    .ul-dl {padding-top: 80px;}
+}
+
+
+
+/*Common For Max 480*/
+@media only screen and (max-width: 767px) {
+    /*******************************
+        -------[=公用]-------
+    ********************************/
+    .ul-fd-menu li {margin-right: 0 !important;padding-bottom: 20px;width: 49%;}
+    .ul-fd-menu li:nth-child(2n+1) {margin-right: 2% !important;}
+    /*******************************
+        -------[=首页]-------
+    ********************************/
+    #banner .item .tit {font-size: 40px;}
+    #banner .item .tips1 {font-size: 30px;}
+    #banner .item .tips2 {font-size: 24px;}
+    #sec6 {padding: 30px 0;}
+    .ul-dl li {margin-bottom: 20px;width: 50%;}
+    .ul-dl li:nth-child(2n+2) {border-right: none;}
+    .ul-dl .tit {font-size: 18px;height: 60px;}
+    .ul-dl {padding-top: 40px;}
+}
+
+@media only screen and (max-width: 600px) {
+    /*******************************
+        -------[=首页]-------
+    ********************************/
+    .box-fee {padding: 0;}
+    .box-fee .item {margin: 0 5px;}
+    .ul-order li {margin-right: 0 !important;margin-bottom: 10px;width: 100%;}
+    .tab-join {padding-top: 20px;}
+    .ul-order {padding-top: 30px;}
+    #sec6 {padding: 20px 0;}
+    .box-fee .item {padding: 20px 34px 20px;}
+    .box-fee .num {margin: 0 auto 20px;}
+    .box-fee .info {margin: 20px 0;}
+}
+
+/*Common For Max 320*/
+@media only screen and (max-width: 479px) {
+    /*******************************
+        -------[=首页]-------
+    ********************************/
+    #banner .item .tit {font-size: 30px;}
+    #banner .item .tips1 {font-size: 24px;}
+    #banner .item .tips2 {font-size: 18px;}
+    .tab-join .tabtitle a {font-size: 18px;height: 40px;line-height: 40px;}
+    .ul-dl li {margin-bottom: 10px;padding-bottom: 20px;width: 100%;border-right: none !important;border-bottom: 1px solid #d8d8d8;}
+    .ul-dl .tit {font-size: 16px;height: 80px;}
+    .ul-dl {padding-top: 20px;}
+}
+@media only screen and (max-width: 360px) {
+/*******************************
+    -------[=公用]-------
+********************************/
+.ul-fd-menu li {margin-right: 0 !important;padding-bottom: 20px;width: 100%;}
+}

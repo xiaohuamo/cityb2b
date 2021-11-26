@@ -1,0 +1,4 @@
+html { overflow:hidden; }
+body { width:15px; height:100%; background:url(bg_middle.jpg) repeat-y #fff; }
+.middle { width:15px; min-height:40px; _height:40px; padding-top:150px; background:url(middle_lt_1.jpg) no-repeat; }
+#switchPoint { left:0; cursor:pointer; }

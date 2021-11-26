@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		<div class="pc-side p-hide">
+	<div class="box">
+		
+		<div class="menu3">
+			<ul class="clearfix">
+			
+			
+		
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>factory_2c/factroy_order_summery"><{$lang->print_picking_list}></a>
+					</span>
+				</li>
+				<li>
+					<span>
+					<a class ="panel_item"  href="<{$http_root_www}>factory_2c/single_item_print_edit"> <{$lang->Single_Picking_item_edit}></a>
+					</span>
+				</li>
+				
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>company/customer_orders_logistic"> <{$lang->print_packing_slips}></a>
+					</span>
+				</li>
+				
+				
+				<li>
+					<span>
+						<a class ="panel_item"   href="<{$http_root_www}>factory_2c/print_single_item_buying_list"> <{$lang->print_item_packing_slips}></a>
+					</span>
+				</li>
+				
+				
+				<li >
+					<span>
+						<a class ="panel_item"   href="<{$http_root_www}>company/print_label_admin"> <{$lang->print_label_logistic}></a>
+					</span>
+				</li>
+				
+				<li >
+					<span>
+						<a class ="panel_item"   href="<{$http_root_www}>company/dispcenter_add_customer"> <{$lang->add_dispatching_customer}></a>
+					</span>
+				</li>
+				
+				
+			</ul>
+		</div>
+
+	</div>
+</div>
+	</div>
+	<{include file='footer.htm'}>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<style type="text/css">
+		.con input{
+			position: absolute;
+			right: 11px;
+			top:11px;
+		}
+		.response{
+			position: relative;
+			top: 40px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body class="bg-1">
+<div class='box2'></div>
+<form id="memberForm" action="<{$http_root_www}>member/broadcast_control" method="post" target="post_frame">
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+		<h1>直播管理</h1>
+		<div class="right">
+			<div class="right">
+				<button type="submit" class="a-red">保存</button>
+			</div>
+		</div>
+	</header>
+
+	<section id="bd">
+		<div class="new-add">
+			<div class="con">
+				<em>Ubonus 直播 ID: <span>UUID<{$loginUser.id}></span></em>
+					
+			</div>
+
+			
+			<div class='con'>
+				<em>开始直播：</em>
+				<input type="checkbox" name="isbroadcasting" class="input-text" onclick="if($(this).is(':checked')){$('.broadcastType').show();}else{$('.broadcastType').hide();}" <{if $broadcastInfo.isbroadcasting=="on"}> checked <{/if}>/>
+				<!-- <span class='js-on on' ></span> -->
+			</div>
+
+			<div class='broadcastType' <{if $broadcastInfo.isbroadcasting=="off"||!$broadcastInfo.isbroadcasting}>style="display: none;"<{/if}> >
+
+				<div class="con">
+					<em>直播标题：</em>
+					<input type="text" name="title" class="g-input inp" placeholder="填写一个主题"  value='<{$broadcastInfo.broadcastTitle}>' />
+				</div>
+
+				<div class='con'>
+					<em>播放直播信号：</em>		
+					<input type="radio" name="broadcastType" class="input-text" value='live' <{if $broadcastInfo.broadcastType=="live"}>checked<{/if}>/>	
+					<!-- <span class='js-on on'></span>		 -->
+
+				</div>
+
+				<div class='con'>
+					<em>播放录播片段：</em>		
+					<input type="radio" name="broadcastType" class="input-text" value='rec' <{if $broadcastInfo.broadcastType=="rec"}>checked<{/if}>/>	
+					<!-- <span class='js-on on'></span>		 -->
+				</div>	
+			</div>
+			
+
+			<div class="con">
+				<em>您的直播频道链接: </em>
+				<span>
+					<a style='display: inline-block;width: 50px;float: right; height: 19px;margin-top: 0.4rem;' target＝'_blank' href="<{$http_root_www}>index.php?ctl=broadcast&act=index&id=UUID<{$loginUser.id}>">查看</a>
+				</span>
+					
+			</div>
+
+			<div class='con' style='height: auto;'>
+				<em>直播说明：</em>
+				<br>
+				<br>
+
+				<div class='well'>
+					<ul style='font-size: 12px'>
+						<li>下载APP  Wowza GoCoder</li>
+						<li>打开设置，选择 Wowza Streaming Engine</li>
+						<li>在Host中填写以下信息: </li>
+						<li>Server 221.121.142.184 </li>
+						<li>port 1935</li>
+
+						<li>在Application中填写以下信息 </li>
+						<li>Application name:live</li>
+						<li>Stream Name: UUID<{$loginUser.id}></li>
+
+						<li>在Login中填写一下信息:</li>
+						<li>username: live1</li>
+						<li>password: Abcd@2017</li>
+
+						<li>点击开始直播</li>
+
+						<li><p>Note:直播信号一般会有30秒左右的延迟，直播开始后30秒左右频道的视频才会开始播放</p></li>
+					</ul>
+				</div>
+
+			</div>
+
+
+			
+		</div>
+
+	</section>
+
+</form>
+
+	<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+
+
+<{include file="mobile/mobile_footer.htm"}>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+</body>
+</html>

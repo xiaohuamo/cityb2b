@@ -1,0 +1,62 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-home" ></i>
+				<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>>运营商中心</a> 
+				
+			</div>
+
+		</li>
+
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>>发布产品管理</a>
+			</div>
+			
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/index_publish" <{if $submenu=='index_publish'}> class="current"<{/if}>>发布中心</a>
+
+			
+			</div>
+		</li>
+		
+		<{include file='company/side_customer_centre.htm'}>
+		<{include file='company/side_money.htm'}>
+		
+		
+		<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-building" ></i>
+		<a <{if $menu=='store_setting'}> class="current"<{/if}>>设置</a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>company/logo"<{if $submenu=='logo'}> class="current"<{/if}>>
+			Logo
+		</a>
+		<a href="<{$http_root_www}>company/profile"<{if $submenu=='profile'}> class="current"<{/if}>>
+			<{$lang->business_info}>
+		</a>
+	
+		<a href="<{$http_root_www}>company/profile_pic"<{if $submenu=='profile_pic'}> class="current"<{/if}>>
+			店铺主图
+		</a>
+		<a href="<{$http_root_www}>company/store_banner_edit"<{if $submenu=='store_banner_edit'}> class="current"<{/if}>>
+			店铺banner管理
+		</a>
+	
+		<a href="<{$http_root_www}>store/<{$loginUser.id}>" target='_blank' ><{$lang->preview_store}></a>
+		
+	
+		<a href="<{$http_root_www}>company/profile_manager"<{if $submenu=='profile_manager'}> class="current"<{/if}>>
+			<{$lang->administrator_info}>
+		</a>
+	</div>
+</li>
+		
+	
+	</ul>
+	
+	
+</div>

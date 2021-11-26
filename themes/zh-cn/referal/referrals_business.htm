@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='referal/side_referal_menu.htm'}>
+
+					<div class="main-list">
+						<div class="input-box clearfix">
+							<p>总收益：$0.00 (Beta) <a href="<{$http_root_www}>member/recharge?type=BUSINESS_REF_COMMISSION">详情</a></p>
+						</div>
+							
+						<{if $ref_list}>
+							<form method="post" action="?">
+								<table cellspacing="0" cellpadding="0" width="100%">
+									<thead>
+										<tr>
+											<th>用户名</th>
+											<th>介绍时间</th>
+											<th>状态</th>
+											<th>总提成</th>
+										</tr>
+									</thead>
+									<tbody>
+										<{foreach from=$ref_list item=item name='dl'}>
+										<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+											<td><{$item.userId}></td>
+											<td><{date('Y-m-d H:i:s', $item.time)}></td>
+											<td>
+												<span style='color:green'>
+													不可变更
+												</span>
+											</td>
+											
+											<td>
+												<{if $item.totalCommission}>
+													$<{$item.totalCommission}>
+												<{else}>
+													0
+												<{/if}>
+											</td>
+										</tr>
+										<{/foreach}>
+									</tbody>
+								</table>
+								
+							</form>
+						<{else}>
+							还没有介绍记录
+						<{/if}>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

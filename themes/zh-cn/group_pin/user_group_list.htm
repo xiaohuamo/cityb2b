@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='group_buy/group_buy_top_menu.htm'}>
+				<div class="main-form">	
+					<h1>
+						<p>
+							基于产品 <a href="<{$http_root_www}>coupon/<{$group.coupon_id}>"><{$group.coupon_id}></a> 的团ID:<{$group.id}>
+						</p>
+						<p>
+							总团数限制：<{$group.group_size_total}> 
+						</p>
+						<p>
+							单个团人数限制：<{$group.group_size_each}>  
+						</p>
+						<p>
+							单个团时间限制：<{$group.time_limit}> 秒
+						</p>
+					</h1>
+
+					<p>系统每5分钟检查一遍过期的团，已经过期的团保留30天后永久删除，过期时订单自动执行退款</p>
+
+					<div class="main-list">
+						<table style='width:100%'>
+							<thead >
+								<tr>
+									<th>id</th>
+									<th>列表</th>
+									<th>状态</th>
+									<th>时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<{foreach from=$list item=item name='dl'}>
+
+									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}> >
+										<td>
+											<a href="<{$http_root_www}>group_pin/user_group_show?id=<{$item.id}>"><{$item.id}></a>
+										</td>
+										<td>
+											<{foreach from=$item.user_list item=uitem}>
+												<a href="<{$http_root_www}>company/customer_order_detail?id=<{$uitem.order_id}>"><{$uitem.user_id}></a>
+												
+											<{/foreach}>
+											<br>
+											<small>(<{$item.user_list|@count}>/<{$group.group_size_each}>)</small>
+										</td>
+
+										<td>
+											<{if $item.status==0}>
+												<span style='color:#FD5001 '>OPEN</span>
+											<{elseif $item.status==1}>
+												<span style='color:green'>COMPLETE</span>
+											<{elseif $item.status==2}>
+												<span style='color:#F30'>EXPIRE</span>
+											<{/if}>
+										</td>
+
+										<td>
+											<{if $item.status==0}>
+												<{if ($group.time_limit-time()+$item.gen_date)>0}>
+													<{ceil(($group.time_limit-time()+$item.gen_date)/3600)}>小时后过期
+												<{else}>
+													已经过期
+												<{/if}>
+												<br>
+												<small><{date('Y-m-d H:i', $item.gen_date)}></small>
+
+											<{elseif $item.status==1}>
+												<{date('Y-m-d H:i:s', $item.last_update_date)}>
+
+											<{elseif $item.status==2}>
+
+
+											<{/if}>
+										</td>
+										<td>
+											<select onChange='selectUpdate(this);'>
+												<option >更新状态</option>
+												<option  
+												value='<{$http_root_www}>group_pin/user_group_update?id=<{$item.id}>&group_id=<{$group_id}>&status=0'>
+												OPEN
+												</option>
+
+												<option 
+												value='<{$http_root_www}>group_pin/user_group_update?id=<{$item.id}>&group_id=<{$group_id}>&status=1'>
+												COMPLETE
+												</option>
+
+												<option 
+												value='<{$http_root_www}>group_pin/user_group_update?id=<{$item.id}>&group_id=<{$group_id}>&status=2'>
+												EXPIRE
+												</option>
+
+												<option 
+												value='<{$http_root_www}>group_pin/user_group_update?id=<{$item.id}>&group_id=<{$group_id}>&status=3'>
+												DELETE
+												</option>
+
+											</select>
+										</td>
+									</tr>
+									
+								<{/foreach}>
+								<script type="text/javascript">
+									function selectUpdate(obj) {
+										var url = $(obj).val();
+
+										if(confirm('确认操作?'))window.location.href=url;
+									}
+								</script>
+							</tbody>
+						</table>
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>		
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

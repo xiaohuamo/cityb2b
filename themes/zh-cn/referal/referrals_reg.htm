@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style>
+	.main-form .input-box span label { width:200px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='member/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='referal/side_referal_menu.htm'}>
+				
+				<div class="main-form">
+					<form id="memberForm"  class='form-style-green' action="<{$http_root_www}>referal/referrals_reg" method="post" target="post_frame">
+
+						<div class="input-box clearfix">
+						<h1>在正式成为介绍人之前您取消确认填写以下个人信息</h1>
+						<p>成为介绍人正常审批速度为24小时，如果您填写了email,结果会在24小时之内发送至您的email.如果您未填写Email，请稍后再检查该页面（最长等待时间为24小时）。如有任联系Ubonus商家服务中心</p>
+					</div>
+
+						<div class="input-box clearfix">
+							<span><label>姓：</label></span>
+							<input type="text" name="firstName" class="input-text" value="<{$loginUser.person_last_name}>" />
+							<em style="color:red;">*</em>
+						</div>
+						<div class="input-box clearfix">
+							<span><label>名：</label></span>
+							<input type="text" name="lastName" class="input-text" value="<{$loginUser.person_first_name}>" />
+							<em style="color:red;">*</em>
+						</div>
+						<div class="input-box clearfix">
+							<span><label>邮箱地址：</label></span>
+							<input type="text" name="email" class="input-text" value="<{$loginUser.email}>" />
+							<em style="color:red;">*</em>
+						</div>
+						<div class="input-box clearfix">
+							<span><label>电话：</label></span>
+							<input type="text" name="phone" class="input-text" value="<{$loginUser.phone}>" />
+							<em style="color:red;">*</em>
+						</div>
+						<div class="input-box input-submit clearfix">
+							
+							<button type="submit">提交申请</button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

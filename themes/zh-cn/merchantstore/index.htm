@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="<{$pageKeywords}>" />
+	<meta name="description" content="<{$pageDescription}>" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>merchantstore/css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>merchantstore/css/lib.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>merchantstore/css/style.css" />
+</head>
+<body>
+    <!-- 头部 -->
+    <div class="header shop">
+        <!--
+        <div class="head-top">
+            <div class="wp">
+                <div class="btn JS-select">
+                    <p>切换语言</p>
+                    <div class="option JS-select-con">
+                        <a href="">中文</a>
+                        <a href="">英文</a>
+                    </div>
+                </div>
+                <div class="btn JS-select">
+                    <p>选择货币</p>
+                    <div class="option JS-select-con">
+                        <a href="">美元</a>
+                        <a href="">人民币</a>
+                    </div>
+                </div>
+                <div class="r">
+                    <div class="login">
+                        <a href="">注册</a>
+                        <a href="">登录</a>
+                    </div>
+                    <div class="l">|</div>
+                    <a href="" class="btn btn2">我的订单</a>
+                    <div class="l">|</div>
+                    <div class="btn btn3 JS-select">
+                        <p>客户服务</p>
+                        <div class="option option2 JS-select-con">
+                            <dl>
+                                <dt>客户</dt>
+                                <dd><a href="">帮助中心</a></dd>
+                                <dd><a href="">售后服务</a></dd>
+                                <dd><a href="">在线客服</a></dd>
+                                <dd><a href="">意见建议</a></dd>
+                                <dd><a href="">电话客服</a></dd>
+                                <dd><a href="">客服邮箱</a></dd>
+                                <dd><a href="">金融咨询</a></dd>
+                            </dl>
+                            <dl>
+                                <dt>商户</dt>
+                                <dd><a href="">合作招商</a></dd>
+                                <dd><a href="">商学院</a></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="l">|</div>
+                    <div class="btn btn3 JS-select">
+                        <p>网站导航</p>
+                        <div class="option option3 JS-select-con">
+                            <dl>
+                                <dt>热门分类</dt>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                                <dd><a href="">演唱会</a></dd>
+                                <dd><a href="">特价套餐</a></dd>
+                                <dd><a href="">羽毛球</a></dd>
+                            </dl>
+                            <dl>
+                                <dt>热门城市</dt>
+                                <dd><a href="">CBD及周边</a></dd>
+                                <dd><a href="">BovHIII</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">CBD及周边</a></dd>
+                                <dd><a href="">BovHIII</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">西北区其他西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                            </dl>
+                            <dl class="last">
+                                <dt>温馨推荐</dt>
+                                <dd><a href="">CBD及周边</a></dd>
+                                <dd><a href="">BovHIII</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">CBD及周边</a></dd>
+                                <dd><a href="">BovHIII</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">Chadstone</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                                <dd><a href="">西北区其他</a></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="l">|</div>
+                </div>
+            </div>
+        </div>
+        <div class="head-con">
+            <div class="wp">
+                <div class="logo">
+                    <a href="">
+                        <img src="<{$SKIN_PATH}>merchantstore/images/logo.png" alt="">
+                    </a>
+                </div>
+                <div class="head-center">
+                    <div class="search">
+                        <div class="form">
+                            <form action="">
+                                <div class="inner">
+                                    <input type="text" class="inp">
+                                    <input type="submit" value=" " class="sub">
+                                </div>
+                                <div class="search-list">
+                                    <ul class="ul-search TAB" id=".list-box">
+                                        <li class="on"><a href="">手机壳</a></li>
+                                        <li><a href="">手机支架</a></li>
+                                        <li><a href="">手机架</a></li>
+                                        <li><a href="">手机车载支架</a></li>
+                                        <li><a href="">手机耳机</a></li>
+                                        <li><a href="">手机防水袋</a></li>
+                                    </ul>
+                                    <div class="list-box">
+                                        <dl>
+                                            <dt>手机壳</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="list-box dn">
+                                        <dl>
+                                            <dt>手机支架</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="list-box dn">
+                                        <dl>
+                                            <dt>手机架</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="list-box dn">
+                                        <dl>
+                                            <dt>手机支架</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="list-box dn">
+                                        <dl>
+                                            <dt>手机架</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="list-box dn">
+                                        <dl>
+                                            <dt>手机支架</dt>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                            <dd>
+                                                <ul class="ul-list-s">
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">卡通</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                    <li><a href="">日韩</a></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="hot">
+                            <a href="">抽奖</a>
+                            <a href="">演唱会</a>
+                            <a href="">箱包</a>
+                            <a href="">电影票</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="head-right">
+                    <a class="order" href="">我的订单<i></i></a>
+                    <a class="closing" href="">去购物车</a>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <div class="head-bot">
+            <div class="wp">
+                <div class="shop-box">
+                    <{if $loginUser}>
+                        <a class="icon-add fav_faved" style="display: none;"><{$lang->followed}></a>
+                        <a class="icon-add fav_not_faved" style="display: none;"><{$lang->follow}></a>    
+                    <{/if}>
+
+                   <!-- <a class="shop"><span><{$lang->quality_certification}></span> -->
+					
+					<{if  $businessUser.business_type_miss==1}>
+						    <{$businessUser.person_first_name}>
+						<{else}>
+							<{$businessDisplayName}>
+						<{/if}>
+					
+					
+					</a>
+
+                    <div class="star-box">
+                        <!--div class="hot-box">
+                            <em class="jGray"></em>
+                            <em style="width:68px;" class="jRed"></em>
+                            <strong>9.06</strong>
+                        </div-->
+                    </div>
+
+                   
+
+                    <a target="_blank" href="<{$http_root_www}>member/index" class="icon-vip"><{$lang->vip_center}></a>
+
+                    <a class="icon-kefu" target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>','singleChat')"  ></a>
+                    
+                    <a style='background: #FD5001 ;color: #fff;border-radius: 5px;padding: 5px 10px;' href="<{$http_root_www}>business/intro"><{$lang->I_wang_sell}></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 头部 end -->
+
+    <!-- 主体  -->
+    <div class="main">
+        <div class="concern-box">
+            <div class="shop-logo" style="    margin-top: 1px;">
+			
+			<{if $businessUser.business_type_miss==1}>
+    <img style="width:100%;height:auto; right:10px;" src="<{$SKIN_PATH}>merchantstore/images/2019miss.jpg" alt="seller Logo">
+			<{else}>
+                <{if $businessUser.logo}>
+                    <img style="height: 104px" src="<{$UPLOAD_PATH}><{$businessUser.logo|image:100:100}>" alt="seller Logo">
+                <{else}>
+				
+				 <{if $langStr=='zh-cn'}>
+                     <img src="<{$SKIN_PATH}>merchantstore/images/logo.png" alt="seller Logo">
+				 <{else}>
+				     <img src="<{$SKIN_PATH}>merchantstore/images/logo_en.png" alt="seller Logo">
+				 <{/if}>
+                <{/if}>
+ <{/if}>
+            </div>
+            <div class="shop-name">
+                <h1 style="    font-size: 14px;"><{$h1}></h1>
+
+                 <div class="m-notice">
+                    <div class="bd">
+                        <ul>
+                             <{if $busienssNotice}>
+                                <{foreach from=$busienssNotice item=item}>
+                                       <li><a href="#"><{$item}></a></li>
+                                <{/foreach}>
+                            <{else}>
+                               
+                                <li><a href="#"></a></li>
+                            <{/if}>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="qr" style="margin-top: -30px;">
+                <img src="<{if $busi_weixin_scancode}><{$UPLOAD_PATH}><{$busi_weixin_scancode}><{else}><{$SKIN_PATH}>merchantstore/images/p1.jpg<{/if}>" style="margin-right: 28px; height: 80px;" alt="" />
+            </div>
+        </div>
+        <div class="navi">
+            <div class="wp">
+                <{include file='index_inc_title.htm'}>
+            </div>
+        </div>
+        <!--
+        <div class="shop-so">
+            <div class="wp">
+                <form action="">
+                    <div class="form-shop">
+                        <input type="text" class="inp1" />
+                        <label for=""> 
+                            <input type="radio" class="radio1" />
+                            全站搜
+                        </label>
+                        <input type="submit" value="搜索" class="btn" />
+                    </div>   
+                </form>
+            </div>
+        </div>
+        -->
+       
+        <div class="m-classify">
+            <div class="wp">
+
+            <{if $businessUser.banner_pics}>
+             <div class="fullSlide">
+                <div class="bd">
+                    <ul>
+                         <{foreach from=$businessUser.banner_pics|@unserialize item=item}>
+                        <li>
+                            <img  width='1200px' src="<{$UPLOAD_PATH}><{$item}>">
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+            <{/if}>
+
+                <div class="col-slide">
+                    <div class="classify-box">
+                        <a href="<{$orderByUrl}>">
+                            <h3><i></i><{$lang->all}></h3>
+                        </a>
+                        <ul>
+                            <!--li>
+                                <span><i></i>全部分类</span>
+                            </li-->
+                            <!--li>
+                            <span><i></i>17秋季新款</span>
+                            <div class="sub">
+                            <a href="">17秋季新品区</a>
+                            <a href="">17秋季新品区</a>
+                            <a href="">17秋季新品区</a>
+                            </div>
+                            </li-->
+
+                            <{foreach from=$customizableCategory item=item}>
+                            <li>
+                                <{if $item.child}>
+                                     <a href="<{$orderByUrl}>cc=<{$item.id}>">
+                                        <span><i></i><{$item.name}></span>
+                                     </a>
+                                     
+                                    <div class="sub">
+                                    <{foreach from=$item.child item=citem}>
+                                        <a href="<{$orderByUrl}>cc=<{$citem.id}>"><{$citem.name}></a>
+                                    <{/foreach}>
+                                    </div>
+                                <{else}>
+							
+                                <a href="<{$orderByUrl}>cc=<{$item.id}>">
+                                    <span><i></i><{$item.name}></span>
+                                </a>
+                              
+                                <{/if}>
+
+                            </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                    <!--div class="sort-box">
+                        <h4>销售排行</h4>
+                        <ul>
+                            <li>
+                                <i class="on">1</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="on">2</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="on">3</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <i>4</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <i>5</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <i>6</i>
+                                <div class="pic">
+                                   <img src="<{$SKIN_PATH}>merchantstore/images/q-p2.jpg" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h5><a href="">HelloKitty童装秋新品儿童套装女童长袖</a></h5>
+                                    <strong class="price">￥79.00</strong>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="notice-box">
+                        <h4>店铺公告</h4>
+                        <div class="txt">
+                            <p></p>
+                        </div>
+                    </div-->
+                </div>
+
+               
+
+                <div class="col-main">
+                   
+                    <ul class='ul-shop' style='min-height: 0'>
+                         <{foreach from=$referral_product_list item=item}>
+                        <li style="position: relative;">
+                            <span style="position: absolute;width: 40px;height: 40px;line-height: 40px;text-align: center;border-radius: 20px;background-color: rgba(255,204,51,0.7);top: 0px;left: 8px;color: #fff"><{$lang->ubonus_recommend}></span>
+
+                            <div class="inner">
+                                <div class="pic-box">
+                                    <div class="pic-big">
+                                        <a href="<{$http_root_www}>coupon/<{$item.id}>?reftag=<{$reftag}>">
+                                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="" /></a>
+                                    </div>
+                                </div>
+                                <div class="txt-box">
+                                    <p><{$item.title}></p>
+                                    <div class="buy-box" style="">
+                                        <strong class="price"><{if $item.price1=='$0.00'}>$0.00<{else}><{$item.price1}><{/if}> </strong>
+
+                                        <s style="color: #888"><{$item.price2}></s>
+                                       
+                                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>?reftag=<{$reftag}>" class="btn-buy"><{$lang->buy_now}> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+
+                    <div class="select-box">
+                        <ul id="ulsel">
+                             <li id="li1"<{if $orderBy=='bonusType'}>class='on'<{/if}>><a href="<{$orderByUrl}>orderBy=bonusType"><{$lang->product}><{$lang->type}></a></li>
+                            <li id="li1"<{if $orderBy=='hits'}>class='on'<{/if}>><a href="<{$orderByUrl}>orderBy=hits"><{$lang->over_all}></a></li>
+                            <li id="li2"<{if $orderBy=='buy'}>class='on'<{/if}>><a href="<{$orderByUrl}>orderBy=buy"><{$lang->sales_volume}></a></li>
+                            <li id="li3"<{if $orderBy=='voucher_deal_amount'}>class='on'<{/if}>><a href="<{$orderByUrl}>orderBy=voucher_deal_amount"><{$lang->price}></a></li>
+                            <li id="li4"<{if $orderBy=='id'}>class='on'<{/if}>><a href="<{$orderByUrl}>orderBy=id"><{$lang->newest}></a></li>
+                        </ul>
+                    </div>
+                    <ul class="ul-shop">
+                        <{foreach from=$coupon item=item}>
+                        <li>
+                            <div class="inner">
+                                <div class="pic-box">
+                                    <div class="pic-big">
+                                        <a href="<{$http_root_www}>coupon/<{$item.id}>?reftag=<{$reftag}>">
+                                            <img class='lazyload' data-src="<{$UPLOAD_PATH}><{$item.pic|image:330:210}>" alt="" /></a>
+                                    </div>
+                                </div>
+                                <div class="txt-box">
+                                    <p><{$item.title}></p>
+                                    <div class="buy-box" style="">
+                                        <strong class="price"><{if $item.price1=='$0.00'}>$0.00<{else}><{$item.price1}><{/if}> </strong>
+
+                                        <s style="color: #888"><{$item.price2}></s>
+                                       
+                                        <a target="_blank" href="<{$http_root_www}>coupon/<{$item.id}>?reftag=<{$reftag}>" class="btn-buy"> <{$lang->buy_now}></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 主体 end -->
+    <!-- 底部 -->
+
+	<{include file='index_inc_footer.htm'}>
+    <!-- 底部 end -->
+
+    <div class="m-toolbar">
+        <ul class="ul-toolbar">
+            <li>
+                <a href="<{$http_root_www}>member/myorders">
+                <div class="inner">
+                    <i class="i1"></i>
+                    <p><{$lang->my_orders}></p>
+                </div>
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="<{$http_root_www}>member/fav">
+                <div class="inner">
+                    <i class="i2"></i>
+                    <p><{$lang->my_watch_list}></p>
+                </div>
+                </a>
+            </li>
+            <!--li>
+                <div class="inner">
+                    <i class="i3"></i>
+                    <p>我的优惠券</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i4"></i>
+                    <p>我的足迹</p>
+                </div>
+            </li>
+            <li>
+                <div class="inner">
+                    <i class="i5"></i>
+                    <p>我的JIMI</p>
+                </div>
+            </li-->
+           
+
+            <li class="car">
+                <a target="_blank" href="<{$http_root_www}>member/showcart">
+                <div class="inner">
+                    <i class="i7"></i>
+                    <span></span>
+                    <em><{$carts_count}></em>
+                </div>
+                </a>
+            </li>
+
+            <li>
+                <div class="inner">
+                    <i class="i8"></i>
+                    <div class="qr-box">
+                        <img src="<{$SKIN_PATH}>merchantstore/images/eq.png" alt="" />
+                        <em>Scan promotion code </em>
+                    </div>
+                </div>
+            </li>
+            <!--li>
+                <div class="inner">
+                    <i class="i9"></i>
+                    <p>加关注</p>
+                </div>
+            </li-->
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>merchantstore/js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>merchantstore/js/lib.js"></script>
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+    <script>
+        jQuery(".m-notice").slide({mainCell:".bd ul",autoPlay:true,effect:"topLoop",vis:1});
+    </script>
+
+    <script type="text/javascript">
+
+    jQuery(".fullSlide").slide({
+        mainCell: ".bd ul",
+        effect: "fold",
+        autoPlay: true,
+        autoPage: true,
+        trigger: "click"
+    });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            <{if $faved}>
+            $('.fav_faved').show();
+            $('.fav_not_faved').hide();
+            <{else}>
+            $('.fav_faved').hide();
+            $('.fav_not_faved').show();
+            <{/if}>
+
+
+            $('.fav_faved').on('click',function(){
+                <{if $loginUser}>
+                removeFav();
+                <!--
+                <{else}>
+                window.location.href='<{$http_root_www}>member/login';
+                -->
+                <{/if}>
+            });
+
+            $('.fav_not_faved').on('click',function(){
+                <{if $loginUser}>
+                addFav();
+                <!--
+                <{else}>
+                window.location.href='<{$http_root_www}>member/login';
+                -->
+                <{/if}>
+            });
+
+        });
+
+        function addFav(){
+            $.get(
+                "<{$http_root_www}>query?cmd=fav_add",
+                {'itemId': '<{$businessUser.id}>','userId':'<{$loginUser.id}>','type':'store'},
+                function(data){
+                    $('.fav_faved').show();
+                    $('.fav_not_faved').hide();
+                });
+        }
+
+        function removeFav(){
+            $.get(
+                "<{$http_root_www}>query?cmd=fav_remove",
+                {'itemId': '<{$businessUser.id}>','userId':'<{$loginUser.id}>','type':'store'},
+                function(data){
+                    $('.fav_faved').hide();
+                    $('.fav_not_faved').show();
+                });
+        }
+    </script>
+
+    <script>
+        // 全站搜单选按钮
+        $('.form-shop label').click(function(event) {
+            $(this).find('.radio1').toggleClass('on');
+        });
+        // 图片放大
+        $(".pic-small .item").hover(function() {
+            var a = $(this).find("img").attr("src");
+            console.log(a);
+            $(this).addClass('on').siblings('.item').removeClass('on');
+            $(this).parents('.pic-small').siblings('.pic-big').find('img').attr('src', a);
+        }, function() {
+            $(this).removeClass('on');
+            return true;
+        });
+        // 商品分类折叠
+        $('.classify-box ul li span').click(function(event) {
+            $(this).siblings('.sub').stop().slideToggle();
+        });
+
+    </script>
+
+    <script>
+        $(function() {
+            $('img.lazyload').unveil();
+        });
+    </script>
+</body>
+</html>

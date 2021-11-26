@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- edit 4-11 -->
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >4</span>
+					
+					<div class="colCurTit clearfix">
+						<h1>第四步：设置主代金券及子代金券</h1>
+					</div>
+					
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+
+					<form id="memberForm" class='form-style-green'action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box clearfix">
+							<span><label>商品名称：</label></span>
+							<{$data.title}>
+						</div>
+						<div class="input-box clearfix">
+							<span><label>商品类型：</label></span>
+							<{$data.coupontype.name}>
+						</div>
+						
+						<div class="input-box clearfix">
+							<span><label style="width:auto;"><{$data.coupontype.name}>门票最低金额</label></span>
+							<input type="number" min='0' name="voucher_deal_amount" class="input-text" value="<{$data.voucher_deal_amount}>" style="width:120px;"/> 澳元起
+						</div>
+
+						
+						<{include file='company/coupons_edit_step_menu.htm'}>
+
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

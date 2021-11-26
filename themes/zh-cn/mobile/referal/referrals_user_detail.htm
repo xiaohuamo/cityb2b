@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+	<header id="hd">
+		<div class="left">
+			<a onClick="history.back();" class="a-back"></a>
+		</div>
+		<h1>
+			分享业绩详细
+		</h1>
+	</header>
+
+	<section id='bd'>
+		<ul class="list-group">
+			<{foreach from=$ref_list item=item name='dl'}>
+			<li class="list-group-item" style="height: 100px">
+			  <img  src="<{$UPLOAD_PATH}><{$item.userAvatar}>" alt="" style='max-width: 50px'>
+			  <div  style="width: 80%;float: right;">
+			    <h5 > <!-- (<{$item.couponId}>)/ --> <{$item.userName}></h5>
+
+			   	
+			   	<small>
+			   		<{if $item.userId}>
+						<{if $item.currentSuccessor==$loginUser.id}>
+							<span style='color:#2bb8aa'>您是介绍人</span>
+							<span style='color:green'>
+								<{((mdl_referral_relation::ValidTimeLength+$item.time-$smarty.now)/(3600*24))|ceil}> Days Left
+							</span>
+
+						<{elseif $item.currentSuccessor}>
+							<span style='color:#9c9c9c'>该用户当前介绍人为
+							<{$item.currentSuccessor}></span>
+							<span style='color:green'>
+								<{((mdl_referral_relation::ValidTimeLength+$item.time-$smarty.now)/(3600*24))|ceil}> Days Left
+							</span>
+						
+						<{else}>
+							<span style='color:#2bb8aa'>该用户当前没有介绍人
+							</span>
+						<{/if}>
+					<{/if}>
+			   	</small>
+			   	<br>
+			   	<span>
+			   		点击：<{$item.hits}>
+			   	</span>
+
+			   	<{if $item.userId}>
+				   	总提成：
+				   	<span style="color:#f30;">
+				   		<{if $item.totalCommission}>
+							$<{$item.totalCommission}>
+						<{else}>
+							$0.00
+						<{/if}>
+				   	</span>
+			   	<{/if}>
+			  </div>
+			</li>
+			
+			<{/foreach}>
+		</ul>
+	</section>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<{include file="mobile/mobile_footer.htm"}>
+</body>
+</html>

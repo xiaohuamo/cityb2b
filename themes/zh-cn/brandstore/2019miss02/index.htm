@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="/themes/zh-cn/brandstore/2019miss/css/bootstrap.css" />
+		<link rel="stylesheet" href="/themes/zh-cn/brandstore/2019miss/index.css" />
+	</head>
+	<body>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/jquery-1.12.4.min.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/bootstrap.js" ></script>
+		<script type="text/javascript" src="/themes/zh-cn/brandstore/2019miss/js/vue.min.js" ></script>
+		<style>
+			/*手机*/
+			#top{
+				/*height: 440px;*/
+				width: 100%;
+				/*background-image: url(/themes/zh-cn/brandstore/2019miss/img/haibao.png);
+				background-repeat: no-repeat;
+				background-size: 100%;*/
+			}
+			.demo-nav{
+				height: 56px;
+				line-height: 56px;
+				display: flex;
+				text-align: center;
+				background-color: #f6dad7;
+				color: white;				
+			}
+			.demo-nav a{
+				color: white !important;
+			}
+			.demo-nav a:hover{
+				color: #954941;
+			}
+			.flex-1{
+				flex: 1;
+			}
+			.saishi{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+				/*border: 1px solid #000000;*/
+				
+			}
+			.btn-saishi{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    border-radius: 30px;
+			    background-color: #f6dad7;			    
+			    margin-top: 20px;
+			    color: white;
+			}
+			.saishi-content{
+				text-align: center;
+				margin-top: 10px;
+			}
+			.content-top{
+				width: 70%;
+				height: 20px;
+				background-color:#f6dad7 ;
+				display: inline-block;
+				border-radius: 15px 15px 0 0;
+			}
+			.content-con{
+				width: 89%;
+				height: auto;
+				display: inline-block;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+			}
+			
+			.sign{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 20px;
+			}
+			.sign-img img{
+				width: 12%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote{
+				width: 100%;
+				height: auto;
+				text-align: center;
+				padding-bottom: 30px;
+			}
+			.vote-img img{
+				width: 12%;
+				height: auto;
+				margin-bottom: 5px;
+			}
+			.vote-all{
+				width: 89%;
+				height: auto;
+				border-radius: 7px;
+				box-shadow: rgba(234,89,108,0.3) 0px 5px 5px 5px;
+				text-align: justify;
+				padding: 20px;
+				color: #95494e;
+				margin: 0px auto;
+			}
+			.row-bottom{
+				margin-bottom: 10px;
+			}
+			.vote-img-top{
+				height: 50px;
+				width: auto;
+				background-color: #f6dad7;
+				border-radius: 25px;
+			}
+			.vote-btn{
+				margin-top: 10px;
+				display: block;
+				height: 27px;
+				line-height: 27px;
+				width: 100%;
+				background-color: #f6dad7;
+				border-radius: 25px;
+				color: white;
+			}
+			
+			.banner{
+				width: 98%;
+				height: 130px;
+				margin-bottom: 20px;
+				background-color: #f6dad7;
+				border-radius: 15px;
+				margin: 0px auto;
+				text-align: center;
+			}
+			.beauty{
+				width: 100%;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+			}
+			.beauty-content{
+				margin: 0px auto;
+				width: 89%;
+				height: auto;
+			}
+			.beauty-title{
+				text-align: left;
+				color: #95494e;
+			    height: 45px;
+			    margin-bottom: 10px;
+			    border-bottom: 1px solid #f6dad7;
+			}
+			.row-style{
+				height: 109px;
+				/*background-color: #f6dad7;*/
+				margin: 0px;
+				margin-bottom: 10px;
+			}
+			.col-item{
+				height: 100%;
+				border:1px solid #f6dad7;
+				/*background-color: #f6dad7;*/
+			    width: 45%;
+			    margin-left: 10px;
+			    margin-top: 10px;
+			}
+			.member-top-img{
+				height: 85px;
+				width: auto;
+				background-color: #f6dad7;
+				border-radius: 60px;
+			}
+			.mamber-name{
+				margin-top: 10px;
+			}
+			.goods{
+				width: 100%;
+				text-align: center;
+				margin-bottom: 20px;
+				border: none;
+			}
+			.goods-content{
+				width: 89%;
+				height: auto;
+				border: 0px solid #f6dad7;
+				margin: 0px auto;
+			}
+			.goods-title{
+				color: #95494e;
+				margin-bottom: 20px;
+			}
+			.goods-inner{
+				width: 100%;
+				height: auto;
+			}
+			.discount{
+				display: block;
+			    height: 30px;
+			    width: 85%;
+			    line-height: 30px;
+			    background-color: #ff6600;
+			    margin: 10px auto;
+			}
+			.price{
+				color: red;
+			}
+			.live{
+				width: 100%;
+				height: auto;
+				border: 0px solid #1B6D85;
+				text-align: center;
+			}
+			.live-live{
+				width: 89%;
+				margin: 0px auto;
+				
+			}
+			.live-btn{
+				display: inline-block;
+				width: 140px;
+			    height: 45px;
+			    line-height: 45px;
+			    border-radius: 30px;
+			    background-color: #f6dad7;			    
+			    margin-top: 20px;
+			    color: white;
+			}
+			.live-content{
+				margin-top: 20px;
+			}
+			/* 小屏幕（平板，大于等于 768px） @2x*/
+			@media (min-width: 768px) { 
+				body{
+					font-size: 25px;
+				}
+				.btn-saishi{
+					width: 190px;
+				    height: 65px;
+				    line-height: 65px;
+				    margin-top: 25px;
+				}
+				.saishi-content{
+					margin-top: 15px;
+				}	
+				.content-con{
+					height: auto;
+				}
+				.vote{
+					padding-bottom: 45px;
+				}
+				.vote-img-top{
+					height: 130px;
+					width: auto;
+					border-radius: 75px;
+				}
+				.vote-btn{
+					height: 50px;
+					line-height: 50px;
+				}
+				.beauty{
+					margin-top: 40px;
+					margin-bottom: 40px;
+				}
+				.beauty-title{
+					font-size: 25px;
+				}
+				.row-style{
+					height: 209px;
+					margin: 0px;
+					margin-bottom: 15px;
+				}
+				.col-item{
+				    margin-left: 20px;
+				    margin-top: 20px;
+				}
+				.mamber-name{
+					margin-top: 15px;
+					font-size: 25px;
+				}
+				.member-top-img{
+					height: 195px;
+					border-radius: 100px;
+				}
+				.goods{
+					margin-bottom: 40px;
+				}
+				.goods-title{
+					font-size: 25px;
+					color: #95494e;
+				}
+				.goods-inner{
+					width: 100%;
+					height: auto;
+				}
+				.discount{
+				    height: 50px;
+				    line-height: 50px;
+				}
+			}
+			
+		</style>
+	<div>
+	  	<div id="top">
+	  		<img width="100%" height="auto" src="/themes/zh-cn/brandstore/2019miss/img/haibao@2x.png" />
+	  	</div>
+	  	<div role="navigation">
+		  <div class="demo-nav">
+		  	<a class="flex-1" href="#">佳丽报名</a>
+  			<a class="flex-1" href="#">人气投票</a>
+  			<a class="flex-1" href="#" accesskey="">直播风采</a>
+  			<a class="flex-1" href="#" accesskey="">活动订票</a>
+  			<a class="flex-1" href="#">赞助合作</a>
+		  </div>
+		</div>
+		<div class="saishi">
+			<div class="btn-saishi">
+		
+<img src="/themes/zh-cn/brandstore/2019miss/img/jianjie@2x.png" style="  width: 100%;    height: auto;"/>
+			</div>
+			<div class="saishi-content">
+				<div class="content-top">
+				
+				</div>
+				<div class="content-con">
+					2019澳洲华裔小姐大赛于今年4月在墨尔本正式启动，澳洲华裔小姐大赛是一项倍受全球华人华侨瞩目的国际赛事。由TV MEDIA AUSTRALIA （TVB澳洲公司）授权，墨尔本“大上海联合总会”全权主办。
+时间：2019年4⽉-7 ⽉。本次大赛主办方堪称最佳⼈气的组织，“大上海联合总会”汇集墨尔本各商会、同乡会、侨团组织、知名企业及多方媒体联袂合作！为缔造美丽时尚及文化交流添上浓墨重彩的一笔。
+海纳百川，融合多元。秉承 “秀外慧中、天然灵动的理念，选拔优秀华裔女性代表，弘扬传统美德，传承骨根文化，更推崇“精品个性”的独特⻛尚，专业打造一台美轮美奂的真人秀。让中华女性之美传递世界。
+				</div>
+			</div>
+		</div>
+		<div class="sign">			
+			<div class="sign-img"><img src="/themes/zh-cn/brandstore/2019miss/img/meinv@2x.png"/></div>
+			<div class="content-con" style="text-align: center;">
+					新闻发布会： 4月12日11:30AM-2:30 PM （星期五）<br/>
+					報名截止日: 5月17日 (星期五) <br/>
+					初赛日期: 5月24 日 (星期五)<br/>
+					复赛日期： 6月7日（星期五）<br/>
+					决赛日期：7月21日（星期日）<br/>
+					（主办方有权根据实际情况对以上活动日期做调整）<br />
+					<div class="btn-saishi">
+					<img src="/themes/zh-cn/brandstore/2019miss/img/baoming@2x.png" style="  width: 100%;    height: auto;"/>
+					
+					</div>
+			</div>
+			
+		</div>
+		
+		<div class="vote">			
+			<div class="vote-img"><img src="/themes/zh-cn/brandstore/2019miss/img/huangguan@3x.png"/></div>
+			<div class="vote-all" style="text-align: center;">
+				<div class="row row-bottom">
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top">
+						<!--<img src="/themes/zh-cn/brandstore/2019miss/img/001.jpg"/> -->
+						</div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					
+				</div>
+				
+				<div class="row row-bottom">
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					<div class="col-sm-3 col-xs-3">
+						<div class="vote-img-top"></div>
+						<a class="vote-btn">投票</a>
+					</div>
+					
+				</div>
+				
+				
+			</div>
+		</div>			
+		
+
+		<div class="banner">广告banner</div>
+		
+		<div class="beauty">
+			<div class="beauty-content">
+				<div class="beauty-title">佳丽视频    往届精彩</div>
+				<div class="row row-style">
+					<div class="col-xs-6 col-sm-6 col-item">aa</div>
+					<div class="col-xs-6 col-sm-6 col-item">aa</div>
+				</div>
+				<div class="row row-style">
+					<div class="col-xs-6 col-sm-6 col-item">aa</div>
+					<div class="col-xs-6 col-sm-6 col-item">aa</div>
+				</div>
+			</div>
+			
+		</div>
+	
+		<div class="beauty">
+			<div class="beauty-content">
+				<div class="beauty-title">线上评委会成员</div>
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img"></div>
+						<div class="mamber-name">姓名</div>
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img"></div>
+						<div class="mamber-name">姓名</div>
+					</div>
+					<div class="col-xs-4 col-sm-4 member-item">
+						<div class="member-top-img"></div>
+						<div class="mamber-name">姓名</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="goods">
+			<div class="goods-content">
+				<div class="goods-title">好物推荐</div>
+				<div class="goods-inner">
+					<table class="table table-bordered">
+						<tr>
+							<td colspan="2" rowspan="2">
+								<div style="height: 180px; width:100% ;background-color: #f6dad7;">图片</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">APP特惠</div>
+									<div>60s锦棉贡缎四件套</div>
+									<div class="price">￥469</div>
+								</div>
+							</td>
+							<td >
+								<div style="height: 90px; width:100% ;background-color: #f6dad7;">图片</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">APP特惠</div>
+									<div>贡缎四件套</div>
+									<div class="price">￥469</div>
+								</div>
+							</td>
+							<td>
+								<div style="height: 90px; width:100% ;background-color: #f6dad7;">图片</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">APP特惠</div>
+									<div>贡缎四件套</div>
+									<div class="price">￥469</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								<div style="height: 90px; width:100% ;background-color: #f6dad7;">图片</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">APP特惠</div>
+									<div>贡缎四件套</div>
+									<div class="price">￥469</div>
+								</div>
+							</td>
+							<td >
+								<div style="height: 90px; width:100% ;background-color: #f6dad7;">图片</div>
+								<div style="height: auto; width: 100%">
+									<div class="discount">APP特惠</div>
+									<div>贡缎四件套</div>
+									<div class="price">￥469</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="banner">广告banner</div>
+		
+		<div class="live">
+			<div class="live-live">
+				<div class="live-btn">
+				<img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo1@2x.png" />
+				</div>
+				<div class="live-content">
+				<a href="#"><img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/zhibo@2x.png" /></a>
+				</div>
+			</div>
+			
+		</div>
+		<div class="live">
+			<div class="live-live">
+				<div class="live-btn">	<img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/piaowu1@2x.png" /></div>
+				<div class="live-content">
+					<a href="#"><img img width="100%" src="/themes/zh-cn/brandstore/2019miss/img/piaowu@2x.png" /></a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	</body>
+</html>

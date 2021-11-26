@@ -1,0 +1,222 @@
+<!doctype html>
+<html>  
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />           
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>normalize.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+</head>
+
+<style type="text/css">
+.container{
+	max-width: 900px;
+	margin: auto;
+	left: 0px;
+	right:0px;
+}
+.container {
+	color: #4a4a4a;
+	padding: 10px;
+}
+.top-section{
+	position: relative;
+	width: 1000px;
+	background-color: #FD5001 ;
+	margin: auto;
+}
+.fix-section{
+	position: fixed;
+    width: 100%;
+    background: #FD5001 ;
+    bottom: 55px;
+
+}
+.go-back{
+	line-height: 40px;
+	float: left;
+	 text-align: center;
+}
+
+.go-back i{
+	color:#0c0;
+}
+.vote-statics{
+	padding-left: 46%;
+	line-height: 40px;
+}
+.vote-statics .count_label{
+	
+	font-size: 15px;
+}
+.vote-statics .count{
+	font-size: 14px;
+}
+.vote-statics .count_change{
+	position: relative;
+	color:#f33;
+	font-weight: bolder;
+	font-size: 19px;
+}
+.vote-btn-bg{
+	position: absolute;
+    top: 6px;
+    right: 18px;
+    padding: 5px 25px;
+    background: #2bb8aa;
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		$('.vote-btn-bg').on("click",function(){
+			<{if !$loginUser}>
+				alert('请先登录！');
+				window.location.href = '<{$http_root_www}>member/login?returnUrl=/voting/show?id=' + '<{$voting.id}>';
+			<{else}>
+				if($(this).hasClass('disable'))return;
+				$target = $(this).find('.vote-btn');
+				if($target.hasClass('voted')){
+					withdrawAjax($target);
+				}else{
+					voteAjax($target);
+				}
+			<{/if}>
+			
+		})
+	})
+
+	function count_change(obj,value){
+		if(value==0)return;
+		if(value>0){
+			displayValue="+" + Math.abs(value);
+		}
+		if(value<0){
+			displayValue="- " + Math.abs(value);
+		}
+		var id = $(obj).data('id');
+
+		$count = $('div.vote-statics[data-id="'+id+'"]').find('.count');
+		console.log($count);
+		$count.html(parseInt($count.html()) + parseInt(value));
+
+		$target=$('div.vote-statics[data-id="'+id+'"]').find('.count_change');
+		$target.css('opacity','1').css('top','0');
+
+		$target.html(displayValue);
+		$target
+		.stop( true, false )
+		.animate({"top":"-=10px"},500)
+		.animate({opacity:0},1000);
+
+	}
+
+	function voteAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/vote_ajax",
+			data:{id:id},
+			
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-o-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-up').addClass('voted');
+				count_change(obj,+1);
+			},
+			error:function(){
+
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+
+	function withdrawAjax(obj){
+		var id = $(obj).data('id');
+		console.log(id);
+		$.ajax({
+			url:"<{$http_root_www}>voting/withdraw_vote_ajax",
+			data:{id:id},
+
+			beforeSend:function(){
+				$(obj).removeClass('fa-thumbs-up').addClass('fa-spinner').addClass('fa-spin').addClass('disable');
+			},
+			success:function(data){
+				console.log(data);
+				$(obj).addClass('fa-thumbs-o-up').removeClass('voted');
+				count_change(obj,-1);
+			},
+			error:function(){
+				
+			},
+			complete:function(){
+				$(obj).removeClass('fa-spinner').removeClass('fa-spin').removeClass('disable');
+			}
+		})
+	}
+
+</script>
+
+
+<body>
+	<{include file='header.htm'}>
+	<div class="container">
+			<{str_replace('white-space: pre-wrap;','',<{$item.detail}>)}>
+	</div>
+
+	<div class='top-section m-hide'>
+		<span class='go-back'><a href="<{$http_root_www}>voting/show?id=<{$item.group_id}>"><i class='fa fa-reply fa-lg'>返回</i></a></span>
+		
+		<div class='vote-statics' data-id='<{$item.id}>'>
+			<span class='count_label'>当前票数：</span><span class='count'><{$item.vote_count}></span>&nbsp<span class='count_change'></span>
+		</div>
+
+		<{if $item.voted==true}>
+		<span class='vote-btn-bg'>
+		  <i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-up vote-btn voted'></i>
+		  VOTE
+		  </span>
+		<{else}>
+		<span class='vote-btn-bg'>
+			<i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-o-up vote-btn '></i>
+			VOTE
+		</span>
+		<{/if}>
+	</div>
+
+	<div class='fix-section p-hide'>
+		<span class='go-back'><a href="<{$http_root_www}>voting/show?id=<{$item.group_id}>"><i class='fa fa-reply fa-lg'>返回</i></a></span>
+		
+		<div class='vote-statics' data-id='<{$item.id}>'>
+			<span class='count_label'>当前票数：</span><span class='count'><{$item.vote_count}></span>&nbsp<span class='count_change'></span>
+		</div>
+
+		<{if $item.voted==true}>
+		<span class='vote-btn-bg'>
+		  <i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-up vote-btn voted'></i>
+		  VOTE
+		  </span>
+		<{else}>
+		<span class='vote-btn-bg'>
+			<i data-id='<{$item.id}>' class='fa fa-lg fa-thumbs-o-up vote-btn '></i>
+			VOTE
+		</span>
+		<{/if}>
+	</div>
+	<{include file='footer.htm'}>
+
+</body>
+
+</html>

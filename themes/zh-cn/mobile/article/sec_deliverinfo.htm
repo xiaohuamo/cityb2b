@@ -1,0 +1,44 @@
+
+   
+    <{if $coupon_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+     <{if ($coupon.bonusType==4 ||  $coupon.bonusType==18 )}>
+	 <{else}>
+           <div class="comm-express toggle-txt">
+           		<h3><{$lang->offline_payment}></h3>
+           		<div class="txt">
+                <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.offline_pay_des}>)}>
+                </div>
+          </div>
+		  <{/if}>
+    <{/if}>
+
+ 
+   
+    <{if $coupon_delivery_info.EvoucherOrrealproduct=='realproduct'}>
+
+        <{if $coupon_delivery_info.deliver_avaliable}>
+
+               <div class="comm-express toggle-txt">
+               		<h3><{$lang->support_delivery}></h3>
+               		<div class="txt">
+                    <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.delivery_description}>)}>
+                    </div>
+                </div>
+
+        <{/if}>
+
+        <{if $coupon_delivery_info.pickup_avaliable}>
+
+               <div class="comm-express toggle-txt">
+               		<h3><{$lang->pick_up}></h3>
+               		<div class="txt">
+                    <{str_replace('white-space: pre-wrap;','',<{$coupon_delivery_info.pickup_des}>)}>
+                    </div>
+                </div>
+
+                 <{include file ="mobile/coupon_detail/sec_stafflist.htm"}>
+
+        <{/if}>
+
+        
+    <{/if}>

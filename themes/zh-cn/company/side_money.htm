@@ -1,0 +1,18 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='balance_account'}> class="current"<{/if}>><{$lang->money_account}></a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>member/withdraw_account&side=company"<{if $submenu=='withdraw_account'}> class="current"<{/if}>>
+			<{$lang->withdraw_account_management}>
+		</a>
+		<a href="<{$http_root_www}>company/money_review"<{if $submenu=='money_review'}> class="current"<{/if}>>
+			<{$lang->settlement_center}>
+		</a>
+		
+		<a href="<{$http_root_www}>company/settlement_file_history" <{if $submenu=='settlement_file_history'}> class="current"<{/if}>>
+		<{$lang->settlement_file_history}>
+		</a>
+	</div>
+</li>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title><{$pageTitle}></title>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body class="bg-1">
+
+<header id="hd">
+	<div class="left">
+		<a href="<{$http_root_www}>group1_buy/list" class="a-back"></a>
+	</div>
+	<h1>我参加的团</h1>
+</header>
+
+<section id="bd" style="background-color: #FFF" style="position: relative;">
+
+<{foreach from=$groups item=item}>
+<div class="media" style="padding: 10px;">
+  <div class="media-left">
+    <a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'>
+      <img style="width: 90px;height: 60px;max-width: none" class="media-object" src="<{$UPLOAD_PATH}><{$item.pic}>" alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+    <h5 class="media-heading"><a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a></h5>
+    
+    <p>
+    <span>
+    	<{if $item.status==0}>
+		<!-- <span>Ready</span> -->
+		<span class='label label-default'>您不应该看到该团,请report该bug</span>
+		<{elseif $item.status==1}>
+		<!-- <span>Running</span> -->
+		<span class='label label-info'>进行中</span>
+		<{elseif $item.status==2}>
+		<!-- <span>Closed</span> -->
+		<span class='label label-default'>商家关闭</span>
+		<{elseif $item.status==3}>
+		<!-- <span>Stageing</span> -->
+		<span class='label label-warning'>商家随时发放奖励</span>
+		<{elseif $item.status==4}>
+		<!-- <span>Finalizing</span> -->
+		<span class='label label-warning'>等待发放奖励</span>
+		<{elseif $item.status==5}>
+		<!-- <span>Complete</span> -->
+		<span class='label label-success'>奖励已经发放</span>
+		<{else}>
+		Error
+		<{/if}>
+    </span>
+
+    <{if $item.real_order_id}>
+    	<span class='label label-success'>已购买</span>
+    <{/if}>
+    
+    <span style="float: right;">当前人数：  <em style="color:#f23030"><{$item.current}>&nbsp; </em> &nbsp;</span> 
+   
+    </p>
+  
+  </div>
+</div>
+<{/foreach}>
+
+
+<div style="text-align: center; padding: 15px 40px;line-height: 22px;font-size: 14px;color: #888; border-top: 1px solid #eee" >
+	<p>友情提示：</p>
+	<p>长按二维码关注Ubonus公众号，凑团成功后您将自动收到奖励的推送</p>
+	<img src="<{$http_root_www}>themes/zh-cn/images/pc-main/erweima.png">
+	<p>在个人中心填写您的邮箱地址,您同样也会收到邮件推送</p>
+</div>
+
+</section>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+</body>
+</html>
+
+
+

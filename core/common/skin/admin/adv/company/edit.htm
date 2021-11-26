@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+	<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+        var citylist = [];
+        <{foreach from=$citylist item=item}>
+        citylist.push([<{$item.id}>, <{$item.parentId}>, <{$item.level}>, <{$item.hasSon}>, '<{$item.name}>', '<{$item.map}>']);
+        <{/foreach}>
+
+        function catChg(obj) {
+            var vv = $(obj).val();
+            var cc = parseInt($(obj).find('option:eq(' + obj.selectedIndex + ')').attr('cc'));
+            if (isNaN(cc)) cc = 0;
+            //alert(cc);
+            //	alert(vv);
+            if (vv == '' || cc <= 0) {
+                $(obj).next().nextAll().remove();
+            } else {
+                $(obj).next().nextAll().remove();
+                //alert(citylist.length);
+                var c = $('<select name="city[]" class="ahibw" onchange="catChg(this);"><option value="">请选择</option></select>');
+                for (var i = 0; i < citylist.length; i++) {
+                    if (citylist[i][1] == vv) {
+                        c.append('<option value="' + citylist[i][0] + '" cc="' + citylist[i][3] + '">' + citylist[i][4] + '</option>');
+                    }
+                }
+                $(obj).next().after(c);
+
+                setDroplist(c);
+                c.before('<input type="hidden" class="input-text" value="' + vv + '" name="backup_city" />');
+            }
+        }
+
+        function check(form) {
+            var password = $("input[name=data[password]]").val();
+            var password2 = $("input[name=data[password2]]").val();
+
+            if (password != '') {
+                if (password.length < 6) {
+                    alert('<{$lang->password_length_error_or_not_match}>');
+
+                    return false;
+                }
+
+                if (password != password2) {
+                    alert('<{$lang->password_length_error_or_not_match}>');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function addline(obj) {
+            $(obj).before('<p><input type="file" name="pic[]" /></p>');
+        }
+
+        function delline(obj) {
+            $(obj).parent().remove();
+        }
+
+        function changePasswordClick(obj) {
+            if (obj.checked) $('.passwordTr').show().find('input').attr('disabled', false);
+            else $('.passwordTr').hide().find('input').attr('disabled', true);
+        }
+
+        $(function () {
+            //$('input[name="pics[]"]').crop();
+
+            var city = [];
+            var cityid = parseInt($('#cityId').val());
+            if (isNaN(cityid)) cityid = 0;
+            if (cityid > 0) {
+                for (var i = 0; i < citylist.length; i++) {
+                    if (citylist[i][0] == cityid) {
+                        city = citylist[i];
+                        break;
+                    }
+                }
+                if (city) {
+                    var citymap = city[5].split('-');
+                    for (var i = 0; i < citymap.length; i++) {
+                        sele = $('select[name="city[]"]').eq(i);
+                        sele.next().remove();
+                        sele.find('option[value="' + citymap[i] + '"]').attr('selected', true);
+                        setDroplist(sele);
+                        catChg(sele.get(0));
+                    }
+                }
+            }
+        });
+	</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<form action="<{$http_root_www}>system/system_login" method="post" class='hiddenUserLogin'>
+			<div class="editBtn clearfix">
+				<div><input type="submit" value="以该用户登陆" class="btn1"/></div>
+			</div>
+		</form>
+
+		<script>
+            $('.hiddenUserLogin').submit(function () {
+                var _form = $(this);
+                var _action = _form.attr('action');
+                _form.find(':submit').attr('disabled', true);
+
+                $.post(_action, {
+                    'name': '<{$data.name}>',
+                    'pwd': '<{$data.password}>',
+                }, function (data) {
+                    _form.find(':submit').attr('disabled', false);
+
+                    try {
+                        data = JSON.parse(data);
+                    } catch (err) {
+                        data['msg'] = data;
+                    }
+
+                    if (data.status == 200) {
+                        alert('登录成功！如果页面没有自动跳转，请检查是否浏览器block popups');
+                        window.open('<{$http_root_www}>company/index', '_blank');
+                    } else {
+                        alert(data.msg);
+                    }
+
+                });
+                return false;
+            });
+		</script>
+
+
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post" onSubmit="return check(this);" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2"><{$lang->edit_user}></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->user_name}></td>
+					<td class="editRtTd"><input name="name" value="<{$data.name}>" type="text" size="30" class="text" disabled/> <input type="checkbox" id="changePassword"
+																																		onClick="changePasswordClick(this);"/><label
+								for="changePassword">修改密码</label></td>
+				</tr>
+				<tr class="editTr passwordTr" style="display:none;">
+					<td class="editLtTd"><{$lang->password}></td>
+					<td class="editRtTd"><input name="data[password]" value="" type="password" size="30" class="text" disabled/> <{$lang->edit_password_tips}></td>
+				</tr>
+				<tr class="editTr passwordTr" style="display:none;">
+					<td class="editLtTd"><{$lang->confirm_password}></td>
+					<td class="editRtTd"><input name="data[password2]" value="" type="password" size="30" class="text" disabled/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->email}></td>
+					<td class="editRtTd"><input name="data[email]" value="<{$data.email}>" type="text" size="30" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><{$lang->status}></td>
+					<td class="editRtTd">
+						<input id="isApproved" name="data[isApproved]" value="1" type="checkbox"<{if $data.isApproved==1}> checked<{/if}> /><label
+								for="isApproved"><{$lang->audit}></label>
+					</td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">商家通知邮箱</td>
+					<td class="editRtTd"><input name="data[backupEmail]" value="<{$data.backupEmail}>" type="text" size="60" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Business Name</td>
+					<td class="editRtTd"><input name="data[businessName]" value="<{$data.businessName}>" type="text" size="60" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">ABN/ACN</td>
+					<td class="editRtTd"><input name="data[abn]" value="<{$data.abn}>" type="text" size="30" class="text"/></td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Firstname</td>
+					<td class="editRtTd"><input name="data[contactPersonFirstname]" value="<{$data.contactPersonFirstname}>" type="text" size="30" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Lastname</td>
+					<td class="editRtTd"><input name="data[contactPersonLastname]" value="<{$data.contactPersonLastname}>" type="text" size="30" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Person Nickname</td>
+					<td class="editRtTd"><input name="data[contactPersonNickName]" value="<{$data.contactPersonNickName}>" type="text" size="30" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">Contact Mobile</td>
+					<td class="editRtTd"><input name="data[contactMobile]" value="<{$data.contactMobile}>" type="text" size="30" class="text"/></td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">Website Link</td>
+					<td class="editRtTd"><input name="data[websiteLink]" value="<{$data.websiteLink}>" type="text" size="60" class="text"/></td>
+				</tr>
+
+
+				<tr class="editTr">
+					<td class="editLtTd">信用级别</td>
+					<td class="editRtTd"><input name="data[trustLevel]" value="<{$data.trustLevel}>" type="text" size="30" class="text"/> <em>0-4，0级发布需要后台审核，1级可以自动发布，但上不了最新商家
+							2级可以自动发布且上最新商家 ，运营商导入后自动变成2级</em></td>
+				</tr>
+
+
+				<tr class="editTr">
+					<td class="editLtTd">商家代理编号</td>
+					<td class="editRtTd">
+						<input name="data[user_belong_to_agent]" value="<{$data.user_belong_to_agent}>" <{if $admin_user_id ==-1}>type="text"
+                                                <{else}>type="hidden"<{/if}> size="30" class="text"/></td>
+				</tr>
+				<!--
+				<tr class="editTr">
+					<td class="editLtTd">客户信息对商家可见</td>
+					<td class="editRtTd"><input name="data[visibleForBusiness]" id="visibleForBusiness1" value="0" type="checkbox"<{if $data.visibleForBusiness}> checked<{/if}> /><label for="visibleForBusiness1">可见</label></td>
+				</tr>
+			
+				-->
+				<tr class="editTr">
+					<td class="editLtTd">语言服务类型</td>
+					<td class="editRtTd">
+						<select name="data[languageType]" class="ahibw">
+							<option value="">请选择</option>
+							<option value="en"<{if $data.languageType=='en'}> selected<{/if}>>english only</option>
+							<option value="zh"<{if $data.languageType=='zh'}> selected<{/if}>>chinese only</option>
+							<option value="zh-en"<{if $data.languageType=='zh-en'}> selected<{/if}>>chinese&english</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">店铺版本类型</td>
+					<td class="editRtTd">
+						<select name="data[shop_version]" class="ahibw">
+							<option value="">请选择</option>
+							<option value="0"<{if $data.shop_version=='0'}> selected<{/if}>>旧版（静态版）</option>
+							<option value="1"<{if $data.shop_version=='1'}> selected<{/if}>>新版（动态版）</option>
+							
+						</select>
+					</td>
+				</tr>
+				
+				<tr class="editTr">
+					<td class="editLtTd">商家是否被挂起</td>
+					<td class="editRtTd">
+						<input name="data[isSuspended]" id="isSuspended1" value="1" type="checkbox"<{if $data.isSuspended}> checked<{/if}> /><label
+								for="isSuspended1">是</label>
+					</td>
+				</tr>
+				<!--	<tr class="editTr">
+					<td class="editLtTd">编辑后是否需要重新审核</td>
+					<td class="editRtTd"><input name="data[needReapprovedAfterEdit]" id="needReapprovedAfterEdit1" value="1" type="checkbox"<{if $data.needReapprovedAfterEdit}> checked<{/if}> /><label for="needReapprovedAfterEdit1">是</label></td>
+				</tr>
+				-->
+				<tr class="editTr">
+					<td class="editLtTd">结算订单方式</td>
+					<td class="editRtTd">
+						<select name="data[settlement_type]" class="ahibw">
+							<option value="b01"<{if $data.settlement_type=='b01'}> selected<{/if}>>仅结算已兑付订单</option>
+							<option value="c01"<{if $data.settlement_type=='c01'}> selected<{/if}>>结算所有已购买订单</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">默认平台佣金比率</td>
+					<td class="editRtTd"><input name="data[platform_commission_rate]" value="<{$data.platform_commission_rate}>" type="text" size="60" class="text"/></td>
+
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">是否所有该商家产品佣金比率跟随调整？</td>
+					<td class="editRtTd"><input name="all_percent_commission_change" id="all_percent_commission_change" value="1" type="checkbox"/><label
+								for="all_percent_commission_change">是</label></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">默认平台佣金固定值</td>
+					<td class="editRtTd"><input name="data[platform_commission_base]" value="<{$data.platform_commission_base}>" type="text" size="60" class="text"/></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">商家GST设置</td>
+					<td class="editRtTd">
+						<select name="data[gst_type]" class="ahibw">
+							<option value="1"<{if $data.gst_type==1}> selected<{/if}>>全部GST</option>
+							<option value="2"<{if $data.gst_type==2}> selected<{/if}>>全部无GST</option>
+							<option value="3"<{if $data.gst_type==3}> selected<{/if}>>混合（以含gst为主）</option>
+							<option value="4"<{if $data.gst_type==4}> selected<{/if}>>混合（以无gst为主）</option>
+						</select>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">商家是否收取运费</td>
+					<td class="editRtTd">
+						<select name="data[delivery_fee_type]" class="ahibw">
+							<option value="1"<{if $data.delivery_fee_type==1}> selected<{/if}>>是</option>
+							<option value="0"<{if $data.delivery_fee_type==0}> selected<{/if}>>否</option>
+						</select>
+					</td>
+				</tr>
+
+
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave"/>
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+			</div>
+		</form>
+
+	</div>
+</div>
+</body>
+</html>

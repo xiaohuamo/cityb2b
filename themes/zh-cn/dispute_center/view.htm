@@ -1,0 +1,237 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" /> 
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+
+	.action_step{
+		display: inline-block;
+		width: 130px;
+		height:130px;
+		border-radius: 100px;
+		line-height: 57px;
+		float: left;
+		text-align: center;
+		margin: 35px 5px 35px 5px;
+		position: relative;
+	}
+
+	.step_pending{
+		border: 2px solid #aaa;
+	}
+
+	.current_step{
+		border: 5px solid #FD5001 ;
+	}
+
+	.step_done{
+		border: 3px solid green;
+	}
+
+	.confirm-btn{
+		display: inline-block;
+	    background-color: #b4ff00;
+	    color: #2c4356;
+	    padding: 0px 20px;
+	    margin: 50px;
+	    float: right;
+	}
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{if $type=='business'}>
+	   		<{include file='company/side.htm'}>
+	    <{elseif $type=='customer'}>
+	    	<{include file='member/side.htm'}>
+	    <{/if}>
+
+		<div class="main">
+
+			<div class="box2">
+
+				<{if $type=='business'}>
+				
+			    <{elseif $type=='customer'}>
+			    	 <{include file='member/my_order_submenu.htm'}>
+			    <{/if}>
+
+				<div class="main-form">
+						
+					<form id="memberForm" class ='form-style-green' action="#" method="post" target="post_frame">
+
+                       <div class="input-box clearfix">
+
+							<span>
+							<label>Case ID</label>
+							</span>
+
+							<{$data.id}>
+
+							(
+							状态：
+							<{if $data.status=='close'}>
+							<span style="color:#58964E;"><{$data.status}></span>
+							<{else}>
+							<span style="color:#F30;"><{$data.status}></span>
+							<{/if}>	
+							)
+
+						</div>
+						
+
+						<div class="input-box clearfix">
+
+							<span><label>订单</label></span>
+							<{$info.order_name}>
+							(<{$data.order_id}>)
+						</div>
+
+						<div class="input-box clearfix">
+
+							<span><label>商家</label></span>
+							<{$info.business_name}>
+							(<{$data.business_id}>)
+						</div>
+
+						<div class="input-box clearfix">
+
+							<span><label>用户</label></span>
+							<{$info.customer_name}>
+							(<{$data.customer_id}>)
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>提交者</label></span>
+							
+							<{$info.case_creator_name}>
+							
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>提交时间</label></span>
+							<{date('Y-m-d H:i:s', $data.gen_date)}>
+						</div>
+
+
+						<div class="input-box clearfix">
+
+							<span><label>原因</label></span>
+                              <{$data.reason}>
+						</div>
+
+
+						<div class="input-box clearfix">
+
+							<span><label>流程</label></span>
+							<{$info.actionDesc}>
+							<br>
+
+
+							<{foreach from=$action->action_list item=item name='dl'}>
+							<div class='action_step step_<{$item->status}> <{if $action->current_index==$smarty.foreach.dl.index}>current_step<{/if}>'>
+
+									<{if $item->required_user=='user'}>
+										<span class='action_user' style='color:#FD5001 '>用户</span>
+									<{elseif $item->required_user=='business'}>
+										<span class='action_user' style='color:#2bb8aa'>商家</span>
+									<{elseif $item->required_user=='platform'}>
+										<span class='action_user' style='color:green'>平台</span>
+									<{/if}>
+									<br>
+									<span><{$item->getActionDesc()}></span>	
+									<{if $item->update_date}>
+									<br>
+									<span>
+										<small><{date('m-d H:i:s', $item->update_date)}></small>
+									</span>
+									<{/if}>
+							</div>
+							<{/foreach}>
+
+						</div>
+						<{if $info.loginUserType == $action->getCurrentStep()->required_user}>
+							<div class="input-box clearfix">
+								<span><label>操作</label></span>
+								<!-- <{$action->getCurrentStep()->required_user}> -->
+								
+								<!-- <{$action->getCurrentStep()->status}> -->
+
+								<{if $action->getCurrentStep()->type==CaseActionStep::ACTION_GOODSREFUND_SEND}>
+									<p>首先您需要和商家联系，确认是否需要将产品退回，并在将产品送出后在此确认</p>
+									<a class='confirm-btn' href="<{$complete_current_step_url}>">我确认已经将产品退回</a>
+
+								<{elseif $action->getCurrentStep()->type==CaseActionStep::ACTION_GOODSREFUND_RECEIVE}>
+									<p>您需要和客户沟通，确认是否需要将产品退回，并在将产品收到后在此确认。如果不需要退回产品，也可以点击确认后进入下一步退款流程</p>
+									<a class='confirm-btn' href="<{$complete_current_step_url}>">我确认已经收到了退回的产品</a>
+
+								<{elseif $action->getCurrentStep()->type==CaseActionStep::ACTION_MONEYREFUND_SEND}>
+									<p>您需要根据该订单的支付方式，和客户协商后将货款退回相应账户</p>
+									<a class='confirm-btn' href="<{$complete_current_step_url}>">我确认已经将相应款项退回</a>
+
+								<{elseif $action->getCurrentStep()->type==CaseActionStep::ACTION_MONEYREFUND_RECEIVE}>
+									<p>请您确认已经是否已经收到了该订单的退款，如果7天内仍没有收到退款，请马上和退款方联系</p>
+									<a class='confirm-btn' href="<{$complete_current_step_url}>">我确认已经收到了退款</a>
+									
+								<{/if}>
+								
+							</div>
+						<{/if}>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="<{$listUrl}>act=edit&id=<{$data.id}>" method="post" enctype="multipart/form-data">
+			<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="editTable">
+				<tr class="editHdTr">
+					<td colspan="2">介绍人编辑</td>
+				</tr>
+
+				
+               	<tr class="editTr">
+					<td class="editLtTd">商家名称</td>
+					<td class="editRtTd"><input name="data[name]"  value="<{$data.name}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">姓</td>
+					<td class="editRtTd"><input name="data[lastName]"  value="<{$data.lastName}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">名</td>
+					<td class="editRtTd"><input name="data[firstName]"  value="<{$data.firstName}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">邮箱</td>
+					<td class="editRtTd"><input name="data[email]"  value="<{$data.email}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">电话</td>
+					<td class="editRtTd"><input name="data[phone]"  value="<{$data.phone}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">作为商家介绍人提成比率</td>
+					<td class="editRtTd"><input name="data[businessRefRate]"  value="<{$data.businessRefRate}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+
+				<tr class="editTr">
+					<td class="editLtTd">作为用户介绍人提成比率</td>
+					<td class="editRtTd"><input name="data[customerRefRate]"  value="<{$data.customerRefRate}>" type="text" size="100" class="text"  /></td>
+				</tr> 
+				
+			
+			
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave" />
+				<a href="<{$listUrl}>" class="lnkReturn"><{$lang->return_to_list}></a> 
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+</html>

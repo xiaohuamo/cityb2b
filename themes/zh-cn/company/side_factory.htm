@@ -1,0 +1,152 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfood}></strong></a> 
+					
+				</div>
+			</li>
+			
+			
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/choose_business_type"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+						<{$lang->console_switch}>
+					</a>
+				</div>
+
+			</li>
+	    	
+			
+			
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><{$lang->publish_center}></a>
+			</div>
+
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					<{$lang->shop_card}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					<{$lang->category_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				
+			
+				<a href="<{$http_root_www}>restaurant/<{$loginUser.id}>"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->preview_store}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$loginUser.id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->refresh_store}>
+				</a>
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>
+				
+
+				
+			</div>
+		</li>
+			
+			
+			
+			
+			
+			
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='factory_stores_managment'}> class="current"<{/if}>><{$lang->factory_stores_managment}></a>
+			</div>
+
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='add_new_stores'}> class="current"<{/if}>>
+					<{$lang->factory_add_new_stores}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					<{$lang->category_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				
+			
+				<a href="<{$http_root_www}>restaurant/<{$loginUser.id}>"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->preview_store}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$loginUser.id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->refresh_store}>
+				</a>
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>
+				
+
+				
+			</div>
+		</li>
+		
+		
+
+
+			
+		<{include file='company/side_customer_centre.htm'}>
+		
+		<{include file='company/side_factory_management.htm'}>
+		
+		<{include file='company/side_logistic_management.htm'}>
+		
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-line-chart"></i>
+				<a <{if $menu=='online_center'}> class="current"<{/if}>><{$lang->sales_Management}></a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>factorypage/totalsales_commissions"<{if $submenu=='totalsales_commissions'}> class="current"<{/if}>>
+						<{$lang->totalsales_commissions}>
+				</a>
+
+				
+
+			</div>
+		</li>
+		
+		<{include file='company/side_money.htm'}>
+		
+		<{include file='company/side_basic_setting.htm'}>
+	<!--	<{include file='company/side_advanced_setting_factory.htm'}> -->
+		
+		
+
+		
+	</ul>
+	
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

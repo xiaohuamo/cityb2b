@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+	.main-form tbody td{text-align: center;}
+	.height-auto{height:auto!important}
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='group_buy/group_buy_top_menu.htm'}>
+				<div class="main-form">	
+					
+
+					<form id="memberForm"  class ='form-style-green' action="<{$http_root_www}>group1_buy/create_group" method="post" target="post_frame" enctype="multipart/form-data" >
+						<input hidden class='group_setting_option' name='group_setting_option' value='basic'>
+						 <div class="input-box clearfix">	
+								<span><label>基于产品</label></span>	
+								<select class="ahibw" name='couponId' style='width:400px;' required>
+								  <option value='-1'>请选择</option>
+								  <{foreach from = $couponList item=item}>
+								  <option value="<{$item.id}>"><{$item.id}> # <{$item.title}></option>
+								  <{/foreach}>
+								</select> 
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>团名</label></span>	
+								<input type="text" name="name" class="input-text"  required/>
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>描述</label></span>	
+								<input type="text" name="description" class="input-text"  required/>
+						</div>
+
+						<!-- <div class="input-box clearfix">	
+								<span><label>自动开始时间</label></span>	
+								<input name='start_time'class='input-text pickdate' type='text' style='width:120px;' onClick='WdatePicker()' > 
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>自动结束时间</label></span>	
+								<input name='end_time'class='input-text pickdate' type='text' style='width:120px;' onClick='WdatePicker()' > 
+						</div> -->
+						
+						<div class='advanced_setting' >
+							<div class="input-box " >	
+								<span><label>成团条件与奖励</label></span>	
+								<select class="ahibw" name='adv_complete_condition'  required>
+									<option value="0">无限制</option>
+								  	<option value="1">总人数(单人模式－仅允许用户个人参团)</option>
+								    <option value="2">总人数(多人模式－允许用户参团时输入人数)</option>
+								   <!--  <option value="3">商品数</option> -->
+								</select> 
+
+								<select class="ahibw" name='adv_reward_type'  required>
+									<option value="0">无奖励</option>
+								   	<option value="1">Percent</option>
+								   	<option value="2">Flat</option>
+								</select> 
+
+								<select class="ahibw" name='condition_level'  required>
+									<option value="0">阶段奖励</option>
+								  	<option value="1">1</option>
+								   	<option value="2">2</option>
+								   	<option value="3">3</option>
+								   	<option value="4">4</option>
+								   	<option value="5">5</option>
+								   	<option value="6">6</option>
+								   	<option value="7">7</option>
+								   	<option value="8">8</option>
+								</select> 
+							</div>
+
+							<div class='level_condition'> </div>
+							
+							<div class="input-box clearfix">	
+								<span><label>自动发放奖励</label></span>	
+								<select class="ahibw" name='auto_reward'  required>
+									<option value="0">OFF</option>
+								  	<option value="1">ON</option>
+								</select> 
+							</div>
+
+							<div class="input-box clearfix">	
+								<span><label>团购发起模式</label></span>	
+								<select class="ahibw" name='allow_user_group'  required>
+									<option value="0">商家独家发起</option>
+								  	<option value="1">授权用户自主发团</option>
+								</select> 
+							</div>
+							<div class="input-box clearfix max_user_group " style='display:none'>	
+								<span><label>用户团上限</label></span>	
+								<input class='input-text' type="number" min="1" name="max_user_group" placeholder="用户团上限"/>
+							</div>
+						</div>
+					
+						<div class='basic_setting' >
+							<div class="input-box clearfix">	
+								<span><label>成团条件</label></span>	
+								<select class="ahibw complete_condition" name='complete_condition'  required>
+									<option value="0">无限制</option>
+								  	<option value="1">总人数(单人模式－仅允许用户个人参团)</option>
+								    <option value="2">总人数(多人模式－允许用户参团时输入人数)</option>
+								   <!--  <option value="3">商品数</option> -->
+								</select> 
+							</div>
+
+							<div class="input-box clearfix complete_value"  style='display:none'>	
+								<span><label>人数上限</label></span>	
+								<input type="number" min="1" name="complete_value" class="input-text "  placeholder="人数上限" />
+							</div>
+
+							<div class="input-box clearfix">	
+								<span><label>成团奖励</label></span>	
+								<select class="ahibw reward_type" name='reward_type'  required>
+									<option value="0">无奖励</option>
+								  	<option value="1">Percent</option>
+								   	<option value="2">Flat</option>
+								</select> 
+								<input type="number" min="1"  step='any' name="reward_value" class="input-text reward_value"  style='display:none'/>
+							</div>
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit" style='float:right'>创建新团</button>
+							<span class='basic_advanced_setting_switch setting_advanced'>高级设置</span>
+						</div>
+					
+					</form>
+					<script type="text/javascript">
+						function initConditions(){
+							var condition=$("select[name='adv_complete_condition']").val();
+							var reward=$("select[name='adv_reward_type']").val();
+							var level=$("select[name='condition_level']").val();
+							
+							if(condition==0 || reward==0 || level==0){$('.level_condition').html('');return;}
+
+							var condition_type_text,reward_type_text;
+							if(condition==1){
+								//成员(单人模式)
+								condition_type_text ='人';
+							}else if(condition==2){
+								//成员(多人模式)
+								condition_type_text ='人';
+							}else if(condition==3){
+								//商品
+								condition_type_text ='件';
+							}
+
+							if(reward==2){	
+								//flat
+								reward_type_text='Dollar OFF';
+							}else if(reward==1){
+								//percent
+								reward_type_text='% OFF';
+							}
+
+							var html = [];
+							for (var i = 1; i <= level; i++) {
+								var name1 ="condition[" + (i-1) + "][condition]";
+								var name2 ="condition[" + (i-1) + "][reward]";
+
+								html.push("<div class='each_condition'>");
+								html.push("<span class='each_condition_level'>Level <strong>",i,"</strong></span>");
+								html.push("<span>条件：</span><input type='number' name=",name1," min='0' required> <span class='condition_type_text'>",condition_type_text,"</span>");
+								html.push("<span>奖励：</span><input type='number' name=",name2," min='0' required> <span class='reward_type_text'>",reward_type_text,"</span>");
+								html.push("</div>");	
+							};
+							$('.level_condition').html(html.join(' '));
+						}
+
+						$(function(){
+							$("select[name='condition_level'], select[name='adv_complete_condition'], select[name='adv_reward_type']").on("change",function(){
+									initConditions();
+							});
+
+							$('.basic_setting').show();
+							$('.advanced_setting').hide();
+							$(".basic_advanced_setting_switch").on("click",function(){
+								$(this).toggleClass('setting_advanced');
+								if($(this).hasClass('setting_advanced')){
+									$(this).html('高级设置');
+									$('.basic_setting').show();
+									$('.advanced_setting').hide();
+									$("input[name='group_setting_option']").val('basic');
+								}else{
+									$(this).html('基本设置');
+									$('.basic_setting').hide();
+									$('.advanced_setting').show();
+									$("input[name='group_setting_option']").val('advanced');
+								}
+							})
+						});
+
+						$(function(){
+							$('.complete_condition').change(function(){
+								$target=$('.complete_value');
+								if($(this).val()==0){
+									$target.hide();
+								}else if($(this).val()==1){
+									$target.show();
+								}else if($(this).val()==2){
+									$target.show();
+								}else if($(this).val()==3){
+									$target.show();
+								}
+							})
+
+							$('.reward_type').change(function(){
+								if($(this).val()==0){
+									$(this).siblings('.reward_value').hide();
+								}else{
+									$(this).siblings('.reward_value').show();
+								}
+								
+							})
+
+							$("select[name='allow_user_group']").change(function(){
+								if($(this).val()==1){
+									$(".max_user_group").show();
+								}else{
+									$(".max_user_group").hide();
+								}	
+							});
+						});
+					</script>
+
+					
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

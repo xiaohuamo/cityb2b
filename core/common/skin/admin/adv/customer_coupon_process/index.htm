@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/list.js"></script>
+	
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	
+	<script>
+function countSelect ()
+{
+	var cnt		= 0;
+	var list	= document.getElementsByName('ids[]');
+	for (var i = 0; i < list.length; i++)
+	{
+		if (list[i].checked) cnt++;
+	}
+	return cnt;
+}
+function DeleteSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('<{$lang->are_you_sure_delete_selected_records}>')) $('#listForm').attr('action', '?con=admin&ctl=adv/lottery&act=delete').submit();
+}
+function AuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要将当前选中记录的状态设置为审核通过吗？')) $('#listForm').attr('action', '<{$doUrl}>act=audit').submit();
+}
+
+function RedeemDone4 ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定产品已经兑付了吗？')) $('#listForm').attr('action', '<{$doUrl}>act=RedeemDone4').submit();
+}
+
+
+function UnAuditSome ()  //批量删除
+{
+	if (countSelect() <= 0)
+	{
+		alert('<{$lang->please_select_batch_records}>');
+		return false;
+	}
+	if (window.confirm('您确定要产品已经兑付？')) $('#listForm').attr('action', '<{$doUrl}>act=unaudit').submit();
+}
+$(function(){
+	$('#checkAll').click(function(){
+		$('input.listChk').attr('checked', $(this).attr('checked'));
+	});
+});
+
+function searchSubmit ()
+{
+	var keyword	= document.getElementsByName('keyword')[0].value;
+	
+	var status	= document.getElementsByName('status')[0].value;
+	var onlyNotApproved	= document.getElementsByName('onlyNotApproved')[0];
+	if (onlyNotApproved.checked) onlyNotApproved = 1;
+	else onlyNotApproved = 0;
+
+	window.location.href = '<{$searchUrl}>keyword=' + encodeURI(keyword)  + '&status=' + status  + '&onlyNotApproved=' + onlyNotApproved;
+}
+</script>
+</head>
+
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="<{$refreshUrl}>" class="lnkRefresh"><{$lang->refresh}></a>
+		</div>
+		<div class="search clearfix">
+			<form method="get" action="<{$searchUrl}>">
+				<input type="hidden" name="con" value="admin" />
+				<input type="hidden" name="ctl" value="adv/customer_coupon_process" />
+				<!--select name="status" class="ahibw">
+					<option value="">全部</option>
+					<option value="c01"<{if $status=='c01'}> selected<{/if}>>已申请</option>
+					<option value="b01"<{if $status=='b01'}> selected<{/if}>>商家已审批</option>
+					<option value="w01"<{if $status=='w01'}> selected<{/if}>>运营商已审批</option>
+					<option value="d01"<{if $status=='d01'}> selected<{/if}>>已删除</option>
+				</select-->
+				<input type="text" name="sk" value="<{$sk}>" placeholder="订单号\电话号\快递单号\客户名称\产品名称" class="text" />
+				<select  name ="status" value="<{$search.status}>" style="width:150px;"  >
+					<option value="5" 	<{if $search.status==5}>selected<{/if}> >--支付状态-- </option>
+						
+						<option  	value='0'  	<{if $search.status==0}>selected<{/if}> 	>未支付</option>
+						<option  	value='1'  	<{if $search.status==1}>selected<{/if}> 	>已支付</option>
+						<option  	value='2'  	<{if $search.status==2}>selected<{/if}> 	>绑定</option>
+						
+					</select>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;		<input type="checkbox" onclick="searchSubmit()" name="onlyNotApproved"<{if $onlyNotApproved}> checked<{/if}> id="onlyNotApproved" /><label for="onlyNotApproved">仅显示主订单</label>
+		&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="lnkSearch" style="width:auto; margin-top:12px; background-color:transparent; cursor:pointer; border:0;">搜索</button>
+		
+			</form>
+		</div>
+		<table width="98%" align="center" height="100%" border="0" cellspacing="0" cellpadding="0" class="listTable">
+			<tr class="listHdTr">
+				<td>商品名称</td>
+				<td>数量</td>
+				<td>商家</td>
+				<td>领取时间</td>
+				<td>使用状态</td>
+			</tr>
+			<script>
+							var order_id =0;
+							
+			</script>
+			<form id="listForm" name="listForm" action="" method="post">
+			<{assign var='oi' value=""}>
+
+			<{foreach from=$data item=item key=key}>
+				
+				<{if $oi!=$item.order_id}>
+              <{if $onlyNotApproved}>
+					<tr style="background-color:#ddd">
+					<{else}>
+					<tr style="background-color:#ccc">
+					<{/if}>
+						<td>  
+							订单编号:&nbsp; <a href="<{$viewUrl}>id=<{$item.order_id}>"><{$item.order_id}></a>  
+							
+							<a target="_blank" href="http://www.fastway.com.au/tools/track?l=<{$item.tracking_id}>"><{$item.tracking_id}> </a>
+						</td>
+						<td >  
+							顾客姓名:&nbsp; <{$item.last_name}> &nbsp;   <{$item.first_name}><{if $item.first_id==$item.idd}><span style="font-size :18px; color:red;">(新)</span><{/if}>
+						
+						</td>
+						<td >  
+							顾客电话:&nbsp;   <{$item.phone}>
+						
+						</td>
+						<td >  
+							支付方式:&nbsp; <{$item.payment}>
+						
+						</td>
+						<td >  
+							金额:&nbsp;   <{$item.money}>
+							
+						</td>
+						
+						
+					</tr>
+					<tr style="background-color:#ddd">
+						<td>  
+							送货日期:&nbsp;  <{date('Y-m-d', $item.logistic_delivery_date)}>
+						</td>
+						<td >  
+							预计到达时间:&nbsp;  <{date('Y-m-d H:i', $item.logisitic_schedule_time)}>
+						
+						</td>
+						<td >  
+							<{if $item.status==1}>
+										<span style="color:#58964E;">已支付</span>
+										<{elseif $item.status==0}>
+										<span style="color:red;"><a href="/company/update_order_status_paid?orderId=<{$item.order_id}>&sys_op=1" onclick="return confirm('订单确认已支付将无法撤回,确认真的执行该操作吗?')" '="">未支付<{if $item.coupon_status=='d01'}>(订单已取消）<{/if}></a></span>
+										<{elseif $item.status==2}>
+										<span style="color:#F30;">Pending</span>
+										<{/if}>	
+						</td>
+						<td   colspan="2">  
+							 <{$item.address}>
+					
+						</td>
+						
+						
+						
+					</tr>
+					
+					
+					
+					
+
+				<{/if}>
+
+				<{assign var='oi' value=$item.order_id}>
+
+			  <{if !$onlyNotApproved}>
+				<tr<{if $key % 2 == 0}> class="Alternating"<{/if}>>
+					<td><{$item.bonus_title}></td>
+					<td>x <{$item.customer_buying_quantity}></td>
+					<td><{$item.business_name}></td>
+					<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+					<td>
+						<{if $item.coupon_status=='c01'}>
+							<span style="color:#ff8300;"><{$item.cn_coupon_status_name}></span>
+						<{elseif  $item.coupon_status=='b01'}>
+							<span style="color:#58964E;"><{$item.cn_coupon_status_name}></span>
+						<{elseif  $item.coupon_status=='d01'}>
+							<span style="color:red;"><{$item.cn_coupon_status_name}></span>
+						<{/if}>
+
+					</td>
+					
+				</tr>
+               <else>
+			
+				<{/if}>
+			<{/foreach}>
+			</form>
+			<tr class="listFtTr">
+				<td colspan="10"><{$pager}></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$('input[name=idd]').on('change',function(){
+			alert('aa');
+  		    var iconLoading ="<i class='fa fa-fw fa-spinner fa-spin' style='color:#fc3'></i>";
+		    var successIcon ="<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		    var errorIcon="<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+			
+			var id =$(this).data('id');
+			var value =	$(this).val();
+			var update_field_name=$(this).attr('name');
+			var updateData ={};
+
+			updateData['id']=id;
+			updateData[update_field_name]=value;
+			
+            var ajax_result = $(this).next('.promote-ajax');
+		 	$.ajax({
+			  url: "<{$http_root_www}>restaurant/update_menu_item",
+			  type: "POST",
+			  data: updateData,
+			  beforeSend:function(){
+			  		$(ajax_result).html(iconLoading);
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					   $(ajax_result).html(successIcon);
+					//alert('yes');
+				}else if(data.status==500){
+					alert(data.msg);
+						$(ajax_result).html(errorIcon);
+				}else{
+				alert(data.msg);
+						$(ajax_result).html(errorIcon);
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+		
+		
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+	    alert(this.target);
+		this.target.html('<i style="color:#fc3" class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+	
+
+
+</script>
+
+
+</body>
+</html>

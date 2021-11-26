@@ -1,0 +1,20 @@
+<{foreach from=$latest_coupons item=item}>
+<li>
+	<a href="<{$http_root_www}>coupon/<{$item.id}>" class="inner">
+		<div class="pic">
+			<img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="" />
+		</div>
+		<div class="txt">
+		
+		
+			<p><{$item.title|truncate_cn:90:'...'}></p>
+		
+			<div class="price">
+				<span class="new"><{$item.price1}></span>
+				<span class="old"><{$item.price2}></span>
+			</div>
+			<span class="collect"><i></i><{$item.hits}></span>
+		</div>
+	</a>
+</li>
+<{/foreach}>

@@ -1,0 +1,29 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='online_center'}> class="current"<{/if}>><{$lang->customer_center}></a>
+	</div>
+	<div class='second-level'>
+		<a  href="<{$http_root_www}>company/customer_orders"<{if $submenu=='customer_coupon_process'}> class="current"<{/if}>>
+			<{$lang->order_management}>
+		</a>
+	
+      <{if $loginUser.business_type_service !=1}>
+		<a  href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+			<{$lang->order_management_amend}>
+		</a>
+		<{/if}>
+		<a  href="<{$http_root_www}>company/customer_order_statistics"<{if $submenu=='customer_order_statistics'}> class="current"<{/if}>>
+			<{$lang->order_statistic}>
+		</a>
+		<a href="<{$http_root_www}>company/customer_rating_list"<{if $submenu=='customer_rating_list'}> class="current"<{/if}>>
+			<{$lang->custoemr_review_management}>
+		</a>
+		<a href="<{$http_root_www}>company/customer_list"<{if $submenu=='customer_list'}>class="current"<{/if}>>
+			<{$lang->customer_management}>
+		</a>
+	<!--	<a href="<{$http_root_www}>dispute_center/list?type=business"<{if $submenu=='dispute_center'}>class="current"<{/if}>>
+			<{$lang->refund_and_return}>
+		</a>  -->
+	</div>
+</li>

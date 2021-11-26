@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title>Ubonus美食生活-专注墨尔本华人美食生活的电商平台</title>
+
+    <meta name="keywords" content="专注墨尔本华人美食生活的电商平台 " />
+    
+    <meta name="description" content="专注墨尔本华人美食生活的电商平台" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+</head>
+
+<body class="index">
+    <!-- 头部 -->
+    <header id="hd">
+        <div class="left">
+            <h1>Ubonus美食生活</h1>
+        </div>
+        <div class="right">
+
+        </div>
+    </header>
+    <!-- 头部 end-->
+
+    <div class='container'></div>
+
+    <!-- 主内容 -->
+    <div class='box2 '></div>
+    
+	   <section id="bd">
+
+        <form id='memberForm' class='ajaxForm' action="<{$http_root_www}>coupon1/buy/<{$coupon.id}>" method="post" target="post_frame" enctype="multipart/form-data">
+							
+				<div class='panel panel-default'>
+					<div class='panel-body '>
+
+                    <div class='row'>
+                        <div class="col-xs-12">
+                                <{if $coupon.pic}>
+                                    <a href="<{$http_root_www}>coupon1/<{$coupon.id}>" target="_blank">
+                                    <img src="<{$UPLOAD_PATH}><{$coupon.pic}>" class="media-object" /> 
+                                    </a>
+                                <{/if}>
+                        </div>
+
+                        <div class="col-xs-12">
+                                <label for="sub<{$coupon.id}>" style='margin: 10px 0px;background: #FD5001 ;padding: 10px;width: 100%;'>
+                                    <input type="radio" name="sub" value="<{$coupon.id}>" id="sub<{$coupon.id}>" checked  data-price='<{$coupon.voucher_deal_amount}>'/>
+                                    <{$coupon.title}>
+                                </label>
+                        </div>
+
+                        <div class="col-xs-12" style="text-align: right;color: red">
+                            <{if $coupon.voucher_deal_amount>0}>
+                              售价：<{$coupon.voucher_deal_amount}> 
+                            <{else}>
+                              免费领取
+                            <{/if}>
+
+                            <{if $coupon.voucher_original_amount>0}>
+                              <s>面值：<{$coupon.voucher_original_amount}></s> 
+                            <{/if}>
+
+                        </div>
+                    </div>
+
+					<{foreach from=$sub_coupon item=item name='dl'}>
+					<div class='row'>
+						<div class="col-xs-12">
+							    <label for="sub<{$item.id}>" style='margin: 10px 0px;background: #FD5001 ;padding: 10px;width: 100%;'>
+									<input type="radio" name="sub" value="<{$item.id}>" id="sub<{$item.id}>"  data-price='<{$item.customer_amount}> '/>
+									<{$item.title}>
+								</label>
+						</div>
+						<div class="col-xs-12" style="text-align: right;color: red">
+							<{if $item.customer_amount>0}>
+                              售价：<{$item.customer_amount}> 
+                            <{else}>
+                              免费领取
+                            <{/if}>
+
+                            <{if $item.original_amount>0}>
+                              <s>面值：<{$item.original_amount}></s> 
+                            <{/if}>
+						</div>
+					</div>
+					<{/foreach}>
+
+					</div>
+
+					<{if $staff_list}>
+					<div class="list-group">
+						<{foreach from=$staff_list item=item name='sll'}>
+						<div class="list-group-item">
+							<{if $item.avatar}><div><img src="<{$UPLOAD_PATH}><{$item.avatar}>" alt="<{$item.displayName}>" /></div><{/if}>
+
+							<label class="name">
+							<input type="radio" name="staff_id"  value='<{$item.id}>'/><{$coupon.sub_sales_name}>：<{$item.contactPersonNickName}>
+							</label>
+
+							<div class="phone">电话：<{$item.tel}></div>
+							<div class="email">Email：<{$item.email}></div>
+                            <div class="email">Address<{$item.googleMap}></div>
+						</div>
+						<{/foreach}>
+					</div>
+					<{/if}>
+
+				</div>
+
+				    <div class="well row" style="background: white;margin: 15px 0px">
+					    <label class="col-xs-3 ">数量</label>
+					    <div class="col-xs-9">
+					         <!-- 数量 -->
+			                <div class="m-num">
+			                    <a class="minusBtn disabled" href="javascript:void(0);">-</a>
+			                    <input class="inp" type="text" value="1" name ='qty' readonly style="width: 130px">
+			                    <a class="plusBtn" href="javascript:void(0);">+</a>
+			                </div>
+			                <!-- 数量 -->
+					    </div>
+				    </div>
+
+					<div class="panel panel-info">
+					 	<div class='panel-heading' style="text-align: center">请填写个人信息</div>
+					  <div class="panel-body">
+
+						  <div class="form-group">
+						    <label for="delivery_last_name" class="col-sm-2 control-label">姓：</label>
+						    <div class="col-sm-10">
+						      <input type="text" class="form-control" id="delivery_last_name"  value="<{$loginUser.person_last_name}>" name="delivery_last_name">
+						    </div>
+						  </div>
+
+						  <div class="form-group">
+						    <label for="delivery_first_name" class="col-sm-2 control-label">名：</label>
+						    <div class="col-sm-10">
+						       <input type="text" class="form-control" id="delivery_first_name"  value="<{$loginUser.person_first_name}>" name="delivery_first_name">
+						    </div>
+						    </div>
+
+						   <div class="form-group">
+						    <label for="delivery_phone" class="col-sm-2 control-label">电话：</label>
+						    <div class="col-sm-10">
+						       <input type="text" class="form-control" id="delivery_phone"  value="<{$loginUser.phone}>" name="delivery_phone">
+						    </div>
+						    </div>
+
+						   <div class="form-group">
+						    <label for="delivery_email" class="col-sm-2 control-label">Email：</label>
+						    <div class="col-sm-10">
+						       <input type="email" class="form-control" id="delivery_email"  value="<{$loginUser.email}>" name="delivery_email">
+						    </div>
+						    </div>
+
+						   <div class="form-group">
+						    <label for="msgToBusiness" class="col-sm-2 control-label">留言：</label>
+						    <div class="col-sm-10">
+						       <textarea  class="form-control" id="msgToBusiness" name="msgToBusiness" rows='5' placeholder="还有什么要嘱咐的？"></textarea>
+						    </div>
+						    </div>
+
+
+
+                        <div class='payment' style="text-align: center;padding: 30px 0px;">
+                            <label>支付方式：</label>
+                            <select name='payment'>
+                                <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+                                    <option value='creditcard'><{$lang->pay_creditcard}></option>
+                                <{/if}>
+
+                                <{if $business_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+                                    <option value='paypal'><{$lang->pay_paypal}></option>
+                                <{/if}>
+
+                                <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+                                    <option value='offline'><{$lang->pay_offline}></option>
+                                <{/if}>
+
+                                <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+                                    <option value='royalpay'><{$lang->pay_wechat}></option>
+                                <{/if}>
+
+                                <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+                                    <option value='hcash' disabled><{$lang->pay_hcahs}></option>
+                                <{/if}>
+                            </select>
+
+                            <!-- CREDIT CARD FORM STARTS HERE -->
+                            <div class="panel panel-default credit_card_from">
+                                <div class="panel-heading display-table" >
+                                    <div class="row display-tr" >
+                                        <div class="display-td" >                            
+                                            <img class="img-responsive pull-right" src="<{$SKIN_PATH}>images/accepted_card.png">
+                                        </div>
+                                    </div>                    
+                                </div>
+                                <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="form-group">
+                                                    <label for="cardNumber">CARD NUMBER</label>
+                                                    <div class="input-group">
+                                                        <input  type="tel" class="form-control" name="card_number" placeholder="Valid Card Number" autocomplete="cc-number"
+                                                        />
+                                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                    </div>
+                                                </div>                            
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="cardExpiry"> MM</label>
+                                                    <select  class="form-control" name='card_expire_month'>
+                                                      <{for $m=1 to 9}>
+                                                        <option value="<{$m}>">0<{$m}></option>
+                                                      <{/for}>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                             <div class="col-xs-4 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="cardExpiry"> YY</label>
+                                                    <select  class="form-control" name='card_expire_year'>
+                                                      <{for $y=16 to 46}>
+                                                        <option value="<{$y}>"><{$y}></option>
+                                                      <{/for}>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-4 col-md-4 pull-right">
+                                                <div class="form-group">
+                                                    <label for="cardCVC">CV CODE</label>
+                                                    <input  type="tel"  class="form-control" name="card_security_code" placeholder="CVC" autocomplete="cc-csc"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                </div>
+                            </div>        
+
+                            <style type="text/css">
+                              /* CSS for Credit Card Payment form */
+                              .credit-card-box .panel-title {
+                                  display: inline;
+                                  font-weight: bold;
+                              }
+                              .credit-card-box .form-control.error {
+                                  border-color: red;
+                                  outline: 0;
+                                  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+                              }
+                              .credit-card-box label.error {
+                                font-weight: bold;
+                                color: red;
+                                padding: 2px 8px;
+                                margin-top: 2px;
+                              }
+                              .credit-card-box .payment-errors {
+                                font-weight: bold;
+                                color: red;
+                                padding: 2px 8px;
+                                margin-top: 2px;
+                              }
+                              .credit-card-box label {
+                                  display: block;
+                              }
+                              /* The old "center div vertically" hack */
+                              .credit-card-box .display-table {
+                                  display: table;
+                              }
+                              .credit-card-box .display-tr {
+                                  display: table-row;
+                              }
+                              .credit-card-box .display-td {
+                                  display: table-cell;
+                                  vertical-align: middle;
+                                  width: 50%;
+                              }
+                            </style>    
+                            <!-- CREDIT CARD FORM ENDS HERE -->
+
+                            <script type="text/javascript">
+                                $(function(){
+                                    $("select[name='payment']").on('change',function(){
+                                        if($(this).val()=='creditcard'){
+                                            $('.credit_card_from').show(100);
+                                        }else{
+                                            $('.credit_card_from').hide(100);
+                                        }
+                                    })
+
+                                    $("select[name='payment']").trigger("change");
+
+                                    $("input[name='sub']").on('click',function(){
+                                        if($(this).data('price')>0){
+                                            $('.payment').show(100);
+                                        }else{
+                                            $('.payment').hide(100);
+                                        }
+                                    })
+
+                                    $("input[name='sub']").first().click();
+
+                                })
+                            </script>
+                        </div>
+
+
+					      <div class="form-group ">
+					      	 <button type="submit" class="btn btn-primary btn-block ajaxFormSubmitBtn">立即领取</button>
+					      </div>
+						   
+					  </div>
+					</div>
+
+				</form>
+
+			  <iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+        <script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				
+				
+	</section>
+
+    <!-- 主内容 end-->
+
+    <!-- 底部 -->
+    <{include file='mobile/mobile_footer.htm'}>
+    <!-- 底部 end-->
+
+</body>
+
+</html>
+			

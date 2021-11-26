@@ -1,0 +1,207 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>company/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfood}></strong></a> 
+					
+				</div>
+			</li>
+			
+			
+			
+	    	<{if $loginUser.id==26326}>
+			
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>chart/index"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+						数据分析
+					</a>
+				</div>
+
+			</li>
+			<{/if}>
+			
+			
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='open_store'}> class="current"<{/if}>><{$lang->open_store_setting}></a>
+			</div>
+
+			<div class='second-level'>
+				
+			
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1&freshfood=1"<{if $submenu=='freshshop_card'}> class="current"<{/if}>>
+					<!--<{$lang->shop_card}> --><{$lang->Business_card_edit}> 
+				</a>
+				
+			
+				
+				<a href="<{$http_root_www}>company/payment_setting?freshfood=1" <{if $submenu=='payment_setting'}> class="current"<{/if}>>
+				<!--<{$lang->payment_setting}>--><{$lang->payment_setting}>  
+				</a>
+				
+				<a href="<{$http_root_www}>company/delivery_setting?freshfood=1" <{if $submenu=='delivery_setting'}> class="current"<{/if}>>
+				<!--	<{$lang->deliver_setting}> --> <{$lang->deliver_setting}>  
+				</a>
+				
+				<a href="<{$http_root_www}>company/dispcenter?type=single&freshfood=1" <{if $submenu=='dispcenter'}> class="current"<{/if}>>
+					 <{$lang->open_weekly_order}>  
+				</a>
+				
+				<{if $showDelivery_date_setting_menu}>
+				<a href="<{$http_root_www}>company/dispcenter_schedule?freshfood=1"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
+					<{$lang->delivery_date_open_end_time_setting}>
+				</a>
+				<{/if}>
+				
+			</div>
+		</li>
+			
+		
+		
+		
+		
+		
+		
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>>	<{$lang->product_management}></a>
+			</div>
+
+			<div class='second-level'>
+				
+			
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1"<{if $submenu=='restaurant_parant_category_edit'}> class="current"<{/if}>>
+					<{$lang->parent_category_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					<!--<{$lang->category_management}> --> <{$lang->sub_category_managementd}>
+				</a>
+				
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu=='restaurant_menu_add'}> class="current"<{/if}>>
+					<{$lang->items_add}>
+				</a>
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				
+			   <a href="<{$http_root_www}>restaurant/category_migration?freshfood=1"<{if $submenu=='category_migration'}> class="current"<{/if}>>
+					<{$lang->category_migration}>
+				</a>
+			<!--	
+				<a href="<{$http_root_www}>company/images_grab"<{if $submenu=='images_grab'}> class="current"<{/if}>>
+					<{$lang->images_grab}>
+				</a>
+			-->
+			</div>
+		</li>
+		
+		
+	<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><!--<{$lang->publish_center}>--><{$lang->online_publish}></a>
+			</div>
+
+			<div class='second-level'>
+				
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1&step=7"<{if $submenu=='onoff_share'}> class="current"<{/if}>>
+					<{$lang->onoff_share}>
+				
+				</a>
+				
+				
+				
+				
+				<{if !$customer_id || ( $customer_id == $loginUser.id && count($authoriseBusinessList)<=1)}>
+				<a href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$customer_id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->refresh_store}>
+				</a>
+				<{/if}>
+				
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_refresh_preview_management"<{if $submenu=='preview_refresh'}> class="current"<{/if}>>
+					<{$lang->preview_store}>
+				</a>
+			
+				
+				
+				
+				
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='coupon_private_view_setting'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>
+		
+				
+				<a href="<{$http_root_www}>company/promotion_code_manage"<{if $submenu=='promotion_code_manage'}> class="current"<{/if}>>
+					<{$lang->pormotion_code}>
+				</a>
+				
+			</div>
+		</li>
+		
+
+			
+		<{include file='company/side_customer_centre.htm'}>
+		
+		<{include file='company/side_dispatching_management_freshfood.htm'}>
+		<!--
+		<{include file='company/side_logistic_management.htm'}>
+		-->
+		
+		<{include file='company/side_money.htm'}>
+		
+		<{include file='company/side_basic_setting_freshfood.htm'}>
+		<{include file='company/side_advanced_setting_freshfood.htm'}>
+		<!--
+		<{include file='company/side_store.htm'}>
+		-->
+
+	<!--	
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>company/ubonus_package"<{if $menu=='community'}> class="current"<{/if}>><{$lang->online_promotion}></a>
+			</div>
+		</li> -->
+	<!--	
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-archive" ></i>
+				<a href="<{$http_root_www}>member/index"<{if $menu=='community'}> class="current"<{/if}>><{$lang->my_account}></a>
+			</div>
+		</li>
+	-->	
+	<!--	
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-gear"></i>
+				<a <{if $menu=='article_vote'}> class="current"<{/if}>>文章/社群</a>
+			</div>
+			<div class='second-level'>
+				<a href="<{$http_root_www}>company/article"<{if $submenu=='article'}> class="current"<{/if}>>美文</a>
+				
+				<a href="<{$http_root_www}>voting/voting_manage"<{if $submenu=='voting_manage'}> class="current"<{/if}>>
+					人气及投票
+				</a>
+				
+			</div>
+			
+		</li>
+	-->	
+		
+	</ul>
+	
+	
+
+	
+</div>

@@ -1,0 +1,157 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+			<div class="main-form">
+
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/dispcenter_invite" method="post" target="post_frame" enctype="multipart/form-data">
+
+					<div class="input-box t clearfix">
+						<h1>添加配货中心服务的商户</h1>
+						
+						<p>如果配货中心为某个商家进行配货操作或管理，需要添加该商户至配货中心。</p>
+						
+
+						
+
+						
+					</div>
+
+					<{if $isDispCenter==true}>
+						<div class="input-box  clearfix">
+							<label>输入配对密钥（必填）：</label>
+
+							<input style="width:300px;" type="text" name="passportlink" placeholder="xxxxxxx" required>
+						
+						</div>
+						
+						
+						
+						<div class="input-box  clearfix">
+							<label>中文名称（必填）：</label>
+
+						
+							<input style="width:300px;"  type="text" name="cn_displayName" placeholder="商家中文名（页面显示最多4个字）" required>
+					
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>英文名称（可选）：</label>
+
+						
+							<input style="width:300px;"  type="text" name="en_displayName" placeholder="商家英文名（页面显示最多12个字符）" >
+							
+
+						</div>
+						
+						<div class="input-box  clearfix">
+							<label>面单名称（必填）：</label>
+
+							
+								<input style="width:300px;"  type="text" name="suppliers_name" placeholder="商家（在货运单上）" required>
+
+						
+						</div>
+						<div class="input-box  clearfix">
+							<button type="submit" class="btn btn-default btn-success" id="">添加</button>
+						</div>
+						
+					<{/if}>
+					
+				</form>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+				<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				<{if $isDispCenter==true}>
+				<div class='main-list'>
+					<table cellspacing="0" cellpadding="0" width="100%">
+						<thead>				
+							<tr>			
+								<th>商家ID</th>
+								<th>商家名称</th>
+								<th>商家名(物流面单显示)</th>
+								<th>商家中文名(店铺页面显示)</th>
+								<th>商家英文名(店铺页面显示)</th>
+							
+								<th>删 除</th>
+							</tr>			
+						</thead>		
+						<tbody>		
+							<{foreach from=$suplierList item=item name='dl'}>	
+							<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td><{$item.business_id}></td>
+								<td><{$item.business_name}></td>
+								<td><{$item.name}></td>
+								<td><{$item.cn_displayName}></td>
+								<td><{$item.en_displayName}></td>
+							
+								<th>
+									<a href="<{$http_root_www}>company/dispcenter_delete?deleteid=<{$item.id}>">删 除</a>
+								</th>
+							</tr>
+							<{/foreach}>	
+						</tbody>		
+					</table>	
+				</div>
+
+				<div style="padding: 20px">
+					<p>统配中心说明:</p>
+					<p>该页面控制统配中心下属供应商，您需要供应商的登陆密码才可操作。</p>
+					<p>统配中心的递送设置将用于其所有下属商家。请确保您 高级设置>递送设置 中设置了配送范围邮编。</p>
+					<p>统配中心的供应商负责产品和备货。请通过供应商账户的 高级设置>递送设置>统配商家递送日期设置 中设置配送日期。</p>
+					<p>统配管理商家负责物流与配送，您可以通过 <a href="<{$http_root_www}>company/oproute">optimoRoute 控制面板</a>管理订单的配送。</p>
+					<p>当删除全部商家后，统配中心即自动关闭。</p>
+				</div>
+				<{/if}>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

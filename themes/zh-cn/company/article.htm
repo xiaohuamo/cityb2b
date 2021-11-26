@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style type="text/css">
+.onoffswitch {
+    position: relative; width: 70px;margin: auto;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 22px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 0px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 8px; margin: 11px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 36px;
+    border: 2px solid #999999; border-radius: 22px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+	</style>
+	
+	<script>
+	
+		
+	</script>
+	
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+								
+				<div class="colCurTit">
+					<{$pagename}> 
+					<span class="links "> 
+					
+						<a  class='btn-yellow' href="<{$http_root_www}>company/article_add" ><i class='fa fa-plus'></i><{$lang->add_product}></a>
+				
+					</span>
+				</div>
+       <div class="search-row" style="padding: 20px 18px">
+				<form  method="get" >
+						
+				      
+						<label><{$lang->search}>:</label>
+						
+				     	<input type="text" class="searchTerm" name="sk" value="<{$sk}>" placeholder="名称/关键字">
+					<select name="article_type" id="article_type" style="    background-color: white;    font-size: 13px;">
+                         <option value="all">全部</option>
+						 <{foreach from=$article_type_list item=item name='dl'}>
+							
+
+							<option value="<{$item.idd}>" <{if $item.idd==$article_type}>selected <{/if}> ><{$item.cat_name}></option>
+
+							<{/foreach}>
+
+						</select>
+					
+							<button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+								
+				    </form></div><br>
+				    
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th>编辑</th>
+									<th>关键字1</th>
+									<th>关键字2</th>
+								  	<th><{$lang->image}></th>
+									<th><{$lang->title}></th>
+									
+									<th><{$lang->type}></th>
+									<th><{$lang->approve}></th>
+									<th><{$lang->status}></th>
+									<th><{$lang->publish}></th>
+									<th><{$lang->edit}></th>
+									<th><{$lang->delete}></th>
+									
+								</tr>
+							</thead>
+							<tbody>
+							
+							
+						  <{foreach from=$data item=item name='dl'}>
+
+									<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										<td><{$item.editor}></td>
+										<td><{$item.keyword1}></td>
+										<td><{$item.keyword2}></td>
+									
+										<td><img src="<{$UPLOAD_PATH}><{$item.pic|image:66:42}>"></td>
+
+										<td><a target='_blank' href="<{$http_root_www}>article/<{$item.id}>"><{$item.title}></a></td>
+										
+										<td>
+						  					<{$item.cat_type.cat_name}>
+					  					
+						  				</td>
+
+						  		
+										<td>
+											<{if $item.is_approved==1}>
+												<span style="color:#58964E;">已审核</span>
+											<{else}>
+												<span style="color:#F30;">未审核</span>
+											<{/if}>
+										</td>
+
+										<td>
+											<{if $item.status==4}>
+												<span class = 'publish_icon' data-id='<{$item.id}>' >
+													<span style="color:#58964E;">产品发布</span>
+												</span>
+											<{else}>
+												<span  class = 'publish_icon' data-id='<{$item.id}>' >
+													<span style="color:#F30;">产品下线</span>
+												</span>
+											<{/if}>
+
+											<br>
+						
+										</td>
+
+										<td>
+											<div class="onoffswitch">
+											    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+											    data-id='<{$item.id}>' <{if $item.status==4}> checked <{/if}>>
+											    <label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+											        <span class="onoffswitch-inner"></span>
+											        <span class="onoffswitch-switch"></span>
+											    </label>
+											</div>
+										</td>
+
+										<td><a target='_blank' href="<{$http_root_www}>company/article_add?id=<{$item.id}>">修改</a></td>
+										<td>
+											<a href="<{$http_root_www}>company/article?id=<{$item.id}>" onClick="return window.confirm('<{$lang->are_you_sure_to_delete}>');"><{$lang->delete}></a>
+											<small>浏览：<{$item.hits}></small>
+									
+										</td>
+
+															
+									</tr>
+								<{/foreach}>
+							</tbody>
+						</table>
+						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
+
+						
+
+					<{else}>
+
+						<{$lang->no_data}>
+						<a href="<{$http_root_www}>company/article_add" ><{$lang->add_product}></a>
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var loading=false;
+	
+	
+		
+	
+		
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+		
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+	    alert(this.target);
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+
+	
+	
+	
+	
+	
+	
+	
+	$('input[name=onoffswitch]').on('click',function(){
+		var articleId=$(this).data('id')
+		var context =$('.publish_icon[data-id='+articleId+']');
+
+		if(loading)return false;
+		$.ajax({
+			type:"GET",
+			url: "<{$http_root_www}>company/article_publish_ajax", 
+			data:{"id":articleId},
+			beforeSend: function( xhr ) {
+				loading=true;
+				context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+			},
+			success: function(result){
+				result=jQuery.parseJSON( result );
+				if(result.article_status=='1'){
+					context.html("<span style='color:#F30;'>产品下线</span>");
+				}else if(result.article_status=='4'){
+					context.html("<span style='color:#58964E;'>产品上线</span>");
+				}
+			}
+		}).always(function(){
+			loading=false;
+		})
+	})
+</script>
+
+<script type="text/javascript">
+	$('.template-toggle').on('click',function(){
+		var context = $(this).parent().next('.template-toggle-list');
+		$(this).toggleClass('fa-angle-double-down');
+		$(this).toggleClass('fa-angle-double-up');
+		$(this).parent().toggleClass('bg-color-yellow');
+
+		context.toggle();
+		ajaxShow(context);
+	});
+
+	function ajaxShow(context){
+		if($.trim(context.html()).length==0){//if its empty
+			$.ajax({
+				type:"GET",
+				url: "<{$http_root_www}>company/coupons_template_ajax", 
+				data:{"cid":context.data('category-id')},
+				beforeSend: function( xhr ) {
+					context.html("<div style='text-align:center;line-height:300px;'><i style='color:#FD5001 ' class='fa fa-spinner fa-3x fa-pulse'></i></div>");
+				},
+				success: function(result){
+					if($.trim(result).length==0){
+						$(context).html("<div style='text-align:center;line-height:300px;'><i  class='fa fa-frown-o fa-3x'>Empty</i></div>");
+					}else{
+						$(context).html(result);
+					}
+    			}
+    		}).fail(function(){
+    			$(context).html();
+    		});	
+		}
+		
+	}
+</script>
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<{include file='footer.htm'}>
+
+</body>
+</html>

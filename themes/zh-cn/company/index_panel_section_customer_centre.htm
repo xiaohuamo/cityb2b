@@ -1,0 +1,32 @@
+	<div class='panel_item'style="height:auto">
+								<div class='panel_item_top'>
+									<div class='panel_icon'><i class='fa fa-bar-chart fa-4x'></i></div>
+									<h1><{$lang->customer_center}></h1>
+									<p><{$lang->order_management_and_user_feedback}></p>
+								</div>
+								<div class='panel_item_sub'>
+									<a  href="<{$http_root_www}>company/customer_orders" class='panel_sub_item'<{if $submenu=='customer_coupon_process'}> class="current"<{/if}>>
+										<{$lang->order_management}>
+									</a>
+									<a  href="<{$http_root_www}>company/customer_order_statistics" class='panel_sub_item'<{if $submenu=='customer_order_statistics'}> class="current"<{/if}>>
+										<{$lang->order_statistic}>
+									</a>
+									<a href="<{$http_root_www}>company/customer_rating_list" class='panel_sub_item'<{if $submenu=='customer_rating_list'}> class="current"<{/if}>>
+										<{$lang->custoemr_review_management}>
+									</a>
+									<a href="<{$http_root_www}>company/customer_list" class='panel_sub_item'<{if $submenu=='customer_list'}>class="current"<{/if}>>
+										<{$lang->customer_management}>
+									</a>
+									
+								
+								</div>
+								<div class='panel_item_sub'>
+									
+									<a href="<{$http_root_www}>dispute_center/list?type=business" class='panel_sub_item'<{if $submenu=='dispute_center'}>class="current"<{/if}>>
+										<{$lang->refund_and_return}>
+									</a>
+									
+										<a href="" class='panel_sub_item'></a><a href="" class='panel_sub_item'></a><a href="" class='panel_sub_item'></a>
+								
+								</div>
+							</div>

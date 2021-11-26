@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>如何使用同学录</title>
+<META charset=utf-8 name=viewport content="width=device-width, user-scalable=no, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery.mobile-1.3.2.min.js"></script>
+<style type="text/css">
+<!--
+li {
+	color: #006;
+}
+-->
+</style>
+</head>
+
+<body>
+
+<div data-role="page" id="page1">
+  <div data-role="header" data-position="fixed" >
+    <h1>方便实用的云端同学录</h1>
+    <div data-role="navbar" data-iconpos="left">
+      <ul>
+        <li><a href="#" class="ui-btn-active ui-state-persist"  >基本操作</a></li>
+        <li><a href="#page2" data-transition="slidefade" >班级管理</a></li>
+        <li><a href="#page3" data-transition="slidefade" >高级功能</a></li>
+      </ul>
+    </div>
+  </div>
+  <p>同学录方便你随时查看班级同学信息，了解各地同学分布、发送贺卡、组织活动等等。 </p>
+  <p>你需要加入班级后才能使用，可先加入一个体验班（班级代码10160），请输入：加入10160</p>
+  <p>两种操作方式：1、菜单；2、直接输入（从？号开始了解）。这里主要介绍菜单操作方式。</p>
+  <div data-role="collapsible-set">
+    <div data-role="collapsible">
+    <h1>一步加入班级</h1>
+      <ul>
+        <li> 输入班级代码，选择&quot;加入班级&quot;即可</li>
+        <li>第一次使用会要求你输入真实名字</li>
+        <li> 如果班级花名册里已有你的名字，花名册里的信息会智能更新你的个人信息</li>
+        <li>如果花名册没有你的名字，则会自动提出加入班级的申请，等待班级管理员批准</li>
+        <li><em>快捷命令：加入xxxxx，xxxxx为班级代码</em></li>
+      </ul>
+  	</div>
+    <div data-role="collapsible">
+    <h1>查询班级通讯录</h1> 
+    <ul>
+      <li>点击&quot;查询&quot;-&quot;班级通讯录&quot;，选择你所属的班级，即得该班通讯录。</li> 
+      <li>无论是否注册，花名册里的同学都会被显示</li>
+      <li>点击电话号码，可以拨打电话或发送短信</li>
+      <li>点击名字，可以查看该同学更详细的信息</li>
+      <li><em>快捷命令：103</em></li>
+    </ul>
+</div>
+    <div data-role="collapsible">
+    <h1>查询同学</h1>
+    <ul>
+      <li>      点击&quot;查询&quot;-&quot;查询同学&quot;，输入同学名字，点击查询即可</li> 
+      <li>如果你的班加入了一个班级群，比如一个年级，则查询范围包括该年级</li>
+        <li>支持模糊查询</li>
+        <li><em>快捷命令：104</em></li>
+    </ul>
+  </div>
+    <div data-role="collapsible">
+    <h1>查询同学地图</h1>
+    <ul>
+      <li>      点击&quot;查询&quot;-&quot;查询同学地图&quot;，显示中国地图，各省/市颜色深浅代表该省的人数多少，下面也有各省人数清单</li> 
+      <li>点击下面清单中的某省，可以显示该省下面各市/地区的人数、同学清单、班级名称</li>
+        <li>点击同学名字，可以查看该同学详细信息</li>
+        <li><em>快捷命令：105</em></li>
+    </ul>
+  </div>
+    <div data-role="collapsible">
+    <h1>我的消息</h1>
+      <ul>
+        <li> 点击&quot;查询&quot;-&quot;我的消息&quot;，这里可以查看：</li>
+        <li>同学或者系统发给<strong>我的消息</strong>，点消息回复</li>
+        <li>我的<strong>班级</strong>清单，点班级名直接打开通讯录</li>
+        <li>我的<strong>贺卡</strong>清单，可以查看、制作、删除</li>
+        <li>与我相关的<strong>活动</strong>清单，可以查看、创建、删除</li>
+        <li>我的相册，可以增加<strong>个人图片</strong></li>
+        <li><em>快捷命令：109</em></li>
+      </ul>
+  	</div>
+    <div data-role="collapsible">
+    <h1>个人资料</h1>
+      <ul>
+        <li> 点击&quot;我&quot;-&quot;个人资料&quot;，这里可以修改个人信息</li>
+        <li>仅你的同学能看到你的个人信息</li>
+        <li>你还可以在班级查询里设置在不同班里是否保密</li>
+      </ul>
+  	</div>
+    <div data-role="collapsible">
+    <h1>选择学校再加入班级</h1>
+<ul>
+	    <li>依次选择“省份-城市-学校类型-学校”        </li>
+	    <li>再查询班级，如果班级存在，则点击该班级名加入。</li>
+	    <li>如果学校或班级不存在，点击“创建XX”创建学校或班级。</li>
+	    <li>如果是第一次使用，会提示你输入名字，名字非常重要！用于判断你能否加入班级</li>
+	    <li>如果花名册没有你的名字，则会自动提出申请，等待班级管理员批准你加入班级 </li>
+      </ul>
+    </div>
+  </div>
+  <div data-role="content">
+    请告诉你的同学关注<strong>cn-txl</strong>，并让他们加入到班级中。这样你可以查询到他们最新的信息。
+  </div>
+</div> 
+
+<div data-role="page" id="page2">
+  <div data-role="header">
+    <h1>管理你的班级</h1>
+    <div data-role="navbar" data-iconpos="left">
+      <ul>
+        <li><a href="#page1" ddata-transition="slidefade" ata-position="fixed" >基本操作</a></li>
+        <li><a href="#" class="ui-btn-active ui-state-persist"  data-position="fixed" >班级管理</a></li>
+        <li><a href="#page3" data-transition="slidefade"  data-position="fixed" >高级功能</a></li>
+	  </ul>
+	</div>
+  </div>
+ <div data-role="collapsible-set">
+    <div data-role="collapsible">
+    <h1>创建班级</h1>
+      <ul>
+        <li>首先选择学校，若学校不存在，则创建学校</li>
+        <li>在选择班级时，点击“<strong>创建班级</strong>”则创建一个班级</li>
+        <li>如果是第一次使用，会提示你输入名字</li>
+        <li>你自动成为你所创建班级的<strong>班级管理员</strong>。  </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+    <h1>退出班级</h1> 
+      <ul>
+        <li>在查询班级通讯录时，点击“退出班级”</li>
+        <li>退出后，你不能再查询班级同学录和同学信息。 </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>班级管理员</h1>
+      <ul>
+        <li>你创建班级时会自动成为班级管理员。或被其他管理员指定你成为班级管理员</li>
+        <li>班级管理员权限：
+          <ul>
+            <li>可以补充完善班级的信息</li>
+            <li>可以补充完善班上未注册同学的信息</li>
+            <li>可以增补花名册名单。若人数较多，建议email给cntxl01@qq.com请后台代劳</li>
+            <li>可以指定新的班级管理员，便于共同维护</li>
+            <li>可以批准同学加入班级</li>
+            <li>班级群各种操作：创建、邀请、审批、退出</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>更新班级信息</h1>
+      <ul>
+        <li>选择你的班级</li>
+        <li>补充完善班级的信息，包括学校简称（不会影响学校原本的名称），入学年、毕业年等</li>
+        <li>然后点击“更新”即可。</li>
+        <li>只有班级管理员才有权限操作 </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>指定班级管理员</h1>
+      <ul>
+        <li>选择你的班级，点击“指定管理员”</li>
+        <li>会显示该班已注册的同学清单，其中已是管理员的同学后面有“管理员”三个字</li>
+        <li>点击你要指定为管理员的同学名即可</li>
+        <li>只有班级管理员才有权限操作</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+    <h1>批准/拒绝同学加入</h1> 
+      <ul>
+        <li>当有人加入班级，而班级花名册里没有Ta的名字时，会自动提出申请</li>
+        <li>班级管理员在“班级-管理班级”里点击“批准”，可看到申请清单，点击同学名字可批准其加入</li>
+        <li>请确认申请者是本班同学！ </li>
+      </ul>
+    </div>
+  </div>
+  <div data-role="content">
+    <p>请告诉你的同学关注<strong>cn-txl</strong>，并让他们加入到班级中。这样你可以查询到他们最新的信息。</p>
+  </div>
+</div>
+
+<div data-role="page" id="page3">
+  <div data-role="header">
+    <h1>花名册管理</h1>
+    <div data-role="navbar" data-iconpos="left">
+      <ul>
+        <li><a href="#page1" data-transition="slidefade" data-position="fixed" >基本操作</a></li>
+        <li><a href="#page2" data-transition="slidefade" data-position="fixed" >班级管理</a></li>
+        <li><a href="#" class="ui-btn-active ui-state-persist"  data-position="fixed" data-icon="search" >高级功能</a></li>
+      </ul>
+	</div>
+  </div>
+ <div data-role="collapsible-set">
+    <div data-role="collapsible">
+      <h1>花名册</h1>
+      <ul>
+        <li>花名册就是你的通讯录文件</li>
+        <li>可将班级花名册发送给cntxl01@qq.com，我们帮你导入系统后，你可以随时查询花名册里的内容。</li>
+        <li>花名册的好处是你不必等同学加入到你所创建班级，就可以查看到完整的通讯录。</li>
+        <li>你的同学加入班级时，若Ta存在花名册里中，才能加入，并且花名册信息会完善他的个人信息。</li>
+        <li>若Ta不在花名册中，则只能提出加入申请，等候班级管理员批准。 </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>维护花名册</h1>
+      <ul>
+        <li>在“管理班级”中点击“维护花名册”，可以看到班上全体同学信息</li>
+        <li>点击同学名字，可以修改同学信息、开除、指定为老师</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>班级群</h1>
+      <ul>
+        <li>如果一个年级有好几个班，大家希望能查询全年级各班的通讯录，那么可以设置<strong>班级群</strong>，几个班都加入这个班级群中即可</li>
+        <li>班级群相当于扩大了班级范围，在查询班级通讯录和查询个人信息里都起作用</li>
+        <li>其他任意班级组合，如友好班、同专业上下几届、共同主题班级等，都可以使用此方法实现通讯录共享</li>
+        <li>只有班级管理员才能将一个班加入到班级群中。 </li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>管理班级群</h1>
+      <ul>
+        <li>在“<strong>管理班级</strong>”中点击“<strong>管理班级群</strong>”，会显示本班已加入群，被邀请加入的群</li>
+        <li>退群：点击已加入群名</li>
+        <li>同意/拒绝邀请：点击被邀请加入的群名</li>
+        <li>创建新群：可首先查看本校已有的班级群，确认没有，再选择“<strong>创建新班级群</strong>”</li>
+        <li>邀请加入：创建新群后，点击“<strong>邀请其他班加入</strong>”，可输入被邀请的班级代码，需等待对方管理员同意。</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+    <h1>安全设置</h1>
+      <ul>
+        <li> 在“班级通讯录”页面，点击&quot;<strong>安全设置</strong>&quot;，可以让个人信息对自己同学也保密</li>
+        <li>个人信息分两类：一是手机号码，一是其他所有详细信息</li>
+        <li>公开范围分两类，一是本班，一是班级群（年级）</li>
+        <li>不同的班可以设定不同的保密程度</li>
+      </ul>
+  	</div>
+    <div data-role="collapsible">
+      <h1>DIY贺卡</h1>
+      <ul>
+        <li>选菜单：<strong>查询-我的消息</strong>，在<strong>我的贺卡</strong>中点齿轮图标</li>
+        <li> 点击文字可以编辑，可以选取现成的贺词。可以改变<strong>文字颜色</strong></li>
+        <li> 拖动文字可以改变<strong>文字的位置</strong></li>
+        <li> 可以选择不同的<strong>背景动画</strong></li>
+        <li> 点击<strong>背景图片</strong>，可以从分类图库中挑选出你喜爱的背景图片</li>
+        <li> 点击<strong>背景音乐</strong>，可以从分类音乐库中挑选出你喜爱的背景音乐</li>
+        <li> 点击 <strong>发布</strong>生成贺卡，然后就可以通过右上角的微信菜单发送给朋友或者分享到朋友圈啦！</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+      <h1>发起贺卡活动</h1>
+      <ul>
+        <li><a href="http://mp.weixin.qq.com/s?__biz=MzA3MTg2MTkyMQ==&mid=207615719&idx=1&sn=91c4df1551249edb18bec3d63ac3e138&scene=4#wechat_redirect">点此看图文详细说明</a></li>
+        <li>选菜单：<strong>查询-我的消息</strong>，在<strong>我的活动</strong>中点齿轮图标</li>
+        <li> 选择一张已制作好的<strong>贺卡</strong>，输入活动<strong>截止日</strong>、活动征集<strong>文字</strong>、活动<strong>发布范围</strong>等，选择<strong>下一步</strong>，</li>
+        <li> 拖动文字可以改变<strong>文字的位置</strong></li>
+        <li> 点击<strong>背景图片</strong>，可以从分类图库中挑选出你喜爱的背景图片</li>
+        <li> 点击<strong>背景音乐</strong>，可以从分类音乐库中挑选出你喜爱的背景音乐</li>
+        <li> 点击 <strong>发布</strong>生成活动，然后就可以通过右上角的微信菜单发送给朋友或者分享到朋友圈啦！</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+    <h1>遇到问题？</h1> 
+      <ul>
+        <li>在使用过程中遇到任何问题，请直接发送文本信息给本同学录，或者发送email: cntxl01@qq.com，我们会即时处理。</li>
+      </ul>
+    </div>
+    <div data-role="collapsible">
+    <h1>隐私</h1>
+    <ul>
+      <li> 你的个人信息，仅对本班同学开放。</li>
+      <li>当有人要加入班级时，必须<strong>班级代码</strong>和<strong>姓名</strong>同时匹配。</li>
+      <li>如果花名册里没有其名字，则必须由班级管理员<strong>批准</strong>。</li>
+      <li>任何个人信息不被用于商业用途。</li>
+    </ul>
+    </div>
+  </div>
+  <div data-role="content">
+    <p>请告诉你的同学关注<strong>cn-txl</strong>，并让他们加入到班级中。这样你可以查询到他们最新的信息。</p>
+  </div>
+</div>
+
+</body>
+</html>

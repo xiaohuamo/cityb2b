@@ -1,0 +1,93 @@
+.system-notification{
+
+}
+.system-notification .mask{
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.6;
+	z-index: 98
+}
+.system-notification .alert-box{
+	position: fixed;
+    width: 90%;
+    min-height: 20%;
+    background: #eee;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    top: 10%;
+    margin: auto;		
+}
+.system-notification .alert-box .header{	
+	background: #2bb8aa;
+    color: #fff;
+    line-height: 40px;
+    font-size: 15px;
+    text-align: center;
+}
+.system-notification .alert-box .body{
+    padding: 5%;
+    margin-bottom: 50px;
+    color: #333;
+    text-align: center;
+    font-size: 13px
+}
+.system-notification .alert-box .btn-yes{
+	background: #FD5001 ;
+    display: inline-block;
+    width: 30%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+
+}
+.system-notification .alert-box .btn-no{
+	background: #FD5001 ;
+    display: inline-block;
+    width:30%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.btn-yes.only{
+	left: 0;
+    right: 0;
+    margin: auto;
+}
+
+
+
+/*htmlMessage*/
+.form_response_alert{
+    width: 200px;
+    line-height: 20px;
+    position: fixed;
+    top: 40%;
+    margin: auto;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background-color: rgba(195,25,25,0.5);
+    color: #fff;
+    padding: 25px 0px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+

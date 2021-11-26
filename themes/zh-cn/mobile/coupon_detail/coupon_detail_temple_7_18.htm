@@ -1,0 +1,253 @@
+
+	
+
+	<header id="hd">
+		<div class="left">
+			<!--<a onClick='window.history.back()' class="a-back"></a> -->
+		</div>
+	
+		<h2>
+			<a onCLick="$('html,body').animate({scrollTop: $('#bd').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;" ><{$lang->products}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f2').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;" ><{$lang->mobile_product_description}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;"><{$lang->product_comment}></a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'slow');" style="padding-left: 0.5rem;padding-right: 0.5rem;"><{$lang->related_product}></a>
+		</h2>
+		<{include file ="mobile/coupon_detail/sec_more.htm"}>
+	</header>
+	<section id="bd">
+		<div class='sec-product'>
+
+			<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:252:'cut'}>" width="100%" height="auto" alt="<{$pageTitle}>" /></div>
+			   		
+			         <{if $coupon.pics}>
+			          <{foreach from=$coupon.pics item=item name='cpl'}>
+		             	 <div class="swiper-slide"><img class="lazyload" data-src="<{$UPLOAD_PATH}><{$item|image:396:252:'cut'}>"  alt="<{$pageTitle}>"  ></div>
+		              <{/foreach}>
+			         <{/if}>
+			    </div>
+			    <div class="swiper-pagination"></div>
+
+			 <!--   <{include file ="mobile/coupon_detail/referral_share.htm"}> -->
+			 
+				<div class="referral-share" style="<{if $coupon.bonusType==18}><{else}>display:none;<{/if}>">
+				<div class="share-btn" style="font-size: 1.8rem;    color: #fff;    left: 1.5rem;    background-color: rgba(255,191,0,0);bottom: 3.9rem;">50</div>
+				<div class="share-btn" style="font-size: 0.5rem;    bottom: 0.75rem;      left: 0.26rem;     background-color: rgba(255,191,0,0); /* background-color: #fff; */    color: #fcc33e;"></div>
+
+				</div>
+			    
+			</div>
+           <{if $coupon.bonusType <>7}>
+			<div class="comm-tit">
+				<h3><{$coupon.title}><{if $coupon.perCustomerLimitQuantity!='0'}>(<{$lang->purchese_limit_max}><{$coupon.perCustomerLimitQuantity}>)<{/if}>
+					
+				</h3>
+
+				<h4><{$coupon.coupon_summery_description}></h4>
+
+				<{if $group_pin}>
+				    <a  style='background-color: #ff5f74;color: #fff;float: right;padding: 0px 15px' href="<{$http_root_www}>coupon1/<{$coupon.id}>?specialDisplay=group_pin"><{$lang->go_group1_buy}></a>
+                <{/if}>
+
+				<p><{$coupon.price1}> <s><{$coupon.price2}></s>
+					<{if $wholesale=='1'}>
+				<div style="display: inline;color: #FD5001;">
+					$<{$wholesaledata[0].price}>
+					≥<{$wholesaledata[0].amount}><{$lang->units}>
+				</div>
+				<{if $wholesaledata[0].price1!='0' && $wholesaledata[0].amount1!=0}>
+				<div style="display: inline;margin-left:16px;margin-right: 16px;color: #FD5001;">
+					$<{$wholesaledata[0].price1}>
+					≥<{$wholesaledata[0].amount1}><{$lang->units}>
+				</div>
+				<{/if}>
+				<{if $wholesaledata[0].price2!='0' && $wholesaledata[0].amount2!=0}>
+				<div style="display: inline;color: #FD5001;">
+					$<{$wholesaledata[0].price2}>
+					≥<{$wholesaledata[0].amount2}><{$lang->units}>
+				</div>
+				<{/if}>
+				<{/if}>
+				<{if $pendingQty>0}>
+                	<small style='color:red'>(<{$lang->buying_1}> <{$pendingQty}><{$lang->buying_2}>)</small>
+                <{/if}>
+                
+                </p>
+			</div>
+			<{else}>
+			
+			
+			<{if $coupon.title}>
+			<div class="comm-tit" >
+				<h1><{$h1}></h1>
+<{if $coupon.coupon_summery_description}>
+				<h4 style="margin-bottom: .05rem;"><{$coupon.coupon_summery_description}></h4>
+<{/if}>
+				<{if $group_pin}>
+				    <a  style='background-color: #ff5f74;color: #fff;float: right;padding: 0px 15px' href="<{$http_root_www}>coupon1/<{$coupon.id}>?specialDisplay=group_pin"><{$lang->go_group1_buy}></a>
+                <{/if}>
+
+				<!--<p><{$coupon.price1}> <s><{$coupon.price2}></s> -->
+					<{if $wholesale=='1'}>
+				<div style="display: inline;color: #FD5001;">
+					$<{$wholesaledata[0].price}>
+					≥<{$wholesaledata[0].amount}><{$lang->units}>
+				</div>
+				<{if $wholesaledata[0].price1!='0' && $wholesaledata[0].amount1!=0}>
+				<div style="display: inline;margin-left:16px;margin-right: 16px;color: #FD5001;">
+					$<{$wholesaledata[0].price1}>
+					≥<{$wholesaledata[0].amount1}><{$lang->units}>
+				</div>
+				<{/if}>
+				<{if $wholesaledata[0].price2!='0' && $wholesaledata[0].amount2!=0}>
+				<div style="display: inline;color: #FD5001;">
+					$<{$wholesaledata[0].price2}>
+					≥<{$wholesaledata[0].amount2}><{$lang->units}>
+				</div>
+				<{/if}>
+				<{/if}>
+				<{if $pendingQty>0}>
+                	<small style='color:red'>(<{$lang->buying_1}> <{$pendingQty}><{$lang->buying_2}>)</small>
+                <{/if}>
+                
+                </p>
+			</div>
+			<{/if}>
+			<{/if}>
+
+			<div class="comm-tit">
+			<h3 id="item-select" style=" margin-bottom: .3rem;font-weight: 600;">购买选项</h3>
+				<div class="coupon_option" >
+					<div style="display: inline-block;width: 70%">
+						<p class='title'>
+							<{$coupon.title|truncate_cn:120:'..'}>
+						</p>
+
+						<p class='price'>
+							<span><{$coupon.price1}> &nbsp; <s><{$coupon.price2}></s></span>
+						</p>	
+					</div>
+
+					<div style="float:right;" class="quantity">
+							<i class='fa fa-minus-square'></i>
+							<input class='input-quantity' type="text" name="quantity[]" value='<{if $sub_coupon}>0<{else}>1<{/if}>' readonly 
+								data-item-id='<{$coupon.id}>' 
+								data-stock = '<{$coupon.qty}>' >
+							<i class='fa fa-plus-square'></i>
+
+							<div class='stock'>
+								<{if $coupon.qty<=0}>
+									Sold Out
+								<{elseif $coupon.qty>10}>
+									<{$lang->stock}>:充足
+								<{else}>
+									仅剩:<{$coupon.qty}>
+								<{/if}>
+							</div>
+					</div>
+
+				<!--	<p class='description'>
+						<{$coupon.coupon_summery_description}> 
+					</p> -->
+					
+				</div>
+
+
+				<{foreach from=$sub_coupon item=citem}>
+					<div class="coupon_option"  >
+
+						<div style="display: inline-block;width: 70%">
+							<p class='title'>
+								<{$citem.title|truncate_cn:120:'..'}>
+							</p>
+
+							<p class='price'>
+								<span>$<{$citem.customer_amount}>&nbsp;&nbsp;<s>$<{$citem.original_amount}></s></span>
+							</p>	
+						</div>
+
+						<div style="float:right;" class="quantity">
+								<i class='fa fa-minus-square'></i>
+								<input class='input-quantity' type="text" name="quantity[]" value='0' readonly 
+									data-item-id='<{$citem.id}>' 
+									data-stock = '<{$citem.quantity}>'>
+								<i class='fa fa-plus-square'></i>
+								
+
+								<div class='stock'>
+									<{if $citem.quantity<=0}>
+										Sold Out
+									<{elseif $citem.quantity>100}>
+										<{$lang->stock}>:充足
+									<{else}>
+										仅剩:<{$citem.quantity}>
+									<{/if}>
+								</div>
+						</div>
+                 <!--
+						<p class='description'>
+							<{$citem.product_description}> 
+						</p> -->
+					</div>
+
+				<{/foreach}>
+
+			</div>
+			<{include file='mobile/couponhtm/sec_explain7m.htm'}>
+		</div>
+
+		<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+		<div class="h2"></div>
+
+		<div class="comm-btn">
+			<div class="left">
+				<{include file='mobile/coupon_detail/sec_favandstore.htm'}>
+			</div>
+			<div class="right">
+				
+				 <{if $coupon.business.allow_buy_link_customelize}>
+							<!--	<{if $coupon.buy_link}>有定制链接<{else}>无定制链接<{/if}> -->
+								
+								<{if $coupon.buy_link}>
+							  	 <a  href="<{$coupon.buy_link}>"  style="width: 100%;" class="a1 "><{$lang->buy_now}></a>
+								<{else}>
+								<a  onClick='add_carts();' style="width: 100%;" class="a1 "><{$lang->buy_now}></a>
+								<{/if}>
+				<{else}>
+				<a  onClick='add_carts();' style="width: 100%;" class="a1 "><{$lang->buy_now}></a>
+				<{/if}>
+			</div>
+		</div>
+	</section>
+<script>
+
+init_page();
+ var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+</script>
+
+	<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+	 $('img.lazyload').unveil();
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+	
+
+	
+
+
+	
+
+

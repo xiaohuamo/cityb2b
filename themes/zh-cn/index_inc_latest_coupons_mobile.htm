@@ -1,0 +1,25 @@
+<{foreach from=$latest_coupons item=item}>
+<li>
+	
+	<div class="pic">
+	<a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+		<img class="lazyload"  src="<{$UPLOAD_PATH}><{$item.pic|image:220:140:'cut'}>" alt="">
+	</a>
+</div>
+<h4 style="    font-size: 0.45rem;    margin-top: 0.5rem;    height: 1.5rem;    margin-left: 0.1rem;    margin-right: 0.1rem;"><a  href="<{$http_root_www}>coupon1/<{$item.id}>?reftag=<{$reftag}>">
+ 
+			<p><{$item.title|truncate_cn:70:'...'}></p>
+		</a></h4>
+  <div class='row' style="line-height: 25px;">
+<span  class='col-xs-4' style="color:#f30;text-align: left;font-size: 14px;font-weight: bold;"><{$item.price1}></span>
+<s class='col-xs-3' style="text-align: center;color:#bbb;font-size: 12px;"> <{$item.price2}></s> 
+<span class='col-xs-5' style="color:#00b7a5;text-align: right;font-size: 12px;"> <i class='fa fa-heart'></i><{$item.hits}></span>
+</div>
+		
+		
+	
+</li>
+
+
+		  
+<{/foreach}>

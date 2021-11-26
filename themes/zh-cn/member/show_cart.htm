@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+    <meta charset="UTF-8">
+    <title>购物车-Checkout</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+    <link rel="stylesheet" href="<{$SKIN_PATH}>css/luobo.css" />
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+
+    <style type="text/css">
+      #address-validate-btn{
+        color: #FFF;
+        background-color: #64ca64;
+        padding: 10px
+      }
+      #geocode-result ul{
+          margin-top: 20;
+          font-size: 12px;
+          list-style: none;
+      }
+       #geocode-result li{
+          margin: 12px 0px;
+          height: 30px;
+          line-height: 30px;
+      }
+       #geocode-result label{
+          background: #eee;
+          width: 50%;
+          padding: 3px;
+          display: inline-block;
+      }
+       #geocode-result input{
+          width: auto;
+          height: auto;
+          padding: 0px;
+      }
+    </style>
+</head>
+
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+
+
+    <!-- inedx -->
+      <{if !$data}>
+     <!-- inedx -->
+    <div class="main bg-fff">
+        
+        <div class="wp">
+            <div class="order-ok">
+                <p style='line-height: 300px'><{$lang->nothing_in_shopping_cart}></p>
+            </div>
+        </div>
+    </div>
+    <!-- inedx -->
+      <{else}>
+    <section class='shopping-cart'>
+  	<div class="main bg-fff">
+  		<div class="m-cur-shop">
+  			<div class="wp">
+  				<span class="car">
+          <a href="<{$http_root_www}>member/showcart">
+            <{if !$showSingleBusiness}>
+                 <{$lang->my_cart}> 
+            <{else}>
+
+              <{if !$mixedItemFromBusinesses}>
+                 <{$lang->view_item_from_all_business}>
+              <{else}>
+                 <{$lang->my_cart}> 
+              <{/if}>
+
+            <{/if}>
+           
+          </a>
+          </span>
+
+
+
+  				<ul class="ul-shop1">
+  					<li class="first on">
+  						<div class="items">
+  							<span class="shape1 shape go-shoppingcart-btn"><em></em><i></i></span>
+  							<p><{$lang->shopping_cart}></p>
+  						</div>
+  					</li>
+  					<li>
+  						<div class="items">
+  							<span class="shape2 shape go-checkout-btn"><em></em><i></i></span>
+  							<p><{$lang->order_confirm}></p>
+  						</div>
+  					</li>
+  					<li>
+  						<div class="items">
+  							<span class="shape3 shape"><em></em><i></i></span>
+  							<p><{$lang->payment}></p>
+  						</div>
+  					</li>
+  					<li class="last">
+  						<div class="items">
+  							<span class="shape4 shape"><em></em><i></i></span>
+  							<p><{$lang->complete}></p>
+  						</div>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		<div class="wp">
+  			<div class="shop-con">
+  				<form action="">
+          <{foreach from=$data item=row}>
+		    
+  					<table class="shop-table">
+  						<tr class="first">
+  							<th width="600px">
+  								<div class="check">
+                    <a href="<{$http_root_www}>member/showcart?business_userid=<{$row.businessUserId}>">
+    									<label for="" class="js-shop1"></label>
+    									<input type="checkbox">
+                    </a>
+  									<a href="<{$http_root_www}>member/showcart?business_userid=<{$row.businessUserId}>" class="store"><{$row.businessUserName}></a>
+  								</div>
+  							</th>
+  							<th width="150px"><{$lang->unit_price}></th>
+  							<th width="250px"><{$lang->quantity}></th>
+  							<th width="100px"><{$lang->subtotal}></th>
+  							<th width="100px"></th>
+  						</tr>
+              
+			  <{foreach from=$row.items item=item}>
+				
+    						<tr>
+    							<td>
+    								<div class="td-inner">
+    								<!-- 	<div class="check">
+    										<label for="" class="js-shop2"></label>
+    										<input type="checkbox">
+    									</div> -->
+    									<div class="td-con">
+    										<div class="img">
+    											<img src="<{$UPLOAD_PATH}><{$item.pic}>" style='margin: auto;max-width: 80px;max-height: 80px;'>
+    										</div>
+    										<div class="txt">
+											  <{if $langStr=='en'}> <{if $item.coupon_name_en}><{$item.coupon_name_en}><{else}><{$item.coupon_name}><{/if}><{else}><{$item.coupon_name}> <{/if}>
+											  
+    										
+                              <{if $item.bonusType=="10"}>
+                                  <p><{$item.seat_des}></p>
+                                  <p>
+                                      <i class='fa fa-clock-o countdownclock' style='color:green' data-action-url='<{$deleteSingleUrl}>id=<{$item.id}>'
+                                      data-endtime='<{$item.createTime}>'></i>
+                                  </p>
+                              <{else}>
+                                  <p><{$item.guige_des}></p>
+                              <{/if}>
+    										</div>
+    									</div>
+    								</div>
+    							</td>
+    							<td><span class="unit" data-couponid='<{$item.couponid}>' data-id='<{$item.id}>'>
+                    <!--显示单价 通过在后台装载数据，该产品是否有批发属性和>=批发数量-->
+                        <{if $item.couponid != ''&&$item.quantity>=$item.amount}>
+
+                             <{if $item.quantity<$item.amount1}>
+                                <{$item.price}>
+                             <{/if}>
+                            <{if $item.quantity>=$item.amount1 && $item.quantity<$item.amount2}>
+                                <{$item.price1}>
+                             <{/if}>
+                            <{if $item.quantity>=$item.amount2}>
+                                <{$item.price2}>
+                             <{/if}>
+                        <{else}>
+                            <{$item.single_amount}>
+                        <{/if}>
+                  </span></td>
+
+    							<td>
+    								<div class="g-num">
+    									<span>
+                            <{if $item.bonusType=="10"}>
+                                <input value="1" class="num shopping-cart-item-qty"  data-couponid="<{$item.couponid}>" data-id='<{$item.id}>' data-single-amount='<{$item.single_amount}>' data-whole-sale="<{$item.price}>" data-whole-quantity="<{$item.amount}>" data-whole-sale1="<{$item.price1}>" data-whole-quantity1="<{$item.amount1}>" data-whole-sale2="<{$item.price2}>" data-whole-quantity2="<{$item.amount2}>" readonly>
+                            <{else}>
+                                <i class="min minusBtn">-</i>
+                                <input value="<{$item.quantity}>" class="num shopping-cart-item-qty" data-limit-qty="<{$item.perCustomerLimitQuantity}>" data-maincouponid="<{$item.main_coupon_id}>"  data-subid="<{$item.sub_coupon_id}>" data-couponid="<{$item.couponid}>" data-id='<{$item.id}>' data-single-amount='<{$item.single_amount}>' data-whole-sale="<{$item.price}>" data-whole-quantity="<{$item.amount}>" data-whole-sale1="<{$item.price1}>" data-whole-quantity1="<{$item.amount1}>" data-whole-sale2="<{$item.price2}>" data-whole-quantity2="<{$item.amount2}>" readonly>
+                                <i class="add plusBtn">+</i>
+                            <{/if}>
+    									</span>
+    								</div>
+    							</td>
+    							<td><span class="sub sub-total" data-couponid='<{$item.couponid}>' data-id='<{$item.id}>'>00.00</span></td>
+    							<td><a href = '<{$deleteSingleUrl}>id=<{$item.id}>' class="delete"></a></td>
+    						</tr>
+							
+                <{/foreach}>
+            
+  					</table> 
+  					<{/foreach}>      
+
+  					<div class="select-all">
+  						<!-- <div class="choice">
+  							<div class="check">
+  								<label for="" class="js-shop3"></label>
+  								<input type="checkbox">
+  								<span>全选</span>
+  							</div>
+  							<div class="remove">
+  								<a class="delete">删除</a>
+  							</div>
+  						</div> -->
+               <span class='go-back-btn goback'><{$lang->continue_shopping}></span>
+
+  						<div class="select">
+  							<span> <{$lang->total_item}>: <em class='shopping-cart-totalQty'>  </em></span>
+  							<span class="other"><{$lang->total_amount}>:<em class='shopping-cart-total' id='shopping-cart-total'>$00.00</em></span>
+  							<a class = 'go-checkout-btn' class="js-enter"><{$lang->checkout}></a>
+  						</div>
+
+  					</div>
+  				</form>
+  			</div>
+  		</div>
+  	</div>
+    </section>
+
+    <style type="text/css">
+      .ajaxFormResponse button{
+        display: none;
+      }
+    </style>
+
+    <div class='ajaxFormResponse' style='background: #FD5001 ;text-align: center;line-height: 75px;font-size: 25px'></div>
+    <form method="post" action="<{$http_root_www}>payment/orderpaymentprocess/checkout" class='ajaxForm'>
+    <section class='checkout-confirmation' style="display: none;">
+        <div class="main bg-fff">
+        <div class="m-cur-shop sure">
+            <div class="wp">
+                <span class="car"><{$lang->fill_order_info}></span>
+                <ul class="ul-shop1">
+                    <li class="first">
+                        <div class="items">
+                            <span class="shape1 shape go-shoppingcart-btn"><em></em><i></i></span>
+                            <p><{$lang->shopping_cart}></p>
+                        </div>
+                    </li>
+                    <li class="two on ">
+                        <div class="items">
+                            <span class="shape2 shape go-checkout-btn"><em></em><i></i></span>
+                            <p><{$lang->order_confirm}></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="items">
+                            <span class="shape3 shape"><em></em><i></i></span>
+                            <p><{$lang->payment}></p>
+                        </div>
+                    </li>
+                    <li class="last">
+                        <div class="items">
+                            <span class="shape4 shape"><em></em><i></i></span>
+                            <p><{$lang->complete}></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="wp">
+            <div class="m-sure-lb">
+
+               <div class="sure-row">
+                    <div class="addr-con">
+
+                      <h3 class="addr-tit">
+                        &bull; <{$lang->deliver_address}>
+                        <{if $requireIdCard}>
+                        <small>（中国大陆用户需要填写真实姓名并可以提供相应身份证。否则海关无法清关）</small> 
+                        <{/if}>    
+                        <a href="<{$http_root_www}>member/delivery_address"><{$lang->manage_address}></a> 
+                      </h3>
+
+                      <div class='addr-list'>
+                         <ul class="ul-addr-con">
+                                 <{foreach from=$delivery_info_list item=item}>
+                                    <li  <{if $item.isDefaultAddress}>  class='default' <{/if}> data-id='<{$item.id}>' data-first-name ='<{$item.first_name}>' data-last-name='<{$item.last_name}>' data-address='<{$item.address}>' data-phone='<{$item.phone}>' data-email='<{$item.email}>' data-id-number='<{$item.id_number}>' data-id='<{$item.id}>'>
+
+                                        <div class="left">
+                                            <span class="home" ><{$item.first_name}> <{$item.last_name}></span>
+                                            <span class="site"><{$item.address}> </span>
+                                            <span class="name"> <{$item.email}></span>
+                                            <span class="tel"><{$item.phone}></span>
+
+                                             <{if $item.isDefaultAddress}> 
+                                             <span class="moren">默认地址</span>
+                                             <{/if}>
+                                        </div>
+                                    </li>
+                                <{/foreach}>
+
+                                 <li class='new'  data-id='0' id="addressID">
+                                    <div class="left" >
+                                        <span class="home"><{$lang->new_address}></span>
+                                        <span class="site"></span>
+                                        <span class="name"> </span>
+                                        <span class="tel"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                      </div>
+                      </div>
+                </div>
+
+
+                <div class='sure-row'>
+                  <div class='addr-con'>
+                      <h3 class="addr-tit">
+                        <{$lang->deliver_address}>
+                      </h3>
+
+                      <!-- 新增收货地址 -->
+                        <div class="new-addr">
+                            <div class="con">
+                                    <div class="items">
+                                        <label for="">
+                                            <span><{$lang->last_name}><em>*</em></span>
+                                             <input type="text" class="form-control" id="lastname" placeholder="<{$lang->last_name}>" name="delivery_last_name" >
+                                        </label>
+                                       
+                                    </div>
+
+                                    <div class='items'>
+                                         <label for="">
+                                            <span><{$lang->first_name}><em>*</em></span>
+                                           <input type="text" class="form-control" id="firstname" placeholder="<{$lang->first_name}>"  name="delivery_first_name" >
+                                        </label>
+                                    </div>
+
+                                    <div class="items">
+                                        <label for="">
+                                            <span><{$lang->telephone}><em>*</em></span>
+                                             <input type="tel" class="form-control" id="phone" placeholder="<{$lang->telephone}>"   name="delivery_phone">
+                                        </label>
+                                    
+                                    </div>
+
+                                    <div class='items'>
+                                         <label for="">
+                                            <span><{$lang->mail}><em></em></span>
+                                            <input type="email" class="form-control" id="email" placeholder="Email" name="delivery_email">
+                                        </label>
+                                    </div>
+
+                                     <div class='items' <{if !$requireIdCard}> style='display:none' <{/if}>>
+                                         <label for="">
+                                            <span><em></em></span>
+                                            <input type="text" class="form-control" id="id_number" placeholder="身份证号,中国大陆邮递必填" name="delivery_id_number">
+                                        </label>
+                                    </div>
+
+                                    <div class="items">
+                                        <label for="">
+                                            <span><{$lang->address}><em>*</em></span>
+                                            <input type="text" class="form-control" id="address" placeholder="<{$lang->address}>"   name="delivery_googleMap">
+
+                                        </label>
+                                        <em id ='address-validate-btn'><{$lang->verified_address}></em>
+                                        <div id='geocode-result'></div>
+                                    </div>
+
+
+                                    <div>
+                                        <input type='hidden' class="addr_house_number" name='addr_house_number'>
+                                        <input type='hidden' class="addr_street" name='addr_street'>
+                                        <input type='hidden' class="addr_city" name='addr_city'>
+                                        <input type='hidden' class="addr_state" name='addr_state'>
+                                        <input type='hidden' class="addr_country" name='addr_country'>
+                                        <input type='hidden' class="addr_post_code" name='addr_post_code'>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- 新增收货地址 end -->
+                  </div>
+                </div>
+
+
+
+
+ <{if $business_delivery_info.EvoucherOrrealproduct=='realproduct' || $business_delivery_info.EvoucherOrrealproduct=='restaurant_menu'}>
+          
+                <div class="sure-row1">
+                    <div class="addr-con">
+
+                       <h3 class="addr-tit">&bull; <{$lang->deliver_option}></h3>
+
+                        <div class="take-me">
+                                
+                                 <{if $business_delivery_info.deliver_enable}>
+                                 <span class='me  business-deliver deliver-option' data-value='1'><{$lang->business_deliver}></span> 
+                                 <{/if}>
+
+                                 <{if $business_delivery_info.pickup_enable}>
+                                 <span class="me  self-pickup deliver-option" data-value='2'><{$lang->self_pickup}></span>
+                                 <{/if}>
+                        </div>
+                        
+                        <{if $business_delivery_info.deliver_enable}>
+                        <div class="addr-take  addr-desc deliver-option-desc">
+                          <div class='desc'>
+
+                                <{if $dispCenterUserSelectedDeliveryDate}>
+                                  <div>
+                                    <strong style="color:green">
+                                      统配时间： <em><{$dispCenterUserSelectedDeliveryDate_display}></em>
+                                    </strong>
+                                  </div>
+                                 
+                                <{/if}>
+
+                                <{if $business_delivery_info.amount_for_free_delivery>0}>
+                                            <strong>
+                                                <label><{$lang->free_freight_amount}>>=</label>
+                                                $<{$business_delivery_info.amount_for_free_delivery}>
+                                            </strong>
+                                <{/if}>
+                                
+                                <{$business_delivery_info.delivery_description}>
+
+                                <small>（ <{$lang->notice_deliver_fee_subject_to_condition}> ）</small>
+                            </div>
+                        </div>
+                        <{/if}>
+
+                        <{if $business_delivery_info.pickup_enable}>
+                         <div class="addr-take pickup-list deliver-option-desc" >
+                            <div class='desc' ><{$business_delivery_info.pickup_des}></div>
+                            <ul class="ul-addr-con">
+                                <{if !$staff_list}>
+                                    <li class="ok" data-value='<{$businessUser.id}>'>
+                                        <div class="left" >
+                                            <span class="home"><{$lang->pickup_nickname}>：<{$businessUser.contactPersonNickName}></span>
+                                            <span class="name"><{$businessUser.contactPersonFirstname}> <{$businessUser.contactPersonLastname}></span>
+                                            <span class="tel"><{$businessUser.contactMobile}></span>
+                                            <span class="site"><{if $businessUser.googleMap}><{$businessUser.googleMap}><{else}><{$lang->service_scope_national}><{/if}></span>
+                                        </div>
+                                    </li>
+                                <{/if}>
+
+                                <{foreach from=$staff_list item=item}>
+                                    <li  data-value='<{$item.id}>'>
+                                        <div class="left" >
+                                            <span class="home"><{$lang->pickup_nickname}>：<{$item.contactPersonNickName}></span>
+                                            <span class="name"><{$item.contactPersonFirstname}> <{$item.contactPersonLastname}></span>
+                                            <span class="tel"><{$item.contactMobile}></span>
+                                            <span class="site"><{if $item.googleMap}><{$item.googleMap}><{else}><{$lang->service_scope_national}><{/if}></span>
+                                        </div>
+                                    </li>
+                                <{/foreach}>
+
+                            </ul>
+                        </div>
+                        <{/if}>
+                          <input  name="dispCenterUserSelectedDeliveryDate" type="hidden"  value="<{$dispCenterUserSelectedDeliveryDate}>"  />
+                    </div>
+                </div>
+                <{elseif $business_delivery_info.EvoucherOrrealproduct=='evoucher'}>
+                  <div class="sure-row1" style="display: none">
+                    <div class="addr-con">
+                       <h3 class="addr-tit">&bull; <{$lang->deliver_option}></h3>
+                        <div class="take-me" >
+                          <span class="me on" data-value='0'><{$lang->no_need_delivery}></span>
+                      </div>
+                    </div>
+                </div>
+                <{/if}>
+
+                <div class="sure-row2 payment-section" >
+                    <div class="addr-con ">
+                        <h3 class="addr-tit">&bull; <{$lang->payment_option}></h3>
+
+
+                        <ul class="ul-pay">
+                           <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+                               <li class='payment-creditcard payment-option' data-value='creditcard'><{$lang->pay_creditcard}></li>
+                              <{/if}>
+                             <!-- 
+                            <{if $business_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+                              <li class="payment-paypal payment-option" data-value='paypal'><{$lang->pay_paypal}></li>
+                            <{/if}>
+-->
+                            <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+                              <li class='payment-offline payment-option' data-value='offline'><{$lang->pay_offline}></li>
+                            <{/if}>
+
+                             <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+                              <li class='payment-royalpay payment-option' data-value='royalpay'><{$lang->pay_wechat}></li>
+
+                              <li class='payment-alipay payment-option' data-value='alipay'><{$lang->Alipay}></li>
+                            <{/if}>
+<!--
+                             <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+                              <li class='payment-hcash payment-option' data-value='hcash'><{$lang->pay_hcahs}></li>
+                             <{/if}> -->
+
+                             
+                        </ul>
+
+
+                        <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+                        <div class='creditcard-payment-des payment-option-desc'>
+
+                          <{$lang->notice_creditcard_pay_desc}><br>
+                          <img src="<{$SKIN_PATH}>images/accepted_card.png">
+
+                          <br>
+                          <{if $card_on_file}>
+                            <div>
+                                <span>Use Card On File </span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input name='use_card_on_file' type="checkbox" id='use_card_on_file'>
+                                <label for='use_card_on_file'><{$card_on_file}></label>
+                            </div>
+                          <{/if}>
+                          <br>
+
+                          <div  class="pay-style">
+                              <div class='items'>
+                                  <label for="">
+                                      <span><em>*</em>Number</span>
+                                      <input name='card_number' type="text"  class="num">
+                                  </label>
+                              </div>
+
+                              <div class="items">
+                                  <label for="">
+                                      <span><em>*</em>Expiration Date</span>
+                                      <select name="card_expire_month" class="month">
+                                          <{for $m=1 to 9}>
+                                            <option value="<{$m}>">0<{$m}></option>
+                                          <{/for}>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                      </select>
+                                      <span style="width:5px">/</span>
+                                      <select name="card_expire_year" class="year">
+                                          <{for $y=16 to 46}>
+                                            <option value="<{$y}>"><{$y}></option>
+                                          <{/for}>
+                                      </select>
+                                  </label>
+                              </div>
+                              <div class="items">
+                                  <label for="">
+                                      <span><em>*</em>Security Code</span>
+                                      <input type="text" name='card_security_code' class="code" >
+                                      <a href="http://www.dcporder.com/ccv.htm" target='_blank' class="what">What is this?</a>
+                                  </label>
+                              </div>
+                          </div>
+                        </div>
+                        <{/if}>
+
+                        <{if $business_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+                          <div class='paypal-payment-des payment-option-desc' >
+                            <{$lang->notice_paypal_pay_desc}>
+                            <br> <img src="<{$SKIN_PATH}>images/payment/paypal.gif" height="50" alt="Paypal" />
+                          </div>
+                        <{/if}>
+
+                        <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+                        <div class='offline-payment-des payment-option-desc' >
+                          <{$lang->pay_offline}>:<{$business_delivery_info.offline_pay_des}></div>
+                        <{/if}>
+
+                         <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+                          <div class='royalpay-payment-des payment-option-desc' >
+                            <{$lang->notic_wechat_pay_desc}>
+                            <br>
+                             <img src="<{$SKIN_PATH}>images/payment/wechat_pay.jpg" alt="wechat_pay" />
+                          </div>
+
+                           <div class='alipay-payment-des payment-option-desc' >
+                           <{$lang->notic_alipay_desc}>
+                            <br>
+                             <img src="<{$SKIN_PATH}>images/payment/alipay.jpg" alt="alipay" />
+                          </div>
+                        <{/if}>
+
+                         <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+                             <div class='hcash-payment-des payment-option-desc' >
+                              <{$lang->notice_hcash_pay_desc}>
+                              </div>
+
+                             <div class='hcash-pay-box'>
+
+                                <div class='top-info'>
+                                    <h1>Hcash 支付 </h1>
+                                    <p>请按照当前比率支付相应的Hcash，并填写支付凭证。</p>
+                                    <p>提示：实时交易价格汇率有效5分钟。请在5分钟内完成钱包转账并提交订单</p>
+
+                                    <div style="line-height: 50px;font-size: 15px;">
+                                      <span>
+                                         应付澳元：$<em class='grand-total-display'></em>
+                                      </span>
+
+                                      <span>
+                                         折合人民币：￥<em class='cnyPrice'></em>
+                                      </span>
+                                       <br>
+
+                                       <span>
+                                         实时Hcash Rate：<em class='hcashRate'></em>
+                                      </span>
+                                       <br>
+                                       
+                                       <span>
+                                         应付HCash：<em class='hcashAmount'></em>
+                                      </span>
+                                      <br>
+                                      <span class='hcashRefreshBtn'><span class='hcashRefreshText'>汇率锁定</span> <small class='timer'> </small> </span>
+                                    </div>
+                                </div>
+
+                                <div class="pay-style">
+                                   <div class="items">
+                                      <label for="" style="text-align:center;width: 100%">
+                                          商家钱包地址:HP34XL7oy9bznTZHHK1s4kaqQcHHnxNndx
+                                      </label>
+                                    </div>
+
+                                 <!--  <div class="items">
+                                      <label for="">
+                                          <span><em>*</em>钱包转账交易号</span>
+                                          <input type="text" class='hcashOrderId name' name='hcashOrderId' >
+                                      </label>
+                                  </div>
+                                  <div class="items">
+                                      <label for="">
+                                          <span><em>*</em>请输入提示标签</span>
+                                          <input type="text" class ='hcashOrderTag num' name='hcashOrderTag'>
+                                      </label>
+                                  </div> -->
+                                 </div>
+
+                                  <input type="hidden" name='hcashRate'>
+                                  <input type="hidden" name='hcashAmount'>
+
+                                 <div class='note'>
+                                   <p>提交订单后 HRS支付团队将会审核是否确认支付，成功付款后，HSR团队会向您发送通知邮件并安排物流</p>
+                                 </div>
+
+                                 <div class='footer-btn'>
+                                   <span class='btn-yes' onClick="hcashSubmit();" style="background-color:#FD5001 ">确认提交订单</span>
+                                   <span class='btn-no' onClick="$('.hcash-pay-box').hide()" style="background-color:#f30">取消订单</span>
+                                 </div>
+                               </div>
+
+                              <style type="text/css">
+                                  .hcash-pay-box{
+                                      width: 500px;
+                                      height: 600px;
+                                      border: 1px solid #data-address;
+                                      position: fixed;
+                                      top: 10%;
+                                      background-color: #eee;
+                                      z-index: 99;
+                                      left: 30%;
+                                      display: none;
+                                  }
+                                  .hcash-pay-box .top-info,.hcash-pay-box .pay-style,.hcash-pay-box .note{
+                                    margin: 15px 30px;padding:10px;
+                                  }
+
+                                  .top-info .hcashRefreshBtn{
+                                      padding: 3px 20px;
+                                      color: #fff;
+                                      background-color: #29b729;
+                                  }
+
+                                  .top-info .grand-total-display{
+                                      color:#2bb8aa;
+                                  }
+
+                                  .top-info .hcashRate{
+                                      color:#c90;
+                                  }
+
+                                  .top-info .hcashAmount{
+                                      font-weight: bolder;
+                                      color:#f30;
+                                      font-size: 50px;
+                                  }
+
+                                   .hcash-pay-box .footer-btn{
+                                      position: absolute;
+                                      bottom: 20px;
+                                      width: 100%;
+                                      text-align: center;
+                                   }  
+
+                                   .footer-btn span{
+                                     display: inline-block;
+                                     margin: 10px;
+                                     padding:10px  40px;
+                                     width: 120px;
+                                     color: #fff;
+                                     font-size: 15px;
+                                   }
+
+                              </style>
+                           <{/if}>
+                    </div>
+                </div>
+
+                <div class="sure-row3">
+                   
+                    <div class="addr-con">
+                         <h3 class="addr-tit">&bull; <{$lang->item_list}></h3>
+                   <{if $data}>
+				   <{foreach from=$data item=row}>
+							
+                        <table class="shop-table">
+                            <tr class="first">
+                                <th width="600px">
+                                    <div class="check">
+                                        <a  href = '<{$http_root_www}>store/<{$businessUser.id}>' target='_blank' class="store"><{$row.businessUserName}></a>
+                                    </div>
+                                </th>
+                                <th width="200px"><{$lang->unit_price}></th>
+                                <th width="200px"><{$lang->quantity}></th>
+                                <th width="200px"><{$lang->subtotal}></th>
+                            </tr>
+
+
+                           <{foreach from=$row.items item=item}>
+							
+                            <tr>
+                                <td>
+                                    <div class="td-inner">
+                                        <div class="td-con">
+                                            <div class="img">
+                                                <img src="<{$UPLOAD_PATH}><{$item.pic}>" style='max-width: 80px;max-height: 80px;'>
+                                            </div>
+                                            <div class="txt">
+                                                <a href="<{$http_root_www}>coupon1/<{$item.main_coupon_id}>" target='_blank'>											  <{if $langStr=='en'}> <{if $item.coupon_name_en}><{$item.coupon_name_en}><{else}><{$item.coupon_name}><{/if}><{else}><{$item.coupon_name}> <{/if}>
+</a>
+
+                                               <{if $item.bonusType=="10"}>
+                                                    <input id="<{$item.id}>_seat_des" name="seat_des[]" type="hidden"  value="<{$item.seat_des}>"  />
+                                                    <input id="<{$item.id}>_seat_id" name="seat_id[]" type="hidden"  value="<{$item.seat_id}>"  />
+                                                    <p><{$item.seat_des}></p>
+                                                    <p>
+                                                        <i class='fa fa-clock-o countdownclock' style='color:green' data-action-url='<{$deleteSingleUrl}>id=<{$item.id}>'
+                                                        data-endtime='<{$item.createTime}>'></i>
+                                                    </p>
+                                                <{else}>
+                                                    <input id="<{$item.id}>_guige_des" name="guige_des[]" type="hidden"  value="<{$item.guige_des}>"  />
+                                                    <input id="<{$item.id}>_guige_ids" name="guige_ids[]" type="hidden"  value="<{$item.guige_ids}>"  />
+                                                    <p><{$item.guige_des}></p>
+                                                <{/if}>
+
+                                                <p class='pickupAndDeliverExceptionCheck' 
+                                                data-pickup-avaliable='<{$item.pickup_avaliable}>'
+                                                data-deliver-avaliable='<{$item.deliver_avaliable}>'
+                                                data-type='<{$item.EvoucherOrrealproduct}>'
+                                                data-item-it='<{$item.id}>'
+                                                data-sales-user-list='<{$item.sales_user_list}>'
+                                                >
+                                                  
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="unit" data-couponid='<{$item.couponid}>' data-id='<{$item.id}>'>
+                                         <{if $item.couponid != ''&&$item.quantity>=$item.amount}>
+                                             <{if $item.quantity<$item.amount1}>
+                                                <{$item.price}>
+                                             <{/if}>
+                                            <{if $item.quantity>=$item.amount1 && $item.quantity<$item.amount2}>
+                                                <{$item.price1}>
+                                             <{/if}>
+                                            <{if $item.quantity>=$item.amount2}>
+                                                <{$item.price2}>
+                                             <{/if}>
+                                        <{else}>
+                                            <{$item.single_amount}>
+                                        <{/if}>
+                                </span></td>
+                                <td>
+                                    <div class="g-num">
+                                        <span>
+                                           <input class='num checkout-confirmation-qty' data-id='<{$item.id}>' readonly name="quantity[]" value='1'>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><span class="sub sub-total"   data-couponid='<{$item.couponid}>' data-id='<{$item.id}>'>00.00</span></td>
+
+                                <input type="hidden" name="ids[]" value="<{$item.id}>" />
+                                <input type="hidden" name="main_ids[]" value="<{$item.main_coupon_id}>" />
+                                <input type="hidden" name="sub_ids[]" value="<{$item.sub_coupon_id}>" />
+                                <input type="hidden" name="sub_or_main[]" value="<{$item.sub_or_main}>" />
+								
+								 <{if $langStr=='en'}> 
+										 <{if $item.coupon_name_en}>
+										 
+												<input type="hidden" name="coupon_names[]" value="<{$item.coupon_name_en}>" />
+										 
+										 <{else}>
+										 
+												<input type="hidden" name="coupon_names[]" value="<{$item.coupon_name}>" />
+										 
+										 <{/if}>
+								 
+								 <{else}>
+								 
+									<input type="hidden" name="coupon_names[]" value="<{$item.coupon_name}>" />
+
+
+								 <{/if}>
+											 
+                                
+                                <input type="hidden" name="single_amount[]"  value="<{$item.single_amount}>"/>
+                                <input type="hidden" name="original_amount[]"  value="<{$item.original_amount}>"/>
+                                <input type="hidden" name="commission_free[]"  value="<{$item.commission_free && $item.onSpecial}>"/>
+                                <input type="hidden" name="menu_id[]" value="<{$item.menu_id}>" />
+                                <input type="hidden" name="sidedish_menu_id[]"  value="<{$item.sidedish_menu_id}>"/> 
+                            </tr>
+
+                            <{/foreach}>
+                              <{/foreach}>
+                            <{/if}>
+
+                            <input type="hidden" name="business_userId" value="<{$businessUser.id}>" />
+                            <input type="hidden"  id ="total_amount" name="total_amount" class="input-text"  value="0" /> 
+                            <input type="hidden"  id ="booking_total"  name="booking_total" class="input-text"  value="0" /> 
+                            <input type="hidden"  id ="delivery_fee"  name="delivery_fee" class="input-text"  value="0"  /> 
+                            <input type="hidden"  id ="promotion_total" name="promotion_total" class="input-text"  value="0" /> 
+                            <input type="hidden"  id ="promotion_id" name="promotion_id" class="input-text"  value="0"  /> 
+                            <input type="hidden"  id ="confirmedMoneyAppliedAmount" name="confirmedMoneyAppliedAmount" class="input-text"  value="0"  /> 
+                            <input type="hidden"  id ="total_amount_inc_delivery_fees" name="total_amount_inc_delivery_fees" class="input-text"  value="0" /> 
+                            <input type="hidden"  id ="surcharge" name="surcharge" class="input-text"  value="0" />  
+
+                            <input type="hidden"  id ="deliver_option" name="deliver_option" value="0" /> 
+                            <input type="hidden"  id ="business_staff_id" name="business_staff_id" value="0" /> <!-- pickup-list -->
+                            <input type="hidden"  id ="payment" name="payment" value="paypal" />
+                            
+                            <input type="hidden"  id ="specialGroupPinCheckoutUserGroupId" name="specialGroupPinCheckoutUserGroupId" value="<{$specialGroupPinCheckoutUserGroupId}>" />
+
+                        </table>
+                        <div class="leave-word">
+                            <div class="col-l">
+                                <label for="" class="leave1">
+                                    <input type="text" name ='message_to_business' placeholder="<{$lang->message_to_business}> ">
+                                </label>
+
+                            </div>
+                            <div class="col-r">
+                                <p class='promotion-loading' style="color: #fff;background-color: #5bc0de;
+                                border-color: #46b8da;padding: 5px 20px;"><{$lang->enter_promotion_code}></p>
+								
+								
+                               <label for="" class="leave2" style="    height: auto;">
+							   
+							   	<{if !$promotion_code_list}>
+								
+                                    <input type="text" class="form-control" id ="promotion_code" name="promotion_code" placeholder="<{$lang->enter_promotion_code}>">
+                                 <{else}>    
+										 
+											
+
+																<div class="left">
+																	 <select   id ="promotion_code" name="promotion_code" style="    width: 82%;" >
+																	   <{foreach from=$promotion_code_list item=item}>
+																			 <option  value ="<{$item.promotion_code}>" selected="selected">
+																			   <{$item.promotion_des}>-$<{$item.value}>优惠券 
+																			</option>
+																		   
+																	  
+																	   <{/foreach}> 
+																	   
+																	  </select>
+																	
+																	
+																</div>
+														
+												 
+												 
+												
+											   
+										  
+										  
+									  <{/if}>  
+
+
+								   <div class="apply-button" type="button" onClick="check_promotion_code();"><{$lang->apply}></div>
+                                </label>
+								
+								
+                                <br>
+
+                                <{if $moneyBalance>0}>
+                                  <p class="money-loading" style="color: #fff;background-color: #5bc0de;
+                                    border-color: #46b8da;padding: 5px 20px;"> <{$lang->available_fund}>：$<{$moneyBalance}></p>
+                                   <p class='use-money-error'></p>
+                                  <label for="" class="leave2">
+                                      <input type="text" aria-label="Amount (to the nearest dollar)" placeholder="<{$lang->enter_money}>" id ="amountApply" name="amountApply" data-available-amount='<{$moneyBalance}>'>
+                                      <div class="apply-button"  onClick="applyPocketMoney();"><{$lang->apply}></div>
+                                  </label>
+                                  <{/if}>
+                            </div>
+                           
+                        </div>
+                        <div class="total-shop">
+                            <p>
+                                <span class="t1"> <{$lang->total_item}><em class='shopping-cart-totalQty'>  </em></span>
+                                <span class="t2"><{$lang->product_total}>:</span>
+                                <span  id ='checkout-confirmation-total'>00.00</span>
+                            </p>
+
+                             <p class='booking-fee-display'>
+                                <!-- <span class="t3">优惠券:</span>
+                                <span class="">-￥500.00</span> -->
+                            </p>
+
+                             <p class='deliver-fee-display'>
+                               
+                            </p>
+
+                            <p class='deliver-fee-display-msg'>
+                               
+                            </p>
+
+                             <p class='promotion-amount-display'>
+                                
+                            </p>
+
+                             <p class='use-money-display'>
+                                
+                            </p>
+                            <hr>
+
+                            <p class='total-before-surcharge'>
+                              
+                            </p>
+
+                            <p class='surcharge-display'>
+                               
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="select-all all">
+                 <span class='go-shoppingcart-btn goback'><{$lang->back_to_shopping_cart}></span>
+
+                <div class="select">
+                    <span class="other"><{$lang->checkout_total}>:<em>$</em><em style='margin-left: 0px;' class='grand-total-display'>00.00</em></span>
+                    <a  href='javascript:void(0);' class='ajaxFormSubmitBtn' onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><{$lang->submit_order}></a>
+                </div>
+            </div>
+        </div>
+    <div class="h60"></div>
+    </div>
+    
+
+    </section>
+    </form>
+     <{/if}>
+    <!-- inedx -->
+    <!-- 底部 -->
+     <{include file='index_inc_footer.htm'}>
+    <!-- 底部 end -->
+    <!-- 登录弹窗 -->
+    <div class="enter-float">
+    	<h3 class="tit">登录</h3>
+    	<form action="">
+    		<div class="items">
+    			<label for="">
+    				<span class="tel">手机号</span>
+    				<input type="text">
+    			</label>
+    		</div>
+    		<div class="items">
+    			<label for="">
+    				<span class="password">密　码</span>
+    				<input type="password">
+    			</label>
+    		</div>
+    		<div class="items">
+    			<label for="">
+    				<span class="word">验证码</span>
+    				<input type="text" class="other">
+    				<a href="">
+    					<img src="<{$SKIN_PATH}>images/enter-float4.png" alt="">
+    					换一张
+    				</a>
+    			</label>
+    		</div>
+			<div class="sign-for">
+				<a href="" class="sign">注册账号</a>
+				<a href="" class="for">忘记密码</a>
+			</div>
+			<input type="button" value="登录" class="enter">
+    	</form>
+    </div>
+    <!-- 登录弹窗 end -->
+    
+    <!-- 右边栏 -->
+    <{include file='index_inc_right.htm'}>
+    <!--右边栏 end-->
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+    <script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+    <script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+    <script src="<{$SKIN_PATH}>js/dong.js"></script> 	
+
+    <link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places"></script>
+    <script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+
+     <script type="text/javascript">
+          $(function(){
+            try {
+                initGeocomplete();
+            }
+            catch(err) {
+                console.log('google API not working.');
+            }
+          });
+
+          function initGeocomplete(){
+             $("#address").geocomplete()
+            .bind("geocode:result", function(event, result){
+               populateHiddenAddrInput(result);
+                showNewAddr();
+                saveAddress();
+
+            })
+            .bind("geocode:error", function(event, status){
+              console.log("ERROR: " + status);
+            })
+            .bind("geocode:multiple", function(event, results){
+                geocodeResultDisplay(results);
+            });
+          }
+
+          $(function(){
+             $("#address-validate-btn").click(function(){
+              $("#address").trigger("geocode");
+            });
+
+             $('body').on('click','#geocode-result input',function(){
+                 $("#address").val($(this).val()).trigger('change');
+             });
+          })
+
+
+          function geocodeResultDisplay(result) {
+            console.log(result);
+            var html = " <ul>"
+
+            for (var i = result.length - 1; i >= 0; i--) {
+              var r = result[i].formatted_address;
+              html+="<li><label><input type='radio' name='geocode-result-list' value='"+r+"'>"+r+"</label></li>"
+            }
+             html+= " </ul>"
+
+            $('#geocode-result').html(html);
+          }
+
+          function populateHiddenAddrInput(result) {
+            var parts = result.address_components;
+            
+            for (var i = parts.length - 1; i >= 0; i--) {
+              if (parts[i].types.includes('street_number')) {
+                $(".addr_house_number").val(parts[i].short_name);
+              }
+              if (parts[i].types.includes('route')) {
+                $(".addr_street").val(parts[i].short_name);
+              }
+              if (parts[i].types.includes('locality')) {
+                $(".addr_city").val(parts[i].short_name);
+              }
+              if (parts[i].types.includes('administrative_area_level_1')) {
+                $(".addr_state").val(parts[i].short_name);
+              }
+              if (parts[i].types.includes('country')) {
+                $(".addr_country").val(parts[i].short_name);
+              }
+              if (parts[i].types.includes('postal_code')) {
+                $(".addr_post_code").val(parts[i].short_name);
+              }
+            }
+          }
+      </script>
+
+
+    <script type="text/javascript">
+
+      function update_temp_carts(){
+          var data={};
+          $('.minusBtn').each(function(key,value){
+            var qty= $(value).next('input').val();
+            var id = $(value).next('input').data('id');
+            data[id]=qty;
+            
+          });
+
+           data = JSON.stringify(data);
+
+           $.ajax({
+           url:'<{$http_root_www}>query?cmd=update_carts',
+           method :'POST',
+           dataType:'json',
+           data:{data:data}}
+            ).always(function(){
+              //点击去结算，数量更新后需要重新计算运费和验证折扣码
+              updateDeliverFee();
+              check_promotion_code();
+            }); 
+
+      }
+
+      $(document).ready(function() {
+        $('.minusBtn').click(function(){
+
+			 var _val = $(this).next('input').val()*1 - 1;
+			 if (_val<0) {
+			   _val =0;
+			 }
+			  $(this).next('input').val(_val);
+                refresh();
+            });
+            $('.plusBtn').click(function(){
+
+			  var _val = $(this).prev('input').val()*1 +1;
+			  
+			var max_val= $(this).prev('.shopping-cart-item-qty').data('limit-qty');
+			if(max_val==0 ){
+			  max_val=99999;
+			}
+			
+			var main_coupon_id = $(this).prev('.shopping-cart-item-qty').data('maincouponid');
+			var sub_coupon_id = $(this).prev('.shopping-cart-item-qty').data('subid');
+			//alert(main_coupon_id + ' ' + sub_coupon_id);
+			// 如果是子卡不检查
+			if((main_coupon_id != sub_coupon_id) && sub_coupon_id>0) {}else{
+			//alert(max_val);
+			if (_val>max_val) {
+			   _val =max_val;
+			   alert('<{$lang->max_quantity}>'+max_val+'!');
+			 }
+			 }
+			  $(this).prev('input').val(_val);
+			
+              refresh();
+            });
+
+        });
+
+     var current_address_id=0;
+
+    
+        //address list
+        function populateAddress(target) {
+            if($(target).hasClass('new')){
+              $('input#firstname').val('<{$loginUser.person_first_name}>');
+              $('input#lastname').val('<{$loginUser.person_last_name}>');
+              $('input#phone').val('<{$loginUser.phone}>');
+              $('input#email').val('<{$loginUser.email}>');
+              $('input#address').val('<{$loginUser.address}>');
+              $('input#id_number').val(' ');
+            }else{
+              $('input#firstname').val($(target).data('first-name'));
+              $('input#lastname').val($(target).data('last-name'));
+              $('input#phone').val($(target).data('phone'));
+              $('input#email').val($(target).data('email'));
+              $('input#address').val($(target).data('address'));
+              $('input#id_number').val($(target).data('id-number'));
+            }
+            updateDeliverFee();
+        }
+
+        function showNewAddr() {
+            var target = (current_address_id==0)?$('.addr-list li.new'):$('.addr-list li[data-id="'+current_address_id+'"]');
+            
+            $(target).data('first-name',$('input#firstname').val());
+            $(target).data('last-name',$('input#lastname').val());
+            $(target).data('phone',$('input#phone').val());
+            $(target).data('email',$('input#email').val());
+            $(target).data('address',$('input#address').val());
+             $(target).data('id-number',$('input#id_number').val());
+
+            $(target).find('.home').html( $(target).data('first-name') + ' ' + $(target).data('last-name') );
+            $(target).find('.site').html( $(target).data('address') );
+            $(target).find('.name').html( $(target).data('email') );
+            $(target).find('.tel').html( $(target).data('phone') );
+        }
+
+        function pickupAndDeliverExceptionCheck($type) {
+            if($type=='pickup'){
+               $('.pickupAndDeliverExceptionCheck').each(function(){
+                if($(this).data('type')=='realproduct'){
+                  if($(this).data('pickup-avaliable')=='0'){
+                    $(this).data('item-id');
+                    var msg = "<span style='color:#f30'>产品不支持自取</span>"
+                    $(this).html(msg);
+                  }else{
+                    var selected_staff_id = $('.pickup-list li.ok').data('value');
+                    var supported_staff_id = $(this).data('sales-user-list');
+
+                    selected_staff_id=selected_staff_id.toString();
+                    supported_staff_id=supported_staff_id.toString();
+
+
+                    var res = supported_staff_id.split(",");
+
+                    $result = res.indexOf(selected_staff_id);
+
+                    if($result<0){
+                      var msg = "<span style='color:#f30'>产品不支持该自取点</span>"
+                      $(this).html(msg);
+                    }else{
+                      $(this).html(" ");
+                    }
+                    
+                  }
+                }else{
+                   $(this).html("Evoucher");
+                }
+                })
+            }else if($type=='deliver'){
+               $('.pickupAndDeliverExceptionCheck').each(function(){
+                if($(this).data('type')=='realproduct'){
+                   if($(this).data('deliver-avaliable')=='0'){
+                    $(this).data('item-id');
+                    var msg = "<span style='color:#f30'>产品不支持递送</span>"
+                    $(this).html(msg);
+                  }else{
+                    $(this).html(" ");
+                  }
+                }else{
+                  $(this).html("Evoucher");
+                }
+                })
+            }
+           
+        }
+        $(document).ready(function() {
+
+        //address list
+        $('.addr-list li').on('click',function(){
+            $('.addr-list li').removeClass('ok');
+
+            $(this).addClass('ok')
+
+            populateAddress($(this));
+
+            current_address_id = $(this).data('id');
+
+            $('#address').trigger('geocode');
+        })
+
+        //if address list has no default, click the first one by default
+        if($('.addr-list li.default').length==0){
+          $('.addr-list li').first().click();
+        }else{
+          $('.addr-list li.default').first().click();
+        }
+
+
+        //deliver method
+        $('.self-pickup').on('click',function(){
+            $('.self-pickup,.business-deliver').removeClass('on');
+            $('.addr-desc').hide();
+            $('.pickup-list').show();
+            $(this).addClass('on');
+             deliverFeeEnable=false;
+             pickupAndDeliverExceptionCheck('pickup');
+             refresh();
+        });
+
+         $('.business-deliver').on('click',function(){
+            $('.self-pickup,.business-deliver').removeClass('on');
+            $('.addr-desc').show();
+            $('.pickup-list').hide();
+            $(this).addClass('on');
+             deliverFeeEnable=true;
+             updateDeliverFee();
+             pickupAndDeliverExceptionCheck('deliver');
+             refresh();
+        });
+         //pick-up-list
+         $('.pickup-list li').on('click',function(){
+            $('.pickup-list li').removeClass('ok')
+            $(this).addClass('ok');
+
+            pickupAndDeliverExceptionCheck('pickup');
+
+            refresh();
+         });
+
+
+        //payment method
+        $('.payment-option').on('click',function(){
+            var target =$(this).data('value');
+
+            if (target == 'creditcard' && creditcardFirstTimeBuyerLimit()) {
+              alert('新用户首次购买信用卡支付上限为$100');
+              $('.payment-option-desc').hide();
+              $('.payment-option').removeClass('on');
+              currentPaymentMethod='';
+              refresh();
+              return false;
+            }
+
+            $('.payment-option-desc').hide();
+            $('.'+target+'-payment-des').show();
+
+            $('.payment-option').removeClass('on');
+            $('.payment-'+target).addClass('on');
+
+            currentPaymentMethod=target;
+
+            refresh();
+        })  
+
+        function creditcardFirstTimeBuyerLimit() {
+          let limit = 100;
+          let isFirstTime = '<{$isFirstTimeBuyer}>';
+
+          return ((grandTotal + confirmedMoneyAppliedAmount) > limit && isFirstTime);
+        }
+
+       
+
+         // init payment and deliver click
+         $('.pickup-list li:first').click();
+         $('.deliver-option:first').click();
+         $('.payment-option:first').click();
+
+        //go checkout btn
+        $('.go-checkout-btn').on('click', function(){
+                var mixedItemFromBusinesses = '<{$mixedItemFromBusinesses}>';
+                if(mixedItemFromBusinesses=='true'){
+                    htmlAlert('<{$lang->warning_no_multiple_store_checkout}>');
+                }else{
+                    $('.shopping-cart').hide();
+                    $('.checkout-confirmation').show();
+                    update_temp_carts();
+                }
+        }); 
+
+        $(".go-shoppingcart-btn").on('click', function(){
+                if($(this).hasClass('disabled'))return;
+
+                $('.shopping-cart').show();
+                $('.checkout-confirmation').hide();
+        }); 
+
+        $('.go-back-btn').on('click',function(){
+                <{if $data[0].items[0].main_coupon_id}>
+                    window.location.href = '<{$http_root_www}>coupon1/<{$data[0].items[0].main_coupon_id}>';
+                <{else}>
+                    window.location.href = '<{$http_root_www}>';
+                <{/if}>
+
+            });
+
+     });
+
+     $(function(){
+        refresh();
+     })
+
+
+     function saveAddress() {
+        updateDeliverFee();
+        
+         var firstname=$('input#firstname').val();
+         var lastname=$('input#lastname').val();
+         var phone=$('input#phone').val();
+         var email=$('input#email').val();
+         var address=$('input#address').val();
+         var id_number=$('input#id_number').val();
+
+         var id=$('#addressID').data('addressID');
+         var url="";
+
+         if(!firstname&&!lastname&&!phone&&!email&&!address&&!id_number)return;
+
+         if (current_address_id==0)
+         {
+
+              if(id==null||id==''||id=='undefined'){
+                  //新建地址
+                  url = '<{$http_root_www}>query?cmd=saveAddress&firstname='+firstname+'&lastname='+lastname+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type=0';
+
+                    $.ajax({
+                       url:url,
+                       method:"GET",
+                       success:function(data){
+                           $('#addressID').data('addressID',data);
+                       },
+                   })
+              }else{
+                // 更新新建地址
+                  url = '<{$http_root_www}>query?cmd=saveAddress&firstname='+firstname+'&lastname='+lastname+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type='+id;
+
+                    $.ajax({url:url});
+              }
+             
+         }
+         else
+         {//更新已有地址
+              url = '<{$http_root_www}>query?cmd=saveAddress&firstname='+firstname+'&lastname='+lastname+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type='+current_address_id+'';
+              $.ajax({url:url });
+         }
+
+        
+     }
+    </script>
+
+    <script type="text/javascript">
+        var total=0;
+        var totalQty;
+        var grandTotal=0;
+        var grandTotal_beforeSurcharge=0;
+
+        var deliverFee=0;
+        var deliverFeeEnable=false;
+
+        var bookingFee=0;
+        // var promotion_amount;
+        // var confirmedMoneyAppliedAmount;
+         
+
+        //support paylment: offline,creditcard,hcash,paypal,royalpay.
+        var currentPaymentMethod;
+        var surchargevalue;
+        var surchargeRate={};
+
+
+        <{if $business_delivery_info.transactionFeeChargeFrom_paypal!='user'}>
+          surchargeRate['paypal']=0;
+        <{else}>
+          surchargeRate['paypal']=parseFloat('<{$business_delivery_info.paypalsurcharge}>');
+        <{/if}>
+
+
+        <{if $business_delivery_info.transactionFeeChargeFrom_royalpay!='user'}>
+          surchargeRate['royalpay']=0;
+        <{else}>
+          surchargeRate['royalpay']=parseFloat('<{$business_delivery_info.royalpaysurcharge}>');
+        <{/if}>
+
+        //alipay use same config as royalpay(wechat)
+         <{if $business_delivery_info.transactionFeeChargeFrom_royalpay!='user'}>
+          surchargeRate['alipay']=0;
+        <{else}>
+          surchargeRate['alipay']=parseFloat('<{$business_delivery_info.royalpaysurcharge}>');
+        <{/if}>
+
+
+        <{if $business_delivery_info.transactionFeeChargeFrom_hcash!='user'}>
+          surchargeRate['hcash']=0;
+        <{else}>
+          surchargeRate['hcash']=parseFloat('<{$business_delivery_info.hcashsurcharge}>');
+        <{/if}>
+        
+
+        <{if $business_delivery_info.transactionFeeChargeFrom_creditcard!='user'}>
+          surchargeRate['creditcard']=0;
+        <{else}>
+          surchargeRate['creditcard']=parseFloat('<{$business_delivery_info.creditcardsurcharge}>');
+        <{/if}>
+
+
+		function calculateTotal(){
+            total = 0;
+            totalQty= 0;
+
+      			var old_couponid = 0;
+      			var new_couponid = 0;
+      			var qty_of_same_coupon =0;
+      			var amount_of_same_coupon=0;
+      			var addup =0; 
+            // 标记在叠加中，如果在叠加中循环，当前条目的数据没有被处理，在下一条中判断是否处理，如果叠加是最后一条记录，则会通过
+      			// 这个字段判断后，在循环结束后再最后处理一次。
+      			var i=0;
+      			//alert('here');
+      			var sub_total_array = [];
+		
+            $('.shopping-cart-item-qty').each(function(){
+			
+            //获取批发数据 
+            var price=parseFloat($(this).data('whole-sale'));//通过price判断是否有批发属性 第一级
+            var quantity=parseFloat($(this).data('whole-quantity'));//批发预设数量 第一级
+
+            var price1=parseFloat($(this).data('whole-sale1'));//通过price判断是否有批发属性 第二级
+            var quantity1=parseFloat($(this).data('whole-quantity1'));//批发预设数量 第二级
+
+            var price2=parseFloat($(this).data('whole-sale2'));//通过price判断是否有批发属性 第三级
+            var quantity2=parseFloat($(this).data('whole-quantity2'));//批发预设数量 第三级
+
+            var amount="";//单价
+            var qty = parseFloat($(this).val());//当前数量
+
+            var item_id = parseFloat($(this).data('id'));
+            var single_amount = parseFloat($(this).data('single-amount'));
+				
+				
+            if (price){
+              if(!price1)
+                price1 =price;
+
+              if(!price2)
+                price2 =price1;
+
+              if(!quantity)
+                quantity=qty;
+
+              if(!quantity1)
+                quantity1 =quantity;
+
+              if(!quantity2)
+                quantity2 =quantity1;
+            }
+
+			     new_couponid = parseInt($(this).data('couponid'));
+				
+				
+             
+				if(new_couponid ) { //新条目有批发属性
+				  if(new_couponid != old_couponid){ // 如果新的couponid 和之前的产品不一一样，
+				      if( old_couponid ==0) {  // 如果之前的产品与批发无关，表明当前条目为一个新的批发，开始进行数量累加及批发价格计算。
+					    addup =1; //批发累加进行中
+						qty_of_same_coupon +=qty;//数量累加
+						//计算批发价格
+						amount_of_same_coupon=getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2);
+					 	// 将当前条目标识及数量退入数组，当累加结束后，使用数组元素进行显示对应条目的价格和子汇总，批发未结束价格无法最终确定
+						sub_total_array.push([item_id,qty]); //subtotal 数组中加入 当前条目编号，及数量
+					   }else{ //如果之前的产品与批发相关，且当前产品和之前的不同，则做两个处理：
+						
+						// 1）将之前的产品进行价格计算，进入汇总，并显示。
+						priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid,sub_total_array);						
+						sub_total_array = [];
+											
+						// 对新的批发条目进行累计开始
+						qty_of_same_coupon =qty;	
+						//alert('price is :' + price + ' price1:' + price1 + ' price2' + price2 + ' qty_of_same_coupon' + qty_of_same_coupon + ' quantity'+ quantity + ' quantity1' + quantity1 + ' quantity2' + quantity2);
+						amount_of_same_coupon=getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2);
+					    sub_total_array.push([item_id,qty]);
+					    addup =1;
+						//alert('qty' + qty_of_same_coupon +' amount ' + amount_of_same_coupon );
+					 }
+					
+				  }else{
+				   //如果新的和就得相同则只进行叠加
+				   qty_of_same_coupon +=qty;
+				   amount_of_same_coupon=getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2);
+				   sub_total_array.push([item_id,qty]);
+				   addup =1;
+				  }
+				
+				}else{
+				    //如果新条目不是批发new_couponid==0 
+					if(old_couponid >0){//但旧条目是批发 old_couponid>0 ，那么旧条目的同规格累计结束，就要进行最后的统计，并复位数量=0
+						priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid,sub_total_array);
+						sub_total_array = [];//数组清空
+						qty_of_same_coupon=0;// 复位数量
+						addup =0; //将叠加标识清0；
+					}
+				
+					// 如果新的couponid==0 表示当前的条目跟批发无关，则直接累计入当前合计中。
+					new_couponid =0;
+					addup=0;
+					amount = parseFloat($(this).data('single-amount'));
+					total += qty * amount;
+                    totalQty += qty; 
+					$('.unit[data-id="'+$(this).data('id') +'"]').html(amount);
+					var subtotal=amount*qty;
+                    $('.sub-total[data-id="'+$(this).data('id')+'"]').html(subtotal.toFixed(2));
+				}
+				
+				old_couponid =new_couponid;
+              
+            });
+			
+			
+			//如果叠加参数为1，那么需要进行最后的计算 //数组清空  // 复位数量  //将叠加标识清0；
+			if(addup ==1){
+			   	priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid,sub_total_array);
+				sub_total_array = [];
+				qty_of_same_coupon=0;
+				addup =0;
+			}
+			
+            updataDisplay('total');
+        }
+     
+	 // 获取当前行累计的多级价格计算的价格--通过检查同种商品的总数量，来检查相应数量对应的价格，并返回结果
+	  function getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2){
+		
+		  if(price!=''&& qty_of_same_coupon>=quantity){
+						if ( qty_of_same_coupon<quantity1)
+							amount=price;
+						if (qty_of_same_coupon>=quantity1 && qty_of_same_coupon<quantity2)
+							amount=price1;
+						if (qty_of_same_coupon>=quantity2)
+							amount=price2;
+					  }
+					  else {
+					  	amount = single_amount;
+				     }
+					 
+			return amount;
+		
+		
+		}
+
+	 //购物车多级价格价格计算更新及显示处理，包括子汇总计算及显示和总汇总计算（数量和总金额）
+		function  priceAndSubAndTotalDisplay(qty,amount,couponid,sub_arry){
+			total += qty * amount;
+		    totalQty += qty;
+			$('.unit[data-couponid="'+couponid +'"]').html(amount);
+			 
+			 for(var i = 0,len = sub_arry.length;i < len;i ++) {
+							var subtotal_id = sub_arry[i][0];
+							var subtotal_qty=sub_arry[i][1];
+							//alert(subtotal_id + ' ' + subtotal_qty);
+							var subtotal = amount *subtotal_qty;
+							$('.sub-total[data-id="'+subtotal_id+'"]').html(subtotal.toFixed(2));
+						}
+		}
+		
+		
+		
+        function calculateBookingFee(){
+            bookingFee = 0;
+
+            var rate = parseFloat('<{$bookingfee}>');
+            var type = '<{$bookingfeetype}>';
+
+            if(type=='peritem'){
+                $('.shopping-cart-item-qty').each(function(){
+                    var qty = parseFloat($(this).val());
+                    bookingFee += qty * rate;
+                });
+            }else{
+                bookingFee=rate;
+            }
+            
+        }
+        function calculateSurcharge(){
+            if(currentPaymentMethod&&currentPaymentMethod!='offline'){
+
+              surchargevalue = (total + deliverFee + bookingFee - promotion_amount - confirmedMoneyAppliedAmount) * surchargeRate[currentPaymentMethod];
+              
+            }else{
+              surchargevalue=0;
+            }
+
+            if(surchargevalue<0)surchargevalue=0;
+        }
+
+        function calculateDeliverFee(){
+            if(deliverFeeEnable){
+
+            }else{
+                deliverFee = 0;
+            }
+            
+        }
+
+        function updateDeliverFee(){
+            var address = $("input#address").val();
+
+            $.ajax({
+                method: "get",
+                url: "<{$http_root_www}>query?cmd=calculate_deliver_fee",
+                data: { id: '<{$processingBusinessUserId}>',address:address},
+                beforeSend:function(){
+                   $('body').append('<p class="form_response_loader"></p>');
+                },
+                success:function(result){
+                    try{
+                        result=JSON.parse(result);
+
+                        deliverFee = parseFloat(result.total_deliver_fee);
+
+                        if(result.msg)
+                          $('.deliver-fee-display-msg').html("<span class='t3'> <{$lang->deliver_fee}> ("+result.msg+")：</span><span>+"+deliverFee.toFixed(2)+"</span>");
+                        else
+                          $('.deliver-fee-display-msg').html(" ");
+                    }catch(err){
+                        deliverFee = 0;
+                    }
+
+                     refresh();
+
+                },
+                complete:function(){
+                  $('.form_response_loader').remove();
+                },
+                error:function(result){
+                    
+                }
+              })
+        }
+
+        function calculatePromotion(){
+            var totalBeforePromotionCode = total + deliverFee + bookingFee - confirmedMoneyAppliedAmount;
+
+            if(totalBeforePromotionCode<promotion_amount)
+              promotion_amount=totalBeforePromotionCode;
+        }
+
+        function calculateGrandTotal(){
+            grandTotal = total + deliverFee + bookingFee - promotion_amount - confirmedMoneyAppliedAmount + surchargevalue;
+            if(grandTotal<0)grandTotal=0;
+
+             grandTotal_beforeSurcharge = total + deliverFee + bookingFee - promotion_amount - confirmedMoneyAppliedAmount;
+            if(grandTotal_beforeSurcharge<0)grandTotal_beforeSurcharge=0;
+        }
+
+        function updataDisplay($target){
+            switch($target){
+                case 'total':
+                    $('#shopping-cart-total').text(total.toFixed(2));//商品应付总额
+                    $('#checkout-confirmation-total').text(total.toFixed(2));
+                    $('.shopping-cart-totalQty').text(totalQty);//产品总数量
+                    break;
+                case 'grand-total':
+                    $('.grand-total-display').text(grandTotal.toFixed(2));
+                    break;
+                case 'booking-fee':
+                    if(bookingFee>0)
+                        $('.booking-fee-display').html("<span class='t3'> <{$lang->booking_fee}>:</span><span>+"+bookingFee.toFixed(2)+"</span>");
+                    else
+                        $('.booking-fee-display').html("");
+                    break;
+                case 'deliver-fee':
+                    if(deliverFee>0)
+                        $('.deliver-fee-display').html("<span class='t3'><{$lang->deliver_fee}>:</span><span>+"+deliverFee.toFixed(2)+"</span>");
+                    else
+                        $('.deliver-fee-display').html('');
+                    break;
+                case 'personal-info':
+                    $('.name-display').text($('input#firstname').val()+" "+$('input#lastname').val());
+                    $('.phone-display').text($('input#phone').val());
+                    $('.address-display').text($('input#address').val());
+                    $('.email-display').text($('input#email').val());
+                    break;
+                case 'promotion-code':
+                    if(promotion_amount<=0){
+                        $('.promotion-amount-display').html('');
+                    }else{
+                        $('.promotion-amount-display').html("<span class='t3'>使用折扣码("+promotion_des+"):</span><span>-"+promotion_amount.toFixed(2)+"</span>");
+                    }
+                    break;
+                case 'use-money':
+                    if(confirmedMoneyAppliedAmount<=0){
+                        $('.use-money-display').html('');
+                        $('.confirmedMoneyAppliedAmount-display').text('未使用');
+                    }else{
+                        $('.use-money-display').html("<span class='t3'>使用钱包:</span><span>-"+confirmedMoneyAppliedAmount.toFixed(2)+"</span>");
+                        $('.confirmedMoneyAppliedAmount-display').text(confirmedMoneyAppliedAmount.toFixed(2));
+                    }
+                    $('.money-loading').html(" <{$lang->wallet}>： " + ($('#amountApply').data('available-amount') - confirmedMoneyAppliedAmount).toFixed(2));
+                    $('#amountApply').val(confirmedMoneyAppliedAmount.toFixed(2));
+                    break;
+                case 'surcharge':
+                    if(surchargevalue<=0){
+                        $('.surcharge-display').html('');
+                        $('.total-before-surcharge').html('');
+                    }else if(currentPaymentMethod&&currentPaymentMethod!='offline'){
+                      
+                       $('.total-before-surcharge').html( "<span class='t3'>Sub Total</span><span>"+grandTotal_beforeSurcharge.toFixed(2)+"</span>");
+
+                        $('.surcharge-display').html( "<span class='t3'>"+currentPaymentMethod+" surcharge("+(surchargeRate[currentPaymentMethod]*100).toFixed(2)+"%):</span><span>+"+ surchargevalue.toFixed(2)+"</span>");
+                    }
+                    break;
+                case 'quantity':
+                    $('.shopping-cart-item-qty').each(function(){
+                        $('.checkout-confirmation-qty[data-id="'+$(this).data('id')+'"]').val($(this).val());
+                    });
+                    break;
+                case 'sub-total':
+                    $('.shopping-cart-item-qty').each(function(){
+                        var price=parseFloat($(this).data('whole-sale'));//通过price判断是否有批发属性 第一级
+                        var quantity=parseFloat($(this).data('whole-quantity'));//批发预设数量 第一级
+
+                        var price1=parseFloat($(this).data('whole-sale1'));//通过price判断是否有批发属性 第二级
+                        var quantity1=parseFloat($(this).data('whole-quantity1'));//批发预设数量 第二级
+
+                        var price2=parseFloat($(this).data('whole-sale2'));//通过price判断是否有批发属性 第三级
+                        var quantity2=parseFloat($(this).data('whole-quantity2'));//批发预设数量 第三级
+
+                        var amount="";//单价
+                        var qty = parseFloat($(this).val());//当前数量
+                        if(price!=''&&qty>=quantity)
+                        {
+                            if ( qty<quantity1)
+                                amount=price;
+                            if (qty>=quantity1 && qty<quantity2)
+                                amount=price1;
+                            if (qty>=quantity2)
+                                amount=price2;
+                        }
+                        else {
+                            amount = parseFloat($(this).data('single-amount'));
+                        }
+                        $('.unit[data-id="'+$(this).data('id')+'"]').html(amount);
+                        var subtotal=amount*qty;
+                        $('.sub-total[data-id="'+$(this).data('id')+'"]').html(subtotal.toFixed(2));
+                    });
+                    break;
+            }
+        }
+
+        function refresh(){
+            calculateTotal();
+            calculateBookingFee();
+            calculateDeliverFee();
+            calculatePromotion();
+            calculateSurcharge();
+            calculateGrandTotal();
+            updataDisplay('total');
+            updataDisplay('grand-total');
+            updataDisplay('booking-fee');
+            updataDisplay('deliver-fee');
+            updataDisplay('personal-info');
+            updataDisplay('promotion-code');
+            updataDisplay('use-money');
+            updataDisplay('surcharge');
+            updataDisplay('quantity');
+           // updataDisplay('sub-total');
+            updateFormData();
+            paymentSectionToggle();
+        }
+
+        function updateFormData(){
+            $('#total_amount').val(total); 
+            $('#booking_total').val(bookingFee); 
+            $('#delivery_fee').val(deliverFee); 
+            $('#promotion_total').val(promotion_amount); 
+            $('#promotion_id').val(promotion_id); 
+            $('#confirmedMoneyAppliedAmount').val(confirmedMoneyAppliedAmount); 
+            $('#total_amount_inc_delivery_fees').val(grandTotal.toFixed(2)); 
+            if(currentPaymentMethod&&currentPaymentMethod!='offline')
+              $('#surcharge').val(surchargevalue); 
+            else
+              $('#surcharge').val(0); 
+             
+            updataValue();
+        }
+
+        function updataValue(){
+             $('input#deliver_option').val($('.take-me span.on').data('value'));
+             $('input#business_staff_id').val($('.pickup-list li.ok').data('value'));
+             $('input#payment').val($('.ul-pay li.on').data('value'));
+        }
+
+        function paymentSectionToggle() {
+            if(grandTotal==0){
+              $('.payment-section').hide(500);
+            }else{
+              $('.payment-section').show(500);
+            }
+           
+        }
+    </script>
+
+    <script type="text/javascript">
+        function getTimeRemaining(endtime){
+          var locktimer = 20*60*1000// 10mins
+          var t =endtime+locktimer-Date.now();
+          var seconds = Math.floor( (t/1000) % 60 );
+          var minutes = Math.floor( (t/1000/60) % 60 );
+          var hours = Math.floor( (t/(1000*60*60)) % 24 );
+          var days = Math.floor( t/(1000*60*60*24) );
+          return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+          };
+        }
+
+        function initializeClock(obj, endtime){
+          var clock = obj.get(0);//jeuqry to DOM obj
+          
+          var timeinterval = setInterval(function(){
+            var t = getTimeRemaining(endtime);
+            if(t.total<0){
+                clock.innerHTML =  'Expired' ;
+                clock.style.color='red';
+                window.location.href=obj.data('action-url');
+            }else if(t.total<60000){
+                 clock.innerHTML =  t.minutes + ':' +t.seconds +'<small style="color:orange;font-size:12px">(到期自动删除)</small>';
+                
+            }else{
+                clock.innerHTML =  t.minutes + ':' +t.seconds;
+            }
+            if(t.total<=0){
+              clearInterval(timeinterval);
+            }
+          },1000);
+        }
+
+        $(function(){
+            $('.countdownclock').each(function(){
+                var endtime = $(this).data('endtime') *1000;
+                initializeClock($(this), endtime);
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var confirmedMoneyAppliedAmount=0;
+
+        function applyPocketMoney(){
+
+            var vTotal = total + deliverFee + bookingFee - promotion_amount ;
+
+            var availableAmount= parseFloat($('#amountApply').data('available-amount'));
+            var amountApply = parseFloat($('#amountApply').val());
+
+            if(isNaN(availableAmount))availableAmount=0;
+            if(isNaN(amountApply))amountApply=0;
+
+            if(availableAmount>0 && amountApply>=0){
+                if((availableAmount>=amountApply) && (vTotal>=amountApply)){
+                    confirmedMoneyAppliedAmount=amountApply;
+                    $('.use-money-error').html(' ');
+                }else if(availableAmount<amountApply){
+                    //console.log('not enough money to use');
+                    $('.use-money-error').html('你看起来没有足够的零钱哦');
+                   
+                }else if(vTotal<amountApply){
+                    //console.log('the money applied is more than grand total');
+                    $('.use-money-error').html('$'+amountApply+'太多了,只需要$'+vTotal+'就够了！');
+                    confirmedMoneyAppliedAmount=vTotal;
+                    amountApply = vTotal;
+                }
+            }else if(amountApply==0){
+                confirmedMoneyAppliedAmount=0;
+            }else{
+                //console.log('input error');
+            }
+            refresh();
+        }
+    </script>
+
+
+    <script type="text/javascript">
+
+        var promotion_amount=0;
+        var promotion_id;
+        var promotion_des;
+		
+		
+
+        // 检查是否输入正确的兑换码
+        function check_promotion_code() {
+            var code = $('#promotion_code').val();
+            var total_cart_amount=$('#checkout-confirmation-total').text();
+
+            if(!code)return;
+            
+            $.ajax({
+              method:"GET",
+              url: "<{$http_root_www}>company/check_promotion_code",
+              data:{pcode:code,businessUserId:'<{$businessUser.id}>',total_cart_amount1:total_cart_amount},
+              beforeSend: function( xhr ) {
+                    $('.promotion-loading').html("<i class='fa fa-cog fa-spin fa-lg' style='color:#39BF21'></i> Processing...");
+              }
+            })
+              .done(function( data ) {
+                data = jQuery.parseJSON(data);
+                if(data.status){
+                    //code match
+                    promotion_amount=parseFloat(data.promotion_amount);
+                    promotion_id=data.promotion_id;
+                    promotion_des=data.promotion_des;
+                    
+                    $('.promotion-loading').html(data.msg);
+
+                }else{
+                    promotion_amount=0;
+                    promotion_id=0;
+                    promotion_des=0;
+
+                    $('.promotion-loading').html(data.msg);
+                     
+                }
+               
+              })
+              .always(function(){
+                refresh();
+              })
+        }
+    </script>
+
+
+    <script type="text/javascript">
+      // this is the id of the form
+      $(function(){
+
+      var ajaxFormSubmit=false;
+
+      $(".ajaxFormSubmitBtn").on('click touchstart',function(event) {
+
+          if(ajaxFormSubmit)return false;
+          
+          if(currentPaymentMethod=='hcash'){
+              //弹出框
+              $('.hcash-pay-box').show();
+              $('.hcashRefreshBtn').click();
+          }else{
+              //正常提交
+              normalSubmit();
+          }
+      });
+
+      })  
+
+      function normalSubmit(){
+         $.ajax({
+                 method: $('.ajaxForm').attr('method'),
+                 url: $('.ajaxForm').attr('action'),
+                 data: $('.ajaxForm').serialize(), 
+                 cache: false,
+                 dataType: "text",
+                 beforeSend: function( xhr ) {
+                          ajaxFormSubmit= true;
+                          $('.ajaxFormResponse').html(bootstrapAlertHtml("<i class='fa fa-cog fa-spin fa-lg' style='color:#39BF21'></i> Processing...",'success'));
+                    },
+                 success: function(data)
+                 {  
+                     try{
+                        data = jQuery.parseJSON(data);
+                     }catch(err){
+                        $('.ajaxFormResponse').html(bootstrapAlertHtml('网络不给力亲，请稍后再试','danger'));
+                        return;
+                     }
+
+                     if(data.status==200){
+                       $('.ajaxFormResponse').html(bootstrapAlertHtml(data.msg,'success'));
+                        setTimeout(function(){
+                          window.location.href = data.redirect.replace('&amp;', '&');
+                        }, 1000);
+                     }else{
+                       $('.ajaxFormResponse').html(bootstrapAlertHtml(data.msg,'danger'));
+                     }
+                 }
+              }).always(function(){
+                  ajaxFormSubmit= false;
+              });
+      }
+
+      function hcashSubmit(){
+          if(!timer){
+              htmlAlert('汇率已经失效，请重新刷新获得最新汇率后再次提交');
+              return false;
+          }
+
+          var hcashRate =$('input[name="hcashRate"]').val();
+          var hcashAmount=$('input[name="hcashAmount"]').val();
+          var hcashOrderTag =$('input[name="hcashOrderTag"]').val();
+          var hcashOrderId =$('input[name="hcashOrderId"]').val();
+          
+          if(!hcashRate||!hcashAmount){
+              htmlAlert('还没有获得汇率和hcash价格');
+              return false;
+          }
+
+          // if(!hcashOrderTag||!hcashOrderId){
+          //     alert('请填写正确的转账信息');
+          //     return false;
+          // }
+
+          $('.hcash-pay-box').hide();
+
+          normalSubmit();
+      }
+
+    </script>
+
+    <script type="text/javascript">
+      function bootstrapAlertHtml(msg,type){
+          var html ='<div class="alert alert-'+type+' alert-dismissible" role="alert" >';
+          html +='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+          html += msg;
+          html +='</div>';
+          return html;
+      }
+
+    </script>
+
+     <script type="text/javascript">
+        //special checkout action; 
+        $(function(){
+            var specialCheckout = '<{$specialCheckout}>';
+            var errormsg = '<{$ERRORMSG}>';
+            
+            if(specialCheckout!='NONE' && specialCheckout!='ERROR'){
+                $('.go-checkout-btn').click();
+                // $('.go-shoppingcart-btn').addClass('disabled');
+                $('#promotion_code').val(specialCheckout);
+                check_promotion_code();
+            }
+        })
+    </script>
+
+
+     <script type="text/javascript">
+          $('.hcashRefreshBtn').on('click',function(){
+            if(seconds>0)return;
+            timerStart();
+             $.get("<{$http_root_www}>query?cmd=hcash_rate",function(data){
+
+                var data = $.parseJSON(data.trim());
+
+                var hcashRate = parseFloat(data.hsr_rate);
+                var aud_to_cny = parseFloat(data.aud_to_cny);
+
+                var cnyPrice=aud_to_cny*grandTotal;
+                var hcashRate=hcashRate.toFixed(8)
+                var hcashAmount=(grandTotal*hcashRate).toFixed(2);
+
+                $('.cnyPrice').html(cnyPrice.toFixed(2));
+                $('.hcashRate').html(hcashRate);
+                $('.hcashAmount').html(hcashAmount + " HSR");
+
+                $('input[name="hcashRate"]').val(hcashRate);
+                $('input[name="hcashAmount"]').val(hcashAmount);
+                // alert('success');
+             }).done(function(){
+                // alert('second success');
+             }).fail(function(){
+                // alert('error ');
+             }).always(function(){
+                // alert('finished');
+             })
+          });
+
+
+          var seconds=0;
+          var timer;
+          function timerFunction() {
+            console.log(seconds);
+            if(seconds <= 300) { // I want it to say 1:00, not 60
+              $('.timer').html(seconds+"s");
+            }
+
+            if (seconds >0 ) { // so it doesn't go to -1
+               seconds--;
+            } else {
+               clearInterval(timer);
+               timer=0;
+               $('.timer').html(' ');
+               $('.hcashRefreshBtn').css('background-color',"#29b729");
+               $('.hcashRefreshText').html("点击刷新汇率");
+            }
+          }
+
+           function timerStart() {
+            seconds=300;
+            $('.hcashRefreshBtn').css('background-color',"#aaa");
+            $('.hcashRefreshText').html("汇率锁定");
+
+            if(!timer) {
+              timer =setInterval(function() { 
+                timerFunction();
+              }, 1000); 
+            }
+          } 
+      </script>
+
+</body>
+
+</html>

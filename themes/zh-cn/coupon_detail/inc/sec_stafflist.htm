@@ -1,0 +1,28 @@
+<{if $coupon.staff_list}>
+
+   
+        <{foreach from=$coupon.staff_list item=item}>
+            <div style="padding: 5px;margin: 5px;">
+              
+                <div class="name" style="font-weight: bolder;"><{$lang->branch}>：<{$item.contactPersonNickName}></div>
+
+                <{if $item.tel}>
+                <div class="phone"><{$lang->telephone}>：<{$item.tel}></div>
+                <{/if}>
+
+                <{if $item.phone || $item.contactMobile}>  
+                <div class="phone"><{$lang->mobile_phone}>：<{if $item.phone}><{$item.phone}><{else}><{$item.contactMobile}><{/if}></div>
+                <{/if}>
+
+                <{if $item.email}>
+                <div class="email">Email：<{$item.email}></div>
+                <{/if}>
+
+                <{if $item.googleMap}>
+                <div class="city"><{$lang->address}>：<{$item.googleMap}></div>
+                <{/if}>
+
+            </div>
+        <{/foreach}>
+
+ <{/if}>

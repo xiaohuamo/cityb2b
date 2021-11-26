@@ -1,0 +1,201 @@
+<style>
+	.movieList{
+		position: relative;
+		width: 100%;
+	}
+	.eachDay:nth-child(1){
+		display: block;
+	}
+	.eachDay:nth-child(2){
+		display: block;
+	}
+	.eachDay{
+		margin: 5px;
+		width: 70%;
+		min-height: 74px;
+		display: none;
+	}
+	.dayinfo{
+		color:#fff;
+		background-color: #2bb8aa;
+	}
+	.eachSession{	
+		position: relative;
+		width: 100px;
+		height: 38px;
+		border:1px solid #2bb8aa;
+		display: inline-block;
+		margin:5px;
+		padding:5px 0px;
+	}
+	.eachSession:hover{
+		background-color:#FD5001 ; 
+	}
+	.sessionTime{
+		position: absolute;
+		top: 10px;
+		left: 5px;
+		font-size: 1.2em;
+		color: #000;
+		font-weight: bold;
+	}
+	.sessionSelected{
+		position: absolute;
+		bottom: 5px;
+		right:5px;
+		color:#2a9e14;
+		display: none;
+	}
+	.showmore{
+		border: 1px solid rgba(0,0,0,.5);
+		display: inline-block;
+		font-weight: bold;
+		text-align: center;
+		text-decoration: none;
+		-webkit-text-shadow: 0 1px 2px rgba(0,0,0,1);
+		-mox-text-shadow: 0 1px 2px rgba(0,0,0,1);
+		text-shadow: 0 1px 2px rgba(0,0,0,1);
+		background: linear-gradient(180deg,#c70208,#a10000);
+		color: #fff;
+		margin-bottom: 10px;
+		width: 70%;
+		height: 30px;
+		line-height: 30px;
+		letter-spacing: 10px;
+	}
+	.selectType{
+		position: absolute;
+		width: 27%;
+		top: 0px;
+		right: 0px;
+	}
+	.selectTypeLabel{
+		color:#fff;
+		background-color: #2bb8aa;
+	}
+	.eachType{
+		position: relative;
+		font-weight: bold;
+		border:1px solid #2bb8aa;
+		margin: 5px;
+		padding:1px;
+		height: 33px;
+		
+		overflow: hidden;
+		display: none;
+	}
+	.eachType:hover{
+		background-color: #FD5001 ;
+	}
+	.roomType{
+		position: absolute;
+		top: -2px;
+		right: 6px;
+		color: #c70208;
+		font-weight: bold;
+		font-size: 12px;
+	}
+	.displayLocation{
+		color: #c70208;
+		font-weight: bold;
+		text-align: center;
+		float: right;
+		margin-right: 8px;
+	}
+</style>
+
+<script type="text/javascript">
+	var selectedMovieId,selectedMovieDate,selectedTicketType,selectMovieLocation;
+
+	$(function(){
+		if($('.eachDay').size()<=1)$('.showmore').hide();
+
+		$('.eachSession').on('click',function(){
+			var priceOptionId = $(this).data('id');
+			$('.eachSession .sessionSelected').hide();
+			$(this).find('i.sessionSelected').show();
+			$('.eachType .sessionSelected').hide();
+			$('.eachType ').hide();
+			$(".eachType[data-group-id='"+priceOptionId+"']").show();
+			selectTicketType($(".eachType[data-group-id='"+priceOptionId+"']").first());
+
+			selectMovieLocation=$(this).data('location');
+			$('.displayLocation').html(selectMovieLocation);
+
+			selectedMovieId=$(this).data('id');
+			selectedMovieDate=$(this).data('date');
+		})
+
+		$('.eachType').on('click',function(){
+			selectTicketType($(this));
+		})
+
+		function selectTicketType(obj){
+			$('.eachType .sessionSelected').hide();
+			$(obj).find('i.sessionSelected').show();
+
+			$('.prucheseQty').data('item-price',$(obj).data('price'));
+			selectedTicketType=$(obj).data('ticket-type');
+
+			caculateTotalPrice();//inc/mobile/js/lib.js
+		}
+
+		$('.showmore').on('click',function(){
+			 $('.eachDay').each(function(index){
+				if(index>1)$(this).toggle();
+			});
+			if($('.showmore').html()=='更多场次'){
+				$('.showmore').html('隐藏场次');
+			}else{
+				$('.showmore').html('更多场次');
+			}
+		})
+	});
+</script>
+
+<div class='movieList'>
+		<{foreach from=$movieList item=item name='l'}>
+			<{if $currentDate==$item.date}>
+				<div class='eachSession' data-id='<{$item.id}>' data-date=' <{$item.time}> <{$item.date}>' data-room-type='<{$item.room_type}>' data-location='<{$item.location_name}>'>
+						<span class='sessionTime' ><{$item.time}></span>
+						<span class='roomType' ><{$item.room_type}></span>
+						<i class='fa fa-check-square-o fa-lg sessionSelected'></i>
+				</div>
+
+			<{else}>
+				<{assign var="currentDate" value=$item.date}>
+				<{if $smarty.foreach.l.index==0}>
+				<div class='eachDay'>
+					<div class='dayinfo'>
+						<{$item.date}>
+					</div>
+				<{else}>
+					</div>
+
+					<div class='eachDay'>
+						<div class='dayinfo'>
+							<{$item.date}>
+						</div>
+				<{/if}>
+					<div class='eachSession' data-id='<{$item.id}>'  data-date='<{$item.time}> <{$item.date}>' data-room-type='<{$item.room_type}>' data-location='<{$item.location_name}>'>
+						<span class='sessionTime'  ><{$item.time}></span>
+						<span class='roomType' ><{$item.room_type}></span>
+						<i class='fa fa-check-square-o fa-lg sessionSelected'></i>
+					</div>
+			<{/if}>
+		<{/foreach}>
+	</div>
+	<div class='showmore'>更多场次</div>
+	<div class='selectType'>
+		<div class='selectTypeLabel'>票价 <span class='displayLocation'></span></div>
+		<{foreach from=$movieList item=item}>
+			<{foreach from= $item.priceOption|@unserialize key=name item =price}>
+			<div class='eachType' data-group-id='<{$item.id}>' data-ticket-type = '<{$name}>' data-price='<{$price}>'>
+			<{$name}>:$<{$price}>
+			<i class='fa fa-check-square-o  sessionSelected'></i>
+			</div>
+			<{/foreach}>
+		<{/foreach}>
+		
+	</div>
+</div>

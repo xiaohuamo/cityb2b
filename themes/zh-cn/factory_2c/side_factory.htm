@@ -1,0 +1,286 @@
+<div class="box">
+	<ul class='mutil-level-menu'>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>factory_2c/index"<{if $menu=='index'}> class="current"<{/if}>><strong><{$lang->business_center_freshfoodFactory2c}></strong></a> 
+					
+				</div>
+			</li>
+			<{if $show_2c_switch_sb_menu}>
+			<li>
+				<div class='top-level'>
+					<i class="fa fa-fw fa-home" ></i>
+					<a href="<{$http_root_www}>factory_2c/login_as_customer?user_id=<{$show_2c_switch_sb_menu}>"><strong><{$lang->switch_to_wholesale_pannel}></strong></a> 
+					
+				</div>
+			</li>
+			<{/if}>
+	    	
+			
+			
+			<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='channel_manage'}> class="current"<{/if}>><{$lang->Sales_channel_management}></a>
+			</div>
+			
+			
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>factory_2c/sales_channel_management"<{if $submenu=='sales_channel'}> class="current"<{/if}>>
+					<{$lang->Sales_channel_list}>
+				</a>
+			<!--	<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					基本设置
+				</a> -->
+				
+				<a target ="_blank" href="<{$http_root_www}>factory_2c/sales_chaneel_invite_page?id=<{$loginUser.id}>" <{if $submenu=='sales_chaneel_invite'}> class="current"<{/if}> >
+					 <{$lang->invite_qr_code}>
+				</a>
+				
+				
+
+				
+			</div>
+			
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit" ></i>
+				<a <{if $menu=='index_publish'}> class="current"<{/if}>><{$lang->Publish_Management}></a>
+			</div>
+
+			<div class='second-level'>
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					<{$lang->Business_card_edit}>
+				</a>
+											
+				<a href="<{$http_root_www}>factory_2c/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					<{$lang->category_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>factory_2c/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				
+				
+				<a href="<{$http_root_www}>factory_2c/generate_restaurant_static_file?id=<{$loginUser.id}>&type=cn"<{if $submenu=='static_refresh'}> class="current"<{/if}>>
+					 <{$lang->refresh_whole_channels}>
+				</a>
+			  <a href="<{$http_root_www}>factory_2c/refresh_menu?business_id=<{$loginUser.id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
+					 <{$lang->refresh_shop}>
+				</a> 
+				
+				<a href="<{$http_root_www}>restaurant/<{$loginUser.id}>"<{if $submenu=='1234'}> class="current"<{/if}>>
+					<{$lang->preview_store}>
+				</a>
+								
+				<a href="<{$http_root_www}>factory_2c/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
+					<{$lang->preview_password}>
+				</a>  
+				
+				<a href="" onclick ="importdata();" <{if $submenu=='private_view'}> class="current"<{/if}>>
+					 <{$lang->product_import_management}>
+				</a>  
+				
+				<{if $showDelivery_date_setting_menu}>
+				
+				<a href="<{$http_root_www}>company/dispcenter"<{if $submenu=='dispcenter'}> class="current"<{/if}>>
+					 <{$lang->multi_shop_delivery_date_management}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/dispcenter_schedule"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
+					<{$lang->delivery_date_open_end_time_setting}>
+				</a>
+				<{/if}>
+				
+			</div>
+		</li>
+			
+			
+		
+			
+			
+			
+			
+		
+		
+		<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='online_center'}> class="current"<{/if}>><{$lang->order_management}></a>
+	</div>
+	<div class='second-level'>
+	
+	
+		<a  href="<{$http_root_www}>company/customer_orders"<{if $submenu=='customer_coupon_process'}> class="current"<{/if}>>
+			<{$lang->order_management}>
+		</a>
+	
+		<a  href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+			<{$lang->order_management_amend}>
+		</a>
+				
+		
+	
+	</div>
+</li>
+
+		
+		<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+				  <{$lang->print_picking_list}>
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/single_item_print_edit"<{if $submenu=='singleItemPrintEdit'}> class="current"<{/if}>>
+				<{$lang->Single_Picking_item_edit}>
+		</a>
+		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
+				<{$lang->print_packing_slips}>
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
+			  <{$lang->print_item_packing_slips}>
+		</a>
+	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
+				导入外部订单
+		</a>  -->
+		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
+				 <{$lang->print_label_logistic}>
+		</a>
+		<a  href="<{$http_root_www}>company/dispcenter_add_customer" <{if $submenu=='dispcenter_add_customer'}> class="current"<{/if}>>
+				 <{$lang->add_dispatching_customer}>  
+		</a>
+			
+	</div>
+</li>
+		
+	<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='Logistic_centre'}> class="current"<{/if}>><{$lang->logistic_center}></a>
+	</div>
+	<div class='second-level'>
+	
+	<a  href="<{$http_root_www}>company/oproute"<{if $submenu=='customer_oproute'}> class="current"<{/if}>>
+			<{$lang->logistic_management_panel}> 
+	</a>
+
+	<a  target=_blank  href="https://my.optimoroute.com/">
+			<{$lang->logistic_route_management}> 
+	</a>
+	
+	<a  href="<{$http_root_www}>company/export_driver_route"<{if $submenu=='export_driver_route'}> class="current"<{/if}>>
+			<{$lang->export_driver_excel}> 
+	</a>
+	
+	<a  href="<{$http_root_www}>company/customer_orders_logistic_query"<{if $submenu=='customer_orders_logistic_query'}> class="current"<{/if}>>
+			<{$lang->logistic_schedule_time1}>
+	</a>
+	
+	<a  href="<{$http_root_www}>company/customer_orders_logistic_query"<{if $submenu=='customer_orders_logistic_query'}> class="current"<{/if}>>
+			 <{$lang->message_management}>
+	</a>
+
+	
+	
+	</div>
+</li>
+
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='balance_account'}> class="current"<{/if}>><{$lang->money_account}></a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>company/money_review"<{if $submenu=='money_review'}> class="current"<{/if}>>
+			<{$lang->settlement_center}>
+		</a>
+		<a href="<{$http_root_www}>member/withdraw_account&side=company"<{if $submenu=='withdraw_account'}> class="current"<{/if}>>
+			<{$lang->withdraw_account_management}>
+		</a>
+	</div>
+</li>
+		
+	<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='basic_setting'}> class="current"<{/if}>><{$lang->basic_setting}></a>
+	</div>
+	<div class='second-level'>
+		
+		<a href="<{$http_root_www}>company/logo"  <{if $submenu=='logo'}> class="current"<{/if}>>
+			Logo
+		</a>	
+		
+		<a href="<{$http_root_www}>company/profile_manager"  <{if $submenu=='profile_manager'}> class="current"<{/if}>>
+			<{$lang->administrator_info}>
+		</a>
+		<a href="<{$http_root_www}>company/profile_pic" <{if $submenu=='profile_pic'}> class="current"<{/if}>>
+			<{$lang->image}>
+		</a>	
+		<a href="<{$http_root_www}>member/changepwd?side=company"<{if $submenu=='changepwd'}> class="current"<{/if}>>
+				<{$lang->password_setting}>	
+		</a>
+		
+		<a href="<{$http_root_www}>company/profile" <{if $submenu=='profile'}> class="current"<{/if}>>
+			<{$lang->business_info}>
+		</a>
+		
+		<a href="<{$http_root_www}>company/abn_application" <{if $submenu=='abn_application'}> class="current"<{/if}>>
+			<{$lang->abn_acn}>
+		</a>
+		<a href="<{$http_root_www}>company/company_category_set"<{if $submenu=='company_category_set'}> class="current"<{/if}>>
+			<{$lang->business_category}>
+		</a>
+		
+		<a href="<{$http_root_www}>company/business_hour_setting"<{if $submenu=='business_hour_setting'}> class="current"<{/if}>>
+			<{$lang->trading_hours}>
+		</a>
+	</div>
+</li>
+
+		<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='advanced_setting'}> class="current"<{/if}>><{$lang->advanced_setting}></a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>company/payment_setting" <{if $submenu=='payment_setting'}> class="current"<{/if}>>
+			<{$lang->payment_setting}>
+		</a>
+		<a href="<{$http_root_www}>company/delivery_setting" <{if $submenu=='delivery_setting'}> class="current"<{/if}>>
+			<{$lang->deliver_setting}>
+		</a>
+		<a href="<{$http_root_www}>company/staff" <{if $submenu=='staff'}> class="current"<{/if}>>
+			<{$lang->shop_staff_management}>
+		</a>
+		<a href="<{$http_root_www}>company/redeem_staff_manage" <{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
+			<{$lang->redeem_staff}>
+		</a>	
+		
+	</div>
+</li>
+		
+
+		
+	</ul>
+	
+	
+	<{if !$loginUser.wx_openID}>
+	<div style='    margin: 5px;padding: 20px;text-align:center'>
+		<h1 ><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
+		<small><{$lang->bind_wx_desc}></small>
+		<div >
+			<a href="<{$http_root_www}>member/wx_manage_account">
+				<img src="<{$bindWxQRCode}>" style='width:100px'>
+			</a>
+		</div>
+	</div>
+	<{/if}>
+	
+</div>

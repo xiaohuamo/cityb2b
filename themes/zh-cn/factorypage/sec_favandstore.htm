@@ -1,0 +1,65 @@
+
+ <{if $storeOverWriteLink}>
+     <a  href="<{$http_root_www}>food"  class="ico1" data-overwrite='true' style="  font-size:15px; "><i style=" font-size:15px; height:40px;  background-size: 30px auto;"></i>线上餐厅</a>
+<{else}>
+    <a  href="<{$http_root_www}>food "  class="ico1" style="font-size:15px; "><i style="   height:40px;   background-size: 30px auto;"></i>线上餐厅</a>
+<{/if}>
+<!--store/<{$coupon.createUserId}>-->
+<a  class="ico2 fav_not_faved" style="display: none;font-size:15px;  "><i style="  height:40px;  background-size: 30px auto;"></i><{$lang->fav}></a> 
+<a  class="ico2 fav_faved" style='color:#FD5001 ;display: none;font-size:15px; '><i style="   height:40px;  background-size: 30px auto;"></i><{$lang->watched}></a>
+<a  class="ico3" onClick='updateInpageShoppingCart()' style="font-size:15px;height:73px; "><i style="  height:40px;   background-size: 30px auto;"><span id='carts_count_id' class="cartQty"><{if $loginUser}><{$carts_count}><{else}>0<{/if}></span></i>订单</a>
+<a style="color: #333;height: auto;">
+    <p  style="text-align: center;">
+    <span></span><br><span id='tp'>$<{$voucher_totalprice+$totalprice}></span>
+    </p>
+    
+    <!-- <i style="    font-style: initial;font-size: 0.37rem;">总额:$<span id='voucher_totalprice'><{if $voucher_totalprice}><{$voucher_totalprice}><{else}>0.00<{/if}> -->
+    <!-- </i>点单:$<span id='carts_totalprice'><{if $totalprice}><{$totalprice}><{else}>0.00<{/if}></span></span> -->
+</a>
+<script type="text/javascript">
+<!-- href="<{$http_root_www}>member/showcart"-->
+    $(function(){
+        <{if $faved}>
+            $('.fav_faved').show();
+            $('.fav_not_faved').hide();
+        <{else}>
+            $('.fav_faved').hide();
+            $('.fav_not_faved').show();
+        <{/if}>
+
+        <{if $loginUser}>
+            $('.fav_faved').find('i').on('click',function(){
+                removeFav();
+            });
+
+            $('.fav_not_faved').find('i').on('click',function(){
+                addFav();
+            });
+        <{/if}>
+    });
+
+    function addFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_add", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+                
+                $('.fav_faved').show();
+                $('.fav_not_faved').hide();
+
+         });
+    }
+
+	
+
+    function removeFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_remove", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+
+                $('.fav_faved').hide();
+                $('.fav_not_faved').show();
+        });
+    }
+</script>

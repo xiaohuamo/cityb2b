@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+	<header id="hd">
+		<div class="left">
+			<a onClick='history.back()' class="a-back"></a>
+		</div>
+		<h1>
+			我分享的产品
+			
+		</h1>
+		 <{if $shop==1}><{else}>
+		<a style="position: absolute;top: 0.3rem;right: 10px;" href="<{$http_root_www}>referal/manage_referral_rule_application"><small>查看合作项目></small></a>
+		<{/if}>
+	</header>
+
+	<section id="bd">
+		<div class="m-integral" >
+			<h4>我分享的产品：<{$ref_list|@count}></h4>
+			<h5>成交订单：<{$totalOrderCount}></h5>
+			<h5>佣金：$<{$totalCommission}></h5>
+		</div>
+
+		<ul class="g-ul g-tab2 g-tab2-1">
+			<li ><a href="<{$http_root_www}>referal/referrals?type=user"><i class="ico1"></i>产品分享</a></li>
+			<li ><a href="<{$http_root_www}>referal/referrals?type=business"><i class="ico1"></i>商家介绍</a></li>
+			<li><a href="<{$http_root_www}>member/recharge?type=CUSTOMER_REF_COMMISSION"><i class="ico2">&nbsp;</i>取现</a></li>
+		</ul>
+
+		<{if $ref_list}>
+		<ul class="g-ul m-list4 m-list4-1" >
+			<{foreach from=$ref_list item=item name='dl'}>
+			<li>
+				<div class="top">
+					<p><{$item.couponTitle}> 
+
+						<a href="<{$http_root_www}>referal/shared_coupon_detail?couponId=<{$item.couponId}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;">业绩详情</a>
+
+						<a href="<{$http_root_www}>coupon1/<{$item.couponId}>" class='btn btn-warning btn-xs' style="color:#fff;float: right;margin-right: 10px;">分享</a>
+					</P>
+				</div>
+				
+				<div class="top">
+					<em class="e1">
+					 佣金：<{$item.totalCommission}>
+					</em>
+					<span>点击：<{$item.hits}>  订单数：<{$item.orderCount}> </span>
+				</div>
+
+				<p>
+				<{if $item.referralRule}>
+					合作推广项目优惠
+					
+					<{$item.referralRule.apply_code}>
+
+					<a href="<{$http_root_www}>referal/apply_new_rule_success?referal_rule_code=<{$item.referralRule.apply_code}>" target='_blank'  class='btn btn-warning btn-xs' style="color:#fff;float: right;">产看资料</a>
+				<{/if}>
+				</p>
+
+			</li>
+			<{/foreach}>
+		</ul>
+		<{/if}>
+
+	</section>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+ <{if $shop==1}>
+ <{include file="mobile/mobile_share_footer.htm"}>
+ <{else}>
+ 	<{include file="mobile/mobile_footer.htm"}>
+ <{/if}>
+
+</body>
+</html>

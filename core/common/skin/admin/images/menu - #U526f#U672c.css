@@ -1,0 +1,22 @@
+html { overflow:auto; }
+body { width:172px; background:url(bg_menu_top.jpg) no-repeat right top #fff; }
+
+#menu-area, .menu-area { width:182px; }
+#menu { width:160px; margin:0; padding:35px 0 35px 11px; }
+dl { width:160px; margin:0; padding:0; }
+
+dt { width:160px; margin:0; padding:2px 0 2px; color:#174A7D; text-align:right; }
+dt a { display:block; width:160px; _height:18px; *min-height:18px; background:url(menu_1_tp.jpg) no-repeat; color:#174A7D; line-height:17px; padding-top:1px; }
+dt a span { display:block; padding:2px 20px 4px 5px; background:url(menu_1_bt.jpg) no-repeat bottom left; }
+dt a:hover { background:url(menu_01_tp.jpg) no-repeat; color:#FF9900; text-decoration:none; }
+dt a:hover span { background:url(menu_01_bt.jpg) no-repeat bottom left; }
+
+.current a { display:block; width:160px; background:url(menu_01_tp.jpg) no-repeat; color:#FF9900; }
+.current a:hover { color:#FF9900; text-decoration:none; }
+.current a span { display:block; padding:2px 20px 4px 5px; background:url(menu_01_bt.jpg) no-repeat bottom left; }
+
+dd { margin-bottom:1px; text-align:right; }
+dd a { display:block; padding:1px 20px 1px 0; background:url(sub_menu_1.jpg) no-repeat; margin:2px 0; padding-top:3px; }
+dd a:hover { background:url(sub_menu_1.jpg) no-repeat; color:#FF9900; }
+dd .current { background:url(sub_menu_1.jpg) no-repeat; color:#FF9900; text-decoration:none; }
+li { /*height:22px;*/ vertical-align: bottom; }

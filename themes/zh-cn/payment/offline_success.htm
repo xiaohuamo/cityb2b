@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="Ubonus  墨尔本| Melbourne  " />
+	<meta name="description" content="Ubonus  墨尔本| Melbourne " />
+    <meta content="telephone=no" name="format-detection" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>css/lib.css" />
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+</head>
+<body>
+<!-- 头部 -->
+<div class="header">
+    <{include file='index_inc_header.htm'}>
+    
+    <{include file='index_inc_top.htm'}>
+</div>
+<!-- 头部 end -->
+	<!-- inedx -->
+		<div style="text-align: center;padding: 100px 0px">
+			<h1 style="color:#31708f;font-size: 40px;margin: 10px"><{$lang->offline_success_description1}></h1>
+			<br>
+			<p><{$lang->offline_success_description2}>：<{$orderId}></p>
+			<br>
+			<p><{$lang->offline_success_description3}></p>
+			<br>
+			<p><{$lang->offline_success_description4}></p>
+			<br>
+			<p><{$lang->offline_success_description5}></p>
+			<br>
+			<p><{$lang->offline_success_description6}></p>
+
+			<br>
+			<i class='fa fa-check fa-5x' style ='color:#FD5001 '></i>
+			<br>
+			<br>
+			<p></p>
+			<span><a href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>"><{$lang->paypal_success9}></a></span>
+			|
+			<span><a href="<{$http_root_www}>"><{$lang->offline_success_description7}></a></span>
+
+		</div>
+
+		<{include file ="payment/pc_success_footer.htm"}>
+	<!-- inedx -->
+
+	<!-- 底部 -->
+	<{include file='index_inc_footer.htm'}>
+	<!-- 底部 end -->
+
+
+	<!-- 右边栏 -->
+	<{include file='index_inc_right.htm'}>
+	<!--右边栏 end-->
+
+	
+	<!-- 浮动导航end-->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/lib.js"></script>
+	<script src="<{$SKIN_PATH}>js/jquery.SuperSlide.js"></script>
+	<script src="<{$SKIN_PATH}>js/jsTimerCountDown.js"></script>
+	<script src="<{$SKIN_PATH}>js/dong.js"></script>
+	
+
+</body>
+</html>

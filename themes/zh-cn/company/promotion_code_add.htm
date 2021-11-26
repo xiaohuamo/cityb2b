@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">	
+
+					<form id="memberForm"  class ='form-style-green' action="<{$http_root_www}>company/promotion_code" method="post" target="post_frame" enctype="multipart/form-data">
+						 <div class="input-box clearfix">	
+								<span><label>基于产品</label></span>	
+								<select name='couponId' style='width:400px;'>
+								  <option value="-1">适用店铺全部商品</option>
+								  <{foreach from = $couponList item=item}>
+								  <option value="<{$item.id}>"><{$item.id}> # <{$item.title}></option>
+								  <{/foreach}>
+								</select> 
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>折扣方式</label></span>	
+								<select name='type' style='width:120px;'>
+								  <option value="fixed">固定金额</option>
+								  <option value="percentage">百分比</option>
+								</select> 
+
+								<input type="text" name="value" class="input-text"  />
+						</div>
+						<div class="input-box clearfix">	
+								<span><label>使用条件</label></span>	
+								<select name='apply_condition_type' style='width:120px;'>
+								  <option value="none">无</option>
+								  <option value="conditionQty">达到购买数量</option>
+								  <option value="conditionMinspend">达到消费金额</option>
+								</select> 
+
+								<input type="text" name="apply_condition_value" class="input-text"  />
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>过期方式</label></span>	
+								<select name='expireType' style='width:120px;'> 
+								  <option value="unlimited">无限期</option>
+								  <option value="fixedQty">限定总数量</option>
+								  <option value="expireInDays">限定时间</option>
+								</select> 
+
+								<input type="text" name="expireValue" class="input-text"  />
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>打折码</label></span>	
+								<select name ='codeGenMethod' style='width:120px;'>
+								  <option value="random">随机生成</option>
+								  <option value="userInput">自定义打折码</option>
+								</select> 
+
+								<input type="text" name="promotionCode" class="input-text" />
+						</div>
+						<div class="input-box clearfix">	
+								<span><label>描述</label></span>	
+								<textarea   rows="4" cols="50" type="text" name="promotionDes" /></textarea>
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>新人卷</label></span>	
+								<input type="checkbox" name="single_use_per_user" value='enable'>每个用户仅可以使用一次
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit" style='float:right'>生成新折扣吗</button>
+						</div>
+					
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

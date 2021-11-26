@@ -1,0 +1,241 @@
+	/*mobile css overwrite*/
+	/*Group Buy by Chris*/
+	html{font-size: 20px;font-family: "微软雅黑","Microsoft Yahei";}
+
+	.group_buy_container_mask{
+		background: rgb(0, 0, 0) none repeat scroll 0% 0%;
+		width: 100%;
+		height: 1500px;
+		opacity: 0.5;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 90;
+		display: none;
+	}
+	.group_buy_container{
+		position: fixed;
+		width: 625px;
+		height: 700px;
+		z-index: 91;
+		background: rgb(238, 238, 238) none repeat scroll 0% 0%;
+		display: block;
+		margin: auto;
+		left: 0px;
+		right: 0px;
+		top: 0px;
+		bottom: 0px;
+		display: none;
+	}
+	.mobile_trigger_btn{
+		text-align: center;
+	    color: white;
+	    background: #FD5001 ;
+	    line-height: 4rem;
+	    height: 4rem;
+	    margin: 10px;
+	    font-size: 2rem;
+	}
+	.group_buy_container_mobile{
+		position: relative;
+		width: 100%;
+		background: #fff;
+		display: none;
+	}
+	.group_buy{
+
+	}
+	
+	.group_buy .user_list{
+		padding: 40px;
+		margin: 5px;
+		border: 1px solid rgb(207, 207, 207);
+		background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+		border-radius: 5px;
+		color: rgb(51, 51, 51);
+		min-height: 100px;
+		overflow-x:hidden;
+		overflow-y:scroll;
+	}
+	.group_buy .group_desc{
+		padding: 40px;
+		margin: 5px;
+		border: 1px solid rgb(207, 207, 207);
+		background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+		border-radius: 5px;
+		color: rgb(51, 51, 51);
+		line-height: 3rem;
+		font-size: 1.5rem;
+	}
+
+	.group_buy .group_desc h1{
+
+	}
+	.group_buy .group_desc p{
+		font-size: 1.9rem;
+	}
+
+	.group_buy .group_desc .product_link{
+		font-size: 2rem; float: right; color: #000; text-decoration: none;
+		 position: relative;
+		 top: -5rem;
+	}
+
+	.group_buy .bottom_sec{
+		position: fixed;
+	    width: 100%;
+	    bottom: 0px;
+	    z-index: 2;
+	}
+	.group_buy .bottom_sec button{
+		background: rgb(43, 184, 170);
+		border: none;
+		color: white;
+		font-size: 3rem;
+		height: 6rem;
+	}
+	.manage_group_btn{width: 40%;}
+	.manage_group_btn a{text-decoration: none;color: white;}
+	.creat_group_btn,.join_group_btn,.leave_group_btn{width: 60%;background-color: #FD5001 !important}
+
+	.group_buy .group{
+		overflow-y: scroll;
+		overflow-x: hidden;
+		margin-bottom: 	20px;
+	}
+
+	.each_group .user_already_in{
+		position: absolute;
+		top: 3px;
+		left:3px;
+		width: 20px;
+		height: 20px;
+		color: #A5FFAC;
+	}
+
+	.group_buy .each_group{
+		position: relative;
+		width: 190px;
+	    display: inline-block;
+	    margin:5px;
+		border: 1px solid #c3c3c3;
+	}
+
+	.single_group_display{
+		width: 94% !important;
+	    margin: 0px 3% !important;
+	}
+
+	.group_running .each_group_top,
+	.group_staging .each_group_top{
+		display: inline-block;
+		width: 100%;
+		background-color: #2bb8aa;
+	}
+	.group_ready .each_group_top,
+	.group_close .each_group_top,
+	.group_finalizing .each_group_top{
+		display: inline-block;
+		width: 100%;
+		background-color: #8c8c8c;
+	}
+
+	.group_complete .each_group_top{
+		display: inline-block;
+		width: 100%;
+		background-color:#0ec100;
+	}
+
+	.each_group_mask{
+		position: absolute;
+		top: 0px;
+		z-index: 5;
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		opacity: 0.8;
+		background-color: #eee;
+		display: none;
+	}
+
+	.each_group_top .group_name{
+		display: inline-block;
+		text-align: center;
+		width: 100%;
+		line-height: 5rem;
+		color: #fff;
+		font-size: 2rem;
+	}
+
+	.each_group .group_size{
+		position: absolute;
+		bottom: 0px;
+		right: 0px;
+		background-color: #FD5001 ;
+		font-size: 2rem;
+		color: #000;
+	}
+
+	.each_group_top .group_status{
+		display: inline-block;
+		text-align: center;
+		width: 100%;
+		line-height: 7rem;
+		color: #fff;
+		font-size: 4rem;
+		font-weight: bolder;
+	}
+	.each_group_top .breaker{
+		border-bottom: 1px solid white;
+		display: block;
+		width: 15px;
+		margin: auto;
+	}
+
+	.each_group_mask .group_selected{
+		position: absolute;
+		bottom: 14px;
+		right: 65px;
+	}
+	.group_user_list .group_reward{
+		color: #FD5001 ;
+		background: #2bb8aa;
+	    display: inline-block;
+	    clear: both;
+	    width: 100%;
+	    text-align: center;
+	    line-height: 8rem;
+	    
+	}
+	.group_user_list{
+		font-size: 2rem;
+	}
+
+	.group_user_list .list_top{
+		margin-bottom: 5rem;
+	}
+
+	.group_user_list .list_body{
+		margin-bottom: 2rem;
+	}
+
+	.group_user_list .level_condition{
+		margin: 30px 0px;
+		padding: 30px 0px;
+		text-align: center;
+		background: #FD5001 ;
+		border-radius: 30px;
+	}
+
+
+	.group_list_popup{
+		display: none;
+		position: relative;
+		height: 100px;
+		overflow-x:hidden;
+		overflow-y:scroll;
+		border: 1px solid rgb(207, 207, 207);
+		margin: 10px;
+		padding: 15px;
+		border-radius:5px;
+	}

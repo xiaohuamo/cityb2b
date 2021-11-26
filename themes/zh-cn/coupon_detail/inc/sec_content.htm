@@ -1,0 +1,196 @@
+ <div style="line-height: 75px;text-align: right;">
+     <{$lang->scan_and_share}><img style="vertical-align: middle;" src="<{$qrlink}>" width='75px'>  
+</div>
+<{if $coupon.id ==7176}>
+<!--<div class="txt content-image-fullsize" style="display: block;">
+ <a href="http://www.academyarts.com.au/zh/about-us/"> <img src="<{$SKIN_PATH}>images/enroll_footer0.jpg" alt="墨尔本艺术学院"></a>
+</div>-->
+<{else}>
+<!--
+<div class="txt content-image-fullsize" style="display: block;">
+ <a href="<{$http_root_www}>coupon1/7115"> <img src="<{$SKIN_PATH}>images/detail_header.jpeg" alt="墨尔本 大洋路 一日游 长青"></a>
+</div> -->
+<{/if}>
+<!--
+<div class="txt content-image-fullsize" style="display: block;">
+ <a href="<{$http_root_www}>coupon1/7122"> <img src="<{$SKIN_PATH}>images/enroll_banner.jpg" alt="2019 中国好声音 墨尔本 海选"></a>
+</div>
+-->
+<div class="m-row2-lb">
+	<ul class="ul-anchor-lb">
+		<li><a href="#one"><{$lang->product_detail}></a></li>
+		<li><a href="#two"><{$lang->product_comment}></a></li>
+		<li><a href="#three"><{$lang->related_product_recommendation}></a></li>
+
+		<{if $storeOverWriteLink}>
+			<li><a  class='link' href="<{$http_root_www}>store/<{$storeOverWriteLink}>" target="_blank"><{$lang->merchant_store}></a></li>
+		<{else}>
+			<li><a  class='link' href="<{$http_root_www}>store/<{$coupon.createUserId}>" target="_blank"><{$lang->merchant_store}></a></li>
+		<{/if}>
+		
+	</ul>
+	<div class="m-detail-lb" id="one">
+		<div class="con">
+			<div class="m-lb-tit">
+				<h3>
+					<span><{$lang->highlight}><em class="a1"></em><em class="a2"></em></span>
+					<i class="circle1"></i><i class="circle2"></i>
+				</h3>
+			</div>
+			<div class="txt content-image-fullsize">
+
+				<{$coupon.highlight}>
+			</div>
+		</div>
+		<div class="con">
+			<div class="m-lb-tit">
+				<h3>
+					<span><{$lang->product_detail}><em class="a1"></em><em class="a2"></em></span>
+					<i class="circle1"></i><i class="circle2"></i>
+				</h3>
+			</div>
+			<div class="txt content-image-fullsize">
+				<{str_replace('white-space: pre-wrap;','',str_replace('<img','<img class="lazyload" name="content_img"',$coupon.content))}> 
+			</div>
+		</div>
+
+
+
+		
+
+
+
+
+
+		<div class="con">
+			<div class="m-lb-tit">
+				<h3>
+					<span><{$lang->about_the_business}><em class="a1"></em><em class="a2"></em></span>
+					<i class="circle1"></i><i class="circle2"></i>
+				</h3>
+			</div>
+			<div class="txt content-image-fullsize">
+			
+			<{str_replace('white-space: pre-wrap;','',str_replace('<img','<img name="content_img"',$coupon.business.companyDescription))}> 
+			
+				
+				
+			</div>
+
+
+			<{if $coupon.business.googleMap}>
+			<div class="comm-con">
+			     <!-- google MAP -->
+			    <div id="googleMap" style="width: 100%;height: 30vh"></div>
+			    <p>商家地址:<{str_replace('white-space: pre-wrap;','',$coupon.business.googleMap)}></p>
+			    <script>
+			      var uluru = {lat: <{$coupon.business.latitude}>, lng: <{$coupon.business.longitude}>};
+
+			      var map;
+			      function initMap() {
+			        map = new google.maps.Map(document.getElementById('googleMap'), {
+			          center: uluru,
+			          zoom: 15
+			        });
+
+			        var marker = new google.maps.Marker({position: uluru, map: map});
+			      }
+			    </script>
+			    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&callback=initMap"
+			    async defer></script>
+			    <!-- google MAP -->
+
+			</div>
+			<{/if}>
+		</div>
+	</div>
+	<div class="m-eval-lb" id="two">
+		<div class="m-lb-tit">
+			<h3>
+				<span><{$lang->product_comment}> <em class="a1"></em><em class="a2"></em></span>
+				<i class="circle1"></i><i class="circle2"></i>
+			</h3>
+		</div>
+		<ul class="ul-eval-lb">
+			<{if $evaluation}>
+			<{foreach from=$evaluation item=item}>
+			<li>
+				<div class="items">
+					<h3 class="tit" ><{$item.user_nickname}><span><{$item.createTime|date_format:"%Y-%m-%d %H:%M:%S"}></span>
+					</h3>
+
+					<div class="con">
+						<p><{$item.description}></p>
+						<div class="xing">
+
+							<{section name=em loop=5}>
+							<{if $smarty.section.em.index<$item.score_avg}>
+							<em></em>
+
+							<{else}>
+							<em class="other"></em>
+							<{/if}>
+							<{/section}>
+
+
+						</div>
+					</div>
+				</div>
+			</li>
+			<{/foreach}>
+			<{else}>
+			<p style='text-align: center;'><{$lang->no_review_yet}></p>
+			<{/if}>
+		</ul>
+	</div>
+	<div class="m-recom-lb" id="three">
+		<div class="m-lb-tit">
+			<h3>
+				<span><{$lang->related_product_recommendation}><em class="a1"></em><em class="a2"></em></span>
+				<i class="circle1"></i><i class="circle2"></i>
+			</h3>
+		</div>
+		<ul class="ul-recom-lb">
+			<{foreach from=$relatedProduct item=item}>   
+			<li>
+				<div class="items">
+					<div class="img"><a href="<{$http_root_www}>coupon1/<{$item.id}>"><img alt="<{$item.title}>" src="<{$UPLOAD_PATH}><{$item.pic}>" style='width: 315px;height: 200px'></a></div>
+					<div class="txt">
+						<p>
+							<a href="<{$http_root_www}>coupon1/<{$item.id}>"> <{$item.title}></a>
+						</p>
+						<em><{$item.voucher_deal_amount}></em>
+						<div class="ico">
+							<a href="" class="ico1"><{$item.hits}></a>
+
+						</div>
+					</div>
+				</div>
+			</li>
+			<{/foreach}>
+			<!--
+			<{foreach from=$guessYouLike item=item}>   
+			<li>
+				<div class="items">
+					<div class="img"><a href="<{$http_root_www}>coupon/<{$item.id}>"><img  alt="<{$item.title}>" src="<{$UPLOAD_PATH}><{$item.pic}>" style='width: 315px;height: 200px'></a></div>
+					<div class="txt">
+						<p>
+							<a href="<{$http_root_www}>coupon/<{$item.id}>"> <{$item.title}></a>
+						</p>
+						<em><{$item.price1}></em>
+						<div class="ico">
+							<a href="" class="ico1"><{$item.hits}></a>
+
+						</div>
+					</div>
+				</div>
+			</li>
+			<{/foreach}> -->
+		</ul>
+	</div>
+
+</div>
+
+<div class="txt content-image-fullsize" style="display: block;">
+  <!--<img src="<{$SKIN_PATH}>images/detail_footer_pc.jpeg"> -->
+</div>

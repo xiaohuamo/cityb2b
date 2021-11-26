@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+<script type="text/javascript">
+
+	$(function(){
+		$('#enable-switch').on('click',function(){
+			if($(this).prop( "checked" )){
+				$('.pass-edit').show(200);
+			}else{
+				$('.pass-edit').hide(200);
+				$('#pass').val('');
+			}
+		})
+
+		$('.fast-pass').on('click',function(){
+			var pass= Math.floor(100000 + Math.random() * 900000);
+			$('#pass').val(pass);
+		})
+
+		if($('#pass').val()!=''){
+			$('#enable-switch').prop( "checked",true );
+			$('.pass-edit').show();
+		}else{
+			$('#enable-switch').prop( "checked",false );
+			$('.pass-edit').hide();
+		}
+	})
+
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">				
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>restaurant/setup_restaurant" method="post" target="post_frame" enctype="multipart/form-data">
+						<!-- Approved -->
+						<div class="input-box clearfix">
+							<h1>开启线上堂食点餐系统</h1>
+							<p>开启线上餐厅后,重新刷新网页,就可以看到线上餐厅的相关管理项,可以设置餐厅菜单类别及菜品和设置线上餐厅的内容介绍.</p>
+							<p></p>
+						</div>
+
+						<div class="input-box clearfix">
+							<span><label>线上餐厅名称</label></span>
+							<label>启用 <input type="checkbox" id='enable-switch'></label>
+
+							<span class='pass-edit'>
+								<input type="text" name="title" id='title' value="">
+								<i class='fa fa-bolt fast-pass' ><em>20个字以内</em></i> 
+							</span>
+						</div>
+						
+						<div class="input-box input-submit clearfix">
+							<button type="submit" > 保存</button>
+						</div>
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

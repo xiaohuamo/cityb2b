@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title><{$pageTitle}></title>
+
+        <{if $pageKeywords}>
+        <meta name="keywords" content="<{$pageKeywords}>"/>
+        <{/if}>
+
+        <{if $pageDescription}>
+        <meta name="description" content="<{$pageDescription}>"/>
+        <{/if}>
+
+        <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+        <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+        <script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+        <!--[if lt IE 7]>
+        <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+    </head>
+    <body>
+
+    <{include file='header.htm'}>
+
+        <div class="container">
+            <div class="wrap clearfix">
+
+                <{include file='company/side.htm'}>
+
+                <div class="main">
+                    <div class="box2">
+                        <label for="date">请选择日期: </label>
+                        <select id='date'>
+						   <option value="0" 0>               选择配送日期                      </option>
+                            <{foreach from=$dateOptions item=dateOption}>
+                            <option value="<{$dateOption}>" <{if $dateOption==$date}>selected<{/if}>>
+                                <{$dateOption}>
+                            </option>
+                            <{/foreach}>
+                        </select>
+
+                        <label for="driver-serial">选择司机编号: </label>
+                        <select id="driver-serial">
+                            <option value="">
+                            <{foreach from=$driversOptions item=driverOption}>
+                            <option value="<{$driverOption}>" <{if $driverOption==$driverSerial}>selected<{/if}>>
+                                <{$driverOption}>
+                            </option>
+                            <{/foreach}>
+                        </select>
+                        <button id="export-xls" type="button" style="padding: 10px 5px;background: #65dfff">
+                            导出
+                        </button>
+                        <div class="main-list">
+
+                            <{if $orders}>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Order Id</th>
+                                    <th>Vehicle Label</th>
+                                    <th>Stop Number</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Logistic Sequence No</th>
+                                    <th>Logistic Suppliers Info</th>
+                                    <th>Logistic Suppliers Count</th>
+                                    <th>Notes</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <{foreach from=$orders item=order}>
+                                    <tr>
+                                        <td><{$order.order_id}></td>
+                                        <td><{$order.vehicle}></td>
+                                        <td><{$order.stop_no}></td>
+                                        <td><{$order.address}></td>
+                                        <td><{$order.phone}></td>
+                                        <td><{$order.logistic_sequence_No}></td>
+                                        <td><{$order.logistic_suppliers_info}></td>
+                                        <td><{$order.logistic_suppliers_count}></td>
+                                        <td><{$order.notes}></td>
+                                    </tr>
+                                    <{/foreach}>
+
+                                </tbody>
+                            </table>
+                            <{/if}>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    <{include file='footer.htm'}>
+        <script type="text/javascript">
+            var date = $('#date');
+            var driverSerial = $('#driver-serial');
+
+            function generateUrl(isExport = false) {
+                return "<{$http_root_www}>company/export_driver_route?date="
+                    + (date.val() || '')
+                    + "&driver-serial="
+                    + (driverSerial.val() || '')
+                    + "&is-export=" + isExport;
+            }
+
+            function filterOrders() {
+                window.location.href = generateUrl();
+            }
+
+            date.on('change', filterOrders);
+            driverSerial.on('change', filterOrders);
+             alert( generateUrl(true));
+            $('#export-xls').on('click', function(){
+                window.location.href = generateUrl(true);
+            });
+        </script>
+    </body>
+</html>

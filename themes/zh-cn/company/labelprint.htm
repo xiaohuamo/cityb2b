@@ -1,0 +1,1062 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script language="javascript" src="<{$STATIC_PATH}>lodop/LodopFuncs.js"></script>
+
+<style type="text/css">
+	body {
+		min-width: 800px;
+
+		user-select: none;
+		-moz-user-select: none;
+	}
+
+	.panel-left{
+		display: inline-block;
+		position: relative;
+		float: left;
+		width: 70%;
+		height: 98vh;
+		background: #eee;
+	}
+
+	.panel-right{
+		display: inline-block;
+		position: relative;
+		width: 29%;
+		height: 98vh;
+		background: #2bcade;
+	}
+
+	.btnbox {
+		display: inline-block;
+		border: 1px solid #eee;
+		height: 4rem;
+		line-height: 4rem;
+		text-align: center;
+		margin: 0.5%;
+
+		background: lightgreen;
+	}
+
+	.btnbox.selected {
+		background: #FD5001  !important;
+		color: white;
+	}
+
+	.btnbox.disabled {
+		background: #ddd !important;
+	}
+
+	.btnbox.printed {
+		background: #ddd;
+		color: white;
+	}
+
+	.operator-panel .btnbox{
+		width: 19%;
+	}
+
+	.order-index-panel .btnbox{
+		width: 11%;
+	}
+
+	.order-panel .btnbox{
+		width: 8%;
+	}
+
+	.detail-panel {
+		padding: 3%;
+		border: 1px solid #eee;
+		height: 30vh;
+		background: #2bcade;
+
+	}
+
+	.detail-panel .info{
+		height: 35px;
+		line-height: 35px;
+	}
+
+	.detail-panel .info span{
+		display: inline-block;
+	}
+
+	.detail-panel .info .sequense-no{
+		width: 12%;
+	}
+	.detail-panel .info .phone{
+		width: 40%;
+		text-align:center;
+	}
+
+	.detail-panel .info .name{
+		width: 44%;
+		text-align:right;
+	}
+
+	.detail-panel .address {
+		height: 50px;
+		margin: 20px 0 40px 0;
+		font-size: 1.5rem
+	}
+
+	.detail-panel .adjust-order-btn {
+		width: 50%;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		display: block;
+		margin: 30px auto 0 auto;
+		border: 1px solid #eee;
+		text-decoration: none;
+		color: black;
+		background: lightgreen;
+	}
+
+	.detail-panel .adjust-order-btn.disabled{
+		background: #ddd !important;
+	}
+
+	.copy-adjust-panel .btnbox{
+		width: 30%;
+	}
+
+	.copy-adjust-input {
+		text-align: center;
+		height: 74px;
+		line-height: 74px;
+	}
+
+	.copy-adjust-input span{
+		display: inline-block;
+		border: 1px solid #eee;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+	}
+
+	.copy-adjust-input input{
+		height: 40px;
+		width: 80px;
+		text-align: center;
+		font-size: 1.6rem;
+	}
+
+	.print-btn {
+		text-align: center;
+	}
+	.print-btn.print button{
+		width: 70%;
+		height:16vh;
+		background-color: #ffcd38;
+		font-size: 50px;
+		font-weight: 600;
+		margin: 5px;
+	}
+
+	.print-btn.preview button{
+		width: 35%;
+		height:50px;
+		background-color: #2bb8aa;
+	}
+
+	.print-btn.dropNum button{
+		width: 35%;
+		height:50px;
+		background-color: #eee;
+	}
+
+	.nav {
+		background: #eee;
+		line-height: 10vh;
+	}
+	.nav label{
+		line-height: 8vh;
+		color: #f3c;
+	    border: 1px solid #f3c;
+	    padding: 15px;
+	    border-radius: 10px;
+	    margin: 0 20px 0 15px;
+	}
+
+	.nav .select{
+		background: #FD5001 ;
+		color: white;
+		padding: 15px 15px;
+	}
+
+	.select-panel {
+		position: fixed;
+		width: 30%;
+		height: 80vh;
+		overflow-y: scroll;
+		background: #2bcade;
+		z-index: 2;
+		left: 20%;
+		top: 10vh;
+		padding: 2%;
+		display: none;
+	}
+
+	.select-panel .select-item {
+		display: block;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		background: lightgreen;
+		margin: 5% 1%;
+		text-decoration: none;
+	}
+
+	.drop-num-panel {
+		background: #2bcade;
+		padding:2%;
+		position: 	fixed;
+		height: 	60vh;
+		width: 	60vw;
+		z-index: 	9;
+		top: 	20vh;
+		left: 	3vw;
+		min-width: 	500px;
+		display: none;
+	}
+
+	.drop-num-panel .btnbox{
+		width: 60px;
+	}
+</style>
+
+</head>
+
+<body>
+<div>
+	<div class="panel-left">
+	<div class='nav'>
+	<label>Deliver Date:</label>
+	<span  id="current_date" class='select' data-target='date-select' style="color: rgb(3, 169, 244); font-size: 20px; font-weight: 600;" ><{if $date}><{$date}><{else}>Please select a date<{/if}></span>
+
+	<div class='select-panel date-select'>
+		<{foreach from=$availableDates item=item}>
+			<a class='select-item' href="<{$http_root_www}>company/labelprint?date=<{$item}>&ref_seq_num=<{$item.ref_seq_num}>&bid=<{$item.business_id}>&data_resource=<{$item.data_source}>">
+				<{$item}>
+			</a>
+		<{/foreach}>
+	</div>
+
+	<label>Business:</label>
+
+	<span id= "current_business" class='select' data-target='business-select' style="color: rgb(3, 169, 244); font-size: 20px; font-weight: 600;"><{$selectedSupplierName}></span>
+
+	<div class='select-panel business-select'>
+		<{foreach from=$suplierList item=item}>
+			<a  class='select-item' href="<{$http_root_www}>company/labelprint?date=<{$date}>&ref_seq_num=<{$item.ref_seq_num}>&bid=<{$item.business_id}>&data_resource=<{$item.data_source}>">
+				<{$item.business_name}>
+			</a>
+		<{/foreach}>
+	</div>
+
+	<label>PrintMode:</label>
+	<span class='select print-mode-select'>
+		2 Labels in 1
+	</span>
+</div>
+		<!-- Left -->
+		<div class="operator-panel" style="    background: #ddd;">
+			<!-- 操作员选择 -->
+			<{foreach from=$operators item=item}>
+				<span class='btnbox' data-user-id='<{$item.id}>'><{$item.displayName}></span>
+			<{/foreach}>
+		</div>
+
+		<div class='order-index-panel'>
+			<!-- 订单快速检索 -->
+			<span class='btnbox'>1-50</span>
+			<span class='btnbox'>51-100</span>
+			<span class='btnbox'>101-150</span>
+			<span class='btnbox'>151-200</span>
+			<span class='btnbox'>201-250</span>
+			<span class='btnbox'>251-300</span>
+			<span class='btnbox'>More</span>
+		</div>
+
+		<div class='order-panel'>
+			<!-- 订单统配号 列表 -->
+			<{for $var=1 to 50}>
+			<span class='btnbox printed'><{$var}></span>
+			<{/for}>
+		</div>
+	</div>
+
+
+	<div class='panel-right'>
+		<!-- right -->
+		
+		<div>
+			<!-- 打印份数 -->
+			<div class='copy-adjust-panel' style="margin: 1rem 1rem;">
+				<!-- 快速按钮 1-6 -->
+				<span class='btnbox selected'>1</span>
+				<span class='btnbox'>2</span>
+				<span class='btnbox'>3</span>
+				<span class='btnbox'>4</span>
+				<span class='btnbox'>5</span>
+				<span class='btnbox'>6</span>
+			</div>
+
+			<div class='copy-adjust-input'>
+				<!-- 份数输入 -->
+				<span onClick='reducePrintCopy(1)'>-</span>
+				<input name="printCopy" class='printCopy' value='1'>
+				<span onClick='increasePrintCopy(1)'>+</span>
+			</div>
+
+			
+
+			<div class='print-btn print'>
+				<button>Print</button>
+			</div>
+			
+			<div style="    text-align: center;">
+			<span   class='print-btn dropNum'>
+				<button onClick="$('.drop-num-panel').show();">Drop Num</button>
+				
+			</span>
+			
+			<span  class='print-btn preview'>
+				<button>Preview</button>
+			</span>
+			
+			
+			</div>
+			
+			
+
+		</div>
+		<div class='detail-panel'>
+			<!-- 订单信息 -->
+			<!-- <div class='info'>
+				<span class='sequense-no'>68</span>
+				<span class='phone'>0433813332</span>
+				<span class='name'>Jack Wang</span>
+			</div>
+
+			<div class='address'>
+				27 signature blvd pointcook 3030 vic
+			</div>
+
+			<button class='adjust-order-btn'>Adjust Order</button> -->
+		</div>
+	
+	</div>
+</div>
+
+<div class='drop-num-panel'>
+	<!-- drop num pop up -->
+	<{for $var=1 to 50}>
+	<span class='btnbox' data-dropnum ='<{$var}>'><{$var}></span>
+	<{/for}>
+</div>
+
+<script type="text/javascript">
+	var PRINT_MODE_SINGLE_LABEL_PER_PAGE = 'SINGLE_LABEL_PER_PAGE';
+	var PRINT_MODE_THREE_LABEL_PER_PAGE = 'THREE_LABEL_PER_PAGE';
+	
+	var parsedOrders1 = '<{$parsedOrdersJson}>';
+	//alert(parsedOrders1);
+   
+var parsedOrders = JSON.parse(parsedOrders1);
+
+	
+	var DEFAULE_PAGE_SIZE = 50;
+	var DEFAULT_PRINT_MODE = PRINT_MODE_THREE_LABEL_PER_PAGE;
+	
+	var ref_seq_num ='<{$ref_seq_num}>';
+
+	$(function(){
+	
+	
+			
+		  window.setInterval(index, 1500); 
+
+		if ($('.operator-panel .btnbox').length === 1) {
+			$('.operator-panel .btnbox').addClass('selected');
+		}
+
+		$('body').on("click", ".operator-panel .btnbox", function(){
+			$(this).siblings('.btnbox').removeClass('selected');
+			$(this).toggleClass('selected');
+
+			updatePrintBtnStatus();
+		})
+
+		$('body').on("click", ".order-index-panel .btnbox", function(){
+			if (isOperatorSelected() === false) return false;
+
+			$(this).siblings('.btnbox').removeClass('selected');
+			$(this).addClass('selected');
+
+			renderPageContent($(this).data('page'), DEFAULE_PAGE_SIZE);
+
+			updatePrintBtnStatus();
+		})
+
+		$('body').on("click", ".order-panel .btnbox", function(){
+			if (isOperatorSelected() === false) return false;
+
+			$(this).siblings('.btnbox').removeClass('selected');
+			$(this).toggleClass('selected');
+
+			var orderId = $(this).data('order-id');
+			renderDetailPanel(orderId);
+
+			var order = parsedOrders[orderId];
+			setSelectedDropNum(order.logistic_stop_No);
+
+			updatePrintBtnStatus();
+		})
+
+		$('body').on("click", ".copy-adjust-panel .btnbox", function(){
+			if (isOperatorSelected() === false) return false;
+
+			$(this).siblings('.btnbox').removeClass('selected');
+			$(this).addClass('selected');
+
+			setPrintCopy($(this).html());
+
+			updatePrintBtnStatus();
+		})
+
+		$('body').on("click", ".drop-num-panel .btnbox", function(){
+			if (isOperatorSelected() === false) return false;
+			var dropNum = $(this).html();
+			setDropNum(dropNum);
+			setSelectedDropNum(dropNum);
+			$('.drop-num-panel').hide();
+		})
+
+		$('body').on("click", ".adjust-order-btn", function(){
+			if (isOperatorSelected() === false) return false;
+			var url = '<{$http_root_www}>company/customer_order_detail?id=' + $(this).data('order-id');
+			window.open(url, '_blank');
+		})
+
+
+		$('body').on("click", ".nav .select", function(){
+			var target = $(this).data('target');
+			$('.select-panel').not('.'+target).hide();
+			$('.select-panel.'+target).toggle();
+		})
+
+		$('body').on("click", ".print button", function(){
+			dropNumberPopUp(function(){
+				print();
+			})
+
+            var orderId = $('.order-panel .btnbox.selected').data('order-id');
+            recordLabelPrint(orderId);
+		})
+
+		$('body').on("click", ".preview button", function(){
+			dropNumberPopUp(function(){
+				preview();
+			})
+		})
+
+		$('body').on("click", ".nav .print-mode-select", function(){
+			if (DEFAULT_PRINT_MODE === PRINT_MODE_SINGLE_LABEL_PER_PAGE) {
+				DEFAULT_PRINT_MODE = PRINT_MODE_THREE_LABEL_PER_PAGE;
+				$(this).html('2 Labels In 1');
+			} else if (DEFAULT_PRINT_MODE === PRINT_MODE_THREE_LABEL_PER_PAGE) {
+				DEFAULT_PRINT_MODE = PRINT_MODE_SINGLE_LABEL_PER_PAGE;
+				$(this).html('Single label');
+			} 
+		})
+
+		renderOrderList(1, DEFAULE_PAGE_SIZE);
+
+		updatePrintBtnStatus();
+	});
+	
+	
+   function index(){
+			$('#current_date').css('color','#03a9f4');  //默认值
+			$('#current_business').css('color','#03a9f4');  //默认值
+			setTimeout(" $('#current_date').css('color','#ffffff')",1000); //第一次闪烁
+				setTimeout(" $('#current_business').css('color','#ffffff')",1000); //第一次闪烁
+			
+		};
+
+
+	function renderOrderList(page, pageSize) {
+		renderPager(pageSize);
+		renderPageContent(page, pageSize);
+		selectPager(page);
+	}
+
+	function renderPager(pageSize) {
+		var pagerContext = $('.order-index-panel');
+		pagerContext.html(' ');//clear content
+
+		var total = Object.keys(parsedOrders).length;
+		var page = 1;
+
+		for (var i = 1; i <= total; i+=pageSize) {
+			var start = i;
+			var end = i + DEFAULE_PAGE_SIZE - 1 
+
+			if (total < end) {
+				end = total;
+			}
+
+			pagerContext.append(
+				$('<span>').addClass('btnbox').html(start + '-' + end).attr('data-page',page)
+			);
+
+			page ++;
+		}
+	}
+
+	function renderPageContent(page, pageSize) {
+		var pageContext = $('.order-panel');
+		pageContext.html(' ');////clear content
+
+		var keys = Object.keys(parsedOrders);
+
+		var startIndex = (page - 1) * pageSize;
+		var endIndex = pageSize * page - 1;
+
+		if (endIndex > keys.length) {
+			endIndex = keys.length - 1 ;
+		}
+
+		if (startIndex > keys.length) {
+			startIndex = keys.length - 1 ;
+		}
+
+		for (var i = startIndex; i <= endIndex; i++) {
+			var order = parsedOrders[keys[i]];
+
+			pageContext.append(
+				$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
+			);
+		}
+	}
+
+	function selectPager(page) {
+		$('.order-index-panel .btnbox').removeClass('selected');
+		$('.order-index-panel .btnbox[data-page="'+page+'"]').addClass('selected');
+	}
+
+	function renderDetailPanel(orderId) {
+		var context = $('.detail-panel');
+		context.html(' ');//clear content;
+        var data_source1 ='<{$selectedSupplierDataSource}>';
+		var order = parsedOrders[orderId];
+		
+		context.append(
+		$('<div>')
+			.addClass('info')
+			.append(
+				$('<span>').addClass('sequense-no').html(order.logistic_sequence_No)
+			).append(
+				$('<span>').addClass('phone').html(order.phone)
+			).append(
+				$('<span>').addClass('name').html(order.first_name + " " + order.last_name)
+			)
+		).append(
+			$('<div>').addClass('address').html(order.address)
+		)
+
+		if (data_source1==1) {
+			context.append(
+				$('<span>').addClass('adjust-order-btn').attr('data-order-id', order.orderId).html('Adjust Order')
+			)
+		}
+		
+	}
+
+	function setPrintCopy(copyNum) {
+		$('input.printCopy').val(copyNum);
+	}
+	function increasePrintCopy(copyNum) {
+		if (isOperatorSelected() === false) return false;
+
+		var copy = $('input.printCopy').val();
+		$('input.printCopy').val(parseInt(copy) + parseInt(copyNum));
+		$('.copy-adjust-panel .btnbox').removeClass('selected');
+
+		updatePrintBtnStatus();
+	}
+	function reducePrintCopy(copyNum) {
+		if (isOperatorSelected() === false) return false;
+
+		var copy = $('input.printCopy').val();
+		if (copy - copyNum < 0) return;
+		$('input.printCopy').val(copy - copyNum);
+		$('.copy-adjust-panel .btnbox').removeClass('selected');
+
+		updatePrintBtnStatus();
+	}
+
+	function isOperatorSelected() {
+		return $('.operator-panel .btnbox.selected').length === 1;
+	}
+
+	function shouldPrintEnable(){
+		return $('.operator-panel .btnbox.selected').length === 1
+			&& $('.order-panel .btnbox.selected').length > 0
+			&& $('input.printCopy').val() != 0;
+	} 
+
+	function updatePrintBtnStatus() {
+		if (shouldPrintEnable()) {
+			$('.print-btn button').attr('disabled', false);
+		} else {
+			$('.print-btn button').attr('disabled', true);
+		}
+
+		var btnboxGroup = $('.order-index-panel .btnbox, .order-panel .btnbox, .copy-adjust-panel .btnbox, .copy-adjust-input span, .adjust-order-btn, .drop-num-panel .btnbox');
+		if (isOperatorSelected()) {
+			btnboxGroup.removeClass('disabled');
+
+		} else {
+			btnboxGroup.addClass('disabled');
+		}
+	}
+
+	function setSelectedDropNum(dropNum) {
+		$('.drop-num-panel .btnbox').removeClass('selected');
+		$('.drop-num-panel .btnbox[data-dropnum="'+dropNum+'"]').addClass('selected');
+	}
+
+	var setDropNumCallback;
+	function setDropNum(dropNum) {
+		// set local js data
+		var orderId = $('.order-panel .btnbox.selected').data('order-id');
+		parsedOrders[orderId].logistic_stop_No = dropNum;
+
+		//trigger ajax to set remote;
+		$.ajax({
+				url:"/company/set_dropnum_ajax",
+				type:"POST",
+				data: {
+					orderId:orderId,
+					dropNum:dropNum,
+				}
+			}).done(function(d){
+			   	if (typeof setDropNumCallback ==="function"){
+			   		setDropNumCallback();
+			   	}
+			})
+	}
+
+	function dropNumberPopUp(callback) {
+		var orderId = $('.order-panel .btnbox.selected').data('order-id');
+		if (!orderId) return;
+		//if (parsedOrders[orderId].logistic_stop_No == 0) {
+		
+		if (ref_seq_num == 2) {
+			$('.drop-num-panel').show();
+			setDropNumCallback = callback;
+		} else {
+			if (typeof callback ==="function"){
+		   		callback();
+		   	}
+		}
+	}
+
+	function recordLabelPrint(orderId) {
+        $.ajax({
+            url:"/company/record_label_print",
+            type:"POST",
+            data: {
+                orderId:orderId,
+            }
+        })
+	}
+</script>
+
+
+<script type="text/javascript">
+	var LODOP;
+
+	function init() {
+		LODOP = getLodop();  
+		LODOP.PRINT_INIT("Ubonus-打印机预览");
+		LODOP.SET_PRINT_PAGESIZE(1, '3.6 in', '7 in', "");
+
+		$('.order-panel .btnbox.selected').each(function(k,v){
+			var orderId = $(v).data('order-id');
+			var order = parsedOrders[orderId];
+
+			var totalCopy = $('input.printCopy').val();
+
+			if (DEFAULT_PRINT_MODE === PRINT_MODE_SINGLE_LABEL_PER_PAGE) {
+				generateOrderPrint(order, totalCopy);
+			} else if (DEFAULT_PRINT_MODE === PRINT_MODE_THREE_LABEL_PER_PAGE) {
+				generateOrderPrint2(order, totalCopy);
+			} 
+		})
+	}	
+
+	//single label per page
+	function generateOrderPrint(order, copy) {
+		for (var i = 0; i < copy; i++) {
+			order.boxLabel = i + 1 + " of " + copy;
+			addOnePage(order);
+		}
+	}
+
+	function addOnePage(order) {
+		LODOP.NewPage();
+		//QR CODE
+		var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
+		LODOP.ADD_PRINT_BARCODE(0,280,60,60,"QRCode",qrvalue);
+		// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
+		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body style='font-size:12px' leftmargin=0 topmargin=0>"+labelTemplate(order)+"</body>");
+	}
+
+	function preview() {
+		init();
+		LODOP.PREVIEW();
+	}
+
+	function print() {
+		init();
+		LODOP.PRINT();
+	}
+
+	function labelTemplate(order) {
+		var html = '';
+
+		html+='<p>'+order.subtitle+'</p>';
+		
+
+		html+='<table style="width: 100%;font-size:30px;font-weight:bolder" cellspacing="0" cellpadding="0">';
+		html+='<tr>';
+		html+=	'<td style="font-size:18px ;border-width: 2px 1px 1px 2px;border-style:solid;text-align: left; ">&nbsp;&nbsp;'+new Date(order.logistic_delivery_date*1000).toLocaleDateString("en-US")+'</td>';
+		html+=	'<td style=" border-width: 1px 1px 1px 1px;border-style:solid;text-align: right;"><span style="font-size:18px">Drop No:&nbsp;&nbsp;</span>'+order.logistic_stop_No+'&nbsp;&nbsp;</td>';
+		html+='</tr>';
+		html+='<tr>';
+		html+=	'<td style="border-width: 1px 1px 1px 1px;border-style:solid;text-align: left;" >&nbsp;&nbsp;'+order.logistic_sequence_No+'</td>';
+		html+=	'<td style="border-width: 1px 1px 1px 1px;border-style:solid;text-align: right;" >&nbsp;<span style="font-size:18px">Box </span> '+order.boxLabel+'&nbsp;&nbsp;</td>';
+	
+		html+='</tr>';
+		html+='</table>';
+
+		html+='<br>';
+		html+='	<label>Deliver Address:</label>';
+		html+='<br>';
+		html+='<div style="border: 3px solid black; padding: 5px">';
+				html+='	<span style="font-weight: bolder;">'+order.address + '</span>';
+
+		html+='</div>';
+		html+='<div>';
+		html+='	<label>Note:</label>  ';
+		html+='	<small>'+order.message_to_business+'</small>';
+		html+='</div>';
+		html+='<br><br>';
+		html+='<hr><br>';
+
+		html+='<div>';
+		html+='	<label>Order ID:</label>';
+		html+='	<span style="float:right;">'+order.orderId+'</span>';
+		html+='</div>';
+		html+='<div>';
+		html+='	<label>Name:</label>';
+		html+='	<span style="float:right;">'+order.first_name+' '+order.last_name+'</span>';
+		html+='</div>';
+		html+='<div>';
+		html+='	<label>Phone:</label>';
+		html+='	<span style="float:right;">'+order.phone+'</span>';
+		html+='</div>';
+		
+		html+='<div>';
+		html+='	<label>Truck No:</label>';
+		html+='	<span style="float:right;">'+order.logistic_truck_No+'</span>';
+		html+='</div>';
+		html+='<div>';
+		html+='	<label>Stop No:</label>';
+		html+='	<span style="float:right;">'+order.logistic_stop_No+'</span>';
+		html+='</div>';
+		html+='<br><hr><br>';
+		html+='<div>';
+		html+='	<label>Suppliers Count:</label>';
+		html+='	<span style="float:right;">'+order.logistic_suppliers_count+'</span>';
+		html+='</div>';
+		html+='<label>Suppliers Name:</label>';
+		html+='<div style="border: 1px solid black; padding: 5px">';
+		html+='	<span >'+order.logistic_suppliers_info+'</span>';
+		html+='</div>';
+
+		return html;
+	}
+
+	function labelTemplate_ThreeLabelPerPage_Main(order, boxLabel) {
+		var html = '';
+
+        var day =new Date(order.logistic_delivery_date*1000);
+		// var day = new Date(Date.parse(date.replace(/-/g, '/'))); 
+		var langstr= '<{$langStr}>';
+		var today='';
+		if(langstr =='zh-cn'){ 
+			 today = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');  
+		}else{
+			 today = new Array('SUN','MON','TUE','WED','THUR','FRI','SAT');  
+		}
+		
+		var week = today[day.getDay()]; 
+		
+		
+		html+='<p>'+order.subtitle+'</p>';
+		
+
+		html+='<table style="width: 100%;font-size:20px;font-weight:bolder" cellspacing="0" cellpadding="0">';
+		html+='<tr>';
+		html+=	'<td style="font-size:16px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;">'+new Date(order.logistic_delivery_date*1000).toLocaleDateString("en-US")+ '(' + week +')</td>';
+		html+=	'<td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;">Drop No:'+order.logistic_stop_No+'</td>';
+		html+='</tr>';
+		html+='<tr>';
+		html+=	'<td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;" >'+order.logistic_sequence_No+'</td><td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;" >&nbsp;&nbsp;&nbsp;&nbsp;Box: '+boxLabel+'</td>';
+		html+='</tr>';
+		html+='</table>';
+
+		
+		//html+='<label>Deliver Address:</label>';
+		
+		html+='<div style="border: 2px solid black; padding: 5px;height:40px;">';
+		//html+='	<span style="font-weight: bolder;">'+order.address+'</span>';
+		html+='	<span style="font-weight: bolder;">'+order.address + '</span>';
+		html+='</div>';
+		html+='<div style="height:40px;">';
+		html+='	<label>Note:</label> ';
+		html+='	<small>'+order.message_to_business+'</small>';
+		html+='</div>';
+
+
+		 html+='<table style="width: 100%;font-size:10px;" cellspacing="0" cellpadding="0">';
+	
+		html+='<tr>';
+		html+='	<td>Order ID:'+order.orderId+ '</td>';
+		html+='<td><span style="float:right;"> Name:'+ order.first_name+' '+order.last_name +'</span></td></tr>';
+		
+		html+='<tr>';
+		html+='	<td>Phone:'+order.phone+'</td>';
+		html+='<td><span style="float:right;">Truck No:'+order.logistic_truck_No+'&nbsp;Stop No:&nbsp;'+order.logistic_stop_No+'</td>';
+		html+='</tr>';
+		
+		html+='</table>';
+		html+='<hr>';
+		html+='<div>';
+		html+='	<label>Suppliers Count:</label>';
+		html+='	<span style="float:right;">'+order.logistic_suppliers_count+'</span>';
+		html+='</div>';
+		html+='<label>Suppliers Name:</label>';
+		if(order.logistic_suppliers_info) {
+			html+='<div style="height:25px;border: 1px solid black; padding: 5px">';
+			html+='	<span >'+order.logistic_suppliers_info+'</span>';
+			html+='</div>'; 
+		 }else{
+			html+='<div style="height:25px;border: 0px solid black; padding: 5px">';
+			html+='	<span >'+order.logistic_suppliers_info+'</span>';
+			html+='</div>'; 
+		 
+		 
+		 }
+		return html;
+	}
+
+	function labelTemplate_ThreeLabelPerPage_Sub(order, boxLabel) {
+			var html = '';
+
+        var day =new Date(order.logistic_delivery_date*1000);
+		// var day = new Date(Date.parse(date.replace(/-/g, '/'))); 
+		var langstr= '<{$langStr}>';
+		var today='';
+		if(langstr =='zh-cn'){ 
+			 today = new Array('星期日','星期一','星期二','星期三','星期四','星期五','星期六');  
+		}else{
+			 today = new Array('SUN','MON','TUE','WED','THUR','FRI','SAT');  
+		}
+		
+		var week = today[day.getDay()]; 
+		
+		
+		html+='<p>'+order.subtitle+'</p>';
+		
+
+		html+='<table style="width: 100%;font-size:20px;font-weight:bolder" cellspacing="0" cellpadding="0">';
+		html+='<tr>';
+		html+=	'<td style="font-size:16px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;">'+new Date(order.logistic_delivery_date*1000).toLocaleDateString("en-US")+ '(' + week +')</td>';
+		html+=	'<td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;">Drop No:'+order.logistic_stop_No+'</td>';
+		html+='</tr>';
+		html+='<tr>';
+		html+=	'<td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;" >'+order.logistic_sequence_No+'</td><td style="font-size:30px; border-width: 1px 1px 1px 1px;border-style:solid;text-align: center;" >&nbsp;&nbsp;&nbsp;&nbsp;Box: '+boxLabel+'</td>';
+		html+='</tr>';
+		html+='</table>';
+
+
+		
+		html+='<div style="border: 1px solid black; padding: 2px;height:30px;">';
+				html+='	<span style="font-weight: bolder;">' +order.address + '</span>';
+
+		html+='</div>';
+		html+='<div style="height:30px;" >';
+		html+='	<label>Note:</label> ';
+		html+='	<small>'+order.message_to_business+'</small>';
+		html+='</div>';
+
+	   
+ 	    html+='<table style="width: 100%;font-size:10px;" cellspacing="0" cellpadding="0">';
+	
+		html+='<tr>';
+		html+='	<td>Order ID:'+order.orderId+ '</td>';
+		html+='<td><span style="float:right;"> Name:'+ order.first_name+' '+order.last_name +'</span></td></tr>';
+		
+		html+='<tr>';
+		html+='	<td>Phone:'+order.phone+'</td>';
+		html+='<td><span style="float:right;">Suppliers Count:' +order.logistic_suppliers_count+'&nbsp;Truck No:'+order.logistic_truck_No+'&nbsp;Stop No:&nbsp;'+order.logistic_stop_No+'</td>';
+		html+='</tr>';
+		
+		html+='</table>';
+		
+		html+='<hr>';
+		
+		if(order.logistic_suppliers_info) {
+			html+='<div style="height:25px;border: 1px solid black; padding: 5px">';
+			html+='	<span >'+order.logistic_suppliers_info+'</span>';
+			html+='</div>'; 
+		 }else{
+			html+='<div style="height:25px;border: 0px solid black; padding: 5px">';
+			html+='	<span >'+order.logistic_suppliers_info+'</span>';
+			html+='</div>'; 
+		 
+		 
+		 }
+		return html;
+	}
+	//max 3 label per page
+	function generateOrderPrint2(order, copy) {
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
+
+		LODOP.NewPage();
+		//QR CODE
+		var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
+		LODOP.ADD_PRINT_BARCODE(0,280,60,60,"QRCode",qrvalue);
+		// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+		
+		var template = '';
+		template += labelTemplate_ThreeLabelPerPage_Main(order, "1 of " + copy);
+
+		if (copy >1) {
+			
+			template += "<div style='height:70px'></div>";
+			template += labelTemplate_ThreeLabelPerPage_Sub(order, "2 of " + copy);
+		}
+		
+	/*	if (copy > 2) {
+			template += "<div style='height:70px'></div>";
+			template += labelTemplate_ThreeLabelPerPage_Sub(order, "3 of " + copy);
+		} */
+		
+		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body  style='font-size:12px' leftmargin=0 topmargin=0>"+template+"</body>");
+
+
+
+
+	if (copy > 2) {
+			for (var i = 1; i <= copy/2-1; i++) {
+				LODOP.NewPage();
+				//QR CODE
+				var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
+				LODOP.ADD_PRINT_BARCODE(0,280,60,60,"QRCode",qrvalue);
+				// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+				
+				var template = '';
+				template += labelTemplate_ThreeLabelPerPage_Main(order,  i*2+1 + " of " + copy);
+				
+	
+				
+				
+				template += "<div style='height:70px'></div>";
+				template += labelTemplate_ThreeLabelPerPage_Sub(order, i*2+2+" of " + copy);
+				
+				LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body  style='font-size:12px' leftmargin=0 topmargin=0>"+template+"</body>");
+			}
+
+			if (copy%2 == 1) {
+				LODOP.NewPage();
+				var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
+				LODOP.ADD_PRINT_BARCODE(0,280,60,60,"QRCode",qrvalue);
+				
+				template = ''
+				template += labelTemplate_ThreeLabelPerPage_Main(order, copy +" of " + copy);
+				LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body  style='font-size:12px' leftmargin=0 topmargin=0>"+template+"</body>");
+			}
+
+			
+		}
+
+
+
+
+
+
+
+
+
+
+		if (copy > 12) {
+			for (var i = 1; i < copy-1; i++) {
+			
+								
+				if ((i+2)%2 == 1) { //如果是3，5，7，9 copy 则新建一个打印页，首先打带二维码的 main页面。
+				LODOP.NewPage();
+				var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
+				LODOP.ADD_PRINT_BARCODE(0,280,60,60,"QRCode",qrvalue);
+				// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+				
+				var template = '';
+				template += labelTemplate_ThreeLabelPerPage_Main(order,i+2 + " of " + copy);
+                } else {
+					template += "<div style='height:360px'></div>";
+					template += labelTemplate_ThreeLabelPerPage_Sub(order, i+2 +" of " + copy);
+					}
+								
+				
+
+				/*template += "<div style='height:70px'></div>";
+				template += labelTemplate_ThreeLabelPerPage_Sub(order, i*3+3 +" of " + copy); */
+
+				LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body  style='font-size:12px' leftmargin=0 topmargin=0>"+template+"</body>");
+			}
+
+		
+		}
+		
+		
+	}
+	
+	
+</script>
+</body>
+
+</html>

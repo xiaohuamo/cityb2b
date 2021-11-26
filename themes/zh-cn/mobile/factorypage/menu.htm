@@ -1,0 +1,183 @@
+<{foreach from=$menu item=citem name='dl'}>
+
+    <{if $citem.new_cat}>
+        <{if $smarty.foreach.dl.index ==0}>
+			<span id="category-<{$citem.restaurant_id}>-<{$citem.restaurant_category_id}>" class="positionPin<{$citem.restaurant_id}>"
+				  data-target='<{$citem.restaurant_id}>-<{$citem.restaurant_category_id}>'
+				  style="font-weight: 600; line-height: 1.5rem;   font-size: 0.45rem;    background-color: #fff;    color: #333;">Category:<{$citem.category_name}></span>
+        <{else}>
+			<span id="category-<{$citem.restaurant_id}>-<{$citem.restaurant_category_id}>" class="positionPin<{$citem.restaurant_id}>"
+				  data-target='<{$citem.restaurant_id}>-<{$citem.restaurant_category_id}>'
+				  style="font-weight: 600;  line-height: 1.5rem;  font-size: 0.45rem;    background-color: #fff;    color: #333;"><{$citem.category_name}></span>
+        <{/if}>
+    <{/if}>
+	<div
+			id='category-<{$citem.restaurant_id}>-<{$citem.restaurant_category_id}>'
+			class="coupon_option"
+			data-product-name="<{$citem.menu_name}>">
+		<div style="display: inline-block;width: 35%">
+			<p class="title" style="  margin-top: 0rem;  font-size: 0.45rem;">
+				<i class='fa fa-close fa-lg' style="display: none"></i>
+				<img <{if $lazyload}> class="lazyload" data-<{/if}>src="<{$UPLOAD_PATH}><{$citem.menu_pic|image:100:100:'cut'}>"
+									  data-src-lg="<{$UPLOAD_PATH}><{$citem.menu_pic|image:500:500:'cut'}>"
+									  data-src-org="<{$UPLOAD_PATH}><{$citem.menu_pic|image:100:100:'cut'}>"
+				>
+			</p>
+            <{$citem.unit}>
+		</div>
+
+		<div style="display: inline-block;width: 60%;">
+			<div>
+				<p class="title" style="    font-size: 0.5rem;    height: 2.6rem;  margin-left: 5px;">
+                    <{$citem.menu_name|truncate_cn:56:'..'}>
+				</p>
+			</div>
+
+			<div>
+				<div class='price' style="font-size: 0.60rem;margin-left: 5px;display: inline-block">
+					<span style="color:red;display: block">
+						<{if $citem.new_price != 0 || $show_origin_price}>
+							$<b><{$citem.new_price}></b>
+                        <{/if}>
+					</span>
+                    <{if $citem.new_price < $citem.original_price}>
+						<s style="font-size: 0.40rem;margin-left: 5px;;display: block"> <{$citem.original_price}></s>
+                    <{/if}>
+                    <{if $restaurant_promotion_manjian_rates}>
+						<div style="  color: #f23030;font-size:0.45rem;display: block">
+                            <{if ($citem.new_price < $citem.price)}>$<{$citem.price-$citem.new_price}><{/if}>
+						</div>
+                    <{/if}>
+				</div>
+
+      <{if $citem.menu_option_list||$citem.sidedish_menu}>
+			<!-- 如果有规格或者配菜，使用不同的加入购物车规则 -->
+			<div style="float:right;margin-top: 1.4rem;font-weight: 400;">
+		<span style="    background-color: #FD5001;
+		color: #333;    padding: 2px 7px;  font-size: 0.40rem;border-radius: .25em;margin-right: -0.1rem; " onClick="showMenuGuige(this);">选 规 格</span>
+			</div>
+			<!--popup 明细选项  -->
+			<div class='menu_guige well' style="position: fixed;    top: 0px;    right: 0px;    width: 100%;    height: 93vh;    z-index: 999999;    margin-bottom: 3rem;    
+    display: none;">
+				<h3>
+                    <{$citem.menu_cn_name|truncate_cn:30:'..'}> 
+				</h3>
+                <{if $citem.menu_desc || $citem.menu_en_name}>
+					<p class='description'>
+                        <{if $citem.menu_desc}><{$citem.menu_desc}><{else}><{$citem.menu_en_name}><{/if}>
+					</p>
+                <{/if}>
+				<hr>
+
+
+                <{if $citem.menu_option_list}>
+					<h5>规格</h5>
+					
+					
+				
+					
+					
+					
+					<div class='menu_option'>
+                        <{foreach from=$citem.menu_option_list item=sitem}>
+							<div class="coupon_option" style ="margin: 0.2rem 0rem 0.3rem 0rem;">
+								<div style="display: inline-block;width: 60%">
+                                    <{$sitem.menu_cn_name|truncate_cn:35:'..'}>
+									<span>
+						<{if $sitem.new_price>0}>
+							$<{$sitem.new_price}>
+                        <{else}>
+							$<{$citem.new_price}>
+                        <{/if}>
+					</span>
+								</div>
+
+								<div style="float:right;width:30%;" class="quantity">
+									<i class='fa fa-minus-square' onclick="removeProduct(this)"></i>
+									<input class='menu-quantity' type="text" name="quantity[]" value='<{if $sitem.quantity}><{$sitem.quantity}><{else}><{/if}>' 
+										   data-main_coupon_id='<{$restaurant_couponID}>'
+										   data-menu_id='<{$citem.id}>'
+										   data-menu_option_id='<{$sitem.id}>'
+										   data-type="menu_option"
+										   data-price='<{if $sitem.new_price>0}><{$sitem.new_price}><{else}><{$citem.new_price}><{/if}>'>
+
+									<i class='fa fa-plus-square' onclick="addProduct(this)"></i>
+								</div>
+
+								<p class='description'>
+                                    <{if $sitem.menu_desc}><{$sitem.menu_desc}><{else}><{$sitem.menu_en_name}><{/if}>
+								</p>
+							</div>
+                        <{/foreach}>
+					</div>
+                <{/if}>
+
+
+                <{if $citem.sidedish_menu}>
+					<h5>配菜</h5>
+					<div class='sidedish_menu'>
+                        <{foreach from=$citem.sidedish_menu item=sitem}>
+							<div class="coupon_option">
+								<div style="display: inline-block;width: 60%">
+                                    <{$sitem.menu_cn_name|truncate_cn:35:'..'}>
+									<span>$<{$sitem.new_price}>  <{if ($sitem.new_price < $sitem.price)}><s style="  font-size: 0.4rem;"><{$sitem.price}></s><{/if}></span>
+								</div>
+
+								<div style="float:right;" class="quantity">
+									<i class='fa fa-minus-square' onclick="removeProduct(this)"></i>
+									<input class='menu-quantity' type="text" name="quantity[]" value='<{if $sitem.quantity}><{$sitem.quantity}><{else}>0<{/if}>' 
+										   data-main_coupon_id='<{$restaurant_couponID}>'
+										   data-menu_id='<{$citem.id}>'
+										   data-sidedish_menu_id='<{$sitem.id}>'
+										   data-type="sidedish_menu"
+										   data-price='<{$sitem.new_price}>'
+
+									>
+
+									<i class='fa fa-plus-square' onclick="addProduct(this)"></i>
+								</div>
+
+								<p class='description'>
+                                    <{if $sitem.menu_desc}><{$sitem.menu_desc}><{else}><{$sitem.menu_en_name}><{/if}>
+								</p>
+							</div>
+                        <{/foreach}>
+					</div>
+                <{/if}>
+
+				<div class='container' style="position: fixed;    bottom: 0px;    width: 100%;    height: 7vh;    background: white;    margin-left: -0.8rem;">
+					<div class="row" style="    margin-top: 0.3rem;">
+						<div class='col-xs-6' style="text-align: center;width: auto;" onClick="$('html,body').toggleClass('noscroll');addMenuWithOption(this,'<{$coupon.createUserId}>')">
+							<span class='btn btn-success'>加入购物车</span>
+						</div>
+						<div class='col-xs-6' style="text-align: center;width: auto;" onClick="$('html,body').toggleClass('noscroll');$(this).parents('.menu_guige').hide()">
+							<span class='btn btn-danger'>取消</span>
+						</div>
+					</div>
+				</div>
+			</div>
+        <{else}>
+
+
+				<div class="quantity" style="display: inline-block; float: right">
+					<i class='fa fa-minus-square' onclick="removeProduct(this)"></i>
+					<input class='menu-quantity' type="number" name="quantity[]" value='<{if $citem.quantity}><{$citem.quantity}><{else}><{/if}>'
+						   data-main_coupon_id='<{$restaurant_couponID}>'
+						   data-menu_id='<{$citem.id}>'
+						   data-type="menu"
+						   data-price='<{$citem.new_price}>'
+						   data-onspecial='<{$citem.onSpecial}>'
+						   onchange="updateQuantity(this)"
+					>
+					<i class='fa fa-plus-square' onclick="addProduct(this)"></i>
+				</div>
+				<{/if}>
+			</div>
+		</div>
+
+		<p class='description'>
+            <{$citem.menu_desc}>
+		</p>
+
+	</div>
+<{/foreach}>

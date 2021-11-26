@@ -1,0 +1,33 @@
+<{extends file="mobile/coupon/search_result_tpl.htm"}>
+
+<{block name=search_result}>
+<ul class="g-ul m-list9">
+	<{foreach from=$businessConpanyData item=item}>	
+	<li>
+
+		<div class="con">
+			<a href="<{$http_root_www}>store/<{$item.id}>" class="l-logo"><img src="<{$UPLOAD_PATH}><{$item.logo}>"></a>
+			<div class="txt">
+				<h4><a href="<{$http_root_www}>store/<{$item.id}>"><{$item.businessDisplayName}></a></h4>
+				<p><{$item.tel}></p>
+				<p><{$lang->our_business}></p>
+				
+				<dl class="xing" value="<{$item.ratting_score|@ceil}>"></dl>
+			</div>
+		</div>
+		<div class="m-pic1">
+		    <div class="swiper-container">
+		        <div class="swiper-wrapper">
+		        <{foreach from=$item.coupons item=coupon}>
+		            <div class="swiper-slide">
+						<a href="<{$http_root_www}>coupon1/<{$coupon.id}>"><img style="border:1px solid #eee" class="pic" src="<{$UPLOAD_PATH}><{$coupon.pic}>" alt="<{$coupon.title}>"/></a>
+		            </div>
+		        <{/foreach}>
+		        </div>
+		    </div>
+		</div>
+	</li>
+	<{/foreach}>
+	
+</ul>
+<{/block}>

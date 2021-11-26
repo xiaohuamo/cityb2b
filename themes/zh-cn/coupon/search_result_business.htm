@@ -1,0 +1,65 @@
+<{extends file="coupon/search_result_tpl.htm"}>
+ 
+<{block name=result_display}>
+<div class="mbs-cont">
+    <ul class="ul-stores">
+        <{foreach from=$businessConpanyData item=item}>   
+        <li>
+            <div class="stores-items">
+                <div class="hd">
+                    <div class="logo-pic">
+                        <img src="<{$UPLOAD_PATH}><{$item.logo}>" alt="">
+                    </div>
+                    <div class="stores-txt">
+                        <h4><{$item.businessDisplayName}></h4>
+                        <div class="info">
+                            <p class="tel"><{$item.tel}></p>
+                            <p class="addr"><{$item.googleMap}></p>
+                        </div>
+                    </div>
+                    <div class="stores-star">
+                        <div class="star" style="position: relative;">
+                           <{if $item.ratting_score|@ceil >0}>
+                            <dl class="xing" value="<{$item.ratting_score|@ceil}>">
+                            </dl>
+                            <{/if}>
+
+                        </div>
+                        <a href="<{$http_root_www}>store/<{$item.id}>" class="btn">进入店铺</a>
+                    </div>
+                </div>
+                <div class="bd">
+                    <ul class="ul-sev ul-sev1">
+                        <{foreach from=$item.coupons item=coupon}>
+                        <li>
+                        
+                            <a href="<{$http_root_www}>coupon/<{$coupon.id}>">
+                                <i class="type <{$coupon.typecss}>"></i>
+                                <div class="pic">
+                                    <img src="<{$UPLOAD_PATH}><{$coupon.pic|image:330:210}>" alt="" />
+                                </div>
+                                <div class="txt">
+                                    <h4><{$coupon.title}></h4>
+                                    <div class="tip">
+                                        <div class="price">
+                                            <em class="new"><{$coupon.price1}></em>
+                                            <em ><{$coupon.wj_points}></em>
+                                        </div>
+                                        <strong><i></i><{$coupon.hits}></strong>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <{/foreach}>
+                        
+                    </ul>
+                    <{if $item.coupons}>
+                    <div class="btn-switch"><span>展开</span><i class="ico"></i></div>
+                    <{/if}>
+                </div>
+            </div>
+        </li>
+        <{/foreach}>
+    </ul>
+</div>
+<{/block}>

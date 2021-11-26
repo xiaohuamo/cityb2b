@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style type="text/css">
+	.marketing-panel{
+		position: relative;
+	}
+
+	.marketing-panel .panel-item{
+		display: inline-block;
+		width: 32%;
+		height: 200px;
+		border: 1px solid #eee;
+	}
+
+	.marketing-panel .panel-item p{
+		text-align: center;
+		margin: 5px;
+	}
+
+	.marketing-panel .panel-item p.panel-title{
+		font-size: 0.8rem;
+	}
+
+	@media screen and (max-width:640px) {
+		.marketing-panel .panel-item{
+			display: block;
+			width: 100%
+		}
+	}
+</style>
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2"><a name="pagename"></a>
+
+				<div class="main-form">
+
+					
+
+					<div class="colCurTit clearfix">
+						<h1>Ubonus美食线上餐厅分享系统</h1>
+					</div>
+
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+
+					
+
+							<div class="input-box clearfix">
+
+								
+									<h1>分享Ubonus线上餐厅,赚取分红!!! <a target='_blank' href="<{$foodLink}>">查看分红地址>></a></h1>
+								
+
+								
+								<p>分享方法</p>
+								<p>1)使用微信扫一扫,既可以分享到朋友圈或微信群中. 用户点击就锁定为您的用户(60-360天),用户购买后分红.</p>
+								<p>2)将所示二维码和网址链接放在自己的社交渠道中,比如微信软文,微博,网站或各种可以接触到用户的媒体渠道中.</p>
+							</div>
+							
+							<div class='marketing-panel'>
+								
+
+								<div class='panel-item'>
+									<p class='panel-title'>微信扫码查看Ubonus线上餐厅</p>
+									<p><img src="<{$storeQrCode}>"></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$storeLink}>">Ubonus线上餐厅</a></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$storeLink}>"><{$storeLink}></a></p>
+								</div>
+								
+							</div>
+
+							<div class="input-box clearfix" >
+								<button type="button"  onClick="window.location.href='<{$http_root_www}>company/index'" >返回</button>
+							</div>
+						
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

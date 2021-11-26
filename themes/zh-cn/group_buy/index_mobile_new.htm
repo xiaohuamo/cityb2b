@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ubonus团购-<{$group.name}></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/cui.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/lib.css" />
+    
+	<link rel="stylesheet" href="<{$SKIN_PATH}>group1_buy/css/style.css" />
+    <script type="text/javascript" src="<{$SKIN_PATH}>group1_buy/js/jquery.js"></script>
+	
+
+	<link rel="stylesheet" href="<{$STATIC_PATH}>slick/slick.css">
+	<script type="text/javascript" src="<{$STATIC_PATH}>slick/slick.min.js"></script>
+</head>
+<body>
+	<div class="viewport">
+
+		<!-- 顶部标题 -->
+		<div class="top-bar" style="z-index: 5">
+			<a href="<{$http_root_www}>group1_buy/list" class="return"></a>
+			<h2>Ubonus团购-<{$group.name}></h2>
+		</div>
+
+		<{if $isInGroup}>
+			<span style="color: #fff;background-color: #59b966;padding: 2px 10px;border-radius: 5px 0px 0px 5px;position: absolute;right: 0;">已加入</span>
+		<{/if}>
+
+		<!-- 商品图 -->
+		<div class="goods-box">
+			<div class="pic">
+			<a target= '_blank' href="<{$http_root_www}>coupon1/<{$coupon.id}>">
+				<img src="<{$UPLOAD_PATH}><{$coupon.pic}>">
+			</a>
+			</div>
+			<div class="price">
+				<div class="right">
+					<span><{$group.max}>人团</span>
+
+					<{if $group.status==0}>
+					<!-- group_ready -->
+					<a  >筹备中...</a>
+					<{elseif $group.status==1}>
+					<!-- group_running -->
+					<a  >进行中...</a>
+					<{elseif $group.status==2}>
+					<!-- group_close -->
+					<a  >临时中止</a>
+					<{elseif $group.status==3}>
+					<!-- group_staging -->
+					<a  >即将完成</a>
+					<{elseif $group.status==4}>
+					<!-- group_finalizing -->
+					<a  >商家审核</a>
+					<{elseif $group.status==5}>
+					<!-- group_complete -->
+					<a  >奖励达成</a>
+					<{else}>
+					<!-- group_error -->
+					<a  >出错了</a>
+					<{/if}>
+
+				</div>
+				<div class="left">
+					<p><span>正常售价：</span><small><del><{$coupon.price1}></del></small></p>
+				</div>
+			</div>
+			<div class="tit">
+				<p><{$group.description}></p>
+				
+			</div>
+		</div>
+		<div class="hr"></div>
+		<div class="goods-info">
+			<div class="tit">商品简介</div>
+			<div style='height: 40vh;overflow-y: scroll;border: 2px solid #AAA;border-radius: 5px;padding: 10px;'><{$coupon.highlight}></div>
+			<div class="tit">团购分级</div>
+			<ul class="ul-list1">
+				<{foreach from=$conditions key=k item=c name='condition'}>
+					<li>Level <{$smarty.foreach.condition.index+1}> 条件:<em style="color:#fb0000"><{$k}></em>人 奖励:<em style="color:#fb0000"><{$c}> </em><{$reward_type_text}></li>
+				<{/foreach}>
+			</ul>
+
+			<p><small>团购奖励说明：本次团购产品的正常Ubonus售价为<{$coupon.price1}>，团购达成是您会得到相应额度的折扣码，在购买产品的时候使用折扣码从而获得更大优惠！</small></p>
+			<br>
+			<div class="call-firend">
+				<{if $group.status==0}>
+				<!-- group_ready -->
+				<a  class="btn">筹备中</a>
+				<{elseif $group.status==1}>
+				<!-- group_running -->
+				<a  class="btn">进行中</a>
+				<{elseif $group.status==2}>
+				<!-- group_close -->
+				<a  class="btn">临时中止</a>
+				<{elseif $group.status==3}>
+				<!-- group_staging -->
+				<a  class="btn">即将完成</a>
+				<{elseif $group.status==4}>
+				<!-- group_finalizing -->
+				<a  class="btn">商家审核</a>
+				<{elseif $group.status==5}>
+				<!-- group_complete -->
+				<a  class="btn">领取奖励</a>
+				<{else}>
+				<!-- group_error -->
+				<a  class="btn">出错了</a>
+				<{/if}>
+
+				<div class="left">
+					<p>
+					已有<span><{$current}></span>人参团，
+					<{if ($group.max-$current)<=0}>
+						<span>人数已满</span>
+					<{else}>
+						仅缺<span><{$group.max-$current}></span>人
+					<{/if}>
+					</p>
+				</div>
+
+				<{if $isInGroup}>
+					<br>
+					<p class='reward_msg' style="text-align: center;line-height: 35px;"><span style="color: #fff;background-color: #286090;border-color: #122b40;padding: 5px 20px;border-radius: 5px;"><{$reward_msg}></span></p>
+				<{/if}>
+
+			</div>
+		</div>
+		<div class="hr"></div>
+		<div class="goods-info">
+			<div class="tit">已经参团用户</div>
+			<ul class="ul-list2">
+				<{foreach from=$data item=c name='user'}>
+					<li <{if $loginUser.id==$c.user_id}>style='color:#FD5001 '<{/if}>><i class="icon"><{$smarty.foreach.user.index+1}></i><{if $c.user_nickname}><{$c.user_nickname}><{else}><{$c.user_name}><{/if}> x <{$c.qty}></li>
+				<{/foreach}>
+				
+			</ul>
+		</div>
+		<div class="hr"></div>
+
+		<div style="text-align: center;    padding: 15px 40px;line-height: 22px;font-size: 14px;color: #888;" >
+			<p>友情提示：</p>
+			<p>长按二维码关注Ubonus公众号，凑团成功后您将自动收到奖励的推送</p>
+			<img src="<{$http_root_www}>themes/zh-cn/images/pc-main/erweima.png">
+			<p>在个人中心填写您的邮箱地址,您同样也会收到邮件推送</p>
+		</div>
+		
+		<!-- 底部按钮 -->
+		<div class="footer-fix">
+			<a class="a1" href="<{$http_root_www}>group1_buy/manage_joined_group">我的团购</a>
+			<a class="a2" href="<{$http_root_www}>group1_buy/list">更多团购</a>
+			
+
+			<{if $group.status==0}>
+			<!-- group_ready -->
+			<a  class="a3">即将开团</a>
+			<{elseif $group.status==1}>
+			<!-- group_running -->
+			
+				<{if $isInGroup}>
+				<a class="a3" onClick='leaveGroupAjax();'><i></i>退出团购</a>
+				<{else}>
+				<a class="a3" onClick='joinGroupAjax();'><i></i>加入团购</a>
+				<{/if}>
+
+			<{elseif $group.status==2}>
+			<!-- group_close -->
+			<a  class="a3">临时中止</a>
+			<{elseif $group.status==3}>
+			<!-- group_staging -->
+				
+				<{if $isInGroup}>
+				<a class="a3" onClick='leaveGroupAjax();'><i></i>退出团购</a>
+				<{else}>
+				<a class="a3" onClick='joinGroupAjax();'><i></i>加入团购</a>
+				<{/if}>
+
+			<{elseif $group.status==4}>
+			<!-- group_finalizing -->
+				<a  class="a3">商家审核</a>
+
+			<{elseif $group.status==5}>
+			<!-- group_complete -->
+
+				<{if $isInGroup}>
+					<{if $isAlreadyBuy}>
+						<a class="a3 reward_recheckout" style="background-color: #59b966;color:#fff">已下单</a>
+					<{else}>
+						<a class="a3 reward_checkout" style="background-color: #c73b3b;color:#fff">立即购买</a>
+					<{/if}>
+				<{else}>
+					<a class="a3 ">奖励达成</a>
+				<{/if}>
+
+			<{else}>
+			<!-- group_error -->
+			<a  class="a3">出错了</a>
+			<{/if}>
+
+
+			
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	var	selectedGroupId='<{$group.id}>';
+	var	condition='<{$group.complete_condition}>';
+
+	function joinGroupAjax(){
+		if(selectedGroupId<=0){
+			return;
+		}
+
+		var numberOfPeople=1;
+
+		if(condition=="1"){
+			//一个人可以代表一个人参团
+			numberOfPeople=1
+		}else if(condition=="2"){
+			//一个人可以代表多个人参团
+			numberOfPeople=parseInt(prompt("请输入参团数量(最大5)", "1"));
+			if(isNaN(numberOfPeople)){console.log('invalid input');return;}
+			if(numberOfPeople>5||numberOfPeople<=0){
+				alert('参团数量最大5');return;
+			}
+		}
+		$.ajax({
+			   method:"GET",
+			   url: '<{$http_root_www}>group1_buy/join_group',
+			   data: {
+			   		groupId: selectedGroupId,
+			   		numberOfPeople:numberOfPeople
+			   },
+	            success : function (returnData) {
+	            	var returnData =JSON.parse(returnData)
+	              	alert(returnData.msg);
+	              	if(returnData.status==200){
+	              		window.location.href='<{$http_root_www}>group1_buy/index?group1_buy_id='+selectedGroupId;
+	              	}else if(returnData.status==100){
+	              		//fill info
+	              		//returnData.redirect
+	              		window.location.href=returnData.redirect;
+	              	}
+	            }
+			});
+	}
+
+		function leaveGroupAjax(){
+			$.ajax({
+				   method:"GET",
+				   url: '<{$http_root_www}>group1_buy/leave_group',
+				   data: {
+				   		group_id: selectedGroupId
+				   },
+		            success : function (returnData) {
+		            var returnData =JSON.parse(returnData)
+		              alert(returnData.msg);
+		              if(returnData.status==200){
+		              		window.location.href='<{$http_root_www}>group1_buy/index?group1_buy_id='+selectedGroupId;
+		              }
+		            }
+				});
+		}
+
+		$(function(){
+			$('.reward_checkout').on('click',function(){
+				$target = $('.reward_msg em');
+				var code = $target.html().trim();
+		
+				if(confirm("您将前往购物车页面完成奖品领取和购买，您购物车之前的内容会被清空，确定前往？"))
+					window.location.href='<{$http_root_www}>member/showcart?specialGroupBuyCheckoutCode='+code;
+				
+			})
+
+			$('.reward_recheckout').on('click',function(){
+				$target = $('.reward_msg em');
+				var code = $target.html().trim();
+		
+				if(confirm("您已经成功的购买了该产品，订单ID：<{$isAlreadyBuy}>。点击OK 您将在此前往购物车购买该产品，购物车之前的内容会被清空，确定前往？"))
+					window.location.href='<{$http_root_www}>member/showcart?specialGroupBuyCheckoutCode='+code;
+				
+			})
+
+		})
+</script>
+
+<script type="text/javascript">
+	<{if $jsTrigger=='joinaftercreate'}>
+		$(function(){
+			joinGroupAjax();
+		});
+	<{/if}>
+</script>
+<!-- sec float go top -->
+	<{include file ="mobile/coupon_detail/sec_static_gotop.htm"}>
+	
+<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='快来帮我抢－Ubonus团购-<{$group.name}>';
+        var shareLink='<{$http_root_wx}>group1_buy/index_mobile?group1_buy_id=<{$group.id}>';
+        var desc=shareTitle;//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+</html>

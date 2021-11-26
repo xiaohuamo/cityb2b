@@ -1,0 +1,140 @@
+
+<!--<div class="txt content-image-fullsize" style="display: block;"><p>&nbsp;</p>
+  <img src="<{$SKIN_PATH}>images/detail_header.jpeg">
+</div> -->
+
+<!-- 
+<div class="comm-express toggle-txt">
+   
+    <h3>信用卡购买声明</h3>
+	
+    <div class="txt content-image-fullsize" style="display: block; color:red;"> 使用信用卡支付购买本产品,必须在消费时出示Photo ID及信用卡, 并与您购买时信息一致.否则,商家会拒绝提供相关服务.</div>
+</div>
+-->
+<div id="f1">
+<{if $coupon.highlight}>
+<div class="comm-express toggle-txt">
+     <h3 style="font-weight: 600;" ><{$lang->highlight}></h3>
+	 
+    <div class="txt content-image-fullsize" style="display: block;"><{str_replace('white-space: pre-wrap;','',$coupon.highlight)}></div>
+</div>
+<{/if}>
+</div>
+
+
+<div div id="f2">
+<!-- 温馨提示 -->
+
+
+
+
+
+
+
+<!-- 详情 -->
+<{if $coupon.content}>
+
+<div class="comm-express toggle-txt" >
+<h3 style="font-weight: 600;">详细介绍</h3>
+<div class="content-image-fullsize" style='padding: 15px;overflow: hidden;'>
+  <{str_replace('white-space: pre-wrap;','',str_replace(' src=',' data-src=',str_replace('<img','<img class="lazyload"',$coupon.content)))}>
+ </div>
+
+</div>
+
+
+<{/if}>
+
+<!--商品评价-->
+
+
+<{if $coupon.finePrint}>
+<div class="comm-express toggle-txt" >
+<h3 style="font-weight: 600;"><{$lang->warm_prompt}></h3>
+   
+	
+
+	
+    <div class="txt content-image-fullsize" style="display: block;">
+		<{str_replace('white-space: pre-wrap;','',str_replace('<img alt="" src=',' <img class="lazyload" data-src=',$coupon.finePrint))}>
+	
+	</div>
+	
+	 <div class="comm-express toggle-txt" style="padding: 0 .0rem;" >
+        <!-- <h4><span></span><em>  Tips</em></h4> -->
+        <div class='coupon-addon' style="line-height: 28px;margin: 2px;margin-top:10px;">
+          <{foreach from=$addontext item=t}>
+            <span style='white-space: nowrap;color: #fff;background: rgba(43, 59, 184, 0.73);padding: 1px 6px;border-radius: 10px;'><{$t}></span>
+          <{/foreach}>
+
+          <p><{$addondata.time_limit_desc}></p>
+          <p><{$addondata.sharable_desc}></p>
+          <p><{$addondata.apportmant_required_desc}></p>
+          </div>
+</div>
+	<div class="txt content-image-fullsize" style="display: block; color:red;"> 使用信用卡支付,必须在消费时出示Photo ID,并与您购买时信息一致.</div>
+
+	<{if $addontext}>
+
+   
+<{/if}>
+</div>
+<{/if}>
+
+
+<!-- 下面调用 用户评价信息o 调用. 参照 sec_explain的写法 -->
+<div class="comm-evaluate" id="f3"  style="font-weight: 600;" >
+ 
+</div>
+
+
+<!-- 下面调用 load_more_coupon_info 显示商家信息about_business. 参照 sec_explain的写法 -->
+
+<div class="comm-express " id="about_business" >
+   
+   
+	
+</div>
+
+
+<!-- 下面调用 地图信息 调用. 参照 sec_explain的写法 -->
+
+<div class="comm-express " id="coupon_business_googlemap">
+   
+
+  
+</div>
+
+<{if $coupon.refund_policy}>
+<div class="comm-express ">
+    <h3><{$lang->refund_policy}></h3>
+    <div class="txt"><{str_replace('white-space: pre-wrap;','',$coupon.refund_policy)}></div>
+</div>
+<{/if}>
+<{if $coupon.redeemProcedure}>
+<div class="comm-express">
+    <h3><{$lang->how_to_use}></h3>
+    <div class="txt"><{str_replace('white-space: pre-wrap;','',$coupon.redeemProcedure)}></div>
+</div>
+<{/if}>
+
+
+
+<!-- 商家递送 -->
+<{include file ="mobile/coupon_detail/sec_deliverinfo.htm"}>
+<!-- 商家二维码 -->
+<{if $coupon.business.busi_weixin_scancode}>
+<div style="text-align: center;"><img src="<{$UPLOAD_PATH}><{$coupon.business.busi_weixin_scancode|image:172:172}>" id="main_pic"  width="172" height="172"  /></div>
+<{/if}>
+
+
+
+
+
+</div>
+
+
+<!--随机产品-->
+<div id="f4">
+   
+</div>

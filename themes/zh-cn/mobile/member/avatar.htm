@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+<div class='bootstrapAlert' style="position: relative;top: 40px;"></div>
+
+<div class="box2"></div>
+
+<form id="memberForm" action="<{$http_root_www}>company/avatar" target="post_frame" method="post">
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+		<h1>个人头像-编辑</h1>
+		<div class="right">
+			<div class="right">
+				<button type="submit" class="a-red">保存</button>
+			</div>
+		</div>
+	</header>
+
+	<section id="bd">
+
+		<div class="panel panel-default">
+		  <div class="panel-body" style="text-align: center;">
+		   	<p>
+		   		 请上传200 x 200以上的正方形图片
+		   	</p>
+
+				<div class='image-outline' style='display: inline-block;width: 200px;height: 200px;border: dotted 2px;box-sizing: content-box;'>
+						<img id ='main_pic' onclick='ckfinder();' 
+						<{if $loginUser.avatar}>
+						src="<{$UPLOAD_PATH}><{$loginUser.avatar}>" 
+						<{else}>
+						src="<{$SKIN_PATH}>mobile/images/icon38.png"
+						<{/if}>
+						style='max-height: 200px;max-width: 200px;margin: 0px;padding:0px'>
+				</div>
+				
+		  </div>
+		</div>
+		
+	</section>
+
+	<input type="hidden" name="avatar">
+
+</form>
+
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+
+<script src="<{$STATIC_PATH}>ckfinder/ckfinder.js"></script>
+<script>
+$(function(){
+	$('#main_pic').on('load',function(){
+		validation();
+	});
+})
+
+function ckfinder() {
+	CKFinder.modal( {
+		width: 800,
+    	height: 600,
+		connectorInfo:"user=<{$loginUser.id}>",
+
+	    onInit: function( finder ) {
+	    	finder.on( 'file:choose:resizedImage', function( evt ) {
+	    		var imageurl = imagePathInsideUpload(evt.data.resizedUrl);
+			    $('#main_pic').attr('src',"<{$UPLOAD_PATH}>"+imageurl);
+			    $("input[name='avatar']").val(imageurl);
+
+			    finder.request( 'dialog:destroy' );
+			} );
+
+	        finder.on( 'files:choose', function( evt ) {
+			    var files = evt.data.files;
+			    files.forEach( function( file, i ) {
+			        var imageurl = imagePathInsideUpload(file.getUrl());
+			        $('#main_pic').attr('src',"<{$UPLOAD_PATH}>"+imageurl);
+			    	$("input[name='avatar']").val(imageurl);
+			    } );
+			} );
+	    }
+	} );
+}
+
+function validation() {
+	 try{
+	 	var naturalWidth = $('#main_pic').get(0).naturalWidth;
+	 	var naturalHeight= $('#main_pic').get(0).naturalHeight;
+
+    	if(imageSizeValidation(naturalWidth,naturalHeight)){
+    		//image ok;
+    		$('.image-outline').css('color','green');
+    		$('.bootstrapAlert').html('');
+    		$(':input[type="submit"]').prop('disabled', false);
+    	}
+
+    }catch(error){
+    	$('.bootstrapAlert').html(bootstrapAlertHtml(error,'warning'));
+    	//image not ok;
+    	$('.image-outline').css('color','red');
+    	$(':input[type="submit"]').prop('disabled', true);
+    }
+}
+function imagePathInsideUpload(str){
+	console.log(str);
+	var re = /(userfiles\/).+/;	
+	var found = str.match(re);
+	console.log(found);
+	return found[0];
+}
+
+function imageSizeValidation(width,height){
+	console.log(width);
+	console.log(height);
+
+	var validationPass=true;
+
+	var allowMinWidth = 200;    //define
+	var allowMinHeight= 200;    //define
+	var allowDistortionRatio=1.2; //长边比短边的比例最大可以是
+
+	if(width<allowMinWidth)
+	{
+		validationPass=false;
+		throw "图片太小了，宽度不够";
+	}
+	if(height<allowMinHeight)
+	{
+		validationPass=false;
+		throw "图片太小了，高度不够";
+	}
+	if( Math.max(width,height)/Math.min(width,height)>allowDistortionRatio)
+	{	
+		console.log(Math.max(width,height)/Math.min(width,height));
+		validationPass=false;
+		throw "图片比例不对，差的太多了";
+	}
+	return validationPass;
+}
+</script>
+
+ <script type="text/javascript">
+        function bootstrapAlertHtml(msg,type){
+            var html ='<div class="alert alert-'+type+' alert-dismissible" role="alert" >';
+            html +='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+            html +=' <strong>Opp!</strong> '+msg;
+            html +='</div>';
+            return html;
+        }
+    </script>
+
+</body>
+</html>

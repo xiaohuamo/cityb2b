@@ -1,0 +1,239 @@
+<{include file='email/inc/email_head.htm'}>
+
+<body>
+	<table class="body">
+		<tr>
+			<td class="center" align="center" valign="top">
+				<center>
+					<table class="row header">
+						<tr>
+							<td class="center" align="center">
+								<center>
+									<table class="container">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td class="six sub-columns">
+															<img src="<{$SKIN_PATH}>images/acexhibitions_logo.png">
+
+														</td>
+
+														<td class="six sub-columns last" style=" vertical-align:middle;text-align:right">
+															<span class="template-label">订单时间：<br /><{$createTime}> </span>
+														</td>
+														
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</center>
+							</td>
+						</tr>
+					</table>
+					<table class="container">
+						<tr>
+							<td>
+								<table class="row">
+									<tr>
+										<td class="wrapper last">
+											<table class="twelve columns">
+												<tr>
+													<td>
+														<h6>Hi, <{$customerName}></h6>
+														<br/>
+
+														<p class="lead"><{$message}> </p>
+														<p>兑换码：<{$redeemCode}></p>
+
+														<div class='panel' >
+															<p class='panel'>订单描述:<{$productName}></p>
+
+															<p >订单编号：<{$order_id}></p>
+
+															<p><{$itemTable}></p>
+
+															<div class='brief_summary'>
+																<{if $deliveryFees!=0}><span>运费：+$<{$deliveryFees}></span><{/if}>
+																<{if $bookingFees!=0}><span>预定费：+$<{$bookingFees}></span><{/if}>
+																<{if $promotionTotal!=0}><span>折扣：-$<{$promotionTotal}></span><{/if}>
+																<{if $surcharge!=0}><span>Surcharge：+$<{$surcharge}></span><{/if}>
+																<{if $productPrice!=0}><span>总价：<strong><{$productPrice}></strong></span><{/if}>
+															</div>
+														</div>
+
+
+														<div class='panel'>
+															    <p style='text-align:center'>门票二维码</p>
+																<img src="<{$redeemQRCode}>"  style='float:none;margin:auto'>
+														</div>
+
+														<div class='panel' >
+																
+																<p>展会场馆：Melbourne Convention and Exhibition Centre</p>
+																<p>展会地址：2 Clarendon Rd, Wharf VIC 3006</p>
+																<p>展会时间：</p>
+																<ul>
+																	<li>10月28日 10:00AM -- 5:00PM</li>
+																	<li>10月29日 10:00AM -- 5:00PM</li>
+																	<li>10月30日 10:00AM -- 2:00PM</li>
+																</ul>
+																<p>交通 Getting There mcec.com.au/your-visit/getting-there</p>
+																<p>停车软件Parking App：Parkopedia(仅供参考)</p>
+														</div>
+
+														<div class='panel' >
+
+															<P>商家信息</p>
+															<p >商家：<{$businessName}></p>
+														
+															<p >地址：<{$business_address}></p>
+															<p >邮箱：info@acexhibitions.com </p>
+															<p>联系人：Sam 0416108818  |  Stin 0411144324</p>
+														</div>
+
+														
+															
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+
+									<table class="row callout">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td class="panel">
+															<img src="<{$SKIN_PATH}>images/logo.png"  height='28px'>
+															<p style='text-align:right'> <a href="https://www.ubonus365.com/company/customer_order_detail?type=member&id=<{$order_id}>">登录Ubonus美食生活 »</a></p>
+															<br />
+															<p style="text-align:center;">活动售票技术支持由ubonus365.com提供</p>
+															<p>1.出示该email（电子版或打印件均可）</p>
+															<p>2.使用您的邮箱和默认密码登录Ubonus美食生活，在我的订单中打印中澳展会的订单。（包含二维码的页面）</p>
+															<p>说明：如果您已经是Ubonus美食生活的用户，请通过该邮箱和您的密码登录。如果您是第一成为Ubonus美食生活的用户，您的账号为您的邮箱地址。</p>
+
+															<{if $initPassword}><p style='text-align:center'><strong>密码默认:<{$initPassword}></strong></p><{/if}>
+
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+
+
+									<!-- <table class="row footer">
+										<tr>
+											<td class="wrapper">
+												<table class="six columns">
+													<tr>
+														<td class="last right-text-pad">
+															<h5>联系Ubonus:</h5>
+															<p>Email: support@ubonus365.com</p>
+															<img src="https://www.ubonus365.com/themes/zh-cn/images/harry.png" width="100" height="100">
+															<p>&nbsp;</p>
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+											<td class="wrapper last">
+
+												<table class="six columns" >
+													<tr>
+														<td class="left-text-pad">
+															<h5>门票二维码：</h5>
+															<p>商家扫描此二维码即可兑付</p>
+															<img src="<{$redeemQRCode}>" width="100" height="100">
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+
+												
+											</td>
+										</tr>
+									</table> -->
+
+								<br><br>
+									<table class="row">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td align="center">
+															<center>
+															<a href="https://www.ubonus365.com/business/index">
+																<img src="<{$SKIN_PATH}>images/success_banner.png" style='width:580px!important'>
+															</a>	
+															</center>
+
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+
+
+									<table class="row">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td align="center">
+															<center>
+															<a href="https://www.ubonus365.com">
+																<img src="<{$SKIN_PATH}>images/success_banner1.jpg"  style='width:580px!important'>
+															</a>
+															</center>
+
+														</td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									
+								<br><br>
+												
+
+									<table class="row">
+										<tr>
+											<td class="wrapper last">
+												<table class="twelve columns">
+													<tr>
+														<td align="center">
+															<center>
+
+																<p style="text-align:center;"><a href="https://www.ubonus365.com/our-policy">用户协议</a> | <a href="https://www.ubonus365.com/">Ubonus美食生活-Ubonus</a> | <a href="https://www.ubonus365.com/our-policy#points">积分兑换声明</a></p>
+															</center>
+
+														</td>
+														<td><img src="<{$SKIN_PATH}>images/logo.png"></td>
+														<td class="expander"></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+
+								</td>
+							</tr>
+						</table>
+					</center>
+				</td>
+			</tr>
+		</table>
+		<{include file='email/inc/footer_script.htm'}>
+	</body>
+	</html>

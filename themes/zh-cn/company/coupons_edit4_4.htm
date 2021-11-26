@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >4</span>
+					<div class="colCurTit clearfix">
+						<h1>第四步：优惠券金额设置</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+					
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						
+					  	<div class="input-box clearfix">
+							<span>
+							<label  >售价</label>
+							</span>
+							<input type="number" min='0' step='any' class="input-text" value="<{$data.voucher_deal_amount}>"  name ="voucher_deal_amount" style="width:120px;"  /> 澳元
+						</div>
+
+
+						<div class="input-box clearfix">
+							<span>
+							<label>面值</label>
+							</span>
+							<input type="number" min='0' step='any' class="input-text" value="<{$data.voucher_original_amount}>"  name ="voucher_original_amount" style="width:120px;"/> 澳元
+						</div>
+
+						<div class="input-box clearfix ">
+							<span><label >库存</label></span>
+							<input type="text" name="qty" class="input-text" value="<{$data.qty}>" style="width:120px;" />
+
+							<span class='help-box'></span>
+						</div>
+
+						<{include file='company/sub_coupons.htm'}>
+						
+						<{include file='company/coupons_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

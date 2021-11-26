@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css"/>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap_restaurant.min.css"/>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style_restaurant.css"/>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/shoppingday/lib.css"/>
+	<script src="<{$SKIN_PATH}>mobile/js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+	<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+	
+
+	<style type="text/css">
+        body {
+            width: 100%;
+        }
+		
+		.noscroll{
+		 overflow:hidden;
+		
+		}
+
+        .toggle-txt div.txt {
+            display: none;
+        }
+
+        .restaurants {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        #search-result-holder {
+            background: #fff;
+            display: none;
+            padding-top: 0;
+        }
+
+        .head-business-box {
+            line-height: 1.4rem;
+            background: #fff;
+            border-bottom: 2px solid #eee;
+            overflow-y: hidden;
+        }
+
+        .menu-quantity {
+            text-align: center;
+            font-size: 0.40rem;
+			height: 0.7rem;
+            width: 1.5rem;
+        }
+
+        .promotion-des-display {
+            margin-left: 0.3rem;
+            background-color: #FD5001;
+            font-family: "微软雅黑", "Microsoft Yahei";
+            font-size: .37rem;
+        }
+
+		.top-cart {
+			display: inline-block;
+			width: 30%;
+		}
+
+		.deliver-date-display {
+            display: inline-block;
+            /* width: 100%; */
+		}
+
+		.deliver-date-display em {
+            margin-left: 0.2rem !important;
+		}
+
+        /*隐藏搜索框默认的删除按钮*/
+        input[type=search]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+		.header-search {
+            width: 30% !important;
+		}
+	</style>
+
+	<script type="text/javascript">
+		var oldTarget = null;
+        $(window).scroll(function () {
+            //显示business info的时候隐藏品类菜单
+            if ($(window).scrollTop() > $('#business_info').position().top - 900) {
+                $("#leftnav" + window.current_business_id).css("display", 'none');
+            } else {
+                $("#leftnav" + window.current_business_id).css("display", '');
+            }
+
+            if ($('input.header-search').val()) {
+                document.activeElement.blur();
+            }
+
+            var target = null;
+            var categoryIndex = 0;
+            $('.positionPin' + window.current_business_id).each(function (index, value) {
+                var elementTop = $(value).offset().top;  //这个是 菜单里面的每一个品类显示的位置。 （也就是距顶端的距离）
+                if ($(window).scrollTop() > elementTop - $('.head-business-box').height() - 20) {
+					target = $(value).data('target');
+                    categoryIndex = index;
+                }
+            })
+
+			if(oldTarget !== target) {
+                $('a.s1').css('background', '');
+                $('a.s1[data-target-id=' + target + ']').css('background', '#5bc0de');
+                oldTarget = target;
+			}
+            if (categoryIndex > 5) {
+                $("#leftnav" + window.current_business_id).scrollTop(500);
+            } else {
+                $("#leftnav" + window.current_business_id).scrollTop(0);
+            }
+        })
+
+        function myfun() {
+            window.current_business_id = '<{$coupon.createUserId}>';
+            load_cart();
+            load_category_list();
+            load_menu();
+            load_business_info();
+            updateCartDisplay(<{$restaurant_id}>);
+            var cart = '<{$cart}>';
+            if (cart == 1) {
+                $('.inpageShoppingCart').show();
+            }
+            $('.restaurants').css('height', $('.head-business-box').height());
+            $('#box-prod').css('margin-top', '0');
+			//$(".deliver-center-user-panel").show();
+			window.setInterval(flash_delivery_date, 1000); //让index 多久循环一次 
+        }
+
+        window.onload = myfun;
+		
+		
+		function flash_delivery_date(){
+			$('#logistic_delivery_date1').css('color','#000');  //默认值
+			setTimeout(" $('#logistic_delivery_date1').css('color','#fF0000')",500); //第一次闪烁
+		
+		};
+		
+
+	</script>
+</head>
+<body class="bg-1">
+
+<section id="bd">
+	<div class="sec-product" style="margin-top: -1.45rem;">
+
+		<div id="head-business-box" class="head-business-box fixed">
+			<div class="deliver-date-display">
+			</div>
+			
+			
+			<em class="promotion-des-display">
+				<a onclick="showCustomerSelectModal(true)" style="width: 100%;color: white;"><{$lang->current_customer}>:<small id='current-customer'><{$currentUser['name']}></small></a>
+			</em>
+			<em class="promotion-des-display">
+				<a onClick="$('.inpageShoppingCart').show();" style="width: 100%;color: white;">
+					<small style="color:red" id="carts_count_id"></small>
+					<{$lang->shopping_cart}>
+					:<small id='tp'>loading..</small>
+				</a>
+			</em>
+			
+		</div>
+		<div class="restaurants"></div>
+
+		<script>
+            window.current_business_id =<{$coupon.createUserId}>;
+		</script>
+
+		<div id="search-result-holder"></div>
+
+		<div id="leftnav<{$coupon.createUserId}>" class="col-l fixed " style=" width: 2.1rem;padding-bottom:3rem;">
+            <{include file='mobile/factorypage/category.htm'}>
+		</div>
+
+
+		<div id='box-prod' class="box-prod " style="background:white;padding-right: .05rem;">
+			<div id="menu-section<{$coupon.createUserId}>" class=" col-r comm-tit " style="padding: 0.35rem 0.2rem;">
+				<div id="coupon_list<{$coupon.createUserId}>"></div>
+				<div id="menu_menu_bought">
+                    <{*					单商户情况下直接预渲染已购买列表，避免js加载的延迟*}>
+                    <{if $menu_bought_list}>
+                        <{include file='mobile/factorypage/menu_bought_list.htm'}>
+                    <{/if}>
+				</div>
+
+				<div id="menu_menu<{$coupon.createUserId}>">
+                    <{include file='mobile/factorypage/menu.htm'}>
+
+                    <{for $i = 1 to $menu_pages + 1}>
+						<div id="menu_menu<{$coupon.createUserId}>_temp_<{$i}>"></div>
+                    <{/for}>
+				</div>
+			</div>
+		</div>
+
+		<div id='f11' class="txt content-image-fullsize" style="display: block;"><p>&nbsp;</p>
+			<div class="comm-pic">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:157:'cut'}>" width="100%" height="auto" alt="<{$coupon.title}>"/></div>
+				</div>
+			</div>
+
+            <{if ($restaurant_promotion_manjian.discount || $restaurant_promotion_manjian.promotion_desc )}>
+				<div class='money-display'
+					 style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;font-size: 15px; font-weight:600; background-color: #d9eff5cc;padding: 5px 15px;color: #f23030;"><{$lang->promption}>
+					：
+                    <{if $restaurant_promotion_manjian.discount}>
+						<strong style="font-size:14px;"><{$restaurant_promotion_manjian.discount}>%OFF.</strong>
+                    <{/if}>
+                    <{if $restaurant_promotion_manjian.promotion_desc}>
+                        <{$restaurant_promotion_manjian.promotion_desc}>
+                    <{/if}>
+				</div>
+            <{/if}>
+		</div>
+		<div id="business_info"></div>
+
+	</div>
+
+	<div class="js-roll"><span><!-- 继续拖动，查看图文详情 --></span></div>
+	<div class="h2"></div>
+
+	<div class='inpageShoppingCart'
+		 style="position: fixed;top: 0;right: 0;width: 100%;padding-bottom: 3rem;height: 100vh;overflow-y: scroll;z-index: 99999;display: none; background-color: #fff;padding: 3%">
+	</div>
+
+    <{if $isDispCenterBusiness}>
+		<div id="deliver-center-user-panel" class='deliver-center-user-panel'>
+			<!-- 统配中心用户弹窗 -->
+			<div class='panel-header'>
+				<div class='panel-header-text'><{$lang->logistic_choosedate}></div>
+				<span class='fa fa-close'></span>
+			</div>
+
+			<div class='panel-body'>
+				<h5><{$lang->logistic_checkarea}></h5>
+				<div style="text-align: center;">
+					<input class='postcode-validation' type="number" placeholder="&nbsp;<{$lang->input_post_code}>..." style="padding-left: 0.2rem;">
+					<span>
+			    	</span>
+				</div>
+
+				<div>
+
+
+					<h5><{$lang->logistic_delivery_date}></h5>
+					<div class='time-box date-options'>
+						<!-- day of week -->
+                        <{foreach from=$businessDispSchedule item=item}>
+							<span class='<{if $dispCenterUserSelectedDeliveryDate|strpos:$item->orderDeliveryTimestamp !== false && $item->isAvaliable == true}> selected <{/if}>
+			    				<{if $item->isAvaliable == false}> unavailable <{/if}>'
+								  data-delivery-anytime='<{$item->delivery_anytime}>'
+								  data-delivery-morning='<{$item->delivery_morning}>'
+								  data-delivery-afternoon='<{$item->delivery_afternoon}>'
+								  data-order-delevery-timestamp='<{$item->orderDeliveryTimestamp}>'
+							>
+			    				<{$item->getOrderDeliveryDisplay($lang['lang'][0])}>
+			    			</span>
+                        <{/foreach}>
+					</div>
+					<div>
+						<!-- available business in this period -->
+						<div class='business-box'>
+							<p class='business-box-start-shopping-btn' onClick="$('.deliver-center-user-panel').hide();"
+							   style="text-align: center;margin-top: 2rem; display: none;"><em style="background: #FD5001 ;color: #fff;padding: 10px 20px;font-size: 0.5rem;"><{$lang->start_shopping}></em>
+							</p>
+						</div>
+					</div>
+
+					<h5><{$lang->logistic_schedule_time}></h5>
+					<div class='time-box time-options'>
+						<!-- Morning or afternoon -->
+						<span style="height:2rem;"
+							  class='delivery-option-anytime
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'anytime' !== false}>selected<{/if}>
+			    			'
+							  data-val='anytime'>
+							<{$lang->any_time}><em>8:00 - 20:00</em>
+			    		</span>
+						<span style="height:2rem;"
+							  class='delivery-option-morning
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'morning' !== false}>selected<{/if}>
+			    			'
+							  data-val='morning'>
+							<{$lang->morning}><em>8:00 - 12:00</em>
+			    		</span>
+						<span style="height:2rem;"
+							  class='delivery-option-afternoon
+			    			<{if $dispCenterUserSelectedDeliveryDate|strpos:'afternoon' !== false}>selected<{/if}>
+			    			'
+							  data-val='afternoon'>
+							<{$lang->afternnon}><em>12:00 - 20:00</em>
+			    		</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+    <{/if}>
+</section>
+
+<{include file ="factorypage/customer-select.htm"}>
+
+<{include file ="language-select.htm"}>
+
+<script>
+    function updateShoppingCart(target, businessUserId, oldQuantity = 0) {
+        var main_coupon_id = $target.data('main_coupon_id');
+        var menu_id = $target.data('menu_id');
+        var onspecial = $target.data('onspecial');
+        var quantity = $target.val();
+        var postData = {};
+        postData['main_coupon_id'] = main_coupon_id;
+        postData['menu_id'] = menu_id;
+        postData['quantity'] = quantity;
+        postData['onspecial'] = onspecial;
+
+        $.ajax({
+            type: 'POST',
+            url: '/factorypage/update_cart?user_id=<{$userId}>&factory_id=<{$coupon.createUserId}>',
+            data: postData,
+            beforeSend: function () {
+
+            }
+        }).done(function (data) {
+            if (!updateCartDisplay(businessUserId, data)) {
+                $target.val(parseInt(oldQuantity));
+            }
+
+        });
+
+        if (quantity == 0) {
+            $target.parent('.quantity').next('.sidedish_menu').find('.menu-quantity').val(0);
+        }
+    }
+
+    function updateCartDisplay(businessUserId, data1 =null) {
+        if (!data1) {
+            $.ajax({
+                url: '/factorypage/get_cart_info?user_id=<{$userId}>&businessUserId=${businessUserId}',
+                beforeSend: function () {
+                    $('body').append('<p class="form_response_loader"></p>');
+                }
+            }).done(function (d) {
+                try {
+                    data = JSON.parse(d);
+                } catch (err) {
+                    return false;
+                }
+
+                $('.inpageShoppingCart').html(data['html']);
+                $('#carts_count_id').html(data['totalQuantity']);
+               $('#voucher_totalprice').html(data['totalVoucherPrice'].toFixed(2));
+                $('#carts_totalprice').html(data['totalMenuPrice'].toFixed(2));
+                $('#tp').html("$" + (parseFloat(data['totalVoucherPrice']) + parseFloat(data['totalMenuPrice'])).toFixed(2));
+            }).always(function () {
+                $('.form_response_loader').remove();
+            });
+        } else {
+            try {
+                data = JSON.parse(data1);
+            } catch (err) {
+                return false;
+            }
+
+            if (data['msg']) {
+                if (data['msg']['code'] == '0') {
+                    window.location.href = "/member/login";
+                    return false;
+                } else {
+                    alert(data['msg']['error']);
+                    return false;
+                }
+            }
+
+            $('.inpageShoppingCart').html(data['html']);
+            $('#carts_count_id').html(data['totalQuantity']);
+           $('#voucher_totalprice').html(data['totalVoucherPrice'].toFixed(2));
+            $('#carts_totalprice').html(data['totalMenuPrice'].toFixed(2));
+            $('#tp').html("$" + (parseFloat(data['totalVoucherPrice']) + parseFloat(data['totalMenuPrice'])).toFixed(2));
+        }
+        return 1;
+    }
+	
+	
+
+function addMenuWithOption(obj, businessUserId) {
+
+    var qtyCheck = 0;
+    $(obj).parents('.menu_guige').find('.menu_option input').each(function (index, value) {
+        qtyCheck += parseInt($(value).val());
+    })
+    if (qtyCheck == 0 && $(obj).parents('.menu_guige').find('.menu_option input').size() != 0) {
+        alert('请至少选择一种规格');
+        return false;
+    }
+
+    var postData = [];
+
+    var totalPirce = 0;
+    $(obj).parents('.menu_guige').find('input').each(function (index, value) {
+        if (parseInt($(value).val()) > 0) {
+            var singleData = {};
+
+            singleData['main_coupon_id'] = $(value).data('main_coupon_id');
+            singleData['menu_id'] = $(value).data('menu_id');
+
+
+            var type = $(value).data('type');
+            var price = $(value).data('price');
+
+            if (type == 'menu_option') {
+                var id = $(value).data('menu_option_id');
+            } else if (type == 'sidedish_menu') {
+                var id = $(value).data('sidedish_menu_id');
+            } else {
+                var id = null;
+            }
+
+            //console.log('type='+type +';id='+id+';price='+price);
+            singleData['type'] = type;
+            singleData['id'] = id;
+            singleData['price'] = price;
+            singleData['quantity'] = $(value).val();
+          
+            postData.push(singleData);
+
+            totalPirce += singleData['quantity'] * singleData['price'];
+
+            //reset to 0
+            $(value).val(0);
+        }
+    })
+
+    $.ajax({
+        type: 'POST',
+        url: '/query?cmd=factorypage_add_menu_with_option',
+        data: {data: postData,user_id:'<{$userId}>'},
+        beforeSend: function () {
+
+        }
+    }).done(function (data) {
+        updateCartDisplay(businessUserId,data );
+		load_cart();
+    });
+
+
+    $(obj).parents('.menu_guige').hide();
+}	
+	
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var selectedDateTarget = $('.time-box.date-options span.selected');
+        var selectedTimeTarget = $('.time-box.time-options span.selected');
+
+        if (selectedDateTarget.length == 1 && selectedTimeTarget.length == 1) {
+            loadBusiness();
+        }
+
+        function toggleDeliverOptionForDate(target) {
+            if ($(target).data('delivery-afternoon') == 1) {
+                $('.delivery-option-afternoon').show();
+            } else {
+                $('.delivery-option-afternoon').hide();
+            }
+
+            if ($(target).data('delivery-anytime') == 1) {
+                $('.delivery-option-anytime').show();
+            } else {
+                $('.delivery-option-anytime').hide();
+            }
+
+            if ($(target).data('delivery-morning') == 1) {
+                $('.delivery-option-morning').show();
+            } else {
+                $('.delivery-option-morning').hide();
+            }
+
+            if ($('.time-box.time-options span:visible').length == 1) {
+                $('.time-box.time-options span:visible').first().addClass('selected');
+                loadBusiness();
+            }
+        }
+
+        function loadBusiness() {
+            var selectedDateTarget = $('.time-box.date-options span.selected');
+            var selectedTimeTarget = $('.time-box.time-options span.selected');
+            if (selectedDateTarget.length == 1 && selectedTimeTarget.length == 1) {
+                var time = $(selectedDateTarget).data('order-delevery-timestamp');
+                var option = $(selectedTimeTarget).data('val');
+
+                document.cookie = "DispCenterUserSelectedDeliveryDate=" + time + "@" + option + "; path=/";
+
+                $('.business-box-start-shopping-btn').show();
+            }
+        }
+
+        function isPostcodeSupported(postcode) {
+            if (postcode.length != 4) return -1;
+            var postcodeSupported = "<{$postcodeSupported}>";
+            return postcodeSupported.indexOf(postcode);
+        }
+
+        function toggleHeaderReady() {
+            var selectedDateTarget = $('.time-box.date-options span.selected');
+            var selectedTimeTarget = $('.time-box.time-options span.selected');
+
+            var currentDateTime = new Date();
+            //夏令时判断
+            var d1 = new Date(currentDateTime.toISOString().slice(0, 10) + ' 00:00:00 AEST');
+            var d2 = new Date(currentDateTime.getYear() + '-06-01 00:00:00 AEST');
+            var timezoneOffset = 60;
+            if (d1.getTimezoneOffset() !== d2.getTimezoneOffset()) {
+                timezoneOffset *= -11;
+            } else {
+                timezoneOffset *= -10;
+            }
+
+            var time = $(selectedDateTarget).data('order-delevery-timestamp');
+            var currentDate = new Date((time + (currentDateTime.getTimezoneOffset() - timezoneOffset) * 60) * 1000)
+
+            <{if $langStr=='zh-cn'}>
+            var week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+            <{else}>
+            var week = ["SUN", "MON", "TUE", "WED", "THUR", "FRI", "SAT"];
+            <{/if}>
+            var month = currentDate.getMonth() + 1;
+            var dayOfMonth = currentDate.getDate();
+            var dayOfWeek = week[currentDate.getDay()];
+            <{if $langStr=='zh-cn'}>
+            deliverDateDisplay = dayOfWeek + '(' + month + '月' + dayOfMonth + '日)';
+            <{else}>
+            deliverDateDisplay = dayOfWeek + '(' + dayOfMonth + '/' + month + ')';
+            <{/if}>
+
+            let html = "";
+            let searchHtml = "<em style='margin-left: 0.5rem;'><input type='search' name='search' id='search-input' class='header-search' style='color:#808080' placeholder='<{$lang->search}>'/><i id='search-button' class='fa fa-search'></i></em>";
+            if (selectedDateTarget.length == 1 && selectedTimeTarget.length == 1) {
+                $('.deliver-center-user-panel .panel-header').addClass('ready');
+                $('.deliver-center-user-panel .panel-header .panel-header-text').html('<{$lang->logistic_choosedate}><{$lang->logistic_selected}>');
+                $('.dispcenter-footer-icon-text').html('<{$lang->unified_delivery}>').css('color', '#3cab4a');
+
+                html = "<div style='display:inline-block'><em onclick='$(\".deliver-center-user-panel\").show();return false;' style='font-weight:600;font-style:normal;line-height:50px;display:inline-block;margin-left: 0.2rem;width:100%;color:#808080'><small id='logistic_delivery_date1'><{$lang->logistic_delivery_date}>:<u>"
+                    + deliverDateDisplay + "</u></small><!--<em class='promotion-des-display'><{$lang->logistic_choosedate}></em>--></em></div>"
+                    + searchHtml 
+					+ " <em class='promotion-des-display'>	<a onClick='showSelectLanguage(true);' style='width: 100%;color: white;'><{$lang->switch_lang}></a>	</em>&nbsp;<em class='promotion-des-display'>	<a onClick='creat_new_order();' style='width: 100%;color: white;'><{$lang->buy}></a></em>";
+                  /*  + "<div style='display:inline-block;'><em class='promotion-des-display'><a style=\"  color: white;\" onCLick=\"$('html,body').animate({scrollTop: $('#f11').offset().top-100},'fast');\"><{$lang->warm_prompt}></a></em><div>"; */;
+                $('.deliver-date-display').html(html) ;
+				
+				
+				
+				
+            } else {
+                $('.deliver-center-user-panel .panel-header').removeClass('ready');
+                $('.deliver-center-user-panel .panel-header .panel-header-text').html('配送时间');
+                $('.dispcenter-footer-icon-text').html('<{$lang->unified_delivery}>').css('color', '#f15353');
+
+                html = "&nbsp;&nbsp;<em class='promotion-des-display'><a style=\"  color: white;\" onCLick=\"$('html,body').animate({scrollTop: $('#f11').offset().top-100},'fast');\"><{$lang->warm_prompt}></a></em> "
+                    + searchHtml;
+                $('.deliver-date-display').html(html);
+            }
+
+            //监听搜索动作
+            $('#search-button').on('click', function () {
+                filterProduct($('#search-input').val());
+            });
+            //按回车后收回键盘
+            $('input.header-search').on('keyup', function (event) {
+                if (event.keyCode === 13) {
+                    document.activeElement.blur();
+                    filterProduct($(this).val());
+                }
+            })
+            //点击搜索框体后清空之前搜索
+            $('input.header-search').on('click', function () {
+                $(this).val('')
+                filterProduct($(this).val());
+            })
+        }
+
+        function alertEmptyingShoppingCartOnDateChange() {
+            var cartQty = parseInt($('.cartQty').text());
+            if (cartQty > 0) {
+                var answer = confirm("<{$lang->confirm_clear_cart}>");
+
+                if (answer) {
+                    $.ajax({
+                        url: '/factorypage/empty_cart?user_id=<{$userId}>',
+                        success: function (data) {
+                            if (data.trim() == 'success') {
+                                $('.cartQty').html('0');
+                                var oldQuantity = $('.menu-quantity').val();
+                                $('.menu-quantity').val(0);
+                                updateShoppingCart('menu', '<{$coupon.createUserId}>', oldQuantity);
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                    })
+                }
+
+                return answer;
+            } else {
+                return true;
+            }
+        }
+
+        function selectThisItem(obj) {
+            $(obj).siblings().removeClass('selected');
+            $(obj).addClass('selected');
+            // update little available text
+            $(obj).siblings().not('.unavailable').find('i').html('<{$lang->logistic_selected}>');
+            $(obj).find('i').html('<{$lang->logistic_selected}>');
+        }
+
+        $('.time-box.date-options span.selected i').html('已选');//default selection from cookie text need to update
+
+
+        $('.time-box.date-options span').not('.unavailable').on('click', function () {
+            if (alertEmptyingShoppingCartOnDateChange()) {
+                selectThisItem(this);
+                $('.time-box.time-options span').removeClass('selected');
+                toggleDeliverOptionForDate(this);
+                toggleHeaderReady();
+            }
+
+        })
+        $('.time-box.time-options span').on('click', function () {
+            selectThisItem(this)
+            loadBusiness();
+            toggleHeaderReady();
+        })
+        $('.panel-header .fa-close').on('click', function () {
+            $('.deliver-center-user-panel').hide();
+        })
+        $('.postcode-validation').on('keyup', function () {
+            if (isPostcodeSupported($(this).val()) >= 0) {
+                $(this).next('span').html("<em class='fa fa-check-circle fa-lg' style='color:green'></em><{$lang->support}>");
+            } else {
+                $(this).next('span').html("<em class='fa fa-times-circle-o fa-lg' style='color:red'></em><{$lang->not_support}>");
+            }
+        })
+
+        //默认选择第一个 available date 和 delver anytime if none selected from cookie
+        if ($('.time-box.date-options span.selected').length == 0)
+            selectThisItem($('.time-box.date-options span').not(".unavailable").first());
+        if ($('.time-box.time-options span.selected').length == 0)
+            $('.time-box.time-options span.delivery-option-anytime').addClass('selected');
+
+        toggleDeliverOptionForDate($('.time-box.date-options span.selected'));
+
+        loadBusiness();
+        toggleHeaderReady();
+    })
+</script>
+
+<script>
+    $(document).ready(function ($) {
+        $('.ul-evaluate li').each(function () {
+            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+            var _val = $(this).find('dl').attr('value');
+            $(this).find('dl').find('dd:lt(' + _val + ')').addClass('on');
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.form_response_loader').remove();
+    })
+</script>
+
+<script type="text/javascript">
+    function change_category(catid) {
+        window.click_category = 1;
+
+        if (catid == 'bd') {
+            $('html,body').animate({scrollTop: $('#' + catid).offset().top - 250}, 'fast');
+        } else if (catid == 'menu-section') {
+            $('html,body').animate({scrollTop: $('#' + catid).offset().top - 250}, 'fast');
+        } else {
+            $('html,body').animate({scrollTop: $('#category-' + catid).offset().top - $('#head-business-box').height() - $('#category-' + catid).height()}, 'fast');
+        }
+
+        $('.loading-btn').css('background', '');
+        $('#cate_href-' + catid).css('background', '#5bc0de');
+        setTimeout("window.click_category=0;", 1000);
+    }
+
+    function load_category_list() {
+        <{if $menu_bought_list}>
+        showBoughtCategory(true);
+        <{/if}>
+        window.scrollTo(0, 0);
+    }
+
+    function load_cart() {
+        $.ajax({
+            url: "/factorypage/get_cart?businessUserId=<{$coupon.createUserId}>&user_id=<{$userId}>",
+            type: "GET",
+        }).done(function (d) {
+            data = JSON.parse(d);
+            $('.inpageShoppingCart').html(data['html']);
+
+            var order_qty = parseInt(data['totalQuantity']);
+            var totalPrice = data['totalPrice'];
+
+            if (order_qty > 0) {
+                $('#carts_count_id').html(order_qty);
+                $('#tp').html('$' + totalPrice);
+            }
+        })
+    }
+
+    function load_menu() {
+        let pageLoaded = 1;
+        for(let i = 1; i < <{$menu_pages}> + 1; i++) {
+            $.ajax({
+                url: `/factorypage/get_menu_list?id=<{$coupon.createUserId}>&page=${i}&user_id=<{$userId}>`,
+                success: function (data) {
+                    $(`#menu_menu<{$coupon.createUserId}>_temp_${i}`).replaceWith(data);
+                    pageLoaded++;
+                    if(pageLoaded === <{$menu_pages}>) {
+                        $('img.lazyload').unveil();
+
+                        $('.toggle-txt').on('click', function () {
+                            $(this).find('div.txt').toggle();
+                        })
+					}
+                }
+            })
+		}
+    }
+
+    function load_business_info() {
+        $.ajax({
+            url: "/factorypage/get_business_info?businessUserId=<{$coupon.createUserId}>",
+            type: "GET",
+        }).done(function (data) {
+            $('#business_info').html(data);
+            $('img.lazyload').unveil();
+        })
+    }
+
+    //在品类中移除或添加已购买列表
+    function showBoughtCategory(show) {
+        let boughtCategory = $('a [id=bought]');
+        if (show) {
+            if (boughtCategory.length === 0) {
+                $('#leftnav<{$coupon.createUserId}> ul').prepend('<li>   ' +
+                    `    <a id="bought" onclick="change_category('bought');" data-target-id="bought" class="s1 loading-btn"><{$lang->bought_history}>` +
+                    '    </a>  ' +
+                    '</li>');
+            }
+        } else {
+            if (boughtCategory.length !== 0) {
+                boughtCategory.parent().remove();
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $(document.body).on('click', '.coupon_option .title img,.coupon_option .title .fa-close', function () {
+            if ($(this).parents('.coupon_option').hasClass('fixBottom')) {
+                //close
+                $(this).parents('.coupon_option').toggleClass('fixBottom');
+                $(this).attr('src', $(this).data('src-org'));
+            } else {
+                //open
+                $('.coupon_option').removeClass('fixBottom');
+                $(this).parents('.coupon_option').toggleClass('fixBottom');
+                $(this).attr('src', $(this).data('src-lg'));
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('img.lazyload').unveil();
+    })
+
+    function creat_new_order() {
+	
+        $.ajax({
+            method: 'post',
+            url: '<{$http_root_www}>factorypage/checkout',
+            data: {
+                'userId' : '<{$userId}>'
+			},
+            cache: false,
+            dataType: "text",
+            beforeSend: function( xhr ) {
+                //
+            },
+            success: function(data)
+            {
+				data = jQuery.parseJSON(data);
+
+                if(data.status==200){
+                    $.ajax({
+						url: data.redirect.replace('&amp;', '&'),
+                    });
+					$('.inpageShoppingCart').hide();
+					$('.inpageShoppingCart').find('li').remove();
+					$('#carts_count_id').html('0');
+					alert('<{$lang->order_done}>');
+                }else{
+                    alert(data.msg);
+                }
+            }
+        })
+    }
+
+    function showMenuGuige(obj) {
+	
+		 $(obj).parent().next('.menu_guige').find('.menu_option input').each(function (index, value) {
+			 if ($(this).attr('data-menu_option_id')==501){
+			  //  $(this).val(0);
+			 } 
+		})
+		
+		$("html,body").toggleClass('noscroll');
+	
+		$(obj).parent().next('.menu_guige').show();
+		
+			
+			
+
+	}
+
+    function addProduct(button) {
+        $target = $(button).prev('.menu-quantity');
+        if (!$target.val()) {
+            $target.val(0);
+        }
+        var oldQuantity = $target.val();
+
+        if ($target.data('type') == 'menu_option') $target.parents('.menu_guige').find('.menu_option input').val(0);
+
+        $target.val(parseInt(oldQuantity) + 1);
+
+     if ($target.data('type') == 'menu_option') {
+	   // updateShoppingCart($target, '<{$coupon.createUserId}>', oldQuantity);
+	 }else{
+	  updateShoppingCart($target, '<{$coupon.createUserId}>', oldQuantity);
+	 }
+        
+    }
+
+    function updateQuantity(input) {
+        $target = $(input);
+        if (!$target.val() || $target.val() < 0) {
+            $target.val(0);
+        }
+        var oldQuantity = 0;
+
+        if ($target.data('type') == 'menu_option') $target.parents('.menu_guige').find('.menu_option input').val(0);
+
+        $target.val(parseInt($target.val()));
+
+        updateShoppingCart($target, '<{$coupon.createUserId}>', oldQuantity);
+    }
+
+
+    function removeProduct(button) {
+        $target = $(button).next('.menu-quantity');
+        var oldQuantity = $target.val();
+
+        if ($target.val() > 0) {
+            $target.val(parseInt($target.val()) - 1);
+            $(button).show();
+        } else {
+            $(button).hide();
+        }
+
+        updateShoppingCart($target, '<{$coupon.createUserId}>', oldQuantity);
+    }
+</script>
+
+<script type="text/javascript">
+    //This is effectively the search function
+    function filterProduct(str) {
+        if (str) {
+            var searchTerm = str.trim().toLowerCase();
+            window.scrollTo(0, 0);
+
+            $(".col-l").hide();
+            $(".col-r").hide();
+            $('#search-result-holder').html(" ").show();
+
+            $('.coupon_option').each(function () {
+                if ($(this).attr('id') !== 'category-bought' && $(this).data('product-name').trim().toLowerCase().includes(searchTerm)) {
+                    $('#search-result-holder').append($(this).clone());
+                }
+            })
+            $('img.lazyload').unveil();
+        } else {
+            $('#search-result-holder').html(" ").hide();
+            $('input.header-search').val("");
+
+            $("#leftnav" + window.current_business_id).first().show();
+            $("#menu-section" + window.current_business_id).first().show();
+        }
+    }
+</script>
+
+<{include file ="mobile/factorypage/sec_static_gotop.htm"}>
+
+<!-- WX jssdk share -->
+<script type="text/javascript">
+    var shareTitle = '<{$pageTitle}>';
+    var shareLink = '<{$shareUrl}>';
+    var desc = "<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+    var shareImg = '<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+</script>
+<{include file='wx_share_js.htm'}>
+</body>
+</html>
+

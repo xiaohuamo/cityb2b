@@ -1,0 +1,56 @@
+
+ <{if $storeOverWriteLink}>
+     <a  href="<{$http_root_www}>store/<{$storeOverWriteLink}>?reftag=<{$reftag}>" target="_blank" class="ico1" data-overwrite='true'><i></i><{$lang->store}></a>
+<{else}>
+    <a  href="<{$http_root_www}>store/<{$coupon.createUserId}>?reftag=<{$reftag}>" target="_blank" class="ico1"><i></i><{$lang->store}></a>
+<{/if}>
+
+<a  class="ico2 fav_not_faved" style="display: none"><i></i><{$lang->fav}></a> 
+<a  class="ico2 fav_faved" style='color:#FD5001 ;display: none;'><i></i><{$lang->watched}></a>
+<a  class="ico3" href="<{$http_root_www}>member/showcart"><i><span id="cart_counts" class="cartQty"><{$carts_count}></span></i><{$lang->shopping_cart}></a>
+
+<script type="text/javascript">
+
+    $(function(){
+        <{if $faved}>
+            $('.fav_faved').show();
+            $('.fav_not_faved').hide();
+        <{else}>
+            $('.fav_faved').hide();
+            $('.fav_not_faved').show();
+        <{/if}>
+
+        <{if $loginUser}>
+            $('.fav_faved').find('i').on('click',function(){
+                removeFav();
+            });
+
+            $('.fav_not_faved').find('i').on('click',function(){
+                addFav();
+            });
+        <{/if}>
+    });
+
+    function addFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_add", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+                
+                $('.fav_faved').show();
+                $('.fav_not_faved').hide();
+
+         });
+    }
+
+    function removeFav(){
+        $.get(
+            "<{$http_root_www}>query?cmd=fav_remove", 
+            {'itemId': '<{$coupon.id}>','userId':'<{$loginUser.id}>','type':'coupon'}, 
+            function(data){
+
+                $('.fav_faved').hide();
+                $('.fav_not_faved').show();
+        });
+    }
+</script>

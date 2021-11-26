@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title><{$pageTitle}></title>
+	<meta name="keywords" content="<{$pageKeywords}>"/>
+	<meta name="description" content="<{$pageDescription}>"/>
+
+	<!-- Elegant font icons -->
+	<link href="<{$SKIN_PATH}>welcome/assets/vendor/elegant_font/HTMLCSS/style.css" rel="stylesheet">
+
+	<!-- Elegant font icons -->
+	<link href="<{$SKIN_PATH}>welcome/assets/vendor/materializeicon/material-icons.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="<{$SKIN_PATH}>welcome/assets/css/style-amber.css" rel="stylesheet" id="style">
+	<link rel="stylesheet" href="<{$STATIC_PATH}>ccp/build/css/intlTelInput.css">
+	<style>
+        .loader-logo .logo {
+            background-color: transparent;
+        }
+
+        #verify-code, #mobile {
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+        }
+
+		/*wechat login css*/
+        .wx_login {
+            position: relative;
+        }
+
+        .wx_login_item {
+            position: relative;
+            display: inline-block;
+            color: white;
+            background: #74bd36;
+            width: 100%;
+            height: 100%;
+            top: 10px;
+
+            text-align: center;
+            line-height: 120px;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+		.wx_logo {
+            background-image: url(<{$SKIN_PATH}>images/wx_logo_64_x_64.png);
+		}
+	</style>
+</head>
+<body class="ui-rounded">
+
+<!-- Begin page content -->
+<main class="flex-shrink-0 main-container">
+	<!-- page content goes here -->
+	<div class="banner-hero vh-100 scroll-y bg-white">
+		<div class="container h-100 text-white">
+			<div class="row h-100 h-sm-auto">
+				<div class="col-12 col-md-8 col-lg-5 col-xl-4 mx-auto align-self-center text-center">
+					<div class="loader-logo mr-4">
+						<div class="logo">
+							<a href="/"><img style="height:56px;width:135px;" src="/themes/zh-cn/images/logo.png" alt="微奖网"></a>
+						</div>
+						<h4 class="logo-text text-default">
+						</h4>
+					</div>
+					<br>
+					<br>
+					<form id="login-form">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<button id="login-gateway" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+								</button>
+								<div class="dropdown-menu" style="">
+									<a id="account-login" class="dropdown-item login-gateway text-dark" data-login-gateway="account" href="#"><{$lang->account_login}></a>
+									<a id="mobile-login" class="dropdown-item login-gateway text-dark" data-login-gateway="mobile" href="#"><{$lang->mobile_login}></a>
+								</div>
+							</div>
+							<label for="mobile" class="sr-only"><{$lang->input_mobile_number}></label>
+							<input type="text" id="mobile" class="form-control form-control-lg border-0 bg-light" placeholder="<{$lang->input_mobile_number}>" required autofocus>
+							<label for="username" class="sr-only"><{$lang->user_name}></label>
+							<input type="text" id="username" class="form-control form-control-lg border-0 bg-light" placeholder="<{$lang->user_name}>" required autofocus>
+						</div>
+						<div class="form-group">
+							<label for="password" class="sr-only"><{$lang->password}></label>
+							<input type="password" id="password" class="form-control form-control-lg border-0 bg-light" placeholder="<{$lang->password}>" required>
+						</div>
+						<div class="input-group mb-3">
+							<label for="verify-code" class="sr-only"><{$lang->verify_code}></label>
+							<input type="text" id="verify-code" class="form-control form-control-lg border-0 bg-light" placeholder="<{$lang->verify_code}>" required>
+							<div class="input-group-append">
+								<button id="get-verify-code-button" class="btn btn-outline-secondary" type="button"><{$lang->remind_user_register_10}></button>
+							</div>
+						</div>
+						<div class="form-group">
+							<p class="text-danger" id="error-message"><br></p>
+						</div>
+
+						<div class="my-3 row">
+							<div class="col-6 col-md py-1 text-left">
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="remember-me" checked>
+									<label class="custom-control-label text-dark" for="remember-me"><{$lang->remember_me}></label>
+								</div>
+							</div>
+							<div class="col-6 col-md py-1 text-right text-md-right">
+								<a href="<{$http_root_www}>system/forget_password?returnUrl=<{$returnUrl}>" class="text-dark"><{$lang->forget_password}>?</a>
+							</div>
+						</div>
+						<div class="mb-4">
+							<button type="submit" id="login-button" class="btn btn-lg btn-default default-shadow btn-block">
+								<{$lang->log_in}>
+								<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+								<span class="ml-2 icon arrow_right"></span>
+							</button>
+						</div>
+					</form>
+					<div class="mb-4 text-dark">
+						<p><{$lang->do_not_have_account_yet}>?<br><{$lang->click}> <a href="<{$http_root_www}>member/register?returnUrl=<{$returnUrl}>"
+																					  class="text-default"><{$lang->register}></a></p>
+					</div>
+
+					<div class='wx_login'>
+                        <{if $ua=='wechat'}>
+							<div class='wx_login'>
+								<a class='wx_login_item' href="<{$http_root_www}>member/wx_redirect?returnUrl=<{$returnUrl}>"><{$lang->wechat_log_in}></a>
+							</div>
+                        <{elseif $ua=='desktop'}>
+						<!--
+							<div class="swiper-slide w-auto p-2">
+								<div data-toggle="modal" data-target="#wechat-login">
+									<a class="icons icon-60 shadow-sm bg-white wx_logo">
+									</a>
+									<p class="small mt-2 text-success"><{$lang->wechat_log_in}></p>
+								</div>
+							</div> -->
+                        <{/if}>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Wechat login Modal -->
+<!--	<div class="modal fade" id="wechat-login" tabindex="-1" role="dialog" aria-labelledby="wechat-login-title" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="wechat-login-title"><{$lang->wx_scan_log_in}></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<img id='wx_login_mask' src='<{$loginQrcode}>'>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</main>
+<!-- End of page content -->
+
+<!-- Required jquery and libraries -->
+<script src="<{$SKIN_PATH}>welcome/assets/js/jquery-3.3.1.min.js"></script>
+<script src="<{$SKIN_PATH}>welcome/assets/js/popper.min.js"></script>
+<script src="<{$SKIN_PATH}>welcome/assets/vendor/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+
+<!-- cookie js -->
+<script src="<{$SKIN_PATH}>welcome/assets/vendor/cookie/jquery.cookie.js"></script>
+
+<!-- Customized jquery file  -->
+<script src="<{$SKIN_PATH}>welcome/assets/js/main.js"></script>
+
+<!-- Wechat login Js -->
+<script>
+    var id='<{$pc_login_id}>';
+
+    function check_wechat_login() {
+        $.post('<{$http_root_www}>query?cmd=check_weixin_login', {'id':id}, function(data){
+            if(data.trim()=='VALID') {
+                window.location.href = '<{if $returnUrl}><{urldecode($returnUrl)}><{else}><{$http_root_www}><{/if}>';
+            }
+            setTimeout(function(){check_wechat_login();}, 2000);
+        });
+    }
+    check_wechat_login();
+</script>
+<!-- Custom Js -->
+<script src="<{$SKIN_PATH}>welcome/assets/js/common.js"></script>
+<script>
+    const errorMessage = $('#error-message');
+    const loginForm = $('#login-form')
+    const username = $('#username');
+    const password = $('#password');
+    const mobile = $('#mobile');
+    const verifyCode = $('#verify-code');
+    const mobileLogin = $('#mobile-login');
+    const accountLogin = $('#account-login');
+    const getVerifyCodeButton = $('#get-verify-code-button');
+    const loginButton = $('#login-button');
+
+    loginForm.submit(function () {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        errorMessage.html('<br>');
+
+        let loginData = {remember: $('#remember-me').prop("checked") ? 1 : 0}
+        switch (loginForm.attr('login-type')) {
+            case 'account':
+                loginData.name = username.val();
+                loginData.pwd = password.val();
+                break;
+            case 'mobile':
+                loginData.mobile = mobile.val();
+                loginData.code = verifyCode.val();
+                break;
+        }
+
+        let url = loginForm.attr('action');
+        let returnUrl = urlParams.get('returnUrl');
+        if(returnUrl) {
+            url += (returnUrl.length > 0 ? ('?returnUrl=' + returnUrl) : '');
+		}
+        $.ajax({
+            url: url,
+            data: loginData,
+            type: "POST",
+			beforeSend : function() {
+                isButtonLoading(true, loginButton)
+			},
+            success: function (data) {
+                data = JSON.parse(data);
+
+                if (data.status === 200) {
+                    window.location.href = data.redirect;
+                } else if (data['msg']) {
+                    errorMessage.html(data['msg']);
+                }
+            },
+        }).done(function () {
+            isButtonLoading(false, loginButton)
+        });
+
+        return false;
+    })
+
+    getVerifyCodeButton.on('click', function () {
+        errorMessage.html('<br>');
+
+        if (mobile.val() === '') {
+            errorMessage.html('<{$lang->input_mobile_number}>');
+            return false;
+        }
+
+        const regAUS = /^(0)?[0-8]\d{8}$/g//Australia mobile format check
+        if (!regAUS.test(mobile.val())) {
+            errorMessage.html('<{$lang->only_10_digital_phone}>');
+            return false;
+        }
+
+        let full_number = '+61' + mobile.val().slice(-9);// +61400500600
+        getVerifyCodeButton.html('<{$lang->remind_user_register_10}>...');
+        $.get("<{$http_root_www}>system/send_sms_login_verification_code?mobile=" + mobile.val() + "&full_number=" + full_number, function () {
+            verifyCodeButtonCutDown();
+        });
+    })
+
+    function verifyCodeButtonCutDown() {
+        getVerifyCodeButton.prop('disabled', true);
+        let time = 60;
+
+        let timeCutDown = setInterval(function () {
+            time--;
+            getVerifyCodeButton.html('<{$lang->remind_user_register_10}>(' + time + 's)');
+
+            if (time === 0) {
+                clearInterval(timeCutDown);
+                getVerifyCodeButton.html('<{$lang->remind_user_register_10}>');
+                getVerifyCodeButton.prop('disabled', false);
+            }
+        }, 1000)
+    }
+
+    function changeLoginGateway(gateway) {
+        const rootPath = '<{$http_root_www}>';
+        switch ($(gateway).data('login-gateway')) {
+            case 'account':
+                loginForm.attr('action', rootPath + 'member/login');
+                loginForm.attr('login-type', 'account');
+                username.show();
+                username.attr('required', true);//required need to remove if disable for browser submit check
+                password.show();
+                password.attr('required', true);
+                mobile.hide();
+                mobile.removeAttr('required')
+                verifyCode.hide();
+                verifyCode.removeAttr('required');
+                getVerifyCodeButton.hide();
+                break;
+            case 'mobile':
+                loginForm.attr('action', rootPath + 'member/mobileonly_login');
+                loginForm.attr('login-type', 'mobile');
+                mobile.show();
+                mobile.attr('required', true);
+                verifyCode.show();
+                verifyCode.attr('required', true);
+                getVerifyCodeButton.show();
+                username.hide();
+                username.removeAttr('required');
+                password.hide();
+                password.removeAttr('required');
+                break;
+        }
+
+        $('#login-gateway').html($(gateway).html());
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        mobileLogin.on('click', function () {
+            changeLoginGateway(this);
+        });
+        accountLogin.on('click', function () {
+            changeLoginGateway(this);
+        });
+
+        accountLogin.trigger('click');
+        isButtonLoading(false, loginButton);
+    });
+</script>
+</body>
+
+</html>

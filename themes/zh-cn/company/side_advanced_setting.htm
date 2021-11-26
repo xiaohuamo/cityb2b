@@ -1,0 +1,40 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw  fa-money" ></i>
+		<a <{if $menu=='advanced_setting'}> class="current"<{/if}>><{$lang->advanced_setting}></a>
+	</div>
+	<div class='second-level'>
+		<a href="<{$http_root_www}>company/payment_setting" <{if $submenu=='payment_setting'}> class="current"<{/if}>>
+			<{$lang->payment_setting}>
+		</a>
+		<a href="<{$http_root_www}>company/delivery_setting" <{if $submenu=='delivery_setting'}> class="current"<{/if}>>
+			<{$lang->deliver_setting}>
+		</a>
+		<a href="<{$http_root_www}>company/staff" <{if $submenu=='staff'}> class="current"<{/if}>>
+			<{$lang->shop_staff_management}>
+		</a>
+		<a href="<{$http_root_www}>company/redeem_staff_manage" <{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
+			<{$lang->redeem_staff}>
+		</a>	
+		<a href="<{$http_root_www}>company/busi_pay_setting_application" <{if $submenu=='busi_pay_setting_application'}> class="current"<{/if}>>
+			<{$lang->payment_application}>
+		</a>
+		<!--<a href="<{$http_root_www}>company/profile_web" <{if $submenu=='profile_web'}> class="current"<{/if}>>
+			<{$lang->social_network}>
+		</a> -->
+	<a href="<{$http_root_www}>company/abn_application" <{if $submenu=='abn_application'}> class="current"<{/if}>>
+			<{$lang->abn_acn}>
+		</a>
+		<!--<a href="<{$http_root_www}>company/company_category_set"<{if $submenu=='company_category_set'}> class="current"<{/if}>>
+			<{$lang->business_category}>
+		</a> -->
+		
+		<a href="<{$http_root_www}>company/business_hour_setting"<{if $submenu=='business_hour_setting'}> class="current"<{/if}>>
+			<{$lang->trading_hours}>
+		</a>
+		<a href="<{$http_root_www}>company/choose_business_type"<{if $menu=='choose_business_type'}> class="current"<{/if}>>
+		<{$lang->console_switch}>
+		</a>
+				
+	</div>
+</li>

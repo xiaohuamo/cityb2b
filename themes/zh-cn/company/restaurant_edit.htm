@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:120px; }
+</style>
+
+
+<script> 
+
+var cats = [];
+<{foreach from=$categoriesAll item=item}>
+cats.push(['<{$item.id}>', '<{$item.name}>', <{$item.childCount}>]);
+<{/foreach}>
+
+
+function setBonusType(obj) {
+ 	bonusType=$(obj).val();
+	 $('.coupon-tyle-select-box-body').hide();
+	 $('.coupon-tyle-select-box-head').css('background-color','#B4DFE3');
+	 if($(obj).is(':checked')){
+	 	$(obj).parent().parent().css('background-color','#FFDB3F');
+	 	$(obj).parent().parent().next('.coupon-tyle-select-box-body').show();
+	 }
+}
+
+$(function(){
+	$("input[name='bonusType']").on('click',function(){
+		setBonusType(this);
+	})
+	$("input[name='bonusType']:checked").click();
+})
+
+
+
+function catChg(obj) {
+	var vv = $(obj).val(); 
+
+	var cc = parseInt($(obj).find('option:eq('+ obj.selectedIndex +')').attr('cc'));
+	if (isNaN(cc)) cc = 0;
+
+	var cat_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd')
+	
+
+	if (vv == '' || cc <= 0) {
+		$(obj).next().nextAll().remove();
+
+		if($(".nice-check-box input[value='"+vv+"']").length>0){
+			$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
+		}else{
+			$.get('<{$http_root_www}>company/category_insert_single', 
+				{ 'cid': vv,}, 
+				function(data){
+					$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="userCategoryId[]"  value="' + vv +'" checked /><label for="'+vv+'"><strong>' + cat_name + '</strong></label></div>');
+					$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+			});
+		}
+
+	}else {
+		$(obj).next().nextAll().remove();
+		var c = $('<select name="allCategoryId[]" class="ahibw" onchange="catChg(this);">');
+		for (var i = 0; i < cats.length; i++) {
+			if ( cats[i][0].substring(0, vv.length) == vv && cats[i][0].length == vv.length + 3 ) {
+				c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
+			}
+		}
+		$(obj).next().after(c);
+		setDroplist(c);
+	}
+}
+
+</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+                      <{include file='company/side_restaurant_info.htm'}>
+				
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >1</span>
+					<div class="colCurTit clearfix">
+						<h1>第一步：标题、类型</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+
+					<form id="memberForm"  action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box  form-style-green">
+							<span>
+							<label>标题名称</label>
+							</span>
+							<input type="text" name="title" id="title" class="input-text" value="<{$data.title}>" placeholder="请输入..." style="width:70%" />
+							<span class='help-box' data-content='最好包含品牌、关键字，这样可以被搜索到。'></span>
+						</div>
+
+						<div class="input-box clearfix " style="display: none">
+							<div class=' form-style-green '>
+								<span>
+								<label >券类型</label>
+								</span>
+							</div>
+							
+							<div  id="bonusTypeWrapper" style='clear:both'>
+								<{if $types}>
+									<{foreach from=$types item=item}>
+										
+										<div class='coupon-tyle-select-box'>
+											<div class='coupon-tyle-select-box-head clearfix'>
+												<label for="bonusType<{$item.id}>"><strong><{$item.name}></strong></label>
+												<span>
+													<input type="radio" name="bonusType" id="bonusType<{$item.id}>" value="<{$item.id}>" <{if $data['bonusType']==$item.id}>checked<{else}><{if $coupon_type}>checked<{/if}><{/if}> />
+												</span>
+											</div>
+											<div class='coupon-tyle-select-box-body clearfix'>
+												<span>
+													 <{$item.intro}>
+												</span>
+											
+											</div>
+										</div>	
+										
+									<{/foreach}>
+								<{else}>
+									请先选择行业
+								<{/if}>
+							</div>
+						</div>
+
+
+						<div class="input-box clearfix" >
+							<div class=' form-style-green '>
+								<span><label>选择产品分类</label></span>
+							</div>
+							<select  id="bigcategoryid" name="allCategoryId[]" class="ahibw" onChange="catChg(this);">
+									<{foreach from=$categories item=item}>
+											<option value="<{$item.id}>" cc="<{$item.childCount}>" <{if substr($item.id,0,6)==$category}>selected<{/if}> ><{$item.name}>   </option>
+									<{/foreach}>
+							</select>
+							<em>点击下拉框进项选择，可多选</em>
+						</div>
+					
+						
+
+						<div id="all_category" class="input-box clearfix" >
+							<div class=' form-style-green '>
+								<span ><label>已选分类 </label></span> 
+							</div>
+							<em>绿色为已选，灰色为未选，鼠标点击可选择或取消</em>
+							<br>
+
+							<div class='my_categorys-list' style='padding-left: 80px;padding-right:30px;'>
+								<{foreach from=$userCategory item=item1}>
+									<div class='nice-check-box'>
+										<input id="<{$item1.id}>" type="checkbox" name="userCategoryId[]" value="<{$item1.id}>"
+										 <{if in_array($item1.id, explode(',', $data.categoryId))}> checked<{/if}> />
+										<label for="<{$item1.id}>"><strong><{$item1.name}></strong></label>
+									</div>
+								<{/foreach}>
+								
+							</div>
+						</div>
+						
+
+						
+						
+
+						<{include file='company/coupons_edit_step_menu.htm'}>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

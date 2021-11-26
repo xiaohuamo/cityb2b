@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+	<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+	
+</head>
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="?con=admin&ctl=adv/referal_link_type&act=index&pagetype=<{$data.type}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="?con=admin&ctl=adv/referal_link_type&act=edit&id=<{$data.id}>" method="post" enctype="multipart/form-data">
+			<table class='editTable'>
+				<tr class="editHdTr">
+					<td colspan="2">编辑产品</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">引流源</td>
+					<td class="editRtTd"><input style="width: 170px" name="data[type]" value="<{$data.type}>" type="text" size="30" class="text" /></td>
+				</tr>
+				
+				
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave"/>
+				<a href="?con=admin&ctl=adv/referal_link_type&act=index&pagetype=<{$data.type}>" class="lnkReturn"><{$lang->return_to_list}></a>
+			</div>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

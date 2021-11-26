@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+
+<title><{$lottery.title}></title>
+<link href="<{$SKIN_PATH}>images/lottery/activity-style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/reset.css">
+<link rel="stylesheet" type="text/css"  href="<{$SKIN_PATH}>images/redbag/css/style.css">
+<script src="<{$SKIN_PATH}>images/lottery/jquery.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="<{$STATIC_PATH}>slick/slick.css">
+<script type="text/javascript" src="<{$STATIC_PATH}>slick/slick.min.js"></script>
+
+<script type="text/javascript">
+  new function (){
+   var _self = this;
+       _self.width = 640;//设置默认最大宽度
+       _self.fontSize = 100;//默认字体大小
+       _self.widthProportion = function(){var p = (document.body&&document.body.clientWidth||document.getElementsByTagName("html")[0].offsetWidth)/_self.width;return p>1?1:p<0.32?0.32:p;};
+       _self.changePage = function(){
+         document.getElementsByTagName("html")[0].setAttribute("style","font-size:"+_self.widthProportion()*_self.fontSize+"px !important");
+       }
+       _self.changePage(); 
+       window.addEventListener('resize',function(){_self.changePage();},false);
+     };
+   </script>
+ </head>
+
+
+ <body class="activity-lottery-winning">
+   <div id="cover"></div>
+   <div id="guide"><img src="<{$SKIN_PATH}>images/redbag/img/guide1.png"></div>
+   <div  style="display:none;">
+
+    <img  style= " width:300px; height:300px; " src="<{$SKIN_PATH}>images/lottery/lottery.jpg">
+
+  </div>
+
+  <style type="text/css">
+    button{width:100%;text-align:center;border-radius:3px;}
+    .button2{font-size:16px;padding:8px 0;border:1px solid #adadab;color:#000000;background-color: #e8e8e8;background-image:linear-gradient(to top, #dbdbdb, #f4f4f4);background-image:-webkit-gradient(linear, 0 100%, 0 0, from(#dbdbdb),to(#f4f4f4));box-shadow: 0 1px 1px rgba(0,0,0,0.45), inset 0 1px 1px #efefef; text-shadow: 0.5px 0.5px 1px #ffffff;}
+    .button2:active{background-color: #dedede;background-image: linear-gradient(to top, #cacaca, #e0e0e0);background-image:-webkit-gradient(linear, 0 100%, 0 0, from(#cacaca),to(#e0e0e0));}
+    #mess_share{margin:2px 0;}
+    #share_1{float:left;width:49%;}
+    #share_2{float:right;width:49%;}
+    #mess_share img{width:22px;height:22px;}
+    #cover{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;opacity:0.7;}
+    #guide{display:none;position:absolute;right:18px;top:px;z-index:19999;}
+    #guide img{width:260px;height:180px;}
+
+    /*slick over write*/
+    #pc-top-banner button{visibility: hidden;}
+    #pc-top-banner li{display: inline-block;width: 10px;height: 10px;margin: 10px;border-radius: 10px;overflow: hidden;background: #888}
+    #pc-top-banner ul{text-align: center;height: 25px}
+  </style>
+  <script type="text/javascript">
+    var _system={
+      $:function(id){return document.getElementById(id);},
+      _client:function(){
+        return {w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight,bw:document.documentElement.clientWidth,bh:document.documentElement.clientHeight};
+      },
+      _scroll:function(){
+        return {x:document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft,y:document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop};
+      },
+      _cover:function(show){
+        if(show){
+         this.$("cover").style.display="block";
+         this.$("cover").style.width=(this._client().bw>this._client().w?this._client().bw:this._client().w)+"px";
+         this.$("cover").style.height=(this._client().bh>this._client().h?this._client().bh:this._client().h)+"px";
+       }else{
+         this.$("cover").style.display="none";
+       }
+     },
+     _guide:function(click){
+      this._cover(true);
+      this.$("guide").style.display="block";
+      this.$("guide").style.top=(_system._scroll().y+5)+"px";
+      window.onresize=function(){_system._cover(true);_system.$("guide").style.top=(_system._scroll().y+5)+"px";};
+      if(click){_system.$("cover").onclick=function(){
+       _system._cover();
+       _system.$("guide").style.display="none";
+       _system.$("cover").onclick=null;
+       window.onresize=null;
+     };}
+   },
+   _zero:function(n){
+    return n<0?0:n;
+  }
+}
+
+function redirect_to_busi_web () {
+  window.location.href = '<{$http_root_www}>shoppingday';
+}
+function redirect_to_redbag () {
+  window.location.href = '<{$http_root_www}>redbag/redbag_show?bag_id=148';
+}
+function redirect_to_ubonus () {
+  window.location.href = '<{$http_root_www}>shoppingday';
+}
+function redirect_to_ubonus_food () {
+  window.location.href = '<{$http_root_www}>shoppingday';
+}
+function redirect_more_lotterys () {
+  window.location.href = '<{$http_root_www}>lottery/lottery_show';
+}
+function redirect_to_lottery (obj) {
+   $(obj).prop('value','请等待...');
+   $(obj).prop('disabled',true);
+  window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
+}
+</script>
+<div class="main">
+
+
+
+
+  <div id="outercont" style='overflow:hidden'>
+    <div id="outer-cont">
+	<{if $imagePath=='upload'}>
+      <div id="outer"><img src="<{$UPLOAD_PATH}><{$lottery.pic1}>" ></div>
+	 <{else}>
+	 
+	   <div id="outer"><img src="<{$SKIN_PATH}>images/lottery/<{$lottery.pic1}>" ></div>
+	  <{/if}>
+    </div>
+    <div id="inner-cont">
+      <div id="inner"><img src="<{$SKIN_PATH}>images/lottery/activity-lottery-2.png"></div>
+    </div>
+  </div>
+  <div class="content">
+
+  
+    <div class="boxcontent boxyellow" id="result" style="display:none">
+      <div class="box">
+        <div class="title-orange"><span>恭喜你中奖了</span></div>
+        <div class="Detail">
+		  <p>抽奖名称：<span  ><{$lottery.title}></span></p>
+          <p>奖品提供商：<span  ><{$lottery.businessName}></span></p>
+          <p>你中了：<span class="red" id="prizetype"><{$lottery_rec.lottery_name}></span></p>
+          <p>目前中奖状态：<span class="red"  >等待提交领奖申请...</span></p>
+		  <p>重要提示：<span class="red"  >中奖后24个小时内不提交兑奖信息将会自动过期...</span></p>
+          <p>你的兑奖SN码：<span  id="sncode"><{$lottery_rec.redeem_code}></span></p>
+
+
+          <p>
+            <input name="last_name" class="px" value="<{$loginUser.person_last_name}>" id="last_name" type="text" placeholder="输入您的名">
+          </p>
+          <p>
+            <input name="first_name" class="px" value="<{$loginUser.person_first_name}>"  id="first_name" type="text" placeholder="输入您的姓">
+            <input name="sub_id" class="px" id="sub_id" type="hidden" placeholder="">
+          </p>
+
+          <p>
+            <input name="phone" class="px" id="phone"  value="<{$loginUser.phone}>" type="text" placeholder="输入您的手机号码">
+          </p>
+          <p>
+            <input name="email" class="px" id="email" value="<{$loginUser.email}>" type="text" placeholder="输入您的email">
+          </p>
+
+
+
+
+          <p>
+            <input name="rule"  onClick="if (this.checked) $('#save-btn').attr('disabled', false).removeClass('disabled'); else $('#save-btn').attr('disabled', true).addClass('disabled');" style="float:left;margin-top:5px;" id="rule" value="1" type="checkbox" checked>&nbsp;&nbsp;&nbsp;<a href="<{$http_root_www}>company/help?id=64" > 我已阅读抽奖协议</a>
+          </p>
+          <p>
+            <input class="pxbtn"  id="save-btn" name="提 交"  type="button" value="确认信息并提交">
+          </p>
+            
+          <p>
+           <input class="pxbtn" onClick="redirect_more_lotterys();" id="busi_link" name="busi_link"  type="button" value="更多抽奖">
+         </p>
+         <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus_food();" id="busi_link" name="busi_link"  type="button" value="澳中博览会线上购物节">
+         </p>
+        <!--
+         <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus();" id="busi_link" name="busi_link"  type="button" value="逛Ubonus美食生活">
+         </p> -->
+
+       </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  <div class="boxcontent boxyellow"><!--
+  <div class="box">
+    <div class="title-orange">冠名支持</div>
+    <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>store/199583"><img alt="" src="<{$SKIN_PATH}>images/lottery/jixiangfugui.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"></p>
+         </a>
+       
+		 
+    </div>
+	
+  
+ </div>
+ <div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">钻石赞助</div>
+     <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>store/199768"><img alt="" src="<{$SKIN_PATH}>images/lottery/dichan.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"> 澳纽集团</p>
+         </a>
+    </div>
+
+	
+
+ </div>-->
+</div>
+
+</div>
+    <div class="boxcontent boxyellow" id="result_fault" style="display:none">
+	
+      <div class="box">
+        <div class="title-orange"><span>抽奖信息</span></div>
+        <div class="Detail">
+		      <p>抽奖名称：<span class="red" ><{$lottery.title}></span></p>
+          <p>感谢奖品提供商：<span class="red" ><{$lottery.businessName}></span></p>
+         
+		  <{if $lottery.id==25}>
+		  <p>声明：抽奖加速倍数不适用于本抽奖</p>
+		  <{/if}>
+		  <div>
+
+      <{if $lottery.pic}>
+        <img src="<{$UPLOAD_PATH}><{$lottery.pic}>"></div>
+      <{/if}>
+		 
+         <div><{$item.title}></div>
+		 
+         </div>
+          <p>
+            <input class="pxbtn" onClick="redirect_to_lottery(this);" id="busi_link" name="busi_link"  type="button" value="分享朋友圈">
+          </p>
+           <p>
+           <input class="pxbtn" onClick="redirect_more_lotterys();" id="busi_link" name="busi_link"  type="button" value="更多抽奖">
+         </p>
+		 <!--
+         <{if $redbagId}>
+         <p>
+           <input class="pxbtn" onClick="redirect_to_redbag();" id="busi_link" name="busi_link"  type="button" value="墨尔本，一起来淋红包雨（8888个）">
+         </p>
+         <{/if}>
+       -->
+	    <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus_food();" id="busi_link" name="busi_link"  type="button" value="澳中博览会线上购物节">
+         </p>
+      <!--   <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus();" id="busi_link" name="busi_link"  type="button" value="逛Ubonus美食生活">
+         </p>
+-->
+        </div>
+
+      </div>
+    </div>
+
+    <div class="boxcontent boxyellow" id="result_show" style="display:none">
+      <div class="box">
+        <div class="title-orange"><span>您已经中奖</span></div>
+		
+        <div class="Detail">
+		 
+		<p>抽奖名称：<span  ><{$lottery.title}></span></p>
+         <p>奖品提供商：<span  ><{$lottery.businessName}></span></p>
+         <p>奖品：<span id="lottery_name" ><{$lottery_rec.lottery_name}></span></p>
+         <p>状态：<span class="red" id="lottery_desc" ><{$lottery_rec.status_desc}></span></p>
+		 <{if $lottery_rec.status==1}>
+		  <p>提示：<span class="red"  >中奖后24个小时内不提交兑奖信息将会自动过期...</span></p>
+		 <{/if}>
+         <p>兑奖码：<span class="red" id="lottery_redeem_code" ><{$lottery_rec.redeem_code}></span></p>
+
+         <p>
+            <input class="pxbtn" onClick="redirect_to_lottery(this);" id="busi_link" name="busi_link"  type="button" value="分享朋友圈">
+        </p>
+         <p>
+           <input class="pxbtn" onClick="redirect_more_lotterys();" id="busi_link" name="busi_link"  type="button" value="更多抽奖">
+         </p>
+           <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus_food();" id="busi_link" name="busi_link"  type="button" value="澳中博览会线上购物节">
+         </p>
+       <!--
+         <p>
+           <input class="pxbtn" onClick="redirect_to_ubonus();" id="busi_link" name="busi_link"  type="button" value="逛Ubonus美食生活">
+         </p> -->
+
+      </div>
+
+    </div>
+  </div>
+   <div class="boxcontent boxyellow">
+    <div class="box">
+      <div class="title-green"><span>抽奖战况：</span></div>
+      <div class="Detail">
+	       <p><span class="red"  >您的火力指数-</span>是普通用户抽奖的：<span class="red"  ><{$user_lottery_speed_data.total_speed}></span>倍</p>
+		  <p>您<{if $user_lottery_speed_data.is_get_award==1}>自上次获大奖后到现在<{else}>30天内<{/if}>共抽<span class="red"  ><{$user_lottery_speed_data.self_draw_count}></span>次，获得<span class="red"  ><{$user_lottery_speed_data.self_draw_speed}></span>倍加速<a href="<{$http_root_www}>lottery/lottery_show" >更多抽奖>></a></p>
+		  <p>您<{if $user_lottery_speed_data.is_get_award==1}>自上次获大奖后到现在<{else}>30天内<{/if}>转朋友圈，被点击<span class="red"  ><{$user_lottery_speed_data.recommand_count}></span>次，获得<span class="red"  ><{$user_lottery_speed_data.recommand_speed}></span>倍加速
+
+		<p></p>
+        <p>累计抽奖：<span class="red"  ><{$totaldraw}></span>次 </p>
+		<p>累计获奖：<span class="red"  ><{$totalgot}></span>次</p>
+
+      </div>
+    </div>
+  </div>
+<div class="boxcontent boxyellow">
+    <div class="box">
+      <div class="title-green">活动说明：</div>
+      <div class="Detail">
+       <{$lottery.redeem}>
+     </div>
+   </div>
+ </div>
+  <div class="boxcontent boxyellow">
+    <div class="box">
+      <div class="title-green"><span>奖项设置：</span></div>
+      <div class="Detail">
+        <{$lottery.description}>
+
+      </div>
+    </div>
+  </div>
+  
+ <div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-green">兑奖说明：</div>
+    <div class="Detail">
+     <{$lottery.redeem_details}>
+   </div>
+ </div>
+</div>
+
+
+
+ <div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">2019澳中博览会</div>
+
+    <div class="Detail">
+	  <p>
+           <input class="pxbtn" onClick="redirect_to_busi_web();" id="busi_link" name="busi_link"  type="button" value="线上购物节万件秒杀">
+         </p>
+		 	<br>
+      <div id="pc-top-banner" >
+     
+       <div>
+         <a href="<{$http_root_www}>coupon1/7109"><img src="https://ubonus365.com/themes/zh-cn/images/2019bolanhui.png"></a>
+         <div>超过1万件产品免费领取或超级低价秒杀，产品涵盖美食/美妆/美容/代购/生活服务各个领域 </div>
+       </div>
+     
+     </div>
+   </div>
+ </div>
+</div>
+
+<!--
+  <div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">商家产品</div>
+
+    <div class="Detail">
+	  <p>
+           <input class="pxbtn" onClick="redirect_to_busi_web();" id="busi_link" name="busi_link"  type="button" value="<{$lottery.businessName}>-Ubonus店铺">
+         </p>
+		 	<br>
+      <div id="pc-top-banner" >
+     
+       <div>
+         <a href="<{$http_root_www}>coupon1/7109"><img src="<{$UPLOAD_PATH}>thumbnails/2019-01/20190130160103659757_660x420_fill.jpg"></a>
+         <div>Boxhill春节嘉年华 | 6只礼盒装！TOPO金蛋鸸鹋油➕送正装木瓜膏乳钙醒酒片 原价$98 现价$68.88 </div>
+       </div>
+     
+     </div>
+   </div>
+ </div>
+</div>
+ -->
+ 
+ <!--
+<div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">商家推广 </div>
+    
+	 <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/4894"><img alt="Ubonus商家推广" src="<{$UPLOAD_PATH}>thumbnails/2018-04/20180411142446119630_396x252_cut.png" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;">Ubonus商家推广特价套餐 Value Package $999 (50%off)[顶级文案策划 +5次推广 +门户置顶]</p>
+         </a>
+		
+    </div>
+	 
+	
+	
+	<!--
+    <{foreach from=$recommend_list item=item}>
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/<{$item.couponid}>"><img alt="" src="<{$UPLOAD_PATH}><{$item.pic}>" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"><{$item.title}></p>
+         </a>
+       
+		 
+   </div>
+	<{/foreach}> -->
+ <!--</div>
+</div>
+-->
+
+<!--
+<div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">同德干锅猪蹄 </div>
+    
+	 <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/4918"><img alt="" src="<{$UPLOAD_PATH}>upload/2018-07/20180702123842100089.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"></p>
+         </a>
+    </div>
+	 
+	
+	
+	
+    <{foreach from=$recommend_list item=item}>
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/<{$item.couponid}>"><img alt="" src="<{$UPLOAD_PATH}><{$item.pic}>" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"><{$item.title}></p>
+         </a>
+       
+		 
+   </div>
+	<{/foreach}> 
+ </div>
+</div>
+-->
+<!--
+<div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">麻辣空间火锅 </div>
+    
+	 <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/4918"><img alt="" src="<{$UPLOAD_PATH}>thumbnails/2018-04/20180423101542631033_660x420_fill.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"></p>
+         </a>
+    </div>
+	 
+	
+	
+	
+    <{foreach from=$recommend_list item=item}>
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/<{$item.couponid}>"><img alt="" src="<{$UPLOAD_PATH}><{$item.pic}>" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"><{$item.title}></p>
+         </a>
+       
+		 
+   </div>
+	<{/foreach}> 
+ </div>
+</div>
+-->
+<!--
+<div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">洋河会-淮扬菜 </div>
+    
+	 <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/4903"><img alt="" src="<{$UPLOAD_PATH}>thumbnails/2018-04/20180416125049708040_660x420_fill.png" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"></p>
+         </a>
+    </div>
+	 
+	
+
+    <{foreach from=$recommend_list item=item}>
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/<{$item.couponid}>"><img alt="" src="<{$UPLOAD_PATH}><{$item.pic}>" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"><{$item.title}></p>
+         </a>
+       
+		 
+   </div>
+	<{/foreach}> 
+ </div>
+</div>
+-->
+
+<div class="boxcontent boxyellow">
+  <div class="box">
+    <div class="title-orange">商家推广 </div>
+    
+	 <div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/7441"><img alt="33%OFF 维爱佳奶粉" src="<{$UPLOAD_PATH}>thumbnails/2019-07/20190704092418403649_660x420_fill.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;">2019澳中博览会 | 33%OFF 维爱佳奶粉 原价$90 现价$60</p>
+         </a>
+		 
+    </div>
+	 
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/7424"><img alt="100%澳洲羊毛冬被 Queen Size 原价$149 现价 $70 Down Wools 系列 MIG旗下品牌Ausoft" src="<{$UPLOAD_PATH}>2019-07/20190702174749287472.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;">100%澳洲羊毛冬被 Queen Size 原价$149 现价 $70 Down Wools 系列 MIG旗下品牌Ausoft </p>
+         </a>
+		 
+    </div>
+	
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/7421"><img alt="ANI微小分子玻尿酸水光针 原价39.70 博览会特价$10" src="<{$UPLOAD_PATH}>thumbnails/2019-07/20190702141542172941_660x420_fill.jpg" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;">ANI微小分子玻尿酸水光针 原价39.70 博览会特价$10 </p>
+         </a>
+		 
+    </div>
+	
+	
+	
+	
+	<!--
+    <{foreach from=$recommend_list item=item}>
+	<div class="Detail">
+         <a style="margin: 1px;" target="_blank" href="<{$http_root_www}>coupon1/<{$item.couponid}>"><img alt="" src="<{$UPLOAD_PATH}><{$item.pic}>" />
+             <p style="text-align: center;    font-size: 20px;    margin: 5px;"><{$item.title}></p>
+         </a>
+       
+		 
+   </div>
+	<{/foreach}> -->
+ </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+
+
+  $(function() {
+    window.requestAnimFrame = (function() {
+      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
+        window.setTimeout(callback, 1000 / 24)
+      }
+    })();
+    var totalDeg = 360 * 3 + 0;
+    var steps = [];
+    var lostDeg = [36, 66, 96, 156, 186, 216, 276, 306, 336];
+    var prizeDeg = [126, 246,6 ];
+    var prize, sncode,award_name,user_info,datenologin,lotteryId,datamsg,datastatus;
+    var count = 0;
+    var now = 0;
+    var a = 0.01;
+    var outter, inner, timer, running = false;
+    function countSteps() {
+      var t = Math.sqrt(2 * totalDeg / a);
+      var v = a * t;
+      for (var i = 0; i < t; i++) {
+        steps.push((2 * v * i - a * i * i) / 2)
+      }
+      steps.push(totalDeg)
+    }
+    function step() {
+      outter.style.webkitTransform = 'rotate(' + steps[now++] + 'deg)';
+      outter.style.MozTransform = 'rotate(' + steps[now++] + 'deg)';
+      if (now < steps.length) {
+        requestAnimFrame(step)
+      } else {
+        running = false;
+        setTimeout(function() {
+         if (prize != null) {
+							  //alert('prize'+prize);
+               $("#sncode").text(sncode);
+               $("#sub_id").val(prize);
+               $("#last_name").val(user_info.last_name);
+               $("#first_name").val(user_info.first_name);
+               $("#phone").val(user_info.phone);
+               $("#email").val(user_info.email);
+               var type = "";
+               if (prize == 1) {
+                type = "一等奖"
+              } else if (prize == 2) {
+                type = "二等奖"
+              } else if (prize == 3) {
+                type = "三等奖"
+              }
+
+              $("#prizetype").text(award_name);
+              $("#result").slideToggle(500);
+			  changeTitle(1);
+			    $("#result_fault").slideToggle(500);
+			  
+                               // $("#outercont").slideUp(500)
+                             } else {
+							 
+							  // 如果来自非登陆用户
+							  if(datenologin==1){
+							      var r =confirm(datamsg + "是否自动登陆？");
+								  if(r==true){
+								         running=true;
+										 if(datastatus=='wechatlogin'){
+										 	window.location.href = '<{$http_root_www}>member/wx_redirect?returnUrl=<{$http_root_www}>lottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
+											;
+									 
+										 }else{
+										 	window.location.href = '<{$http_root_www}>member/login?returnUrl=<{$http_root_www}>lottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
+
+										 }
+
+								  }else{
+								    return;
+								  }
+           
+							  }else{
+							  
+							 
+                               var thistime_count = '<{$lottery.draw_timers_perDay_perUser}>';
+                               var lefetime =thistime_count-count;
+                               if (lefetime==0) {
+							    var r =confirm(thistime_count +"次机会全部失手，该抽奖共提供" + <{$lottery.max_draw_times_perUser}> +"次，是否用完所有剩余机会？");
+								if (r==true){
+								 running=true;
+	                              window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$uid}>';
+								}else{
+                               // $("#result_fault").slideToggle(500);
+							   changeTitle(0);
+                               // _system._guide(true);
+								}
+                              }else{
+							  
+							   var r =confirm("本轮已抽" + count +"次，还剩下" +lefetime +"次。加油,再抽一次?");
+								if(r==true){
+									$("#inner").click();
+									}
+							
+                               // alert("本轮来Ubonus美食生活，您已经抽了" + count +"次，还有" +lefetime +"次。再抽一次，加油！");
+                          //  没中奖
+						       changeTitle(0);
+							  
+                              }
+							  }
+
+                            }
+                          }, 200)
+      }
+    }
+    function start(deg) {
+      deg = deg || lostDeg[parseInt(lostDeg.length * Math.random())];
+      running = true;
+      clearInterval(timer);
+      totalDeg = 360 * 5 + deg;
+      steps =  [];
+      now = 0;
+      countSteps();
+      requestAnimFrame(step)
+    }
+    window.start = start;
+    outter = document.getElementById('outer');
+    inner = document.getElementById('inner');
+    i = 10;
+    $("#inner").click(function() {
+      if (running)
+        return;
+      if (prize != null) {
+      
+         var r =confirm("亲，已经获奖了,是否分享给朋友试试？");
+			 if(r==true){
+				window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';			  
+				  }
+        
+        return
+      }
+      if (count >= <{$lottery.draw_timers_perDay_perUser}>) {
+        alert("每次进入最多抽 <{$lottery.draw_timers_perDay_perUser}> 次奖，一共可以抽取<{$lottery.max_draw_times_perUser}>次。");
+		changeTitle(0);
+        //$("#result_fault").slideToggle(500);
+       // _system._guide(true);
+        return
+      }
+
+      $.ajax({  method:"GET",
+       url: "<{$http_root_www}>lottery/lottery_get_result",  data:{id:'<{$lottery.id}>',ref_userId:'<{$ref_userId}>',type:'1'},
+       beforeSend: function( xhr ) {
+         running = true;
+         timer = setInterval(function() {
+          i += 5;
+          outter.style.webkitTransform = 'rotate(' + i + 'deg)';
+          outter.style.MozTransform = 'rotate(' + i + 'deg)'
+        }, 1)
+       }
+     })
+      .done(function( data ) {
+       data = JSON.parse(data);
+	  // alert(data.prizetype + ' and is_award is ' + data.is_award +' status is : ' +data.status);
+    if (data.error == 1) {
+	
+	  if(data.status=='over_max_times'){
+	       var r =confirm(data.msg);
+			 if(r==true){
+			  clearInterval(timer);
+			   window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
+               
+			 
+			 }
+	       clearInterval(timer);
+	  }else{
+	  
+	   alert(data.msg);
+	 
+      count = <{$lottery.draw_timers_perDay_perUser}>;
+      clearInterval(timer);
+      //$("#result_fault").slideToggle(500);
+	   
+     // _system._guide(true);
+	  }
+     
+
+      return
+    }
+    if (data.error == "getsn") {
+      alert('本次活动你已经中过奖，本次只显示你上次抽奖结果!兑奖SN码为:' + data.sn);
+      count = <{$lottery.draw_timers_perDay_perUser}>;
+      clearInterval(timer);
+      prize = data.prizetype;
+      sncode = data.sn;
+      award_name =data.msg;
+      start(prizeDeg[data.prizetype - 1]);
+      return
+    }
+    if (data.success) {
+	 prize = data.prizetype;
+	
+	  
+	
+	
+	 
+	
+     
+      sncode = data.sn;
+      award_name =data.msg;
+	  sub_award_name =data.prize_name;
+      user_info=data.delivery_info;
+      start(prizeDeg[data.prizetype - 1])
+    } else {
+	
+	
+	
+	  if(data.status=='notwechatlogin'){
+	       datamsg=data.msg;
+	      datenologin =1;
+		  lotteryId=data.id;
+		  datastatus=data.status;
+	      
+	  }
+	  if(data.status=='wechatlogin'){
+	       datamsg=data.msg;
+	      datenologin =1;
+		  lotteryId=data.id;
+		   datastatus=data.status;
+		  
+	      
+	  }
+	
+      prize = null;
+      start()
+    }
+    running = false;
+    count++
+
+  });
+
+    })
+
+    var lottery_rec_status_desc ='<{$lottery_rec.status_desc}>';
+    var lottery_rec_status = parseInt('<{$lottery_rec.status}>');
+    if (lottery_rec_status !=null && lottery_rec_status >0 ){
+     clearInterval(0);
+     count = <{$lottery.draw_timers_perDay_perUser}>;
+     prize = parseInt('<{$lottery_rec.lottery_sub_id}>');
+
+     running =true;
+     outter.style.webkitTransform = 'rotate(' + prizeDeg[prize - 1] + 'deg)';
+     outter.style.MozTransform = 'rotate(' + prizeDeg[prize - 1] + 'deg)';
+     running =false;			
+     if(lottery_rec_status ==1){
+       $("#result").slideToggle(500);
+	   changeTitle(1);
+     }else{
+       $("#result_show").slideToggle(500);
+	   changeTitle(1);
+     }
+	   
+   }else{
+     $("#result_fault").slideToggle(500);
+   }
+   var friends='<{$friends}>';
+   <{if $uid==$loginUser.id && $uid>0}>
+   if (friends ==1) {
+      _system._guide(true);
+   
+   }
+   <{/if}>
+
+ });
+$("#save-btn").bind("click", function() {
+  var btn = $(this);
+  var phone = $("#phone").val();
+  var last_name=$("#last_name").val();
+  var first_name=$("#first_name").val();
+  var email=$("#email").val();
+  var sub_id=$("#sub_id").val();
+  var prize_name =$("#prizetype").val();
+  if (phone == '') {
+    alert("请输入手机号码");
+    return
+  }
+  var regu = /^[0][0-9]{9}$/;
+  var re = new RegExp(regu);
+
+  function Trim(str,is_global)
+  {
+    var result; 
+    result = str.replace(/(^\s+)|(\s+$)/g,"");
+    if(is_global.toLowerCase()=="g")
+      result = result.replace(/\s/g,"");
+    return result;
+  }
+
+  phone =Trim(phone,'g');
+
+ // if (!re.test(phone)) {
+ //   alert("请输入正确手机号码，手机号 10-11位号码");
+//    return
+//  }
+
+  var reg = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+  re = new RegExp(reg);
+  if (!re.test(email)) {
+    alert("请输入正确email");
+    return
+  }
+				 //alert('sub_id is ' +sub_id);
+				$.ajax({  method:"GET", url: "<{$http_root_www}>lottery/lottery_add_activeuser", 
+          data:{
+            id:'<{$lottery.id}>',
+            'last_name':last_name,
+            'first_name':first_name,
+            'email':email,
+            'phone':phone,
+            'sub_id':sub_id,
+            'prize_name':prize_name,
+            beforeSend: function( xhr ) {
+              $('#save-btn').prop('value','提交中...');
+			    $('#save-btn').prop('disabled',true);
+            } 
+          }
+        }).done(function( data ) {
+         data = JSON.parse(data);
+         if (data.success == 1) {
+          alert(data.msg);
+          $('#result').slideToggle(500);
+          $("#lottery_desc").text(data.status);
+          $("#lottery_name").text( $("#prizetype").text());
+          $("#lottery_redeem_code").text( $("#sncode").text());
+
+          $("#result_show").slideToggle(500);
+		  
+		 
+          //_system._guide(true);
+          return
+        } else {
+
+          alert("提交失败，请加Ubonus微信客服,Ubonus美食生活客服会帮助你解决问题");
+
+          return
+
+        }
+
+      });
+
+      });
+	  var no_award=false;
+	  var got_award=false;
+	  var sub_award_name ='<{$lottery_rec.lottery_sub_name}>';
+	  function changeTitle(a){
+	  
+	    if (a==0){
+		  if(no_award) {
+		  
+		  }else{
+		   //document.title="我差一点！" + document.title; 
+		   no_award=true;
+		  }
+		 
+		}
+		if(a==1){
+		  if(got_award) {
+		  
+		  }else{
+		  
+		    document.title="我中了" + sub_award_name  + "!" + document.title;  
+		   got_award=true;
+		  }
+		 
+		}
+		
+	  }
+	  
+	  
+    </script>
+
+    <script type="text/javascript">
+      $(function(){
+        $('#pc-top-banner').slick({
+          dots: true,
+          arrows: false,
+          autoplay: true,
+          autoplaySpeed: 2000,
+        });
+      })
+    </script>
+
+      <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$lottery.title}>';
+        var shareLink='<{$http_root_wx}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
+        var desc="<{$lottery.title}>";//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$lottery.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+  <!-- WX jssdk share -->
+
+  </body>
+
+  </html>

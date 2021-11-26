@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+	.main-form tbody td{text-align: center;}
+	.height-auto{height:auto!important}
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+			<{include file='group_buy/group_buy_top_menu.htm'}>
+				<div class="main-form">	
+
+					<div class="colCurTit">
+						<span class="links">
+							<a class='btn-yellow' href="<{$http_root_www}>group1_buy/create_group_view" ><i class='fa fa-plus'></i>添加新团</a>
+						</span>
+					</div>
+
+					<div class="main-list">
+					<table style='width:100%'>
+						<thead >
+							<tr>
+								<th>团购产品</th>
+								<th>团名</th>
+								<th>类型</th>
+								<th>当前人数</th>
+								<th>状态</th>
+								<th>操作</th>
+								<th>删除</th>
+								<th>最高奖励结团</th>
+							</tr>
+						</thead>
+						<tbody>
+							<{foreach from=$groups item=item name='dl'}>
+
+								<{if $item.allow_user_group==0&&$item.parentId==0}>
+								<!-- 商家团 -->
+
+								<tr data-id='<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}> >
+									<td><a href="<{$http_root_www}>coupon/<{$item.c_id}>" target='_blank'><{$item.title}></a></td>
+									<td><a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a></td>
+									<td>商家团</td>
+									<td><{$item.current}>人 <span onClick='showGroupList(<{$item.id}>)'>查看</span></td>
+									<{if $item.status==0}>
+										<td>Ready</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==1}>
+										<td>Running</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a></td>
+									<{elseif $item.status==2}>
+										<td>Closed</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==3}>
+										<td>Stageing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a></td>
+									<{elseif $item.status==4}>
+										<td>Finalizing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a></td>
+									<{elseif $item.status==5}>
+										<td>Complete</td>
+										<td>奖励已经发放</td>
+									<{else}>
+									Error
+									<{/if}>
+
+									<td><a href="<{$http_root_www}>group1_buy/group_delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.name}>?')"><i class='fa fa-close fa-lg' style='color:red'></i></a></td>
+
+									<td>
+									<{if $item.status==1||$item.status==3||$item.status==4}>
+									<a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a>
+									<{/if}>
+									</td>
+									
+								</tr>
+								<{elseif $item.allow_user_group==1&&$item.parentId==0}>
+
+								<!-- Master用户团 -->
+								<tr data-id='<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}>>
+									<td><a href="<{$http_root_www}>coupon/<{$item.c_id}>" target='_blank'><{$item.title}></a></td>
+									<td><a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a></td>
+									<td>Master用户团</td>
+									<td><a href="<{$http_root_www}>group1_buy/child_group_list?id=<{$item.id}>">开团列表</a></td>
+									<{if $item.status==0}>
+										<td>Ready</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==1}>
+										<td>Running</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a></td>
+									<{elseif $item.status==2}>
+										<td>Closed</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==3}>
+										<!-- <td>Stageing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a></td> -->
+										Error
+									<{elseif $item.status==4}>
+										<!-- <td>Finalizing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a></td> -->
+										Error
+									<{elseif $item.status==5}>
+										<!-- <td>Complete</td>
+										<td>奖励已经发放</td> -->
+										Error
+									<{else}>
+										Error
+									<{/if}>
+
+									<td><a href="<{$http_root_www}>group1_buy/group_delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.name}>?')"><i class='fa fa-close fa-lg' style='color:red'></i></a></td>
+
+									<td>
+									<{if $item.status==1||$item.status==3||$item.status==4}>
+									<!-- <a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a> -->
+									<{/if}>
+									</td>
+									
+								</tr>
+
+								<{elseif $item.allow_user_group==0&&$item.parentId!=0}>
+								<!-- Child用户团 -->
+
+								<tr data-id='<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd" <{/if}>>
+									<td><a href="<{$http_root_www}>coupon/<{$item.c_id}>" target='_blank'><{$item.title}></a></td>
+									<td><a href="<{$http_root_www}>group1_buy/index?group1_buy_id=<{$item.id}>" target='_blank'><{$item.name}></a></td>
+									<td>Child用户团</td>
+									<td><{$item.current}>人 <span onClick='showGroupList(<{$item.id}>)'>查看</span></td>
+									<{if $item.status==0}>
+										<td>Ready</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==1}>
+										<td>Running</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_close?id=<{$item.id}>">闭团</a></td>
+									<{elseif $item.status==2}>
+										<td>Closed</td>
+										<td><a href="<{$http_root_www}>group1_buy/group_open?id=<{$item.id}>">开团</a></td>
+									<{elseif $item.status==3}>
+										<td>Stageing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">中止并发放奖励</a></td>
+									<{elseif $item.status==4}>
+										<td>Finalizing</td>
+										<td><a href="<{$http_root_www}>group1_buy/give_reward_and_complete_group?id=<{$item.id}>">完成并发放奖励</a></td>
+									<{elseif $item.status==5}>
+										<td>Complete</td>
+										<td>奖励已经发放</td>
+									<{else}>
+									Error
+									<{/if}>
+
+									<td><a href="<{$http_root_www}>group1_buy/group_delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.name}>?')"><i class='fa fa-close fa-lg' style='color:red'></i></a></td>
+
+									<td>
+									<{if $item.status==1||$item.status==3||$item.status==4}>
+									<!-- <a onclick="return confirm('最高奖励结团方式将会强制完成该团，无论目前参团人数多少或者奖励是否达成，并切按照设置的最高奖励奖励全部团员，确认继续？');" href="<{$http_root_www}>group1_buy/give_reward_at_max_level?id=<{$item.id}>">最高奖励结团</a> -->
+									<{/if}>
+									</td>
+									
+								</tr>
+
+								<{/if}>
+								
+							<{/foreach}>
+						</tbody>
+					</table>
+					</div>
+					<div class='group_list_popup' ></div>
+					<script type="text/javascript">
+						function showGroupList(id){
+							console.log(id);
+							$.ajax({
+								   method:"GET",
+								   url: '<{$http_root_www}>group1_buy/group_list_show_ajax',
+								   data: {
+								   		id: id,
+								   		type:'admin'
+								   },
+							   beforeSend : function (){
+					              $('.group_list_popup').html('<i class="fa fa-spinner fa-lg fa-spin" style="color:#31BC86"></i>').show();
+					            },
+					            success : function (returnData) {
+					              $('.group_list_popup').html(returnData);
+					            }
+							});
+						}
+
+						function closeGroupList(){
+							$('.group_list_popup').hide();
+						}
+					</script>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

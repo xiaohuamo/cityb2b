@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+					<select class='chooseDate'>
+						<option>请选择日期</option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+					</select>
+
+					<{if $orders}>
+						<button style="padding: 10px 5px;background: #FD5001 ">  
+							<a onclick='return confirm("确认生成统配号?");'	href="<{$http_root_www}>company/generate_sequence_number?date=<{$date}>&task=generate_logistic_sequence">生成统配号</a>
+						</button>
+
+						
+					<{/if}>
+					<div class="main-list">	
+
+					<{if $orders}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th>订单号</th>
+									<th>地址</th>
+									<th>姓名</th>
+									<th>电话</th>
+
+									<th style="background: #FD5001 ">统配号</th>	
+
+									<th style="background: #43d1af">Truck</th>	
+									<th style="background: #43d1af">Driver</th>
+									<th style="background: #43d1af">Stop</th>
+									<th style="background: #43d1af">ETA</th>
+
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$orders item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+									<td>
+										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+									</td>
+									<td><{$item.address}></td>
+									<td><{$item.first_name}> <{$item.last_name}></td>
+									<td><{$item.phone}></td>
+
+									<td>
+										<{if $item.logistic_sequence_No == 0}>
+											-
+										<{else}>
+											<{$item.logistic_sequence_No}>
+										<{/if}>
+									</td>
+
+									<td><{$item.logistic_truck_No}></td>
+									<td><{$item.logistic_driver_code}></td>
+									<td><{$item.logistic_stop_No}></td>
+									<td>
+										<{if $item.logisitic_schedule_time == 0}>
+											-
+										<{else}>
+											<{$item.logisitic_schedule_time|date_format:'%I:%M %p'}>
+										<{/if}>
+									</td>
+
+								
+									
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+					<{/if}>
+				</div>	
+
+				
+				
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+	$(function(){
+		$('.chooseDate').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>company/generate_sequence_number?date=" + $(this).val();
+		});
+	})
+</script>
+
+
+
+
+
+</body>
+
+</html>

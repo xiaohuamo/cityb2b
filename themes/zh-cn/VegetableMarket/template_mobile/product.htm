@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="/css/uploadify.css" type="text/css" rel="stylesheet" />
+    <link href="/WebUploader/webuploader.css" rel="stylesheet" type="text/css" />
+    <link href="/css/upload.css" rel="Stylesheet" type="text/css" />
+    <link href="/css/bootstrap.min.css" rel="Stylesheet" />
+    <style>
+        .container-fluid
+        {
+            margin: 10px auto;
+            padding: 10px 15px;
+        }
+        
+        #evalList
+        {
+            margin: 10px auto;
+        }
+        #evalList td:nth-child(1)
+        {
+            width: 50px;
+        }
+        #evalList td:nth-child(2)
+        {
+            width: 150px;
+        }
+        #evalList td:nth-child(3)
+        {
+            width: 150px;
+        }
+        #evalList th:nth-child(4)
+        {
+            width: 100px;
+        }
+        #evalList th:nth-child(5)
+        {
+            width: 100px;
+        }
+        #evalList th:nth-child(6)
+        {
+            width: 50px;
+        }
+        #evalList th:nth-child(7)
+        {
+            width: 50px;
+        }
+        #evalList th:nth-child(8)
+        {
+            width: 100px;
+        }
+    </style>
+    <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+    <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+    <script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+    <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.cookie.js"></script>
+   
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            
+          
+           
+            <div class="col col-md-2">
+                <div class="input-group input-group-sm">
+                   
+                    <span class="input-group-btn">
+                        
+                        <button type="button" class="btn btn-default btn-success" id="ButtonXML">
+                            导入生鲜更新数据测试</button>
+                        <input type="file" id="inputXMl"  style="display: none;" onchange="importf(this,'test/send_import_xls')" value="导入生鲜更新数据测试" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+           
+    </div>
+  <div class="container-fluid">
+        <div class="row">
+            
+          
+           
+            <div class="col col-md-2">
+                <div class="input-group input-group-sm">
+                   
+                    <span class="input-group-btn">
+                        
+                        <button type="button" class="btn btn-default btn-success" id="ButtonXMLA">
+                            导入订单数据，反向地址修正</button>
+                        <input type="file" id="inputXMlA"  style="display: none;" onchange="importf(this,'test/order_address_split')" value="导入订单数据，反向地址修正" />
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+           
+    </div>
+  
+    
+    </div>
+    <script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+    <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+    <script>
+
+        $("#ButtonXML").click(function () {
+            $("#inputXMl").click();
+        });
+		
+		 $("#ButtonXMLA").click(function () {
+            $("#inputXMlA").click();
+        });
+
+        var wb; //读取
+        var rABS = false;
+
+        //开始导入
+        function importf(obj,actionlink) {
+            if (!obj.files) {
+                return;
+            }
+            var f = obj.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                if (rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                /**
+                * wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                * wb.Sheets[Sheet名]获取第一个Sheet的数据
+                */
+                var excelJson = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                excelJson.pop();
+                console.log(excelJson);
+                InsertProduct(excelJson,actionlink);
+                //document.getElementById("excelContent").innerHTML = JSON.stringify(excelJson);
+            };
+            if (rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+
+        //文件流转BinaryString
+        function fixdata(data) {
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        function InsertProduct(excelJson,actionlink) {
+            var Jstring = JSON.stringify(excelJson);
+			var urllink = '<{$http_root_www}>' + actionlink;
+            $.ajax({
+			
+                url: urllink,      //异步方法
+                method: 'POST',
+                data: { ProductList: Jstring },                 //传入的那么参数
+                cache: false,
+                timeout: 0,                            //延迟5秒执行
+                error: function () {                        //返回失败后
+                    alert("导入失败");
+                },
+                success: function (result) {
+               result=jQuery.parseJSON( result );
+			     
+                    if (result.result) {
+					  alert(result.result);
+                       alert(result.message);
+                      //  location.reload();
+                    }
+                    else {
+                        alert('no result' + result.message);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

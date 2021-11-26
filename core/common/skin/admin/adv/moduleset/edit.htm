@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/global.css">
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>images/main.css">
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/global.js"></script>
+	<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript">
+		function check()
+		{
+            var first=$('#first option:selected') .val();
+            var url = '<{$http_root_www}>index.php?con=admin&ctl=adv/moduleset&act=pagetype&pageType='+first;
+            $.ajax({
+                url: url,
+                method: "GET",
+                async:false,
+                success: function (data) {
+                    var obj = eval('(' + data + ')');
+                    $("#panaltype").html('');
+                    for(var item in obj) {
+                        //alert(obj[item].id + "-" + obj[item].name);
+                        document.getElementById("panaltype").innerHTML += "<option value="+obj[item].id+">"+obj[item].name+"</option>";
+                    }
+                }
+            });
+		}
+
+        $(function(){
+            $('#first').attr('value',<{$data.pagetype}>);
+            check();
+            $('#panaltype').attr('value',<{$data.panaltype}>);
+            $('#alias').attr('value',<{$data.alias}>);
+        });
+
+	</script>
+</head>
+<body>
+<div class="wrap inner clearfix">
+	<div class="container">
+		<div class="tips">
+			<a href="?con=admin&ctl=adv/moduleset&act=index&pagetype=<{$data.pagetype}>&panaltype=<{$data.panaltype}>" class="lnkReturn"><{$lang->return_to_list}></a>
+		</div>
+		<form action="?con=admin&ctl=adv/moduleset&act=edit&id=<{$data.id}>" method="post" enctype="multipart/form-data">
+			<table class='editTable'>
+				<tr class="editHdTr">
+					<td colspan="2">编辑产品</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">标题</td>
+					<td class="editRtTd"><input style="width: 300px" name="data[title]" disabled="disabled" value="<{$data.title}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">产品号</td>
+					<td class="editRtTd"><input style="width: 170px" name="data[couponid]" value="<{$data.couponid}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">店铺链接目录</td>
+					<td class="editRtTd"><input style="width: 170px" name="data[type]" value="<{$data.type}>" type="text" size="30" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd"><em class="tip" tips="<{$lang->smaller_front}>">排序</em></td>
+					<td class="editRtTd"><input style="width: 170px" name="data[sort]" value="<{$data.sort}>" type="text" size="20" class="text" /></td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">页面类别</td>
+					<td class="editRtTd">
+						<select id="first" name="data[pageType]" onchange="check()" class='no-js'>
+							<{foreach from=$pagetype item=item key=key}>
+								<option value=<{$item.id}>><{$item.pagename}></option>
+							<{/foreach}>
+						</select>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">模块类别</td>
+					<td class="editRtTd">
+						<select id="panaltype" name="data[panaltype]" class='no-js'>
+							<{foreach from=$panaltype item=item key=key}>
+								<option value=<{$item.id}>><{$item.name}></option>
+							<{/foreach}>
+						</select>
+					</td>
+				</tr>
+				<tr class="editTr">
+					<td class="editLtTd">商家类别</td>
+					<td class="editRtTd">
+						<select id="alias" name="data[alias]" class='no-js' >
+							<option value='106105'>商城</option>
+							<option value='106124'>生鲜及食品</option>
+							<option value='106121'>本地生活</option>
+							<option value='106119'>活动/赛事</option>
+							<option value='106122'>优惠/返现券</option>
+							<option value='106120'>代购</option>
+							<option value='106104'>教育</option>
+						</select>
+					</td>
+				</tr>
+
+				<tr class="editTr">
+					<td class="editLtTd">产品语言</td>
+					<td class="editRtTd">
+						<select id="lang" name="data[lang]" class='no-js' >
+							<option value='0'>中文</option>
+							<option value='1'>英文</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div class="editBtn clearfix">
+				<input type="submit" value="Save" class="lnkSave"/>
+				<a href="?con=admin&ctl=adv/moduleset&act=index&pagetype=<{$data.pagetype}>&panaltype=<{$data.panaltype}>" class="lnkReturn"><{$lang->return_to_list}></a>
+			</div>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>

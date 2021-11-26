@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$lang->change_password}></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+</head>
+<body class="bg-1">
+
+	<header id="hd">
+		<div class="left">
+			<a href="<{$http_root_www}>member/index" class="a-back"></a>
+		</div>
+		<h1><{$lang->change_password}></h1>
+		<div class="right">
+			<button  <button onclick="$('#memberForm').submit()" class="a-red" style="    height: 1.3rem;          color: #333;" onClick="$('#memberForm').submit()" class="a-red" ><{$lang->save}></button>
+		</div>
+	</header>
+
+	
+		<section id="bd">
+			<div class="new-add">
+				<form id="memberForm" action="<{$http_root_www}>member/changepwd" method="post">
+
+				<div class="con">
+					<em><{$lang->old_password}>：</em>
+					
+					<input type="password" name="oldpwd" class="g-input inp" placeholder="<{$lang->old_password}>" style="    left: 2rem;" /><em style="font-size:14px; color:#C00;"></em>
+					
+					
+				</div>
+				<div class="con">
+					<em><{$lang->new_password}></em>
+					<input type="password" name="password" class="g-input inp" placeholder="<{$lang->new_password}>" style="    left: 2rem;  /><em style="font-size:14px; color:#C00;"></em>
+				</div>
+				
+				<div class="con">
+					<em><{$lang->confirm_password}></em>
+					<input type="password" name="password2" class="g-input inp" placeholder="<{$lang->confirm_password}>" style="    left: 2rem;  /><em style="font-size:14px; color:#C00;"></em>
+				</div>
+
+				</form>
+			</div>
+		</section>
+	
+<{include file="mobile/mobile_footer.htm"}>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+</body>
+</html>

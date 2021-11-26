@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}><meta name="description" content="<{$pageDescription}><{$start_time}><{$end_time}>" /><{/if}>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+	
+	<style type="text/css"> .toggle-txt div.txt{display: none;}</style>
+
+	<style type="text/css">
+	
+	.well {
+	margin-bottom: 1px;
+	border: 0px solid #e3e3e3;
+	}
+		.coupon_option{
+		    border-top-color: rgb(204, 204, 204);
+		    border-top-style: solid;
+		    border-top-width: 0px;
+		    border-right-color: rgb(204, 204, 204);
+		    border-right-style: solid;
+		    border-right-width: 0px;
+		    border-bottom-color:  #eee;
+		    border-bottom-style: solid;
+		    border-bottom-width: 1px;
+		    border-left-color: #eee;
+		    border-left-style: solid;
+		    border-left-width: 0px;
+		    border-image-source: initial;
+		    border-image-slice: initial;
+		    border-image-width: initial;
+		    border-image-outset: initial;
+		    border-image-repeat: initial;
+			padding: 2px 5px;
+			margin: 15px 15px;
+		}
+
+		.coupon_option .title{
+			color: #000;
+    		font-size: 14px;
+		}
+		.coupon_option .price{
+			
+		}
+
+		.coupon_option .quantity{
+
+		}
+
+		.coupon_option .quantity i{
+			color:#FD5001 ;
+			font-size: 16px;	
+		}
+
+		.coupon_option .quantity .input-quantity{
+			width: 28px;
+			text-align: center;
+			border:none;
+			font-size: 14px;
+		}
+		.coupon_option .quantity .stock{
+			font-size: 10px;
+			color: #999;
+			text-align: right;
+		}
+
+		.coupon_option .description{
+			border-top: 1px solid #fee;
+			line-height: 17px;
+			padding-top: 10px;
+			color: #a5928b;
+			font-size: 12px;
+			margin-left: 10px;
+
+		}
+		.coupon_option .spec-num{
+			
+		}
+		.col-l{
+			overflow-y: scroll;
+    		height: 90vh;
+    		position: absolute;
+			z-index: 9;
+		}
+		.col-l.fixed{
+			position: fixed;
+			top: 47px;
+			z-index: 9;
+		}
+	    .s-nav .s1{
+			    padding: 20px 0;
+             line-height: 20px;
+			 font-size: 15px;
+		}
+		.promotion-des-display, .confirmedMoneyAppliedAmount-display {
+		    background-color: #FD5001 ;
+		    color: #fff;
+		    padding: 4px;
+		    border-radius: 5px;
+		}
+
+
+		@media only screen and (min-width: 768px) {
+			html{
+				font-size: 50px!important;
+			}
+		    body{
+		    	width: 768px;
+		    	margin: auto;
+		    }
+		    #hd{
+		    	width: inherit;
+		    	margin: auto;
+		    }
+		    .comm-btn-restaurant{
+		    	width: 768px;
+		    	margin: auto;
+		    }
+
+		    .menu_guige{
+		    	width: 768px!important;
+		    	right: 0;
+		    	left: 0;
+		    	margin: auto;
+		    }
+
+		    .inpageShoppingCart{
+		    	width: 768px!important;
+		    	left: 0;
+		    	right: 0;
+		    	margin: auto;
+		    }
+		}
+	</style>
+
+<script type="text/javascript">
+var  click_category=0;
+	$(function(){
+		fix_bar_position('初始');
+		
+        $('img.lazyload').unveil();
+		//alert('aa');
+
+		
+	})
+  
+  
+  function fix_bar_position(aa) {
+   	var top = $('.col-l').position().top;
+	var top1 =$('#content01').position().top;
+	
+	var menu_height=$('#box-prod').height();
+	
+	
+	var header_height=$('#hd').height();
+	
+	var before = $(window).scrollTop();
+	var bottom_top = top+menu_height-$(window).height()-$('#foot_menu').height()-10;
+	
+    $(window).scroll(function(){
+	// console.log($(window).scrollTop());
+	 // console.log(top);
+ //console.log(header_height);
+
+        if($(window).scrollTop()<(top-header_height)||$(window).scrollTop()>bottom_top){
+		   // alert('here');
+          	$('.col-l').removeClass('fixed');
+        }else{
+          	$('.col-l').addClass('fixed');
+		   
+        }
+		 if($(window).scrollTop()<(top-header_height)-20){
+		 	$('#hd').css('opacity','1');
+		 }else{
+		 	$('#hd').css('opacity','1');
+		 }
+		 
+		
+		 if(click_category==0) {
+         var windowTop = $(window).scrollTop();
+		
+		  var after = $(window).scrollTop();
+		  
+		  
+                    if (before<after || after<200) {
+                      //console.log('上');
+                        before = after;
+						//alert(window.screen.height);
+						windowTop=windowTop + window.screen.height -300;
+                    };
+                    if (before>after ) {
+                     // console.log('下');
+                        before = after;
+						
+                    };
+		 
+		 
+		 
+		 
+		 
+		 var target;
+		 $('.positionPin').each(function(index,value){
+		 	var elementTop = $(value).offset().top;
+		 	if(windowTop>elementTop-100){
+		 		target=$(value).data('target');
+				//alert(target);
+		 	}
+		 })
+		 $('a.s1').css('background',''); 
+		 $('a.s1[data-target-id='+target+']').css('background','#5bc0de'); 
+        }
+    })
+	
+  }
+  
+  function change_category(catid){
+  
+    click_category=1;
+    
+    $('[id*=' + 'ccategory' + ']').css('display','');
+	  	for(i=0;i<$('.input-quantity').length;i++) {
+		    $target1 = $('.input-quantity').eq(i);
+		    $target1.parent().parent('div').css('display','');	
+		}
+  
+    	if(catid =='bd') {
+     		$('html,body').animate({scrollTop: $('#' + catid).offset().top-50},'fast');
+		}else if(catid=='menu-section'){
+		  	$('html,body').animate({scrollTop: $('#' + catid).offset().top-50},'fast');
+		}else{
+		 	$('html,body').animate({scrollTop: $('#ccategory-' + catid).offset().top-50},'fast');
+		}
+ 
+	   $('[id*=' + 'menu' + ']').css('display',''); 
+	   $('[id*=' + 'coupon-' + ']').css('display',''); 
+ 	
+	   $('[id*=' + 'cate_href' + ']').css('background',''); 
+  	   $('#cate_href-'+catid).css('background','#5bc0de'); 
+      setTimeout( "click_category=0;", 1000 );
+  }
+  
+ 
+</script>
+</head>
+<body class="bg-1">
+	<header id="hd" style="    opacity: 1;">
+		
+		<h1 style="    font-size: 15px;    line-height: 45px;">
+			<a onCLick="change_category('bd');">点单</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f10').offset().top-40},'fast');">商家</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f11').offset().top-40},'fast');">提示</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f3').offset().top-40},'fast');">评价</a>
+			<a onCLick="$('html,body').animate({scrollTop: $('#f4').offset().top-40},'fast');">套餐</a>
+		</h1>
+		<{include file ="restaurant/sec_more.htm"}>
+	</header>
+	<section id="bd" style="    margin-top: 1.3rem;">
+	<div class="sec-product" style="margin-top: -95px;">
+
+			<div class="comm-pic">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img  src="<{$UPLOAD_PATH}><{$coupon.pic|image:396:157:'cut'}>" width="100%" height="auto" alt="<{$coupon.title}>" /></div>
+			    </div>
+			</div>
+			
+			<{if ($restaurant_promotion_manjian.discount || $restaurant_promotion_manjian.promotion_desc )}>
+			 <div class='money-display' style="margin: 0.23rem;border-radius: 10px;margin: 0.23rem;border-radius: 10px;font-size: 13px; background-color: #d9eff5cc;padding: 5px 15px;color: #333;">
+  优惠说明2： <{if $restaurant_promotion_manjian.discount}><strong style="font-size:14px;"><{$restaurant_promotion_manjian.discount}>%OFF.</strong><{/if}> <{if $restaurant_promotion_manjian.promotion_desc}><{$restaurant_promotion_manjian.promotion_desc}><{/if}>
+          </div>
+		  <{/if}>
+		  
+		  <div id="leftnav" class="col-l " style="width: 164px;">
+<!--
+                <div id = "pic-menu" class="pic-menu"><img data-cid="106" class="loading-btn" src="/themes/zh-cn/mobile/images/pic336.jpg" alt=""></div> -->
+                <ul class="g-ul s-nav" >
+				  <{if $coupon_list}>
+					  <li>
+					     <a id ='cate_href-menu-section'  data-target-id='abc' onclick="change_category('menu-section');" data-cid="abc" class="s1 loading-btn">线上套餐
+ 						<i style="   font-style: normal;   top: 8px;	font-size:13px;    margin-left: 2px;    display: inline-block;    padding: 0px 5px;    border-radius: 10px;    background: red;    color: white;    line-height: 17px;"><span id="">热</span></i>
+
+						
+						 </a>  
+					  </li>
+	               <{/if}>
+
+				<{foreach from=$restaurant_category item=gitem}>
+                    <li>   
+                    	<a  id="cate_href-<{$gitem.category_id}>"  onclick="change_category('<{$gitem.category_id}>');	" data-target-id='<{$gitem.category_id}>'  data-cid="<{$gitem.id}>" class="s1 loading-btn"><{$gitem.category_cn_name}> 
+						<{if $gitem.hot}> <i style="   font-style: normal;   top: 8px;	font-size:13px;    margin-left: 2px;    display: inline-block;    padding: 0px 5px;    border-radius: 10px;    background: red;    color: white;    line-height: 17px;"><span id="">热</span></i>
+
+				<{/if}>
+						</a>  
+                    </li>
+              	<{/foreach}>
+                  
+				</ul>
+            </div> 
+
+             <div id= 'box-prod' class="box-prod " style="padding-right: .05rem;">
+
+			<div id= "menu-section" class=" col-r comm-tit " style="padding: 0.35rem 0.2rem;">
+			  <{if $coupon_list}>
+				<span class="label label-info positionPin" style="background-color: #fff;font-weight:600; font-size:15px;  line-height: 20px;color: #333;" data-target='abc'>团购套餐</span>
+
+
+					<{foreach from=$coupon_list item=couponitem name='dl'}>
+						<div id="coupon-<{$smarty.foreach.dl.index}>" class="coupon_option">
+
+						<div style="float:left; display: inline-block;width: 25%">
+	                            <p class="title" style="    "></p>
+	                            <a data-lightbox="roadtrip" href="<{$UPLOAD_PATH}><{$couponitem.pic|image:500:300:'cut'}>" data-title=" <{$couponitem.title|truncate_cn:50:'...'}>">	
+								 <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$couponitem.pic|image:120:120:'cut'}>"> 
+								</a>
+								</p>
+
+							</div>
+						
+						<div style="display: inline-block;width: 45% ;    height: 2.5rem;">
+                             <p class="title" style="      font-size: 14px;    margin-left: 5px; ">
+	                            <{$couponitem.title|truncate_cn:50:'...'}>
+							</p>
+                          
+							<p class="price" style="    font-size: 14px;    margin-left: 5px;">
+								<span>$ <{$couponitem.voucher_deal_amount}>  <s style="  font-size: 14px;"><{$couponitem.voucher_original_amount}></s></span>
+							</p>	
+							
+						</div>
+						<div style="float:right;" class="quantity" >
+								<i class="fa fa-minus-square"></i>
+								<input class="input-quantity" type="text" name="quantity[]" value="<{$couponitem.qty}>" readonly
+								data-main_coupon_id='<{$couponitem.id}>' 
+								data-sub_coupon_id="<{$couponitem.sub_id}>"
+								data-type='voucher'
+								data-price='<{$couponitem.voucher_deal_amount}>' >
+								<i class="fa fa-plus-square"></i>
+								
+								<div class="stock" style="  color: #f23030;">
+									<{$couponitem.discount}>%OFF
+								</div>
+								
+								<p class="price"  style=" float:right;     margin-top: 14px; font-size: 14px;">
+								<span class="label label-info" style=" font-weight:400;   background-color: #FD5001; font-size: 100%;margin-right: -0.1rem;"><a href ="<{$http_root_www}>coupon1/<{$couponitem.id}>"> 套餐详情 ></a></span>
+							</p>
+						</div>
+						<{if $couponitem.coupon_summery_description}>
+                   		<p class="description">
+							<{$couponitem.coupon_summery_description|truncate_cn:120:'..'}> 
+						</p>
+						<{/if}>
+					</div>
+                    <{/foreach}>
+				<{/if}>
+					
+				<{foreach from=$menu item=citem name='dl'}>
+				    
+					<{if $citem.new_cat}> 
+					  <{if $smarty.foreach.dl.index ==0}>
+				     	<span  id = "ccategory-<{$citem.restaurant_category_id}>" class="label label-info positionPin" data-target='<{$citem.restaurant_category_id}>' style="font-weight: 600; line-height: 70px;   font-size: 15px;    background-color: #fff;    color: #333;">餐厅菜单:<{$citem.category_cn_name}></span>
+					   <{else}>
+						<span  id = "ccategory-<{$citem.restaurant_category_id}>" class="label label-info positionPin" data-target='<{$citem.restaurant_category_id}>' style="font-weight: 600;  line-height: 70px;  font-size: 15px;    background-color: #fff;    color: #333;"><{$citem.category_cn_name}></span>
+
+					
+					   <{/if}>
+					<{/if}>
+
+					    <div name='menu-<{$smarty.foreach.dl.index}>' id = 'category-<{$citem.restaurant_category_id}>' class="coupon_option"  >
+						<div style="float:left; display: inline-block;width: 25%">
+	                            <p class="title" style="  margin-top: -10px;  font-size: 14px;padding: 10px;">
+	                            	<a data-lightbox="roadtrip" href="<{$UPLOAD_PATH}><{$citem.menu_pic|image:500:300:'cut'}>" data-title="<{$citem.menu_cn_name|truncate_cn:55:'..'}>">
+									 <img class="lazyload" data-src="<{$UPLOAD_PATH}><{$citem.menu_pic|image:120:120:'cut'}>"> 
+									 </a>
+								</p>
+	                          
+								
+							</div>
+
+
+						<div style="display: inline-block;width: 45%;    height: 2.4rem;">
+	                            <p class="title" style="    font-size: 14px;margin-top: -3px;    margin-left: 5px;">
+									<{$citem.menu_cn_name|truncate_cn:35:'..'}>
+
+								</p>
+	                          
+								<p class='price' style="    font-size: 14px; font-size: 14px;margin-top: -3px;    margin-left: 5px;">
+									<span>$<{$citem.new_price}>  <{if ($citem.new_price < $citem.price)}><s style="  font-size: 14px;"><{$citem.price}></s><{/if}></span>
+								</p>	
+							</div>
+
+
+							<{if $citem.menu_option_list||$citem.sidedish_menu}>
+								<!-- 如果有规格或者配菜，使用不同的加入购物车规则 -->
+
+								<div style="float:right;margin-top: 1.4rem;font-weight: 400;" >
+										<span style="    background-color: #FD5001;
+    color: #333;    padding: 2px 7px;  font-size: 14px;border-radius: .25em;margin-right: -0.1rem; " onClick="$(this).parent().next('.menu_guige').show();">选规格</span>
+								</div>
+
+								<!--popup 明细选项  -->
+
+								<div class='menu_guige well' style="position: fixed;top: 0;right: 0;width: 100%;height: 100vh;overflow-y: scroll;z-index: 999999;display: none;">
+									<h3>
+										<{$citem.menu_cn_name|truncate_cn:35:'..'}>
+									</h3>
+									<{if $citem.menu_desc || $citem.menu_en_name}>
+										<p class='description'>
+											<{if $citem.menu_desc}><{$citem.menu_desc}><{else}><{$citem.menu_en_name}><{/if}>
+										</p>
+									<{/if}>
+									<hr>
+
+									
+									<{if $citem.menu_option_list}>
+									<h5>规格</h5>
+										<div class='menu_option'>
+										<{foreach from=$citem.menu_option_list item=sitem}>
+											<div class="coupon_option" >
+												<div style="display: inline-block;width: 60%">
+													<{$sitem.menu_cn_name|truncate_cn:35:'..'}>
+													<span>
+														<{if $sitem.new_price>0}>
+															$<{$sitem.new_price}>
+														<{else}>
+															$<{$citem.new_price}>
+														<{/if}>
+													</span>
+												</div>
+
+												<div style="float:right;" class="quantity">
+													<i class='fa fa-minus-square'></i>
+													<input class='input-quantity' type="text" name="quantity[]" value='<{if $sitem.quantity}><{$sitem.quantity}><{else}>0<{/if}>' readonly 
+														data-main_coupon_id='<{$restaurant_couponID}>' 	
+														data-menu_id='<{$citem.id}>'
+														data-menu_option_id='<{$sitem.id}>'
+					                                    data-type="menu_option"
+					                                    data-price='<{if $sitem.new_price>0}><{$sitem.new_price}><{else}><{$citem.new_price}><{/if}>' >	
+
+													<i class='fa fa-plus-square'></i>
+												</div>
+
+												<p class='description'>
+													<{if $sitem.menu_desc}><{$sitem.menu_desc}><{else}><{$sitem.menu_en_name}><{/if}>
+												</p>
+											</div>
+										<{/foreach}>
+										</div>
+									<{/if}>
+
+									
+									<{if $citem.sidedish_menu}>
+										<h5>配菜</h5>
+										<div class='sidedish_menu'>
+										<{foreach from=$citem.sidedish_menu item=sitem}>
+											<div class="coupon_option" >
+												<div style="display: inline-block;width: 60%">
+													<{$sitem.menu_cn_name|truncate_cn:35:'..'}>
+													<span>$<{$sitem.new_price}>  <{if ($sitem.new_price < $sitem.price)}><s style="  font-size: 14px;"><{$sitem.price}></s><{/if}></span>
+												</div>
+
+												<div style="float:right;" class="quantity">
+													<i class='fa fa-minus-square'></i>
+													<input class='input-quantity' type="text" name="quantity[]" value='<{if $sitem.quantity}><{$sitem.quantity}><{else}>0<{/if}>' readonly 
+														data-main_coupon_id='<{$restaurant_couponID}>' 	
+														data-menu_id='<{$citem.id}>'
+														data-sidedish_menu_id='<{$sitem.id}>'
+					                                    data-type="sidedish_menu"
+					                                    data-price='<{$sitem.new_price}>' >	
+
+													<i class='fa fa-plus-square'></i>
+												</div>
+
+												<p class='description'>
+													<{if $sitem.menu_desc}><{$sitem.menu_desc}><{else}><{$sitem.menu_en_name}><{/if}>
+												</p>
+											</div>
+										<{/foreach}>
+										</div>
+									<{/if}>
+
+									<div class='container' style="position: fixed;bottom: 0px;width: inherit;height: 50px;">
+										<div class='row'>
+											<div class='col-xs-6' style="text-align: center;" onClick="addMenuWithOption(this)">
+												<span class='btn btn-success'>加入购物车</span>
+											</div>
+											<div class='col-xs-6' style="text-align: center;" onClick="$(this).parents('.menu_guige').hide()">
+												<span class='btn btn-danger'>取消</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+							<{else}>
+
+								<div style="float:right;" class="quantity">
+										<i class='fa fa-minus-square'></i>
+										<input class='input-quantity' type="text" name="quantity[]" value='<{if $citem.quantity}><{$citem.quantity}><{else}>0<{/if}>' readonly 
+											data-main_coupon_id='<{$restaurant_couponID}>' 	
+											data-menu_id='<{$citem.id}>'
+		                                    data-type="menu"
+		                                    data-price='<{$citem.new_price}>' >									
+										<i class='fa fa-plus-square'></i>
+										
+		                        		<{if $restaurant_promotion_manjian_rates}>
+										<div class="stock" style="  color: #f23030;">
+											<{$restaurant_promotion_manjian_rates}>%OFF
+										</div>
+										<{/if}>
+								</div>
+
+							<{/if}>
+							
+
+		                  	<{if $citem.menu_desc || $citem.menu_en_name}>
+								<p class='description'>
+									<{if $citem.menu_desc}><{$citem.menu_desc}><{else}><{$citem.menu_en_name}><{/if}>
+								</p>
+							<{/if}>
+
+						</div>
+				<{/foreach}>
+			</div>
+			</div>
+		
+			<{include file='restaurant/sec_explain.htm'}>
+		</div>
+
+		
+		<div class="h2"></div>
+
+		<div class='inpageShoppingCart' style="position: fixed;top: 0;right: 0;width: 100%;height: 100vh;overflow-y: scroll;z-index: 99999;display: none; background-color: #eee;padding: 3%"></div>
+
+
+	<div id='foot_menu'  class="comm-btn-restaurant" style="z-index: 999;padding: 0.1rem;">
+			<div class="left" style="  height:60px;  margin-top: -10px;">
+				<{include file='restaurant/sec_favandstore.htm'}>
+			</div>
+			<div class="right" >
+				<a onclick="add_carts();" style="width: 100%;font-size:15px;line-height: 55px;" class="a1 ">一键购买</a>
+			</div>
+		</div>
+	</section>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
+
+	<link rel="stylesheet" type="text/css" href='<{$SKIN_PATH}>css/htmlAlert_mobile.css'>
+    <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
+
+    <link rel="stylesheet" type="text/css" href='<{$STATIC_PATH}>lightbox2/dist/css/lightbox.min.css'>
+    <script type="text/javascript" src='<{$STATIC_PATH}>lightbox2/dist/js/lightbox.min.js'></script> 
+
+	<script>
+	    $(document).ready(function($) {
+	        $('.ul-evaluate li').each(function() {
+	            $(this).find('dl').append('<dd></dd><dd></dd><dd></dd><dd></dd><dd></dd>');
+	            var _val = $(this).find('dl').attr('value');
+	            $(this).find('dl').find('dd:lt('+_val+')').addClass('on');
+	        });
+	    });
+	</script>
+ 
+	<script type="text/javascript">
+		$(function(){
+			$('.form_response_loader').remove();
+		})
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			   var cart_count;
+			$('.toggle-txt').on('click',function(){
+				$(this).find('div.txt').toggle();
+			})
+
+
+			$('.fa-plus-square').on('click',function(){
+			    <{if !$loginUser}>
+			       window.location.href = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/restaurant/<{$restaurant_id}>");
+		       <{else}>
+						
+				$target = $(this).prev('.input-quantity');
+
+				if($target.data('type')=='menu_option')$target.parents('.menu_guige').find('.menu_option input').val(0);
+
+				$target.val(parseInt($target.val())+1);
+				
+				updateShoppingCart($target);
+		     
+				<{/if}>
+			})
+
+			$('.fa-minus-square').on('click',function(){			
+				  <{if !$loginUser}>
+			       window.location.href = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/restaurant/<{$restaurant_id}>");
+		         <{else}>
+						
+					$target = $(this).next('.input-quantity');
+
+					if($target.val()>0)$target.val(parseInt($target.val())-1);
+			      	
+			      	updateShoppingCart($target);
+				<{/if}>
+			})
+
+
+		})
+
+		function addMenuWithOption(obj) {
+
+			var qtyCheck=0;
+			$(obj).parents('.menu_guige').find('.menu_option input').each(function(index,value){
+				qtyCheck+=parseInt($(value).val());
+			})
+			if(qtyCheck==0&&$(obj).parents('.menu_guige').find('.menu_option input').size()!=0){
+				alert('请至少选择一种规格');
+				return false;
+			}
+
+			var postData=[];
+
+			var totalPirce = 0;
+			$(obj).parents('.menu_guige').find('input').each(function(index,value){
+				if(parseInt($(value).val())>0){
+					var singleData={};
+
+					singleData['main_coupon_id']=$(value).data('main_coupon_id');
+					singleData['menu_id']=$(value).data('menu_id');
+					
+
+					var type = $(value).data('type');
+					var price=$(value).data('price');
+
+					if(type =='menu_option'){
+						var id=$(value).data('menu_option_id');
+					}else if(type=='sidedish_menu'){
+						var id = $(value).data('sidedish_menu_id');
+					}else{
+						var id=null;
+					}
+
+					//console.log('type='+type +';id='+id+';price='+price);
+					singleData['type']=type;
+					singleData['id']=id;
+					singleData['price']=price;
+					singleData['quantity']=$(value).val();
+
+					postData.push(singleData);
+
+					totalPirce+=singleData['quantity']*singleData['price'];
+
+					//reset to 0
+					$(value).val(0);
+				}
+			})
+
+			$.ajax({
+			  type: 'POST',
+			  url: '<{$http_root_www}>query?cmd=restaurant_add_menu_with_option',
+    		  data : {data:postData},
+			  beforeSend:function(){
+
+			  }
+			}).done(function(data){
+				updateCartDisplay(data);
+			});
+
+
+			$(obj).parents('.menu_guige').hide();
+		}
+
+		function updateShoppingCart(target) {
+			var type=$target.data('type');
+          
+			switch(type){
+				case 'voucher':
+					console.log('this is '+ type);
+
+					var main_coupon_id=$target.data('main_coupon_id');
+					var sub_coupon_id=$target.data('sub_coupon_id');
+					var quantity=$target.val();
+
+
+					var postData={};
+					postData['type']=type;
+					postData['main_coupon_id']=main_coupon_id;
+					postData['sub_coupon_id']=sub_coupon_id;
+					postData['quantity']=quantity;
+
+					$.ajax({
+					  type: 'POST',
+					  url: '<{$http_root_www}>query?cmd=restaurant_menu_add_carts',
+					  data: postData,
+					  beforeSend:function(){
+
+					  }
+					}).done(function(data){
+						updateCartDisplay(data);
+					});
+
+				break;
+
+				case 'menu':
+					console.log('this is '+ type);
+
+					var main_coupon_id=$target.data('main_coupon_id');
+					var menu_id=$target.data('menu_id');
+					var quantity=$target.val();
+
+
+					var postData={};
+					postData['type']=type;
+					postData['main_coupon_id']=main_coupon_id;
+					postData['menu_id']=menu_id;
+					postData['quantity']=quantity;
+
+					$.ajax({
+					  type: 'POST',
+					  url: '<{$http_root_www}>query?cmd=restaurant_menu_add_carts',
+					  data: postData,
+					  beforeSend:function(){
+
+					  }
+					}).done(function(data){
+						updateCartDisplay(data);
+					});
+
+					if(quantity==0){
+						$target.parent('.quantity').next('.sidedish_menu').find('.input-quantity').val(0);
+					}
+				break;
+			}
+
+			
+		}
+
+		function updateCartDisplay(data) {
+			if(!data){
+				$.ajax({
+				    url:"<{$http_root_www}>query?cmd=cart_info&businessUserId=<{$coupon.createUserId}>",
+				    beforeSend:function(){
+				    	$('body').append('<p class="form_response_loader"></p>');
+				    }
+				}).done(function(d) {
+				       try{
+							data = JSON.parse(d);
+						}catch(err){
+							return false;
+						}
+
+						$('#carts_count_id').html(data['totalQuantity']);
+						$('#voucher_totalprice').html(data['totalVoucherPrice'].toFixed(2));
+						$('#carts_totalprice').html(data['totalMenuPrice'].toFixed(2));
+						$('#tp').html("$"+(parseFloat(data['totalVoucherPrice']) +parseFloat(data['totalMenuPrice'])).toFixed(2));
+				    }).always(function(){
+				    	$('.form_response_loader').remove();
+				    });
+			}else{
+
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					return false;
+				}
+
+				$('#carts_count_id').html(data['totalQuantity']);
+				$('#voucher_totalprice').html(data['totalVoucherPrice'].toFixed(2));
+				$('#carts_totalprice').html(data['totalMenuPrice'].toFixed(2));
+				$('#tp').html("$"+(parseFloat(data['totalVoucherPrice']) +parseFloat(data['totalMenuPrice'])).toFixed(2));
+			}
+
+		}
+
+		function updateInpageShoppingCart(){
+			$.ajax({
+				url:"<{$http_root_www}>query?cmd=get_cart_item_ajax&businessUserId=<{$coupon.createUserId}>",
+				type:"GET",
+				beforeSend:function(){
+					$('body').append('<p class="form_response_loader"></p>');
+				},
+
+			}).done(function(data){
+				$('.inpageShoppingCart').html(data);
+				$('.inpageShoppingCart').show();
+			}).always(function(){
+				$('.form_response_loader').remove();
+			})
+		}
+
+		
+	</script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
+    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
+	<script type="text/javascript" src="<{$STATIC_PATH}>unveil/jquery.unveil.js"></script>
+	<script>
+	
+        var swiper = new Swiper('.comm-pic', {
+           pagination: '.swiper-pagination',
+           paginationClickable: true
+       });
+	      
+	</script>
+
+	<script type="text/javascript">
+	
+	function add_carts() { 
+		<{if !$loginUser}>
+			var u = "<{$http_root_www}>member/login?returnUrl="+encodeURIComponent("/member/showcart?business_userid=<{$coupon.createUserId}>&code_str="+encodeURIComponent(code_str)+"#directCheckout");
+			console.log(u);
+			window.location.href = u;
+		<{else}>
+	
+		window.location.href = '<{$http_root_www}>member/showcart?business_userid=<{$coupon.createUserId}>#directCheckout';
+		<{/if}>
+	}
+
+
+	</script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+	
+
+	<!-- sec float go top -->
+	<{include file ="mobile/restaurant/sec_static_gotop.htm"}>
+
+	<!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='<{$pageTitle}>';
+        var shareLink='<{$shareUrl}>';
+        var desc="<{$coupon.coupon_summery_description}>";//onMenuShareAppMessage
+       var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+	<!-- WX jssdk share -->
+
+</body>
+</html>
+

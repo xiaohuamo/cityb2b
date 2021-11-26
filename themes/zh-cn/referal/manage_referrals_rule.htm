@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+					
+					<div class="colCurTit">
+						<span class="links">
+							
+							<a class='btn-yellow' href="<{$editUrl}>"><i class='fa fa-plus'></i>生成媒体码</a>
+						</span>
+					</div>
+
+						<div class="main-list">
+							<{if $list}>
+								<form method="post" >
+									<table cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th>图片</th>
+												<th>产品</th>
+												<th>描述</th>
+												<th>媒体码</th>
+												<th>创建时间</th>
+												<th>状态</th>
+												<th>操作</th>
+												<th>媒体用户</th>
+												<th>二维码</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<{foreach from=$list item=item name='dl'}>
+
+											<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+												<td>
+													<a href="<{$http_root_www}>coupon/<{$item.coupon_id}>">
+														<img src="<{$UPLOAD_PATH}><{$item.coupon_pic|image:165:105}>">
+													</a>
+
+												</td>
+												<td>
+													<small><{$item.coupon_title}></small>
+												</td>
+
+												<td>
+													<{$item.desc}>
+												</td>
+
+												<td>
+													<{$item.apply_code}>
+												</td>
+
+												<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
+
+												<td class='update-result'>
+													<{if $item.status==0}>
+														<span style='color:green'>启用</span>
+													<{elseif $item.status==1}>
+														<span style='color:#f30'>禁用</span>
+													<{elseif $item.status==2}>
+														<span style='color:#FD5001 '>锁定</span>
+													<{/if}>
+												</td>
+												<td>
+													<select class='update-selected' data-target-id='<{$item.id}>'>
+														<option value='0' <{if $item.status==0}>selected<{/if}>>启用规则</option>
+														<option value='1' <{if $item.status==1}>selected<{/if}>>禁用规则</option>
+														<option value='2' <{if $item.status==2}>selected<{/if}>>Lock规则</option>
+													</select>
+												</td>
+												<td><a href="<{$viewUrl}>id=<{$item.id}>">查看</a></td>
+
+												<td><a href="<{$codeUrl}>id=<{$item.id}>">生成</a></td>
+											</tr>
+											<{/foreach}>
+										</tbody>
+									</table>
+								</form>
+							<{else}>
+								还没有介绍记录
+							<{/if}>
+						</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+
+$(function(){
+	$('.update-selected').on('change',function(){
+		var value = $(this).find("option:selected").val();
+		var target =$(this).data('target-id');
+
+		$display=$(this).parent().prev('.update-result');
+
+		console.log(target);
+		console.log(value);
+
+		$.ajax({
+		  method: "get",
+		  url: "<{$http_root_www}>referal/update_referral_rule_ajax",
+		  data: { target:target,value:value},
+		  beforeSend:function(){
+		  		$display.html("<i class='fa fa-spinner fa-pulse'></i>");
+		  },
+		  success:function(result){
+		  		try{
+					console.log(result);
+
+					var msg = "";
+
+					if(value==0){
+						msg="<span style='color:green'>启用</span>";
+					}else if(value==1){
+						msg="<span style='color:#f30'>禁用</span>";
+					}else if(value==2){
+						msg="<span style='color:#FD5001 '>锁定</span>";
+					}
+
+					$display.html(msg);
+
+				}catch(err){
+					$display.html("<i class='fa fa-warning'></i>");
+				}
+
+		  },
+		  complete:function(){
+
+		  },
+		  error:function(result){
+		  	  $display.html("<i class='fa fa-warning'></i>");
+		  }
+		})
+	});
+})
+
+</script>
+
+</body>
+</html>

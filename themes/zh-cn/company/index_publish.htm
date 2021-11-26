@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	
+	<style type="text/css">
+		.index_publish_panel{
+			position: relative;
+		}
+
+		.index_publish_panel .publish_item{
+			
+			display: inline-block;
+			width: 24.2%;
+			height: 200px;
+			background-position: center;
+			text-decoration: none;
+			border: 2px solid white;
+		}
+
+		a.publish_item:hover{
+			border: 2px solid #FD5001 ;
+		}
+
+		.publish_item .publish_title{
+			text-align: center;
+			line-height: 60px;
+			font-size: 20px;
+			font-weight: bold;
+			color: #fff;
+		}
+
+		.publish_item .publish_desc{
+			text-align: center;
+			font-size: 13px;
+			color: #fff;
+		}
+
+		
+	</style>
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}> 
+			<div class="main clearfix m-hide">
+			
+			<div class="box2">
+					
+					<div class="colCurTit" style="margin-left:5px;">
+						<label style="float:left"><a href="<{$http_root_www}>company/index_publish"><{$lang->publish_center}></a></label>
+						<span class="links "> 
+							<a  class='btn-yellow' href="<{$http_root_www}>company/help?id=17" ><i class='fa fa-plus'></i>发布帮助</a>
+						</span>
+					</div>
+                   
+				<{include file='company/fast_config_panel.htm'}>
+			
+				 <{if $business_type =='business_type_shop'}>
+					<{include file='company/index_publish_shop.htm'}>
+				<{/if}>
+	
+				<{if $business_type =='business_type_service'}>
+					<{include file='company/index_publish_service.htm'}>
+				<{/if}>
+   
+				<{if $business_type =='business_type_restaurant'}>
+					<{include file='company/index_publish_restaurant.htm'}>
+				<{/if}>
+   
+				<{if $business_type =='business_type_media'}>
+					<{include file='company/index_publish_media.htm'}>
+				<{/if}>
+				
+					</div>
+			</div> 
+		</div>
+	</div>
+
+	<{include file='footer.htm'}>
+
+	</body>
+	</html>

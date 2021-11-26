@@ -1,0 +1,16 @@
+<ul class="g-ul s-nav">
+
+
+    <{foreach from=$restaurant_category item=gitem}>
+		<li>
+			<a id="cate_href-<{$gitem.restaurant_id}>-<{$gitem.category_id}>" onclick="change_category('<{$gitem.restaurant_id}>-<{$gitem.category_id}>');    "
+			   data-target-id='<{$gitem.restaurant_id}>-<{$gitem.category_id}>' data-cid="<{$gitem.id}>" class="	s1 loading-btn"><{$gitem.category_name}>
+                <{if $gitem.hot}>
+					<i style="   font-style: normal;   top: 8px;	font-size:13px;    margin-left: 2px;    display: inline-block;    padding: 0px 5px;    border-radius: 10px;    background: red;    color: white;    line-height: 17px;"><span
+								id=""><{$lang->hot_category_list}></span></i>
+                <{/if}>
+			</a>
+		</li>
+    <{/foreach}>
+
+</ul>

@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+			 <{include file='company/side_restaurant_info.htm'}>
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >6</span>
+					<div class="colCurTit clearfix">
+						<h1>第六步:递送设置&指定门店</h1>
+					</div>
+
+					<{include file='company/coupons_edit_step_menu_top.htm'}>
+					
+					<form id="memberForm" action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						
+
+						<{if $data.bonusType!=4}>
+						<div class='coupon-option' >
+							<div  class="input-box clearfix">
+								<span><label>产品类型</label></span>
+								<{if $data.EvoucherOrrealproduct!='restaurant_menu'}>
+								<label>
+									<input type="radio" name="EvoucherOrrealproduct" value="evoucher" <{if $data.EvoucherOrrealproduct=='evoucher'}> checked<{/if}> />
+									电子券(Evoucher)
+								</label>
+								<label>
+									<input type="radio" name="EvoucherOrrealproduct" value="realproduct" <{if $data.EvoucherOrrealproduct=='realproduct'}> checked<{/if}> />
+									产品涉及配送或提货
+								</label>
+								<{else}>
+								<label>
+									<input type="radio" name="EvoucherOrrealproduct" value="restaurant_menu" <{if $data.EvoucherOrrealproduct=='restaurant_menu'}> checked<{/if}> />
+									线上餐厅
+								</label>
+								<{/if}>
+							</div>
+							
+
+							<div class='realproduct-option' style="display: none">
+								<div  class="input-box multi-select clearfix">
+									<span><label>客户上门提货</label></span>
+									<select id="pickup_avaliable" name="pickup_avaliable" >
+										<option value="1"<{if $data.pickup_avaliable=='1'}> selected<{/if}>>允许客户上门提货</option>
+										<option value="0"<{if $data.pickup_avaliable=='0'}> selected<{/if}>>不允许客户上门提货</option>
+									</select>
+								</div>
+
+								<div class='staff-list'>
+									<{if !$loginUser.googleMap}>
+										<p>
+											<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+											<em>默认自取点缺少地址</em>
+											
+											<input type="text" id='geocomplete' name="address" placeholder="请填写地址" style="width: 350px;">
+											<script type="text/javascript">
+												$('input[name=address]').on('keyup',function(){
+													$('input[name="sales_user_list[]"]').next('small').html($(this).val());
+												})
+											</script>
+
+											<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries&libraries=places"></script>
+											<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+											<script>
+												$(function(){
+													$("#geocomplete").geocomplete({
+														details: "form",
+														types: ["geocode", "establishment"],
+														location: "<{$loginUser.googleMap}>"
+													});
+												});
+											</script>				
+										</p>
+										<br>
+									<{/if}>
+
+									<em>如要增加多个取货点，<a href="<{$http_root_www}>company/staff">点击这里编辑</a>，完成后刷新该页面</em><br><br>
+
+									<div class='item'>
+										<label > 
+										可用取货点：
+										<{if $staff_list}>
+											<input type="checkbox" name="sales_user_list[]" value='<{$loginUser.id}>' 
+											<{if in_array($loginUser.id,$selected_sales_user_list)}>checked <{/if}>>
+											<{$loginUser.contactPersonNickName}> &nbsp;&nbsp;&nbsp;&nbsp;<small ><{$loginUser.googleMap}></small>
+										<{else}>
+											<input type="checkbox" name="sales_user_list[]" value='<{$loginUser.id}>' 
+											checked style='display: none'>
+											<{$loginUser.contactPersonNickName}> &nbsp;&nbsp;&nbsp;&nbsp;<small ><{$loginUser.googleMap}></small>
+										<{/if}>
+										
+										</label>	
+									</div>
+
+									<{foreach from=$staff_list item=item}>
+									<div class='item'>
+										<label > 
+										自取点：
+										<input type="checkbox" name="sales_user_list[]" value='<{$item.id}>' 
+										<{if in_array($item.id,$selected_sales_user_list)}>checked <{/if}>>
+										<{$item.contactPersonNickName}> <small ><{$item.googleMap}></small>
+										</label>	
+									</div>
+									<{/foreach}>
+									
+
+									<{if !$loginUser.pickup_des}>
+									<div  class="input-box clearfix">
+										<span><label >自提说明</label></span>
+										<br>
+										<textarea name="pickup_des" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.pickup_des}></textarea>
+									</div>
+
+									<script type="text/javascript">
+										$(function(){
+											CKEDITOR.replace('pickup_des', {
+												height : 200,
+												toolbar: 'Basic',
+												placeholder : '<p>EXAMPLE:自取说明</p> <p>自取地址：墨尔本总部</p> <p>自取时间:每周一到周五 9:00AM - 5:00PM</p> <p>请出示订单邮件或二维码，自取前请联系我们预约</p>'
+											});
+										});
+									</script>
+									<{/if}>
+
+								</div>
+								
+								<div  class="input-box multi-select clearfix">
+									<span><label>快递服务</label></span>
+									<select id="deliver_avaliable" name="deliver_avaliable" >
+										<option value="1"<{if $data.deliver_avaliable=='1'}> selected<{/if}>>提供递送服务</option>
+										<option value="0"<{if $data.deliver_avaliable=='0'}> selected<{/if}>>不提供递送服务</option>
+										
+									</select>
+								</div>
+
+
+								<div class='deliver-option'>
+
+									<div class="input-box clearfix">
+										<span><label>订单基本邮费</label></span>
+
+										<input type="number" step='0.01' min='0' class="input-text" value="<{$loginUser.flat_rates_to_local_city}>" name='user_flat_rates_to_local_city'/>
+
+										<em class='update_user_deliver_fee em-btn-yellow' >应用</em>
+										
+										<script type="text/javascript">
+											$(function(){
+												var varifiedHtml="<i class='fa fa-check-circle' style='color: #30af30;'></i>已更改";
+												var loadingHtml="<i class='fa fa-spinner fa-spin'></i>";
+												var errorHtml= " <i class='fa fa-exclamation-triangle' style='color: #FD5001 ;'></i>网络问题请稍后再试"
+
+												$('.update_user_deliver_fee').on('click',function(){
+													 var result=confirm('该订单基本邮费是指当用户下的每一订单的最基本运费收费。是否更改？')
+													if(result){
+														var fee = $("input[name='user_flat_rates_to_local_city']").val();
+														$.ajax({
+															url:'<{$http_root_www}>company/update_user_deliver_fee',
+															data:{fee:fee},
+															beforeSend: function( xhr ) {
+																$('.update_user_deliver_fee').html(loadingHtml);
+															}
+														}).done(function(result){
+															$('.update_user_deliver_fee').html(varifiedHtml);
+														}).fail(function(){
+															$('.update_user_deliver_fee').html(errorHtml);
+														})
+													}
+
+												})
+											})
+										</script>
+										
+									</div>
+
+									<div  class="input-box multi-select clearfix">
+										<label>
+											<input type="checkbox" name='product_deliver_fee_checkbox' class='product_deliver_fee_checkbox' <{if $data.flat_rates_to_local_city>0}>checked<{/if}>>
+											除上面基本邮费外，如果购买本产品需要加收额外运费请勾选
+										</label>
+										<br>
+										<div class='product_deliver_fee_edit' <{if $data.flat_rates_to_local_city<=0}>style='display:none'<{/if}>>
+											
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<label>
+												<input type="radio" name="deliverFeeCalculationType" value='per_coupon' checked>
+												无论客户购买本产品数量多少均收取唯一运费
+											</label>
+											<br>
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<label>
+												<input type="radio" name="deliverFeeCalculationType" value='per_coupon_item'>
+												每个产品加收固定费用（比如每个产品加收$2.00,如果用户购买2个，实际运费在每笔订单费用上另加$4）
+											</label>
+
+											<br>
+
+											<span><label>产品加收邮费</label></span>
+											$
+											<input type="number" step='0.01' min='0' class="input-text" value="<{$data.flat_rates_to_local_city}>" name="flat_rates_to_local_city" />
+										</div>
+
+										<script type="text/javascript">
+											$(function(){
+												$('.product_deliver_fee_checkbox').on('click',function(){
+													if($(this).attr('checked')){
+														$('.product_deliver_fee_edit').show(200);
+													}else{
+														$('.product_deliver_fee_edit').hide(200);
+													}
+												})
+											})
+										</script>
+									</div>
+
+									<!-- <div class="input-box clearfix">
+										<span><label>国内统一邮费</label></span>
+
+										<{if $loginUser.flat_rates_national>0}>
+										<span style="width: 130px;display: inline-block;">
+											每单 $<{$loginUser.flat_rates_national}> +
+										</span>	
+										<{/if}>
+
+										<input type="number" step='0.01' min='0' class="input-text" value="<{$data.flat_rates_national}>" name="flat_rates_national" />
+										<em>暂不支持</em>
+										
+									</div>
+									<div  class="input-box clearfix">
+										<span><label>国际统一邮费</label></span>
+
+										<{if $loginUser.flat_rates_international>0}>
+										<span style="width: 130px;display: inline-block;">
+											每单 $<{$loginUser.flat_rates_international}> +
+										</span>	
+										<{/if}>
+
+										<input type="number" step='0.01' min='0' class="input-text" value="<{$data.flat_rates_international}>" name="flat_rates_international" />
+										<em>暂不支持</em>
+										
+									</div> -->
+
+									<{if !$loginUser.delivery_description}>
+									<div  class="input-box clearfix">
+										<span>
+										<label >递送说明</label>
+										</span>
+										<br />
+										<textarea name="delivery_description" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.delivery_description}></textarea>
+									</div>
+
+									<script type="text/javascript">
+										$(function(){
+
+											CKEDITOR.replace('delivery_description', {
+												height : 200,
+												toolbar: 'Basic',
+												placeholder : '<p>EXAMPLE:递送说明</p> <p>递送范围：仅限墨尔本周边</p> <p>递送时间：每周一发货</p> <p>递送周期：墨尔本2天内到达</p> <p>特殊说明等等</p>'
+											});
+										});
+									</script>
+									<{/if}>
+								</div>
+
+							</div>
+						</div><!--End Class coupon-option  -->
+
+						<{else}>
+
+						<div class='voucher-option'>
+
+							<div  class="input-box multi-select clearfix">
+								<span><label>分区销售</label></span>
+								<select id="staff_region_limited" name="staff_region_limited" >
+									<option value="1"<{if $data.staff_region_limited=='1'}> selected<{/if}>>支持分区销售</option>
+									<option value="0"<{if $data.staff_region_limited=='0'}> selected<{/if}>>关闭分区销售</option>
+								</select>
+							</div>
+
+
+							<div class='staff-list'>
+								<div class='item'>
+									<label > 
+									总部：
+									<input type="checkbox" name="sales_user_list[]" value='<{$loginUser.id}>' 
+									<{if in_array($loginUser.id,$selected_sales_user_list)}>checked <{/if}>>
+									<{$loginUser.contactPersonNickName}> <small style="float:right;"><{$loginUser.googleMap}></small>
+									</label>	
+								</div>
+
+								<{foreach from=$staff_list item=item}>
+								<div class='item'>
+									<label > 
+									分部：
+									<input type="checkbox" name="sales_user_list[]" value='<{$item.id}>' 
+									<{if in_array($item.id,$selected_sales_user_list)}>checked <{/if}>>
+									<{$item.contactPersonNickName}> <small style="float:right;"><{$item.googleMap}></small>
+									</label>	
+								</div>
+								<{/foreach}>
+								
+							</div>
+						</div>
+						<{/if}>
+
+						<{include file='company/coupons_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		$("input[name='EvoucherOrrealproduct']").on('click',function(){
+			if($(this).val()=='evoucher'){
+				$('.realproduct-option').hide(200);
+				$('.deliver-option').hide(200);
+			}else if($(this).val()=='realproduct'){
+				$('.realproduct-option').show(200);
+
+				$("#pickup_avaliable,#staff_region_limited,#deliver_avaliable").trigger('change');
+			}
+		})
+
+		$("#pickup_avaliable,#staff_region_limited").on('change',function(){
+			var selectedvalue = $(this).find('option:selected').val();
+			if(selectedvalue=='1'){
+				$('.staff-list').show(200);
+			}else if(selectedvalue=='0'){
+				$('.staff-list').hide(200);
+			}
+		})
+			
+
+
+		$("#deliver_avaliable").on('change',function(){
+			var selectedvalue = $(this).find('option:selected').val();
+			if(selectedvalue=='1'){
+				$('.deliver-option').show(200);
+			}else if(selectedvalue=='0'){
+				$('.deliver-option').hide(200);
+			}
+		})
+
+		$("#pickup_avaliable,#staff_region_limited,#deliver_avaliable").trigger('change');
+
+		$("input[name='EvoucherOrrealproduct']:checked").click();
+
+	});
+</script>
+
+</body>
+</html>

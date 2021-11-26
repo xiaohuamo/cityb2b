@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		<div class="pc-side p-hide">
+	<div class="box">
+		
+		<div class="menu3">
+			<ul class="clearfix">
+			
+			
+		
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"><{$lang->wholeseller_card}></a>
+					</span>
+				</li>
+				<li>
+					<span>
+					<a class ="panel_item"  href="<{$http_root_www}>factorypage/restaurant_edit?freshfood=1"> <{$lang->category_management}></a>
+					</span>
+				</li>
+				
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>factorypage/restaurant_menu_edit?freshfood=1"> <{$lang->items_management}></a>
+					</span>
+				</li>
+				
+				
+				<li>
+					<span>
+						<a class ="panel_item"   href="<{$http_root_www}>factorypage/<{$loginUser.id}>"> <{$lang->preview_store}></a>
+					</span>
+				</li>
+				
+				
+				<li >
+					<span>
+						<a class ="panel_item"   href="<{$http_root_www}>company/dispcenter_schedule"> <{$lang->delivery_date_open_end_time_setting}></a>
+					</span>
+				</li>
+				
+				
+				
+				
+			</ul>
+		</div>
+
+	</div>
+</div>
+	</div>
+	<{include file='footer.htm'}>
+</body>
+</html>

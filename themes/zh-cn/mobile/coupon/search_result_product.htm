@@ -1,0 +1,92 @@
+<{extends file="mobile/coupon/search_result_tpl.htm"}>
+
+<{block name=search_result}>
+	<{if strpos($alias,'106121')!==false||true}>
+		<!-- 美食style -->
+			<style type="text/css">
+				 .promotion-item{
+			        position: relative;
+			        margin-top: 25px;
+			      }
+
+			      .promotion-item .price-off{
+			        position: absolute;
+			        top: -18px;
+			        left: 10px;
+			        height: 60px;
+			        width: 60px;
+			        line-height: 60px;
+			        border-radius: 30px;
+			        background: #FD5001 ;
+			        color: #fff;
+			        text-align: center;
+			        font-size: 20px;
+			      }
+			</style>
+
+		<div class="promotion container" style="    padding-right: 0px;    padding-left: 0px;">
+          <div class='row'>
+            <{foreach from=$data item=item}>
+           
+
+							<div class="col-xs-12 " style="	padding: 5px;">
+
+							 <a href="<{if $item.business==1}>/coupon1/<{$item.id}><{else}>/restaurant/<{$item.createUserId}>?keyword=<{$item.id}><{/if}>">
+								<div class="col-xs-6 promotion-item" style="margin-top: 2px;padding: 2px;">
+									
+									   <img class="card-img-top" src="<{$UPLOAD_PATH}><{$item.pic|image:200:200}>" alt="<{$item.title}>">  
+								
+												
+								</div>
+								
+								<div class="col-xs-6 promotion-item" style="margin-top: 2px;text-align: left;padding: 4px;">
+															
+									<div class="card-body">
+									 <{if $item.business==0}><h2><p style="overflow: hidden;font-size: 0.5rem;font-weight: bolder;text-align: left;line-height: 0.7rem;color: #f30;"><{$item.businessName|truncate_cn:45:'..'}></p></h2><{/if}>
+									 <h2><p style="overflow: hidden;    font-size: 0.5rem;    font-weight: bolder; text-align: left;   line-height: 0.7rem;"><{$item.title}></p></h2>
+									  <p style="color:#bbb;height: 2.5rem;">  <{if $langStr=='zh-cn'}><{$item.coupon_summery_description|truncate_cn:150:'..'}><{else}><{$item.coupon_summery_description_en|truncate_cn:180:'..'}><{/if}></p>
+									  <div class="row" style="line-height: 25px;/* margin-bottom: 10px; */">
+												<span class="col-xs-4" style="color:#f30;text-align: left;font-size: 23px;font-weight: bold;"><{$item.price1}></span>
+												<s class="col-xs-4" style="text-align: center;color:#bbb;"><{$item.price2}> </s> 
+												<span class="col-xs-4" style="    right: 10px;color:#00b7a5;text-align: right;"> <i class="fa fa-heart"></i><{$item.hits}></span>
+									  </div>
+									</div>
+
+								</div>
+							</a>
+							</div>
+
+
+
+
+
+		  
+            <{/foreach}>
+           
+          </div>
+        </div>
+
+	<{else}>
+		<ul class="g-ul m-list1">
+		<{foreach from=$data item=item}>
+			<li>
+				<a class="con" href="<{$http_root_www}>coupon1/<{$item.id}>">
+					<div class="pic"><img src="<{$UPLOAD_PATH}><{$item.pic|image:210:140}>" alt="<{$item.title}>"></div>
+					<h4><{$item.title|truncate_cn:80:'...'}></h4>
+						<{if $wholesale=='1'}>
+						<{if $item.wholesale_price3!='0.00'}>
+						<span class="new">$<{$item.wholesale_price3}></span>
+						<{elseif $item.wholesale_price2!='0.00'}>
+						<span class="new">$<{$item.wholesale_price2}></span>
+						<{elseif $item.wholesale_price1!='0.00'}>
+						<span class="new">$<{$item.wholesale_price1}></span>
+						<{/if}>
+						<{else}>
+						<span class="new"><{$item.price1}></span>
+						<{/if}>
+				</a>
+			</li>
+		<{/foreach}>
+		</ul>
+	<{/if}>
+<{/block}>

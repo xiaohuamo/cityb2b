@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
+ 
+</head>
+<body>
+
+<div style="text-align: center;">
+	<a href="<{$http_root_www}>"><img style='width: 50%' src="<{$SKIN_PATH}>mobile/images/p-logo.jpg"></a>
+</div>
+
+<div style="text-align: center;padding: 30px 20px">
+
+	<h1 class='text-info'>媒体邀请二维码!</h1>
+
+	<p>生成并分发媒体码给指定用户可以给出特定的分享抽成，以此激励媒体和商家之间的互惠互利</p>
+	<p>请将该二维码或链接发送给您希望邀请的用户，用户识别次二维码后需要输入邀请码确认身份</p>
+	<p>
+		<img src="<{$applyqrcode}>">
+	</p>
+	<p>
+		OR
+	</p>
+	<p>
+	 <a href="<{$applyUrl}>"> <small><{$applyUrl}></small></a>
+	</p>
+
+	<!-- <p>
+    	<strong>邀请码</strong>
+    </p>
+
+    <p>
+    	<strong><{$data.apply_code}></strong>
+    </p> -->
+
+
+    <div class='referral-share'>
+		<div class='share-btn btn btn-warning'>分享该页面</div>
+		<div class='share-display'>
+			<div class='top'>
+				<img src="<{$SKIN_PATH}>images/redbag/img/guide1.png">
+			</div>
+		</div>
+	</div>
+	
+	<style type="text/css">
+	.referral-share .share-display{
+		display: none;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		width:100%;
+		height: 100%;
+		z-index: 999;
+		background-color: rgba(0,0,0,0.7);
+	}
+
+	.referral-share .share-display h2{
+	    color: #fff;
+	    padding: 30px;
+	    line-height: 100px;
+	    text-align: center;
+	}
+
+	.referral-share .top{
+		height: 120px;
+	}
+	.referral-share .top img{
+		width: 170px;
+		position: absolute;
+		right: 0px;
+	}
+	.referral-share .qrcode{
+		text-align: center;
+		padding: 50px 0px;
+	}
+	.referral-share .qrcode img{
+		display: inline-block;
+		width: auto;
+	}
+	.referral-share .bottom{
+		text-align: center;
+		width: 100%;
+		height: 50px;
+	}
+	.referral-share .bottom .manage-share-link{
+		background-color: #FD5001 ;
+		padding: 10px 20px;
+	}
+	</style>
+
+
+	<br><br>
+
+	<div>
+	<a class='btn btn-default' href="<{$manageUrl}>">返回列表</a>
+	<a class='btn btn-default' href="<{$http_root_www}>">首页</a>
+	</div>
+
+	<br><br>
+
+	<p style="color:#aaa"><small>提示：Ubonus介绍人是全澳最真实的介绍收益体系</small></p>
+</div>
+
+<{include file="mobile/mobile_footer.htm"}>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$('.referral-share .share-btn').on('click',function(){
+			$('.referral-share .share-display').show();
+		})
+
+		$('.referral-share .share-display').on('click',function(){
+			$(this).hide();
+		})
+	})
+</script>
+
+</body>
+
+<!-- WX jssdk share -->
+<script type="text/javascript">
+    var shareTitle='分享推广邀请 - <{$business.businessName}>';
+    var shareLink='<{$shareUrl}>';
+    var desc="<{$coupon.title}>";//onMenuShareAppMessage
+   var shareImg='<{$http_root_wx}>data/upload/<{$coupon.pic}>';
+</script>
+<{include file='wx_share_js.htm'}>
+<!-- WX jssdk share -->
+
+</html>

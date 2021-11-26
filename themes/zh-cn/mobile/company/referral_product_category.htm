@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+  <link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<script>
+	var php_root ='<{$http_root_www}>';
+</script>
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+ <script type="text/javascript">
+        //special checkout action; 
+        $(function(){
+           $('.go-back-btn').on('click',function(){
+                if($(this).hasClass('disabled'))return;
+                if($('.checkout-confirmation').is(":visible")){
+                    $('.shopping-cart').show();
+                    $('.checkout-confirmation').hide();
+                }else{
+                     window.history.back();
+                }
+
+            });
+			
+					
+        })
+    </script>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+<header id="hd" >
+	<div class="left">
+		<a  class="a-back go-back-btn"></a>
+	</div>
+	<h1>商品分类-Ubonus美食生活</h1>
+
+	<div class="right">
+		<!-- <sapn style='line-height: 1.5rem' class='resend_btn' ><{$lang->send_email_again}></span>	-->
+	<!-- <span class='search-icon' style="margin-right: 10px;line-height: 1.5rem;"><img class='share-btn' src="<{$SKIN_PATH}>mobile/images/food-footer/share.png" style='width:25px;padding-right: 5px;'>  </span> -->
+	       <span class='search-icon' style="margin-right: 10px;">
+
+         
+
+      </span>
+
+
+
+	 
+
+	</div>
+
+	
+</header>
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+				<div class="main-form">
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+
+					
+						<div class='search-result main-list'>
+						<{if $preview}>
+						<table cellspacing="0" cellpadding="0" width="100%"style="   background: #fdda8b;">
+								<tbody>
+										<tr>
+	
+											<td><a target='_blank' href="<{$http_root_www}>coupon1/<{$preview.id}>"><{$preview.title}></a></td>
+
+										</tr>
+								</tbody>
+							</table>
+							<{/if}>
+					</div>
+					
+						
+						
+						<div class="input-box clearfix">
+							
+							<span class='help-box' data-content='如果您有很多产品，编辑自定义分类，有助于您系统化的分类产品。 产品在您的商家店铺中也会按照您的分类显示'></span>
+
+							<div class='category_show'>
+							
+								<{if $table_tr}>
+								<a href="<{$http_root_www}>customizable_category/edit"><em>编辑自定义分类</em></a>
+								<table class='citen_edit'style='width:100%'>
+									<tr style='width:100%;background:#00A1E9;color:white'>
+										<td style='width=80%'>名称</td>
+										<td style='width=20%'>使用</td>
+									</tr>
+									<{$table_tr}>
+								</table>
+								<{else}>
+								<em>目前没有分类，<a href="<{$http_root_www}>customizable_category/edit"  style="  font-size: 14px;">请添加分类>></a></em>
+								<{/if}>
+
+							</div>
+						</div>
+<{if $table_tr}>	
+						<div class="input-box input-submit clearfix">
+							<button type="submit">保存</button>
+						</div>
+						<{/if}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div> 
+		</div>
+	</div>
+</div>
+
+<{include file="mobile/mobile_share_footer.htm"}>
+
+
+									
+<style type="text/css">
+	.input_html{
+		display: none;
+	}
+	input[name='nodecname']{
+		width:105px;
+	}
+	input[name='nodeorder']{
+		width:55px;
+	}
+
+	.add_top_level_item{
+		line-height: 35px;
+	}
+	table.citen_edit tr{
+		line-height: 35px;
+	}
+	table.citen_edit tr:hover{
+		background-color: #FD5001 ;
+	}
+	tr.highlight{
+		background-color: #FD5001 ;
+	}
+</style>
+<script type="text/javascript">
+
+	var selectedCategoryID='<{$data.cCategoryId}>'.split(',');
+
+	function popSelectedCategory(){
+		$allCheckbox=$("input[name='cCategoryId[]']");
+		$allCheckbox.each(function(){
+			if(selectedCategoryID.indexOf($(this).val())!='-1'){
+				$(this).prop('checked', true);
+			}
+		})
+	}
+
+	function loadChildAjax(obj){
+		$icon = $(obj).find('.load_child i');
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		if($(obj).hasClass('opened')){
+			$children=getChildCItem(obj);
+			$children.hide();
+			$children.each(function(){
+				$(this).find('.load_child i').removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			});
+
+			$icon.removeClass('fa-minus-square-o').addClass('fa-plus-square-o');
+			$(obj).removeClass("opened").addClass("collapsed");
+		}else if($(obj).hasClass('collapsed')){
+			$children=$("tr.citem[data-pid='"+id+"']");
+			$children.show();
+
+			$icon.removeClass('fa-plus-square-o').addClass('fa-minus-square-o');
+			$(obj).removeClass("collapsed").addClass("opened");
+		}else{
+			$.ajax({
+				url:"<{$http_root_www}>customizable_category/load_child_show",
+				data:{pid:id},
+				
+				beforeSend:function(){
+					$icon.removeClass('fa-plus-square-o').addClass('fa-spinner fa-spin');
+				},
+				success:function(data){
+					$(obj).after(data);
+					$(obj).addClass('opened');
+					$icon.addClass('fa-minus-square-o');
+				},
+				error:function(){
+					$icon.addClass('fa-plus-square-o');
+				},
+				complete:function(){
+					$icon.removeClass('fa-spinner fa-spin');
+					popSelectedCategory();
+				}
+			})
+		}
+	}
+
+	function getChildCItem(obj){
+		//从第一个子类到最后一个子类的全部tr
+		var id =$(obj).data('id');
+		var pid=$(obj).data('pid');
+
+		$allItem = $('tr.citem');
+		var firstIndex = $allItem.index($("tr.citem[data-pid='"+id+"']").first());
+
+		if($(obj).nextAll("tr.citem[data-pid='"+pid+"']").length!==0){
+			var lastIndex =  $allItem.index($(obj).nextAll("tr.citem[data-pid='"+pid+"']").first());
+		}else{
+			var lastIndex =  $allItem.index($("tr.citem[data-pid='"+id+"']").last())+1;
+		}	
+
+		if(lastIndex==-1){
+			$children=$allItem.slice(firstIndex);
+		}else{
+			$children=$allItem.slice(firstIndex,lastIndex);
+		}
+		return $children;
+	}
+
+	function loadChild(obj){
+		console.log('.load_child clicked');
+		$citem = $(obj).parents('tr.citem');
+		loadChildAjax($citem);
+	}
+
+</script>
+
+
+<script type="text/javascript">
+$(function(){
+	popSelectedCategory();
+});
+
+
+</script>
+
+
+</body>
+</html>

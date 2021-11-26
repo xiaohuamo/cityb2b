@@ -1,0 +1,114 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title><{$pageTitle}></title>
+
+	<{if $pageKeywords}>
+	<meta name="keywords" content="<{$pageKeywords}>"/>
+	<{/if}>
+
+	<{if $pageDescription}>
+	<meta name="description" content="<{$pageDescription}>"/>
+	<{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+	<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<script>
+        function timeToString(timeStamp) {
+            var date = new Date(timeStamp * 1000);
+            return date.toLocaleString();
+        }
+
+        function filePathToType(filePath) {
+			return filePath.split('/')[4].split('-')[0];
+        }
+	</script>
+</head>
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+					<label>Start Date</label>
+					<input type="date" class="input-text" id="startDate" value="<{$startDate}>">
+					<label>End Date</label>
+					<input type="date" class="input-text" id="endDate" value="<{$endDate}>">
+				</div>
+
+
+				<div class="main-list">
+					<{if $settlementFileHistory}>
+					<table>
+						<thead>
+						<tr>
+							<th>File</th>
+							<th>Create At</th>
+							<th>From</th>
+							<th>TO</th>
+						</tr>
+						</thead>
+						<tbody>
+						<{foreach from=$settlementFileHistory item=history name='dl'}>
+							<tr class="<{if $smarty.foreach.dl.index%2==0}>odd<{/if}>">
+								<td><a href="<{$http_root_www}><{$history.file_path}>"><script>document.write(filePathToType('<{$history.file_path}>'))</script></a></td>
+								<td><script>document.write(timeToString('<{$history.createTime}>'))</script></td>
+								<td><{$history.startDate}></td>
+								<td><{$history.endDate}></td>
+							</tr>
+						<{/foreach}>
+						</tbody>
+					</table>
+
+					<{else}>
+					没有任何结算历史
+					<{/if}>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+<script>
+	$('#startDate, #endDate').change(function() {
+        window.location.href = `<{$http_root_www}>company/settlement_file_history?startDate=` + $('#startDate').val() + '&endDate=' + $('#endDate').val();
+    });
+</script>
+</body>
+
+
+</html>

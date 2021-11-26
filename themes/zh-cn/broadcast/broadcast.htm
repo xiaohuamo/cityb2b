@@ -1,0 +1,196 @@
+
+<!doctype html>
+
+<head>
+
+   <!-- player skin -->
+   <link rel="stylesheet" href="<{$STATIC_PATH}>flowplayer.css">
+   <!-- site specific styling -->
+   <style>
+   body { font: 12px;font-family: "微软雅黑","Microsoft Yahei"; }
+
+   /*player*/
+   .flowplayer {max-width: 40%; height: 600px}
+
+   /*chat*/
+   .chat{ display:inline-block;position: relative; width: 30%;height: 600px;}
+   iframe{width: 100%;height: 100%; border: 1px solid #eee}
+
+   /*product*/
+   .sale{width: 28%;display: inline-block; overflow: hidden;position: relative; height: 600px;border: 1px solid #eee;}
+   .sale .head{background: #2bb8aa ;font-size: 12px; line-height: 30px;color: white;text-align: center;}
+   .products{width: 100% ;height: 95%;overflow-y: scroll;overflow-x: hidden; padding:0px 15px 0px 0px;}
+
+    ul.products {list-style-type: none;}
+   .products a{text-decoration: none}
+   .products li{
+       float: left; margin: 0 4.5px 10px; width: 100%;
+   }
+   .products li .inner{
+       display: block; padding:1px 1px 18px; border:1px solid #fff;
+       background-color: #fff;
+       transition: .3s;
+       -ms-transition: .3s;
+       -moz-transition: .3s;
+       -webkit-transition: .3s;
+       -o-transition: .3s;
+   }
+   .products .pic{}
+   .products .pic img{ display: block;width: 100%;height: 100%;}
+   .products .txt{
+       color: #545454;  line-height: 20px;
+       padding: 10px 5px 0;  overflow: hidden;
+       transition: .3s;
+       -ms-transition: .3s;
+       -moz-transition: .3s;
+       -webkit-transition: .3s;
+       -o-transition: .3s;
+   }
+   .products a:hover .txt{color: #FD5001;}
+   .products .txt p{
+       margin-bottom: 6px;
+       display: -webkit-box;
+       -webkit-box-orient: vertical;
+       -webkit-line-clamp: 2;
+       overflow: hidden;
+       height: 40px;
+   }
+   .products .txt .price{ float: left;}
+   .products .txt .price .new{font-size: 16px;color: #f23030;margin-right: 6px;}
+   .products .txt .price .old{font-size: 14px;color: #808080;text-decoration: line-through;}
+   .products .txt .collect{float: right;font-size: 14px;color: #333;}
+   .products .txt .collect i{
+       display: inline-block;
+       vertical-align: middle;
+       width: 15px;
+       height: 13px;
+       background: url(<{$SKIN_PATH}>images/pc-main/ico_collect.png) no-repeat center center;
+       margin-right: 6px;
+   }
+   </style>
+
+   <style type="text/css">
+     .live-list h1{
+      text-align: center;
+      line-height: 100px;
+      font-weight: lighter;
+     }
+     .live-user{
+        display: inline-block;
+        position: relative;
+        width: 22%;
+        margin: 1%;
+     }
+
+     .live-user img{
+        width: 100%
+     }
+   </style>
+
+   <!-- for video tag based installs flowplayer depends on jQuery 1.7.2+ -->
+   <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+   <!-- include flowplayer -->
+   <script src="<{$STATIC_PATH}>flowplayer.js"></script>
+
+</head>
+
+<body>
+
+   <!--
+      Please replace data-key value with your key that can be generated from
+
+      https://flowplayer.org/account/
+
+      Sample keys:
+
+      localhost  $512206430871778
+      127.0.0.1  $230995013922566
+      moot.it    $377415222747626
+   -->
+   <h1 style="text-align: center; font-weight: lighter;">
+    <a href="<{$http_root_www}>"><img src="<{$SKIN_PATH}>mobile/images/logo.png"></a>
+    
+     <br>
+     <{$broadcastInfo.broadcastTitle}>
+   </h1>
+   <div class="flowplayer" data-swf="flowplayer.swf" data-key="$512206430871778" data-ratio="1.5">
+      <video>
+      <{if $broadcastInfo.broadcastType=='live'}>
+        <source type="application/x-mpegurl" src="http://221.121.142.184:1935/live/<{$id}>/playlist.m3u8">
+      <{else}>
+        <source type="application/x-mpegurl" src="http://221.121.142.184:1935/vod/<{$id}>/playlist.m3u8">
+      <{/if}>
+      </video>
+   </div>
+   <div class='chat'>
+      <iframe src="http://livechat.ubonus365.com/WebPublicChat.aspx?sUUID=<{$id}>&sIsSign=<{$isOwner}>"></iframe>
+   </div>
+
+   <div class='sale'>
+      <div class='head'>产品</div>
+      <ul class="products" >
+
+          <{foreach from=$coupons item=item}>
+            <li>
+               <a href="<{$http_root_www}>coupon/<{$item.id}>" class="inner">
+                  <div class="pic">
+                     <img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="" />
+                  </div>
+                  <div class="txt">
+                     <p><{$item.title|truncate_cn:90:'...'}></p>
+                     <div class="price">
+                        <span class="new"><{$item.price1}></span>
+                        <span class="old"><{$item.price2}></span>
+                     </div>
+                     <span class="collect"><i></i><{$item.hits}></span>
+                  </div>
+               </a>
+            </li>
+            <{/foreach}>
+
+             <{foreach from=$random item=item}>
+            <li>
+               <a href="<{$http_root_www}>coupon/<{$item.id}>" class="inner">
+                  <div class="pic">
+                     <img src="<{$UPLOAD_PATH}><{$item.pic}>"/>
+                  </div>
+                  <div class="txt">
+                     <p><{$item.title|truncate_cn:90:'...'}></p>
+                     <div class="price">
+                        <span class="new"><{$item.price1}></span>
+                        <span class="old"><{$item.price2}></span>
+                     </div>
+                     <span class="collect"><i></i><{$item.hits}></span>
+                  </div>
+               </a>
+            </li>
+            <{/foreach}> 
+            
+         </ul>
+   </div>
+
+   <div class='live-list'>
+   <h1>其他正在直播的频道</h1>
+    <{foreach from=$userList item=item}>
+      <div class='live-user'>
+          <a target='_blank'  href="<{$http_root_www}>index.php?ctl=broadcast&act=index&id=UUID<{$item.id}>">
+          <img <{if $item.logo==null}> src="<{$UPLOAD_PATH}><{$item.avatar}>" <{else}>src="<{$UPLOAD_PATH}><{$item.logo}>"<{/if}> >
+          </a>
+      </div>
+      <{/foreach}>
+   </div>
+
+
+    <!-- WX jssdk share -->
+    <script type="text/javascript">
+        var shareTitle='Ubonus美食生活 - 直播 - <{$broadcastInfo.broadcastTitle}>';
+        var shareLink='<{$http_root_wx}>index.php?ctl=broadcast&act=index&id=<{$id}>';
+        var desc=shareTitle;//onMenuShareAppMessage
+        var shareImg='<{$http_root_wx}>data/upload/<{$coupons[0].pic}>';
+    </script>
+    <{include file='wx_share_js.htm'}>
+    <!-- WX jssdk share -->
+
+    <script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+</body>
