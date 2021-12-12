@@ -167,7 +167,7 @@ class ctl_factorypage extends cmsPage
 		//获得当前用户的实际商家所有者商家id
 		$factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
 		$id = $factoryId;
-		if(	$this->loginUser['role']==101) {
+		if(	$this->loginUser['role']==20) {
 			$salesManId = $this->loginUser['id'];
 			
 		}
@@ -1471,7 +1471,7 @@ class ctl_factorypage extends cmsPage
 		/**
          * sales Lists
          */
-        $where_sales = "((role = 101 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
+        $where_sales = "((role = 20 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
         $listsales = $mdl_user->getList(null, $where_sales, 'createdDate asc');
 
 		foreach ($listsales as $key => $value) {
@@ -1660,7 +1660,7 @@ class ctl_factorypage extends cmsPage
 // 2021-7-17 如果当前登陆用户为销售员，那么找到他的商家ID，并传递该值 。
 // 销售员的用户role 为101
 
-  if($this->loginUser['role']==101) {
+  if($this->loginUser['role']==20) {
 	  
 	  $business_userid = $this->loginUser['user_belong_to_user'];
 	  

@@ -232,7 +232,7 @@ class ctl_factory extends cmsPage
         }
 		// 检查如果当前用户为销售员，则生成查询sql语句。
 		
-		if($this->loginUser['role']==101){
+		if($this->loginUser['role']==20){
 			$whereStr .= " and o.userId in (select user_id from cc_user_factory where factory_sales_id =".$this->loginUser['id'].")";
 			
 		}
@@ -241,6 +241,7 @@ class ctl_factory extends cmsPage
 		
 
         $pageSql = $sql." where ".$whereStr." order by createTime desc";
+       // var_dump($pageSql);exit;
         if (trim(get2('output')) == 'pdf') {
 
             $where12 = [
@@ -422,7 +423,7 @@ class ctl_factory extends cmsPage
 		
 		// 销售员的用户role 为101
 
-		  if($this->loginUser['role']==101) {
+		  if($this->loginUser['role']==20) {
 			  
 			  $busi_id = $this->loginUser['user_belong_to_user'];
 			  
@@ -920,7 +921,7 @@ class ctl_factory extends cmsPage
 				
 				// 销售员的用户role 为101
 
-				  if($this->loginUser['role']==101) {
+				  if($this->loginUser['role']==20) {
 					  
 					  $business_userid = $this->loginUser['user_belong_to_user'];
 					  if (($tongpei_busi_rec[0]['business_id'] !=   $business_userid) && ($uni_business_id !=   $business_userid)) {
@@ -1251,13 +1252,13 @@ class ctl_factory extends cmsPage
 			//如果该用户本身为销售员，则前端不显示该信息，后端也不读取，也不处理。
 			// 如果用户为owner 则 获得 user_belong_to_user =该用户，且用户role=101
 			
-			if($this->loginUser['role']==101) {
+			if($this->loginUser['role']==20) {
 				
 				
 			}else {
 				$where =array (
 				 'user_belong_to_user'=>$this->loginUser['id'],
-				 'role'=>101
+				 'role'=>20
 				);
 				$sales_list = $this->loadModel('user')->getList(null,$where);
 				//var_dump($sales_list);exit;
@@ -1479,8 +1480,8 @@ class ctl_factory extends cmsPage
         }
 
         if(!$factoryId){
-			//如果该用户的 role =101 ，表示该用户为销售员，其不是工厂商家id ,需要找到工厂商家ID，并且要插入一个字段值告知系统，是那个销售员创建的商家。
-			if($this->loginUser['role']==101) {
+			//如果该用户的 role =20 ，表示该用户为职员，其不是工厂商家id ,需要找到工厂商家ID，并且要插入一个字段值告知系统，是那个销售员创建的商家。
+			if($this->loginUser['role']==20) {
 				$factoryId = $mdl_user_factory->getFactoryId($this->loginUser['id']);
 				$salesManId =  $this->loginUser['id'];
 				
@@ -1568,7 +1569,7 @@ class ctl_factory extends cmsPage
         $id = (int)get2('id');
         $mdl_user = $this->loadModel('user');
       
-        $where = array('role' => 101, 'user_belong_to_user' => $this->loginUser['id']);
+        $where = array('role' => 20, 'user_belong_to_user' => $this->loginUser['id']);
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
@@ -1695,7 +1696,7 @@ class ctl_factory extends cmsPage
                     'contactMobile'=>$contactMobile,
 
                     'cityId' => $cityId,
-                    'role' => 101,
+                    'role' => 20,
                     'groupid' => 1,
                     'createdDate' => time(),
                     'lastLoginIp' => ip(),
@@ -1758,7 +1759,7 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
 
         $search = trim(get2('search'));
-		if($this->loginUser['role']==101) {
+		if($this->loginUser['role']==20) {
 			 $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
 			 $salesManId = $this->loginUser['id'];
 		}else{

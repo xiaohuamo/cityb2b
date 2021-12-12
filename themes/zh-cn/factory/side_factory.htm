@@ -21,9 +21,7 @@
 
 
 		//角色为客户服务或客户经理
-		<{if in_array('3', explode(',', $user_roles.roles))
-		||  in_array('4', explode(',', $user_roles.roles))
-		||  in_array('0', explode(',', $user_roles.roles))
+		<{if in_array('17', explode(',', $user_roles.roles))
 		|| $user_roles.role==3}>
 
 		//发布管理
@@ -73,6 +71,12 @@
 
 			</div>
 		</li>
+		<{/if}>
+
+		<{if in_array('3', explode(',', $user_roles.roles))
+		||  in_array('4', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| $user_roles.role==3}>
 
 		//客户管理
 		<li>

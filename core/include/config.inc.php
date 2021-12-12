@@ -28,9 +28,9 @@ $CONFIG = ARRAY();
  * 数据库设置
  */
 $CONFIG['DB_HOST']	= 'localhost';
-$CONFIG['DB_USER']	= 'ubonusco_root';	
+$CONFIG['DB_USER']	= 'ubonusco_root';
 $CONFIG['DB_PASS']	= 'fWMGWK}og*W5';
-$CONFIG['DB_NAME']	= 'ubonusco_tinybonus';
+$CONFIG['DB_NAME']	= 'cityb2b';
 $CONFIG['DB_CHAR']	= 'UTF8';
 $CONFIG['DB_PRE']	= 'cc_';
 
