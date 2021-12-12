@@ -12,47 +12,16 @@ class ctl_company extends cmsPage
         $this->setData('company', 'footer_menu'); //old version mobile
         $this->setData( 'dashboard', 'mobile_menu' ); //new version mobile
 
-        $act = $GLOBALS['gbl_act'];
-       
-	   if( $act=='customer_coupon_approving' || $act=='customer_order_detail') {
-		   
-		  
-	   }else{
-	   
-        if (!$this->loginUser) {
-            $this->sheader(HTTP_ROOT_WWW . 'member/login?returnUrl=' . urlencode($_SERVER['REQUEST_URI']));
-        }
 
-        if ($this->loginUser['role'] == 5) {  //商家的员工权限
-            if ($act == 'staff' || $act == 'staff_edit') {
 
-                $this->sheader(null,'员工无权限访问该页面');
-            }
-        }
-		
-	
-	   }
-	   //如果该商家是华姐佳丽,将 miss_id 放入 .
-	   
-	   if($this->loginUser['business_type_miss']==1){
-		   $mdl_voting_item =$this->loadModel('voting_item');
-		   $where =array(
-		     'couponid'=>$this->loginUser['id']
-		   );
-		   $vote_info = $mdl_voting_item->getByWhere($where);
-		   if ($vote_info){
-			   $vote_id = $vote_info['id'];
-		   }else{
-			   $vote_id = 0;
-		   }
-		   $this->setData($vote_id,'vote_id');
-		   
-		   
-	   }
-	   
-	   
-	   
-			// 获取该用户是否为餐馆信息
+
+
+
+
+
+
+
+        // 获取该用户是否为餐馆信息
 		$mdl_restaurant =$this->loadModel('restaurant_info');
 		$restaurant =$mdl_restaurant->getByWhere(array('userId'=>$this->loginUser['id']));
 		$this->setData($restaurant,'restaurant');
@@ -146,76 +115,10 @@ class ctl_company extends cmsPage
     }
 
     function index_action()
-    {   
-	
-	
-	   $miss= get2('miss');
-	   
-	   if ($miss) {
-		  $this->loginUser['business_type_miss']==1;
-		  $this->setData($miss, 'miss');
-		
-	   }
-	
-	if( $this->loginUser['role']!=6) {
-		if($this->loginUser['business_type_factory_2c']==0 && $this->loginUser['business_type_factory']==0 && $this->loginUser['business_type_shop']==0 && $this->loginUser['business_type_miss']==0 && $this->loginUser['business_type_freshfood']==0 && $this->loginUser['business_type_service']==0 && $this->loginUser['business_type_restaurant']==0 && $this->loginUser['business_type_media']==0){
-			 $this->display('company/choose_business_type');
-			  exit;
-		}
-		
-	}
-		
-	
-	
-	
-       // 如果用户为佳丽, 则获得佳丽的vote_id , 并获取 关于其朋友助攻数据
-	   
-	   if($this->loginUser['business_type_miss']==1){
-		   
-		   //var_dump('是佳丽');exit;
-		   
-		   $mdl_voting_item =$this->loadModel('voting_item');
-		   $where =array(
-		     'couponid'=>$this->loginUser['id']
-		   );
-		   $vote_info = $mdl_voting_item->getByWhere($where);
-		   if ($vote_info){
-			   $vote_id = $vote_info['id'];
-		   }else{
-			   $vote_id = 0;
-		   }
-		   $this->setData($vote_id,'vote_id');
-		   //var_dump($this->loginUser['id']);
-		   //var_dump($vote_id);exit;
-		   
-		   //获得该佳丽的一次行投票助攻和奖金助攻数据
-		   
-		   if ($vote_id) {
-				$mdl_vote_miss_gift_vote =$this->loadModel('vote_miss_gift_vote');
-				$sql ="SELECT a.*,b.order_name,FROM_UNIXTIME(a.`createTime`) as date1 FROM  cc_vote_miss_gift_vote a left join cc_order b on a.orderId=b.orderId  WHERE  `vote_id` =".$vote_id. " order by a.createTime Desc" ;
-				$gift_list= $mdl_vote_miss_gift_vote->getListBySql($sql);
-				//var_dump($gift_list);exit;
-				
-		   }
-		   
-				$missLink="http://$_SERVER[HTTP_HOST]/coupon1/miss01?miss_id=".$vote_id;
-				$this->setData($missLink,'missLink');
-				$this->setData(generateQRCode($missLink),'missQrCode');
-		   
-		   
-	   }
-	   
-	   
-	   
-	   
-	   // 佳丽处理程序结束
-	   
-	   
-	  
-	  
-	
-	
-	
+    {
+
+
+
         // 获取公司一段时间内的销售额,30天
         $mdl_order = $this->loadModel('order');
         $totalSales = $mdl_order->getTotalSales($this->loginUser['id'], 30);
@@ -233,150 +136,20 @@ class ctl_company extends cmsPage
         $this->setData('商家首页', 'pagename');
         $this->setData('index', 'menu');
         $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
-		
-		if($this->loginUser['business_type_factory']==1) {
+		//var_dump($this->current_business);exit;
+		if($this->current_business['business_type_factory']==1) {
 			
 			 $this->display_pc_mobile('factory/index', 'mobile/factory/index');
 		}else{
 			
-			 $this->display_pc_mobile('company/index', 'mobile/company/index');
+			 $this->display_pc_mobile('factory/index', 'mobile/company/index');
 		}
        
     }
 
+
 	
-	function  miss_gifts_list_action(){
-		
 
-		
-
-       		$mdl_voting_item =$this->loadModel('voting_item');
-		   $where =array(
-		     'couponid'=>$this->loginUser['id']
-		   );
-		   $vote_info = $mdl_voting_item->getByWhere($where);
-		   if ($vote_info){
-			   $vote_id = $vote_info['id'];
-		   }else{
-			   $vote_id = 0;
-		   }
-		   $this->setData($vote_id,'vote_id');
-		   //var_dump($this->loginUser['id']);
-		   //var_dump($vote_id);exit;
-		   
-		   //获得该佳丽的一次行投票助攻和奖金助攻数据
-		   
-		   if (vote_id) {
-				$mdl_vote_miss_gift_vote =$this->loadModel('vote_miss_gift_vote');
-				$sql ="SELECT a.*,b.order_name,FROM_UNIXTIME(a.`createTime`) as date1 FROM  cc_vote_miss_gift_vote a left join cc_order b on a.orderId=b.orderId  WHERE  `vote_id` =".$vote_id. " order by a.createTime Desc" ;
-				
-				//var_dump($gift_list);exit;
-				
-		   }
-
-     
-
-       
-
-        $pageSql = $sql;
-        $pageUrl = $this->parseUrl()->set('page');
-        $pageSize = 20;
-        $maxPage = 10;
-        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-        $data = $mdl_vote_miss_gift_vote->getListBySql($page['outSql']);
-
-
-        $this->setData($data, 'data');
-        $this->setData($page['pageStr'], 'pager');
-
-
-
-
-        // 这个是 存储当前卡券类型
-
-		
-		
-		
-        $this->setData('order', 'menu');
-        $this->setData('miss_gifts_list', 'submenu');
-
-        $this->setData($pagename, 'pagename');
-
-        $this->setData($pageTitle, 'pageTitle');
-		
-		$this->display('company/miss_gifts_list');
-       
-
-
-		
-	}
-	
-	
-function  miss_quick_vote_list_action(){
-		
-
-		
-
-       	 $mdl_voting_item =$this->loadModel('voting_item');
-		   $where =array(
-		     'couponid'=>$this->loginUser['id']
-		   );
-		   $vote_info = $mdl_voting_item->getByWhere($where);
-		   if ($vote_info){
-			   $vote_id = $vote_info['id'];
-		   }else{
-			   $vote_id = 0;
-		   }
-		   $this->setData($vote_id,'vote_id');
-		   //var_dump($this->loginUser['id']);
-		   //var_dump($vote_id);exit;
-		   
-		   //获得该佳丽的一次行投票助攻和奖金助攻数据
-		   
-		   if (vote_id) {
-				$mdl_vote_miss_quick_vote_vote =$this->loadModel('vote_miss_quick_vote');
-				$sql ="SELECT a.*,b.order_name FROM  cc_vote_miss_quick_vote a left join cc_order b on a.orderId=b.orderId  WHERE  `vote_id` =".$vote_id. " order by a.createTime Desc" ;
-				
-				//var_dump($gift_list);exit;
-				
-		   }
-
-     
-
-       
-
-        $pageSql = $sql;
-        $pageUrl = $this->parseUrl()->set('page');
-        $pageSize = 20;
-        $maxPage = 10;
-        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-        $data = $mdl_vote_miss_quick_vote_vote->getListBySql($page['outSql']);
-
-
-        $this->setData($data, 'data');
-        $this->setData($page['pageStr'], 'pager');
-
-
-
-
-        // 这个是 存储当前卡券类型
-
-		
-		
-		
-        $this->setData('miss_zhugong', 'menu');
-        $this->setData('miss_quick_vote_list', 'submenu');
-
-        $this->setData($pagename, 'pagename');
-
-        $this->setData($pageTitle, 'pageTitle');
-		
-		$this->display('company/miss_quick_vote_list');
-       
-
-
-		
-	}
 	
 	
     function index_publish_action()
@@ -9863,6 +9636,127 @@ function freshfood_edit_action()    {
         $this->display('company/staff');
     }
 
+    function staffnew_action()
+    {
+        $id = (int)get2('id');
+        $mdl_user = $this->loadModel('user');
+
+        $where = array('role' => 20, 'user_belong_to_user' => $this->loginUser['id']);
+        $list = $mdl_user->getList(null, $where, 'createdDate asc');
+        $this->setData($list, 'list');
+
+        $this->setData('员工管理', 'pagename');
+        $this->setData('staffnew', 'submenu');
+        $this->setData('advanced_setting', 'menu');
+        $this->setData('分店管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('company/staffnew');
+    }
+    function staff_permissions_action()
+    {
+
+
+        // 只有商家用户可以操作该菜单
+
+        if ($this->loginUser['role'] !=3){
+            $this->sheader(null, "no access!");
+        }
+
+        $mdl_staff_roles =$this->loadModel(('staff_roles'));
+
+
+        if (is_post()) {
+
+
+            $staff_id = post('staff_id');
+            if(!$staff_id){
+                $this->form_response(500,'please choose the staff!');
+            }
+            $roles = post('roles');
+            if(!$roles){
+                $this->form_response(500,'please choose the roles for current staff!');
+            }
+            $roles =($roles)?','.join(',', $roles).',':' ';
+          //  var_dump(($roles));exit;
+
+            $data=array();
+            $data['staff_id'] = $staff_id;
+            $data['roles'] = $roles;
+
+           // var_dump(($data));exit;
+            $staff = $mdl_staff_roles->getByWhere(array('staff_id' => $staff_id));
+
+           if ($staff) {
+              //权限表里存在则修改
+               $updatadata =array(
+                   'roles'=>$roles
+               );
+             //  var_dump($updatadata);exit;
+               if($mdl_staff_roles->updateByWhere($updatadata,array('staff_id' => $staff_id))){
+
+                   $this->form_response(500,'修改成功！');
+               }else{
+
+                   $this->form_response(500,'something wrong !');
+               }
+           }else{
+              //否则增加
+               if($mdl_staff_roles->insert($data)){
+                //   $redirect = HTTP_ROOT_WWW . 'company/staff_permissions';
+                   $this->form_response(500,'保存成功！');
+               }else{
+
+                   $this->form_response(500,'something wrong !');
+               }
+           }
+
+
+
+        }else{
+
+            $staff_id = get2('staff_id');
+
+            if($staff_id){
+                $current_staff = $this->loadModel('staff_roles')->getByWhere(array('staff_id'=>$staff_id));
+                if(!$current_staff){
+                    $current_staff=array();
+                    $current_staff['id']='';
+                    $current_staff['staff_id']=$staff_id;
+                    $current_staff['roles']='';
+
+                }
+
+            }
+            $this->setData($current_staff,'current_staff');
+
+            $stafflist =     $this->loadModel('user')->getAllStaffnew($this->loginUser['id']);
+
+            $this->setData($stafflist, 'stafflist');
+
+          //  var_dump($current_staff); exit;
+
+            // 获得目前部门列表 并把角色列表加入刀部门下面
+            $Departmentlist =     $this->loadModel('department')->getList();
+            $mdl_roles =$this->loadModel('roles');
+            foreach ($Departmentlist as $key => $value) {
+                $Departmentlist[$key]['roles'] = $mdl_roles->getlist(null,array('role_belongto_department'=>$value['id']));
+            }
+            $this->setData($Departmentlist, 'departmentlist');
+
+            // var_dump($Departmentlist); exit;
+
+        }
+
+            //获取该商家下所有员工信息
+
+
+        $this->setData($this->parseUrl,'postUrl');
+        $this->setData('员工授权', 'pagename');
+        $this->setData('staff_permissions', 'submenu');
+        $this->setData('advanced_setting', 'menu');
+        $this->setData('员工授权 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('company/staff_permissions');
+    }
+
     function staff_delete_action()
     {   
         $mdl_user = $this->loadModel('user');
@@ -9888,7 +9782,7 @@ function freshfood_edit_action()    {
     }
 
     function staff_edit_action()
-    {   
+    {
         $mdl_user = $this->loadModel('user');
         $mdl_reg = $this->loadModel('reg');
 
@@ -9928,7 +9822,7 @@ function freshfood_edit_action()    {
             $tel = trim(post('tel'));
             $phone = trim(post('phone'));
 
-           
+
             /**
              * 员工信息
              */
@@ -9975,7 +9869,7 @@ function freshfood_edit_action()    {
 
                     $data['password'] = $passwordByCustomMd5;
                 }
-                
+
 
                 if ($mdl_user->updateUserById($data, $staff['id'])) {
 
@@ -9997,11 +9891,11 @@ function freshfood_edit_action()    {
 
                 if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
 
-               
+
 
 
                 $passwordByCustomMd5 = $this->md5($password);
-                
+
 
                 $data = array(
                     'user_belong_to_user' => $this->loginUser['id'],
@@ -10064,6 +9958,186 @@ function freshfood_edit_action()    {
             $this->setData('business_setting', 'menu');
             $this->setData('员工管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/staff_edit');
+        }
+    }
+
+    function staff_edit_new_action()
+    {   
+        $mdl_user = $this->loadModel('user');
+        $mdl_reg = $this->loadModel('reg');
+
+        $id = (int)get2('id');
+
+        $staff = $mdl_user->getByWhere(array('id' => $id, 'user_belong_to_user' => $this->loginUser['id']));
+
+        if (is_post()) {
+            /**
+             * Location related data
+             */
+            $googleMap = trim(post('googleMap'));
+
+            $addrNumber = trim(post('street_number'));
+            $addrStreet = trim(post('route'));
+            $addrPost = trim(post('postal_code'));
+            $addrSuburb = trim(post('locality'));
+            $google_location = trim(post('location'));
+            $country_short = trim(post('country_short'));
+            $addrState = trim(post('administrative_area_level_1'));
+            $country = trim(post('country'));
+            $googleMapUrl = trim(post('url'));
+
+
+            /**
+             * 管理员信息
+             */
+            $name = trim(post('username'));
+            $email = trim(post('email'));
+
+            $change_password = (int)post('change_password');
+            $password = trim(post('password'));
+            $password2 = trim(post('password2'));
+
+            $person_first_name = trim(post('person_first_name'));
+            $person_last_name = trim(post('person_last_name'));
+            $tel = trim(post('tel'));
+            $phone = trim(post('phone'));
+
+           
+            /**
+             * 员工信息
+             */
+            $businessName = '';
+            $contactPersonFirstname = trim(post('contactPersonFirstname'));
+            $contactPersonLastname = trim(post('contactPersonLastname'));
+            $contactPersonNickName = trim(post('contactPersonNickName'));
+            $contactMobile = trim(post('contactMobile'));
+
+
+            if ($staff) {
+                $data = array(
+                    // 'name' => $name,
+                    'email' => $email,
+                    'nickname' => $nickname,
+                    'person_first_name' => $person_first_name,
+                    'person_last_name' => $person_last_name,
+                    'tel' => $tel,
+                    'phone' => $phone,
+
+                    'contactPersonFirstname'=>$contactPersonFirstname,
+                    'contactPersonLastname'=>$contactPersonLastname,
+                    'contactPersonNickName'=>$contactPersonNickName,
+                    'contactMobile'=>$contactMobile,
+
+                    'addrNumber' => $addrNumber,
+                    'addrStreet' => $addrStreet,
+                    'addrPost' => $addrPost,
+                    'addrSuburb' => $addrSuburb,
+                    'addrState' => $addrState,
+                    'countryCode' => $country_short,
+                    'country' => $country,
+                    'googleMapUrl' => $googleMapUrl,
+                    'google_location' => $google_location,
+                    'googleMap' => $googleMap
+                );
+
+                if ($change_password) {
+                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+
+                    if ($password != $password2)$this->form_response_msg('确认密码与密码填写不一致');
+
+                    $passwordByCustomMd5 = $this->md5($password);
+
+                    $data['password'] = $passwordByCustomMd5;
+                }
+                
+
+                if ($mdl_user->updateUserById($data, $staff['id'])) {
+
+                    $this->form_response(200,'保存成功',HTTP_ROOT_WWW.'company/staffnew');
+                } else {
+                    $this->form_response_msg('保存成功');
+                }
+
+            } else {
+                if (empty($name) ) $this->form_response_msg('请填写用户名');
+
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+
+                if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
+
+                if (empty($password)) $this->form_response_msg('请填写密码');
+
+                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+
+                if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
+
+               
+
+
+                $passwordByCustomMd5 = $this->md5($password);
+                
+
+                $data = array(
+                    'user_belong_to_user' => $this->loginUser['id'],
+                    'isApproved' => 1,
+                    'isAdmin' => 0,
+                    'person_first_name' => $person_first_name,
+                    'person_last_name' => $person_last_name,
+                    'nickname' => $nickname,
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $passwordByCustomMd5,
+                    'phone' => $phone,
+                    'tel' => $tel,
+
+                    'businessName' => $businessName,
+
+                    'contactPersonFirstname'=>$contactPersonFirstname,
+                    'contactPersonLastname'=>$contactPersonLastname,
+                    'contactPersonNickName'=>$contactPersonNickName,
+                    'contactMobile'=>$contactMobile,
+
+                    'cityId' => $cityId,
+                    'role' => 20,
+                    'groupid' => 1,
+                    'createdDate' => time(),
+                    'lastLoginIp' => ip(),
+                    'lastLoginDate' => time(),
+                    'loginCount' => 1,
+                    'addrNumber' => $addrNumber,
+                    'addrStreet' => $addrStreet,
+                    'addrPost' => $addrPost,
+                    'addrSuburb' => $addrSuburb,
+                    'addrState' => $addrState,
+                    'countryCode' => $country_short,
+                    'country' => $country,
+                    'googleMapUrl' => $googleMapUrl,
+                    'google_location' => $google_location,
+                    'googleMap' => $googleMap
+                );
+
+                $data['isBusinessReferalExist'] = 0;
+                $data['referralId'] = 0;
+                $data['businessRefPointPercent'] = 10;
+                $data['customerRefPointPercent'] = 10;
+                $data['trustLevel'] = 0;
+                $data['visibleForBusiness'] = 0;
+                $data['languageType'] = 'zh-en';
+                $data['isSuspended'] = 0;
+                $data['needReapprovedAfterEdit'] = 1;
+                $data['isApproved'] = 1;
+
+                if ($mdl_user->addUser($data)) $this->form_response(200,'保存成功',HTTP_ROOT_WWW.'company/staffnew');
+
+            }
+
+        } else {
+            $this->setData($staff);
+            $this->setData('员工管理', 'pagename');
+            $this->setData('staffnew', 'submenu');
+            $this->setData('advanced_setting', 'menu');
+            $this->setData('员工管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('company/staff_edit_new');
         }
     }
 

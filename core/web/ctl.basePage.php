@@ -14,6 +14,7 @@ class cmsPage extends corecms
 	protected $wx_auth_code = null;
 	protected $wx_openID = null;
 	protected $returnUrl = '';
+    protected $current_business;
 
 	function cmsPage ()
 	{
@@ -23,8 +24,10 @@ class cmsPage extends corecms
         $this->setData($w, 'wholesale' );
 		
 		$this->setData($this->getBusinessType(),'business_type');
-		
-		
+
+        // 获取当前登陆用户的角色
+
+
 		// 获得导入源 ，并存储导入源，最终观察转化
 		
 		$source =get2('source_code');
@@ -288,6 +291,60 @@ class cmsPage extends corecms
 			 
 			 $this->setData($userId2c,'userId2c');
 		 }
+
+
+         //如果用户类型不是客户
+         if($this->loginUser && $this->loginUser['role']!=4) {
+
+             $act = $GLOBALS['gbl_act'];
+             // 如果是确认订单已兑付 或者是显示 客户订单详细 这两个动作，不需要登陆，其它的动作都需要登陆。
+             if( $act=='customer_coupon_approving' || $act=='customer_order_detail') {
+
+             }else{
+                 if (!$this->loginUser) {
+                     $this->sheader(HTTP_ROOT_WWW . 'member/login?returnUrl=' . urlencode($_SERVER['REQUEST_URI']));
+                 }
+             }
+
+
+
+
+             // 获得当前登陆人管理的商业账户的类型，如果该账户是员工账户，则获取员工账户对应的商家账户的商业类行
+
+             $role = $this->loginUser['role'];
+             if($role==20) {
+                 $this->current_business = $this->loadModel('user')->get($this->loginUser['user_belong_to_user']);
+
+             }else{
+                 $this->current_business =$this->loginUser;
+             }
+
+             // 获取该登陆用户的角色
+
+             if($this->loginUser) {
+
+                 $user_roles= $this->loadModel('staff_roles')->getByWhere(array('staff_id' => $this->loginUser['id']));
+                 $user_roles['role'] = $role;
+                 $this->setData($user_roles, 'user_roles');
+                 // var_dump($user_roles);exit;
+             }
+
+             // 如果当前的用户不是该商家的Owner ,需要进行操作授权检查。
+             if($this->loginUser['role']!=3) {
+
+                 if(!$this->checkActCanBeExecuted($act,$user_roles['roles']) ) {
+
+                     $this->form_response(500, 'no access ,please contact admin');
+                 }else{
+
+
+                 }
+
+
+             }
+
+
+         }
 		 
 		
 	}
@@ -509,6 +566,30 @@ class cmsPage extends corecms
 
         }
 	}
+
+    public function checkActCanBeExecuted($act,$role){
+       // var_dump($act);exit;
+        // 根据当前的当作，获得可以执行该动作的角色
+        $authroised_roles = $this->loadModel("action_roles")->getByWhere (array('action_name'=>$act));
+        if(!$authroised_roles) {
+         // 如果没有发现该动作对应的角色，则默认可以执行
+            return 1;
+        }
+        // 将该校色字符串变成数组
+        $authroised_roles_arr = explode(',', $authroised_roles['roles']);
+        // 将当前登陆用户的角色转成数组
+        $user_can_do_rules = explode(',', $role);
+       // var_dump( $authroised_roles_arr); exit;
+        // 从该动作允许的角色数组中，依次提出角色，查看当前用户配置的角色中是否存在，如果存在，表示该用户可以执行该动作。
+        foreach ($authroised_roles_arr as $key => $value) {
+             if(in_array($value,$user_can_do_rules)) {
+                 return 1;
+             }
+
+        }
+      // 如果当前动作规定了角色，且当前登陆用户没有授权该角色，则返回状态0 ，表示，用户无权操作该功能
+        return 0;
+    }
 	
 	// 删除生鲜餐馆点单生成的旧的临时文件
 	public function restaurantStaticFileDeleteProcess($business_id,$refresh_code_old)	{
@@ -685,6 +766,39 @@ class cmsPage extends corecms
 			}
 			
 	 }
+
+    function  getBusinessType1($current_business) {
+      //  var_dump($current_business);exit;
+        $type='';
+
+
+            if(current_business['business_type_shop']=='1') {
+                $type = 'business_type_shop';
+                return  $type;
+            }else if (current_business['business_type_service']=='1'){
+                $type = 'business_type_service';
+                return  $type;
+            }else if (current_business['business_type_restaurant']=='1'){
+                $type = 'business_type_restaurant';
+                return  $type;
+            }else if (current_business['business_type_freshfood']=='1'){
+                $type = 'business_type_freshfood';
+                return  $type;
+            }else if (current_business['business_type_media']=='1'){
+                $type = 'business_type_media';
+                return  $type;
+            }else if (current_business['business_type_factory']=='1'){
+                $type = 'business_type_factory';
+                return  $type;
+            }else{
+                $type = 'business_type_factory';
+                return $type;
+
+
+        }
+
+        return $type;
+    }
 	 
 	   function  getBusinessType() {
 		

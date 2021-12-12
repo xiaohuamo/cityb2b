@@ -129,88 +129,43 @@
 	
 			<div class="m-side m-hide">
 				<div class="main clearfix">
-					<{if $loginUser.role==3 ||  $loginUser.role==6 || $loginUser.role==5 || $miss}>
+					<{if $loginUser.role==3 || $loginUser.role==20 || $loginUser.role==6 || $loginUser.role==5}>
 					<div class="box2">
 						<div>
 						
 							<{include file='company/fast_config_panel.htm'}>
                            
-                                   <{if $loginUser.business_type_miss ==1}>
-										<{include file='company/index_publish_miss.htm'}>
-										
-									<{else}>
+                                 
 								
 						            <{if  $loginUser.role==6}> //如果是运营商
 										<{include file='company/index_publish_yunyingshang.htm'}>
 									<{/if}>   
 						   
-									<{if $business_type =='business_type_shop'}>
-										<{include file='company/index_publish_shop.htm'}>
-									<{/if}>
-		
-									<{if $business_type =='business_type_service'}>
-										<{include file='company/index_publish_service.htm'}>
-									<{/if}>
-									
-									<{if $business_type =='business_type_freshfood'}>
-										<{include file='company/index_publish_freshfood.htm'}>
-									<{/if}>
-	   
-									<{if $business_type =='business_type_restaurant'}>
-										<{include file='company/index_publish_restaurant.htm'}>
-									<{/if}>
-	   
-									<{if $business_type =='business_type_media'}>
-										<{include file='company/index_publish_media.htm'}>
-									<{/if}>
-									
-										<{if $business_type =='business_type_factory'}>
+
+
 										<{include file='company/index_publish_factory.htm'}>
-									<{/if}>
+
 									
-											<{if $business_type =='business_type_factory_2c'}>
+									<!--		<{if $business_type =='business_type_factory_2c'}>
 										<{include file='factory_2c/index_publish_factory.htm'}>
-									<{/if}>
+									<{/if}> -->
 									
-										<{/if}>
+										
 								
 								
 						</div>
 						
-						<{if $loginUser.business_type_miss ==1}>
-									<{include file='company/index_panel_miss.htm'}>
-								
-						<{else}>
+					
 							
-                           <{if $business_type =='business_type_shop'}>
-									<{include file='company/index_panel_shop.htm'}>
-								<{/if}>
-	
-								<{if $business_type =='business_type_service'}>
-									<{include file='company/index_panel_service.htm'}>
-								<{/if}>
-   
-								<{if $business_type =='business_type_restaurant'}>
-									<{include file='company/index_panel_restaurant.htm'}>
-								<{/if}>
-								
-								<{if $business_type =='business_type_freshfood'}>
-									<{include file='company/index_panel_freshfood.htm'}>
-								<{/if}>
-   
-								<{if $business_type =='business_type_media'}>
-									<{include file='company/index_panel_media.htm'}>
-								<{/if}>
-								<{if $business_type =='business_type_factory'}>
+
+
 									<{include file='company/index_panel_factory.htm'}>
-								<{/if}>
-								<{if $business_type =='business_type_factory_2c'}>
-									<{include file='factory_2c/index_panel_factory.htm'}>
-								<{/if}>
-							<{/if}>	
+
+
+							
 					</div> 
 
-					<{else if  $loginUser.role!=6}>
+					<{else if  ($loginUser.role!=6 && $loginUser.role!=20  )}>
 						<div class='panel_item'>
 							<div class='panel_item_top'>
 								<div class='panel_icon'><i class="fa fa-archive fa-4x" aria-hidden="true"></i></div>

@@ -3259,5 +3259,11 @@ public function image_file_insert_cut_info_action(){
 	
 }
 
+public function phpinfo(){
+	phpinfo();
+
+
+}
+
 	}
  ?>

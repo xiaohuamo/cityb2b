@@ -1068,10 +1068,7 @@ class ctl_member extends cmsPage
 			$sql22= "select * from cc_wj_customer_coupon where userId=".$user['id']. " and bonus_id=7176 ";
 			$miss= $mdl_wj_customer_coupon->getListBySql($sql22);
 			
-			if($miss) {
-				$data['business_type_miss']=1;
-				$data['role']=3;
-			}
+
 			//end
 
 			$mdl_user->updateUserById( $data, $user['id'] );
@@ -1088,18 +1085,14 @@ class ctl_member extends cmsPage
 			$redirect_uri = HTTP_ROOT_WWW;
 			if($this->returnUrl){
 				$redirect_uri = HTTP_ROOT.$this->returnUrl;
-			}elseif($user['role']==3){
-				if($miss) {
-					$redirect_uri = HTTP_ROOT_WWW.'company/index?miss=1';
-				}else{
+			}elseif($user['role']==3 || $user['role']==6 || $user['role']==20 ){
+
 					$redirect_uri = HTTP_ROOT_WWW.'company/index';
-				}
+
 			}elseif($user['role']==4){
-				if($miss) {
-					$redirect_uri = HTTP_ROOT_WWW.'company/index?miss=1';
-				}else{
+
 					$redirect_uri = HTTP_ROOT_WWW.'member/index';
-				}
+
 				
 			}elseif($user['role']==101){
 				

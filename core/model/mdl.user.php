@@ -350,10 +350,30 @@ class mdl_user extends mdl_base
 			$where = array( 'user_belong_to_user' => $id );
 		}
 		
-		$list = $this->getList( array( 'id', 'email', 'nickname','contactPersonNickName', 'person_first_name', 'person_last_name', 'cityId', 'phone', 'tel','avatar','googleMap'), $where, 'createdDate asc' );
+		$list = $this->getList( array( 'id', 'email', 'nickname','displayName','contactPersonNickName', 'person_first_name', 'person_last_name', 'cityId', 'phone', 'tel','avatar','googleMap'), $where, 'createdDate asc' );
+        foreach ($list as $key => $value) {
 
+            $staffname =$this->getUserDisplayName($value['id']);
+            $list[$key]['staffname'] = $staffname;
+        }
 		return $list;
 	}
+
+    public function getAllStaffnew($id,$includeSelf=false){
+        if($includeSelf){
+            $where = " (user_belong_to_user= $id or id = $id) and role !=5";
+        }else{
+            $where = array( 'user_belong_to_user' => $id ,'role !=5');
+        }
+
+        $list = $this->getList( array( 'id', 'email', 'nickname','displayName','contactPersonNickName', 'person_first_name', 'person_last_name', 'cityId', 'phone', 'tel','avatar','googleMap'), $where, 'createdDate asc' );
+        foreach ($list as $key => $value) {
+
+            $staffname =$this->getUserDisplayName($value['id']);
+            $list[$key]['staffname'] = $staffname;
+        }
+        return $list;
+    }
 	
 	
 	public function getAllStaff1($id,$includeSelf=false){

@@ -20,6 +20,13 @@
 			<{/if}>
 
 
+		//角色为客户服务或客户经理
+		<{if in_array('3', explode(',', $user_roles.roles))
+		||  in_array('4', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| $user_roles.role==3}>
+
+		//发布管理
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw fa-edit"></i>
@@ -67,6 +74,7 @@
 			</div>
 		</li>
 
+		//客户管理
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw fa-edit"></i>
@@ -87,7 +95,7 @@
 			</div>
 		</li>
 
-
+        //订单管理
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw fa-line-chart"></i>
@@ -109,14 +117,27 @@
 
 			</div>
 		</li>
-		
+
+		<{/if}>
+
+   //配货中心
+		//角色为客户服务或客户经理
+		<{if in_array('9', explode(',', $user_roles.roles))
+		||  in_array('10', explode(',', $user_roles.roles))
+		||  in_array('11', explode(',', $user_roles.roles))
+		||  in_array('12', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
+
 		<li>
 	<div class='top-level'>
 		<i class="fa fa-fw fa-line-chart" ></i>
 		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
 	</div>
 	<div class='second-level'>
-		
+		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+		配货中心经理管理
+		</a>
 		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
 				  <{$lang->print_picking_list}>
 		</a>
@@ -145,12 +166,22 @@
 	<{include file='company/side_logistic_management.htm'}>
 	
 </li>
+		<{/if}>
+
+		//财务中心
+		//角色为财务主管或财务经理
+		<{if in_array('13', explode(',', $user_roles.roles))
+		||  in_array('14', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
+
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw  fa-money"></i>
 				<a <{if $menu=='balance_account'}> class="current"<{/if}>><{$lang->money_account}></a>
 			</div>
 			<div class='second-level'>
+
 				<a href="<{$http_root_www}>company/money_review"<{if $submenu=='money_review'}> class="current"<{/if}>>
                     <{$lang->settlement_center}>
 				</a>
@@ -162,16 +193,27 @@
 				</a>
 			</div>
 		</li>
-		
-			<li>
+
+		<{/if}>
+
+		//销售中心
+		//角色为销售经理或销售
+		<{if in_array('5', explode(',', $user_roles.roles))
+		||  in_array('6', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
+
+		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw fa-edit" ></i>
 				<a <{if $menu=='selling'}> class="current"<{/if}>>销售分析</a>
 			</div>
 
 			<div class='second-level'>
-				
-				
+
+				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
+				  销售经理查询
+				</a>
 				
 				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
 					按周销售分析
@@ -188,9 +230,12 @@
 				
 			</div>
 		</li>
-		
-		
-	
+
+		<{/if}>
+
+		// 创建者 或管理员
+		<{if in_array('0', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw  fa-money"></i>
@@ -246,9 +291,15 @@
 				<a href="<{$http_root_www}>company/redeem_staff_manage" <{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
                     <{$lang->redeem_staff}>
 				</a>
+				<a href="<{$http_root_www}>company/staffnew" <{if $submenu=='staffnew'}> class="current"<{/if}>>
+				员工管理
+				</a>
+				<a href="<{$http_root_www}>company/staff_permissions" <{if $submenu=='staff_permissions'}> class="current"<{/if}>>
+			<!--	<{$lang->staff_permissions}> -->员工授权
+				</a>
 			</div>
 		</li>
-
+		<{/if}>
 	</ul>
 
 

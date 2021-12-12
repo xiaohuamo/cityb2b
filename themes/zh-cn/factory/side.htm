@@ -1,5 +1,5 @@
 
-<{if $loginUser.role==3 || $loginUser.role==6 || $loginUser.role==101|| $miss}>
+<{if $loginUser.role==3 || $loginUser.role==6 || $loginUser.role==101|| $loginUser.role==20}>
 <style type="text/css">
 	.mutil-level-menu{
 		margin-left: 20px;
@@ -62,12 +62,7 @@
 </script>
 <div class="side m-hide">
 
-<{if $loginUser.role==3}>
-		<{include file='factory/side_factory.htm'}>
-	<{else}>
-	     <{include file='factory/side_factory_sales.htm'}>
-	<{/if}>
+	<{include file='factory/side_factory.htm'}>
 
-	
 </div>
 <{/if}>
