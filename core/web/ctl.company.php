@@ -2531,7 +2531,7 @@ class ctl_company extends cmsPage
 		
 		// 销售员的用户role 为101
 
-		  if($this->loginUser['role']==101) {
+		  if($this->loginUser['role']==20) {
 			  
 			  $business_userid = $this->loginUser['user_belong_to_user'];
 			  

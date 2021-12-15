@@ -8,7 +8,7 @@
 			</div>
 		</li>
 
-
+<!--
 		<{if $userId2c}>
 			<li>
 				<div class='top-level'>
@@ -18,7 +18,7 @@
 				</div>
 			</li>
 			<{/if}>
-
+-->
 
 		//角色为客户服务或客户经理
 		<{if in_array('17', explode(',', $user_roles.roles))
@@ -86,6 +86,13 @@
 			</div>
 
 			<div class='second-level'>
+				<{if in_array('3', explode(',', $user_roles.roles))
+				||  in_array('0', explode(',', $user_roles.roles))
+				|| $user_roles.role==3}>
+				<a href="<{$http_root_www}>factory/approve_customer_payments_and_discount"<{if $submenu=='approve_customer_payments_and_discount'}> class="current"<{/if}>>
+				 客户账期及折扣审批
+				</a>
+				<{/if}>
 
 				<a href="<{$http_root_www}>factory/add_new_customer"<{if $submenu=='add_new_customer'}> class="current"<{/if}>>
 					<{$lang->add_new_customer}>
