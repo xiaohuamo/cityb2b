@@ -21,16 +21,17 @@ class mdl_user_factory extends mdl_base
         ]);
     }
 
-    public function getFactoryId($salesMan)
+    public function getFactoryId($login_user)
     {
        
 		
-        $userFactory =loadModel('user')->get($salesMan);
-        if($userFactory) {
-           return $userFactory['user_belong_to_user'];
+        $user =loadModel('user')->get($login_user);
+        if($user && $user['user_belong_to_user']) {
+           return $user['user_belong_to_user'];
         } else {
-           
+           return $login_user;
         }
+        return $login_user;
     }
 	
 	 public function getBusinessId($salesMan,$role)
@@ -76,23 +77,46 @@ class mdl_user_factory extends mdl_base
         }
     }
 
+    /* 获得当前供应商 当前客户的账期到期日*/
+    public function getUserOverDueDate($factory_id,$cutomer_id) {
+        $where =array(
+            'factory_id'=>$factory_id,
+            'user_id'=>$cutomer_id
+
+        );
+
+        $current_rec = $this->getByWhere($where);
+        if(!$current_rec || $current_rec['COD']) {
+            $overduedays =2;
+        }else{
+            $overduedays =$current_rec['account_type']*7;
+        }
+        $overduetime =$overduedays * 24 *60*60 +time();
+        return $overduetime;
+
+
+    }
+
     public function getUserFactoryList($factoryId, $search = null,$salesmanId) {
-        $sql = "SELECT cc_user_factory.id as idd,cc_user_factory.nickname as code,cc_user_factory.* ,cc_user.*
-                FROM cc_user_factory 
-                LEFT JOIN cc_user ON cc_user.id = cc_user_factory.user_id
-			    WHERE cc_user_factory.factory_id = $factoryId";
-			//	var_dump ($salesmanId);exit;
+
+
+
+        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
+                FROM cc_user_factory f
+                LEFT JOIN cc_user u ON u.id = f.user_id
+			    WHERE f.factory_id = $factoryId";
+				//var_dump ($sql);exit;
 		if($salesmanId ){
 			
-			$sql .= " and cc_user_factory.factory_sales_id = $salesmanId";
+			$sql .= " and f.factory_sales_id = $salesmanId";
 			//var_dump($sql);exit;
 		}
 
         if($search) {
-            $sql .= " AND (cc_user.id ='%$search%'
-                     OR cc_user.phone like '%$search%'
-                     OR cc_user.name like '%$search%'
-					  OR cc_user_factory.nickname like '%$search%'
+            $sql .= " AND (u.id ='%$search%'
+                     OR u.phone like '%$search%'
+                     OR u.name like '%$search%'
+					  OR f.nickname like '%$search%'
 					 )";
         }
 //var_dump($sql);exit;

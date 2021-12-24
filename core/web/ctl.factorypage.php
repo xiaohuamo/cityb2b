@@ -1189,6 +1189,8 @@ class ctl_factorypage extends cmsPage
         // 检查当前产品是否new_price已经下架，检查当前产品库存是否充足
 
         $current_menu_rec = $mdl_restaurant_menu->get($menu_id);
+
+
         if (! $current_menu_rec['visible']) {
             $this->form_response_msg(['code' => 1, 'error' => (string) $this->lang->unable_to_buy]);
         }
@@ -1666,6 +1668,21 @@ class ctl_factorypage extends cmsPage
 	  
   }
 
+     // 获取该商家的折扣比率
+
+      // $user_discount_rec = $this->loadModel('user_factory')->getByWhere (array('factory_id'=>$business_userid,'user_id'=>$userId));
+
+       // $this->form_response_msg( $user_discount_rec['business_discount_rate']);
+
+        $user_discount_rec = $this->loadModel('user_factory')->getByWhere (array('factory_id'=>$business_userid,'user_id'=>$userId));
+
+        if( $user_discount_rec['business_discount_rate']){
+            $user_discount_rate = $user_discount_rec['business_discount_rate'];
+        }else{
+            $user_discount_rate = 0;
+        }
+
+       //$this->form_response_msg( $user_discount_rec['business_discount_rate']);
 
         $mdl_wj_user_temp_carts = $this->loadModel( 'wj_user_temp_carts' );
         $mdl_user = $this->loadModel('user');
@@ -1688,13 +1705,40 @@ class ctl_factorypage extends cmsPage
         $guige_ids = [];
         $total = 0;
 
+        $restaurant_menu_option = $this->loadModel('restaurant_menu_option');
+
         $cartItems=$mdl_wj_user_temp_carts->getDetailedItem($userId, $business_userid,$this->getLangStr());
         foreach ($cartItems as $raws) {
             foreach ($raws['items'] as $item) {
+
+                array_push($guige_ids, $item['guige_ids']);
+                $guigeids  = $item['guige_ids'];
+                $single_amount=0.00;
+                if($guigeids) { //有规格
+                   $guige_rec =  $restaurant_menu_option->get($guigeids);
+
+                   if( $guige_rec['price']>0)  {
+                       $single_amount= $guige_rec['price'];
+
+
+                   }else{
+                       $single_amount= $item['single_amount'];
+
+                   }
+
+                }else{
+                    $single_amount= $item['single_amount'];
+
+                }
+
+                $single_amount =number_format($single_amount * (1-($user_discount_rate/100)),2);
+
+                array_push($single_amounts, $single_amount);
+
                 array_push($ids, $item['main_coupon_id']);
                 array_push($sub_ids, $item['sub_coupon_id']);
                 array_push($quantities, $item['quantity']);
-                array_push($single_amounts, $item['single_amount']);
+
                 array_push($original_amounts, $item['original_amount']);
                 array_push($commission_frees, $item['commission_free'] && $item['onSpecial']);
                 array_push($sub_or_mains, $item['sub_or_main']);
@@ -1702,8 +1746,9 @@ class ctl_factorypage extends cmsPage
                 array_push($sidedish_menu_ids, $item['sidedish_menu_id']);
                 array_push($coupon_names, $item['coupon_name']);
                 array_push($guige_des, $item['guige_des']);
-                array_push($guige_ids, $item['guige_ids']);
-                $total += $item['quantity'] * $item['single_amount'];
+
+                $total += $item['quantity'] * $single_amount;
+               // $this->form_response_msg($total);
             }
         }
 

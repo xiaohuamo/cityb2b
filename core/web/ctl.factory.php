@@ -405,6 +405,9 @@ class ctl_factory extends cmsPage
 		
 	}
 
+
+
+
     public function customer_order_detail_action()
     {
         require_once(DOC_DIR.'static/4pxAPI.php');
@@ -434,7 +437,7 @@ class ctl_factory extends cmsPage
        
         $sql1 = "select sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,sum(adjust_subtotal_amount) as ajust_sum from cc_wj_customer_coupon  where order_id=$orderId and  business_id=$busi_id";
         $data1 = $mdl_wj_customer_coupon->getListBySql($sql1);
-		
+
 		// 获得订单商家名称
 		
 		$sql2 ="select concat(factory_user.nickname,'(',user.name ,')') as cust_name  from cc_user user ,cc_user_factory factory_user where user.id=factory_user.user_id and user.id=".$data['userId'];
@@ -562,17 +565,9 @@ class ctl_factory extends cmsPage
 
         $this->setData('订单详情 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle');
 
-        //根据状态转向不同的显示页面
-        // status 1 : 当前用户为普通查看者，不是订单的商家
-        // status 2 : 当前用户为当前订单唯一商家。
-        // status 3 : 当前用户为当前订单的某一个商家（该情况存在于如果该订单为统配中心订单的情况） 。
-        // status 4 : 当前用户为配货中心管理用户，拥有完整权限管理权和数据管理权
-        if (in_array($display_status, [2, 3, 4])) {
-			//var_dump('here');exit;
+
             $this->display('factory/customer_order_detail_full_control');
-        } else {
-            $this->display('factory/customer_order_detail_gen');
-        }
+
     }
 
     public function update_customer_coupon_subtotal_action()
@@ -1524,37 +1519,156 @@ class ctl_factory extends cmsPage
         header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
     }
 
+    public function update_business_discount_rate_action()
+    {
+
+
+        if (is_post()) {
+
+            $mdl_user_factory = $this->loadModel("user_factory");
+
+            $id = post('id');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'], $this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600, 'no access', 'no access');
+
+            }
+
+
+            $data = array();
+
+            $business_discount_rate = post('business_discount_rate');
+            if ($business_discount_rate) $data['business_discount_rate'] = $business_discount_rate;
+            $account_type = post('account_type');
+            if ($account_type) $data['account_type'] = $account_type;
+
+            try {
+                $mdl_user_factory->update($data, $id);
+
+
+                $this->form_response(200, '', '');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(), '');
+            }
+
+        } else {
+            //wrong protocol
+        }
+    }
+
+
+
+    public function add_customer_payments_action(){
+
+        if(!is_post()){
+
+            $mdl_user_factory =$this->loadModel("user_factory");
+
+            $id = post('id');
+            $id = 239;
+           // $this->form_response(600,$id);
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600,'no access','no access');
+
+            }
+
+
+            $data=array();
+
+            $payment_amount = post('payment_amount');
+            $payment_amount =700;
+            // 校对当日同笔付款是否已执行 ，如果付过 则 不允许再付款。
+            // 插入付款数据
+            $mdl_statement= $this->loadModel('statement');
+
+            $mdl_statement->begin();
+
+
+            //插入客户支付数据
+            $customer_payment_data = $mdl_statement->getCustomerPaymentData($this->loginUser['id'],$factory_user,$payment_amount);
+            $new_id= $mdl_statement->insert($customer_payment_data);
+
+            if(!$new_id){
+                $error=1;
+             }
+
+            // 分析该笔支付 是支付那个账单， 顺序依次 是 overdue账单 （按overdue日期递增走），not yet due , 如果还有剩余，则做一个credit . 如果，所剩余额不够下笔账单
+            // 付款，则 将余额转成credit .
+          //   if(! $isProcessed) $error=1;
+
+            $mdl_statement->updatePaymentsDetails($new_id,$payment_amount,$factory_user,$this->loginUser['id']);
+
+            if($error) {
+                $mdl_statement->rollback();
+                $this->form_response(500, 'error!','');
+            }else{
+                $mdl_statement->commit();
+                $this->form_response(200,'','');
+            }
+
+
+
+         //   $this->form_response(600,$payment_amount);
+
+            try {
+
+                     } catch (Exception $e) {
+             }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
+
+
+
+
+
 		public function update_business_code_action(){
 
 			if(is_post()){
-				
+
 				$mdl_user_factory =$this->loadModel("user_factory");
-				
+
 				$id = post('id');
-				
+
 			   // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
-			   
-			   
+
+
 				$factory_user = $mdl_user_factory->get($id);
 				$FactoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
-				
+
 				if ($factory_user['factory_id'] != $FactoryId) {
 					 $this->form_response(600,'no access','no access');
-					
+
 				}
-			
-			
+
+
 				$data=array();
 
 				$code = post('code');
 				if($code)$data['nickname']=$code;
-				
-			
+
+
 
 				try {
 					$mdl_user_factory->update($data,$id);
-				
-					
+
+
 					$this->form_response(200,'','');
 				} catch (Exception $e) {
 					$this->form_response(500, $e->getMessage(),'');
@@ -1568,7 +1682,7 @@ class ctl_factory extends cmsPage
     {
         $id = (int)get2('id');
         $mdl_user = $this->loadModel('user');
-      
+
         $where = array('role' => 20, 'user_belong_to_user' => $this->loginUser['id']);
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
@@ -1580,7 +1694,7 @@ class ctl_factory extends cmsPage
         $this->display('factory/staff_sales');
     }
  public   function staff_sales_edit_action()
-    {   
+    {
         $mdl_user = $this->loadModel('user');
         $mdl_reg = $this->loadModel('reg');
 
@@ -1592,7 +1706,7 @@ class ctl_factory extends cmsPage
             /**
              * Location related data
              */
-        
+
 
             /**
              * 管理员信息
@@ -1755,6 +1869,37 @@ class ctl_factory extends cmsPage
 
     }
 
+    public function receive_payments_action() {
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $search = trim(get2('search'));
+        if($this->loginUser['role']==20) {
+            $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+            $salesManId = $this->loginUser['id'];
+        }else{
+            $factoryId =  $this->loginUser['id'];
+            $salesManId = 0;
+        }
+        //var_dump($salesManId );exit;
+
+        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        foreach ($users as $key => $user) {
+            $expiredAt =strtotime("+3 months", time());
+            $link = self::customer_login_link($user['id'], $expiredAt);
+            $users[$key]['login_link'] = $link;
+        }
+
+        $this->setData($search, 'search');
+        $this->setData($users, 'users');
+        $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
+
+        $this->setData('receive_payments', 'submenu');
+        $this->setData('account_management', 'menu');
+        $this->display('factory/receive_payments');
+    }
+
+
+
     public function customer_list_action() {
         $mdl_user_factory = $this->loadModel('user_factory');
 
@@ -1803,6 +1948,7 @@ class ctl_factory extends cmsPage
             $expiredAt =strtotime("+3 months", time());
             $link = self::customer_login_link($user['id'], $expiredAt);
             $users[$key]['login_link'] = $link;
+
         }
 
         $this->setData($search, 'search');

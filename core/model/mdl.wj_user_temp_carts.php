@@ -479,6 +479,7 @@ class AddCartProcess
 		$this->onSpecial =$isOnSpecial;
 
 
+
 		//折扣
 		$restaurant =loadModel('coupons')->get($main_coupon_id);
 		
@@ -532,7 +533,7 @@ class AddCartProcess
                     'factory_id' => $factoruId
                 ])['show_origin_price'];
                 if(!$show_origin_price) {
-                    $item['price'] = 0;
+                  //  $item['price'] = 0; 这个价格还是放进去
                 }
             }
 

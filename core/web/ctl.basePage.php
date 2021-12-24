@@ -618,9 +618,17 @@ class cmsPage extends corecms
 			return 1;
 	}
 	
+	/*获得当前日期的年度星期值*/
 	
-	
+  public function  getYearWeekofDate(){
+      $weekNumber =date('W');
+      $weekday =date('w');
+      $year =date('Y');
 
+
+   return $year.$weekNumber;
+
+  }
 	/**
 	 * [freeProductPurcheseLimitCheck description]
 	 * @param  [type] $userId     [description]

@@ -46,66 +46,58 @@
 					<input type="submit" value="搜索">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
-					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
-						<table cellspacing="0" cellpadding="0" width="100%">
+					<div style="overflow-x: auto;overflow-y: auto;width:100%;">
+						<table >
 							<thead>
 							<tr>
-								<th>用户名</th>
-								<th>订单查询</th>
-								<th>手机号</th>
-								<th>当前账期</th>
 
-								<th>当前折扣率</th>
+								<th>用户ID</th>
+								<th>商家CODE</th>
+								<th>用户名</th>
+								<th>付款金额</th>
+								<th>交易查询</th>
+								<th>statement</th>
+								<th>手机号</th>
+
+
+
+
 								
 							</tr>
 							</thead>
 							<tbody>
 							<{foreach from=$users item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td>
+										<{$user.user_id}>
+									</td>
+									<td>
+										<{$user.code}>
+									</td>
+									<td>
+										<a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+									</td>
+
+									<td>
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="money-<{$user.idd}>" style="width:150px;" name="payment_amount"
+												   value="0">
+											<span class='promote-ajax'></span>
+									</td>
+
+
 
 
 
 									<td>
-                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">View</a>
 									</td>
 									<td>
-										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">View </a>
 									</td>
 									<td>
-                                        <{$user.phone}>
-									</td>
-									<td>
-										<select name="account_type" data-id='<{$user.idd}>' id='account_type-<{$user.idd}>'  >
-
-
-
-											<option value="<{$user.account_type}>"
-											<{if $user.account_type=='COD'}> selected<{/if}>>COD</option>
-											<option value="1"	<{if $user.account_type=='1'}> selected<{/if}> >1 Week	</option>
-											<option value="2"	<{if $user.account_type=='2'}> selected<{/if}>>2 Weeks	</option>
-											<option value="3"	<{if $user.account_type=='3'}> selected<{/if}>>3 Weeks	</option>
-											<option value="4"	<{if $user.account_type=='4'}> selected<{/if}>>4 Weeks	</option>
-											<option value="5"	<{if $user.account_type=='5'}> selected<{/if}>>5 Weeks	</option>
-											<option value="6"	<{if $user.account_type=='6'}> selected<{/if}>>5 Weeks	</option>
-											<option value="7"	<{if $user.account_type=='7'}> selected<{/if}>>7 Weeks	</option>
-											<option value="8"	<{if $user.account_type=='8'}> selected<{/if}>>8 Weeks	</option>
-											<option value="9"	<{if $user.account_type=='9'}> selected<{/if}>>9 Weeks	</option>
-											<option value="10"	<{if $user.account_type=='10'}> selected<{/if}>>10 Weeks	</option>
-
-										</select>
-										<span class='promote-ajax'></span>
+										<{$user.phone}>
 									</td>
 
-									<td>
-
-
-										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="width:150px;" name="business_discount_rate"
-											   value="<{if !$user.business_discount_rate}>0<{else}><{$user.business_discount_rate}><{/if}>">%
-										<span class='promote-ajax'></span>
-
-
-
-									</td>
 
 								</tr>
 							<{/foreach}>
@@ -137,7 +129,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=business_discount_rate],select[name=account_type]').on('change', function () {
+    $('input[name=payment_amount]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -146,21 +138,16 @@
         var id = $(this).data('id');
         var update_field_name = $(this).attr('name');
         var value;
-
+        
             value = $(this).val();//常规改动直接抓取改动值
         var updateData = {};
 
         updateData['id'] = id;
         updateData[update_field_name] = value;
-
-		//alert(id);
-		//alert(id);
-		//alert(update_field_name);
-		//alert(value);
-
+        alert(id);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_business_discount_rate",
+            url: "<{$http_root_www}>factory/add_customer_payments",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -210,9 +197,9 @@
     };
 
 
+  
 
-
-
+   
 
 </script>
 <{include file = 'footer.htm'}>

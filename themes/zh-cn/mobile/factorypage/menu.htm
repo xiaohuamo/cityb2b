@@ -84,8 +84,8 @@
 								<div style="display: inline-block;width: 60%">
                                     <{$sitem.menu_cn_name|truncate_cn:35:'..'}>
 									<span>
-						<{if $sitem.new_price>0}>
-							$<{$sitem.new_price}>
+						<{if $sitem.price>0}>
+							$<{$sitem.price}>
                         <{else}>
 							$<{$citem.new_price}>
                         <{/if}>
@@ -99,7 +99,7 @@
 										   data-menu_id='<{$citem.id}>'
 										   data-menu_option_id='<{$sitem.id}>'
 										   data-type="menu_option"
-										   data-price='<{if $sitem.new_price>0}><{$sitem.new_price}><{else}><{$citem.new_price}><{/if}>'>
+										   data-price='<{if $sitem.price>0}><{$sitem.price}><{else}><{$citem.new_price}><{/if}>'>
 
 									<i class='fa fa-plus-square' onclick="addProduct(this)"></i>
 								</div>

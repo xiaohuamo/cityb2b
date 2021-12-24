@@ -327,6 +327,7 @@
         var main_coupon_id = $target.data('main_coupon_id');
         var menu_id = $target.data('menu_id');
         var onspecial = $target.data('onspecial');
+
         var quantity = $target.val();
         var postData = {};
         postData['main_coupon_id'] = main_coupon_id;
@@ -404,7 +405,7 @@
 	
 
 function addMenuWithOption(obj, businessUserId) {
-
+   //alert('here');
     var qtyCheck = 0;
     $(obj).parents('.menu_guige').find('.menu_option input').each(function (index, value) {
         qtyCheck += parseInt($(value).val());
@@ -427,6 +428,7 @@ function addMenuWithOption(obj, businessUserId) {
 
             var type = $(value).data('type');
             var price = $(value).data('price');
+			//alert(price);
 
             if (type == 'menu_option') {
                 var id = $(value).data('menu_option_id');

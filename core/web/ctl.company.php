@@ -2820,6 +2820,7 @@ class ctl_company extends cmsPage
 			 */
 			$mdl_recharge = $this->loadModel('recharge');
 			$mdl_recharge->updataTransactionStatus($orderId, BalanceProcess::SETTLE);
+            $mdl_statement=$this->loadModel('statement');
 
 			 /**
 			 * 更新状态
@@ -2840,7 +2841,29 @@ class ctl_company extends cmsPage
 				->userId($this->loginUser['id'])
 				->userName($mdl_user->getBusinessDisplayName($this->loginUser['id']))
 				->actionId('b01')
-				->log();    
+				->log();
+
+            /**
+             * 新增statement 记录
+             */
+
+            $data=array(
+                'create_user'=>$this->loginUser['id'],
+                'gen_date'=>time(),
+                'invoice_number'=>$order['id'],
+                'type_code'=>1001,
+                'factory_id'=>$order['business_userId'],
+                'customer_id'=>$order['userId'],
+                'customer_ref_id'=>$order['id'],
+                'debit_amount'=>$order['money_new'],
+                'credit_amount'=>0.00,
+                'gst'=>0.00,
+                'is_settled'=>0,
+                'overdue_date'=>$this->loadModel('user_factory')->getUserOverDueDate($order['business_userId'],$order['userId'])
+            );
+
+            $mdl_statement->insert($data);
+
 
 			if ($mdl_order->errno()) {
 				$mdl_order->rollback();

@@ -970,25 +970,33 @@ class ctl_query extends cmsPage
                 $restaurant_promotion_manjian_rates=loadModel("restaurant_promotion_manjian")->getRestaurantPromotionManjian($coupon['createUserId']);
 
                 //如果menu没有规格，价格中计入餐品原价。
-                if(!$menuHasOption)$totalPrice+=$menu['price']*(1-$restaurant_promotion_manjian_rates);
+                if(!$menuHasOption) {
+                    if ($item['price']) {
+                        $totalPrice+=$item['price']*(1-$restaurant_promotion_manjian_rates);
+                    }else{
+                        $totalPrice+=$menu['price']*(1-$restaurant_promotion_manjian_rates);
+                    }
 
-               
+                }
+
+
+
 
                 //add data
                 $data=array();
                 $data['userId']         =$userId;
-        
+
                 $data['main_coupon_id'] =$main_coupon_id;
                 $data['sub_coupon_id']  =$main_coupon_id;
                 $data['sub_or_main']    ='m';
                 $data['coupon_name']    =$name;
-                
-                
-                
+
+
+
                 if($guige_ids) {
 					 $data['guige_ids']      =$guige_ids;
 				}
-               
+
 				if($sidedish){
 					 $data['sidedish_menu_id']      =$sidedish_menu_id;
 					$data['guige_des']      =$option . " SUBSPEC：" . $sidedish;
@@ -1015,7 +1023,9 @@ class ctl_query extends cmsPage
 
                     $data['createTime']     =time();
 
-                    $mdl_wj_user_temp_carts->insert($data);
+                    $newid = $mdl_wj_user_temp_carts->insert($data);
+
+
                 }
 
 

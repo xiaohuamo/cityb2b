@@ -323,6 +323,8 @@
 								<th>规格</th>
 								<th>单位</th>
 								<th>价格</th>
+								<th>折扣</th>
+								<th>折扣后价格</th>
 								<th>数量</th>
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
@@ -342,6 +344,12 @@
 									<td><{$item.unit}></td>
 									<td>
                                         <{$item.voucher_deal_amount}>
+									</td>
+									<td>
+										6%
+									</td>
+									<td>
+										<{number_format($item.voucher_deal_amount*0.94,2)}>
 									</td>
 
 									<td>

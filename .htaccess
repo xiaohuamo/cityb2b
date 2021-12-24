@@ -33,6 +33,7 @@ RewriteRule ^category_new/([^?.]+)$ index.php?ctl=category_new&act=$1&%{QUERY_ST
 RewriteRule ^factory/([^?.]+)$ index.php?ctl=factory&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^freshfood/([^?.]+)$ index.php?ctl=freshfood&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^factory_2c/([^?.]+)$ index.php?ctl=factory_2c&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^statement/([^?.]+)$ index.php?ctl=statement&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^promotion/([^?.]+)$ index.php?ctl=promotion&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^dispute_center/([^?.]+)$ index.php?ctl=dispute_center&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^test/([^?.]+)$ index.php?ctl=test&act=$1&%{QUERY_STRING} [NC]
