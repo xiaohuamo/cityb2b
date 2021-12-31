@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>司機管理物流查詢</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="pTitle">
+				司机管理
+			</div><div style="height: 3rem;"></div>
+			
+			<div class="ma15 borR7 bgfff flexBox1 sjgl f30 col1C1C1C">
+				<div class="div1" @click="chose('1')">
+					{{choseData1?choseData1:'司机'}}     
+					<img src="../img/wl2.png" />
+					<div class="pullBox" v-show="current=='1'">
+						<div v-for="item in list1" @click.stop="choseData('1',item)">{{item}}</div>
+					</div>
+				</div>
+				<div class="div1" @click="chose('2')">
+					{{choseData2?choseData2:'日期'}}    
+					<img src="../img/wl2.png" />
+					<div class="pullBox" v-show="current=='2'">
+						<div v-for="item in list2" @click.stop="choseData('2',item)">{{item}}</div>
+					</div>
+				</div>
+				<div class="no div1" @click="chose('3')">
+					按站号<img src="../img/wl1.png" />
+				</div>
+				<div class="no div1" @click="chose('4')">
+					按物流号<img src="../img/wl1.png" />
+				</div>
+			</div>
+			
+			<div @click="close" class="wlmask" v-if="current=='1'||current=='2'"></div>
+		
+			<div class="borR7 ma15">
+				<div class="flexBox1 wldate pa15 col000 f30 f500">
+					<div>
+						<div class="pmb5">日期 2021年11月8日</div>
+						<div>
+							 商家简码 
+							 <div class="jm">MK4577</div>  
+						</div>
+					</div>
+					<span class="col000 f50 bold">16号</span>
+				</div>
+				<div class="bgfff flexBox1 pa15 borderB">
+					<div>商家名称：Dorset store</div>
+					<div class="wlbtn1">125box</div>
+				</div>
+				<div class="bgfff flexBox1 pa15 borderB">
+					<div>地址：500 dorse00 dorest rd00 Dors et rdt rd。</div>
+					<div class="wlbtn2">已收货</div>
+				</div>
+			</div>
+			
+			<div class="borR7 ma15">
+				<div class="flexBox1 wldate pa15 col000 f30 f500">
+					<div>
+						<div class="pmb5">日期 2021年11月8日</div>
+						<div>
+							 商家简码 
+							 <div class="jm">MK4577</div>  
+						</div>
+					</div>
+					<span class="col000 f50 bold">16号</span>
+				</div>
+				<div class="bgfff flexBox1 pa15 borderB">
+					<div>商家名称：Dorset store</div>
+					<div class="wlbtn1">125box</div>
+				</div>
+				<div class="bgfff flexBox1 pa15 borderB">
+					<div>地址：500 dorse00 dorest rd00 Dors et rdt rd。</div>
+					<div v-if="isSH" class="wlbtn3" @click="SH">标记收货</div>
+					<div v-else class="wlbtn2">已收货</div>
+				</div>
+			</div>
+			
+			<!-- 底部菜单 -->
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div>
+					<img src="../img/driverMenu1.png"/>
+					<span class="col333 f26">拍照</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="../img/driverMenu2_.png" />
+					<span class="colFD5506 f26">物流查询</span>
+				</div>
+				<div @click="changeMenu('3')">
+					<img src="../img/driverMenu3.png" />
+					<span class="col333 f26">客户查询</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="../img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+		</div>	
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				isSH:true,
+				current:0,
+				choseData1:'',
+				choseData2:'',
+				list1:['司机1','司机2'],
+				list2:['2021-09-09','2021-09-09']
+			},
+		    methods:{
+				SH:function(){  // 標記收穫
+					this.isSH=false
+				},
+				choseData:function(source,data){
+					if(source=='1'){
+						this.choseData1=data
+					}else{
+						this.choseData2=data
+					}
+					this.current=0	
+				},
+				chose:function(index){
+					if(index=='3'||index=='4'){
+						alert('更新 data')
+					}else{
+						this.current=index
+					}	
+				},
+				close:function(){
+					this.current=0
+				},
+				changeMenu:function(index){
+					this.currentMenu=index
+					switch(index){
+					case '2':
+					    window.location.href="DriverWLSearch.htm"
+						break;
+					case '3':
+				        window.location.href="DriverCustomerSearch.htm"
+						break;
+					case '4':
+					    window.location.href="driverMe.htm"
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		})	
+	</script>	
+</html>

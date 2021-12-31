@@ -135,13 +135,32 @@ public function  getCustomerPaymentData($login_user,$factory_user,$payment_amoun
     return $data;
 }
 
+    //生成客户付款插入的数据
+    public function  getAdjustCustomerPaymentData($login_user,$factory_user,$payment_amount){
+
+        $data=array();
+        $data['create_user'] = $login_user;
+        $data['gen_date']=time();
+        $data['invoice_number']='0';
+        $data['type_code']=2003;
+        $data['factory_id']=$factory_user['factory_id'];
+        $data['customer_id']=$factory_user['user_id'];
+        $data['customer_ref_id']='0';
+        $data['debit_amount']=$payment_amount;
+        $data['credit_amount']=0;
+        $data['is_settled']=0;
+        $data['overdue_date']=0;
+
+        return $data;
+    }
+
 
 function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
     $data=array();
     $data['create_user'] = $login_user;
     $data['gen_date']=time();
     $data['invoice_number']='0';
-    $data['type_code']=2001;
+    $data['type_code']=5001;
     $data['factory_id']=$factory_user['factory_id'];
     $data['customer_id']=$factory_user['user_id'];
     $data['customer_ref_id']='0';
@@ -153,6 +172,18 @@ function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
     return $data;
 
 }
+
+//获得某个客户的交易流水
+public function getStatementTranscations($factoryId, $customer_id,$search){
+
+        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id order by id ";
+       // var_dump($sql);exit;
+        return $this->getListBySql($sql);
+}
+
+
+
+
 
 //更新付款明细
 public function  updatePaymentsDetails($new_id,$payment_amount,$factory_user,$login_user){
@@ -225,7 +256,7 @@ public function  updatePaymentsDetails($new_id,$payment_amount,$factory_user,$lo
               // 从总的credit中扣除需要支付的transcation的金额
               $total_left_credit_amount -=$debit_amount;
              //已清算金额
-              $total_clear_debit_amount +==$debit_amount;
+              $total_clear_debit_amount +=$debit_amount;
               // 将这条debit记录置为 clear 已清算  issettled =1
                $this->update(array('is_settled'=>1),$value['id']);
 
@@ -254,7 +285,7 @@ public function  updatePaymentsDetails($new_id,$payment_amount,$factory_user,$lo
             }else{
                 // 表示清算剩余amount 只用了部分的该credit项目金额 ，此时也要清算该项目，但会计算剩余的credit 形成一条新的credit .
                 $this->update(array('is_settled'=>1),$value['id']);
-               没测试这个流程呢，程序写完了  $dataOfRestCredit = $this->getdataofrestCreditOf($login_user,$current_credit_amount-$total_clear_debit_amount,$factory_user);
+                $dataOfRestCredit = $this->getdataofrestCreditOf($login_user,$current_credit_amount-$total_clear_debit_amount,$factory_user);
                 $this->insert ($dataOfRestCredit);
 
                 break;

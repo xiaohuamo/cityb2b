@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>开户成功页面</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="success">
+			<div class="pTitle">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				开户成功
+			</div><div style="height: 3rem;"></div>
+			<div class="pHead">
+				<div class="center"><img src="../img/success.png" class="success"></div>  
+				<div class="center f42 col333 bold pmb10">恭喜</div>
+				<div class="textLeft f28 colccc">您已开户成功，您现在即可下单，有些供应商 可能会需要进行更细节的开户处理。如果需要， 供应商会在当日或下个工作日联系您。</div>
+				
+				<div class="continue" @click="getcoupon">新客户专享优惠券</div>
+				<div class="flexBox1">
+					 <div class="lookOrder" @click="lookOrder">去首页看看</div>
+					 <div class="returnHome" @click="returnHome">回管理员端</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#success",
+			data:{
+				
+			},
+		    methods:{
+				getcoupon:function(){
+					
+				},
+				lookOrder:function(){
+					window.location.href="orderDetail.htm"	
+				},
+				returnHome:function(){
+				   window.location.href="home.htm"	
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>
+

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/datePop.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff mb10">
+				<div class="relative center">
+					<img src="../img/headIcon.png" class="headIcon"/>
+					<div class="f38 col333 f500 bold">订货导航</div>
+					<div class="flexBox1 headRight">
+						<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
+						<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<a href=""><div class="flexBox2">
+							<img src="../img/add_1.png"/>
+							<span class="colfff f30">EN</span>
+						</div></a>
+						<div class="flexBox2" @click="clickSC">
+							<img src="../img/sc.png" v-if="isSC"/>
+							<img src="../img/add_2.png" v-else />
+							<span class="colfff f30">收藏</span>
+						</div>
+						<div class="flexBox2" @click="kh">
+							<img src="../img/add_3.png"/>
+							<span class="colfff f30">我要开户</span>
+						</div>
+						<div class="flexBox2" style="border:none;" @click="jm">
+							<img src="../img/add_4.png"/>
+							<span class="colfff f30">我是供应商</span>
+						</div>
+						<div class="triangle"></div>
+					</div>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<!-- 主体部分开始 -->
+			
+			<div class="f28 col0F0F0F tabBox">
+				<div class="pa15 flexBox1 bold">
+					<div class="tab1" @click="changeTab(0)">已订货商家
+					 <img src="../img/tabActive.png" v-if="currentTab==0"/>
+					</div>
+					<div class="tab1" @click="changeTab(1)">已收藏商家
+					 <img src="../img/tabActive.png" v-if="currentTab==1"/>
+					</div>
+				</div>
+			</div>
+			<div v-if="currentTab==0" v-for="(item,index) in dataList">
+				<div class="tabBox flexBox1 pa15">
+					<div class="flexBox1">
+						<img src="../img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">{{item.name}}</span>
+					</div>
+					<div class="flexBox1 f25">
+						<img src="../img/rz.png" class="rz col333"/>&nbsp;已认证&nbsp;
+						<div class="btn f25 colfff" @click="noOrder(index)">不再订货</div>
+					</div>
+				</div>
+				<div class="flexBox1 bgfff ma0-15 pa0-15" style="flex-wrap:wrap;">
+					<div :class="item1.status=='已选'?'checkedData':''"  class="dateBox2 relative" v-for="item1 in item.dateList" @click="clickDate(item1.status)">
+						<div class="f30 col333">{{item1.name}}</div>
+						<div class="f25 colFD5203">{{item1.status}}</div>
+						<div class="f25 col999">{{item1.date}}</div>
+						<img v-show="item1.status=='已选'" src="../img/sj.png"/>
+					</div>
+					<div class="dateBox2 add2Box">
+						<div class="f30 col333 mb5">其他日期</div>
+						<img src="../img/add2.png" class="add2"/>
+					</div>
+				</div>
+			</div>
+			<div v-if="currentTab==1" v-for="(item,index) in dataList">
+				<div class="tabBox flexBox1 pa15">
+					<div class="flexBox1">
+						<img src="../img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">许记猪肉肉铺</span>
+					</div>
+					<div class="flexBox1 f25">
+						<img src="../img/rz.png" class="rz col333"/>&nbsp;已认证&nbsp;
+						<img src="../img/sc.png" class="star" @click="cancelStar(index)"/>
+					</div>
+				</div>
+				<div class="flexBox1 bgfff ma0-15 pa0-15" style="flex-wrap:wrap;">
+					<div class="dateBox2" v-for="item1 in item.dateList">
+						<div class="f30 col333">{{item1.name}}</div>
+						<div class="f25 colFD5203">{{item1.status}}</div>
+						<div class="f25 col999">{{item1.date}}</div>
+					</div>
+					<div class="dateBox2 add2Box">
+						<div class="f30 col333 mb5">其他日期</div>
+						<img src="../img/add2.png" class="add2"/>
+					</div>
+				</div>
+			</div>
+			<div class="col9A9A9A more flexBox4">
+				<img src="../img/loading.png" class="loadingIcon"/>&nbsp;
+			 	<span>正在加载中...</span>
+			</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="../img/menu1.png"/>
+					<span class="col333 f26">首页</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="../img/menu2_.png" />
+					<span class="colFD5001 f26">订货</span>
+				</div>
+				<div @click="changeMenu('3')">
+					<img src="../img/menu3.png" />
+					<span class="col333 f26">订单</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="../img/menu4.png" />
+					<span class="col333 f26">购物车</span>
+				</div>
+				<div @click="changeMenu('5')">
+					<img src="../img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+			
+			
+			<div class="mask z10" @click="close" v-if="isDeletePop">
+				<div class="bgfff borR7 DeletePop">
+					<div  class="borderB center DeletePopCon">不再订货?</div>
+					<div class="flexBox1">
+						<div class="w50 center col999 Deletecancel" @click="close">取消</div>
+						<div class="w50 center colFD5001 Deletesure" @click="sure">确认</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</body>
+	 <script>
+	 	new Vue({
+	 		el:"#me",
+	 		data:{
+				currentTab:0,   // 当前选中的tab
+				dataList:[
+					{
+						name:'许记猪肉肉铺',
+						dateList:[
+							{
+								name:'明天',
+								status:'已选',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可选',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'不可选',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可选',
+								date:'周三10:26'
+							}
+						]
+					},
+					{
+						name:'许记猪肉肉铺',
+						dateList:[
+							{
+								name:'明天',
+								status:'已选',
+								status1:'1',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								status1:'2',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								status1:'2',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可选',
+								status1:'3',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可用',
+								status1:'2',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'不可选',
+								status1:'4',
+								date:'周三10:26'
+							},
+							{
+								name:'明天',
+								status:'可选',
+								status1:'3',
+								date:'周三10:26'
+							}
+						]
+					}
+				],
+	 			currentMenu:2,   // 当前菜单
+	 			isAddShow:false,      // 点击＋ 
+	 			isSC:false,           // 是否收藏
+				isShare:false,
+				isDeletePop:false,
+				currentIndex:0
+	 		},
+	 	    methods:{
+				cancelStar(index){   // 取消收藏
+					this.dataList.splice(index,1)
+				},
+				noOrder(index){   // 不再订货
+					this.isDeletePop=true
+					this.currentIndex=index
+				},
+				changeTab(index){
+					this.currentTab=index
+				},
+	 			clickAdd(){
+	 				this.isAddShow=!this.isAddShow
+	 			},
+	 			clickSC(){
+	 				_self=this
+	 				this.isSC=!this.isSC
+	 				setTimeout(function(){
+	 					_self.isAddShow=false
+	 				},2000)
+	 			},
+				sure(){
+					this.dataList.splice(this.currentIndex,1)
+				},
+				close(){
+					this.isDeletePop=false
+				},
+	 			changeMenu(index){
+	 				this.currentMenu=index
+	 				switch(index){
+	 				case '1':
+	 				    window.location.href="../home.htm"
+	 					break;
+	 				case '5':
+	 			        window.location.href="../me.htm"
+	 					break;
+	 				case '3':
+	 				    window.location.href="../orderPage/orders.htm"
+	 					break;
+	 				case '4':
+	 				    window.location.href="../cart.htm"
+	 					break;
+	 				default:
+	 					break;
+	 				}
+	 			},
+				returnPage(){
+					window.history.go(-1)
+				},
+				shareApp(){
+				  	this.isShare=true
+				},
+				dismissShare(){
+					this.isShare=false
+				},
+				kh(){
+					window.location.href="../KH.htm"
+				},
+				jm(){
+					window.location.href="../jm.htm"
+				},
+				clickDate(status){
+					if(status=='可用'){
+						window.location.href="orderGoodsDetail.htm"
+					}
+				}
+	 		}
+	 	})	
+	 </script>
+</html>

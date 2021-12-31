@@ -54,6 +54,7 @@ class mdl_system_mail extends mdl_base
 	function attachment($path,$name)
 	{
 		 $this->handler->addAttachment($path,$name); // Add attachments  // Optional name file name
+		//var_dump($path.$name);exit;
 		 return $this;
 	}
 

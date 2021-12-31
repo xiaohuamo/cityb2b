@@ -1,101 +1,91 @@
-	<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html>
 <head>
-	
-	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><{$pageTitle}></title>
-	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
-	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
-
-	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
-
-	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
-	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
-
-	<link rel="stylesheet" href="<{$STATIC_PATH}>swiper/swiper.min.css">
-    <script src="<{$STATIC_PATH}>swiper/swiper.min.js"></script>
-
-	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+	<title>Homepage</title>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orders.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 </head>
-<body class="bg-1">
-
-<header id="hd" >
-	<div class="left">
-		<a href="<{$http_root_www}>member/index" class="a-back"></a>
-	</div>
-	<h1><{$lang->my_orders}></h1>
-</header>
-
-<section id="bd" style="padding-bottom: 70px">
-	<div class="m-menu">
-		<div class="swiper-container">
-			<div class="swiper-wrapper">
-			    <div class="swiper-slide"><a <{if $filter=='all'}>class="on" <{/if}> href="<{$listUrl}>filter=all"><{$lang->all}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='unpaid'}>class="on" <{/if}> href="<{$listUrl}>filter=unpaid"><{$lang->unpaid}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='paid'}>class="on" <{/if}> href="<{$listUrl}>filter=paid"><{$lang->paid}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='waiting'}>class="on" <{/if}> href="<{$listUrl}>filter=waiting"><{$lang->waiting}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='send'}>class="on" <{/if}> href="<{$listUrl}>filter=send"><{$lang->send}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='cancel'}>class="on" <{/if}> href="<{$listUrl}>filter=cancel"><{$lang->canceled}></a></div>
-				<div class="swiper-slide"><a <{if $filter=='pleaseRate'}>class="on" <{/if}> href="<{$listUrl}>filter=pleaseRate"><{$lang->please_rate}></a></div>
+<body class="bgF2F2F2">
+<div id="me" v-cloak>
+	<div class="head bgfff mb10">
+		<div class="relative center">
+			<img src="<{$SKIN_PATH}>img/headIcon.png" class="headIcon"/>
+			<div class="f38 col333 f500 bold">我的订单</div>
+			<div class="flexBox1 headRight">
+				<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+				<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
+			</div>
+			<div class="add" id="add" v-show="isAddShow">
+				<a href=""><div class="flexBox2">
+					<img src="<{$SKIN_PATH}>img/add_1.png"/>
+					<span class="colfff f30">EN</span>
+				</div></a>
+				<div class="flexBox2" @click="clickSC">
+					<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
+					<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
+					<span class="colfff f30">收藏</span>
+				</div>
+				<div class="flexBox2" @click="kh">
+					<img src="<{$SKIN_PATH}>img/add_3.png"/>
+					<span class="colfff f30">我要开户</span>
+				</div>
+				<div class="flexBox2" style="border:none;" @click="jm">
+					<img src="<{$SKIN_PATH}>img/add_4.png"/>
+					<span class="colfff f30">我是供应商</span>
+				</div>
+				<div class="triangle"></div>
 			</div>
 		</div>
+	</div><div style="height:3.5rem;"></div>
+	<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+	<!-- 主体部分 -->
+	<div class="choseBox flexBox1 f28" @click="Chose">
+		<span class="col0F0F0F">{{choseData==''? '请选择供应商':choseData}}</span>
+		<img src="<{$SKIN_PATH}>img/arrow2.png" class="arr"/>
+		<div class="mySelect" v-if="isChose">
+			<div v-for="item in list" @click="Chose2(item)">{{item}}</div>
+		</div>
 	</div>
-
-
+	<div v-if="isChose" class="mask2"></div>
+	<div class="flexBox2 tab">
+		<div :class="currentShow=='0'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('0')">
+			全部
+			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='0'"/>
+		</div>
+		<div :class="currentShow=='1'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('1')">
+			未发货
+			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='1'"/>
+		</div>
+		<div :class="currentShow=='2'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('2')">
+			已发货
+			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='2'"/>
+		</div>
+	</div>
+	<!-- 全部 -->
 	<{if $data}>
 	<{foreach from=$data key=key item=item name='dl'}>
-	<div class="order-num order-num-1">
-	 	<a href="<{$http_root_www}>member/exchange_detail?&id=<{$item.orderId}>">
-		<span><{substr($item.orderId,0,8)}>-<{substr($item.orderId,8,6)}>-<{substr($item.orderId,14)}></span>
-		<span style="float:right;"><{$item.order_name|truncate_cn:21}></span>
-		
-		
-		</a>
-
-		
-		
-	</div>
-	<div class="order-num order-num-1">
-		<span><span style="color:#d9534f;margin-left: 10px;"><{$lang-><{$item.action_id}>}></span>
-		
-		
-		<{if $item.status==1}>
+	<div v-if="currentShow=='0'">
+		<div class="tab_con" >
+			<div class="tabTitle"><{substr($item.orderId,0,8)}>-<{substr($item.orderId,8,6)}>-<{substr($item.orderId,14)}></div>
+			<div class="tabbottom">
+				<div class="info1"><{$item.order_name|truncate_cn:60}></div>
+				<div class="info2">
+				
+				<{if $item.status==1}>
 		<em style="float:left; left:2rem; color:#0db40f"><{$lang->paid}></em>
 		<{elseif $item.status==0}>
 		<em style="float:left; left:2rem; color:#d9534f"><{$lang->unpaid}></em>
 		<{elseif $item.status==2}>
 		<em style="float:left; left:2rem; color:#d9534f">Pending</em>
-		<{/if}>
-		<span style="float:right ; right:10px;">$<{$item.money}></span></span>
-		
-	</div>
-	
-	<div class="order-info order-info-1">
-		<!--<ul class="g-ul m-list2">
-			<{foreach from=$item.items item=sitem}>
-			<li>
-				<div class="pic"><img src="<{$UPLOAD_PATH}><{$sitem.pic}>" alt=""></div>
-				<div class="con">
-					<h5><{$sitem.bonus_title}></h5>
-					<span><{$sitem.guige_des}></span>
-					<p><em>$<{$sitem.voucher_deal_amount}></em></p>
-				</div>
-				<em class="num">x <{$sitem.customer_buying_quantity}></em>
-			</li>
-			<{/foreach}>
-		</ul> -->
-
-		<div class="payment">
-			
-
-
-				<{if $item.coupon_status=='c01'}>
+		<{/if}>&nbsp;
+			<{if $item.coupon_status=='c01'}>
 					<!-- 如果该订单已经支付了，则客户不能删除-->
-					<{if $item.no_refundable==0}>
+				
 					 <{if $hours>12}>
 					 
 					 <{else}>
@@ -103,25 +93,18 @@
 					 <{/if}>
 					
 					<{else}>
-					<a href="<{$http_root_www}>member/myorders"><{$lang->not_support_return}></a>
+					<!--<a href="<{$http_root_www}>member/myorders"><{$lang->not_support_return}></a> -->
 					<{/if}>
-				<{/if}>
-				<!--
-				<{if $item.coupon_status=='b01' && $item.bonus_type=='9'}>
-					
-					 <a href="<{$http_root_www}>dispute_center/create?type=customer">我要退货</a>
-				<{/if}>  -->
-               
-				<a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$item.businessChatId}>&orderId=<{$item.orderId}>','singleChat')"  ><{$lang->contact_us}></a>
-
-				<{if $item.rated==1}>
-				<a><{$lang->rated}></a>
-				<{else}>
-				<a href="<{$http_root_www}>company/customers_rating_edit?orderId=<{$item.orderId}>"><{$lang->please_rate}></a>
-                <{/if}>
-
-                <a href="<{$viewUrl}>exchange_detail?type=member&id=<{$item.orderId}>"><{$lang->see_detail}></a>
-			
+			  <{if $item.coupon_status=='c01'}> 	<span class="colFD5001">&nbsp;已购买&nbsp;</span> <{/if}>
+					  <{if $item.coupon_status=='b01'}> <span  class="colFD5001">&nbsp;已交易&nbsp;</span> <{/if}>
+				  <{if $item.coupon_status=='d01'}>	<span   class="col00B063">&nbsp;订单取消&nbsp;</span><{/if}>
+					<!--<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>  -->
+					<span class="col0B0B0B">$<{$item.money}></span>
+				</div>
+				<div class="detailBtn f25 flexBox1" @click="orderDetail('<{$item.orderId}>')">
+					订单详情
+				</div>
+			</div>
 		</div>
 	</div>
 	<{/foreach}>
@@ -132,20 +115,163 @@
 	</div>
 
 	<{/if}>
-</section>
 
-<{include file="mobile/mobile_footer.htm"}>
+	<!-- 未发货 -->
+	<!--	<div v-if="currentShow=='1'">
+            <div class="tab_con">
+                <div class="tabTitle">20210906-114937-918641</div>
+                <div class="tabbottom">
+                    <div class="info1">供应商 mk果蔬</div>
+                    <div class="info2">
+                        <span class="colFD5001">未发货 &nbsp;&nbsp;</span>
+                        <span class="col0B0B0B">配送 &nbsp;&nbsp;</span>
+                        <span class="col0B0B0B">$128</span>
+                    </div>
+                    <div class="detailBtn f25 flexBox1" @click="orderDetail">
+                        订单详情
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- 已发货 -->
+	<!--<div v-if="currentShow=='2'">
+		<div class="tab_con">
+			<div class="tabTitle">20210906-114937-918641</div>
+			<div class="tabbottom">
+				<div class="info1">供应商 mk果蔬</div>
+				<div class="info2">
+					<span class="col00B063">已发货 &nbsp;&nbsp;</span>
+					<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>
+					<span class="col0B0B0B">$125</span>
+				</div>
+				<div class="detailBtn f25 flexBox1" @click="orderDetail">
+					订单详情
+				</div>
+			</div>
+		</div>
+	</div>-->
+	<div class="col9A9A9A more flexBox4">
+		<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
+		<span>正在加载中...</span>
+	</div>
 
-
-<script>
-    $(".m-menu").each(function(){
-        var swiper = new Swiper($(this).find(".swiper-container")[0], {
-            slidesPerView: 5,
-            paginationClickable: true,
-            spaceBetween : 5,
-            freeMode: true
-        });
-    });
-</script>
+	<div style="height:3.125rem;"></div>
+	<div class="flexBox1 menuBox">
+		<div @click="changeMenu('1')">
+			<img src="<{$SKIN_PATH}>img/menu1.png"/>
+			<span class="col333 f26">首页</span>
+		</div>
+		<div @click="changeMenu('2')">
+			<img src="<{$SKIN_PATH}>img/menu2.png" />
+			<span class="col333 f26">订货</span>
+		</div>
+		<div @click="changeMenu('3')">
+			<img src="<{$SKIN_PATH}>img/menu3_.png"/>
+			<span class="colFD5001 f26">订单</span>
+		</div>
+		<div @click="changeMenu('4')">
+			<img src="<{$SKIN_PATH}>img/menu4.png" />
+			<span class="col333 f26">购物车</span>
+		</div>
+		<div @click="changeMenu('5')">
+			<img src="<{$SKIN_PATH}>img/menu5.png" />
+			<span class="col333 f26">我的</span>
+		</div>
+	</div>
+</div>
 </body>
+<script>
+	new Vue({
+		el:"#me",
+		data:{
+			alllist:[
+				{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'订单取消',
+					amount:'156'
+				},
+				{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'未发货',
+					amount:'156'
+				},
+				{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'已发货',
+					amount:'156'
+				}
+			],
+			list1:[],  // 未发货
+			list2:[],   // 已发货
+			isAddShow:false,      // 点击＋
+			isSC:false,           // 是否收藏
+			currentShow:"0",
+			isChose:false,
+			isShare:false,
+			choseData:'',
+			list:['供应商1','供应商2'],
+			currentMenu:3   // 当前菜单
+		},
+		methods:{
+			clickAdd:function(){
+				this.isAddShow=!this.isAddShow
+			},
+			clickSC:function(){
+				_self=this
+				this.isSC=!this.isSC
+				setTimeout(function(){
+					_self.isAddShow=false
+				},2000)
+			},
+			change:function(index){
+				this.currentShow=index
+			},
+			Chose:function(){
+				this.isChose=!this.isChose
+			},
+			Chose2:function(data){
+				this.choseData=data
+			},
+			changeMenu:function(index){
+				this.currentMenu=index
+				switch(index){
+					case '1':
+						window.location.href="<{$SKIN_PATH}>home.htm"
+						break;
+					case '2':
+						window.location.href="<{$SKIN_PATH}>orderGoodsPage/orderGoods.htm"
+						break;
+					case '4':
+						window.location.href="<{$SKIN_PATH}>cart.htm"
+						break;
+					case '5':
+						window.location.href="<{$SKIN_PATH}>me.htm"
+						break;
+					default:
+						break;
+				}
+			},
+			orderDetail:function(orderid){
+			  alert(String(orderid));
+				window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=" +orderid;
+			},
+			shareApp:function(){
+				this.isShare=true
+			},
+			dismissShare:function(){
+				this.isShare=false
+			},
+			kh:function(){
+				window.location.href="<{$SKIN_PATH}>KH.htm"
+			},
+			jm:function(){
+				window.location.href="<{$SKIN_PATH}>jm.htm"
+			}
+
+		}
+	})
+</script>
 </html>

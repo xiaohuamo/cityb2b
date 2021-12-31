@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orders.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff mb10">
+				<div class="relative center">
+					<img src="../img/headIcon.png" class="headIcon"/>
+					<div class="f38 col333 f500 bold">我的订单</div>
+					<div class="flexBox1 headRight">
+						<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
+						<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<a href=""><div class="flexBox2">
+							<img src="../img/add_1.png"/>
+							<span class="colfff f30">EN</span>
+						</div></a>
+						<div class="flexBox2" @click="clickSC">
+							<img src="../img/sc.png" v-if="isSC"/>
+							<img src="../img/add_2.png" v-else />
+							<span class="colfff f30">收藏</span>
+						</div>
+						<div class="flexBox2" @click="kh">
+							<img src="../img/add_3.png"/>
+							<span class="colfff f30">我要开户</span>
+						</div>
+						<div class="flexBox2" style="border:none;" @click="jm">
+							<img src="../img/add_4.png"/>
+							<span class="colfff f30">我是供应商</span>
+						</div>
+						<div class="triangle"></div>
+					</div>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<!-- 主体部分 -->
+			<div class="choseBox flexBox1 f28" @click="Chose">
+				 <span class="col0F0F0F">{{choseData==''? '请选择供应商':choseData}}</span>
+				 <img src="../img/arrow2.png" class="arr"/>
+				 <div class="mySelect" v-if="isChose">
+					 <div v-for="item in list" @click="Chose2(item)">{{item}}</div>
+				 </div>
+			</div>
+			<div v-if="isChose" class="mask2"></div>
+			<div class="flexBox2 tab">
+				<div :class="currentShow=='0'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('0')">
+					全部
+					<img class="classify2Active" src="../img/tabActive.png" v-show="currentShow=='0'"/>
+				</div>
+				<div :class="currentShow=='1'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('1')">
+					未发货
+					<img class="classify2Active" src="../img/tabActive.png" v-show="currentShow=='1'"/>
+				</div>
+				<div :class="currentShow=='2'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('2')">
+					已发货
+					<img class="classify2Active" src="../img/tabActive.png" v-show="currentShow=='2'"/>
+				</div>
+			</div>
+			<!-- 全部 -->
+			<{if $data}>
+	<{foreach from=$data key=key item=item name='dl'}>
+			<div v-if="currentShow=='0'">
+				 <div class="tab_con" v-for="item in alllist">
+				 	<div class="tabTitle">{{item.orderID}}</div>
+				 	<div class="tabbottom">
+				 		<div class="info1">{{item.name}}</div>
+				 		<div class="info2">
+				 			<span v-if="item.status=='订单取消'"  class="colFD5001">{{item.status}} &nbsp;&nbsp;</span>
+				 			<span v-if="item.status=='未发货'"  class="colFD5001">{{item.status}} &nbsp;&nbsp;</span> 
+				 			<span v-if="item.status=='已发货'"  class="col00B063">{{item.status}} &nbsp;&nbsp;</span>
+				 		    <span class="col0B0B0B">配送 &nbsp;&nbsp;</span>
+				 		    <span class="col0B0B0B">$128</span>
+						</div>
+				 		<div class="detailBtn f25 flexBox1" @click="orderDetail">
+				 			订单详情
+				 		</div>
+				 	</div>
+				 </div>
+			</div>
+
+			   <!-- 未发货 -->
+			<div v-if="currentShow=='1'">
+				<div class="tab_con">
+					<div class="tabTitle">20210906-114937-918641</div>
+					<div class="tabbottom">
+						<div class="info1">供应商 mk果蔬</div>
+						<div class="info2">
+							<span class="colFD5001">未发货 &nbsp;&nbsp;</span>  
+							<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>  
+							<span class="col0B0B0B">$128</span>
+						</div>
+						<div class="detailBtn f25 flexBox1" @click="orderDetail">
+							订单详情
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 已发货 -->
+			<div v-if="currentShow=='2'">
+				<div class="tab_con">
+					<div class="tabTitle">20210906-114937-918641</div>
+					<div class="tabbottom">
+						<div class="info1">供应商 mk果蔬</div>
+						<div class="info2">
+							<span class="col00B063">已发货 &nbsp;&nbsp;</span> 
+							<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>   
+							<span class="col0B0B0B">$125</span>
+						</div>
+						<div class="detailBtn f25 flexBox1" @click="orderDetail">
+							订单详情
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col9A9A9A more flexBox4">
+				<img src="../img/loading.png" class="loadingIcon"/>&nbsp;
+			 	<span>正在加载中...</span>
+			</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="../img/menu1.png"/>
+					<span class="col333 f26">首页</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="../img/menu2.png" />
+					<span class="col333 f26">订货</span>
+				</div>
+				<div @click="changeMenu('3')">
+					<img src="../img/menu3_.png"/>
+					<span class="colFD5001 f26">订单</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="../img/menu4.png" />
+					<span class="col333 f26">购物车</span>
+				</div>
+				<div @click="changeMenu('5')">
+					<img src="../img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				alllist:[
+					{
+						orderID:'20217837218937128',
+						name:'供应商 mk果蔬',
+						status:'订单取消',
+						amount:'156'	
+					},
+					{
+						orderID:'20217837218937128',
+						name:'供应商 mk果蔬',
+						status:'未发货',
+						amount:'156'	
+					},
+					{
+						orderID:'20217837218937128',
+						name:'供应商 mk果蔬',
+						status:'已发货',
+						amount:'156'	
+					}
+				],
+				list1:[],  // 未发货
+				list2:[],   // 已发货
+				isAddShow:false,      // 点击＋ 
+				isSC:false,           // 是否收藏
+				currentShow:"0",
+				isChose:false,
+				isShare:false,
+				choseData:'',
+				list:['供应商1','供应商2'],
+				currentMenu:3   // 当前菜单
+			},
+		    methods:{
+				clickAdd:function(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC:function(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				change:function(index){
+					this.currentShow=index
+				},
+				Chose:function(){
+					this.isChose=!this.isChose
+				},
+				Chose2:function(data){
+					this.choseData=data
+				},
+				changeMenu:function(index){
+					this.currentMenu=index
+					switch(index){
+					case '1':
+					    window.location.href="../home.htm"
+						break;
+					case '2':
+				        window.location.href="../orderGoodsPage/orderGoods.htm"
+						break;
+					case '4':
+					    window.location.href="../cart.htm"
+						break;
+					case '5':
+					    window.location.href="../me.htm"
+						break;
+					default:
+						break;
+					}
+				},
+				orderDetail:function(){
+					window.location.href="orderDetail.htm"
+				},
+				shareApp:function(){
+				  	this.isShare=true
+				},
+				dismissShare:function(){
+					this.isShare=false
+				},
+				kh:function(){
+					window.location.href="../KH.htm"
+				},
+				jm:function(){
+					window.location.href="../jm.htm"
+				}
+				
+			}
+		})	
+	</script>
+</html>

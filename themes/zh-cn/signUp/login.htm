@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/signUp.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="sign">
+			<div class="center">
+				<img src="../img/headIcon.png" class="loginIcon"/>
+			</div>
+			<div class="f40 col333 center maT15">用户登录</div>
+			<div class="myInputBox flexBox1">
+				<div class="f28 col000 bold">用户名</div>
+				<input placeholder="请输入用户名" />
+			</div>
+			<div class="myInputBox flexBox1">
+				<div class="f28 col000 bold">密   码</div>
+				<input placeholder="请输入密码" />
+			</div>
+			<div class="flexBox1 remberBox f28 col999">
+				<div class="flexBox2">
+					<input type="checkbox"/>记住我
+				</div>
+				<span @click="forgetPsd">忘记密码？</span>
+			</div>
+			<div class="bigBtn loginBtn">登录</div>
+			<div class="f28 col666 center noAccount" @click="goSignUp">
+				 还没有账号？
+			    <span class="colFD5001">注册</span>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#sign",
+			data:{},
+			methods:{
+				goSignUp:function(){
+					window.location.href="signUp.html"
+				},
+				forgetPsd:function(){
+					window.location.href="forgetPsd.html"
+				}
+			}
+		})
+		
+	</script>
+</html>

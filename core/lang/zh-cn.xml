@@ -744,6 +744,9 @@
     <freight_fees>邮寄费用说明</freight_fees>
 
     <default_address>默认地址</default_address>
+	
+	<supplier_info> 商家信息</supplier_info>
+
     <default_login>默认登陆</default_login>
     <set_default_login>设置默认登录账户</set_default_login>
     <login_current_account>您当前系统登录账号为</login_current_account>
@@ -929,6 +932,7 @@
     <multi_order3>已使用</multi_order3>
     <multi_order4>还剩</multi_order4>
     <customer_name>客户姓名</customer_name>
+	<customer_info>客户信息</customer_info>
 
     <wx_panding_success>解除绑定成功</wx_panding_success>
     <wx_panding_fail_later>暂时无法解除绑定，请稍后再试</wx_panding_fail_later>

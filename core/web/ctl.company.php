@@ -162,10 +162,11 @@ class ctl_company extends cmsPage
     }
 
     
-    function resend_order_confirmation_action()
+   public function resend_order_confirmation_action()
     {
         $systemId = get2('id');
-
+       // $systemId ='20211218074509604123';
+       // var_dump($systemId);exit;
         if($systemId){
             $orderName=$this->loadModel('order')->generateOrderName($systemId);
             $template = $this->loadModel('system_mail_template');
@@ -180,6 +181,13 @@ class ctl_company extends cmsPage
 
             $system_mailer->title($title);
             $system_mailer->body($body);
+           // $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
+         //   $name ='statement.pdf';
+           // $system_mailer->attachment($path,$name);
+           // $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
+         //   $name ='logo.png';
+         //   $system_mailer->attachment($path,$name);
+          //  $system_mailer->to('hhxx_2012@hotmail.com');
             $system_mailer->to($to);
 
             echo $system_mailer->send();

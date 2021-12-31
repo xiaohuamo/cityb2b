@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>個人信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff center">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				修改暱稱
+			</div>
+			<div style="height:3.5rem;"></div>
+				
+			<div class="borR7 pa15 ma15 bgfff flexBox1">
+				<input v-model="con"/>
+				<img v-show="con" src="../img/cha.png" class="cha" style="margin-right:0;" @click="remove"/>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				con:''
+			},
+		    methods:{
+				editNickName:function(){
+					window.location.href="accountSetting.htm"
+				},
+				accountSetting:function(){
+					window.location.href="accountSetting.htm"
+				},
+				remove:function(){
+					this.con=''
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})
+	</script>
+</html>

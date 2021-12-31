@@ -2063,6 +2063,11 @@ class ctl_member extends cmsPage
 		
 		$business_delivery_info =$this->loadModel('user')->getBusinessDeliveryInfo($data2['createUserId'],$this->getLangStr());
 
+         $supplier_info =$this->loadModel('wj_abn_application')->getBusinessInfo($data['business_userId']);
+         //var_dump($supplier_info);exit;
+
+         $this->setData($supplier_info,'supplier_info');
+
         if ($data2) {
 
          if($this->getLangStr()=='en'){
@@ -2099,13 +2104,15 @@ class ctl_member extends cmsPage
         }
 
 
+        // 获取订单商家的信息
+
+
+
         if (!$data) {
             $this->sheader(null, (string)$this->lang->no_data);
         }
 
-        if( $data['payment']=='hcash'){
-        	$data['payment_note']=$this->loadModel('hcash_record')->getByWhere(array('order_id'=>$data['orderId']));
-        }
+
        
 
         $this->setData($data, 'data');
@@ -2136,7 +2143,7 @@ class ctl_member extends cmsPage
         $this->setData('客户Ubonus券管理', 'pagename');
         $this->setData('客户Ubonus券管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
     
-		$this->display_pc_mobile('member/exchange_detail','mobile/member/exchange_detail');
+		$this->display_pc_mobile('member/exchange_detail','mobile/member/orderDetail');
 	}
 	
 	function fav_action() {

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>订单明细</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="success" v-cloak>
+			<div class="head bgfff mb10">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<div class="f38 col333 f500 bold center">订单明细</div>
+			</div><div style="height:3.5rem;"></div>
+			
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					订单信息
+				</div>
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1 pmb10">
+						<span>订单编号</span>
+						<span class="col282828">2020123399300200</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>订单名称</span>
+						<span class="col282828">xxxxxx等5件商品</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>购买时间</span>
+						<span class="col282828">2021-10-19 22:30:15</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>订单状态</span>
+						<div class="col282828">
+							<span class="col00B063">已支付／</span>
+							<span class="col000">已兑付/</span>
+							<span class="colF14646">未支付</span>
+						</div>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>订单金额</span>
+						<span class="col282828">$345</span>
+					</div>	
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1 pmb10">
+						<span>物流方式</span>
+						<span class="col000 bold">配送</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>配送日期</span>
+						<span class="col000 bold">2021-10-19</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>自取说明</span>
+						<span class="col000 bold">xxx</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>取货地址</span>
+						<span class="col000 bold">xxxxxx</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>取货联系</span>
+						<span class="col000 bold">130323912312</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>取货说明</span>
+						<span class="col000 bold">取货说明取货说明取货说明</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>配送说明</span>
+						<span class="col000 bold">配送说明配送说明</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1">
+						<span>客户留言</span>
+						<span class="col000 bold">客户留言客户留言客户留言</span>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					购买清单
+				</div>
+				<div class="pa15 f28 col888888 flexBox1">
+					<div>产品名称</div>
+					<div>规格</div>
+					<div>数量</div>
+					<div>单价</div>
+				</div>
+				<div class="flexBox1 pa0-15 pmb10">
+					<div>川北凉粉250g</div>
+					<div>小</div>
+					<div>x1</div>
+					<div>$2134.08</div>
+				</div>
+				<div class="flexBox1 pa0-15 pmb10">
+					<div>川北凉粉250g</div>
+					<div>小</div>
+					<div>x1</div>
+					<div>$2134.08</div>
+				</div>
+				<div class="flexBox1 pa0-15 pmb10">
+					<div>川北凉粉250g</div>
+					<div>小</div>
+					<div>x1</div>
+					<div>$2134.08</div>
+				</div>
+				<div class="pa15 textRight f28 col0B0B0B">
+					<div class="pmb10">小计  $14,2</div>
+					<div class="pmb10">折扣  $2.1</div>
+					<div class="pmb10">运费  $2.1</div>
+					<div class="pmb10">手续费  $2.1</div>
+					<div class="pmb10">订单金额 <span class="f33">$14.2</span></div>
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					客户信息
+				</div>
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1 pmb10">
+						<span>客户姓名</span>
+						<span class="col0B0B0B">2020123399300200</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>电话</span>
+						<span class="col0B0B0B">2020123399300200</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>地址 </span>
+						<span class="col0B0B0B">2020123399300200</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>邮件</span>
+						<span class="col0B0B0B">2020123399300200</span>
+					</div>
+					<div class="flexBox1">
+						<div></div>
+						<div class="commonBtn">重发邮件</div>
+					</div>
+				</div>
+			</div>
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					商家信息
+				</div>
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1 pmb10">
+						<span>客家名称</span>
+						<span class="col0B0B0B">mk果蔬</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>商家地点</span>
+						<span class="col0B0B0B">mk果蔬</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>联系方式</span>
+						<span class="col0B0B0B">mk果蔬</span>
+					</div>
+					<div class="flexBox6 pmb10">
+						<span>商家客服微信</span>
+						<img src="../img/big.png" class="wx"/>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1">
+						<span>退货政策</span>
+						<span class="col000 bold">退货政策退货政策退货政</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					平台服务
+				</div>
+				<div class="pa15 f28 col888888 flexBox1">
+					<div class="serviceLeft">
+						<div class="flexBox1 pmb10">
+							<span>联系电话</span>
+							<span class="col000 bold">31131388777</span>
+						</div>
+						<div class="flexBox1 pmb10">
+							<span>微信1</span>
+							<span class="col000 bold">88777</span>
+						</div>
+						<div class="flexBox1 pmb10">
+							<span>微信2</span>
+							<span class="col000 bold">88777</span>
+						</div>
+					</div>
+					<div>
+						<img src="../img/big.png" class='wx'/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="infoBox">
+				<div class="infoTitle bold">
+					交易日志
+				</div>
+				<div class="flexBox1 pa15">
+					<div class="journal">日志</div>
+					<div class="journal">详情</div>
+				</div>
+				<div class="pa15 f28 col888888">
+					<div class="flexBox1 pmb10">
+						<span>2020-10-12 10:10:10</span>
+						<span class="col282828">购买</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>2020-10-12 10:10:10</span>
+						<span class="col282828">部分退货</span>
+					</div>
+					<div class="flexBox1 pmb10">
+						<span>2020-10-12 10:10:10</span>
+						<span class="col282828">订单取消</span>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#success",
+			data:{
+				
+			},
+		    methods:{
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

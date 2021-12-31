@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>拣货员</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jhy.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff center">总进程</div><div style="height:3.5rem;"></div>
+			
+			<div class="green f35">已完成145/总单数145
+			  <img src="../img/jhy2.png"/>
+			</div>
+			<div class="green f35 bgFFAE00">
+			  <span class="blink">已完成145/总单数145</span>
+			  <img src="../img/jhy2.png"/>
+			</div>
+			
+			<div class="bgfff borR7 ma15">
+				<div class="flexBox1 pa15 borderB">
+					<div class="flexBox1">
+						<span>XXX</span>&nbsp;&nbsp;&nbsp;&nbsp;  xxx
+					</div>
+					<div class="flexBox1">
+						<span>13/18</span> &nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="greenBtn">
+							已备好
+							<img src="../img/jhy2.png"/>
+						</div>
+					</div>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<div class="flexBox1">
+						<span>XXX</span>&nbsp;&nbsp;&nbsp;&nbsp;  xxx
+					</div>
+					<div class="flexBox1">
+						<span>13/18</span> &nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="greenBtn">
+							已备好
+							<img src="../img/jhy2.png"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="flexBox1 pa15 borderB">
+					<div class="flexBox1">
+						<span>XXX</span>&nbsp;&nbsp;&nbsp;&nbsp;  xxx
+					</div>
+					<div class="flexBox1">
+						<span>13/18</span> &nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="greenBtn bgFFAE00">
+							<span class="blink">备货中</span>
+							<img src="../img/jhy2.png"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="toHome">
+					<img src="../img/jhy8_.png"/>
+					<span class="col333 f26">拣货员</span>
+				</div>
+				<div>
+					<img src="../img/jhy5_.png"/>
+					<span class="colFD5001 f26">总进程</span>
+				</div>
+				<div>
+					<img src="../img/jhy4.png"/>
+					<span class="col333 f26">设置</span>
+				</div>
+				<div @click="toMe">
+					<img src="../img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	   new Vue({
+		  el:"#me",
+		  data:{
+			  
+		  },
+		  methods:{
+		    toHome(){
+				window.location.href="index.html"
+			},
+			changeMenu2(){
+				window.location.href="menu2.html"
+			},
+			toMe(){
+				window.location.href="me.html"
+			}
+		  }
+	   })
+	</script>
+</html>

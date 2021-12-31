@@ -10,6 +10,12 @@ class ctl_factorypage extends cmsPage
         $this->setData($restaurant, 'restaurant');
     }
 
+    public function  place_order_action(){
+       // var_dump('aa');exit;
+        $this->display_pc_mobile('placeorder/index', 'placeorder/index');
+
+    }
+
     public function restaurant_action()
     {
         $id = (int) get2('id');
@@ -18,10 +24,15 @@ class ctl_factorypage extends cmsPage
         $default_menu_page_items = 10;
 
         if (! $id) {
-            $this->sheader(null, '请选择正确工厂');
+            $this->sheader(null, 'Please choose the supplier');
         }
 
-        if ($this->loginUser) {
+        if(!$this->loginUser){
+
+              $this->sheader(null, 'Please login in and place the order ');
+         }
+
+
             //插入一段获取某用户购买历史的程序
             $deliveryTime = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
             $menu_bought_list = $this->loadModel("restaurant_menu")->getUserBoughtMenu($userId, $id, $deliveryTime, $this->lang['lang'][0]);
@@ -90,7 +101,7 @@ class ctl_factorypage extends cmsPage
             $this->setData($show_origin_price, 'show_origin_price');
 
             $this->setData($mdl_user_factory->isUserApproved($userId, $id), 'userApproved');
-        }
+
 
         $where = [
             'createUserId' => $id,
@@ -295,6 +306,14 @@ class ctl_factorypage extends cmsPage
         $this->display_pc_mobile('mobile/factorypage/order_for_customer', 'mobile/factorypage/order_for_customer');
 
         return;
+    }
+
+    public function get_factory_category_liset_action(){
+        $factory_id =get2('id');
+        $mdl_restaurant_category = $this->loadModel('restaurant_category');
+        $cate_list =$mdl_restaurant_category->get_category_list($factory_id);
+       
+
     }
 
     public function get_category_list($id)

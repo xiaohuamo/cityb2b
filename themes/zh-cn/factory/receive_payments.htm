@@ -54,8 +54,9 @@
 								<th>用户ID</th>
 								<th>商家CODE</th>
 								<th>用户名</th>
-								<th>付款金额</th>
-								<th>交易查询</th>
+								<th>客户付款</th>
+								<th>付款调整</th>
+								<th>流水</th>
 								<th>statement</th>
 								<th>手机号</th>
 
@@ -79,9 +80,14 @@
 									</td>
 
 									<td>
-									<input type="text" class="input-text" data-id='<{$user.idd}>' id="money-<{$user.idd}>" style="width:150px;" name="payment_amount"
+									输入付款金额：&nbsp;<input type="text" class="input-text" data-id='<{$user.idd}>' id="money-<{$user.idd}>" style="width:150px;" name="payment_amount"
 												   value="0">
 											<span class='promote-ajax'></span>
+									</td>
+									<td>
+										输入调整金额：&nbsp;<input type="text" class="input-text" data-id='<{$user.idd}>' id="money-<{$user.idd}>" style="width:150px;" name="adjust_payment_amount"
+															value="0">
+										<span class='promote-ajax'></span>
 									</td>
 
 
@@ -89,7 +95,7 @@
 
 
 									<td>
-										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">View</a>
+										<a href="<{$http_root_www}>statement/transcation_list?customer_id=<{$user.id}>">View</a>
 									</td>
 									<td>
 										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">View </a>
@@ -177,7 +183,53 @@
 
     });
 
+	$('input[name=adjust_payment_amount]').on('change', function () {
 
+		var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+		var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+		var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+		var id = $(this).data('id');
+		var update_field_name = $(this).attr('name');
+		var value;
+
+		value = $(this).val();//常规改动直接抓取改动值
+		var updateData = {};
+
+		updateData['id'] = id;
+		updateData[update_field_name] = value;
+		alert(id);
+		var ajax_result = $(this).next('.promote-ajax');
+		$.ajax({
+			url: "<{$http_root_www}>factory/adjust_customer_payments",
+			type: "POST",
+			data: updateData,
+			beforeSend: function () {
+				$(ajax_result).html(iconLoading);
+			}
+		}).done(function (data) {
+			try {
+				data = JSON.parse(data);
+			} catch (err) {
+				data['msg'] = data;
+			}
+
+			if (data.status == 200) {
+				$(ajax_result).html(successIcon);
+				//alert('yes');
+			} else if (data.status == 500) {
+				alert(data.msg);
+				$(ajax_result).html(errorIcon);
+			} else {
+				alert(data.msg);
+				$(ajax_result).html(errorIcon);
+			}
+		}).fail(function () {
+			iconupdate.iconUpdateFail();
+		});
+
+
+	});
     function IconUpdate(obj) {
         this.target = $(obj).find('.status_updating');
     }

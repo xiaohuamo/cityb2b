@@ -606,24 +606,29 @@ class customer_statement
 
              $balancesubTotal = 0.00;
              foreach ($this->items as $item) {
-
+                if($item['debit_amount']<=0  && abs($item['credit_amount']<=0)) continue;
                  $this->pdf->ln();
                  $this->pdf->row(date('Y-m-d ', $item['gen_date']), 0.10, 0, "L", 6);
                  $this->pdf->row($item['code_desc_en'], 0.2, 0, "L", 6);
                  $this->pdf->row($item['id'], 0.15, 0, "L", 6);
                  $this->pdf->row($item['id'], 0.15, 0, "L", 6);
 
-                 $this->pdf->row($item['debit_amount'], 0.10, 0, "L", 6);
+                 $this->pdf->row(number_format($item['debit_amount'],2), 0.10, 0, "L", 6);
 
-                 $this->pdf->row($item['credit_amount'], 0.10, 0, "L", 6);
+                 $this->pdf->row(number_format((-1)*$item['credit_amount'],2), 0.10, 0, "L", 6);
 
-                 if ($item['debit_amount'] >= 0) {
+                 if ($item['debit_amount'] > 0) {
                      $balance = $item['debit_amount'];
                  } else {
-                     $balance = $item['credit_amount'];
+                     $balance =(-1)* $item['credit_amount'];
                  }
-                 $this->pdf->row($balance, 0.10, 0, "L", 6);
-                 $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.10, 0, "L", 6);
+                 $this->pdf->row(number_format($balance,2), 0.10, 0, "L", 6);
+                 if(!$item['overdue_date']) {
+                     $this->pdf->row('-', 0.10, 0, "L", 6);
+                 }else{
+                     $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.10, 0, "L", 6);
+                 }
+
                  $balancesubTotal += $balance;
 
              }
@@ -646,24 +651,29 @@ class customer_statement
         if($this->itemsNotYetDue ) {
             $balancesubTotal =0;
             foreach ($this->itemsNotYetDue as $item) {
-
+                if($item['debit_amount'] <=0 && abs($item['credit_amount'])<=0 ) continue;
                 $this->pdf->ln();
                 $this->pdf->row(date('Y-m-d ',$item['gen_date']), 0.10, 0, "L", 6);
                 $this->pdf->row($item['code_desc_en'], 0.2, 0, "L", 6);
                 $this->pdf->row($item['id'], 0.15, 0, "L", 6);
                 $this->pdf->row($item['id'], 0.15, 0, "L", 6);
 
-                $this->pdf->row($item['debit_amount'], 0.10, 0, "L", 6);
+                $this->pdf->row(number_format($item['debit_amount'],2), 0.10, 0, "L", 6);
 
-                $this->pdf->row($item['credit_amount'], 0.10, 0, "L", 6);
+                $this->pdf->row(number_format((-1)*$item['credit_amount'],2), 0.10, 0, "L", 6);
 
-                if($item['debit_amount']>=0){
+                if($item['debit_amount']>0){
                     $balance =$item['debit_amount'];
                 }else{
-                    $balance =$item['credit_amount'];
+                    $balance =(-1)* $item['credit_amount'];
                 }
-                $this->pdf->row($balance, 0.10, 0, "L", 6);
-                $this->pdf->row(date('Y-m-d ',$item['overdue_date']), 0.10, 0, "L", 6);
+                $this->pdf->row(number_format($balance,2), 0.10, 0, "L", 6);
+                if(!$item['overdue_date']) {
+                    $this->pdf->row('-', 0.10, 0, "L", 6);
+                }else{
+                    $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.10, 0, "L", 6);
+                }
+
                 $balancesubTotal +=$balance;
 
             }

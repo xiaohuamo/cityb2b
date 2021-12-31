@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>我的优惠券</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="success" v-cloak>
+			<div class="pTitle">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				我的优惠券
+			</div><div style="height: 3rem;"></div>
+			
+			<div class="flexBox1 ma15" v-for="item in list">
+				<img src="../img/addressActive.png" class="couponChecked"/>
+				<div class="flexBox1 couponBox borR7">
+					<div class="couponL pa15 bgfff">
+						<div class="f35 col000 pmb15 bold">MK果蔬</div>
+						<div class="f26 col444">
+							满200减20，新客户专享5张
+							每张仅可使用一次
+						</div>
+					</div>
+					<div class="colfff couponR" @click="getcoupon">
+						<div class="f50 bold pmb5">$20</div>
+						<div class="f28">一键领取</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="counponMask" v-show="isPop">
+				<div class="borR7 bgfff counponPop center">
+					<div class="f35 col000 bold ma115-88">领取成功！</div>
+					<div class="counponBtn f35 colfff" @click="look">进店看看</div>
+					<img src="../img/cha2.png" @click="closePop" class="close"/>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#success",
+			data:{
+				list:['','',''],
+				isPop:false
+			},
+		    methods:{
+				look:function(){
+					window.location.href="../orderGoodsPage/tg.htm"
+				},
+				getcoupon:function(){
+					this.isPop=true
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				},
+				closePop:function(){
+					this.isPop=false
+				}
+			}
+		})	
+	</script>
+</html>

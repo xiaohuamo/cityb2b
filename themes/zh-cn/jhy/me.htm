@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>拣货员</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jhy.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff center">我的</div><div style="height:3.5rem;"></div>
+			
+			<div class="flexBox2 bgfff maT15 pa15">
+				<img src="../img/portrait.png" class="portrait"/>
+				<span>登录/注册</span>
+			</div>
+			
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="toHome">
+					<img src="../img/jhy8_.png"/>
+					<span class="col333 f26">拣货员</span>
+				</div>
+				<div @click="changeMenu2">
+					<img src="../img/jhy5.png"/>
+					<span class="col333 f26">总进程</span>
+				</div>
+				<div>
+					<img src="../img/jhy4.png"/>
+					<span class="col333 f26">设置</span>
+				</div>
+				<div>
+					<img src="../img/menu5_.png" />
+					<span class="colFD5001 f26">我的</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	   new Vue({
+		  el:"#me",
+		  data:{
+			  
+		  },
+		  methods:{
+		    toHome(){
+				window.location.href="index.htm"
+			},
+			changeMenu2(){
+				window.location.href="menu2.htm"
+			}
+		  }
+	   })
+	</script>
+</html>

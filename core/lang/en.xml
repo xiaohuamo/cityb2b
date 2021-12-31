@@ -431,6 +431,7 @@
     <multi_order3>used</multi_order3>
     <multi_order4>still left</multi_order4>
     <customer_name>Customer name</customer_name>
+	<customer_info>Customer Info</customer_info>
 
 
     <checkout_total>Amount due</checkout_total>
@@ -737,6 +738,7 @@
     <business_info>SellerInfo  address</business_info>
     <address>Address</address>
     <default_address>Default address</default_address>
+    <supplier_info> Supplier Info</supplier_info>
 
     <verified_address>Verfiy address</verified_address>
     <logo>LOGO</logo>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>订单信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="success">
+			<div class="pTitle">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				订单信息
+			</div><div style="height: 3rem;"></div>
+			<div class="pHead">
+				<div class="center"><img src="../img/fail.png" class="success"></div>  
+				<div class="center f40 col333 bold pmb10">下单失败</div>
+				<div class="center f28 colccc pmb15">由于某些未知原因，导致无法下单，请稍后再试或者直接联系商家下单。</div>
+				<div class="f30 col333 bold pmb10">
+					商家电话：0433 285 256
+				</div>
+				<div class="f30 col333 bold">
+					商家手机：0433 285 256
+				</div>
+				<div style="position:relative;top:-10px" class="continue pmb10" @click="continueOrder">返回</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#success",
+			data:{
+				
+			},
+		    methods:{
+				continueOrder:function(){
+					alert('暂时没连接页面')
+				},
+				lookOrder:function(){
+					window.location.href="orderDetail.htm"	
+				},
+				returnHome:function(){
+				   window.location.href="home.htm"	
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

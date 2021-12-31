@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>团购</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="goods" v-cloak>
+			<div class="head bgfff mb10 flexBox1">
+				<div class="flexBox2">
+					<img src="../img/return.png" class="return2"/>
+					<div class="f38 col333 f500 bold">11月15日星期二</div>
+				</div>
+				<div class="flexBox1">
+					<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			
+			<div class="addPop" v-show="isAddShow">
+				<a href=""><div class="flexBox2">
+					<img src="../img/add_1.png"/>
+					<span class="colfff f30">EN</span>
+				</div></a>
+				<div class="flexBox2" @click="clickSC">
+					<img src="../img/sc.png" v-if="isSC"/>
+					<img src="../img/add_2.png" v-else />
+					<span class="colfff f30">收藏</span>
+				</div>
+				<div class="flexBox2" @click="kh">
+					<img src="../img/add_3.png"/>
+					<span class="colfff f30">我要开户</span>
+				</div>
+				<div class="flexBox2" style="border:none;" @click="jm">
+					<img src="../img/add_4.png"/>
+					<span class="colfff f30">我是供应商</span>
+				</div>
+				<div class="triangle"></div>
+			</div>
+			<!-- main -->
+			
+			<img src="../img/big.png" class="w100"/>
+			
+			<div class="borR7 bgfff ma15 flexBox1 pa15">
+				<div class="commonBtn pa0-5">正在开团中</div>
+				<div>已有<span class="colFD5001">20</span>人购买</div>
+			</div>
+			
+			<div class="borR7 bgfff ma15 pa15 f28 col333">
+			      <div class="center pmb15 f35 bold col333">塔斯马尼亚海鲜团</div>
+				  <div class="pmb10">本次团购总共5000公斤扇贝,200公斤三文鱼2000公斤海参,渤海刀鱼1500公斤。</div>
+				  <div class="pmb10">开团时间： 2021年10月2日</div>
+				  <div class="pmb10">截团时间： 2021年10月2日</div>
+				  <div>到货时间： 2021年10月2日</div>
+			</div>
+			
+			<div class="borR7 bgfff ma15 pa15 f28 col333">
+				支付方式支付方式支付方式支付方式支付方式支付方式本次团购总共5000公斤扇贝,200公斤三文鱼2000公斤海参,渤海刀鱼1500公斤。 
+			</div>
+			
+			<!-- 分类 開始-->
+			<div class="pa0-15 classifyBox2 z7">
+				     <!-- 一级分类 -->
+				<div class="flexBox6">
+					<div class="bigclassify">
+						<div class="classify" @click="choseBigClassify(index)" v-for="(item,index) in classifBigyList" :class="currentBigClassify==index?'colFD5001':''">{{item}}</div>
+					</div>
+					<div class="flexBox2">
+						<img src="../img/fl.png" class="xxx" @click="classifyPop"/>&nbsp;&nbsp;
+						<img src="../img/xxx.png" class="xxx" @click="layoutChange"/>
+					</div>
+				</div>
+				      <!-- 二级分类 -->
+				<div class="flexBox6 maT15" v-show="scroll">
+					<div class="bigclassify">
+						<div class="classify2 bold" @click="haveBuy">
+							已购
+							<img class="classify2Active" src="../img/tabActive.png" v-show="currentClassify==-1"/>  
+						</div>
+						<div class="classify2" v-for="(item,index) in classifyList2" @click="choseClassify(index)">
+						    海鲜
+						    <img class="classify2Active" src="../img/tabActive.png" v-show="currentClassify==index"/>  
+						</div>
+					</div>
+					<div class="flexBox2">
+						<img src="../img/fl.png" class="xxx" @click="classifyPop"/>
+					</div>
+				</div>	
+			</div>
+			
+		    <!-- 分類結束 -->	
+			<!-- 商品列表開始 -->
+			<!-- <div class="ma0-15 bgfff borR7">
+				<div class="pa15" style="padding-bottom:0;">
+					<div class="searchBox flexBox1" style="margin-top:5px;">
+						<img src="../img/search.png" class="searchIcon"/>
+						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					</div>
+				</div>
+				<div class="flexBox3 pa15 borderB" v-for="(item2,index2) in goodsList">
+					<div class="flexBox3">
+						<img src="../img/big.png" class="cartImg"/>
+						<div class="goodInfo2_">
+							<div>{{item2.title}}</div>
+							<div class="flexBox1 price">
+								<span class="colFD5001">$6.45</span>
+								<div class="flexBox2">
+									<div class="numreduce" @click="numreduce(index2,'g')"></div>
+									<input type="number" v-model="item2.num" class="numInput" @input="Enter(item2.num,index2)"/>
+									<div class="numadd" @click="numadd(index2,'g')"></div>
+								</div>
+							</div>
+						</div>		
+					</div>
+				</div>
+				<div class="flexBox3 pa15 borderB">
+					<div class="flexBox3">
+						<img src="../img/big.png" class="cartImg"/>
+						<div class="goodInfo2_">
+							<div>色泽自然利隆赤峰天山大金苗小米2斤/袋</div>
+							<div class="flexBox1 price">
+								<span class="colFD5001">$6.45</span>
+								<div class="commonBtn" @click="Specifications">
+									选规格
+								</div>
+							</div>
+						</div>		
+					</div>
+				</div>
+			</div> -->
+			
+			<div class="ma0-15 bgfff borR7">
+				<div class="pa15"  v-if="layout">
+					<div class="searchBox flexBox1" style="margin-top:0px;">
+						<img src="../img/search.png" class="searchIcon"/>
+						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					</div>
+				</div>
+				<div class="pa15" style="padding-bottom:0;" v-else>
+					<div class="searchBox flexBox1" style="margin-top:0px;">
+						<img src="../img/search.png" class="searchIcon"/>
+						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					</div>
+				</div>
+				
+				<!-- 橫版判斷 -->
+				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
+					<div :class="layout?'bgfff goodsbox':''" class="pa15 borderB" v-for="(item2,index2) in goodsList2" @click="clickGoods">
+						<div :class="layout?'':'flexBox3'">
+							<img src="../img/big.png" :class="layout?'cartImg2':'cartImg'"/>
+							<div class="goodInfo2_">
+								<div>{{item2.title}}</div>
+								<div class="flexBox1 price" v-if="item2.hasGG==0">
+									<span class="colFD5001">$6.45</span>
+									<div class="flexBox2">
+										<div class="numreduce" @click.stop="numreduce(index2,'g')"></div>
+										<input type="number" v-model="item2.num" class="numInput" @click.stop="Enter(item2.num,index2)"/>
+										<div class="numadd" @click.stop="numadd(index2,'g')"></div>
+									</div>
+								</div>
+								<div class="flexBox1 price" v-else>
+									<span class="colFD5001">$6.45</span>
+									<div class="commonBtn" @click.stop="Specifications">
+										选规格
+									</div>
+								</div>
+							</div>		
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			<!-- 商品列表結束 -->
+			<div class="f28 col333 center bgFFF6EC ma10-15 pa5-0 ">
+				<div>到这个团购点看看</div>
+				<div>还有<span class="colFD5204 f35">4</span>个团购正在进行</div>
+			</div>
+			
+			<!-- 底部開始 -->
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox z5">
+				<div class="flexBox1">
+					<div @click="toHome" style="margin-right:2.8rem;">
+						<img src="../img/menu1.png"/>
+						<span class="col333 f26">首页</span>
+					</div>
+					<div @click="cartPop" class="cartnumBox">
+						<img src="../img/menu4.png" />
+						<span class="col333 f26">购物车</span>
+						<div>{{goodsList.length}}</div>
+					</div>
+				</div>
+				<div class="flexBox1">
+					<div class="colFD5001 bold">$<span class="f40">{{allTotal}}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
+				    <div class="commonBtn" @click="placeOrder">下单</div>
+				</div>
+			</div>
+			<!-- 底部結束 -->
+			
+			<!-- 规格弹出框 -->
+			<div class="mask z10" v-if="isPop" @click="closePop('g')">
+				<img src="../img/cha2.png" @click="closePop('g')" class="close2"/>
+				<div class="pop2 center" @click.stop="clickPop">
+					<div class="flexBox2 borderB pa15 relative">
+						<img src="../img/big.png" class="cartImg"/>
+						<div class="goodInfo2 textLeft">
+							<div class="bold">鸡肉条</div>
+							<div class="flexBox1 price">
+								<span class="colFD5001">$7/kg</span>
+							</div>
+						</div>
+					</div>
+					<div class="pa0-15">
+						<div class="f28 col333 textLeft bold pa15-0">规格1 尺寸</div>
+						<div class="flexBox2 wrap">
+							<div :class="current1==index?'checkedBtn detail_btn':'detail_btn'" v-for="(item,index) in list1" @click.stop="chose(index,1)">{{item}}</div>
+						</div>
+						<div class="flexBox1 maT15">
+							<div class="f28">
+								<span class="colFD5001">$7.78</span>
+								<span class="col666" style="text-decoration:line-through;">$12.78</span>
+							</div>
+							<div class="flexBox2">
+								<div class="numreduce" @click="numreduce('','s')"></div>
+								<input type="number" v-model="num" class="numInput" @input="Enter()"/>
+								<div class="numadd" @click="numadd('','s')"></div>
+							</div>
+						</div>
+						<div class="relative joinCartBtnBox">
+							<div class="joinCartBtn f30" @click="closePop">加入购物车</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+			<!-- 购物车弹出框 -->
+			
+			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
+				<div class="bgfff cartPop" @click.stop="clickPop">
+					<img src="../img/cha2.png" @click="closePop('c')" class="close3"/>
+					<div class="center col333 f30 pa15-0 borderB">共{{goodsList.length}}件</div>
+					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" @click.stop="clickGoods">
+						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
+							<img src="../img/big.png" class="cartImg"/>
+							<div class="goodInfo2_">
+								<div>{{item2.title}}</div>
+								<div class="flexBox1 price">
+									<span class="colFD5001">{{item2.price}}</span>
+									<div class="flexBox2">
+										<div class="numreduce" @click.stop="numreduce(index2,'c')"></div>
+										<input type="number" v-model="item2.num" class="numInput" @click.stop="Enter(item2.num,index2)"/>
+										<div class="numadd" @click.stop="numadd(index2,'c')"></div>
+									</div>
+								</div>
+							</div>		
+						</div>
+						<div :class="item2.isTouch?'touchRemoveActive':'touchRemoveActive2'" class="touchRemove f25" @click.stop="clickRemove(index2)">
+							删除
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#goods",
+			data:{
+				isAddShow:false,      // 点击＋
+				isSC:false,           // 是否收藏
+				currentClassify:0,
+				currentBigClassify:0,
+				current1:0,
+				current2:0,
+				classifBigyList:['全部','火锅','火锅','蔬菜','水果','零食','吃的','喝的','用的','玩的'],
+				classifyList1:['火锅底料','火锅底料','火锅底料','火锅底料','火锅底料','火锅底料','火锅底料','火锅底料'],
+				classifyList2:['火锅底料','火锅底料','火锅底料','火锅底料','火锅底料','火锅底料','火锅底料'],
+				list1:['10cm','20cm','30cm','40cm'],
+				list2:['黄色','绿色','白色','红色'],
+				num:1,   // 规格中的
+				goodsList2:[
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:false,
+						status:0     // 是否选中状态  1为选中  2是不选中
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:2,
+						num:2,
+						isTouch:false,
+						hasGG:true,
+						status:0
+					}
+				],
+				goodsList:[
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:false,
+						status:0     // 是否选中状态  1为选中  2是不选中
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:2,
+						num:2,
+						isTouch:false,
+						hasGG:true,
+						status:0
+					}
+				],
+				searchCon:'',
+				isPop:false,
+				isclassifyPop:false,   // 分类弹出框
+				iscartPop:false,
+				isShare:false,
+				layout:false
+			},
+			watch:{
+				'goodsList.length': {
+			        handler(newValue, oldValue) {
+			           if(newValue==0){
+			           	this.iscartPop=false
+			           }
+			        }
+			    }
+			},
+			computed:{
+				 allTotal() {
+				 	var sum=0
+				 	this.goodsList.map(
+				 		(item)=>{
+				 			sum+=item.price*item.num
+				 		}
+				 	)
+				 	return sum
+				 }
+			},
+		    methods:{
+				layoutChange(){
+					this.layout=!this.layout
+				},
+				clickAdd(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				kh(){
+					window.location.href="../KH.htm"
+				},
+				jm(){
+					window.location.href="../jm.htm"
+				},
+				returnPage(){
+					window.history.go(-1)
+				},
+				search:function(){
+					
+				},
+				getFocus:function(){
+					
+				},
+				loseFocus:function(){
+					
+				},
+				haveBuy(){
+					this.currentBigClassify=-1
+					this.currentClassify=-1
+				},
+				remove(){
+					this.searchCon=''
+				},
+				touchStart(e){ //滑动开始
+				   // 记录初始位置
+				   this.startX = e.touches[0].clientX;
+				},
+				touchEnd(e,index2){   //滑动删除
+				  // 当前滑动的元素
+				  let parentElement = e.currentTarget;
+				  // 记录结束位置
+				  this.endX = e.changedTouches[0].clientX;
+				  // 左滑,计算滑动距离
+				  if (this.startX - this.endX > 30) {
+						this.goodsList[index2].isTouch=true
+				  }
+				  // 右滑,计算滑动距离
+				  if (this.startX - this.endX < -30) {
+						this.goodsList[index2].isTouch=false	
+				  }
+				  this.startX = 0;
+				  this.endX = 0;
+				},
+				numadd(index2,source){   //  数量增加
+					if(source=='g'){//  商品中的g  购物车中的c  规格中的s
+						this.goodsList2[index2].num++
+					}else if(source=='c'){
+						this.goodsList[index2].num++
+					}else{  // 规格中的
+						this.num++
+					}
+				},
+				numreduce(index2,source){   // 数量减少
+					if(source=='g'){//  商品中的
+					   if(this.goodsList2[index2].num==1){
+					   	return false
+					   }else{
+					   	this.goodsList2[index2].num--
+					   }
+					}else if(source=='c'){
+						if(this.goodsList[index2].num==1){
+					   		return false
+					   }else{
+					   		this.goodsList[index2].num--
+					   }
+					}else{
+						if(this.num==1){
+							return false
+						}else{
+							this.num--
+						}
+					}	
+				},
+				Enter(num,index2){
+					if(num.length==1){
+					   this.goodsList[index2].num=this.goodsList[index2].num.replace(/[^1-9]/g,'')
+					}else{
+					   this.goodsList[index2].num=this.goodsList[index2].num.replace(/\D/g,'')
+					}
+				},
+				Specifications(){  // 点击规格
+					this.isPop=true
+				},
+				chose(index,source){  //选择规格
+					if(source==1){
+						this.current1=index
+					}else{
+						this.current2=index
+					}
+				},
+				closePop(source){  // 关闭弹窗
+					if(source=='c'){  // 购物车
+						this.iscartPop=false
+					}else{
+						this.isPop=false
+					}
+				},
+				cartPop(){  // 购物车弹出框
+					this.iscartPop=true
+				},
+				classifyPop(){  // 分类弹出框
+					this.isclassifyPop=!this.isclassifyPop
+				},
+				closeclassifyPop(){  // 关闭分类弹出框
+					this.isclassifyPop=false
+				},
+				choseBigClassify(index){  //  选择一级分类
+					this.currentBigClassify=index
+				},
+				choseClassify(index){  //  选择二级分类
+					this.currentClassify=index
+				},
+				placeOrder(){    // 下单
+					window.location.href="../placeOrder.htm"
+				},
+				nextPage(){  // 跳转店铺说明
+					window.location.href="serviceDescription.htm"
+				},
+				toHome(){
+					window.location.href="../home.htm"
+				},
+				shareApp(){
+				  	this.isShare=true
+				},
+				dismissShare(){
+					this.isShare=false
+				},
+				clickPop(){
+				   return false	
+				},
+				clickGoods(){
+					window.location.href="../goods/detail.htm"
+				}
+			}
+		})	
+	</script>
+</html>

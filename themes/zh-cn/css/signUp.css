@@ -1,0 +1,41 @@
+
+
+.myInput{
+	padding:15px;
+	border-radius: 22px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+
+.loginIcon{
+	margin-top: 7.94rem;
+}
+
+.myInputBox{
+	background: #F5F5F5;
+	height: 2.75rem;
+	line-height: 2.75rem;
+	margin:20px 30px;
+	box-sizing: border-box;
+	border-radius: 22px;
+}
+.myInputBox input{
+	height:100%;
+	width: calc(100% - 50px);
+	background: #F5F5F5;
+}
+.myInputBox div{
+	width: 100px;
+	text-align: center;
+}
+
+.remberBox{
+	margin:0px 30px 20px;
+}
+.noAccount{
+   margin-top: 15px;	
+}
+.loginBtn{
+  margin: 0 30px;	
+}

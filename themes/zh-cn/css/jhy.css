@@ -1,0 +1,181 @@
+
+
+
+.f38{
+	font-size: 1.187rem;
+}
+.f45{
+	font-size: 1.4rem;
+}
+.f35{
+	font-size: 1.09rem;
+}
+
+.sj{
+	width: 11px;
+}
+
+.leftsb{
+	background:#f7f7fc;
+	width: 20%;
+	text-align: center;
+	height:100%;
+	padding-top:30px;
+	box-sizing: border-box;
+}
+
+.rightsb{
+	width: 80%;
+}
+
+
+.yellow{
+	width: 5.68rem;
+	text-align: center;
+	height: 4.87rem;
+	line-height: 3rem;
+	background: #FFAE00;
+	border-radius: 7px;
+	position: relative;
+	color: #fff;
+}
+
+.yellow img{
+	width: 34px;
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+}
+
+.H{
+	height: 7rem;
+	color: #000000;
+}
+
+.green{
+	background: #4ED44F;
+	position: relative;
+	width: 50%;
+	left: 25%;
+	padding: 15px;
+	border-radius: 7px;
+	color: #fff;
+	margin: 15px 0;
+}
+.green img{
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	width: 25px;
+}
+
+.greenBtn{
+	width: 5.68rem;
+	height: 2.18rem;
+	line-height: 2.18rem;
+	background: #4ED44F;
+	border-radius: 7px;
+	position: relative;
+	color: #fff;
+	text-align: center;
+}
+.greenBtn img{
+	width: 15px;
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+}
+
+.bg4ED44F{
+	background: #4ED44F !important;
+}
+
+
+.pos{
+	top:105px;
+}
+
+.borb{
+	border-radius: 0 0 7px 7px;
+}
+
+.edit{
+	width: 27px;
+}
+
+.colA0A0A0{
+	color: #A0A0A0;
+}
+
+.paT15{
+	padding-top: 15px !important;
+}
+
+
+.detailpop{
+	width: 80%;
+	height: 190px;
+	position: absolute;
+	left: 10%;
+	top:50%;
+	margin-top: -75px;
+	border-radius: 14px;
+	box-sizing: border-box;
+}
+
+.sureBox{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	border-top: 1px solid #DCDCDC;
+}
+.sureBox div{
+	width: 50%;
+	text-align: center;
+	padding: 15px 0;
+}
+.cancel{
+	border-right: 1px solid #DCDCDC;
+}
+
+.bg2970FE{
+	background: #2970FE;
+}
+.bg4ED44F{
+	background: #4ED44F
+}
+.bgEF4444{
+	background: #EF4444;
+}
+.bgFFAE00{
+  background: #FFAE00 !important;
+}
+.numInput2{
+	width: 60px;
+	background: #EEEEEE;
+	text-align: center;
+	height: 20px;
+	border-radius: 5px;
+}
+
+.col181818{
+	color: #181818;
+}
+
+/* 定义blink类*/
+.blink{
+    color: #fff;
+    animation: blink 2s linear infinite;  
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 2s linear infinite;
+    -moz-animation: blink 2s linear infinite;
+    -ms-animation: blink 2s linear infinite;
+    -o-animation: blink 2s linear infinite;
+}
+
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}

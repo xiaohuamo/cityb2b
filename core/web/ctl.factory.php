@@ -1563,15 +1563,88 @@ class ctl_factory extends cmsPage
     }
 
 
+    public function adjust_customer_payments_action(){
 
-    public function add_customer_payments_action(){
-
-        if(!is_post()){
+        if(is_post()){
 
             $mdl_user_factory =$this->loadModel("user_factory");
 
             $id = post('id');
-            $id = 239;
+          //  $id = 239;
+            // $this->form_response(600,$id);
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600,'no access','no access');
+
+            }
+
+
+            $data=array();
+
+            $payment_amount = post('adjust_payment_amount');
+           // $payment_amount =450;
+            // 校对当日同笔付款是否已执行 ，如果付过 则 不允许再付款。
+            // 插入付款数据
+            if($payment_amount<=0) {
+                $this->form_response(500, 'amount  must larger than 0!','');
+            }
+
+
+            $mdl_statement= $this->loadModel('statement');
+
+            $mdl_statement->begin();
+
+
+            //插入客户支付数据
+            $customer_payment_data = $mdl_statement->getAdjustCustomerPaymentData($this->loginUser['id'],$factory_user,$payment_amount);
+            $new_id= $mdl_statement->insert($customer_payment_data);
+
+            if(!$new_id){
+                $error=1;
+            }
+
+            // 分析该笔支付 是支付那个账单， 顺序依次 是 overdue账单 （按overdue日期递增走），not yet due , 如果还有剩余，则做一个credit . 如果，所剩余额不够下笔账单
+            // 付款，则 将余额转成credit .
+            //   if(! $isProcessed) $error=1;
+
+            $mdl_statement->updatePaymentsDetails($new_id,$payment_amount,$factory_user,$this->loginUser['id']);
+
+            if($error) {
+                $mdl_statement->rollback();
+                $this->form_response(500, 'error!','');
+            }else{
+                $mdl_statement->commit();
+                $this->form_response(200,'','');
+            }
+
+
+
+            //   $this->form_response(600,$payment_amount);
+
+            try {
+
+            } catch (Exception $e) {
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
+    public function add_customer_payments_action(){
+
+        if(is_post()){
+
+            $mdl_user_factory =$this->loadModel("user_factory");
+
+            $id = post('id');
+          //  $id = 239;
            // $this->form_response(600,$id);
             // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
 
@@ -1588,9 +1661,14 @@ class ctl_factory extends cmsPage
             $data=array();
 
             $payment_amount = post('payment_amount');
-            $payment_amount =700;
+           // $payment_amount =450;
             // 校对当日同笔付款是否已执行 ，如果付过 则 不允许再付款。
             // 插入付款数据
+            if($payment_amount<=0) {
+                $this->form_response(500, 'amount  must larger than 0!','');
+            }
+
+
             $mdl_statement= $this->loadModel('statement');
 
             $mdl_statement->begin();
@@ -1638,7 +1716,7 @@ class ctl_factory extends cmsPage
 
 
 
-		public function update_business_code_action(){
+    public function update_business_code_action(){
 
 			if(is_post()){
 
@@ -2052,5 +2130,6 @@ class ctl_factory extends cmsPage
         $report->setFactory($factory, $factoryABN, $factoryAccount);
         $report->generatePDF();
         $report->outPutToBrowser(  'Invoice-' . $order['orderId'] . '.pdf');
+        //outPutToFile
     }
 }

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>拣货员</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jhy.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff center">拣货员</div><div style="height:3.5rem;"></div>
+			<div class="flexBox1 pa15 bgfff">
+				<div class="flexBox1" @click="pop(0)">
+					{{choseData0?choseData0:'选择配货商家'}}
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+				<div class="flexBox1" @click="pop(1)">
+					{{choseData1?choseData1:'2021-09-12'}}
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+				<div class="flexBox1" @click="pop(2)">
+					{{choseData2?choseData2:'xxxx'}}
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+			</div>
+			
+			<div class="mask z10 pos" v-show="isShow" @click="closePop">
+			 	<div class="bgfff ma0-15 borb">
+					 <div class="borderB pa15" v-for="a in list" @click="choseDate(a)">{{a}}</div>
+				</div>
+			</div>
+			
+			<div class="borR7 bgfff pa15 ma15 flexBox1">
+				<div class="flexBox1">
+					物流号
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+				<div class="flexBox1">
+					站号
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+				<div class="flexBox1">
+					客户简称
+					<img src="../img/jhy7.png" class="sj"/>
+				</div>
+			</div>
+			
+			
+			<div class="flexBox1 ma15">
+				<div class="flexBox2">
+					当前司机
+					<div style="background: #FCD633;" class="pa0-15 borR7 blink">12/17</div>
+				</div>
+				<div class="flexBox2 f40 bold">
+					累计司机
+					33/70
+				</div>
+			</div>
+			
+			<div class="borR7 f25 ma15 bgfff flexBox2 H" @click="todetail">
+				<div class="leftsb">
+					<div class="pmb10">物流号</div>
+					<div class="f45">3345</div>
+				</div>
+				<div class="pa15 flexBox1 rightsb">
+					<div style="width: calc(80% - 3rem);">
+						<div class="flexBox1 pmb5">
+							司机   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							车辆   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							站号   <span class="f40">17</span>
+						</div>
+						<div class="flexBox1">
+							客户简称   <span>jason</span>
+						</div>
+					</div>
+					<div class="yellow f35 bg2970FE" v-if="isStart">
+						开始备货
+						<img src="../img/jhy1.png" />
+					</div>
+					<div class="yellow f45" @click="startBH" v-else>
+						<span class="blink">备货中</span>
+						<img src="../img/jhy1.png" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="borR7 f25 ma15 bgfff flexBox2 H" @click="todetail">
+				<div class="leftsb">
+					<div class="pmb10">物流号</div>
+					<div class="f45">3345</div>
+				</div>
+				<div class="pa15 flexBox1 rightsb">
+					<div style="width: calc(80% - 3rem);">
+						<div class="flexBox1 pmb5">
+							司机   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							车辆   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							站号   <span class="f40">17</span>
+						</div>
+						<div class="flexBox1">
+							客户简称   <span>jason</span>
+						</div>
+					</div>
+					<div class="yellow f45" style="background: #4ED44F;">
+						已备好
+						<img src="../img/jhy2.png" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="borR7 f25 ma15 bgfff flexBox2 H" @click="todetail">
+				<div class="leftsb">
+					<div class="pmb10">物流号</div>
+					<div class="f45">3345</div>
+				</div>
+				<div class="pa15 flexBox1 rightsb">
+					<div style="width: calc(80% - 3rem);">
+						<div class="flexBox1 pmb5">
+							司机   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							车辆   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							站号   <span class="f40">17</span>
+						</div>
+						<div class="flexBox1">
+							客户简称   <span>jason</span>
+						</div>
+					</div>
+					<div class="yellow f35" style="background: #2970FE;">
+						开始备货
+						<img src="../img/jhy1.png" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="borR7 f25 ma15 bgfff flexBox2 H" @click="todetail">
+				<div class="leftsb">
+					<div class="pmb10">物流号</div>
+					<div class="f45">3345</div>
+				</div>
+				<div class="pa15 flexBox1 rightsb">
+					<div style="width: calc(80% - 3rem);">
+						<div class="flexBox1 pmb5">
+							司机   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							车辆   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							站号   <span class="f40">17</span>
+						</div>
+						<div class="flexBox1">
+							客户简称   <span>jason</span>
+						</div>
+					</div>
+					<div class="yellow f35" style="background: #B6B6B6;">
+						已有配货员
+						<img src="../img/ren12.png" />
+					</div>
+				</div>
+			</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="../img/jhy8.png"/>
+					<span class="colFD5001 f26">拣货员</span>
+				</div>
+				<div @click="changeMenu2">
+					<img src="../img/jhy5.png"/>
+					<span class="col333 f26">总进程</span>
+				</div>
+				<div>
+					<img src="../img/jhy4.png"/>
+					<span class="col333 f26">设置</span>
+				</div>
+				<div @click="toMe">
+					<img src="../img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	   new Vue({
+		  el:"#me",
+		  data:{
+			  isShow:false,
+			  current:0,
+			  choseData0:'',
+			  choseData1:'',
+			  choseData2:'',
+			  list:[],
+			  isStart:false,
+			  listAll:[
+				  ['商家1','商家2','商家3'],
+				  ['2021-12-09','2021-12-10','2021-12-11'],
+				  ['xx','xxx','hhh']
+			  ]	
+		  },
+		  methods:{
+			startBH(){
+				this.isStart=true
+			},
+			choseDate(a){
+				this['choseData'+this.current]=a
+			},
+			closePop(){
+				this.isShow=false
+			},
+		    pop(index){
+				this.current=index
+				this.list=this.listAll[index]
+				this.isShow=true
+			},
+			changeMenu2(){
+				window.location.href="menu2.html"
+			},
+		    toMe(){
+				window.location.href="me.html"
+			},
+			todetail(){
+				window.location.href="detail.html"
+			}
+		  }
+	   })
+	</script>
+</html>

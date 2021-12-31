@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2 col333 f30">
+		<div id="about" v-cloak>
+			<div class="head bgfff center">
+				<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage"/>
+				关于我们
+			</div>
+			<div style="height:3.5rem;"></div>
+			
+			<div class="flexBox1 pa15 bgfff borderB" style="margin-top:15px;">
+				<span>关于我们</span>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="R"/>
+			</div>
+			<div class="flexBox1 pa15 bgfff borderB">
+				<span>供营商入住须知</span>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="R"/>
+			</div>
+			<div class="flexBox1 pa15 bgfff borderB">
+				<span>零售商家入住须知</span>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="R"/>
+			</div>
+			<div class="flexBox1 pa15 bgfff borderB">
+				<span>帮助文档</span>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="R"/>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#about",
+			data:{
+	
+			},
+		    methods:{
+				returnPage(){
+					window.history.go(-1)
+				}
+				
+			}
+		})	
+	</script>
+</html>

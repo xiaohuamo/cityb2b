@@ -143,11 +143,48 @@ class ctl_statement extends cmsPage
 
 
         $report->outPutToBrowser('statement.pdf');
+        $filePath = date('Y-m');
+        $this->file->createdir('data/statement/'.$filePath);
+
+         if($filePath) {//如果是系统内部调用会直接在指定路径创建文件
+             $report->outPutToFile('data/statement/'.$filePath.'/'.'statement.pdf');
+             return $filePath;
+         }
+       // $report->outPutToFile('data/statement/'.$filePath.'/'.$order['userId'].'-'.$currentStatementRec['id'].".pdf","F");
         exit;
 
 
     }
 
+
+    public function transcation_list_action() {
+
+        $mdl_statement = $this->loadModel('statement');
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $search = trim(get2('search'));
+
+        $customer_id=get2('customer_id');
+        $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+        // var_dump($factoryId);exit;
+
+
+        $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search);
+        //var_dump($data);exit;
+
+        foreach ($data as $key => $value) {
+
+
+
+        }
+
+        $this->setData($search, 'search');
+        $this->setData($data, 'data');
+
+        $this->setData('statement_list', 'submenu');
+        $this->setData('account_management', 'menu');
+        $this->display('statement/transcation_list');
+    }
 
     public function statement_list_action() {
 

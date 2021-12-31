@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>订单信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="success">
+			<div class="pTitle">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				订单信息
+			</div><div style="height: 3rem;"></div>
+			<div class="pHead">
+				<div class="center"><img src="../img/success.png" class="success"></div>  
+				<div class="center f40 col333 bold pmb10">订单已成功提交</div>
+				<div class="center f28 colccc">我们将尽快为您发货!</div>
+				
+				<div class="continue" @click="continueOrder">继续下单</div>
+				<div class="flexBox1">
+					 <div class="lookOrder" @click="lookOrder">查看订单</div>
+					 <div class="returnHome" @click="returnHome">返回首页</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#success",
+			data:{
+				
+			},
+		    methods:{
+				continueOrder:function(){
+					window.location.href="../orderGoodsPage/orderGoodsDetail.htm"
+				},
+				lookOrder:function(){
+					window.location.href="orderDetail.htm"	
+				},
+				returnHome:function(){
+				   window.location.href="home.htm"	
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

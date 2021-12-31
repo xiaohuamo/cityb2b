@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>個人信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style>
+			#file {
+			    display: none;
+			}
+		</style>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff center">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				个人信息
+			</div>
+			<div style="height:3.5rem;"></div>
+			
+			<div class="borR7 ma15 bgfff">
+				<div class="flexBox1 pa15">
+					<img src="../img/portrait.png" class="portrait avatar"/>
+					<img src="../img/arrow2.png" class="arrow" />
+					<input type="file" id="file" accept="image/*" capture='camera' multiple>
+				</div>
+				<div class="flexBox1 pa15" @click="editNickName">
+					confident
+					<img src="../img/arrow2.png" class="arrow" />
+				</div>
+			</div>
+			
+			<div class="borR7 pa15 ma15 bgfff" @click="accountSetting">
+				賬戶設置
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+			},
+			mounted:function(){
+				$(".avatar").click(function(){
+				    $("#file").trigger("click")
+				})
+				var file = document.querySelector('input');
+				if (getIos()) {
+				    file.removeAttribute("capture");
+				}
+				function getIos() {
+				    var ua = navigator.userAgent.toLowerCase();
+				    if (ua.match(/iPhone\sOS/i) == "iphone os") {
+				       return true;
+				   } else {
+				      return false;
+				   }
+				}
+				//转成base64
+				$('input[type=file]').on('change', function () {
+				    var reader = new FileReader();
+				    reader.onload = function (e) {
+				       // console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+				        $(".avatar").attr("src", reader.result);
+				    }
+				    reader.readAsDataURL(this.files[0])
+				     //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一    个图片文件转化为base64的码
+				}) 	
+			},
+		    methods:{
+				returnPage:function(){
+				  window.history.go(-1)
+				},
+				editNickName:function(){
+					window.location.href="editNickName.htm"
+				},
+				accountSetting:function(){
+					window.location.href="accountSetting.htm"
+				}
+			}
+		})
+	</script>
+</html>

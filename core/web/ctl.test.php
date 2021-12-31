@@ -2,6 +2,11 @@
 class ctl_test extends cmsPage
 {
 
+	public function index1_action(){
+		$this->display('home');
+
+
+	}
 
 // 修改 cc_wj_customer_coupon 表种的 menu_id menu_cat_id 字段 
 
