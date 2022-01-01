@@ -567,13 +567,7 @@ class ctl_orderpaymentprocess extends cmsPage
 						$this->royalpay_form_action($orderId,$order_name,$arr_post['money'],$arr_post['payment']);
 					break;
 
-				case 'hcash':
-						foreach ( $arr_post['ids'] as $key => $val ) {
-							$order_name =$order_names.' ' .$arr_post['coupon_names'][$key];
-						}
 
-						$this->hcash_form_action($orderId,$order_name,$arr_post['hcashAmount']);
-					break;
 				case 'offline':
 					$this->create_order($orderId);
 					if($status==1) { //if the status ==1 means from b2b order ,and just marketd at paid .
@@ -966,7 +960,7 @@ class ctl_orderpaymentprocess extends cmsPage
 		if($this->getUserDevice()=='desktop'){
 			$this->display( 'payment/royalpay/return' );
 		}else{
-			$this->display( 'payment/royalpay/return_mobile' );
+			$this->display( 'orderPage/orderSuccess' );
 		}
 		
 	}
@@ -979,73 +973,14 @@ class ctl_orderpaymentprocess extends cmsPage
 		$this->setData( $orderId, 'orderId' );
 		if($this->getUserDevice()=='desktop'){
 			$this->display( 'payment/offline_success' );
+
 		}else{
-			$this->display( 'payment/offline_success_mobile' );
+			$this->display( 'orderPage/orderSuccess' );
 		}
 	}
 
-	public function hcash_form_action($orderId,$order_name,$money)
-	{	
-		$this->setData($orderId,'orderId');
-		$this->setData($order_name,'orderName');
-		$this->setData($money,'money');
 
-		if($this->getUserDevice()=='desktop'){
-			$this->display( 'payment/hcash/form' );
-		}else{
-			$this->display( 'payment/hcash/form_mobile' );
-		}
 
-	}
-
-	public function hcash_success_action($id=null)
-	{
-		
-		if(is_post()){
-			$hcashOrderId =post('hcashOrderId');
-			$hcashOrderTag =post('hcashOrderTag');
-			
-			if(!$hcashOrderId||!$hcashOrderTag){
-				$this->sheader(null,"Wallet info lost.");
-			}
-
-			$orderId = $_GET['orderId'];
-
-			$this->create_order($orderId);
-			
-
-			$data['hcash_order_id']=$hcashOrderId;
-
-			$data['hcash_order_tag']=$hcashOrderTag;
-
-			$where['order_id']=$orderId;
-
-			if($this->loadModel('hcash_record')->updateByWhere($data,$where)){
-
-				$this->setData( ' 购买成功 － '.$this->site['pageTitle'], 'pageTitle' );
-				$this->setData( $orderId, 'orderId' );
-				if($this->getUserDevice()=='desktop'){
-					$this->display( 'payment/hcash/hcash_success' );
-				}else{
-					$this->display( 'payment/hcash/hcash_success_mobile' );
-				}
-			}else{
-				$this->sheader(null,'更新hcash_record出错，请稍后再试');
-			}
-		}else{
-			$orderId = $id;
-
-			$this->setData( ' 购买成功 － '.$this->site['pageTitle'], 'pageTitle' );
-			$this->setData( $orderId, 'orderId' );
-			if($this->getUserDevice()=='desktop'){
-				$this->display( 'payment/hcash/hcash_success' );
-			}else{
-				$this->display( 'payment/hcash/hcash_success_mobile' );
-			}
-		}
-		
-		
-	}
 
 	function finish_order($orderId){
 
@@ -1147,7 +1082,7 @@ class ctl_orderpaymentprocess extends cmsPage
 		if($this->getUserDevice()=='desktop'){
 			$this->display( 'payment/paypal/return' );
 		}else{
-			$this->display( 'payment/paypal/return_mobile' );
+			$this->display( 'orderPage/orderSuccess' );
 		}
 		
 	}

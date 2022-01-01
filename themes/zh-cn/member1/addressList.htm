@@ -5,14 +5,14 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>Homepage</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
+		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="address">
 			<div class="head bgfff center">
-				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
 				收货地址
 			</div>
 			<div style="height:3.5rem;"></div>
@@ -22,24 +22,24 @@
 			<div class="ma15 pa15 bgfff borR7 f28 col282828" v-for="(item,index) in list" @click="clickAddress(index)">
 				<div class="pmb10 flexBox1">
 					<div>王小明   176****8888</div>	
-				    <img v-if="item.isActive==1" src="../img/addressActive.png" class="activeDH"/>
-				    <img v-else src="../img/grayDH.png" class="activeDH"/>
+				    <img v-if="item.isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>
+				    <img v-else src="<{$SKIN_PATH}>/img/grayDH.png" class="activeDH"/>
 				</div>
 				<div class="pmb15">{{item.address}}</div>
 				<div class="flexBox1">
 					<div class="flexBox2">
-						<img v-if="item.isActive==1" src="../img/addressActive.png" class="activeDH"/>&nbsp;
+						<img v-if="item.isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>&nbsp;
 						<span v-if="item.isActive==1" class="f25 colFD5001">已设为默认</span>
 					</div>
 					<div class="flexBox2" @click="remove(index)">
-						<img src="../img/cartDelete.png" class="activeDH" />&nbsp;
+						<img src="<{$SKIN_PATH}>/img/cartDelete.png" class="activeDH" />&nbsp;
 						<span class="col9C978F">删除</span>
 					</div>
 				</div>
 			</div>
 			<div class="ma15">
 				<div class="bigBtn f30 colfff flexBox4" @click="add">
-					<img src="../img/addAddress.png" class="addIcon" />&nbsp;&nbsp;
+					<img src="<{$SKIN_PATH}>/img/addAddress.png" class="addIcon" />&nbsp;&nbsp;
 					<span>新增地址</span>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 			},
 		    methods:{
 				add:function(){
-					window.location.href="addAddress.htm"
+					window.location.href="<{$http_root_www}>member1/delivery_address_edit1"
 				},
 				returnPage:function(){
 					window.history.go(-1)

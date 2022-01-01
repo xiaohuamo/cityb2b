@@ -151,9 +151,29 @@ class mdl_wj_user_temp_carts extends mdl_base
         	}
 
         }
+
         return $data;
         	
 	}
+
+    function deleteAllItemOfThisBusinessId($userid,$business_userId){
+
+        $where=array(
+          'businessUserId'=>$business_userId,
+            'userId'=>$userid
+        );
+        $this->deleteByWhere($where);
+        return 1;
+    }
+
+    function isOwnerOfItem($user_id,$id){
+        $rec =$this->get($id);
+        if($rec['userId'] != $user_id) {
+            return false;
+        }
+        return true;
+
+    }
 
 	public function allItemsAreEvoucher($items)
 	{	

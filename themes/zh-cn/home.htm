@@ -287,16 +287,16 @@
 				 	case '1':
 				 		break;
 				 	case '2':
-                           window.location.href="orderGoodsPage/orderGoods.htm"
+                           window.location.href="<{$http_root_www}>factorypage/choose_supplier"
 				 		break;
 				 	case '3':
-				 	    window.location.href="orderPage/orders.htm"
+				 	    window.location.href="<{$http_root_www}>member/myorders"
 				 		break;
 				 	case '4':
-				 	    window.location.href="cart.htm"
+				 	    window.location.href="<{$http_root_www}>member/showcart1"
 				 		break;
 				 	default:
-				 		window.location.href="member/index"
+				 		window.location.href="<{$http_root_www}>member/index"
 				 		break;
 				 	}
 				 },
@@ -313,7 +313,7 @@
 //					    window.location.href="me/storeChangeOrderList.htm"
 //						break;
 //					case '5':
-//					    window.location.href="me/storeMe.htm"
+//					    window.location.href="me/store<{$http_root_www}>member/index"
 //						break;	
 //					default:
 //						break;
@@ -381,13 +381,13 @@
 					}
 				},
 				joinSrore:function(){
-					window.location.href="orderGoodsPage/orderGoodsDetail.htm"
+					window.location.href="<{$http_root_www}>factorypage/place_order"
 				},
 				kh:function(){
-					window.location.href="index/set_up_account"
+					window.location.href="<{$http_root_www}>index/set_up_account"
 				},
 				jm:function(){
-					window.location.href="index/suppliers_set_up_account"
+					window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
 				},
 				shareApp:function(){
 				  	this.isShare=true

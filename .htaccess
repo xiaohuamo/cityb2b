@@ -40,6 +40,7 @@ RewriteRule ^test/([^?.]+)$ index.php?ctl=test&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^index/([^?.]+)$ index.php?ctl=index&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^coupon_event_management/([^?.]+)$ index.php?ctl=coupon_event_management&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^member/([^?.]+)$ index.php?ctl=member&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^member1/([^?.]+)$ index.php?ctl=member1&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^cinema/([^?.]+)$ index.php?ctl=cinema&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^show/([^?.]+)$ index.php?ctl=show&act=$1&%{QUERY_STRING} [NC]
 

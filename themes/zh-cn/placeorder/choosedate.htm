@@ -277,16 +277,16 @@
 	 				this.currentMenu=index
 	 				switch(index){
 	 				case '1':
-	 				    window.location.href="<{$http_root_www}>"
+	 				    window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>"
 	 					break;
 	 				case '5':
-	 			        window.location.href="<{$http_root_www}>member/index"
+	 			        window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>member/index"
 	 					break;
 	 				case '3':
-	 				    window.location.href="<{$http_root_www}>member/myorders"
+	 				    window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>member/myorders"
 	 					break;
 	 				case '4':
-	 				    window.location.href="<{$http_root_www}>member/showcart1"
+	 				    window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>member/showcart1"
 	 					break;
 	 				default:
 	 					break;
@@ -302,14 +302,14 @@
 					this.isShare=false
 				},
 				kh(){
-					window.location.href="<{$http_root_www}>index/set_up_account"
+					window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>index/set_up_account"
 				},
 				jm(){
-					window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
+					window.location.href="<{$SKIN_PATH}>/<{$http_root_www}>index/suppliers_set_up_account"
 				},
 				clickDate(status){
 					if(status=='可用'){
-						window.location.href="<{$http_root_www}>factorypage/place_order"
+						window.location.href="orderGoodsDetail.htm"
 					}
 				}
 	 		}

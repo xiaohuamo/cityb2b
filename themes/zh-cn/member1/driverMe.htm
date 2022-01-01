@@ -5,48 +5,48 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>司机管理</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
+		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="me" v-cloak>
 			<div class="head bgfff mb10">
 				<div class="relative center">
-					<img src="../img/headIcon.png" class="headIcon"/>
+					<img src="<{$SKIN_PATH}>/img/headIcon.png" class="headIcon"/>
 					<div class="f38 col333 f500 bold">司机管理</div>
 				</div>
 			</div><div style="height:3.5rem;"></div>
 			<!-- 头像部分 -->
 			<div class="flexBox1 personInfoBox">
 				<div class="flexBox2">
-					<img src="../img/portrait.png" class="portrait"/>
+					<img src="<{$SKIN_PATH}>/img/portrait.png" class="portrait"/>
 					<span class="f35 bold">昵称</span>
 				</div>
-				<img src="../img/arrow2.png" class="Me_arrow" />
+				<img src="<{$SKIN_PATH}>/img/arrow2.png" class="Me_arrow" />
 			</div>
 			
 			<div class="maT15 infoSetting">
 				<div class="flexBox1 settingBox" @click="changeMenu('1')">
 					<div class="flexBox1">
-						<img src="../img/driverMe1.png" class="icon"/>
+						<img src="<{$SKIN_PATH}>/img/driverMe1.png" class="icon"/>
 						<span class="col1C1C1C f30">拍照上传</span>
 					</div>
-					<img src="../img/arrow2.png" class="arrow" />
+					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow" />
 				</div>
 				<div class="flexBox1 settingBox" @click="changeMenu('2')">
 					<div class="flexBox1">
-						<img src="../img/driverMe2.png" class="icon"/>
+						<img src="<{$SKIN_PATH}>/img/driverMe2.png" class="icon"/>
 						<span class="col1C1C1C f30">物流查询</span>
 					</div>
-					<img src="../img/arrow2.png" class="arrow" />
+					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow" />
 				</div>
 				<div class="flexBox1 settingBox" @click="changeMenu('3')">
 					<div class="flexBox1">
-						<img src="../img/driverMe3.png" class="icon"/>
+						<img src="<{$SKIN_PATH}>/img/driverMe3.png" class="icon"/>
 						<span class="col1C1C1C f30">客户查询</span>
 					</div>
-					<img src="../img/arrow2.png" class="arrow" />
+					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow" />
 				</div>	
 			</div>
 			<div class="signOut f35 col1C1C1C">退出登录</div>
@@ -56,19 +56,19 @@
 			<div style="height:3.125rem;"></div>
 			<div class="flexBox1 menuBox">
 				<div @click="changeMenu('1')">
-					<img src="../img/driverMenu1.png"/>
+					<img src="<{$SKIN_PATH}>/img/driverMenu1.png"/>
 					<span class="col333 f26">拍照</span>
 				</div>
 				<div @click="changeMenu('2')">
-					<img src="../img/driverMenu2.png" />
+					<img src="<{$SKIN_PATH}>/img/driverMenu2.png" />
 					<span class="col333 f26">物流查询</span>
 				</div>
 				<div @click="changeMenu('3')">
-					<img src="../img/driverMenu3.png" />
+					<img src="<{$SKIN_PATH}>/img/driverMenu3.png" />
 					<span class="col333 f26">客户查询</span>
 				</div>
 				<div>
-					<img src="../img/menu5_.png" />
+					<img src="<{$SKIN_PATH}>/img/menu5_.png" />
 					<span class="colFD5506 f26">我的</span>
 				</div>
 			</div>	

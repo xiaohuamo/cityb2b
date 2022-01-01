@@ -390,13 +390,13 @@
 				changeMenu(index){
 					switch(index){
 						case '1':
-						    window.location.href="../home.htm"
+						    window.location.href="<{$http_root_www}>"
 							break;
 						case '2':
 						    this.iscartPop=true
 							break;
 						default:
-							window.location.href="../placeOrder.htm"
+							window.location.href="<{$http_root_www}>member/showcart1?checkout=1"
 							break;
 					}
 				}

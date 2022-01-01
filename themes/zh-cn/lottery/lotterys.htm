@@ -24,7 +24,7 @@
 			<div class="box2">
 				<div class="colCurTit">
 							<span class="links">
-								<a class='btn-yellow' href="<{$http_root_www}>lottery/new_lottery" ><i class='fa fa-plus'></i>新建抽奖</a>
+								<a class='btn-yellow' href="<{$http_root_www}>ottery/new_lottery" ><i class='fa fa-plus'></i>新建抽奖</a>
 							</span>
 				</div>
 				
@@ -52,13 +52,13 @@
 								  	<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									    <td><{$item.id}> - <{$item.title}></td>
 										
-										<td><a href="<{$http_root_www}>lottery/upload_zhuanpan?id=<{$item.id}>">转盘上传</a></td>
-										<td><a href="<{$http_root_www}>lottery/main_pic_edit?id=<{$item.id}>">主图上传</a></td>
-										<td><a href="<{$http_root_www}>lottery/new_lottery?id=<{$item.id}>">内容编辑</a></td>
+										<td><a href="<{$http_root_www}>ottery/upload_zhuanpan?id=<{$item.id}>">转盘上传</a></td>
+										<td><a href="<{$http_root_www}>ottery/main_pic_edit?id=<{$item.id}>">主图上传</a></td>
+										<td><a href="<{$http_root_www}>ottery/new_lottery?id=<{$item.id}>">内容编辑</a></td>
 									
-										<td><a href="<{$http_root_www}>lottery/lottery_details?lottery_id=<{$item.id}>">奖品编辑</a></td>
+										<td><a href="<{$http_root_www}>ottery/lottery_details?lottery_id=<{$item.id}>">奖品编辑</a></td>
 
-										<td><a href="<{$http_root_www}>lottery/lottery?id=<{$item.id}>" target='_blank'>预览</a></td>
+										<td><a href="<{$http_root_www}>ottery/lottery?id=<{$item.id}>" target='_blank'>预览</a></td>
 
 										<td><{if $item.status==1}>
 												<span class = 'publish_icon' data-id='<{$item.id}>' style="color:#F30;">取消发布</span>
@@ -66,8 +66,8 @@
 												<span  class = 'publish_icon' data-id='<{$item.id}>' style="color:#58964E;">发布</span>
 											<{/if}>
 										</td>
-										<td><a href="<{$http_root_www}>lottery/business_records_management?lottery_id=<{$item.id}>">查看</a></td>
-										<td><a href="<{$http_root_www}>lottery/lotterys?id=<{$item.id}>" onClick="if (!window.confirm('您确定要删除这个商品描述定义吗？')) return false;">删除</a></td>
+										<td><a href="<{$http_root_www}>ottery/business_records_management?lottery_id=<{$item.id}>">查看</a></td>
+										<td><a href="<{$http_root_www}>ottery/lotterys?id=<{$item.id}>" onClick="if (!window.confirm('您确定要删除这个商品描述定义吗？')) return false;">删除</a></td>
 									</tr>
 									<{/foreach}>
 								</tbody>
@@ -77,7 +77,7 @@
 						
 					
 					<{else}>
-						还没有录入，<a href="<{$http_root_www}>lottery/new_lottery" class="link2">新建抽奖</a>
+						还没有录入，<a href="<{$http_root_www}>ottery/new_lottery" class="link2">新建抽奖</a>
 					<{/if}>
 				</div>
 			</div>
@@ -91,7 +91,7 @@ $('.publish_icon').on('click',function(){
 		var context =$(this);
 		$.ajax({
 			type:"GET",
-			url: "<{$http_root_www}>lottery/lottery_publish_ajax", 
+			url: "<{$http_root_www}>ottery/lottery_publish_ajax", 
 			data:{"id":lotteryId},
 			beforeSend: function( xhr ) {
 				context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");

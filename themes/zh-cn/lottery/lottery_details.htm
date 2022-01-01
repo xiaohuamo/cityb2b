@@ -26,7 +26,7 @@
 					<{$title}>
 					
 					<span class="links">
-						<a  class='btn-yellow' href="<{$http_root_www}>lottery/lottery_details_new?lottery_id=<{$lottery_id}>" ><i class='fa fa-plus'></i>添加奖项</a>
+						<a  class='btn-yellow' href="<{$http_root_www}>ottery/lottery_details_new?lottery_id=<{$lottery_id}>" ><i class='fa fa-plus'></i>添加奖项</a>
 					</span>
 				</div>
 				
@@ -55,8 +55,8 @@
 										<td><{$sum_total_award}>次中<{$item.Probability}>，概率:<{number_format(($item.Probability/$sum_total_award)*100,4)}>%</td>
 										<td><{if $item.is_award==1}><{$item.qty}><{else}>无限制<{/if}></td>
 										<td><{if $item.is_award==1}>是<{else}>没有中奖<{/if}></td>
-										<td><a href="<{$http_root_www}>lottery/lottery_details_edit?id=<{$item.id}>&lottery_id=<{$lottery_id}>">修改</a></td>
-										<td><a href="<{$http_root_www}>lottery/lottery_details?id=<{$item.id}>&lottery_id=<{$lottery_id}>" onClick="if (!window.confirm('您确定要删除这个奖励吗？')) return false;">删除</a></td>
+										<td><a href="<{$http_root_www}>ottery/lottery_details_edit?id=<{$item.id}>&lottery_id=<{$lottery_id}>">修改</a></td>
+										<td><a href="<{$http_root_www}>ottery/lottery_details?id=<{$item.id}>&lottery_id=<{$lottery_id}>" onClick="if (!window.confirm('您确定要删除这个奖励吗？')) return false;">删除</a></td>
 									</tr>
 									<{/foreach}>
 								</tbody>
@@ -66,7 +66,7 @@
 						
 					
 					<{else}>
-						还没有录入，<a href="<{$http_root_www}>lottery/lottery_details_edit?lottery_id=<{$lottery_id}>" class="link2">添加新奖励</a>
+						还没有录入，<a href="<{$http_root_www}>ottery/lottery_details_edit?lottery_id=<{$lottery_id}>" class="link2">添加新奖励</a>
 					<{/if}>
 				</div>
 			</div>

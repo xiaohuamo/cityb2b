@@ -154,13 +154,13 @@
 				window.location.href="me/accountChange.html"
 			},
 			address:function(){
-				window.location.href="me/addressList.html"
+				window.location.href="<{$http_root_www}>member1/delivery_address1"
 			},
 			AccountSetting:function(){
-				window.location.href="me/accountSetting.html"
+				window.location.href="<{$http_root_www}>member1/account_setting"
 			},
 			AQsetting:function(){
-				window.location.href="me/passwordSetting.html"
+				window.location.href="<{$http_root_www}>member1/changepwd"
 			},
 			editPersonInfo:function(){
 				window.location.href="me/editMeInfo.html"
@@ -179,16 +179,16 @@
 				this.currentMenu=index
 				switch(index){
 					case '1':
-						window.location.href="home.html"
+						window.location.href="<{$http_root_www}>"
 						break;
 					case '2':
-						window.location.href="orderGoodsPage/orderGoods.html"
+						window.location.href="<{$http_root_www}>factorypage/choose_supplier"
 						break;
 					case '3':
-						window.location.href="orderPage/orders.html"
+						window.location.href="<{$http_root_www}>member/myorders"
 						break;
 					case '4':
-						window.location.href="cart.html"
+						window.location.href="<{$http_root_www}>member/showcart1"
 						break;
 					default:
 						break;

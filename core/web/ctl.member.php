@@ -709,6 +709,354 @@ class ctl_member extends cmsPage
 		$this->display_pc_mobile('member/show_cart','mobile/show_cart');
 
 	}
+
+    function showcart1_action(){
+
+
+        $this->setData(get2('dy'),'dy');
+        if(!$this->loginUser['person_last_name'] && !$this->loginUser['person_first_name']) { //如果根本没有用户信息
+
+            if(strpos($this->loginUser['name'],' ') != false){  // 且找到用户名中包含空格
+
+                $this->loginUser['name'] =str_replace ("'","",$this->loginUser['name']);
+                $pos =strpos($this->loginUser['name'],' ');
+
+                $this->loginUser['person_last_name']=substr($this->loginUser['name'],0,$pos);
+                $this->loginUser['person_first_name']=substr($this->loginUser['name'],$pos+1);
+                $this->loadModel('user')->update(array('person_last_name'=>$this->loginUser['person_last_name'],'person_first_name'=>$this->loginUser['person_first_name']),$this->loginUser['id']);
+
+                $this->setData($this->loginUser,'loginUser');
+            }
+
+        }
+        /**
+         * listen var code_str to add cart on arrive shopping cart
+         */
+
+        //$this->form_response_msg((string)$this->lang->wx_panding_fail_later);
+        $this->addCarts();
+
+        /**
+         * group pin and group buy can add cart with code only
+         */
+
+        $this->showcart_specialCheckout();
+
+
+        $mdl_wj_user_temp_carts = $this->loadModel( 'wj_user_temp_carts' );
+        $mdl_freshfood_disp_centre_suppliers=$this->loadModel('freshfood_disp_centre_suppliers');
+        $mdl_user=$this->loadModel('user');
+
+        $business_userid = (int)get2('business_userid');
+
+        if(!$business_userid){
+            $business_userid=0;
+        }else{
+            $sql ="select DISTINCT business_id as businessUserId from cc_freshfood_disp_centre_suppliers where suppliers_id =$business_userid";
+
+            $dispaitch_business = $mdl_freshfood_disp_centre_suppliers->getListBySql($sql);
+            if($dispaitch_business ) {
+                $dispaitch_business_id =$dispaitch_business[0]['businessUserId'];
+                // var_dump($dispaitch_business_id);exit;
+            }
+            $this->setData('true','showSingleBusiness');
+        }
+
+
+        $factory_id = (int)get2('factory_id');
+        if($factory_id) {
+            $this->setData($factory_id,'factory_id');
+        }
+
+        /**
+         * 购物车内容
+         */
+
+        $cartItems=$mdl_wj_user_temp_carts->getDetailedItem($this->loginUser['id'], $business_userid,$this->getLangStr());
+
+
+        // 判断是否为多个商家组检出 ， cartitems的数量是独立商家的数量， 有些商家（如freshfood)是可以在统配中心集中出货，所以可以同时检出，
+        // 因此 ，系统检查该数组中多个商家是否为统一出货，如果都是统一出货，则标记为单商家购物车检出，
+        // 不需要弹出选择检出商家框。
+
+        $uni_business =array();
+        foreach ($cartItems as $key => $value) {
+            $business_id= $cartItems[$key]['businessUserId'];
+            $sql ="select DISTINCT business_id as businessUserId from cc_freshfood_disp_centre_suppliers where suppliers_id =$business_id";
+            // var_dump($sql);
+            $dispaitch_business = $mdl_freshfood_disp_centre_suppliers->getListBySql($sql);
+            if($dispaitch_business ) {
+
+                array_push($uni_business, $dispaitch_business[0]['businessUserId']);
+                $cartItems[$key]['businessUserName'] = $mdl_user->getBusinessDisplayName($dispaitch_business[0]['businessUserId'],$this->getLangStr()).' ('. $cartItems[$key]['businessUserName'].')';
+            }else{
+                // 如果独立检出的商家 ，加入数组
+                array_push($uni_business, $business_id);
+            }
+            //去掉重复的独立商家
+            $uni_business = array_unique($uni_business);
+
+        }
+
+        //**  计算当前购物车中有多少个独立的checkout 商家结束
+
+
+
+        //var_dump(sizeof($uni_business));exit;
+        if(sizeof($uni_business)>1){
+            $this->setData('true','mixedItemFromBusinesses');
+        };
+
+        //统配商家加入递送时间
+        $this->loadModel('freshfood_disp_suppliers_schedule');
+        if (in_array($business_userid, DispCenter::getSupplierList())) {
+            $dispCenterUserSelectedDeliveryDate = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
+            $parts = explode("@", $dispCenterUserSelectedDeliveryDate);
+            $dateTimestamp = $parts[0];
+            $timeType = $parts[1];
+
+            $displayStr = date('D, F j, Y', $dateTimestamp);
+            switch ($timeType) {
+                case 'morning':
+                    $displayStr .= " 8:00 am - 14:00 pm";
+                    break;
+                case 'afternoon':
+                    $displayStr .= " 14:00 pm - 20:00 pm";
+                    break;
+                case 'anytime':
+                    $displayStr .= " 8:00 am - 20:00 pm";
+                    break;
+
+            }
+            $this->setData($dispCenterUserSelectedDeliveryDate, 'dispCenterUserSelectedDeliveryDate');
+            $this->setData($displayStr, 'dispCenterUserSelectedDeliveryDate_display');
+        }
+
+        $processingBusinessUserId =$cartItems[0]['businessUserId'];
+        $this->setData($processingBusinessUserId,'processingBusinessUserId');
+
+        /**
+         * 登录用户的送货地址
+         */
+        $mdl_wj_user_delivery_info= $this->loadModel('wj_user_delivery_info');
+        $where =array(
+            'userId'=>$this->loginUser['id'],
+            'isDefaultAddress'=>1
+        );
+        $wj_user_delivery_info = $mdl_wj_user_delivery_info->getbyWhere($where);
+
+        if(!$wj_user_delivery_info){
+
+            $wj_user_delivery_info=array(
+                'userId'=>$this->loginUser['id'],
+                'first_name'=>$this->loginUser['person_first_name'],
+                'last_name'=>$this->loginUser['person_last_name'],
+                'address'=>$this->loginUser['googleMap'],
+                'phone'=>$this->loginUser['phone'],
+                'email'=>$this->loginUser['email'],
+                'addrPost'=>$this->loginUser['addrPost'],
+                'country'=>$this->loginUser['country'],
+                'createTime'=>time()
+            );
+        }
+        $this->setData( $wj_user_delivery_info, 'delivery_info' );
+       // var_dump($wj_user_delivery_info);exit;
+        $where =array(
+            'userId'=>$this->loginUser['id'],
+        );
+        $wj_user_delivery_info_list = $mdl_wj_user_delivery_info->getList(null,$where);
+        $this->setData( $wj_user_delivery_info_list,'delivery_info_list');
+
+        // 获取该商家可用邮编
+
+        // 如果是统配商家，获得统配商家的邮编列表
+        if ($dispaitch_business_id) {
+            //获得统配商家邮件列表
+            $where =array(
+                'business_userId'=>$dispaitch_business_id,
+            );
+        }else{
+            // 获得单独商家邮编列表
+            $where =array(
+                'business_userId'=>$business_userid,
+            );
+
+        }
+
+
+        $mdl_local_delivery_postcodes= $this->loadModel('local_delivery_postcodes');
+        $local_delivery_postcodes_list = $mdl_local_delivery_postcodes->getList(null,$where);
+
+        //$postcode_arr=array();
+
+        foreach ($local_delivery_postcodes_list as $key => $value) {
+            //array_push($postcode_arr,$value['postcode']);
+            if($key==0) {
+
+                $postcodes=$value['postcode'];
+            }else{
+                $postcodes.=','.$value['postcode'];
+            }
+
+        }
+
+        $this->setData( $postcodes,'avaliable_postcodes');
+        // $postcode_arr1=explode(',', $postcode_arr);
+        // var_dump ($postcodes);exit;
+        /**
+         * 用户的可用钱包余额
+         */
+        $moneyBalance=$this->loadModel('recharge')->getBalanceOfUser($this->loginUser['id']);
+        if($moneyBalance<0)$moneyBalance =0;
+        $this->setData($moneyBalance,'moneyBalance');
+
+
+        /**
+         * 产品的预定费。 预定费需要基于产品设定,如果是统配中心，更换为统配中心的booking fee
+         */
+
+        if($dispaitch_business_id){
+
+            $this->setData($this->loadModel('user')->getBookingFee($dispaitch_business_id),'bookingfee');
+            $this->setData($this->loadModel('user')->getBookingFeeType($dispaitch_business_id),'bookingfeetype');
+
+        }else{
+            $this->setData($this->loadModel('user')->getBookingFee($processingBusinessUserId),'bookingfee');
+            $this->setData($this->loadModel('user')->getBookingFeeType($processingBusinessUserId),'bookingfeetype');
+
+
+        }
+
+
+        /**
+         * 检测是否有可用优惠吗。 由于Globalcode的存在。 所有产品都有可用优惠码
+         */
+        //$this->setData($this->loadModel( 'wj_promotion_code' )->promotionExist($this->loginUser['id'],$processingBusinessUserId),'promotion');
+
+
+        $this->setData(true,'promotion');
+
+        // 获取某个用户的可用优惠码，只拿通用的。
+
+        $promotion_code_list = $this->loadModel( 'wj_promotion_code' )->getPromotionCodeList($this->loginUser['id'],$processingBusinessUserId);
+        $this->setData($promotion_code_list,'promotion_code_list');
+        //var_dump ($promotion_code_list);exit;
+
+
+        /**
+         * 商家信息
+         */
+        if($dispaitch_business_id){
+            $this->setData($this->loadModel('user')->get($dispaitch_business_id),'businessUser');
+        }else{
+            $this->setData($this->loadModel('user')->get($processingBusinessUserId),'businessUser');
+        }
+
+        /**
+         * 商家的递送规则
+         * @var [type]
+         */
+        if($dispaitch_business_id){
+            $business_delivery_info =$this->loadModel('user')->getBusinessDeliveryInfo($dispaitch_business_id,$this->getLangStr());
+        }else{
+            $business_delivery_info =$this->loadModel('user')->getBusinessDeliveryInfo($processingBusinessUserId,$this->getLangStr());
+        }
+
+        //var_dump($dispaitch_business_id);exit;
+        /**
+         * 全局控制递送方式显示与否的开关
+         */
+        // var_dump( $cartItems[0]);
+        if($mdl_wj_user_temp_carts->allItemsAreEvoucher($cartItems[0]['items'])){
+            //如果检出的全部产品为 evoucher, 购物车不需要显示递送方式
+            $business_delivery_info['EvoucherOrrealproduct']='evoucher';
+
+            // var_dump($business_delivery_info['EvoucherOrrealproduct']);exit;
+        }else{
+            $business_delivery_info['EvoucherOrrealproduct']='realproduct';
+
+            //开启递送选项
+            $business_delivery_info['deliver_enable']
+                =($business_delivery_info['deliver_enable']&&$mdl_wj_user_temp_carts->itemsHasDeliverAvaliable($cartItems[0]['items']));
+
+            //开启自取选项
+            $business_delivery_info['pickup_enable']
+                =($business_delivery_info['pickup_enable']&&$mdl_wj_user_temp_carts->itemsHasPickupAvaliable($cartItems[0]['items']));
+        }
+
+
+        $this->setData( $business_delivery_info, 'business_delivery_info' );
+
+
+        /**
+         * 一个商家只能有一套自取点。不支持自取的产品需要在用户选择自取的时候标红剔除。
+         */
+        if($dispaitch_business_id){
+            $sql ="select id as sales_user_list,contactPersonNickName,googleMap,contactMobile from cc_user where user_belong_to_user= $dispaitch_business_id and role=5";
+            //var_dump ($sql);exit;
+            $staff_value_arr =$this->loadModel('user')->getListBySql($sql);
+            //var_dump($staff_value_arr);exit;
+            $staff_list = $this->loadModel('user')->findCommonStaff($staff_value_arr);
+        }else{
+            $staff_list = $this->loadModel('user')->findCommonStaff($cartItems[0]['items']);
+        }
+
+        $this->setData($staff_list,'staff_list');
+
+
+
+        //***************************
+        // 如果商家为生鲜商家，则 返回编辑直接跳回到生鲜商家的购买页面，二不是用默认退回
+        $business_info =$this->loadModel('user')->get($cartItems[0]['businessUserId']) ;
+        //var_dump($business_info);exit;
+        if($business_info) {
+            if($business_info['business_type_freshfood'] ==1) {
+                $this->setData($business_info['id'],'freshfood');
+            }
+        }
+
+
+
+
+
+        /**
+         * 预留的控制 输入身份证号提示的开关
+         */
+        $this->setData(false,'requireIdCard');
+
+        /**
+         * 是否有存储的信用卡可用
+         */
+        $this->setData($this->loadModel('user')->get_card_on_file($this->loginUser['id']),'card_on_file');
+
+        /**
+         * 默认使用上一次消费的支付方式
+         */
+        $this->setData($this->loadModel('order')->getLastOrderPaymentMethod($this->loginUser['id']),'lastOrderPaymentMethod');
+
+        /**
+         * 是否是第一次消费，第一次超过100无法使用信用卡支付
+         */
+
+        $this->setData((count($this->loadModel('order')->getOrderListOfCustomer($this->loginUser['id'])) === 0), 'isFirstTimeBuyer');
+
+        $this->setData( json_encode($cartItems), 'data' );
+
+        $this->setData($this->parseUrl()->setPath('member/delete_cart_item')->set('id'),'deleteSingleUrl');
+
+        $this->setData( (string)$this->lang->shopping_cart, 'pagename' );
+        $this->setData( (string)$this->lang->shopping_cart.'- '.$this->site['pageTitle'], 'pageTitle' );
+
+        $isCheckout =get2('checkout') ;
+
+        if($isCheckout){
+            $this->display_pc_mobile('member/show_cart','placeorder/placeorder');
+        }else{
+            $this->display_pc_mobile('member/show_cart','cart');
+        }
+
+
+    }
 	
 	function unbind_wx_action() {
 		if ( is_post() ) {
@@ -1806,7 +2154,8 @@ class ctl_member extends cmsPage
 
 		$this->display('member/bind_wx_success');// only mobile will access this page
 	}
-	
+
+
 	
 	function myorders_action(){
 
@@ -2563,7 +2912,7 @@ class ctl_member extends cmsPage
 		$this->setData( 'Recharge '.$this->site['pageTitle'], 'pageTitle' );
 		$this->display( 'member/recharge_add' );
 	}
-	
+
 
 	// 客户配送地址列表
 	function delivery_address_action(){

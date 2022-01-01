@@ -124,10 +124,10 @@
                     <!--li >
                         <a onclick="$('html, body').animate({scrollTop: $('#f12').offset().top+40}, 1000);" href="#f12" style="display: inline-table;background-image: url(<{$SKIN_PATH}>images/shop04.png);"><span>幸运转盘</span>
                         </a>
-                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=78" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">男士</span></a>
-                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=77" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">女士</span></a>
-                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=76" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">儿童</span></a>
-                        <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=79" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">数码</span></a>
+                        <a target="_blank" href="<{$http_root_www}>ottery/lottery?id=78" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">男士</span></a>
+                        <a target="_blank" href="<{$http_root_www}>ottery/lottery?id=77" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">女士</span></a>
+                        <a target="_blank" href="<{$http_root_www}>ottery/lottery?id=76" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">儿童</span></a>
+                        <a target="_blank" href="<{$http_root_www}>ottery/lottery?id=79" style="display: inline-table;padding-left: 12px;"><span style="font-size: 10px;">数码</span></a>
                     </li-->
                     <li >
 					
@@ -1251,13 +1251,13 @@
                 <div class="box_hd_col2">
                 </div>
                 <div class="button_more">
-                    <a href="<{$http_root_www}>lottery/lottery_show" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
+                    <a href="<{$http_root_www}>ottery/lottery_show" class="box_subtit">更多<i class="box_subtit_arrow"></i></a>
                 </div>
             </div>
             <ul class="items ul-row10" style="text-align: center;">
                 <{foreach from=$bonus item=item}>
                 <li>
-                    <a target="_blank" href="<{$http_root_www}>lottery/lottery?id=<{$item.id}>">
+                    <a target="_blank" href="<{$http_root_www}>ottery/lottery?id=<{$item.id}>">
                         <img style="width: 175px;height: 175px;" class='lazyload' src="<{$SKIN_PATH}>images/lottery/<{$item.pic1}>" alt="">
                         <p style="text-align: center;width:100%;"><{$item.title}></p>
                     </a>

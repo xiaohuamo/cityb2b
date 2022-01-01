@@ -211,16 +211,16 @@
 					this.currentMenu=index
 					switch(index){
 					case '1':
-					    window.location.href="../home.htm"
+					    window.location.href="<{$http_root_www}>"
 						break;
 					case '2':
 				        window.location.href="../orderGoodsPage/orderGoods.htm"
 						break;
 					case '4':
-					    window.location.href="../cart.htm"
+					    window.location.href="<{$http_root_www}>member/showcart1"
 						break;
 					case '5':
-					    window.location.href="../me.htm"
+					    window.location.href="<{$http_root_www}>member/index"
 						break;
 					default:
 						break;
@@ -236,10 +236,10 @@
 					this.isShare=false
 				},
 				kh:function(){
-					window.location.href="../KH.htm"
+					window.location.href="../<{$http_root_www}>index/set_up_account"
 				},
 				jm:function(){
-					window.location.href="../jm.htm"
+					window.location.href="../<{$http_root_www}>index/suppliers_set_up_account"
 				}
 				
 			}

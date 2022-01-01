@@ -16,6 +16,12 @@ class ctl_factorypage extends cmsPage
 
     }
 
+    public function choose_supplier_action(){
+        // var_dump('aa');exit;
+        $this->display_pc_mobile('orderGoodsPage/orderGoods', 'orderGoodsPage/orderGoods');
+
+    }
+
     public function restaurant_action()
     {
         $id = (int) get2('id');
@@ -312,7 +318,7 @@ class ctl_factorypage extends cmsPage
         $factory_id =get2('id');
         $mdl_restaurant_category = $this->loadModel('restaurant_category');
         $cate_list =$mdl_restaurant_category->get_category_list($factory_id);
-       
+
 
     }
 

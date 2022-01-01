@@ -3,7 +3,8 @@
 class ctl_index extends cmsPage
 {
 	function index_action() {
-		
+
+       $type= get2('type');
 
 
        if($this->getLangStr()=='en')
@@ -29,7 +30,12 @@ class ctl_index extends cmsPage
 
             $this->setData( 'index', 'mobile_menu' );
 
-					$this->display('home');
+            if($type==old){
+                $this->display_pc_mobile('index-pc','mobile/index');
+            }else{
+                $this->display('home');
+            }
+
 		
 
 			  

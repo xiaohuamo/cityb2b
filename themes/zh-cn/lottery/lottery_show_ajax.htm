@@ -1,7 +1,7 @@
 <{foreach from=$heads item=item}>
 
 <div class="items clearfix" id="coupon<{$item.id}>">
-	<a href="<{$http_root_www}>lottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>"><img style='width: 100%' src="<{$UPLOAD_PATH}><{$item.pic}>" /></a>
+	<a href="<{$http_root_www}>ottery/lottery?id=<{$item.lottery_id}>&uid=<{$loginUser.id}>"><img style='width: 100%' src="<{$UPLOAD_PATH}><{$item.pic}>" /></a>
 	
 	<div class='item-info'>
 		<div class='item-info-top' style="border-bottom: 0px solid #eee;">

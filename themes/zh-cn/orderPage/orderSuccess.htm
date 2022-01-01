@@ -5,18 +5,18 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>订单信息</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/placeOrder.css"/>
+		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="success">
 			<div class="pTitle">
-				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
 				订单信息
 			</div><div style="height: 3rem;"></div>
 			<div class="pHead">
-				<div class="center"><img src="../img/success.png" class="success"></div>  
+				<div class="center"><img src="<{$SKIN_PATH}>/img/success.png" class="success"></div>  
 				<div class="center f40 col333 bold pmb10">订单已成功提交</div>
 				<div class="center f28 colccc">我们将尽快为您发货!</div>
 				
@@ -36,13 +36,13 @@
 			},
 		    methods:{
 				continueOrder:function(){
-					window.location.href="../orderGoodsPage/orderGoodsDetail.htm"
+					window.location.href="<{$http_root_www}>factorypage/place_order"
 				},
 				lookOrder:function(){
-					window.location.href="orderDetail.htm"	
+					window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>"	
 				},
 				returnHome:function(){
-				   window.location.href="home.htm"	
+				   window.location.href="<{$http_root_www}>"	
 				},
 				returnPage:function(){
 					window.history.go(-1)

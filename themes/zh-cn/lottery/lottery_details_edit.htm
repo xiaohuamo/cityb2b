@@ -30,9 +30,9 @@
 	 <div class="box2">	
 		<div class="main-form">		
 		<{if $data}>
-			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>lottery/lottery_details_edit?id=<{$data.id}>&lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>ottery/lottery_details_edit?id=<{$data.id}>&lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
 		<{else}>
-			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>lottery/lottery_details_new?lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
+			<form id="memberForm" class='form-style-green'  action="<{$http_root_www}>ottery/lottery_details_new?lottery_id=<{$lottery_id}>" enctype="multipart/form-data" method="post" target="post_frame">	
 		<{/if}>	
 		
 		

@@ -105,12 +105,12 @@ function redirect_to_ubonus_food () {
   window.location.href = '<{$http_root_www}>shoppingday';
 }
 function redirect_more_lotterys () {
-  window.location.href = '<{$http_root_www}>lottery/lottery_show';
+  window.location.href = '<{$http_root_www}>ottery/lottery_show';
 }
 function redirect_to_lottery (obj) {
    $(obj).prop('value','请等待...');
    $(obj).prop('disabled',true);
-  window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
+  window.location.href = '<{$http_root_www}>ottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
 }
 </script>
 <div class="main">
@@ -300,7 +300,7 @@ function redirect_to_lottery (obj) {
       <div class="title-green"><span>抽奖战况：</span></div>
       <div class="Detail">
 	       <p><span class="red"  >您的火力指数-</span>是普通用户抽奖的：<span class="red"  ><{$user_lottery_speed_data.total_speed}></span>倍</p>
-		  <p>您<{if $user_lottery_speed_data.is_get_award==1}>自上次获大奖后到现在<{else}>30天内<{/if}>共抽<span class="red"  ><{$user_lottery_speed_data.self_draw_count}></span>次，获得<span class="red"  ><{$user_lottery_speed_data.self_draw_speed}></span>倍加速<a href="<{$http_root_www}>lottery/lottery_show" >更多抽奖>></a></p>
+		  <p>您<{if $user_lottery_speed_data.is_get_award==1}>自上次获大奖后到现在<{else}>30天内<{/if}>共抽<span class="red"  ><{$user_lottery_speed_data.self_draw_count}></span>次，获得<span class="red"  ><{$user_lottery_speed_data.self_draw_speed}></span>倍加速<a href="<{$http_root_www}>ottery/lottery_show" >更多抽奖>></a></p>
 		  <p>您<{if $user_lottery_speed_data.is_get_award==1}>自上次获大奖后到现在<{else}>30天内<{/if}>转朋友圈，被点击<span class="red"  ><{$user_lottery_speed_data.recommand_count}></span>次，获得<span class="red"  ><{$user_lottery_speed_data.recommand_speed}></span>倍加速
 
 		<p></p>
@@ -597,11 +597,11 @@ function redirect_to_lottery (obj) {
 								  if(r==true){
 								         running=true;
 										 if(datastatus=='wechatlogin'){
-										 	window.location.href = '<{$http_root_www}>member/wx_redirect?returnUrl=<{$http_root_www}>lottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
+										 	window.location.href = '<{$http_root_www}>member/wx_redirect?returnUrl=<{$http_root_www}>ottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
 											;
 									 
 										 }else{
-										 	window.location.href = '<{$http_root_www}>member/login?returnUrl=<{$http_root_www}>lottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
+										 	window.location.href = '<{$http_root_www}>member/login?returnUrl=<{$http_root_www}>ottery/lottery?id='+ lotteryId + '&uid=<{$uid}>';
 
 										 }
 
@@ -618,7 +618,7 @@ function redirect_to_lottery (obj) {
 							    var r =confirm(thistime_count +"次机会全部失手，该抽奖共提供" + <{$lottery.max_draw_times_perUser}> +"次，是否用完所有剩余机会？");
 								if (r==true){
 								 running=true;
-	                              window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$uid}>';
+	                              window.location.href = '<{$http_root_www}>ottery/lottery?id=<{$lottery.id}>&uid=<{$uid}>';
 								}else{
                                // $("#result_fault").slideToggle(500);
 							   changeTitle(0);
@@ -663,7 +663,7 @@ function redirect_to_lottery (obj) {
       
          var r =confirm("亲，已经获奖了,是否分享给朋友试试？");
 			 if(r==true){
-				window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';			  
+				window.location.href = '<{$http_root_www}>ottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';			  
 				  }
         
         return
@@ -677,7 +677,7 @@ function redirect_to_lottery (obj) {
       }
 
       $.ajax({  method:"GET",
-       url: "<{$http_root_www}>lottery/lottery_get_result",  data:{id:'<{$lottery.id}>',ref_userId:'<{$ref_userId}>',type:'1'},
+       url: "<{$http_root_www}>ottery/lottery_get_result",  data:{id:'<{$lottery.id}>',ref_userId:'<{$ref_userId}>',type:'1'},
        beforeSend: function( xhr ) {
          running = true;
          timer = setInterval(function() {
@@ -696,7 +696,7 @@ function redirect_to_lottery (obj) {
 	       var r =confirm(data.msg);
 			 if(r==true){
 			  clearInterval(timer);
-			   window.location.href = '<{$http_root_www}>lottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
+			   window.location.href = '<{$http_root_www}>ottery/lottery?id=<{$lottery.id}>&uid=<{$loginUser.id}>&friends=1';
                
 			 
 			 }
@@ -838,7 +838,7 @@ $("#save-btn").bind("click", function() {
     return
   }
 				 //alert('sub_id is ' +sub_id);
-				$.ajax({  method:"GET", url: "<{$http_root_www}>lottery/lottery_add_activeuser", 
+				$.ajax({  method:"GET", url: "<{$http_root_www}>ottery/lottery_add_activeuser", 
           data:{
             id:'<{$lottery.id}>',
             'last_name':last_name,

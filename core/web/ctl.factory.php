@@ -352,7 +352,6 @@ class ctl_factory extends cmsPage
 		 
 
         $this->display_pc_mobile('factory/customer_orders', 'factory/customer_orders');
-
         return true;
     }
 	public function  business_hour_setting_action() {

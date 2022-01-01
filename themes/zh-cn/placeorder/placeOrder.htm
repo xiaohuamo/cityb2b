@@ -5,15 +5,15 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>下单页面</title>
-		<link rel="stylesheet" type="text/css" href="common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/placeOrder.css"/>
-		<link rel="stylesheet" type="text/css" href="css/datePop.css"/>
-		<script src="js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/datePop.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="order" v-cloak class="relative">
 			<div class="pTitle">
-				<img src="img/return.png" class="return" @click="returnPage"/>
+				<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//return.png" class="return" @click="returnPage"/>
 				下单页面
 			</div><div style="height: 3rem;"></div>
 			<div class="pHead f28 col0F0F0F">
@@ -26,33 +26,33 @@
 			<div class="bgfff borR7 ma15 f28 col282828">
 				<div class="pa15 borderB">
 					<div class="flexBox3 pmb5">
-						<img src="img/location.png" class="plocation"/>&nbsp;&nbsp;
-						<div><span class="f500">收货人</span> xxxxxx</div>&nbsp;&nbsp;
-						<span>1879987765</span>
+						<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//location.png" class="plocation"/>&nbsp;&nbsp;
+						<div><span class="f500">收货人</span> <{$delivery_info.first_name}>&nbsp;&nbsp;<{$delivery_info.last_name}></div>&nbsp;&nbsp;
+						<span><{$delivery_info.phone}></span>
 					</div>
-					<div>500 Dorset rd，croydon south，vic，3136</div>
+					<div><{$delivery_info.address}></div>
 				</div>
 				
 				
 				<div class="flexBox1 pa15 borderB f28 col282828 bold" @click="UpdateAddress">
-					更换地址
-					<img src="img/down.png" class="arrow" />
+					<{$lang->deliver_address}>
+					<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//down.png" class="arrow" />
 				</div>
 				<div class="mask z9" v-show="isUpdateAddress">
 					<div class="bgfff updateBox pa15 borR7">
-						<img src="img/cha2.png" @click="remove"/>
+						<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//cha2.png" @click="remove"/>
 						<div class="center  f33 bold center">
-							更换地址
+							<{$lang->deliver_address}>
 						</div>
 						<div class="pa15-0" @click="addAddress">
-							新建地址
+							 <{$lang->new_manage_address}>
 						</div>
+					   <{foreach from=$delivery_info_list item=item}>
 						<div class="pmb15" @click="UpdateAddress">
-							地址地址地址地址地址地址地址地址地址
+							<{$item.first_name}> <{$item.last_name}> <{$item.address}> 
 						</div>
-						<div @click="UpdateAddress">
-							地址地址地址地址地址地址地址地址地址
-						</div>
+						
+						 <{/foreach}>
 					</div>
 				</div>
 				
@@ -83,32 +83,27 @@
 				</div>
 			</div>
 			<div class="pgoodsList">
+			
+				 <{foreach from=$data item=row}>
+				
 				<div class="cartTitle flexBox2">
-					<img src="img/big.png" class="cartIcon"/>&nbsp;&nbsp;
-					<span>wwwww</span>
+					<img src="<{$SKIN_PATH}>img/big.png" class="cartIcon"/>&nbsp;&nbsp;
+					<span><{$row.businessUserName}></span>
 				</div>
+				 <{foreach from=$row.items item=item}>
 				<div class="flexBox3 goodInfo">
-					<img src="img/big.png" class="cartImg"/>
+					<img src="<{$SKIN_PATH}>img/big.png" class="cartIcon"/>
 					<div class="goodInfo2">
-						<div>色泽自然利隆赤峰天山大 金苗小米2斤/袋</div>
-						<div class="f25 col8D8D8D">x2</div>
+						<div> <{if $item.coupon_name_en}><{$item.coupon_name_en}><{else}><{$item.coupon_name}><{/if}></div>
+						<div class="f25 col8D8D8D">x<{$item.quantity}></div>
 						<div class="flexBox1 price colFD5001">
-							<span>$6</span>
-							<span>$6</span>
+							<span>$<{$item.single_amount}></span>
+							<span>$<{$item.single_amount * $item.quantity}></span>
 						</div>
 					</div>		
 				</div>
-				<div class="flexBox3 goodInfo">
-					<img src="img/big.png" class="cartImg"/>
-					<div class="goodInfo2">
-						<div>色泽自然利隆赤峰天山大 金苗小米2斤/袋</div>
-						<div class="f25 col8D8D8D">x2</div>
-						<div class="flexBox1 price colFD5001">
-							<span>$6</span>
-							<span>$6</span>
-						</div>
-					</div>		
-				</div>
+				<{/foreach}>
+				<{/foreach}>
 				<div class="f28 col303134 pinfoBox">
 					<div>商品金额  <span class="colFD5001">$7</span></div>
 					<div>折扣码  $7</div>
@@ -149,7 +144,7 @@
 			
 			<div class="mask" v-if="isPop" @click="closePop">
 				<div class="datePop">
-					<img src="img/cha2.png" @click="closePop" class="delete"/>
+					<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//cha2.png" @click="closePop" class="delete"/>
 					<div class="title col333 f30 bold">配送日程</div>
 					<div class="flexBox1" style="flex-wrap:wrap;">
 						<div class="dateBox2" v-for="item in dateList">
@@ -195,7 +190,7 @@
 			
 			<div class="mask z10" @click="close" v-show="isUsePop">
 				<div class="bgfff borR7 codePop center">
-					<img src="img/success2.png"/>
+					<<{$SKIN_PATH}>img/ src="<{$SKIN_PATH}>img//success2.png"/>
 					<div class="bold f35 text">验证成功</div>
 					<div class="f30 col282828">验证码有效将节约$10刀</div>
 					<div class="bigBtn btn ma0-15" @click="sure">确定</div>
