@@ -15,6 +15,22 @@ class mdl_restaurant_category extends mdl_base
 		//var_dump($rec);exit;
 		return  $rec[0]['count'];
     }
+    public function getCategoryList($id) {
+
+         $sql = " (select 'all0' as id,0 as category_id,0 as sort,'全部' as title_cn,'All' as title_en ,1 as hot)  union ( select id,category_id,category_sort_id as sort,category_cn_name as title_cn,category_en_name as title_en,hot from cc_restaurant_category where restaurant_id =$id and isHide=0 and isdeleted=0 and (parent_category_id=0 or parent_category_id is null) and (length(category_cn_name)>0 or length(category_en_name)>0) order by hot desc,category_sort_id)";
+         $cateList =$this->getListBySql($sql);
+         // get the subcategory of the parent category
+         foreach ($cateList as $key=>$value){
+             $parent_category_id =$value['id'];
+             $sql = "select id,category_id,category_sort_id as sort,category_cn_name as title_cn,category_en_name as title_en,hot from cc_restaurant_category where restaurant_id =$id  and parent_category_id=$parent_category_id and isHide=0 and isdeleted=0  and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
+             $subCategorylist = $this->getListBySql($sql);
+             $cateList[$key]['subCategoryList']=$subCategorylist;
+
+         }
+        // var_dump($cateList);exit;
+         return $cateList;
+    }
+
 
 }
 

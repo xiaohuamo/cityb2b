@@ -24,6 +24,8 @@ class ctl_factorypage extends cmsPage
 
     public function restaurant_action()
     {
+
+
         $id = (int) get2('id');
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
@@ -163,6 +165,155 @@ class ctl_factorypage extends cmsPage
         $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id), 'storeOverWriteLink');
 
         $this->display_pc_mobile('mobile/factorypage/coupon_detail_coupon', 'mobile/factorypage/coupon_detail_coupon');
+
+        return;
+    }
+
+
+    public function index_action()
+    {
+
+
+        $id = (int) get2('id');
+        $userId = $this->loginUser['id'];
+        $cart = (int) get2('cart');
+        $default_menu_page_items = 10;
+
+        if (! $id) {
+            $this->sheader(null, 'Please choose the supplier');
+        }
+        $this->setData($id,'businessUserId');
+
+        if(!$this->loginUser){
+
+            $this->sheader(null, 'Please login in and place the order ');
+        }
+
+
+        //插入一段获取某用户购买历史的程序
+        $deliveryTime = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
+        $menu_bought_list = $this->loadModel("restaurant_menu")->getUserBoughtMenu($userId, $id, $deliveryTime, $this->lang['lang'][0]);
+
+        $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $userFactoryMenuPrices = $mdl_user_factory_menu_price->getUserFactoryPriceList($userId, $id);
+
+        foreach ($menu_bought_list as $key => $value) {
+            $show_origin_price = $mdl_user_factory->getByWhere([
+                'user_id' => $id,
+                'factory_id' => $this->loginUser['id']
+            ])['show_origin_price'];
+            if(!$show_origin_price) {
+                $menu_bought_list[$key]['price'] = 0;
+            }
+
+            if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
+                $menu_bought_list[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
+            }
+        }
+
+        //var_dump(menu_bougt_list);exit;
+        //加载配菜
+        $mdl_sidedish_menu=$this->loadModel('restaurant_sidedish_menu');
+        foreach ($menu_bought_list as $key => $value) {
+            if($menu_bought_list[$key]['sidedish_category']>0){
+                $menu_bought_list[$key]['sidedish_menu']=$mdl_sidedish_menu->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['sidedish_category']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+
+
+
+            }
+        }
+
+        //加载菜品规格
+        $mdl_menu_option=$this->loadModel('restaurant_menu_option');
+        foreach ($menu_bought_list as $key => $value) {
+            if($menu_bought_list[$key]['menu_option']>0){
+                $menu_bought_list[$key]['menu_option_list']=$mdl_menu_option->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['menu_option']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+
+
+
+            }
+        }
+
+
+
+
+
+
+
+        $this->setData($menu_bought_list, 'menu_bought_list');
+
+        if($this->loginUser['password'] == $this->loginUser['init_password']) {
+            $this->setData(true, 'need_update');
+            $this->setData( $this->loadModel('wj_abn_application')->getByWhere([
+                'userId' => $this->loginUser['id'],
+            ]), 'abnAccount');
+        }
+
+
+        $show_origin_price = $mdl_user_factory->getByWhere([
+            'user_id' => $this->loginUser['id'],
+            'factory_id' => $id
+        ])['show_origin_price'];
+        $this->setData($show_origin_price, 'show_origin_price');
+
+        $this->setData($mdl_user_factory->isUserApproved($userId, $id), 'userApproved');
+
+
+        $where = [
+            'createUserId' => $id,
+            'EvoucherOrrealproduct' => 'restaurant_menu',
+        ];
+
+        $mdl_coupons = $this->loadModel("coupons");
+
+        $restaurant_coupon = $mdl_coupons->getByWhere($where);
+        $this->setData($restaurant_coupon['id'], 'restaurant_couponID');
+
+        // 获取的餐馆ID--是商家的ID ,判断当前商家是否设置餐厅入口
+        if (($restaurant_coupon['isApproved'] == 1 && $restaurant_coupon['status'] == 4) || $restaurant_coupon['createUserId'] == $this->loginUser['id'] || $_SESSION['coupon_private_view_allowed'] == $restaurant_coupon['id']) {
+            $mdl_user = $this->loadModel("user");
+            $business_user = $mdl_user->get($restaurant_coupon['createUserId']);
+            $restaurant_coupon['business'] = $business_user;
+
+            $this->setData($restaurant_coupon, 'coupon');
+        } else {
+            $this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
+            $this->sheader(null, 'current Business is not avaliable..');
+        }
+
+        $this->setData($id, 'restaurant_id');
+        $this->setData($cart, 'cart');
+
+        $title = str_replace('|', '', $restaurant_coupon['title']);
+        $this->setData($title, 'pageTitle');
+        $this->setData($title, 'pageKeywords');
+        $this->setData($title, 'pageDescription');
+
+        $this->loadModel('freshfood_disp_suppliers_schedule');
+        $businessDispSchedule = DispCenter::getBusinessDispSchedule($id);
+        $businessDispScheduleFilledWithContinueDates = DispCenter::getFollowingNDaysIncludeAvailableDeliver($businessDispSchedule);
+        $this->setData($businessDispScheduleFilledWithContinueDates, 'businessDispSchedule');
+        $this->setData(in_array($id, DispCenter::getSupplierList()), 'isDispCenterBusiness');
+
+        $this->setData(join(DispCenter::getPostcode(DispCenter::getDispCenterIdOfSupplier($id)), ','), 'postcodeSupported'); //使用统配商家邮编信息
+
+        $where1 = [
+            'restaurant_id' => $id,
+        ];
+        $mdl_restaurant_promotion_manjian = $this->loadModel("restaurant_promotion_manjian");
+        $restaurant_promotion_manjian = $mdl_restaurant_promotion_manjian->getByWhere($where1);
+        $menu = self::get_menu_list($id, $restaurant_coupon, $restaurant_promotion_manjian);
+        $this->setData((int) (count($menu) / $default_menu_page_items), 'menu_pages');
+        $this->setData(array_slice($menu, 0, $default_menu_page_items), 'menu');
+        $this->setData(1, 'lazyload');
+
+        $restaurant_category = self::get_category_list($id);
+        $this->setData($restaurant_category, 'restaurant_category');
+
+        $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id), 'storeOverWriteLink');
+
+        $this->display_pc_mobile('index1', 'index1'); /*placeorder/index*/
 
         return;
     }

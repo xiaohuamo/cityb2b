@@ -96,6 +96,7 @@ class mdl_restaurant_menu_category extends mdl_base
 		'category_id' => $sub_category
         ]);
     }
+
 	
 }
 ?>

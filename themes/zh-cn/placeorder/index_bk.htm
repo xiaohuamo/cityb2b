@@ -564,22 +564,10 @@
 				 
 			},
 			mounted:function(){
-				window.addEventListener('scroll', this.scrollToTop);
-				 this.createcode();
+				window.addEventListener('scroll', this.scrollToTop)
 			},
 		    methods:{
-			
-		    	scrollToTop:function(){
-		    		var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-  　　				if(scrollTop>207){
-  						this.scroll=false
-						this.scroll2=false	
-  					}else{
-  						this.scroll=true
-						this.scroll2=true
-  					}
-					this.isclassifyPop=false
-		    	},createcode:function(){
+			createcode:function(){
 				  var self = this;
 				 // alert('here');
 				
@@ -605,6 +593,17 @@
 				
 				 
 				},
+		    	scrollToTop:function(){
+		    		var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  　　				if(scrollTop>207){
+  						this.scroll=false
+						this.scroll2=false	
+  					}else{
+  						this.scroll=true
+						this.scroll2=true
+  					}
+					this.isclassifyPop=false
+		    	},
 				scPage:function(){
 				   	this.isSC=!this.isSC
 				},
@@ -817,6 +816,11 @@
 				clickGoods(){
 					window.location.href="<{$SKIN_PATH}>/goods/detail.htm"
 				}
+			},
+			mounted:function(){
+			 this.createcode();
+			 
+			
 			}
 		})	
 		

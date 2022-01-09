@@ -16,6 +16,110 @@ class mdl_restaurant_menu extends mdl_base
         return $this->db->toArray($this->db->query($sql));
     }
 
+
+
+
+    public function getGoodList($factory_id,$userid=null,$uploadpath) {
+
+
+       // get the good list of business .
+       //get the main table good list
+        $sql_main_table =" select m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name, 
+        0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn,
+        m.price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
+        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
+        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,m.unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
+        from cc_restaurant_menu m 
+        left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
+        where m.restaurant_id=$factory_id   and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
+         ";
+
+
+       $sql_sub_cate_good_list =" select sub.id,sub.restaurant_id,sub.parent_category_id,f.category_cn_name as parent_cat_cn_name,f.category_en_name as parent_cate_en_name, 
+        sub.sub_category_id,sub.sub_cat_cn_name,sub.sub_cate_en_name,sub.menu_id,sub.menu_cn_name as title_cn,
+        sub.price,if(length(sub.menu_pic)>0,concat('$uploadpath',sub.menu_pic),'')  as menu_pic ,
+        sub.menu_desc,sub.menu_en_desc,sub.menu_option,if(length(sub.menu_en_name)>0,sub.menu_en_name,sub.menu_cn_name) as title ,
+        if(length(sub.unit_en)>0,sub.unit_en,sub.unit)as unit_en,sub.unit,sub.onSpecial,0 as status,if(sub.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
+       from (select  e.*,b.restaurant_menu_id,b.category_id as sub_category_id ,d.parent_category_id,d.category_cn_name as sub_cat_cn_name,d.category_en_name as sub_cate_en_name
+        from cc_restaurant_menu_category b  left join cc_restaurant_category d   on  d.id=b.category_id 
+         left join cc_restaurant_menu e on e.id=b.restaurant_menu_id where e.restaurant_id =$factory_id and  (d.parent_category_id is not null or d.parent_category_id !=0)) as sub
+         left join   cc_restaurant_category f  on f.id = sub.parent_category_id ";
+
+
+       //获取自定义大类的产品列表明细
+       $sql_parent_cate_good_list  ="
+         select   b.restaurant_menu_id as id,m.restaurant_id,b.category_id as parent_category_id,d.category_cn_name as parent_cat_cn_name,d.category_en_name as parent_cate_en_name,
+                0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cate_en_name,m.menu_id,m.menu_cn_name as title_cn,
+        m.price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
+        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
+        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,m.unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
+              
+        from cc_restaurant_menu_category b  left join cc_restaurant_category d   on  d.id=b.category_id 
+         left join cc_restaurant_menu m on m.id=b.restaurant_menu_id where m.restaurant_id =$factory_id and  (d.parent_category_id is null or d.parent_category_id =0)
+           and (length(m.menu_cn_name)>0 or length(m.menu_en_name)>0)    
+       ";
+
+
+        $sql_sum = "select * from  (select * from  ($sql_parent_cate_good_list ) as a union select * from ($sql_sub_cate_good_list) as b union select * from ($sql_main_table) as c )  as  bb order by parent_category_id,sub_category_id  ";
+
+      // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
+        $goodList =$this->getListBySql($sql_sum);
+       // var_dump($sql_sum);exit;
+        // get the temp carts record of current user of the business .
+
+        $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.guige_des,a.guige_ids,a.menu_id as id   from cc_wj_user_temp_carts a
+          where a.userId=$userid and a.businessUserId=$factory_id ";
+        $cartItems =$this->getListBySql($sql);
+
+        $mdl_sidedish_menu = loadModel('restaurant_sidedish_menu');
+        $mdl_menu_option = loadModel('restaurant_menu_option');
+        $mdl_restaurant_menu_option_category =loadModel('restaurant_menu_option_category');
+        //获取规格
+        foreach ($goodList as $key =>$value) {
+
+          /*  //加载配菜
+                if ($goodList[$key]['sidedish_category'] > 0) {
+                    $goodList[$key]['sidedish_menu'] = $mdl_sidedish_menu->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['sidedish_category'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+             }
+          */
+
+
+            //加载菜品规格
+
+
+                if ($goodList[$key]['menu_option'] > 0) {
+                    $goodList[$key]['menu_option_list'] = $mdl_menu_option->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['menu_option'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+                   // var_dump($goodList[$key]['menu_option_list']);exit;
+                    $goodList[$key]['guige_des1'] =$mdl_restaurant_menu_option_category->get($value['menu_option']);
+              }
+
+        }
+
+
+
+
+
+
+
+
+        foreach ($cartItems as $key => $value) {
+            foreach ($goodList as $keysub =>$valuesub){
+                if($value['id']==$valuesub['id']){
+                    $goodList[$keysub]['num']=$value['num'];
+                  //  var_dump('ttt '.goodList[$keysub]);
+                    break;
+                }
+
+            }
+
+        }
+
+     //  var_dump($goodList);exit;
+        return $goodList;
+
+    }
+
+
     public function getUserBoughtMenu($userId, $businessId, $deliveryTime, $lang = '简体中文')
     {
         //通过送货日期筛选可以包括在内的商家

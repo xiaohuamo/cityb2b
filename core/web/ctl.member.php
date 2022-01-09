@@ -1040,7 +1040,8 @@ class ctl_member extends cmsPage
 
         $this->setData((count($this->loadModel('order')->getOrderListOfCustomer($this->loginUser['id'])) === 0), 'isFirstTimeBuyer');
 
-        $this->setData( json_encode($cartItems), 'data' );
+        $this->setData( json_encode($cartItems), 'json_data' );
+        $this->setData( $cartItems, 'data' );
 
         $this->setData($this->parseUrl()->setPath('member/delete_cart_item')->set('id'),'deleteSingleUrl');
 
