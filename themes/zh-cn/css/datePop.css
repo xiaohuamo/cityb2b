@@ -1,10 +1,10 @@
 .datePop{
 	max-width: 1024px;
-	width: 80%;
-	height: 80%;
+	width: 90%;
+	max-height: 90%;
 	overflow: auto;
 	position: absolute;
-	left: 10%;
+	left: 5%;
 	top: 100px;
 	background: #FFFFFF;
 	border-radius: 5px;
@@ -21,8 +21,18 @@
 	box-sizing: border-box;
 	width: 22%;
 	text-align: center;
-	padding: 10px 0;
+	padding: 0px 0;
 	margin-bottom: 10px;
+	background: #f0f0f0;
+	
+}
+.dateBox2avaliable{
+	background: #87e987;
+	
+}
+.dateBox2selected{
+	background: #e9e322;
+	
 }
 .sure{
 	margin-top: 0;

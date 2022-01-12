@@ -293,7 +293,16 @@ class ctl_factorypage extends cmsPage
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $businessDispSchedule = DispCenter::getBusinessDispSchedule($id);
         $businessDispScheduleFilledWithContinueDates = DispCenter::getFollowingNDaysIncludeAvailableDeliver($businessDispSchedule);
-        $this->setData($businessDispScheduleFilledWithContinueDates, 'businessDispSchedule');
+
+
+       //获得订货调度的具体日期及星期几
+
+
+        $businessDispScheduleFilledWithContinueDates=$this->getWeekDayandDateOfSchedue($businessDispScheduleFilledWithContinueDates);
+
+
+
+        $this->setData(json_encode($businessDispScheduleFilledWithContinueDates), 'businessDispSchedule');
         $this->setData(in_array($id, DispCenter::getSupplierList()), 'isDispCenterBusiness');
 
         $this->setData(join(DispCenter::getPostcode(DispCenter::getDispCenterIdOfSupplier($id)), ','), 'postcodeSupported'); //使用统配商家邮编信息
@@ -307,6 +316,40 @@ class ctl_factorypage extends cmsPage
         $this->setData((int) (count($menu) / $default_menu_page_items), 'menu_pages');
         $this->setData(array_slice($menu, 0, $default_menu_page_items), 'menu');
         $this->setData(1, 'lazyload');
+
+
+        //获得当前店铺得 订货时间
+        $mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
+        $where = [];
+        $where['business_id'] = $id;
+        $where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($id);
+        $list = $mdl->getList(null, $where);
+
+
+
+        foreach ($list as $key =>$value) {
+            $order_start_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_start_of_date']);
+            $order_cut_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_cut_of_date']);
+            $delivery_date_of_week_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['delivery_date_of_week']);
+
+            $list[$key]['order_start_of_date_cn'] = $order_start_of_date_cn ;
+            $list[$key]['order_cut_of_date'] =$order_cut_of_date_cn  ;
+            $list[$key]['delivery_date_of_week_cn'] = $delivery_date_of_week_cn ;
+            $list[$key]['ordertime_cn'] = '从'.$order_start_of_date_cn.$value['order_start_of_time'] .' 到 '.$order_cut_of_date_cn.$value['order_cut_of_time'];
+            $list[$key]['ordertime'] = 'From '.$value['order_start_of_date'].' '.$value['order_start_of_time'] .' To '.$value['order_cut_of_date'].' '.$value['order_cut_of_time'];
+
+        }
+
+
+
+
+        $this->setData(json_encode($list),'current_business_tuangou_time');
+
+      // var_dump($list);exit;
+
+
+
+
 
         $restaurant_category = self::get_category_list($id);
         $this->setData($restaurant_category, 'restaurant_category');

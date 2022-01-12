@@ -12,7 +12,10 @@
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
-		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script> <script>
+		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script> 
+		
+
+		<script>
 		  Vue.use(VueLazyload)
 		  
 		</script>
@@ -23,7 +26,15 @@
 				<div class="head bgfff mb10 flexBox1">
 				<div class="flexBox2">
 					<img src="<{$SKIN_PATH}>img/return.png" class="return2" @click="returnPage"/>&nbsp;
-					<div class="f38 col333 f500 bold" @click="datePop">11月15日星期二</div>
+
+                    <div v-if="selectDateIndex !=-1">
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Delivery:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>Delivery:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</div>
+					</div>
+					<div v-else>
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Check Delivery Date </div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>查看配送日期</div>
+					</div>
 				</div>
 				<div class="flexBox1">
 					<img v-if="isSC" src="<{$SKIN_PATH}>img/sc.png" class="star shareIcon" @click="scPage"/>
@@ -35,10 +46,10 @@
 				
 				<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
 				<div class="add add2" id="add" v-show="isAddShow">
-					<a href=""><div class="flexBox2">
+					<div class="flexBox2"  @click="switchDisplayLanguage">
 						<img src="<{$SKIN_PATH}>img/add_1.png"/>
-						<span class="colfff f30">EN</span>
-					</div></a>
+						<span class="colfff f30">{{langStrDisplay}}</span>
+					</div>
 					<div @click="nextPage" class="flexBox2" style="border:none;">
 						<img src="<{$SKIN_PATH}>img/dpsm.png"/>
 						<span class="colfff f30">店铺说明</span>
@@ -144,7 +155,7 @@
 				
 				<!-- 橫版判斷 -->
 				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
-					<div :class="layout?'bgfff goodsbox':''" class="pa15 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
+					<div :class="layout?'bgfff goodsbox':''" class="pa15bottom5 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
 						<div :class="layout?'':'flexBox3'">
 							
 							<div class="goodInfo2_" style="height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
@@ -172,15 +183,18 @@
 								</div>
 								<div class="flexBox1 price" v-else>
 									<span class="colFD5001">${{item2.price}}</span>
-									<div class="commonBtn" @click.stop="Specifications(item2)">
+									<div class="commonBtn" @click.stop="Specifications(item2)" v-if="isLanguageEn">
+										Choose Spec
+									</div>
+									<div class="commonBtn" @click.stop="Specifications(item2)" v-else>
 										选规格
 									</div>
 								</div>
 							</div>		
 							
 						</div>
-					<div class="pa15 borderB col9A9A9A" v-if="item2.menu_en_desc !=''">{{item2.menu_en_desc}}</div>		
-				<div class="pa15 borderB col9A9A9A" v-if="(item2.menu_desc !='') && CheckChinese(this.searchCon) ">{{item2.menu_desc}}</div>		
+					<div class="pa15bottom5  col9A9A9A" v-if="item2.menu_en_desc !=''">{{item2.menu_en_desc}}</div>
+				<div class="pa15bottom5  col9A9A9A" v-if="(item2.menu_desc !='') && CheckChinese(this.searchCon) ">{{item2.menu_desc}}</div>
 					</div>
 				</div>
 			</div>
@@ -226,13 +240,15 @@
 					<div class="pa0-15">
 						<div class="f28 col333 textLeft bold pa15-0">{{guige1Info[4][4]}}</div>
 						<div class="flexBox2 wrap">
-							<div :class="current1==index?'checkedBtn detail_btn':'detail_btn'" v-for="(item,index) in guige1List" @click.stop="choseGuige(index,1)">{{item.menu_en_name}}</div>
+							<div :class="current1==index?'checkedBtn detail_btn_45':'detail_btn_45'" v-for="(item,index) in guige1List" @click.stop="choseGuige(index,1)">
+
+								{{item.menu_en_name}}</div>
 						</div>
 						<div class="flexBox1 maT15">
 							<div class="f28">
-						<span class="colFD5001" v-if="{selectedGuige1Item}">{{selectedGuige1Item['price']}}</span>
+								<span class="colFD5001" v-if="{selectedGuige1Item}">{{selectedGuige1Item['price']}}</span>
 								<span class="colFD5001" v-else ></span>
-								
+
 								<span class="col666" style="text-decoration:line-through;"></span>
 							</div>
 							<div class="flexBox2">
@@ -258,7 +274,7 @@
 						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
 							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods"/>
 							<div class="goodInfo2_">
-								<div >{{item2.title}}</div><div v-if="item2.guigeId">{{item2.guigeDesc}}</div>
+								<div >{{item2.title}}</div><div v-if="item2.guige_ids">{{item2.guige_des}}</div>
 								<div class="flexBox1 price">
 									<span class="colFD5001">{{item2.price}}</span>
 									<div class="flexBox2">
@@ -278,50 +294,68 @@
 			
 			<!-- 配送日期弹框 -->
 			
-			<div class="mask z6" v-if="isDatePop" @click="closePop('d')">
+			<div class="mask z6" v-if="isDatePop">
 				<div class="datePop">
 					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
-					<div class="title col333 f30 bold">配送日程</div>
+					<div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
 					<div class="flexBox1" style="flex-wrap:wrap;">
-						<div class="dateBox2 relative" v-for="item in dateList">
-							<div class="f30 col333">{{item.name}}</div>
-							<div class="f25 colFD5203">{{item.status}}</div>
-							<div class="f25 col999">{{item.date}}</div>
-							<img src="<{$SKIN_PATH}>img/sj.png"/>
+						<div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
+
+
+							<div class="  dateBox2selected " v-if="item.isselected" @click ="selectDeliveryDate(index)" >
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+								<img src="<{$SKIN_PATH}>img/sj.png"/>
+							</div >
+
+							<div class="  dateBox2avaliable " v-if="!item.isselected && item.isAvaliable" @click ="selectDeliveryDate(index)">
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+							<div v-if="!item.isselected && !item.isAvaliable">
+
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+
 						</div>
 					</div>
-					<div class="title col333 f30 bold">下单时间及配送时间</div>
-					<div class="flexBox1 pa15">
-						<div class="journal">下单时间</div>
-						<div class="journal">配送时间</div>
+
+					<div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
+					<div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
+					<div class="flexBox1 pa15-15-5-15">
+						<div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
+						<div class="journal"  v-else>下单截单时间</div>
+						<div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
+						<div class="journal"  v-else>配送日期</div>
 					</div>
-					<div class="pa15 f28 col0B0B0B">
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
+					<div class="pa5-15-5-15 f28 col0B0B0B">
+						<div class="flexBox1 pmb15" v-for="item in orderTimeAndDeliveryTime" >
+							<span v-if="isLanguageEn">{{item.ordertime}}</span>
+							<span v-else>{{item.ordertime_cn}}</span>
+							<span v-if="isLanguageEn">{{item.delivery_date_of_week}}</span>
+							<span v-else>{{item.delivery_date_of_week_cn}}</span>
 						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
+
+
 					</div>
-					<div class="continue sure">确定</div>
+					<div class="continue sure"  @click="closePop('d')" >确定</div>
 				</div>
 			</div>
 			
@@ -332,6 +366,10 @@
 		new Vue({
 			el:"#order",
 			data:{
+				isLanguageEn:1, //语言环境
+				langStrDisplay:'中文',
+
+				selectDateIndex:-1,
 				scroll:true,
 				scroll2:true,
 				currentBigClassify:0,
@@ -473,48 +511,68 @@
 						status:0
 					} */
 				],
-				dateList:[
+				//商家可以配送的时间；
+				businessDispSchedule:[
+					/*{
+						name:'明天',
+						status:'已选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
 					{
 						name:'明天',
 						status:'已选',
-						date:'周三10:26'
-					},
-					{
-						name:'明天',
-						status:'已选',
-						date:'周三10:26'
-					},
-					{
-						name:'明天',
-						status:'可选',
-						date:'周三10:26'
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:1
 					},
 					{
 						name:'明天',
 						status:'可选',
-						date:'周三10:26'
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
 					},
 					{
 						name:'明天',
 						status:'可选',
-						date:'周三10:26'
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
 					},
 					{
 						name:'明天',
 						status:'不可选',
-						date:'周三10:26'
+						date:'周三10:26',
+						isavaliable:0,
+						isselected:0
 					},
 					{
 						name:'明天',
 						status:'可选',
-						date:'周三10:26'
+						date:'周三10:26',
+						isavaliable:0,
+						isselected:0
 					},
 					{
 						name:'明天',
 						status:'可选',
-						date:'周三10:26'
-					}
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					}*/
 				],
+				orderTimeAndDeliveryTime:[
+				],
+
 				searchCon:'',
 				isPop:false,
 				isDatePop:false,  // 日期弹出框
@@ -559,25 +617,59 @@
 				ProductList_filter() {
                 let _this=this;
                 let value =_this.searchCon;
+				let arrvalue =[];
+				if(value.trim()) {
+					arrvalue = value.trim().split(' ');
+				}
 
-               // alert(value);
-                if(value) {
-                  return    _this.goodsList2.filter(item=>{
-                        if((item.title.toUpperCase().indexOf(value.toUpperCase())!= -1) || (item.title_cn.toUpperCase().indexOf(value.toUpperCase())!= -1)|| (item.menu_desc.toUpperCase().indexOf(value.toUpperCase())!= -1)){
-                            return item
-                        }
-                    });
-                     
+				let find=0;
+
+
+
+                 if(arrvalue.length>0) {
+					return    _this.goodsList2.filter(item=>{
+						find=0; //每次查找前 find清0
+						for(let i=0;i<arrvalue.length;i++) {
+
+							if ((item.title.toUpperCase().indexOf(arrvalue[i].trim().toUpperCase()) != -1) || (item.title_cn.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1) || (item.menu_desc.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)) {
+								find++;
+							}
+
+						}
+						if(find == arrvalue.length) {
+
+							return item; //如果输入多个单词，需要每个单词都模糊匹配，如果有一个不匹配也不行
+						}
+
+					});
+
 				}else{
 					return  _this.goodsList2;
 				}
-                  
+
               }
 				 
 			},
 			mounted:function(){
 				window.addEventListener('scroll', this.scrollToTop);
-				 this.createcode();
+
+
+				//获取分类及商品数据
+				this.createcode();
+
+				//获取商家关于该客户的下单及配送时间的文字表述；
+				this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
+
+				//设置语言环境
+                this.setLanguageContext();
+
+				// 获得当前客户可以下单的日期列表显示，
+				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
+
+				//设置默认的配送日期
+				this.selectDefaultDeliveryDate();
+				console.log(this.businessDispSchedule);
+
 			},
 		    methods:{
 			
@@ -616,6 +708,7 @@
 
                     console.log(this.ScrollDirection);
 					this.scrollOldPosition =scrollTop;
+					console.log(scrollTop);
 		    	},scrollToId:function(id){
                     //alert(id);
 		    		document.getElementById(id).scrollIntoView(true);
@@ -660,18 +753,113 @@
 					  .catch(function (error) {
 						 console.log(error);
 					  });
+				
 					
 				
 				 
 				},
-				CheckChinese:function(str1)
+				addDataToTable:function(itemData)
 					{
-                    let str =this.searchCon;
-					if (escape(str).indexOf('%u') != -1)
-					{return true;
-					}
-					else {return false;}
+                      var url = '<{$http_root_www}>member1/add_item_temp_cart_table'; 
+                   //   console.log(itemData);
+					//var businessId =319188;
+
+					var params = new URLSearchParams();
+				
+
+					params.append('itemlist', JSON.stringify(itemData));
+					params.append('businessId', 319188);
+                  
+					axios.post('<{$http_root_www}>member1/add_item_temp_cart_table',params)
+
+						 .then(function(res) {
+							console.log(res);
+						})
+						.catch(function(err) {
+							console.log(err);
+						});
+
+
 					},
+				CheckChinese:function(str1)	{
+						let str =this.searchCon;
+						if (escape(str).indexOf('%u') != -1)
+						{return true;
+						}
+						else {return false;}
+				},
+				//设置语言还环境
+				setLanguageContext:function() {
+					var currentLanguage ='<{$langStr}>';
+					if(currentLanguage.toUpperCase() =='ZH-CN'){
+						this.isLanguageEn =0;
+						this.langStrDisplay='En';//如果是中文环境，切换语言的地方提示为 EN
+					}else{
+						this.isLanguageEn =1;
+						this.langStrDisplay='中文';
+					}
+
+
+					// console.log(currentLanguage.toUpperCase());
+				},// 设置语言环境
+				switchDisplayLanguage:function(){
+
+				   	if(this.isLanguageEn) {
+						   this.langStrDisplay='En';
+					}else{
+						this.langStrDisplay='中文';
+					}
+					this.isLanguageEn=!this.isLanguageEn; //切换语言
+					this.isAddShow=!this.isAddShow; //关闭弹框
+					//向后台写入目前的语言环境状态；
+				},
+				// 设置某个日期为配送日期，用户点击选择
+				selectDeliveryDate:function(index){
+					// 清除所有的 select 标志
+					var arrlength =this.businessDispSchedule.length;
+			  		for (let i = 0; i < arrlength; i++) {
+						this.businessDispSchedule[i].isselected =0;
+					}
+
+					//设置当前的标志为 select
+					this.businessDispSchedule[index].isselected =1;
+					this.selectDateIndex =index;
+
+					this.setCookie("deliveryDateIndex",index,1);
+
+
+					console.log(this.getCookie('deliveryDateIndex'));
+
+				},
+				// 设置默认配送日期
+				selectDefaultDeliveryDate:function(){
+					// 清除所有的 select 标志
+					var i =this.getCookie('deliveryDateIndex');
+					if(i) {
+						this.selectDateIndex =i;
+						return 1;
+
+					}
+
+					var arrlength =this.businessDispSchedule.length;
+					for (let i = 0; i < arrlength; i++) {
+						if(this.businessDispSchedule[i].isAvaliable) {
+							this.businessDispSchedule[i].isselected =1;
+							this.selectDateIndex =i;
+							this.setCookie("deliveryDateIndex",i,1);
+
+
+							console.log(this.getCookie('deliveryDateIndex'));
+
+
+						//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
+							break;
+						}
+
+
+
+					}
+				},
 				isDiffOfLastCateId:function(currentCateId,index2,type){
                     if(index2<0)	return 1;
 					
@@ -684,8 +872,7 @@
 					if( this.goodsList2[index2].sub_category_id != currentCateId) 	return 1;
 					
 				}
-                   	
-				
+
 										
 				return 0;
 							  
@@ -737,7 +924,15 @@
                     this.ProductList_filter;
 				},
 				getFocus:function(){
-					
+//如果是在折叠大类和小类时，滚动到更上的位置，否则，滚动到初始
+
+					if(!this.scroll && !this.scroll2) {
+						window.scrollTo(0,35);
+
+					}else{
+						window.scrollTo(0,0);
+					}
+
 				},
 				loseFocus:function(){
 					
@@ -793,7 +988,7 @@
 						//console.log(item);
 
 					}
-				console.log(this.goodsList);
+				// console.log(this.goodsList);
 				},numaddCart:function(index2,source){   //  数量增加
                   
 					if(source=='g'){//  商品中的g  购物车中的c  规格中的s
@@ -802,10 +997,11 @@
 					}else if(source=='c'){
 						this.goodsList[index2].num++;
 						this.itemNumUpdateOnList(this.goodsList[index2],'c');
+						
 					}else{  // 规格中的
 						this.num++
 					}
-				console.log(this.goodsList);
+				// console.log(this.goodsList);
 				},
 				itemNumUpdateOnList:function(goodItem,source){
 				 
@@ -893,7 +1089,7 @@
 					
 				    for (let i = 0; i < arrlength; i++) {
                       // 如果产品编号和规格编号都相同
-					   if(this.goodsList[i].id ==goodItem.id   && this.goodsList[i].guigeId ==this.selectedGuige1Item.id) {
+					   if(this.goodsList[i].id ==goodItem.id   && this.goodsList[i].guige_ids ==this.selectedGuige1Item.id) {
 					   
 						return i; //返回找到的索引
 					   }
@@ -927,8 +1123,8 @@
 						status:0,     // 是否选中状态  1为选中  2是不选中
 						menu_pic:goodItem.menu_pic,
 						id:goodItem.id,
-						guigeId:0,
-						guigeDesc:''
+						guige_ids:0,
+						guige_des:''
 					}];					
 					this.goodsList.push(this.newitem[0]);
 				
@@ -944,8 +1140,8 @@
 						status:0,     // 是否选中状态  1为选中  2是不选中
 						menu_pic:goodItem.menu_pic,
 						id:goodItem.id,
-						guigeId:this.selectedGuige1Item.id,
-						guigeDesc:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name
+						guige_ids:this.selectedGuige1Item.id,
+						guige_des:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name
 					}];					
 					this.goodsList.push(this.newitem[0]);
 				
@@ -1102,7 +1298,7 @@
 					    let find =0 ;
 						for (let i = 0; i < arrlength; i++) {
 						  // 如果产品编号和规格编号都相同
-						   if(this.goodsList[i].id == this.cuurent1ItemId   && this.goodsList[i].guigeId ==this.selectedGuige1Item.id) {
+						   if(this.goodsList[i].id == this.cuurent1ItemId   && this.goodsList[i].guige_ids ==this.selectedGuige1Item.id) {
 						   this.num = this.goodsList[i].num;
 							break;
 						   }
@@ -1182,6 +1378,7 @@
 					
 				},
 				placeOrder:function(){    // 下单
+                 this.addDataToTable(this.goodsList);
 					window.location.href="<{$http_root_www}>member/showcart1?checkout=1"
 				},
 				nextPage:function(){  // 跳转店铺说明
@@ -1198,10 +1395,39 @@
 				},
 				clickGoods(){
 					window.location.href="<{$SKIN_PATH}>/goods/detail.htm"
+				},
+				setCookie:function (cname,cvalue,exdays){
+			var d = new Date();
+			d.setTime(d.getTime()+(exdays*24*60*60*1000));
+			var expires = "expires="+d.toGMTString();
+			document.cookie = cname+"="+cvalue+"; "+expires;
+		},
+		getCookie:function (cname){
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0; i<ca.length; i++) {
+				var c = ca[i].trim();
+				if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+			}
+			return "";
+		},
+		checkCookie:function (){
+			var user=this.getCookie("username");
+			if (user!=""){
+				alert("欢迎 " + user + " 再次访问");
+			}
+			else {
+				user = prompt("请输入你的名字:","");
+				if (user!="" && user!=null){
+					this.setCookie("username",user,30);
 				}
 			}
-		})	
-		
-		
+		}
+			}
+		});
+
+
+
+
 	</script>
 </html>

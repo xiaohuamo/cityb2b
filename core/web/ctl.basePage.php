@@ -617,7 +617,36 @@ class cmsPage extends corecms
 			unlink($filename);  
 			return 1;
 	}
-	
+
+    public function getWeekDayandDateOfSchedue($schedue){
+
+        $days_cn =['周日','周一','周二','周三','周四','周五','周六'];
+        $optional_cn = '可选';
+        $notOptional_cn = '不可选';
+
+        $days=['SUN','MON','TUE','WED','THUR','FRI','SAT'];
+        $optional = 'Available';
+        $notOptional = 'No Delivery';
+
+        foreach ($schedue as $key => $value) {
+            $schedue[$key]->isselected =0;
+
+            $schedue[$key]->days_cn= $days_cn[date('w',  $schedue[$key]->orderDeliveryTimestamp)];
+            $schedue[$key]->days=   $days[date('w',  $schedue[$key]->orderDeliveryTimestamp)];
+            $schedue[$key]->disPlayDate=  date('d-M',  $schedue[$key]->orderDeliveryTimestamp);
+
+            if( $schedue[$key]->isAvaliable) {
+                $schedue[$key]->optionalDisplay_cn =$optional_cn;
+                $schedue[$key]->optionalDisplay =$optional;
+            }else{
+                $schedue[$key]->optionalDisplay_cn =$notOptional_cn;
+                $schedue[$key]->optionalDisplay =$notOptional;
+            }
+
+
+        }
+        return $schedue;
+    }
 	/*获得当前日期的年度星期值*/
 	
   public function  getYearWeekofDate(){

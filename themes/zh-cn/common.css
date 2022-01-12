@@ -326,8 +326,18 @@ body{
 .pa15-10{
 	padding:15px 10px;
 }
+
 .pa5-0{
 	padding:5px 0px;
+}
+.pa4-0-4-0{
+	padding:4px 0px 4px 0px;
+}
+.pa5-15-5-15{
+	padding:4px 0px 4px 0px;
+}
+.pa15-15-5-15{
+	padding:4px 0px 4px 0px;
 }
 .pa0-5{
 	padding:0px 5px;
@@ -342,7 +352,10 @@ body{
 .pa15{
 	padding:15px;
 }
-
+.pa15bottom5{
+	padding:15px;
+	padding-bottom:5px;
+}
 .searchhead {
 padding-bottom: 6px;
 padding-left: 0px;

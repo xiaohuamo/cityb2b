@@ -272,12 +272,12 @@
 						 
 							<span class='<{if $dispCenterUserSelectedDeliveryDate|strpos:$item->orderDeliveryTimestamp !== false && $item->isAvaliable == true}> selected <{/if}>
 			    				<{if $item->isAvaliable == false}> unavailable <{/if}>'
-								  data-delivery-anytime='<{$item->delivery_anytime}>'
+								<!--  data-delivery-anytime='<{$item->delivery_anytime}>'
 								  data-delivery-morning='<{$item->delivery_morning}>'
 								  data-delivery-afternoon='<{$item->delivery_afternoon}>'
-								  data-order-delevery-timestamp='<{$item->orderDeliveryTimestamp}>'
-							>
-			    				<{$item->getOrderDeliveryDisplay($lang['lang'][0])}>
+								  data-order-delevery-timestamp='<{$item->orderDeliveryTimestamp}>' 
+							>-->
+			    			<!--	<{$item->getOrderDeliveryDisplay($lang['lang'][0])}> -->
 			    			</span>
                         <{/foreach}>
 					</div>

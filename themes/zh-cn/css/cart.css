@@ -200,6 +200,17 @@ input[type='checkbox']:checked::after {
 	margin-right: 5px;
 	margin-bottom: 10px;
  }
+.detail_btn_45{
+	width: 45%;
+	height: 2.375rem;
+	background: #F5F5F5;
+	border-radius: 5px; 
+	line-height: 2.375rem;
+	text-align: center;
+	color: #666666;
+	margin-right: 5px;
+	margin-bottom: 10px;
+ }
  .checkedBtn{
 	 background: #FD5001;
 	 color: #FFFFFF;
@@ -225,14 +236,14 @@ input[type='checkbox']:checked::after {
  }
  
  .pop2{
-	 top:calc(15% + 1.5rem);
-	 max-height:70%;
+	 top:calc(5% + 1.5rem);
+	 max-height:95%;
 	 overflow: auto;
 	 background: #fff;
 	 position: absolute;
-	 top: 15%;
-	 width: 80%;
-	 left: 10%;
+	 bottom: 5%;
+	 width: 90%;
+	 left: 5%;
 	 border-radius: 7px;
  }
  
@@ -368,6 +379,7 @@ div::-webkit-scrollbar {
 	top: 3rem;
 	right: 10px;
 	height: 7.31rem;
+    position: fixed;
 }
 .add2 div{
 	height:50%;

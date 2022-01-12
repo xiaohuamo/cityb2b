@@ -156,6 +156,29 @@ class mdl_wj_user_temp_carts extends mdl_base
         	
 	}
 
+   function addItemsToCart($value,$user_id,$currentCoupon,$businessId){
+       $data =array();
+       $data['userId'] =$user_id;
+       $data['createTime']=time();
+       $data['main_coupon_id']=$currentCoupon['id'];
+       $data['sub_coupon_id']=$currentCoupon['id'];
+       $data['coupon_name']=$value['title'];
+       $data['businessUserId']=$businessId;
+       $data['quantity']=$value['num'];
+       $data['single_amount']=$value['price'];
+       $data['guige_des']=$value['guige_des'];
+       $data['guige_ids']=$value['guige_ids'];
+       $data['menu_id']=$value['id'];
+       $data['coupon_name_en']=$value['title'];
+
+       $newId =$this->insert($data);
+       if(!$newId){
+           return 0;
+       }
+      return 1;
+   }
+
+
     function deleteAllItemOfThisBusinessId($userid,$business_userId){
 
         $where=array(

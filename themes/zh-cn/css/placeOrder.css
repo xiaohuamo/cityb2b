@@ -306,10 +306,10 @@ textarea {
 
 
 .updateBox{
-	width: 50%;
+	width: 80%;
 	height: 200px;
 	position: absolute;
-	left: 25%;
+	left: 4%;
 	top: 50%;
 	margin-top: -100px;
 }

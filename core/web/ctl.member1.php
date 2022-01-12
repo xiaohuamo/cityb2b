@@ -231,7 +231,12 @@ class ctl_member1 extends cmsPage
 
                 $cartItems[$key] ['isTouch'] =false;
                 $cartItems[$key] ['status'] =0;
-                $cartItems[$key] ['hasGG'] =false;
+                if($val['guige_ids']) {
+                    $cartItems[$key]['hasGG']=true;
+                }else{
+                    $cartItems[$key] ['hasGG'] =false;
+                }
+
 
                 $menu_rec = $mdl_restaurant_menu->get($val['id']);
                 if (! $menu_rec) {
@@ -378,6 +383,56 @@ class ctl_member1 extends cmsPage
          $mdl_wj_user_temp_carts->deleteAllItemOfThisBusinessId($this->loginUser['id'],$businessId);
 
         echo json_encode($businessId);
+
+
+    }
+
+    public function  add_item_temp_cart_table_action(){
+
+       // 接收购物车中的数据
+
+        $user_id = $this->loginUser['id'];
+        $businessId =post('businessId');
+
+        if(!$user_id || !$businessId) {
+            echo json_encode('Could not find user ID or Business Id ,please Logon in and try again!');
+            exit;
+        }
+
+        // receive cart items
+        $itemData1=stripslashes(post('itemlist')); // remove spec letter of data
+        $itemData =json_decode($itemData1,true);
+
+
+
+        $mdl_wj_user_temp_carts =$this->loadModel( 'wj_user_temp_carts' );
+        //remove original items of current user of this business
+        $mdl_wj_user_temp_carts->deleteAllItemOfThisBusinessId($user_id,$businessId);
+
+        // get the main coupon ID of this business which include the shop card information .
+        $mdl_coupons =$this->loadModel('coupons');
+        $currentCoupon = $mdl_coupons->getByWhere(array('createUserId'=>$businessId,'EvoucherOrrealproduct'=>restaurant_menu));
+
+
+        //insert new record .
+
+
+
+
+
+      foreach ($itemData as $key=>$value){
+
+          if(!$mdl_wj_user_temp_carts->addItemsToCart($value,$user_id,$currentCoupon,$businessId)){
+
+              echo json_encode('0');
+              exit;
+          }
+
+       }
+
+
+
+          echo json_encode('1');
 
 
     }

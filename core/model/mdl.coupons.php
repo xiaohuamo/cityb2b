@@ -506,6 +506,7 @@ where `parent_coupon_id` in (select id from cc_coupons where createUserId =" .$i
 		return $recommends;
   	}
 
+
   	/**
   	 * 检查产品是可购买
   	 * @param  [type] $data [coupon data or coupon Id]

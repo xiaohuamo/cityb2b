@@ -865,7 +865,7 @@ class ctl_member extends cmsPage
             'userId'=>$this->loginUser['id'],
         );
         $wj_user_delivery_info_list = $mdl_wj_user_delivery_info->getList(null,$where);
-        $this->setData( $wj_user_delivery_info_list,'delivery_info_list');
+        $this->setData( json_encode($wj_user_delivery_info_list),'delivery_info_list');
 
         // 获取该商家可用邮编
 
