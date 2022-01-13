@@ -323,7 +323,7 @@
                              <{if $business_delivery_info.deliver_enable}>
                               <label class="list-group-item ">
                                 <h5 class="list-group-item-heading f28">
-                                  <input type="radio" name="deliver_option" value="1" data-text="<{$lang->business_deliver}>" ><{$lang->business_deliver}>
+                                  <input checked  type="radio" name="deliver_option" value="1" data-text="<{$lang->business_deliver}>" ><{$lang->business_deliver}>
                                 </h5>
                               </label>
                             <{/if}>
@@ -757,7 +757,7 @@
 
        <div class="flexBox1 fixBottom"><div class="flexBox1"><span class="col303134 f28 bold"><{$lang->total_amount}></span>&nbsp;&nbsp;
            <div><span class="f38 colFD5001 bold">$</span><span class="bold colFD5001 f38 grand-total-display"></span></div></div>
-           <div class="flexBox1 "><div class="pbtn f28 colFD590E againBtn "><{$lang->continue_shopping}></div>&nbsp;&nbsp;
+           <div class="flexBox1 "><div onclick="window.location.href='<{$http_root_www}>supplier/<{$businessUser.id}>'" class="pbtn f28 colFD590E againBtn "><{$lang->continue_shopping}></div>&nbsp;&nbsp;
            <div class="ajaxFormSubmitBtn pbtn f28 colfff"><{$lang->submit_order}></div></div></div>
 
 
@@ -1396,7 +1396,18 @@
         });
 
         $(function(){
-            
+
+           //暂时处理： 如果商家配送，则自动选择配送
+            <{if $business_delivery_info.deliver_enable}>
+
+                $('.deliver-option-display').text( '<{$lang->business_deliver}>');
+                deliverFeeEnable=true;
+                updateDeliverFee();
+                $('.delivery-des').show();
+                $('.pickup-des').hide();
+                pickupAndDeliverExceptionCheck('deliver');
+             //   refresh();
+            <{/if}>
 
             $('input[name="payment"]').click(function(){
                 var selected = $('input[name="payment"]:checked');
@@ -1436,10 +1447,14 @@
             <{/if}>
 
             $('input[name="deliver_option"]').click(function(){
-                var selected = $('input[name="deliver_option"]:checked');
+               var selected = $('input[name="deliver_option"]:checked');
+               var selectval = selected.val();
+
                 $('.deliver-option-display').text(selected.data('text'));
 
-                if(selected.val()=='1'){
+
+
+                if(selectval=='1'){
                     //console.log('<{$lang->business_deliver}>');
                     deliverFeeEnable=true;
                     updateDeliverFee();
@@ -1449,7 +1464,7 @@
 					 refresh();
                 }
 
-                if(selected.val()=='2'){
+                if(selectval=='2'){
                     //console.log('<{$lang->self_pickup}>');
                     deliverFeeEnable=false;
 
@@ -1936,13 +1951,8 @@
             if(ajaxFormSubmit)return false;
             
             saveAddress();
+               normalSubmit();
 
-            if(currentPaymentMethod=='hcash'){
-              $('.hcash-pay-box').show();
-              $('.hcashRefreshBtn').click();
-            }else{
-              normalSubmit();
-            }
         });
 
         })

@@ -829,11 +829,16 @@
 					this.businessDispSchedule[index].isselected =1;
 					this.selectDateIndex =index;
 
-					console.log('index is' + index);
+
 					this.setCookie("deliveryDateIndex",index,1);
+					//系统解析选择日期时用了一个特殊符号@，符号前是日期的unix 数字，后面是 morning afternoon ,anytime ,这里暂时设置为anytime .
+					let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
+					this.setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
 
 
+					console.log('index is' + index);
 					console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
+					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + this.getCookie('DispCenterUserSelectedDeliveryDate'));
 
 				},
 				// 设置默认配送日期
@@ -1389,7 +1394,7 @@
 				},
 				placeOrder:function(){    // 下单
                  this.addDataToTable(this.goodsList);
-					window.location.href="<{$http_root_www}>member/showcart1?checkout=1&business_userid=<{$businessUserId}>"
+					window.location.href="<{$http_root_www}>member/showcart?checkout=1&business_userid=<{$businessUserId}>#directCheckout"
 				},
 				nextPage:function(){  // 跳转店铺说明
 					window.location.href="serviceDescription.htm"

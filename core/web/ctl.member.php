@@ -470,6 +470,7 @@ class ctl_member extends cmsPage
 		$this->loadModel('freshfood_disp_suppliers_schedule');
 		if (in_array($business_userid, DispCenter::getSupplierList())) {
 			$dispCenterUserSelectedDeliveryDate = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
+
 			$parts = explode("@", $dispCenterUserSelectedDeliveryDate);
 			$dateTimestamp = $parts[0];
 			$timeType = $parts[1];
