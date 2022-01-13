@@ -3,19 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title><{$lang->shopping_cart}></title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-    <meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style_new.css" />
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
     <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>font-awesome-4.3.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
-    <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
-    <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
-    <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/datePop.css"/>
-    <script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/datePop.css"/>
     <style type="text/css">
         #geocode-result ul{
             padding: 0;
@@ -58,11 +55,9 @@
     <script type="text/javascript" src='<{$SKIN_PATH}>js/htmlAlert.js'></script>
 
 </head>
-<body class="bg-1 bgF2F2F2">
+<body class="bg-1">
 
-	
-
-	<header id="hd" style="display: none" >
+	<header id="hd">
 	
 		<div class="left">
 			<a  class="a-back go-back-btn"></a>
@@ -71,23 +66,14 @@
         <a href="<{$http_root_www}>member/showcart">
 
        
-           <{$lang->shopping_cart}>ww
+           <{$lang->shopping_cart}>
        
 
         </a>
       </h1>
 
           
-	</header>
-
-    <div id="order" v-cloak class="relative">
-        <div class="pTitle">
-            <img src="<{$SKIN_PATH}>img/return.png" class="return" />
-            下单页面
-        </div><div style="height: 3rem;"></div>
-
-    </div>
-
+	</header> 
 	  <{if $data==null}>
         <p style='position: relative;top: 100px;text-align: center;'><{$lang->nothing_in_shopping_cart}>~</p>
     <{else}>
@@ -207,11 +193,11 @@
 <form method="post" action="<{$http_root_www}>payment/orderpaymentprocess/checkout" style ="    margin-top: 0.9rem;" class='ajaxForm'>
    <section id="bd" class='checkout-confirmation' style='display:none; margin-top: -42px;'>
 
-        <div class="bgfff borR7 ma15 f28 col282828 ">
-            <ul class="g-ul pa15">
+        <div class="m-words m-words-1">
+            <ul class="g-ul">
                 <li>
                     <a  class="con personal-info-btn">
-                        <div class="top"><span class="f500"><{$lang->deliver_address}></span>  <em class='name-display'></em>   <span class='phone-display'></span></div>
+                        <div class="top"><{$lang->deliver_address}> <em class='name-display'></em>   <span class='phone-display'></span></div>
 
                         <p class='address-display'></p>
                     </a>
@@ -220,7 +206,7 @@
         </div>
 
 
-         <div class="bgfff borR7 ma15 f28 col282828 ">
+         <div class="personal-info ">
             <div class='personal-info-form  personal-info-sec well'>
                  <select class="form-control delivery_info_list_select" >
                     <option class='new' >
@@ -235,46 +221,46 @@
                 </select> 
                 <br>
                   <div class="form-group row">
-                    <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
+                    <label for="lastname"  style ="margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
                     <div class="col-xs-9">
-                      <input type="text" class="form-control new_input" id="lastname" placeholder="Last Name"  name="delivery_last_name">
+                      <input type="text" class="form-control" id="lastname" placeholder="Last Name"  name="delivery_last_name">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="firstname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}></label>
+                    <label for="firstname"  style ="margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}></label>
                     <div class="col-xs-9">
-                      <input type="text" class="form-control new_input" id="firstname" placeholder="First Name"  name="delivery_first_name" >
+                      <input type="text" class="form-control" id="firstname" placeholder="First Name"  name="delivery_first_name" >
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="phone"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->telephone}></label>
+                    <label for="phone"  style ="margin-top: 5px;" class="col-xs-3 control-label"><{$lang->telephone}></label>
                     <div class="col-xs-9">
-                      <input type="number" class="form-control new_input" id="phone" placeholder="Phone"   name="delivery_phone">
+                      <input type="number" class="form-control" id="phone" placeholder="Phone"   name="delivery_phone">
                     </div>
                   </div>
                   
                   <div class="form-group row">
-                    <label for="email"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label">Email<em><{$lang->optional1}></em></label>
+                    <label for="email"  style ="margin-top: 5px;" class="col-xs-3 control-label">Email<em><{$lang->optional1}></em></label>
                     <div class="col-xs-9">
-                      <input type="email" class="form-control new_input" id="email" placeholder="Email"  name="delivery_email">
+                      <input type="email" class="form-control" id="email" placeholder="Email"  name="delivery_email">
                     </div>
                   </div>
 
 
                   <div class="form-group row" <{if !$requireIdCard}>style="display: none;"<{/if}>>
-                    <label for="email" style="    font-weight: normal;" class="col-xs-3 control-label"><{$lang->id_number}></label>
+                    <label for="email" class="col-xs-3 control-label"><{$lang->id_number}></label>
                     <div class="col-xs-9">
-                      <input type="text" class="form-control new_input" id="id_number" placeholder="<{$lang->Delivery_China_needed}>"  name="id_number">
+                      <input type="text" class="form-control" id="id_number" placeholder="<{$lang->Delivery_China_needed}>"  name="id_number">
                     </div>
                   </div>
                  
                   <div  <{if $business_delivery_info.EvoucherOrrealproduct=='evoucher'||!$business_delivery_info.deliver_enable}>style='display:none'<{/if}>>
                     <div class="form-group row">
-                      <label for="address"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->address}></label>
+                      <label for="address"  style ="margin-top: 5px;" class="col-xs-3 control-label"><{$lang->address}></label>
                       <div class="col-xs-9">
-                        <input type="text" class="form-control new_input" id="address" placeholder="Address" oninput="refresh()" onchange="refresh()" name="delivery_googleMap">
+                        <input type="text" class="form-control" id="address" placeholder="Address" oninput="refresh()" onchange="refresh()" name="delivery_googleMap">
                       </div>
                     </div>
 
@@ -284,8 +270,8 @@
                     <div>
 					  <br>
 					   <input style="display:none;" type='text' id="addr_house_number" class="addr_house_number form-control" readonly="readonly" name='addr_house_number'>
-					   <input style="display:none;  font-size:12px;  color: red;background: #fff;    border: 0;" type='text'  value ="<{$lang->msg_input_new_unit_number}>"  readonly="readonly" class="addr_hint99 form-control" name='addr_hint99'>
-					   <input style="display:none;" type='text' id="Street_number" class="Street_number form-control new_input"  name='Street_number'>
+					   <input style="display:none;  font-size:12px;  color: red;" type='text'  value ="<{$lang->msg_input_new_unit_number}>"  readonly="readonly" class="addr_hint99 form-control" name='addr_hint99'>
+					   <input style="display:none;" type='text' id="Street_number" class="Street_number form-control"  name='Street_number'>
 				       <input style="display:none;"  type='text' class="addr_street form-control" readonly="readonly"  name='addr_street'>
                        <input style="display:none;"   type='text' class="addr_city form-control" readonly="readonly"  name='addr_city'>
                        <input style="display:none; "  type='text' class="addr_state form-control" readonly="readonly"  name='addr_state'>
@@ -297,24 +283,28 @@
 
                   </div>
 
-
+                <p>
+                  <small style='color: #aaa'>
+                    
+                    <{if $requireIdCard}> <span style='color:#f30'>中国大陆用户需要填写真实姓名并可以提供相应身份证。否则海关无法清关</span> <{/if}>
+                  </small>
+                </p>
             </div>
         </div>
 
    <{if $business_delivery_info.EvoucherOrrealproduct=='realproduct' || $business_delivery_info.EvoucherOrrealproduct=='restaurant_menu'}>
-       <div class="bgfff borR7 ma15 f28 col282828 ">
-            <div class='order-pay' style="padding-top: 15px;    border-radius: 7px;border-bottom: 0px solid #e2e2e2;">
-              <p class=' pmb5 bold f500 deliver-option-btn'><{$lang->deliver_option}>
-                <a ><span class=' deliver-option-btn deliver-option-display' style='color:#0cb903'><em style="color:#f00"><{$lang->please_choose}></em></span></a>
+            <div class='order-pay'>
+              <p class='deliver-option-btn'><{$lang->deliver_option}>
+                <a ><span class='deliver-option-display' style='color:#0cb903'><em style="color:#f00"><{$lang->please_choose}></em></span></a>
               </p>
             </div>
 
              <div class="deliver-option" >
-                     <div class='spec-option deliver-option-sec well' style="border:0;">
+                     <div class='spec-option deliver-option-sec well'>
                         <div class="list-group">
                             <{if $business_delivery_info.pickup_enable}>
                                <label class="list-group-item ">
-                                <h5 class="list-group-item-heading 28">
+                                <h5 class="list-group-item-heading">
                                   <input type="radio" name="deliver_option" value="2" data-text="<{$lang->self_pickup}>" ><{$lang->self_pickup}>
                                 </h5>
                               </label>
@@ -322,7 +312,7 @@
 
                              <{if $business_delivery_info.deliver_enable}>
                               <label class="list-group-item ">
-                                <h5 class="list-group-item-heading f28">
+                                <h5 class="list-group-item-heading">
                                   <input type="radio" name="deliver_option" value="1" data-text="<{$lang->business_deliver}>" ><{$lang->business_deliver}>
                                 </h5>
                               </label>
@@ -386,7 +376,7 @@
 						  <input  name="dispCenterUserSelectedDeliveryDate" type="hidden"  value="<{$dispCenterUserSelectedDeliveryDate}>"  />
                     </div>
             </div>
-           </div>
+
 
             <{elseif $business_delivery_info.EvoucherOrrealproduct=='evoucher'}>
             <div class='order-pay'>
@@ -397,12 +387,9 @@
              </div>
             <{/if}>
 
-
-       <div class="bgfff borR7 ma15 f28 col282828 ">
-
-
-        <div class="order-pay" style="padding-top: 15px;    border-radius: 7px;border-bottom: 0px solid #e2e2e2;">
-            <p class=' pmb5 bold f500  payment-option-btn'><{$lang->payment_option}>
+       
+        <div class="order-pay">
+            <p class='payment-option-btn'><{$lang->payment_option}>
               <a ><span class='payment-option-display' style='color:#0cb903'><em style='color:#f00'><{$lang->please_choose}></em></span></a>
             </p>
         </div>
@@ -413,7 +400,7 @@
                       <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
                        <label  class="list-group-item ">
                        
-                        <h5 class="list-group-item-heading f28">
+                        <h5 class="list-group-item-heading">
                             <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->pay_offline}>
                         </h5>
                       </label>
@@ -421,13 +408,13 @@
 
                        <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
                           <label  class="list-group-item ">
-                            <h5 class="list-group-item-heading f28">
+                            <h5 class="list-group-item-heading">
                                 <input type="radio" name="payment" value="royalpay" data-text="<{$lang->pay_wechat}>" ><{$lang->pay_wechat}>
                             </h5>
                           </label>
 
                            <label  class="list-group-item ">
-                            <h5 class="list-group-item-heading f28">
+                            <h5 class="list-group-item-heading">
                                 <input type="radio" name="payment" value="alipay" data-text="<{$lang->Alipay}>" >
                                 <{$lang->Alipay}>
                             </h5>
@@ -445,7 +432,7 @@
 -->
                        <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
                            <label  class="list-group-item ">
-                            <h5 class="list-group-item-heading f28">
+                            <h5 class="list-group-item-heading">
                                 <input type="radio" name="payment" value="hcash" data-text="<{$lang->pay_hcahs}>" > <{$lang->pay_hcahs}>
                             </h5>
                           </label>
@@ -453,7 +440,7 @@
                       
                         <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
                            <label  class="list-group-item ">
-                            <h5 class="list-group-item-heading f28">
+                            <h5 class="list-group-item-heading">
                                 <input type="radio" name="payment" value="creditcard" data-text="<{$lang->pay_creditcard}>" ><{$lang->pay_creditcard}>
                             </h5>
                           </label>
@@ -461,29 +448,29 @@
 
                     </div>
 
-                    <div class='offline-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='offline-payment-des payment-option-desc' style='display:none'>
                       <{$lang->pay_offline_desc}>
                       <br>
                   <!--    <{$business_delivery_info.offline_pay_des}> -->
                     </div>
 
-                    <div class='paypal-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='paypal-payment-des payment-option-desc' style='display:none'>
                       <{$lang->notice_paypal_pay_desc}>
                     </div>
 
-                    <div class='royalpay-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='royalpay-payment-des payment-option-desc' style='display:none'>
                       <{$lang->notic_wechat_pay_desc}>
                     </div>
 
-                    <div class='alipay-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='alipay-payment-des payment-option-desc' style='display:none'>
                       <{$lang->notic_alipay_desc}>
                     </div>
 
-                    <div class='hcash-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='hcash-payment-des payment-option-desc' style='display:none'>
                       <{$lang->notice_hcash_pay_desc}>
                     </div>
 
-                    <div class='creditcard-payment-des payment-option-desc f28' style='display:none'>
+                    <div class='creditcard-payment-des payment-option-desc' style='display:none'>
                    
                       	
     <div class="txt content-image-fullsize" style="display: block; color:red;font-weight: 800;">  <{$lang->notice_creditcard_pay_desc}> <{$lang->credit_card_notice}> 
@@ -492,7 +479,7 @@
                         <div class="panel panel-default credit-card-box">
                             <div class="panel-heading display-table" >
                                 <div class="row display-tr" >
-                                    <h3 class="panel-title display-td f28" ><{$lang->pay_creditcard}></h3>
+                                    <h3 class="panel-title display-td" ><{$lang->pay_creditcard}></h3>
                                     <div class="display-td" >                            
                                         <img class="img-responsive pull-right" src="<{$SKIN_PATH}>images/accepted_card.png">
                                     </div>
@@ -606,43 +593,27 @@
             </div>
 
 
-             </div>
+            
 
-       </div>
+         
 
-       <{if $promotion}>
-             <div class="bgfff borR7 ma15 f28 col282828 ">
-
-
-
-
-                 <div class="order-pay" style="    padding-top: 10px;    border-radius: 7px;    border-bottom: 0px solid #e2e2e2;    padding-bottom: 10px;">
-                          <p class=' pmb5 bold coupon-option-btn'><{$lang->enter_promotion_code}>
-                            <a ><span class='promotion-des-display pbtn f25 colfff'><{$lang->not_applied}></span></a>
-
-                          </p>
-                        </div>
-                   </div>
-        <{/if}>
+            <{if $promotion}>
+            <div class='order-pay'>
+              <p class='coupon-option-btn'><{$lang->enter_promotion_code}>
+                <a ><span class='promotion-des-display'><{$lang->not_applied}></span></a>
+              </p>
+            </div>
+            <{/if}>
 
             <{if $moneyBalance>0}>
-               <div class="bgfff borR7 ma15 f28 col282828 ">
-                   <div class="order-pay" style="    padding-top: 10px;    border-radius: 7px;    border-bottom: 0px solid #e2e2e2;    padding-bottom: 10px;">
-                   <p class='pmb5 bold  use-money-btn'><{$lang->wallet}>
-                        <a > <span class='confirmedMoneyAppliedAmount-display  pbtn f25 colfff'><{$lang->not_applied}></span></a>
-                      </p>
-                    </div>
-               </div>
+            <div class='order-pay'>
+              <p class='use-money-btn'><{$lang->wallet}>
+                <a > <span class='confirmedMoneyAppliedAmount-display'><{$lang->not_applied}></span></a>
+              </p>
+            </div>
             <{/if}>
 
 
-       <div class="bgfff borR7 ma15 f28 col282828 ">
-
-           <div class="order-pay" style="    padding-top: 10px;    border-radius: 7px;    border-bottom: 0px solid #e2e2e2;    padding-bottom: 10px;">
-               <p class="pmb5 bold  use-money-btn">购物清单
-
-               </p>
-           </div>
 
          <div class="order-info order-info-1">
             <ul class="g-ul m-list2">
@@ -732,7 +703,7 @@
                 <input type="hidden"  id ="specialGroupPinCheckoutUserGroupId" name="specialGroupPinCheckoutUserGroupId" value="<{$specialGroupPinCheckoutUserGroupId}>" />
                
             </ul>
-            <div class="words" style="    padding-bottom: 30px;">
+            <div class="words">
                 <p>
                     <span><{$lang->product_total}>:<em id = 'checkout-confirmation-total'></em></span>
                     <b style='display:block' class='deliver-fee-display'></b>  
@@ -750,18 +721,9 @@
             </div>
         </div>
 
-       </div>
+
         <div class="h2"></div>
 
-
-
-       <div class="flexBox1 fixBottom"><div class="flexBox1"><span class="col303134 f28 bold"><{$lang->total_amount}></span>&nbsp;&nbsp;
-           <div><span class="f38 colFD5001 bold">$</span><span class="bold colFD5001 f38 grand-total-display"></span></div></div>
-           <div class="flexBox1 "><div class="pbtn f28 colFD590E againBtn "><{$lang->continue_shopping}></div>&nbsp;&nbsp;
-           <div class="ajaxFormSubmitBtn pbtn f28 colfff"><{$lang->submit_order}></div></div></div>
-
-
-<!--
         <div class="order-sub">
 		
 		<{if !$freshfood}>
@@ -775,22 +737,133 @@
             </div>
             <a class='ajaxFormSubmitBtn'><span><{$lang->submit_order}></span></a>
         </div>
--->
+
     </section>
 
-        </div>
-   
+
+     <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+         <div class='hcash-pay-box'>
+
+            <div class='top-info'>
+
+                <span class='hcashRefreshBtn' style="float: right;"><span class='hcashRefreshText'><{$lang->exchange_rate_lock}></span> <small class='timer'> </small> </span>
+                <h4><{$lang->pay_hcahs}>   </h4>
+                <small><{$lang->notice_hcash_pay_desc}></small>
+                
+
+                <div style="line-height: 1.5rem;font-size: 0.5rem">
+                  <span>
+                     Aud：$：$<em class='grand-total-display'></em>
+                  </span>
+
+                  <span>
+                     RMB：￥<em class='cnyPrice'></em>
+                  </span>
+                  <br>
+                   <span>
+                     Rate：<em class='hcashRate'></em>
+                  </span>
+                  <br>
+                   <span>
+                     HCash：<em class='hcashAmount'></em>
+                  </span>
+                  
+                </div>
+            </div>
+
+            <div class="pay-style">
+              <div class="items">
+                  <label for="" style="text-align:center;width: 100%">
+                      <{$lang->hrs_business_wallet_address}> <br>
+                      <small>HP34XL7oy9bznTZHHK1s4kaqQcHHnxNndx</small>
+                  </label>
+              </div>
+
+             <!--  <div class="items">
+                  <label for="" style="text-align:center;width: 100%">
+                      <span><em>*</em>钱包转账交易号</span>
+                      <input type="text" class='hcashOrderId name' name='hcashOrderId' >
+                  </label>
+              </div>
+              <div class="items">
+                  <label for="" style="text-align:center;width: 100%">
+                      <span><em>*</em>请输入提示标签</span>
+                      <input type="text" class ='hcashOrderTag num' name='hcashOrderTag'>
+                  </label>
+              </div> -->
+             </div>
+
+              <input type="hidden" name='hcashRate'>
+              <input type="hidden" name='hcashAmount'>
+
+             <div class='note'>
+               <small><{$lang->notice_hcash_note}></small>
+             </div>
+
+             <div class='footer-btn'>
+               <span class='btn-yes' onClick="hcashSubmit();" style="background-color:#FD5001 "><{$lang->confirm}></span>
+               <span class='btn-no' onClick="$('.hcash-pay-box').hide()" style="background-color:#f30"><{$lang->cancel}></span>
+             </div>
+           </div>
+
+          <style type="text/css">
+              .hcash-pay-box{
+                  width: 100%;
+                  height: 100%;
+                  border: 1px solid #data-address;
+                  position: fixed;
+                  background-color: #eee;
+                  z-index: 999;
+                  top: 0px;
+                  display: none;
+              }
+              .hcash-pay-box .top-info,.hcash-pay-box .pay-style,.hcash-pay-box .note{
+                margin: 0.1rem 0.2rem;padding:0.5rem;
+              }
+
+              .top-info .hcashRefreshBtn{
+                  padding: 3px 20px;
+                  color: #fff;
+                  background-color: #29b729;
+              }
+
+              .top-info .grand-total-display{
+                  color:#2bb8aa;
+              }
+
+              .top-info .hcashRate{
+                  color:#c90;
+              }
+
+              .top-info .hcashAmount{
+                  font-weight: bolder;
+                  color:#f30;
+                  font-size: 1rem;
+              }
+
+               .hcash-pay-box .footer-btn{
+                  position: absolute;
+                  bottom: 0px;
+                  width: 100%;
+                  text-align: center;
+               }  
+
+               .footer-btn span{
+                 display: inline-block;
+                 padding:10px 1%;
+                 width: 49%;
+                 color: #fff;
+                 font-size: 0.5rem;
+               }
+
+          </style>
+    <{/if}>
      <div class="pop-spec coupon-option" style="padding-bottom: 50px;">
         <span class="spec-close"></span>
 
         <div class='coupon-check pop-content'>
-            <h4><{$lang->apply}><{$lang->promotion_code}></h4>
-
-            <div  id="verified_image" style="    text-align: center;   display: none;   padding-bottom: 35px;">
-                <img  src="<{$SKIN_PATH}>img/success2.png" style="      width: 50px; ">
-            </div>
-
-            <p class="promotion-loading bold f35 text" style="    text-align: center;"></p>
+             <h4><{$lang->apply}><{$lang->promotion_code}></h4>
+             <p class='promotion-loading'></p>
              <hr>
             <div class="input-group">
 			
@@ -798,7 +871,7 @@
 			
 		<{if !$promotion_code_list}>
 			
-          <input type="text" class="H80" id ="promotion_code" name="promotion_code" placeholder="<{$lang->promotion_code}>" style="    width: calc(100% - 1rem);">
+          <input type="text" class="form-control" id ="promotion_code" name="promotion_code" placeholder="<{$lang->promotion_code}>"> 
 			  
 			<{else}>    
 			  <select class="form-control "  id ="promotion_code" name="promotion_code"  >
@@ -812,8 +885,7 @@
 		  <{/if}>
 			  
               <span class="input-group-btn">
-                <div class=" pbtn f25 colfff " type="button" onClick="check_promotion_code();", style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->apply}></div>
-
+                <button class="btn btn-default" type="button" onClick="check_promotion_code();", style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->apply}></button>
               </span>
 			  
 			  
@@ -828,14 +900,12 @@
             <p><{$lang->promotion_code_desc}></p>     
         </div>
 
-    <!--    <a  class="spec-btn"><{$lang->confirm}></a> -->
+        <a  class="spec-btn"><{$lang->confirm}></a>
 
     </div>
 
     <{if $moneyBalance>0}>
-
-
-    <div class="pop-spec use-money-option" style="padding-bottom: 50px;" >
+     <div class="pop-spec use-money-option" style="padding-bottom: 50px;" >
         <span class="spec-close"></span>
 
         <div class='use-money pop-content'>
@@ -846,19 +916,17 @@
 
                 <hr>
                <div class="input-group">
-                  <span class="input-group-addon" style="    border-right: 1;    border: 0px solid #ccc;">$</span>
-                   <input type="text" class=" H80" aria-label="Amount (to the nearest dollar)" id="amountApply" name="amountApply" data-available-amount='<{$moneyBalance}>' placeholder="0" style="    width: calc(100% - 2rem);   ">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id ="amountApply" name="amountApply" data-available-amount='<{$moneyBalance}>' placeholder="0">
                    <span class="input-group-btn">
-
-                 <div class=" pbtn f25 colfff " type="button"onClick="applyPocketMoney();" ,="" style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->spend_fund}></div>
+                    <button class="btn btn-default" type="button" style ="color:#fff; background:#FD5001 ;" onClick="applyPocketMoney();" ><{$lang->spend_fund}></button>
                   </span>
                 </div>   
                  <hr>
             <p><{$lang->available_fund_desc}></p>    
         </div>
-        </div>
-    <!--    <a class="spec-btn"><{$lang->confirm}></a> -->
-
+        <a class="spec-btn"><{$lang->confirm}></a>
+    </div>
     <{/if}>
     <div class="pop-bg"></div>
     <!-- 选择类型弹窗-end -->
@@ -1863,9 +1931,8 @@
                     promotion_amount=parseFloat(data.promotion_amount);
                     promotion_id=data.promotion_id;
                     promotion_des=data.promotion_des;
-
+                    
                     $('.promotion-loading').html(data.msg);
-                    $('#verified_image').css('display','');
 
                 }else{
                     promotion_amount=0;
@@ -1873,7 +1940,7 @@
                     promotion_des=0;
 
                     $('.promotion-loading').html(data.msg);
-                    $('#verified_image').css('display','none');
+                     
                 }
                
               })
@@ -2124,228 +2191,5 @@
           }
          })
       </script>
-
-    <script>
-        new Vue({
-            el:"#order",
-            data:{
-                code:'',
-                isLanguageEn:1,
-                isUse:false,
-                isUsePop:false,
-                isPop:false,
-                isDatePop:false,  // 日期弹出框
-                isUpdateAddress:false,
-                isaddAddress:false,
-                currentDeliveryAddressFirstName:'',
-                currentDeliveryAddressLastName:'',
-                currentDeliveryAddress:'',
-                currentDeliveryAddressPhone:'',
-                newFirstName:'',
-                newLastName:'',
-                newPhone:'',
-                newAddress:'',
-                newOther:'',
-                newEmail:'',
-                orderTimeAndDeliveryTime:[
-                ],
-                businessDispSchedule:[],
-                delivery_info_list:[
-
-                ],
-                businessDispSchedule:[
-                    {
-                        name:'明天',
-                        status:'已选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'已选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'不可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    }
-                ]
-            },
-            mounted:function(){
-                this.currentDeliveryAddress='<{$delivery_info.address}>';
-                this.currentDeliveryAddressPhone='<{$delivery_info.phone}>';
-                this.currentDeliveryAddressFirstName ='<{$delivery_info.first_name}>';
-                this.currentDeliveryAddressLastName='<{$delivery_info.last_name}>';
-                this.delivery_info_list=JSON.parse('<{$delivery_info_list}>');
-                console.log(this.delivery_info_list);
-                console.log(this.dateList);
-                //获取商家关于该客户的下单及配送时间的文字表述；
-                this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
-
-                // 获得当前客户可以下单的日期列表显示，
-                this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
-
-                //设置默认的配送日期
-                this.selectDefaultDeliveryDate();
-                console.log(this.businessDispSchedule);
-
-            },
-            methods:{
-                next:function(){
-                    window.location.href="orderPage/orderSuccess.htm"
-                },
-                datePop:function(){
-                    this.isDatePop=true
-                },
-                closePop:function(source){
-                    if(source=='c'){  // 购物车
-                        this.iscartPop=false
-                    }else if(source=='d'){
-                        this.isDatePop=false
-                    }else{
-                        this.isPop=false
-                    }
-                },
-                // 设置某个日期为配送日期，用户点击选择
-                selectDeliveryDate:function(index){
-                    // 清除所有的 select 标志
-                    var arrlength =this.businessDispSchedule.length;
-                    for (let i = 0; i < arrlength; i++) {
-                        this.businessDispSchedule[i].isselected =0;
-                    }
-
-                    //设置当前的标志为 select
-                    this.businessDispSchedule[index].isselected =1;
-                    this.selectDateIndex =index;
-
-                    this.setCookie("deliveryDateIndex",index,1);
-
-
-                    console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
-
-                },
-                // 设置默认配送日期
-                selectDefaultDeliveryDate:function(){
-                    // 清除所有的 select 标志
-                    var i =this.getCookie('deliveryDateIndex');
-                    if(i) {
-                        this.selectDateIndex =i;
-                        this.businessDispSchedule[i].isselected=1;
-                        console.log('find cookie index is  :' +i);
-                        return 1;
-
-                    }
-
-                    var arrlength =this.businessDispSchedule.length;
-                    for (let i = 0; i < arrlength; i++) {
-                        if(this.businessDispSchedule[i].isAvaliable) {
-                            this.businessDispSchedule[i].isselected =1;
-                            this.selectDateIndex =i;
-                            this.setCookie("deliveryDateIndex",i,1);
-
-
-                            console.log('could not find in cookie and then find the first useable date:' + this.getCookie('deliveryDateIndex'));
-
-
-                            //	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
-                            break;
-                        }
-
-
-
-                    }
-                },
-                changeDate:function(){
-                    this.isPop=true
-                },
-
-
-                returnPage:function(){
-                    window.history.go(-1)
-                },
-                UpdateAddress:function(index){
-                    if(this.isaddAddress){
-                        this.isaddAddress=false
-                    }
-                    this.isUpdateAddress=!this.isUpdateAddress
-                    // 显示选择的地址
-                    this.currentDeliveryAddress =this.delivery_info_list[index].address;
-                    this.currentDeliveryAddressFirstName = this.delivery_info_list[index].first_name;
-                    this.currentDeliveryAddressLastName =this.delivery_info_list[index].last_name;
-                    this.currentDeliveryAddressPhone = this.delivery_info_list[index].phone;
-                },
-                changCurrentAddress:function(){
-                    this.currentDeliveryAddressFirstName = this.newFirstName;
-                    this.currentDeliveryAddressLastName =this.newLastName;
-                    this.currentDeliveryAddressPhone =this.newPhone;
-                    this.currentDeliveryAddress =this.newAddress;
-
-                    //可能需要向系统增加，但是，要考虑不能持续增加的问题。
-
-                },
-                addAddress:function(){
-                    this.isaddAddress=true
-                    this.isUpdateAddress=false
-                },
-                remove:function(){
-                    this.isUpdateAddress=false
-                },
-                use(){
-                    if(this.code==''){
-                        alert('请输入折扣码')
-                    }else{
-                        this.isUsePop=true
-                    }
-                },
-                close(){
-                    this.isUsePop=false
-                },
-                sure(){
-                    this.isUse=true
-                    this.isUsePop=false
-                },
-                setCookie:function (cname,cvalue,exdays){
-                    var d = new Date();
-                    d.setTime(d.getTime()+(exdays*24*60*60*1000));
-                    var expires = "expires="+d.toGMTString();
-                    document.cookie = cname+"="+cvalue+"; "+expires + ";" + " path=/";
-                },
-                getCookie:function (cname){
-                    var name = cname + "=";
-                    var ca = document.cookie.split(';');
-                    for(var i=0; i<ca.length; i++) {
-                        var c = ca[i].trim();
-                        if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
-                    }
-                    return "";
-                }
-            }
-        })
-    </script>
 </body>
 </html>

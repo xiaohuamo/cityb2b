@@ -12,7 +12,8 @@
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
-		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script> 
+		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+		<script src="https://unpkg.com/vue-router"></script>
 		
 
 		<script>
@@ -670,6 +671,9 @@
 				this.selectDefaultDeliveryDate();
 				console.log(this.businessDispSchedule);
 
+
+
+
 			},
 		    methods:{
 			
@@ -825,18 +829,24 @@
 					this.businessDispSchedule[index].isselected =1;
 					this.selectDateIndex =index;
 
+					console.log('index is' + index);
 					this.setCookie("deliveryDateIndex",index,1);
 
 
-					console.log(this.getCookie('deliveryDateIndex'));
+					console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
 
 				},
 				// 设置默认配送日期
 				selectDefaultDeliveryDate:function(){
 					// 清除所有的 select 标志
 					var i =this.getCookie('deliveryDateIndex');
+				//	console.log('cookie index is :' +i );
+
 					if(i) {
 						this.selectDateIndex =i;
+						//设置日期数组的对应index 为 isselected
+						this.businessDispSchedule[i].isselected=1;
+						console.log('find in cookie index is  :' +i);
 						return 1;
 
 					}
@@ -849,7 +859,7 @@
 							this.setCookie("deliveryDateIndex",i,1);
 
 
-							console.log(this.getCookie('deliveryDateIndex'));
+							console.log('cam not find coolie,generate by default' + this.getCookie('deliveryDateIndex'));
 
 
 						//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
@@ -1379,7 +1389,7 @@
 				},
 				placeOrder:function(){    // 下单
                  this.addDataToTable(this.goodsList);
-					window.location.href="<{$http_root_www}>member/showcart1?checkout=1"
+					window.location.href="<{$http_root_www}>member/showcart1?checkout=1&business_userid=<{$businessUserId}>"
 				},
 				nextPage:function(){  // 跳转店铺说明
 					window.location.href="serviceDescription.htm"
@@ -1400,7 +1410,8 @@
 			var d = new Date();
 			d.setTime(d.getTime()+(exdays*24*60*60*1000));
 			var expires = "expires="+d.toGMTString();
-			document.cookie = cname+"="+cvalue+"; "+expires;
+		//	document.cookie =cname + "=";
+			document.cookie = cname+"="+cvalue+" ; "+expires + " ; path=/;";
 		},
 		getCookie:function (cname){
 			var name = cname + "=";
@@ -1410,18 +1421,6 @@
 				if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
 			}
 			return "";
-		},
-		checkCookie:function (){
-			var user=this.getCookie("username");
-			if (user!=""){
-				alert("欢迎 " + user + " 再次访问");
-			}
-			else {
-				user = prompt("请输入你的名字:","");
-				if (user!="" && user!=null){
-					this.setCookie("username",user,30);
-				}
-			}
 		}
 			}
 		});

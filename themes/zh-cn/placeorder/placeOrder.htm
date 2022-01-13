@@ -6,8 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>下单页面</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/datePop.css"/>
+
 		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
@@ -19,9 +21,10 @@
 			<div class="pHead f28 col0F0F0F">
 				<div class="pmb5 bold">配送日期</div>
 				<div class="flexBox1">
-				  <span>2021年11月28日 星期6</span>	
-				  <div class="pbtn f25 colfff" @click="changeDate">修改</div>
+				  <span>2021年11月28日 星期6</span>
+					<div class="pbtn f25 colfff" @click="datePop">修改</div>
 				</div>
+
 			</div>
 			<div class="bgfff borR7 ma15 f28 col282828">
 				<div class="pa15 borderB">
@@ -141,55 +144,75 @@
 				  <div class="pbtn f28 colfff" @click="next">下单</div>
 			  </div>
 		    </div>
-			
+
 			<!-- 配送日期弹框 -->
-			
-			<div class="mask" v-if="isPop" @click="closePop">
+
+			<div class="mask z6" v-if="isDatePop">
 				<div class="datePop">
-					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop" class="delete"/>
-					<div class="title col333 f30 bold">配送日程</div>
+					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
+					<div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
 					<div class="flexBox1" style="flex-wrap:wrap;">
-						<div class="dateBox2" v-for="item in businessDispSchedule">
-							<div class="f30 col333">{{item.name}}</div>
-							<div class="f25 colFD5203">{{item.status}}</div>
-							<div class="f25 col999">{{item.date}}</div>
+						<div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
+
+
+							<div class="  dateBox2selected " v-if="item.isselected" @click ="selectDeliveryDate(index)" >
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+								<img src="<{$SKIN_PATH}>img/sj.png"/>
+							</div >
+
+							<div class="  dateBox2avaliable " v-if="!item.isselected && item.isAvaliable" @click ="selectDeliveryDate(index)">
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+							<div v-if="!item.isselected && !item.isAvaliable">
+
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+
 						</div>
 					</div>
-					<div class="title col333 f30 bold">下单时间及配送时间</div>
-					<div class="flexBox1 pa15">
-						<div class="journal">下单时间</div>
-						<div class="journal">配送时间</div>
+
+					<div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
+					<div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
+					<div class="flexBox1 pa15-15-5-15">
+						<div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
+						<div class="journal"  v-else>下单截单时间</div>
+						<div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
+						<div class="journal"  v-else>配送日期</div>
 					</div>
-					<div class="pa15 f28 col0B0B0B">
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
+					<div class="pa5-15-5-15 f28 col0B0B0B">
+						<div class="flexBox1 pmb15" v-for="item in orderTimeAndDeliveryTime" >
+							<span v-if="isLanguageEn">{{item.ordertime}}</span>
+							<span v-else>{{item.ordertime_cn}}</span>
+							<span v-if="isLanguageEn">{{item.delivery_date_of_week}}</span>
+							<span v-else>{{item.delivery_date_of_week_cn}}</span>
 						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
-						<div class="flexBox1 pmb15">
-							<span>周二零点-周日早五点</span>
-							<span>周三</span>
-						</div>
+
+
 					</div>
-					<div class="continue sure">确定</div>
+					<div class="continue sure"  @click="closePop('d')" >确定</div>
 				</div>
 			</div>
-			
+
+
 			<div class="mask z10" @click="close" v-show="isUsePop">
 				<div class="bgfff borR7 codePop center">
 					<img src="<{$SKIN_PATH}>img/success2.png"/>
@@ -206,9 +229,11 @@
 			el:"#order",
 			data:{
 				code:'',
+				isLanguageEn:1,
 				isUse:false,
 				isUsePop:false,
 				isPop:false,
+				isDatePop:false,  // 日期弹出框
 				isUpdateAddress:false,
 				isaddAddress:false,
 				currentDeliveryAddressFirstName:'',
@@ -221,6 +246,9 @@
 				newAddress:'',
 				newOther:'',
 				newEmail:'',
+				orderTimeAndDeliveryTime:[
+				],
+				businessDispSchedule:[],
 				delivery_info_list:[
 
 				],
@@ -275,17 +303,87 @@
 				this.delivery_info_list=JSON.parse('<{$delivery_info_list}>');
 				console.log(this.delivery_info_list);
 				console.log(this.dateList);
+				//获取商家关于该客户的下单及配送时间的文字表述；
+				this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
+
+				// 获得当前客户可以下单的日期列表显示，
+				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
+
+				//设置默认的配送日期
+				this.selectDefaultDeliveryDate();
+				console.log(this.businessDispSchedule);
+
 			},
 		    methods:{
 				next:function(){
 				   window.location.href="orderPage/orderSuccess.htm"
 				},
-				closePop:function(){
-				   this.isPop=false
+				datePop:function(){
+					this.isDatePop=true
+				},
+				closePop:function(source){
+					if(source=='c'){  // 购物车
+						this.iscartPop=false
+					}else if(source=='d'){
+						this.isDatePop=false
+					}else{
+						this.isPop=false
+					}
+				},
+				// 设置某个日期为配送日期，用户点击选择
+				selectDeliveryDate:function(index){
+					// 清除所有的 select 标志
+					var arrlength =this.businessDispSchedule.length;
+					for (let i = 0; i < arrlength; i++) {
+						this.businessDispSchedule[i].isselected =0;
+					}
+
+					//设置当前的标志为 select
+					this.businessDispSchedule[index].isselected =1;
+					this.selectDateIndex =index;
+
+					this.setCookie("deliveryDateIndex",index,1);
+
+
+					console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
+
+				},
+				// 设置默认配送日期
+				selectDefaultDeliveryDate:function(){
+					// 清除所有的 select 标志
+					var i =this.getCookie('deliveryDateIndex');
+					if(i) {
+						this.selectDateIndex =i;
+						this.businessDispSchedule[i].isselected=1;
+						console.log('find cookie index is  :' +i);
+						return 1;
+
+					}
+
+					var arrlength =this.businessDispSchedule.length;
+					for (let i = 0; i < arrlength; i++) {
+						if(this.businessDispSchedule[i].isAvaliable) {
+							this.businessDispSchedule[i].isselected =1;
+							this.selectDateIndex =i;
+							this.setCookie("deliveryDateIndex",i,1);
+
+
+							console.log('could not find in cookie and then find the first useable date:' + this.getCookie('deliveryDateIndex'));
+
+
+							//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
+							break;
+						}
+
+
+
+					}
 				},
 				changeDate:function(){
 					this.isPop=true
 				},
+
+
 				returnPage:function(){
 					window.history.go(-1)
 				},
@@ -329,7 +427,22 @@
 				sure(){
 					this.isUse=true
 					this.isUsePop=false
+				},
+			setCookie:function (cname,cvalue,exdays){
+				var d = new Date();
+				d.setTime(d.getTime()+(exdays*24*60*60*1000));
+				var expires = "expires="+d.toGMTString();
+				document.cookie = cname+"="+cvalue+"; "+expires + ";" + " path=/";
+			},
+			getCookie:function (cname){
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0; i<ca.length; i++) {
+					var c = ca[i].trim();
+					if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
 				}
+				return "";
+			}
 			}
 		})	
 	</script>

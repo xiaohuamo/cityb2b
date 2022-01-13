@@ -333,7 +333,7 @@
     <complete>完成</complete>
     <unit_price>单价</unit_price>
     <quantity>数量</quantity>
-    <final_amount_to_pay>实际需要支付</final_amount_to_pay>
+    <final_amount_to_pay>总金额</final_amount_to_pay>
     <subtotal>小计</subtotal>
     <continue_shopping>我再逛逛</continue_shopping>
 

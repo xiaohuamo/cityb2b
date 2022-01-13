@@ -321,7 +321,7 @@
     <quantity>Quantity</quantity>
     <subtotal>Subtotal</subtotal>
     <continue_shopping>Continue</continue_shopping>
-    <final_amount_to_pay>amount to pay</final_amount_to_pay>
+    <final_amount_to_pay>Amount</final_amount_to_pay>
     <total_amount>Total amount</total_amount>
     <checkout>Checkout</checkout>
     <total_item>Total Item</total_item>
