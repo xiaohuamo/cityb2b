@@ -236,8 +236,8 @@ input[type='checkbox']:checked::after {
  }
  
  .pop2{
-	 top:calc(5% + 1.5rem);
-	 max-height:95%;
+	/* top:calc(5% + 1.5rem); */
+	 max-height:85%;
 	 overflow: auto;
 	 background: #fff;
 	 position: absolute;

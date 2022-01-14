@@ -194,61 +194,61 @@
 						
 						<script> 
 						
-						
+														
 
-var cats = [];
-<{foreach from=$data_parent_cate_list item=item}>
-cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
-<{/foreach}>
-
-
-
-$(function(){
-	var cate='<{$category1}>';
-	var sub_cate ='<{$sub_category}>';
-	//alert('init');
-	if(cate) {
-	  catChg($('#category'));
-	}
-})
+								var cats = [];
+								<{foreach from=$data_parent_cate_list item=item}>
+								cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
+								<{/foreach}>
 
 
-function catChg(obj) {
-	var vv = $(obj).val(); 
-	if(vv ) {
-	    
-		
-		//alert('here');
-		if ($('#sub_category').length > 0) { 
-		
-			$('#sub_category').remove();
-		}
-	
-		var c = $('<select id ="sub_category" name="sub_category" >');
-		c.append('<option value="">选择子分类</option>');
-		for (var i = 0; i < cats.length; i++) {
-			if ( cats[i][2] == vv ) {
-			//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
-			if('<{$sub_category}>' == cats[i][0]){
-			c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
-			}else{
-			c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
-			}
-				
-				
-			}
-		}
-		$(obj).next().after(c);
-		//setDroplist(c);
-	
-	}else{
-	
-	}
-		
-	
-}
 
-</script>
+								$(function(){
+									var cate='<{$category1}>';
+									var sub_cate ='<{$sub_category}>';
+									//alert('init');
+									if(cate) {
+									  catChg($('#category'));
+									}
+								})
+
+
+								function catChg(obj) {
+									var vv = $(obj).val(); 
+									if(vv ) {
+										
+										
+										//alert('here');
+										if ($('#sub_category').length > 0) { 
+										
+											$('#sub_category').remove();
+										}
+									
+										var c = $('<select id ="sub_category" name="sub_category" >');
+										c.append('<option value="">选择子分类</option>');
+										for (var i = 0; i < cats.length; i++) {
+											if ( cats[i][2] == vv ) {
+											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											if('<{$sub_category}>' == cats[i][0]){
+											c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+											}else{
+											c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											}
+												
+												
+											}
+										}
+										$(obj).next().after(c);
+										//setDroplist(c);
+									
+									}else{
+									
+									}
+										
+									
+								}
+
+								</script>
 
 						<button type="submit"><{$lang->search}></button>
 
@@ -360,7 +360,7 @@ function catChg(obj) {
 
 				<div class="main-list" style="padding: 3px 2px;">
                     <{if $data}>
-						<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<div style="overflow-x: auto;overflow-y: auto; word-break:break-all;">
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
@@ -407,6 +407,7 @@ function catChg(obj) {
 											<th>设置分类</th>
 								
 									<th>ID</th>
+									<th>放入回收站</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -605,8 +606,8 @@ function catChg(obj) {
 											<br>
 										</td><{/if}> -->
                                         <{if $menu_option_list}>
-											<td>
-												<select name='menu_option' data-id='<{$item.id}>'>
+											<td style="width:150px;">
+												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
 													<option value='0'>请选择规格</option>
                                                     <{foreach from=$menu_option_list item=sitem}>
 														<option value='<{$sitem.id}>'
@@ -638,11 +639,12 @@ function catChg(obj) {
 										<td id="restaurant_categories-td-<{$item.id}>">
 										  <{if $item.category_cn_name}>
 											<span style="height:16px;background-color: grey;color: white" id="menu-<{$item.id}>"><{$item.category_cn_name}> <a style="color:red" onclick="deleteMenuCategory1('<{$item.id}>','<{$item.categoryId}>')">X&nbsp;</a></span>
-                                           <{/if}>
+                                         <br>  <{/if}>
 										   <{foreach from=$item.categoryIds item=categoryId}>
 												<script>
                                                     document.write(generateCategoryHtml(<{$categoryId.category_id}>, <{$item.id}>));
 												</script>
+												<br>
                                             <{/foreach}>
 											<br>
 											<select id="restaurant_categories-<{$item.id}>" onchange="updateMenuCategory(<{$item.id}>, this.value, 1)">
@@ -662,6 +664,33 @@ function catChg(obj) {
 										<td>
 											<span><{$item.id}></span>
 										</td>
+										
+										
+										<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $item.isDeleted==1}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">已回收</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">未回收</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+										
+										
+										
 									</tr>
                                 <{/foreach}>
 								</tbody>
@@ -760,6 +789,7 @@ function catChg(obj) {
 
 
     $('input[name=onoffswitch]').on('click', function () {
+	
         var couponId = $(this).data('id')
         var context = $('.publish_icon[data-id=' + couponId + ']');
 
@@ -789,6 +819,37 @@ function catChg(obj) {
         })
     })
 	
+	  $('input[name=onoffswitch_deleted]').on('click', function () {
+        var couponId = $(this).data('id')
+		 var context1 = $('.publish_icon[data-id=' + couponId + ']');
+        var context = $('.recycle_icon[data-id=' + couponId + ']');
+       
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>restaurant/menu_publish_ajax_recycle_bin",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.isDeleted == '1') {
+                    context.html("<span style='color:#F30;'>已回收</span>");
+					 context1.html("<span style='color:#F30;'>产品下线</span>");
+                } else if (result.isDeleted == '0') {
+                    context.html("<span style='color:#58964E;'>未回收 </span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
 	
 	
 	 $('input[name=onoffspecialinfo]').on('click', function () {
@@ -983,6 +1044,10 @@ $('input[name=filePath]').on('change', function () {
             loading = false;
         })
     })
+	
+	
+	
+	
 
 	function updateMenuCategory(menuId, categoryId, isAdd) {
 	  //alert(menuId);

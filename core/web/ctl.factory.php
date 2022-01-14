@@ -1710,7 +1710,47 @@ class ctl_factory extends cmsPage
     }
 
 
+    public function customer_recycle_bin_action(){
 
+        if(is_post()){
+
+            $mdl_user_factory =$this->loadModel("user_factory");
+
+            $id = post('id');
+           // $id=4 ;
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+         //   echo json_encode($id); exit;
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600, $FactoryId ,'no access');
+
+            }
+
+
+
+
+
+            $data = array();
+            $data['isHide'] = ($factory_user['isHide'] == '0') ? '1' : '0';
+
+
+
+            if ($mdl_user_factory->update($data, $id)) {
+                echo json_encode(array('isHide' => $data['isHide']));
+            } else {
+                $this->form_response(600,'Please try again later');
+            }
+
+
+
+        }else{
+            //wrong protocol
+            echo json_encode('ooo'); exit;
+        }
+    }
 
 
 
@@ -1991,6 +2031,7 @@ class ctl_factory extends cmsPage
        //var_dump($salesManId );exit;
 
         $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        //var_dump($users);exit;
         foreach ($users as $key => $user) {
             $expiredAt =strtotime("+3 months", time());
             $link = self::customer_login_link($user['id'], $expiredAt);
@@ -2006,6 +2047,35 @@ class ctl_factory extends cmsPage
         $this->display('factory/customer_list');
     }
 
+    public function customer_list_recycle_action() {
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $search = trim(get2('search'));
+        if($this->loginUser['role']==20) {
+            $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+            $salesManId = $this->loginUser['id'];
+        }else{
+            $factoryId =  $this->loginUser['id'];
+            $salesManId = 0;
+        }
+        //var_dump($salesManId );exit;
+
+        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,1);
+       // var_dump($users);exit;
+        foreach ($users as $key => $user) {
+            $expiredAt =strtotime("+3 months", time());
+            $link = self::customer_login_link($user['id'], $expiredAt);
+            $users[$key]['login_link'] = $link;
+        }
+
+        $this->setData($search, 'search');
+        $this->setData($users, 'users');
+        $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
+
+        $this->setData('customer_list_recycle', 'submenu');
+        $this->setData('customer_management', 'menu');
+        $this->display('factory/customer_list_recycle');
+    }
 
     public function approve_customer_payments_and_discount_action() {
         $mdl_user_factory = $this->loadModel('user_factory');

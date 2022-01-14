@@ -97,14 +97,14 @@ class mdl_user_factory extends mdl_base
 
     }
 
-    public function getUserFactoryList($factoryId, $search = null,$salesmanId) {
+    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0) {
 
 
 
-        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
+        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,f.isHide,f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
                 FROM cc_user_factory f
                 LEFT JOIN cc_user u ON u.id = f.user_id
-			    WHERE f.factory_id = $factoryId";
+			    WHERE f.factory_id = $factoryId and f.isHide=$isHide";
 				//var_dump ($sql);exit;
 		if($salesmanId ){
 			

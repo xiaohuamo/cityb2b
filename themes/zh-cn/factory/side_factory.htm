@@ -52,6 +52,10 @@
 				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
 					<{$lang->items_management}>
 				</a>
+				<a href="<{$http_root_www}>restaurant/menu_recycle"<{if $submenu=='menu_recycle'}> class="current"<{/if}>>
+					<{$lang->recycleBinProduct}>
+				</a>
+				
 				
 				<a href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$customer_id}>&freshfood=1"<{if $submenu=='1234'}> class="current"<{/if}>>
 					<{$lang->refresh_store}>
@@ -104,6 +108,10 @@
 
 				<a href="<{$http_root_www}>factory/customer_list"<{if $submenu=='customer_list'}> class="current"<{/if}>>
 					<{$lang->customer_list}>
+				</a>
+				
+				<a href="<{$http_root_www}>factory/customer_list_recycle"<{if $submenu=='customer_list_recycle'}> class="current"<{/if}>>
+					<{$lang->customer_list_recycle}>
 				</a>
 
 

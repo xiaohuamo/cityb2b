@@ -80,13 +80,7 @@
           
 	</header>
 
-    <div id="order" v-cloak class="relative">
-        <div class="pTitle">
-            <img src="<{$SKIN_PATH}>img/return.png" class="return" />
-            下单页面
-        </div><div style="height: 3rem;"></div>
 
-    </div>
 
 	  <{if $data==null}>
         <p style='position: relative;top: 100px;text-align: center;'><{$lang->nothing_in_shopping_cart}>~</p>
@@ -106,7 +100,89 @@
       </div>
     <{/if}>
 
-    <section id="bd" class='shopping-cart' style="padding: 0 0 0;margin-top: 45px;">
+    <div id="order" v-cloak class="relative">
+        <div class="pTitle">
+            <img src="<{$SKIN_PATH}>img/return.png" class="return" />
+            下单页面
+        </div><div style="height: 3rem;"></div>
+
+    </div>
+
+    <div class="mask z6" >
+        <div class="datePop">
+            <img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
+            <div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
+            <div class="flexBox1" style="flex-wrap:wrap;">
+
+
+
+                <{foreach from=$businessDispSchedule item=item}>
+                <div  class=" dateBox2 relative " >
+
+                <{if $item->isselected}>
+                    <div class="  dateBox2selected "  @click ="selectDeliveryDate(index)" >
+
+
+                        <div class="f30 col333 pa5-0" ><{$item->days_cn}></div>
+
+                        <div class="f25 colFD5203 pa4-0-4-0" ><{$item->optionalDisplay_cn}></div>
+
+                        <div class="f25 col999"><{$item->disPlayDate}> </div>
+
+                        <img src="<{$SKIN_PATH}>img/sj.png"/>
+                    </div >
+                <{else if (!$item->isselected && $item->isAvaliable)}>
+                    <div class="  dateBox2avaliable "  @click ="selectDeliveryDate(index)">
+
+                        <div class="f30 col333 pa5-0" ><{$item->days_cn}></div>
+
+                        <div class="f25 colFD5203 pa4-0-4-0" ><{$item->optionalDisplay_cn}></div>
+
+                        <div class="f25 col999"><{$item->disPlayDate}> </div>
+
+
+                    </div >
+                    <{else}>
+
+                    <div>
+
+                        <div class="f30 col333 pa5-0" ><{$item->days_cn}></div>
+
+                        <div class="f25 colFD5203 pa4-0-4-0" ><{$item->optionalDisplay_cn}></div>
+
+                        <div class="f25 col999"><{$item->disPlayDate}> </div>
+
+                    </div >
+
+                   <{/if}>
+                </div>
+                <{/foreach}>
+            </div>
+
+            <div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
+            <div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
+            <div class="flexBox1 pa15-15-5-15">
+                <div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
+                <div class="journal"  v-else>下单截单时间</div>
+                <div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
+                <div class="journal"  v-else>配送日期</div>
+            </div>
+            <div class="pa5-15-5-15 f28 col0B0B0B">
+
+                <{foreach from=$current_business_tuangou_time item=item}>
+                <div class="flexBox1 pmb15"  >
+
+                    <span ><{$item.ordertime_cn}></span>
+
+                    <span><{$item.delivery_date_of_week_cn}></span>
+                </div>
+                <{/foreach}>
+
+            </div>
+            <div class="continue sure"  @click="closePop('d')" >确定</div>
+        </div>
+    </div>
+    <section id="bd" class='shopping-cart' style="display:none; padding: 0 0 0;margin-top: 45px;">
         <!-- 购物车 -->
 
         <div class="m-cart" style="padding-bottom: 3rem;min-height: 90vh">
@@ -121,10 +197,10 @@
             </h3>
             <ul class="g-ul">
                 <{foreach from=$row.items item=item}>
-               
+
 				<a href="<{$http_root_www}>member/showcart?business_userid=<{$row.businessUserId}>">
 			   <li>
-				
+
                     <div class="content">
                         <div class="con">
                             <div class="pic">
@@ -150,7 +226,7 @@
                             <div class="txt">
                                 <h4>
                                      <{if $langStr=='en'}> <{if $item.coupon_name_en}><{$item.coupon_name_en}><{else}><{$item.coupon_name}><{/if}><{else}><{$item.coupon_name}> <{/if}>
-											
+
                                 </h4>
 
                                 <{if $item.bonusType=="10"}>
@@ -190,7 +266,7 @@
 
             <{/foreach}>
         </div>
-       
+
 
         <div class="order-sub order-sub-1">
 		<a onClick='window.history.back();' style="left:0;" id =''><{$lang->continue_shopping}></a>
@@ -205,7 +281,18 @@
 
 
 <form method="post" action="<{$http_root_www}>payment/orderpaymentprocess/checkout" style ="    margin-top: 0.9rem;" class='ajaxForm'>
-   <section id="bd" class='checkout-confirmation' style='display:none; margin-top: -42px;'>
+   <section id="bd" class='checkout-confirmation' style=' margin-top: -42px;'>
+
+       <div class="pHead f28 col0F0F0F">
+           <div class="pmb5 bold">配送日期</div>
+           <div class="flexBox1">
+               <span>2021年11月28日 星期6</span>
+               <div class="pbtn f25 colfff" @click="datePop">修改</div>
+           </div>
+
+       </div>
+
+
 
         <div class="bgfff borR7 ma15 f28 col282828 ">
             <ul class="g-ul pa15">
@@ -229,10 +316,10 @@
 
                     <{foreach from=$delivery_info_list item=item}>
                     <option data-id='<{$item.id}>' data-first-name ='<{$item.first_name}>' data-last-name='<{$item.last_name}>' data-address='<{$item.address}>' data-phone='<{$item.phone}>' data-email='<{$item.email}>' data-Street_number='<{$item.Street_number}>' data-id-number='<{$item.id_number}>' <{if $item.isDefaultAddress}> class='defaultAddress' <{/if}> >
-                         <{$item.first_name}> <{$item.last_name}> <{$item.address}> 
+                         <{$item.first_name}> <{$item.last_name}> <{$item.address}>
                     </option>
                     <{/foreach}>
-                </select> 
+                </select>
                 <br>
                   <div class="form-group row">
                     <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
@@ -254,7 +341,7 @@
                       <input type="number" class="form-control new_input" id="phone" placeholder="Phone"   name="delivery_phone">
                     </div>
                   </div>
-                  
+
                   <div class="form-group row">
                     <label for="email"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label">Email<em><{$lang->optional1}></em></label>
                     <div class="col-xs-9">
@@ -269,7 +356,7 @@
                       <input type="text" class="form-control new_input" id="id_number" placeholder="<{$lang->Delivery_China_needed}>"  name="id_number">
                     </div>
                   </div>
-                 
+
                   <div  <{if $business_delivery_info.EvoucherOrrealproduct=='evoucher'||!$business_delivery_info.deliver_enable}>style='display:none'<{/if}>>
                     <div class="form-group row">
                       <label for="address"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->address}></label>
@@ -292,7 +379,7 @@
                        <input style="display:none; "  type='text' class="addr_country form-control" readonly="readonly" name='addr_country'>
                        <input style="display:none; "  type='text' class="addr_post_code form-control" readonly="readonly"  name='addr_post_code'>
 					   <input style="display:none;  font-size:12px;  color: red;" type='text'  value ="<{$lang->msg_input_new_address}>"   readonly="readonly" class="addr_hint999 form-control" name='addr_hint999'>
-                      
+
                     </div>
 
                   </div>
@@ -300,6 +387,8 @@
 
             </div>
         </div>
+
+
 
    <{if $business_delivery_info.EvoucherOrrealproduct=='realproduct' || $business_delivery_info.EvoucherOrrealproduct=='restaurant_menu'}>
        <div class="bgfff borR7 ma15 f28 col282828 ">
@@ -732,8 +821,8 @@
                 <input type="hidden"  id ="specialGroupPinCheckoutUserGroupId" name="specialGroupPinCheckoutUserGroupId" value="<{$specialGroupPinCheckoutUserGroupId}>" />
                
             </ul>
-            <div class="words" style="    padding-bottom: 30px;">
-                <p>
+            <div class="words f28 col303134 pinfoBox" style="    padding-bottom: 30px;">
+                <div>
                     <span><{$lang->product_total}>:<em id = 'checkout-confirmation-total'></em></span>
                     <b style='display:block' class='deliver-fee-display'></b>  
                     <b style='display:block' class='deliver-fee-display-msg'></b>  
@@ -743,7 +832,7 @@
                     <b style='display:block;border-bottom: 1px solid #555'></b>
                     <b style='display:block' class='total-before-surcharge'></b>
                     <b style='display:block' class='surcharge-display'></b>
-                </p>
+                </div>
                 
                 <input type="text" class="g-input" placeholder="<{$lang->messages_to_business}>" name="message_to_business">
 
@@ -862,6 +951,8 @@
     <{/if}>
     <div class="pop-bg"></div>
     <!-- 选择类型弹窗-end -->
+
+
 </form>
 
 
@@ -2160,69 +2251,33 @@
                 orderTimeAndDeliveryTime:[
                 ],
                 businessDispSchedule:[],
-                delivery_info_list:[
 
-                ],
-                businessDispSchedule:[
-                    {
-                        name:'明天',
-                        status:'已选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'已选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'不可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    },
-                    {
-                        name:'明天',
-                        status:'可选',
-                        date:'周三10:26'
-                    }
-                ]
+
+
             },
             mounted:function(){
                 this.currentDeliveryAddress='<{$delivery_info.address}>';
                 this.currentDeliveryAddressPhone='<{$delivery_info.phone}>';
                 this.currentDeliveryAddressFirstName ='<{$delivery_info.first_name}>';
                 this.currentDeliveryAddressLastName='<{$delivery_info.last_name}>';
-                this.delivery_info_list=JSON.parse('<{$delivery_info_list}>');
-                console.log(this.delivery_info_list);
-                console.log(this.dateList);
+
+
+
                 //获取商家关于该客户的下单及配送时间的文字表述；
-                this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
+            //    this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
 
                 // 获得当前客户可以下单的日期列表显示，
-                this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
+            //    this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
 
                 //设置默认的配送日期
                 this.selectDefaultDeliveryDate();
                 console.log(this.businessDispSchedule);
+
+           //     console.log( this.orderTimeAndDeliveryTime);
+
+         //      console.log('ispopdate value is :' +this.isDatePop);
+
+
 
             },
             methods:{
@@ -2253,20 +2308,29 @@
                     this.businessDispSchedule[index].isselected =1;
                     this.selectDateIndex =index;
 
+
                     this.setCookie("deliveryDateIndex",index,1);
+                    //系统解析选择日期时用了一个特殊符号@，符号前是日期的unix 数字，后面是 morning afternoon ,anytime ,这里暂时设置为anytime .
+                    let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
+                    this.setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
 
 
+                    console.log('index is' + index);
                     console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
+                    console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + this.getCookie('DispCenterUserSelectedDeliveryDate'));
 
                 },
                 // 设置默认配送日期
                 selectDefaultDeliveryDate:function(){
                     // 清除所有的 select 标志
                     var i =this.getCookie('deliveryDateIndex');
+                    //	console.log('cookie index is :' +i );
+
                     if(i) {
                         this.selectDateIndex =i;
+                        //设置日期数组的对应index 为 isselected
                         this.businessDispSchedule[i].isselected=1;
-                        console.log('find cookie index is  :' +i);
+                        console.log('find in cookie index is  :' +i);
                         return 1;
 
                     }
@@ -2279,7 +2343,7 @@
                             this.setCookie("deliveryDateIndex",i,1);
 
 
-                            console.log('could not find in cookie and then find the first useable date:' + this.getCookie('deliveryDateIndex'));
+                            console.log('cam not find coolie,generate by default' + this.getCookie('deliveryDateIndex'));
 
 
                             //	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
@@ -2298,40 +2362,10 @@
                 returnPage:function(){
                     window.history.go(-1)
                 },
-                UpdateAddress:function(index){
-                    if(this.isaddAddress){
-                        this.isaddAddress=false
-                    }
-                    this.isUpdateAddress=!this.isUpdateAddress
-                    // 显示选择的地址
-                    this.currentDeliveryAddress =this.delivery_info_list[index].address;
-                    this.currentDeliveryAddressFirstName = this.delivery_info_list[index].first_name;
-                    this.currentDeliveryAddressLastName =this.delivery_info_list[index].last_name;
-                    this.currentDeliveryAddressPhone = this.delivery_info_list[index].phone;
-                },
-                changCurrentAddress:function(){
-                    this.currentDeliveryAddressFirstName = this.newFirstName;
-                    this.currentDeliveryAddressLastName =this.newLastName;
-                    this.currentDeliveryAddressPhone =this.newPhone;
-                    this.currentDeliveryAddress =this.newAddress;
 
-                    //可能需要向系统增加，但是，要考虑不能持续增加的问题。
 
-                },
-                addAddress:function(){
-                    this.isaddAddress=true
-                    this.isUpdateAddress=false
-                },
-                remove:function(){
-                    this.isUpdateAddress=false
-                },
-                use(){
-                    if(this.code==''){
-                        alert('请输入折扣码')
-                    }else{
-                        this.isUsePop=true
-                    }
-                },
+
+
                 close(){
                     this.isUsePop=false
                 },
@@ -2343,7 +2377,8 @@
                     var d = new Date();
                     d.setTime(d.getTime()+(exdays*24*60*60*1000));
                     var expires = "expires="+d.toGMTString();
-                    document.cookie = cname+"="+cvalue+"; "+expires + ";" + " path=/";
+                    //	document.cookie =cname + "=";
+                    document.cookie = cname+"="+cvalue+" ; "+expires + " ; path=/;";
                 },
                 getCookie:function (cname){
                     var name = cname + "=";

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>Homepage</title>
+		<title>CityB2B</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
@@ -15,7 +15,7 @@
 					<img v-if="isReturnShow" src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage" style="top:0;left:0px;"/>
 					<img v-else src="<{$SKIN_PATH}>img/headIcon.png" class="headIcon" @click="aboutUs"/>
 					
-					<div class="f38 col333 f500 bold">CityB2B</div>
+					<div class="f38 col333 f500 bold">墨尔本批发市场</div>
 					<div class="flexBox1 headRight">
 						<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
 						<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
@@ -42,23 +42,23 @@
 					</div>
 					
 				</div>
-				<div class="searchBox flexBox1">
+			<!--	<div class="searchBoxHomepage flexBox1">
 					<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
 					<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
 				    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
-				</div>	
+				</div>	 -->
 			</div>
-			<div style="height:6.8rem;"></div>
+			<div style="height:3.8rem;"></div> <!--之前是 5.8 ，调小一些-->
 			
 			<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
 			
-			<div class="searchPage" v-if="isShowHistory||isShowSearchRes">
+	<!--m		<div class="searchPage" v-if="isShowHistory||isShowSearchRes"> -->
 				<!-- <div v-if="list.length==0" class="nothing">
 					<img src="img/nothing.png"/>
 					<div class="f40 col363636 bold p1">搜索无结果</div>
 					<div class="f30 col919191">重新搜索一下试试吧！ </div>
 				</div> -->
-				<div v-if="isShowSearchRes">
+	<!--m			<div v-if="isShowSearchRes">
 					<div class="flexBox1 have borderB" v-for="item in searchList" @click="searchNext(1)">
 						<div class="flexBox3 w100">
 							<img src="<{$SKIN_PATH}>img/headIcon.png" class="searchImg"/>
@@ -81,7 +81,8 @@
 						<img src="<{$SKIN_PATH}>img/cha3.png" class="cha2" @click.stop="searchDelete('1',index)"/>
 					</div>
 				</div>
-			</div>
+			</div> -->
+			
 			<div class="bgfff mb10">
 				<div class="flexBox2 mainConHead mainConHeadbg1">
 					<img src="<{$SKIN_PATH}>img/meat.png" class="bigicon"/>
@@ -91,12 +92,40 @@
 					</div>
 				</div>
 				<div class="pa10">
-					<img  @click="pop" src="<{$SKIN_PATH}>img/big.png" class="categoryImg"/>
+				   
+					<img  @click="pop" src="<{$SKIN_PATH}>images/dnl-meat1.jpg" class="categoryImg"/>
 				</div>
 				<div class="flexBox1 pa15-10">
 					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/headIcon.png" class="storeIcon"/>
-						<span class="f500 col333 f30">许记猪肉肉铺</span>
+						<img @click = "storeLink(319188)" src="<{$SKIN_PATH}>images/dnl-logo.png" class="storeIcon"/>
+						<span class="f500 col333 f30">DNL 肉类批发</span>
+					</div>
+					<div class="flexBox1">
+						<div class="colFD5305 collection f25" v-if="isStoreSC" @click="StoreSC">收藏</div>
+						<div class="colFD5305 collection f25 iscollection" v-else @click="StoreSC">已收藏</div>
+						<div class="colfff enter f25" @click = "storeLink(319188)">进店</div>
+					</div>
+				</div>
+			</div>
+			
+		
+<!--
+		<div class="bgfff mb10">
+				<div class="flexBox2 mainConHead mainConHeadbg1">
+					<img src="<{$SKIN_PATH}>img/meat.png" class="bigicon"/>
+					<div>
+						<div class="f35 colDBA000 mb5">鲜肉类</div>
+						<div class="col7E7E7E f25">查看全部</div>
+					</div>
+				</div>
+				<div class="pa10">
+				   
+					<img  @click="pop" src="<{$SKIN_PATH}>images/dnl-meat1.jpg" class="categoryImg"/>
+				</div>
+				<div class="flexBox1 pa15-10">
+					<div class="flexBox1">
+						<img @click = "storeLink(319188)" src="<{$SKIN_PATH}>images/dnl-logo.png" class="storeIcon"/>
+						<span class="f500 col333 f30">DNL 肉类批发</span>
 					</div>
 					<div class="flexBox1">
 						<div class="colFD5305 collection f25" v-if="isStoreSC" @click="StoreSC">收藏</div>
@@ -104,9 +133,9 @@
 						<div class="colfff enter f25" @click="pop">进店</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			
-			<div class="bgfff mb10">
+		<!--	<div class="bgfff mb10">
 				<div class="flexBox2 mainConHead mainConHeadbg2">
 					<img src="<{$SKIN_PATH}>img/icon.png" class="bigicon"/>
 					<div>
@@ -178,7 +207,7 @@
 				<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
 			 	<span>正在加载中...</span>
 			</div>
-			
+			-->
 			<div class="flexBox1 bgfff ma10 borR10 khbox">
 				<div class="flexBox1">
 					<img src="<{$SKIN_PATH}>img/kh.png" class="kh"/>
@@ -250,10 +279,10 @@
 				<div class="pop center">
 					<div class="col000 f35 bold title">选择当前下单用</div>
 					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
+					<div class="f30 col282828 p" @click="joinSrore">商家d名字</div>
 					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
 					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
-					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
-					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop" class="close"/>
+					<img src="<{$SKIN_PATH}>images/dnl-meat1.jpg" @click="closePop" class="close"/>
 				</div>
 			</div>
 		</div>
@@ -287,7 +316,7 @@
 				 	case '1':
 				 		break;
 				 	case '2':
-                           window.location.href="<{$http_root_www}>factorypage/choose_supplier"
+                           window.location.href="<{$http_root_www}>supplier/319188"
 				 		break;
 				 	case '3':
 				 	    window.location.href="<{$http_root_www}>member/myorders"
@@ -327,6 +356,10 @@
 						this.isShowHistory=true
 						this.isShowSearchRes=false
 					}
+				},
+				storeLink:function(businessId){
+				
+					window.location.href="<{$http_root_www}>supplier/" +businessId; 
 				},
 				aboutUs(){
 					window.location.href="index/about_us"

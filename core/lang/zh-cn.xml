@@ -47,6 +47,7 @@
 	<wholeseller_card>批发商卡片</wholeseller_card>
 	<add_new_customer>添加新客户</add_new_customer>
 	<customer_list>客户列表</customer_list>
+	<customer_list_recycle>隐藏客户</customer_list_recycle>
 	<add_new_order>新增订单</add_new_order>
 	<print_picking_list>打印备货单</print_picking_list>
 	<Single_Picking_item_edit>预定义-备货单品编辑</Single_Picking_item_edit> 
@@ -118,6 +119,8 @@
     <category_management>品类管理</category_management>
 	
     <items_management>商品编辑</items_management>
+	<recycleBinProduct>产品垃圾箱</recycleBinProduct>
+	<recycleBinCustomer>隐藏客户</recycleBinCustomer>
 	 <items_add>商品增加</items_add>
 	 <online_publish>上线店铺</online_publish>
 	  <onoff_share>上下线/分享</onoff_share>

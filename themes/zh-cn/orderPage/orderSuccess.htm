@@ -39,7 +39,15 @@
 					window.location.href="<{$http_root_www}>factorypage/place_order"
 				},
 				lookOrder:function(){
-					window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>"	
+				   let  currentOrderId = '<{$orderId}>';
+				    if(currentOrderId){
+						window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=<{$orderId}>"	
+					
+					}else{
+					
+						window.location.href="<{$http_root_www}>member/myorders"
+					}
+					
 				},
 				returnHome:function(){
 				   window.location.href="<{$http_root_www}>"	

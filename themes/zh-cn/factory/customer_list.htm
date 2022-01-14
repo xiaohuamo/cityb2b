@@ -27,6 +27,93 @@
 		text-align: center;
 	}
 	</style>
+	
+	
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
 
 </head>
 <body>
@@ -39,7 +126,7 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                    客户列表
+                   <a href='<{$http_root_www}>factory/customer_recycle_bin' > 客户列表</a>
 				</div>
 				<form>
 					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
@@ -60,6 +147,7 @@
 								<th>已经审核</th>
 								<th>价格显示方式</th>
 								<th>设置营业时间</th>
+								<th>隐藏客户</th>
 								
 							</tr>
 							</thead>
@@ -111,9 +199,34 @@
 									<td>
                                       <{if $user.trading_hours}> <i class='fa fa-fw fa-check ' style='color:green'></i> <{/if}> <a target=_blank  href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$user.id}>">设置</a>
 									</td>
-<{*									<td>*}>
-<{*										<a href="<{$http_root_www}>factory/login_as_customer?user_id=<{$user.id}>">登陆</a>*}>
-<{*									</td>*}>
+
+
+	
+									<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$user.idd}>"
+													   data-id='<{$user.idd}>' <{if $user.isHide==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$user.idd}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $user.isHide==1}>
+												<span class='recycle_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#58964E;">已隐藏</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#F30;">未隐藏</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+
+
+
 								</tr>
 							<{/foreach}>
 							</tbody>
@@ -212,7 +325,40 @@
     };
 
 
-  
+  	  $('input[name=onoffswitch_deleted]').on('click', function () {
+        var couponId = $(this).data('id')
+		
+        var context = $('.recycle_icon[data-id=' + couponId + ']');
+       
+        if (loading) return false;
+        $.ajax({
+            type: "POST",
+            url: "<{$http_root_www}>factory/customer_recycle_bin",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+			    console.log(result);
+                result = jQuery.parseJSON(result);
+                 console.log(result);
+				  console.log(result.isHide);
+                if (result.isHide == '1') {
+                    context.html("<span style='color:#F30;'>已隐藏</span>");
+					
+                } else if (result.isHide == '0') {
+                    context.html("<span style='color:#58964E;'>未隐藏 </span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
 
    
 

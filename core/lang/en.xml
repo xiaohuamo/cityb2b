@@ -35,6 +35,8 @@
 	<wholeseller_card>Wholeseller Card</wholeseller_card>
 	<add_new_customer>Add New Customer</add_new_customer>
 	<customer_list>Customer Lists</customer_list>
+	<customer_list_recycle>Hide Customers</customer_list_recycle>
+	
 	<add_new_order>Add New Order</add_new_order>
 	<order_done>order placed!</order_done>
 	<print_picking_list>Print Picking List</print_picking_list>
@@ -90,6 +92,8 @@
     <category_management>Sub Categories</category_management>
 	 <parent_category_management>Parent Categories</parent_category_management>
     <items_management>Items edit</items_management>
+	 <recycleBinProduct>Items Recycle Bin</recycleBinProduct>
+	 <recycleBinCustomer>Hide Customers</recycleBinCustomer>
 	
 	 <category_migration> Change item category</category_migration>
 	 <images_grab>auto images match</images_grab>

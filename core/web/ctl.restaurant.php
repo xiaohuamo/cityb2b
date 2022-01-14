@@ -3013,7 +3013,7 @@ function category_migration_action(){
 
 				$sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
 
-				$whereStr.=" o.restaurant_id = $customer_id ";
+				$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0  ";
 				
 				if($category =='all' or empty($category)) {
 						$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
@@ -3141,7 +3141,214 @@ function category_migration_action(){
 		$this->setData($this->loginUser['gst_type'], 'gstType');
         $this->display_pc_mobile('restaurant/menu_edit', 'restaurant/menu_edit');
     }
+	function menu_recycle_action(){
+		// 获得该用户餐厅的菜单分类信息
 
+		$freshfood =get2('freshfood');
+
+		if ($freshfood) {
+			$this->setData($freshfood,'freshfood');
+		}else{
+			$freshfood = post('freshfood');
+			$this->setData($freshfood,'freshfood');
+			//var_dump($freshfood);exit;
+
+		}
+
+		$customer_id =get2('customer_id');
+
+		if(!$customer_id) {
+			$customer_id =$this->loginUser['id'];
+
+		}
+		$this->setData($customer_id,'customer_id');
+
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+
+		if($authoriseBusinessList) { //如果该商家可以托管账户
+			// 检查接收的托管的商家是否合法
+
+
+
+			$isAuthoriseCustomer =0 ;
+			foreach ($authoriseBusinessList as $key => $value) {
+				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+					$isAuthoriseCustomer =1;
+				}
+
+			}
+
+			if($isAuthoriseCustomer) { //如果是授权的customer
+
+
+				$mdl_restaurant_category = $this->loadModel('restaurant_category');
+				$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+				$data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+				if(!$data) {
+					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+				}
+				$this->setData($data,'restaurant_category');
+
+
+
+				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+				//var_dump($sql_Parent_cate_list);exit;
+
+				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+
+
+				$sk = trim(get2('sk'));
+
+				$allOrspecial = trim(get2('allOrspecial'));
+
+
+				$sub_category =trim(get2('sub_category'));
+				$this->setData($sub_category,'sub_category');
+				$category = trim(get2('category'));
+
+				if(!$category) {$category='all';}
+				//		var_dump($sub_category);exit;
+				$this->setData($sk,'sk');
+				$this->setData($category,'category1');
+
+
+				$sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
+
+				$whereStr.=" o.restaurant_id = $customer_id ";
+
+				if($category =='all' or empty($category)) {
+					$whereStr.=" and o.isDeleted =1 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+				}else{
+
+					if($sub_category) {
+						$whereStr.= " and ( m.category_id= $sub_category) ";
+					}else{
+						$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
+					}
+
+				}
+
+
+
+				if (!empty($sk)) {
+					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
+					$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
+					$whereStr.=" or o.Menu_desc  like  '%" . $sk .  "%'";
+					$whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
+					$whereStr.=" or o.barcode_number  like  '%" . $sk .  "%'";
+					$whereStr.=" or o.id  like  '%" . $sk . "%')";
+				}
+
+				if($allOrspecial =='special') {
+					$whereStr.=" and onSpecial =1";
+					$this->setData($allOrspecial,'allOrspecial');
+				}else{
+					$this->setData($allOrspecial,'all');
+				}
+
+				// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+				// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+				$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
+				//var_dump($pageSql);exit;
+				$pageUrl = $this->parseUrl()->set('page');
+				$pageSize =50;
+				$maxPage =500;
+				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+
+
+				$key = 'id';
+
+				$data=$this->assoc_unique($data, $key);
+//var_dump($data);exit;
+
+				// 获得该用户的gst type
+
+				$mdl_user =$this->loadModel("user");
+				$customerInfo = $mdl_user->get($customer_id);
+
+				//var_dump($customerInfo);exit;
+
+
+
+
+
+			}else{  //如果可以管理更多店铺
+
+
+
+
+			}
+
+
+		}//结束主处理
+
+
+		//获取该商家是否有多个供应商，是否为集合店
+
+		$this->loadModel('freshfood_disp_suppliers_schedule');
+		$suppliersList = DispCenter::getSupplierListWithName($customer_id);
+		//var_dump($suppliersList);exit;
+		if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
+
+
+		}
+
+		$this->setData($suppliersList, 'suppliersList');
+		$this->setData($page['pageStr'], 'pager');
+		$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+
+
+
+		// 获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
+		$this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
+
+		//  获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+		$this->setData($restaurant_menu_option_list,'menu_option_list');
+
+
+
+		foreach ($data as $key => $menu) {
+			$categoryIds = $this->loadModel('restaurant_menu_category')->findCategoryIdsByMenuId($menu['id']);
+			$data[$key]['categoryIds'] = $categoryIds;
+		}
+		$this->setData($data, 'data');
+
+
+
+		$this->setData('menu_recycle', 'submenu');
+		$this->setData('index_publish', 'menu');
+
+		$pagename = "Items Recycle Management";
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+		$this->setData($pagename, 'pagename');
+
+		$this->setData($pageTitle, 'pageTitle');
+
+		$this->setData($this->loginUser['gst_type'], 'gstType');
+		$this->display_pc_mobile('restaurant/menu_recycle', 'restaurant/menu_recycle');
+	}
 		function assoc_unique($arr, $key) {
 		 
 		$tmp_arr = array();
@@ -3161,6 +3368,58 @@ function category_migration_action(){
 		}
 		 return $arr;
 		}
+	function menu_publish_ajax_recycle_bin_action()
+	{
+		$id = (int)get2('id');
+
+
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+		$menu = $mdl_restaurant_menu->get($id);
+
+		if ($id < 0 || !$menu ) $this->form_response_msg('menu id invalid');
+
+		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+
+
+		$isAuthoriseCustomer =0 ;
+		foreach ($authoriseBusinessList as $key => $value) {
+			if($menu['createUserId'] ==$value['customer_id']) {
+				$isAuthoriseCustomer =1;
+			}
+
+		}
+
+
+
+
+		if ($menu['createUserId'] != $this->loginUser['id'] && !$isAuthoriseCustomer  ) $this->form_response_msg('you are not allow to update!');
+
+		$data = array();
+		$data['isDeleted'] = ($menu['isDeleted'] == '0') ? '1' : '0';
+
+		if($menu['isDeleted'] == '0') {
+			$data['visible']=0;
+		}
+
+		if ($mdl_restaurant_menu->update($data, $menu['id'])) {
+			echo json_encode(array('isDeleted' => $data['isDeleted']));
+		} else {
+			$this->form_response_msg('Please try again later');
+		}
+
+
+	}
+
+
+
+
 
     function menu_publish_ajax_action()
     {
