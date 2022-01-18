@@ -40,7 +40,7 @@ RewriteRule ^test/([^?.]+)$ index.php?ctl=test&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^index/([^?.]+)$ index.php?ctl=index&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^coupon_event_management/([^?.]+)$ index.php?ctl=coupon_event_management&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^member/([^?.]+)$ index.php?ctl=member&act=$1&%{QUERY_STRING} [NC]
-RewriteRule ^member1/([^?.]+)$ index.php?ctl=member1&act=$1&%{QUERY_STRING}  [NC]
+RewriteRule ^member1/([^?.]+)$ index.php?ctl=member1&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^cinema/([^?.]+)$ index.php?ctl=cinema&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^show/([^?.]+)$ index.php?ctl=show&act=$1&%{QUERY_STRING} [NC]
 
@@ -60,8 +60,7 @@ RewriteRule ^store/([0-9]+)$ index.php?ctl=template&act=index&id=$1&%{QUERY_STRI
 RewriteRule ^food$ index.php?ctl=food&act=index&%{QUERY_STRING} [NC]
 RewriteRule ^voucher_subscription$ index.php?ctl=voucher_subscription&act=index&%{QUERY_STRING} [NC]
 RewriteRule ^restaurant/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=index&id=$1&%{QUERY_STRING} [NC]
-
+RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=restaurant&id=$1&%{QUERY_STRING} [NC]
 RewriteRule ^factorypage/([^?.]+)$ index.php?ctl=factorypage&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^supplier/([0-9]+)$ index.php?ctl=factorypage&act=index&id=$1&%{QUERY_STRING} [NC]
 RewriteRule ^r/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
