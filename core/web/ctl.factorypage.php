@@ -2315,7 +2315,7 @@ class ctl_factorypage extends cmsPage
         return;
     }
 
-    public function get_cart_action()
+    public function get_cart_json_action()
     {
         $id = (int) get2('businessUserId');
 

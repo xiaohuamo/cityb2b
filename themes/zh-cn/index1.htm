@@ -710,7 +710,7 @@
 				  var self = this;
 				 // alert('here');
 				
-				 axios.get('<{$http_root_www}>factorypage/get_cart?businessUserId=<{$businessUserId}>')
+				 axios.get('<{$http_root_www}>factorypage/get_cart_json?businessUserId=<{$businessUserId}>')
 					  .then(function (response) {
 					   self.goodsList = response.data;
 
