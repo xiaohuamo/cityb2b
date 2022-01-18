@@ -22,7 +22,7 @@ class ctl_factorypage extends cmsPage
 
     }
 
-    public function restaurant_action()
+    public function restaurant1_action()
     {
 
 
@@ -170,12 +170,12 @@ class ctl_factorypage extends cmsPage
     }
 
 
-    public function index_action()
+    public function restaurant_action()
     {
 
 
         $id = (int) get2('id');
-        var_dump($id);exit;
+      //  var_dump($id);exit;
 
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
