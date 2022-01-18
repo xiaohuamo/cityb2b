@@ -1164,9 +1164,9 @@ class ctl_member extends cmsPage
         $isCheckout =get2('checkout') ;
 
         if($isCheckout){
-            $this->display_pc_mobile('member/show_cart','placeorder/placeorder');
+            $this->display_pc_mobile('placeorder/placeorder','placeorder/placeorder');
         }else{
-            $this->display_pc_mobile('member/show_cart','cart');
+            $this->display_pc_mobile('cart','cart');
         }
 
 
@@ -2347,7 +2347,7 @@ class ctl_member extends cmsPage
 
 		$this->setData( 'My orders  - '.$this->site['pageTitle'], 'pageTitle' );
 
-        $this->display_pc_mobile('member/my_orders','mobile/member/my_orders');
+        $this->display_pc_mobile('mobile/member/my_orders','mobile/member/my_orders');
 	}
 
 	public function cancel_order_action()

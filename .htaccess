@@ -64,7 +64,7 @@ RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=restaurant&id=$
 RewriteRule ^factorypage/([^?.]+)$ index.php?ctl=factorypage&act=$1&%{QUERY_STRING} [NC]
 
 RewriteRule ^r/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^restaurant/([^?.]+)$ index.php?ctl=restaurant&act=$1&%{QUERY_STRING} [NC]
+RewriteRule ^restaurant/([0-9]+)$ index.php?ctl=factorypage&act=index&id=$1&%{QUERY_STRING} [NC]
 RewriteRule ^article/([0-9]+)$ index.php?ctl=article&act=index&id=$1&%{QUERY_STRING} [NC]
 RewriteRule ^article/([^?.]+)$ index.php?ctl=article&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^articlelist$ index.php?ctl=article&act=list&%{QUERY_STRING} [NC]
