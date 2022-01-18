@@ -57,7 +57,7 @@ function setLanguage(languageValue,path) {
 	}
 	//alert(langstr);
 	
-	axios.post(path + 'member1/update_language_type?lang='+ langstr,params)
+	axios.post(path + 'factorypage/update_language_type?lang='+ langstr,params)
 	  .then(function (response) {
 	   console.log('return result after update:' + response.data);
 	  
