@@ -1,0 +1,36 @@
+
+<div v-show="scroll">
+				<div class="head bgfff mb10 flexBox1">
+				<div class="flexBox2">
+					<img src="<{$SKIN_PATH}>img/return.png" class="return2" @click="returnPage"/>&nbsp;
+
+                    <div v-if="selectDateIndex !=-1">
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Delivery:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>配送日期:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</div>
+					</div>
+					<div v-else>
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Check Delivery Date </div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>查看配送日期</div>
+					</div>
+				</div>
+				<div class="flexBox1">
+					<img v-if="isSC" src="<{$SKIN_PATH}>img/sc.png" class="star shareIcon" @click="scPage"/>
+					<img v-else src="<{$SKIN_PATH}>img/star2.png" class="star shareIcon" @click="scPage"/>
+					<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
+				</div>
+				</div><div style="height:3.4rem;"></div>
+				
+				<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+				<div class="add add2" id="add" v-show="isAddShow">
+					<div class="flexBox2"  @click="switchDisplayLanguage">
+						<img src="<{$SKIN_PATH}>img/add_1.png"/>
+						<span class="colfff f30">{{langStrDisplay}}</span>
+					</div>
+					<div @click="nextPage" class="flexBox2" style="border:none;">
+						<img src="<{$SKIN_PATH}>img/dpsm.png"/>
+						<span class="colfff f30">店铺说明</span>
+					</div>
+					<div class="triangle"></div>
+				</div>
+			</div>
