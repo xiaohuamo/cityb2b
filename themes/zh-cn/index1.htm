@@ -579,10 +579,7 @@
 			    }
 			},
 			computed:{
-				allTotal(){
-					return 0;
-				},
-				/* allTotal() {
+				 allTotal() {
 				 	var sum=0
 					// alert('goodlist length is :' + this.goodList.length);
                   //  alert('goods length is :' + this.goodsList.length);
@@ -594,7 +591,7 @@
 
                     sum = sum.toFixed(2);
 				 	return sum
-				 } , */
+				 },
 				ProductList_filter() {
                 let _this=this;
                 let value =_this.searchCon;
@@ -719,7 +716,7 @@
 
 					//	   alert('good lists is : ' +self.goodsList);
 
-					   console.log('cart_date is :' +self.goodsList);
+					//   console.log('cart_date is :' +self.goodsList);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -729,7 +726,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					  console.log(self.oldGoodsList2);
+					//   console.log(self.oldGoodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);

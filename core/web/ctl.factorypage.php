@@ -2432,7 +2432,7 @@ class ctl_factorypage extends cmsPage
             $this->setData($cartItems, 'items');
 
             echo json_encode($cartItems);
-
+            exit;
 
 
         }
