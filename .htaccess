@@ -60,7 +60,8 @@ RewriteRule ^store/([0-9]+)$ index.php?ctl=template&act=index&id=$1&%{QUERY_STRI
 RewriteRule ^food$ index.php?ctl=food&act=index&%{QUERY_STRING} [NC]
 RewriteRule ^voucher_subscription$ index.php?ctl=voucher_subscription&act=index&%{QUERY_STRING} [NC]
 RewriteRule ^restaurant/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
-RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=restaurant&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^factorypage/([0-9]+)$ index.php?ctl=factorypage&act=index&id=$1&%{QUERY_STRING} [NC]
+
 RewriteRule ^factorypage/([^?.]+)$ index.php?ctl=factorypage&act=$1&%{QUERY_STRING} [NC]
 RewriteRule ^supplier/([0-9]+)$ index.php?ctl=factorypage&act=index&id=$1&%{QUERY_STRING} [NC]
 RewriteRule ^r/([0-9]+)$ index.php?ctl=restaurant&act=restaurant&id=$1&%{QUERY_STRING} [NC]
