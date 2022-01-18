@@ -272,12 +272,13 @@
 
 				//根据当前语言环境改变pop menu 的关于语言的提示；
 				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+				//console.log('this loginuser id is :' + <{$loginUser.role}>);
 
 			},
 		    methods:{
 				 changeMenu:function(index){
 				 	this.currentMenu=index;
-					changeMenuBottom(index,'<{$http_root_www}>'); //调用统一的底部导航菜单定义部分。
+					changeMenuBottom(index,'<{$http_root_www}>','<{$loginUser.role}>'); //调用统一的底部导航菜单定义部分。
 				 	
 				 },//设置语言提示
 					switchDisplayLanguage:function(){

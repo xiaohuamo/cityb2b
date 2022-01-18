@@ -93,7 +93,7 @@ function 	setLanguageContext(languageValue) {
 				
 
 //设置底部导航菜单 
-function changeMenuBottom(index,path){ 
+function changeMenuBottom(index,path,roleType){ 
 					
 				 	switch(index){
 				 	case '1':
@@ -109,7 +109,12 @@ function changeMenuBottom(index,path){
 				 	    window.location.href=path + "member/showcart1"
 				 		break;
 				 	default:
-				 		window.location.href=path + "member/index"
+					    if(parseInt(roleType)==3 || parseInt(roleType)==20) {
+							window.location.href=path + "company/index"
+						}else{
+							window.location.href=path + "member/index"
+						}
+				 		
 				 		break;
 				 	}
 				

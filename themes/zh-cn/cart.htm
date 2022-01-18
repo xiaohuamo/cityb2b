@@ -102,7 +102,7 @@
 				 
 				}, changeMenu:function(index){
 					this.currentMenu=index;
-					changeMenuBottom(index,'<{$http_root_www}>'); //调用统一的底部导航菜单定义部分。
+					changeMenuBottom(index,'<{$http_root_www}>','<{$loginUser.role}>'); //调用统一的底部导航菜单定义部分。
 
 				},//设置语言提示
 				numadd:function(index,index2){   //  数量增加
