@@ -175,6 +175,7 @@ class ctl_factorypage extends cmsPage
 
 
         $id = (int) get2('id');
+        var_dump($id);exit;
 
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
