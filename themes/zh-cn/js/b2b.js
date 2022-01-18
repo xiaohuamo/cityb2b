@@ -109,7 +109,7 @@ function changeMenuBottom(index,path){
 				 	    window.location.href=path + "member/showcart1"
 				 		break;
 				 	default:
-				 		window.location.href=path + "member/index"
+				 		window.location.href=path + "login"
 				 		break;
 				 	}
 				

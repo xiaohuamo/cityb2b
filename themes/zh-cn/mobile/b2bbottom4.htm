@@ -1,0 +1,30 @@
+
+				<div style="height:3.125rem;"></div>
+				<div class="flexBox1 menuBox">
+					<div @click="changeMenu('1')">
+						<img src="<{$SKIN_PATH}>img/menu1.png"/>
+						<span class="col333 f26" v-if="isLanguageEn" >Home</span>
+						<span class="col333 f26" v-else>首页</span>
+					</div>
+					<div @click="changeMenu('2')">
+						<img src="<{$SKIN_PATH}>img/menu2.png" />
+						<span class="col333 f26" v-if="isLanguageEn">Buy</span>
+						<span class="col333 f26" v-else>订货</span>
+					</div>
+					<div @click="changeMenu('3')">
+						<img src="<{$SKIN_PATH}>img/menu3.png" />
+						<span class="col333 f26" v-if="isLanguageEn"> Orders</span>
+						<span class="col333 f26" v-else>订单</span>
+					</div>
+					<div @click="changeMenu('4')">
+						<img src="<{$SKIN_PATH}>img/menu4_.png" />
+						<span class="colFD5001 f26" v-if="isLanguageEn">Cart</span>
+						<span class="colFD5001 f26" v-else>购物车</span>
+					</div>
+					<div @click="changeMenu('5')">
+						<img src="<{$SKIN_PATH}>img/menu5.png" />
+						<span class="col333 f26" v-if="isLanguageEn">Me</span>
+						<span class="col333 f26" v-else>我的</span>
+					</div>
+				</div> 
+		
