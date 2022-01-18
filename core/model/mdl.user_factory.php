@@ -36,7 +36,7 @@ class mdl_user_factory extends mdl_base
 	
 	 public function getBusinessId($salesMan,$role)
     {
-       
+     //  var_dump($salesMan.' '.$role);exit;
 	   if($role ==20) { //如果用户是销售员
 		    $userFactory =loadModel('user')->get($salesMan);
 		    if($userFactory) {

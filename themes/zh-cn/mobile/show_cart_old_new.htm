@@ -24,13 +24,13 @@
             list-style: none;
         }
          #geocode-result li{
-
+            
         }
          #geocode-result label{
-
+            
         }
          #geocode-result input{
-
+            
         }
 
         .ajaxFormResponse{width: 90%;/*line-height: 20px;*/position: fixed;top: 40%;margin: auto;left: 0;right: 0;z-index: 99999;background-color:#f29230;color: #fff;padding: 25px 0px;border-radius: 15px;text-align: center;cursor: pointer;}
@@ -50,7 +50,7 @@
         padding: 4px;
         border-radius: 5px;
       }
-
+	  
 	  
     </style>
 	
@@ -60,22 +60,32 @@
 </head>
 <body class="bg-1 bgF2F2F2">
 
+	
+
+	<header id="hd" style="display: none" >
+	
+		<div class="left">
+			<a  class="a-back go-back-btn"></a>
+		</div>
+		<h1>
+        <a href="<{$http_root_www}>member/showcart">
+
+       
+           <{$lang->shopping_cart}>ww
+       
+
+        </a>
+      </h1>
+
+          
+	</header>
 
 
 
-
-
-<div id="order" v-cloak class="relative">
-    <script src="<{$SKIN_PATH}>/js/b2b.js"></script>
-    <div class="pTitle">
-        <img src="<{$SKIN_PATH}>img/return.png" @click ="window. history. go(-1);" class="return" />
-       <span v-if="isLanguageEn"> Comfirm Order</span><span v-else> 确认订单</span>
-    </div><div style="height: 3rem;"></div>
 	  <{if $data==null}>
         <p style='position: relative;top: 100px;text-align: center;'><{$lang->nothing_in_shopping_cart}>~</p>
     <{else}>
 
-    <!--
     <{if $mixedItemFromBusinesses}>
       <div class='mixed-business-popup' style="display: none; text-align: center;position: fixed;top: 30%;z-index: 99;background: rgba(251, 194, 61, 0.8);padding: 54px;border-radius: 20px;    width: 90%;    left: 5%;">
         <i class='fa fa-close' style="position: absolute;top: 15px;right: 15px;color:#555" onClick="$(this).parent().hide();"></i>
@@ -89,86 +99,77 @@
         </select>
       </div>
     <{/if}>
- -->
+
+    <div id="order" v-cloak class="relative">
+        <div class="pTitle">
+            <img src="<{$SKIN_PATH}>img/return.png" class="return" />
+            下单页面
+        </div><div style="height: 3rem;"></div>
+
+    </div>
+
+    <div class="mask z6" v-if="isDatePop">
+        <div class="datePop">
+            <img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
+            <div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
+            <div class="flexBox1" style="flex-wrap:wrap;">
+                <div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
 
 
-        <div class="pHead f28 col0F0F0F">
-            <div class="pmb5 bold" v-if="isLanguageEn">Delivery Date </div> <div class="pmb5 bold" v-else>配送日期</div>
-            <div class="flexBox1">
-                <span v-if="isLanguageEn"> {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</span>
-               <!--  <{$dispCenterUserSelectedDeliveryDate_display}> -->
+                    <div class="  dateBox2selected " v-if="item.isselected" @click ="selectDeliveryDate(index)" >
+                        <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+                        <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
 
-                <span v-else>  {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</span>
+                        <div class="f25 col999">{{item.disPlayDate}}</div>
+                        <img src="<{$SKIN_PATH}>img/sj.png"/>
+                    </div >
+
+                    <div class="  dateBox2avaliable " v-if="!item.isselected && item.isAvaliable" @click ="selectDeliveryDate(index)">
+                        <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+                        <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+                        <div class="f25 col999">{{item.disPlayDate}}</div>
+
+                    </div >
+
+                    <div v-if="!item.isselected && !item.isAvaliable">
+
+                        <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+                        <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+                        <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+                        <div class="f25 col999">{{item.disPlayDate}}</div>
+
+                    </div >
 
 
-                <div class="pbtn f25 colfff" @click="datePop" v-if="isLanguageEn">Edit</div><div class="pbtn f25 colfff" @click="datePop" v-else>修改</div>
+                </div>
             </div>
 
-        </div>
-
-        <div class="mask z6" v-if="isDatePop">
-            <div class="datePop">
-                <img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
-                <div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
-                <div class="flexBox1" style="flex-wrap:wrap;">
-                    <div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
-
-
-                        <div class="  dateBox2selected " v-if="item.isselected" @click ="selectDeliveryDate(index)" >
-                            <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
-                            <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
-
-                            <div class="f25 col999">{{item.disPlayDate}}</div>
-                            <img src="<{$SKIN_PATH}>img/sj.png"/>
-                        </div >
-
-                        <div class="  dateBox2avaliable " v-if="!item.isselected && item.isAvaliable" @click ="selectDeliveryDate(index)">
-                            <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
-                            <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
-
-                            <div class="f25 col999">{{item.disPlayDate}}</div>
-
-                        </div >
-
-                        <div v-if="!item.isselected && !item.isAvaliable">
-
-                            <div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
-                            <div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
-                            <div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
-
-                            <div class="f25 col999">{{item.disPlayDate}}</div>
-
-                        </div >
-
-
-                    </div>
-                </div>
-
-                <div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
-                <div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
-                <div class="flexBox1 pa15-15-5-15">
-                    <div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
-                    <div class="journal"  v-else>下单截单时间</div>
-                    <div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
-                    <div class="journal"  v-else>配送日期</div>
-                </div>
-                <div class="pa5-15-5-15 f28 col0B0B0B">
-                    <div class="flexBox1 pmb15" v-for="item in orderTimeAndDeliveryTime" >
-                        <span v-if="isLanguageEn">{{item.ordertime}}</span>
-                        <span v-else>{{item.ordertime_cn}}</span>
-                        <span v-if="isLanguageEn">{{item.delivery_date_of_week}}</span>
-                        <span v-else>{{item.delivery_date_of_week_cn}}</span>
-                    </div>
-
-
-                </div>
-                <div class="continue sure"  @click="closePop('d')" >确定</div>
+            <div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
+            <div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
+            <div class="flexBox1 pa15-15-5-15">
+                <div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
+                <div class="journal"  v-else>下单截单时间</div>
+                <div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
+                <div class="journal"  v-else>配送日期</div>
             </div>
+            <div class="pa5-15-5-15 f28 col0B0B0B">
+                <div class="flexBox1 pmb15" v-for="item in orderTimeAndDeliveryTime" >
+                    <span v-if="isLanguageEn">{{item.ordertime}}</span>
+                    <span v-else>{{item.ordertime_cn}}</span>
+                    <span v-if="isLanguageEn">{{item.delivery_date_of_week}}</span>
+                    <span v-else>{{item.delivery_date_of_week_cn}}</span>
+                </div>
+
+
+            </div>
+            <div class="continue sure"  @click="closePop('d')" >确定</div>
         </div>
     </div>
     <section id="bd" class='shopping-cart' style="display:none; padding: 0 0 0;margin-top: 45px;">
@@ -266,13 +267,20 @@
         </div>
         <!-- 购物车 end-->
 	</section>
-
+<{/if}>
 
 
 <form method="post" action="<{$http_root_www}>payment/orderpaymentprocess/checkout" style ="    margin-top: 0.9rem;" class='ajaxForm'>
    <section id="bd" class='checkout-confirmation' style=' margin-top: -42px;'>
 
+       <div class="pHead f28 col0F0F0F">
+           <div class="pmb5 bold">配送日期</div>
+           <div class="flexBox1">
+               <span>2021年11月28日 星期6</span>
+               <div class="pbtn f25 colfff" @click="datePop">修改</div>
+           </div>
 
+       </div>
 
 
 
@@ -405,11 +413,11 @@
 
                                 <{if $dispCenterUserSelectedDeliveryDate}>
                                   <div>
-
+                                    
                                         <{$lang->logistic_delivery_date}> <em><{$dispCenterUserSelectedDeliveryDate_display}></em>
-
+                                   
                                   </div>
-
+                               
                                 <{/if}>
 
                                 <{if $business_delivery_info.amount_for_free_delivery>0}>
@@ -418,7 +426,7 @@
                                       <{$lang->amount_bigger_than}>$<{$business_delivery_info.amount_for_free_delivery}>
                                   </strong>
                                 <{/if}>
-
+                                
                                 <{$business_delivery_info.delivery_description}>
 
                                <!-- <small style='color:#f30'> <{$lang->notice_deliver_fee_subject_to_condition}> </small> -->
@@ -430,7 +438,7 @@
                              <div class="form-group">
                               <label ><{$lang->choose_self_pickup_location}>:</label>
                               <select class="form-control pickup-list" name="business_staff_id" onchange="pickupAndDeliverExceptionCheck('pickup');">
-
+                                 
                                 <{if !$staff_list}>
                                 <option value="<{$businessUser.id}>">
                                     <div ><{$businessUser.contactPersonNickName}></div>
@@ -438,7 +446,7 @@
                                     <div ><{$businessUser.contactMobile}></div>
                                 </option>
                                 <{/if}>
-
+                               
 
                                 <{foreach from=$staff_list item=item}>
                                 <option value="<{$item.id}>">
@@ -448,13 +456,13 @@
                                 </option>
                                 <{/foreach}>
                               </select>
-                              </div>
+                              </div>    
 
                             <{$business_delivery_info.pickup_des}>
-
+							 
                         </div>
                         <{/if}>
-						  <input  id ="dispCenterUserSelectedDeliveryDate" name="dispCenterUserSelectedDeliveryDate" type="hidden"   value="<{$dispCenterUserSelectedDeliveryDate}>"  />
+						  <input  name="dispCenterUserSelectedDeliveryDate" type="hidden"  value="<{$dispCenterUserSelectedDeliveryDate}>"  />
                     </div>
             </div>
            </div>
@@ -483,7 +491,7 @@
                     <div class="list-group">
                       <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
                        <label  class="list-group-item ">
-
+                       
                         <h5 class="list-group-item-heading f28">
                             <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->pay_offline}>
                         </h5>
@@ -521,7 +529,7 @@
                             </h5>
                           </label>
                         <{/if}>
-
+                      
                         <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
                            <label  class="list-group-item ">
                             <h5 class="list-group-item-heading f28">
@@ -555,19 +563,19 @@
                     </div>
 
                     <div class='creditcard-payment-des payment-option-desc f28' style='display:none'>
-
-
-    <div class="txt content-image-fullsize" style="display: block; color:red;font-weight: 800;">  <{$lang->notice_creditcard_pay_desc}> <{$lang->credit_card_notice}>
+                   
+                      	
+    <div class="txt content-image-fullsize" style="display: block; color:red;font-weight: 800;">  <{$lang->notice_creditcard_pay_desc}> <{$lang->credit_card_notice}> 
                       <div class='creditcard-payment-des form-group'>
                         <!-- CREDIT CARD FORM STARTS HERE -->
                         <div class="panel panel-default credit-card-box">
                             <div class="panel-heading display-table" >
                                 <div class="row display-tr" >
                                     <h3 class="panel-title display-td f28" ><{$lang->pay_creditcard}></h3>
-                                    <div class="display-td" >
+                                    <div class="display-td" >                            
                                         <img class="img-responsive pull-right" src="<{$SKIN_PATH}>images/accepted_card.png">
                                     </div>
-                                </div>
+                                </div>                    
                             </div>
                             <div class="panel-body">
                                      <{if $card_on_file}>
@@ -589,7 +597,7 @@
                                                     />
                                                     <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                                 </div>
-                                            </div>
+                                            </div>                            
                                         </div>
                                     </div>
                                     <div class="row">
@@ -626,9 +634,9 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                   
                             </div>
-                        </div>
+                        </div>        
 
                         <style type="text/css">
                           /* CSS for Credit Card Payment form */
@@ -668,7 +676,7 @@
                               vertical-align: middle;
                               width: 50%;
                           }
-                        </style>
+                        </style>    
                         <!-- CREDIT CARD FORM ENDS HERE -->
                     </div>
 
@@ -717,13 +725,13 @@
 
          <div class="order-info order-info-1">
             <ul class="g-ul m-list2">
-
+		
 		  <{foreach from=$data item=row}>
 		   <li>
               <div class="con"> <{$row.businessUserName}> </div>
 
 		   </li>
-
+		
              <{foreach from=$row.items item=item}>
                 <li>
                     <div class="pic">
@@ -762,7 +770,7 @@
                                  <{/if}>
                             </span>
 
-                          <p class='pickupAndDeliverExceptionCheck'
+                          <p class='pickupAndDeliverExceptionCheck' 
                             data-pickup-avaliable='<{$item.pickup_avaliable}>'
                             data-deliver-avaliable='<{$item.deliver_avaliable}>'
                             data-type='<{$item.EvoucherOrrealproduct}>'
@@ -785,37 +793,37 @@
                 <input type="hidden" name="commission_free[]"  value="<{$item.commission_free && $item.onSpecial}>"/>
 
                 <input type="hidden" name="menu_id[]" value="<{$item.menu_id}>" />
-                <input type="hidden" name="sidedish_menu_id[]"  value="<{$item.sidedish_menu_id}>"/>
+                <input type="hidden" name="sidedish_menu_id[]"  value="<{$item.sidedish_menu_id}>"/> 
                      <{/foreach}>
              <{/foreach}>
 
             <input type="hidden" name="business_userId" value="<{$businessUser.id}>" />
-            <input type="hidden"  id ="total_amount" name="total_amount" class="input-text"  value="0" />
-            <input type="hidden"  id ="booking_total"  name="booking_total" class="input-text"  value="0" />
-            <input type="hidden"  id ="delivery_fee"  name="delivery_fee" class="input-text"  value="0"  />
-            <input type="hidden"  id ="promotion_total" name="promotion_total" class="input-text"  value="0" />
-            <input type="hidden"  id ="promotion_id" name="promotion_id" class="input-text"  value="0"  />
-            <input type="hidden"  id ="confirmedMoneyAppliedAmount" name="confirmedMoneyAppliedAmount" class="input-text"  value="0"  />
-            <input type="hidden"  id ="total_amount_inc_delivery_fees" name="total_amount_inc_delivery_fees" class="input-text"  value="0" />
+            <input type="hidden"  id ="total_amount" name="total_amount" class="input-text"  value="0" /> 
+            <input type="hidden"  id ="booking_total"  name="booking_total" class="input-text"  value="0" /> 
+            <input type="hidden"  id ="delivery_fee"  name="delivery_fee" class="input-text"  value="0"  /> 
+            <input type="hidden"  id ="promotion_total" name="promotion_total" class="input-text"  value="0" /> 
+            <input type="hidden"  id ="promotion_id" name="promotion_id" class="input-text"  value="0"  /> 
+            <input type="hidden"  id ="confirmedMoneyAppliedAmount" name="confirmedMoneyAppliedAmount" class="input-text"  value="0"  /> 
+            <input type="hidden"  id ="total_amount_inc_delivery_fees" name="total_amount_inc_delivery_fees" class="input-text"  value="0" /> 
             <input type="hidden"  id ="surcharge" name="surcharge" class="input-text"  value="0" />
             <input type="hidden"  id ="factory_id" name="factory_id" class="input-text"  value="<{$factory_id}>" />
 
                 <input type="hidden"  id ="specialGroupPinCheckoutUserGroupId" name="specialGroupPinCheckoutUserGroupId" value="<{$specialGroupPinCheckoutUserGroupId}>" />
-
+               
             </ul>
             <div class="words f28 col303134 pinfoBox" style="    padding-bottom: 30px;">
                 <div>
                     <span><{$lang->product_total}>:<em id = 'checkout-confirmation-total'></em></span>
-                    <b style='display:block' class='deliver-fee-display'></b>
-                    <b style='display:block' class='deliver-fee-display-msg'></b>
-                    <b style='display:block' class='booking-fee-display'></b>
+                    <b style='display:block' class='deliver-fee-display'></b>  
+                    <b style='display:block' class='deliver-fee-display-msg'></b>  
+                    <b style='display:block' class='booking-fee-display'></b> 
                     <b style='display:block' class='promotion-amount-display'></b>
                     <b style='display:block' class='use-money-display'></b>
                     <b style='display:block;border-bottom: 1px solid #555'></b>
                     <b style='display:block' class='total-before-surcharge'></b>
                     <b style='display:block' class='surcharge-display'></b>
                 </div>
-
+                
                 <input type="text" class="g-input" placeholder="<{$lang->messages_to_business}>" name="message_to_business">
 
             </div>
@@ -826,7 +834,7 @@
 
 
 
-       <div class="flexBox1 fixBottom"><div class="flexBox1  pa5-right"><span class="col303134 f28 bold"><{$lang->total_amount}></span>&nbsp;&nbsp;
+       <div class="flexBox1 fixBottom"><div class="flexBox1"><span class="col303134 f28 bold"><{$lang->total_amount}></span>&nbsp;&nbsp;
            <div><span class="f38 colFD5001 bold">$</span><span class="bold colFD5001 f38 grand-total-display"></span></div></div>
            <div class="flexBox1 "><div onclick="window.location.href='<{$http_root_www}>supplier/<{$businessUser.id}>'" class="pbtn f28 colFD590E againBtn "><{$lang->continue_shopping}></div>&nbsp;&nbsp;
            <div class="ajaxFormSubmitBtn pbtn f28 colfff"><{$lang->submit_order}></div></div></div>
@@ -834,7 +842,7 @@
 
 <!--
         <div class="order-sub">
-
+		
 		<{if !$freshfood}>
 		<a onClick='window.history.back();' style="left:0;" id =''><{$lang->continue_shopping}></a>
 		<{else}>
@@ -850,7 +858,7 @@
     </section>
 
         </div>
-
+   
      <div class="pop-spec coupon-option" style="padding-bottom: 50px;">
         <span class="spec-close"></span>
 
@@ -864,39 +872,39 @@
             <p class="promotion-loading bold f35 text" style="    text-align: center;"></p>
              <hr>
             <div class="input-group">
-
-
-
+			
+			
+			
 		<{if !$promotion_code_list}>
-
+			
           <input type="text" class="H80" id ="promotion_code" name="promotion_code" placeholder="<{$lang->promotion_code}>" style="    width: calc(100% - 1rem);">
-
-			<{else}>
+			  
+			<{else}>    
 			  <select class="form-control "  id ="promotion_code" name="promotion_code"  >
 			   <{foreach from=$promotion_code_list item=item}>
                      <option  value ="<{$item.promotion_code}>" selected="selected">
-                       <{$item.promotion_des}>-$<{$item.value}>优惠券
+                       <{$item.promotion_des}>-$<{$item.value}>优惠券 
                     </option>
-
-
+                   
+              
 			   <{/foreach}> </select>
 		  <{/if}>
-
+			  
               <span class="input-group-btn">
                 <div class=" pbtn f25 colfff " type="button" onClick="check_promotion_code();", style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->apply}></div>
 
               </span>
-
-
-
-
-
-
-
-
+			  
+			  
+			
+			  			  
+			  
+			  
+			  
+			  
             </div>
             <hr>
-            <p><{$lang->promotion_code_desc}></p>
+            <p><{$lang->promotion_code_desc}></p>     
         </div>
 
     <!--    <a  class="spec-btn"><{$lang->confirm}></a> -->
@@ -913,7 +921,7 @@
             <h4><{$lang->spend_fund}></h4>
             <p class="money-loading"> <{$lang->available_fund_desc}>：$<{$moneyBalance}></p>
             <p class='use-money-error'></p>
-
+            
 
                 <hr>
                <div class="input-group">
@@ -923,9 +931,9 @@
 
                  <div class=" pbtn f25 colfff " type="button"onClick="applyPocketMoney();" ,="" style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->spend_fund}></div>
                   </span>
-                </div>
+                </div>   
                  <hr>
-            <p><{$lang->available_fund_desc}></p>
+            <p><{$lang->available_fund_desc}></p>    
         </div>
         </div>
     <!--    <a class="spec-btn"><{$lang->confirm}></a> -->
@@ -937,7 +945,7 @@
 
 </form>
 
-<{/if}>
+
 	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
 	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/lib.js"></script>
@@ -977,7 +985,7 @@
               $('body').on('click','#geocode-result input',function(){
                  $("#address").val($(this).val());
              });
-
+              
           })
 
           function geocodeResultDisplay(result) {
@@ -996,38 +1004,38 @@
           function populateHiddenAddrInput(result) {
             var parts = result.address_components;
 			var postcode='';
-
+            
             for (var i = parts.length - 1; i >= 0; i--) {
               if (parts[i].types.includes('street_number')) {
                 $(".addr_house_number").val(parts[i].short_name);
-				//$(".addr_house_number").css('display','');
-
-
+				//$(".addr_house_number").css('display',''); 
+             
+			  
 			/*  if( !$(".Street_number").val()) {
 			     $(".Street_number").val(parts[i].short_name);
 			  } */
 			   }
               if (parts[i].types.includes('route')) {
                 $(".addr_street").val(parts[i].short_name);
-			//	$(".addr_street").css('display','');
+			//	$(".addr_street").css('display',''); 
               }
               if (parts[i].types.includes('locality')) {
                 $(".addr_city").val(parts[i].short_name);
-			//	$(".addr_city").css('display','');
+			//	$(".addr_city").css('display',''); 
               }
               if (parts[i].types.includes('administrative_area_level_1')) {
                 $(".addr_state").val(parts[i].short_name);
-			//	$(".addr_state").css('display','');
-
+			//	$(".addr_state").css('display',''); 
+				
               }
               if (parts[i].types.includes('country')) {
                 $(".addr_country").val(parts[i].short_name);
-			//	$(".addr_country").css('display','');
-
+			//	$(".addr_country").css('display',''); 
+				
               }
               if (parts[i].types.includes('postal_code')) {
                 $(".addr_post_code").val(parts[i].short_name);
-			//	$(".addr_post_code").css('display','');
+			//	$(".addr_post_code").css('display',''); 
 				postcode = parts[i].short_name;
 				if (postcode.substr(0,1) !=3) {
 				  alert('<{$lang->address_out_of_vic}>');
@@ -1043,16 +1051,16 @@
                }
 				 // alert('维州地区邮编，支持');
 				}
-
-
-
+				
+				
+				
               }
-			  $(".addr_hint99").css('display','');
-
-			  $(".Street_number").css('display','');
-
-
-
+			  $(".addr_hint99").css('display',''); 
+			  
+			  $(".Street_number").css('display',''); 
+			  
+			  
+			  
             }
 			updateDeliverFee();
 			//alert('here1');
@@ -1076,8 +1084,8 @@
         var currentPaymentMethod;
         var surchargevalue;
         var surchargeRate={};
-
-
+         
+         
         <{if $business_delivery_info.transactionFeeChargeFrom_paypal!='user'}>
           surchargeRate['paypal']=0;
         <{else}>
@@ -1104,7 +1112,7 @@
         <{else}>
           surchargeRate['hcash']=parseFloat('<{$business_delivery_info.hcashsurcharge}>');
         <{/if}>
-
+        
 
         <{if $business_delivery_info.transactionFeeChargeFrom_creditcard!='user'}>
           surchargeRate['creditcard']=0;
@@ -1126,11 +1134,11 @@
     			var i=0;
 
     			var sub_total_array = [];
-
-
+			
+		
             $('.shopping-cart-item-qty').each(function(){
-
-			   	     //获取批发数据
+			
+			   	     //获取批发数据 
 				        var price=parseFloat($(this).data('whole-sale'));//通过price判断是否有批发属性 第一级
                 var quantity=parseFloat($(this).data('whole-quantity'));//批发预设数量 第一级
 
@@ -1142,10 +1150,10 @@
 
                 var amount="";//单价
                 var qty = parseFloat($(this).val());//当前数量
-
+			    
                 var item_id = parseFloat($(this).data('id'));
                 var single_amount = parseFloat($(this).data('single-amount'));
-
+			
 			          new_couponid = parseInt($(this).data('couponid'));
 
                 if (price){
@@ -1167,8 +1175,8 @@
                     }
 
                 }
-
-
+				
+             
             				if(new_couponid ) { //新条目有批发属性
                 				  if(new_couponid != old_couponid){ // 如果新的couponid 和之前的产品不一一样，
                                 if( old_couponid ==0) {  // 如果之前的产品与批发无关，表明当前条目为一个新的批发，开始进行数量累加及批发价格计算。
@@ -1180,18 +1188,18 @@
                                     //sub_total_array.push([item_id,qty]); //subtotal 数组中加入 当前条目编号，及数量
                                 }else{ //如果之前的产品与批发相关，且当前产品和之前的不同，则做两个处理：
                                     // 1）将之前的产品进行价格计算，进入汇总，并显示。
-                                    priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid);
+                                    priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid);						
                                     //sub_total_array = [];
-
+                                    				
                                     // 对新的批发条目进行累计开始
-                                    qty_of_same_coupon =qty;
+                                    qty_of_same_coupon =qty;	
                                     //alert('price is :' + price + ' price1:' + price1 + ' price2' + price2 + ' qty_of_same_coupon' + qty_of_same_coupon + ' quantity'+ quantity + ' quantity1' + quantity1 + ' quantity2' + quantity2);
                                     amount_of_same_coupon=getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2);
                                     //sub_total_array.push([item_id,qty]);
                                     addup =1;
                                     //alert('qty' + qty_of_same_coupon +' amount ' + amount_of_same_coupon );
                     					 }
-
+                					
                 				  }else{
                 				   //如果新的和就得相同则只进行叠加
                 				   qty_of_same_coupon +=qty;
@@ -1199,30 +1207,30 @@
                 				   //sub_total_array.push([item_id,qty]);
                 				   addup =1;
                 				  }
-
+                				
             				}else{
-            				    //如果新条目不是批发new_couponid==0
+            				    //如果新条目不是批发new_couponid==0 
             					if(old_couponid >0){//但旧条目是批发 old_couponid>0 ，那么旧条目的同规格累计结束，就要进行最后的统计，并复位数量=0
             						priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid);
             						//sub_total_array = [];//数组清空
             						qty_of_same_coupon=0;// 复位数量
             						addup =0; //将叠加标识清0；
             					}
-
+            				
             					// 如果新的couponid==0 表示当前的条目跟批发无关，则直接累计入当前合计中。
             					new_couponid =0;
             					addup=0;
             					amount = parseFloat($(this).data('single-amount'));
             					total += qty * amount;
-                      totalQty += qty;
+                      totalQty += qty; 
             					$('.unit[data-id="'+$(this).data('id') +'"]').html(amount);
             				}
-
+            				
             				old_couponid =new_couponid;
-
+              
             });
-
-
+			
+			
       			//如果叠加参数为1，那么需要进行最后的计算 //数组清空  // 复位数量  //将叠加标识清0；
       			if(addup ==1){
       			   	priceAndSubAndTotalDisplay(qty_of_same_coupon,amount_of_same_coupon,old_couponid);
@@ -1230,13 +1238,13 @@
       				qty_of_same_coupon=0;
       				addup =0;
       			}
-
+			
             updataDisplay('total');
         }
-
+     
 	 // 获取当前行累计的多级价格计算的价格--通过检查同种商品的总数量，来检查相应数量对应的价格，并返回结果
 	  function getItemAmount(single_amount,price,price1,price2,qty_of_same_coupon,quantity,quantity1,quantity2){
-
+		
 		  if(price!=''&& qty_of_same_coupon>=quantity){
 						if ( qty_of_same_coupon<quantity1)
 							amount=price;
@@ -1250,7 +1258,7 @@
 		  } else {
 		  	 amount = single_amount;
 	    }
-
+					 
 			return amount;
 		}
 
@@ -1260,8 +1268,8 @@
         totalQty += qty;
         $('.s-price[data-couponid="'+couponid +'"]').html(amount.toFixed(2));
 		}
-
-
+		
+    
         function calculateBookingFee(){
             bookingFee = 0;
 
@@ -1276,14 +1284,14 @@
             }else{
                 bookingFee=rate;
             }
-
+            
         }
 
          function calculateSurcharge(){
             if(currentPaymentMethod&&currentPaymentMethod!='offline'){
 
               surchargevalue = (total + deliverFee + bookingFee - promotion_amount - confirmedMoneyAppliedAmount) * surchargeRate[currentPaymentMethod];
-
+              
             }else{
               surchargevalue=0;
             }
@@ -1293,11 +1301,11 @@
 
         function calculateDeliverFee(){
             if(deliverFeeEnable){
-
+               
             }else{
                 deliverFee = 0;
             }
-
+            
         }
 
         function updateDeliverFee(){
@@ -1324,7 +1332,7 @@
                           $('.deliver-fee-display-msg').html('运费('+result.distance+'km '+result.msg+'):<em>+'+deliverFee.toFixed(2)+'</em>');
                         else
                           $('.deliver-fee-display-msg').html(" ");
-
+                       
                     }catch(err){
                         deliverFee=0;
                     }
@@ -1336,7 +1344,7 @@
                     $('.form_response_loader').remove();
                 },
                 error:function(result){
-
+                    
                 }
               })
         }
@@ -1376,7 +1384,7 @@
 					  }else{
 					   $('.deliver-fee-display').html('<{$lang->deliver_fee}>:<em>+'+deliverFee.toFixed(2)+'</em>');
 					  }
-
+                       
                     else
                         $('.deliver-fee-display').html('');
                     break;
@@ -1410,7 +1418,7 @@
                         $('.surcharge-display').html('');
                          $('.total-before-surcharge').html('');
                     }else if(currentPaymentMethod&&currentPaymentMethod!='offline'){
-
+                      
                        $('.total-before-surcharge').html( "<span >Sub Total<em>"+grandTotal_beforeSurcharge.toFixed(2)+"</em></span>");
 
                         $('.surcharge-display').html(currentPaymentMethod+" surcharge("+(surchargeRate[currentPaymentMethod]*100).toFixed(2)+"%):<em>+"+ surchargevalue.toFixed(2)+"</em>");
@@ -1444,18 +1452,18 @@
         }
 
         function updateFormData(){
-            $('#total_amount').val(total);
-            $('#booking_total').val(bookingFee);
-            $('#delivery_fee').val(deliverFee);
-            $('#promotion_total').val(promotion_amount);
-            $('#promotion_id').val(promotion_id);
-            $('#confirmedMoneyAppliedAmount').val(confirmedMoneyAppliedAmount);
-            $('#total_amount_inc_delivery_fees').val(grandTotal.toFixed(2));
+            $('#total_amount').val(total); 
+            $('#booking_total').val(bookingFee); 
+            $('#delivery_fee').val(deliverFee); 
+            $('#promotion_total').val(promotion_amount); 
+            $('#promotion_id').val(promotion_id); 
+            $('#confirmedMoneyAppliedAmount').val(confirmedMoneyAppliedAmount); 
+            $('#total_amount_inc_delivery_fees').val(grandTotal.toFixed(2)); 
 
             if(currentPaymentMethod&&currentPaymentMethod!='offline')
-              $('#surcharge').val(surchargevalue);
+              $('#surcharge').val(surchargevalue); 
             else
-              $('#surcharge').val(0);
+              $('#surcharge').val(0); 
 
         }
 
@@ -1516,7 +1524,7 @@
 
             <{if $lastOrderPaymentMethod}>
               $('input[name="payment"][value="<{$lastOrderPaymentMethod}>"]').prop('checked',true).trigger( "click" );
-              refresh();
+              refresh(); 
             <{/if}>
 
             $('input[name="deliver_option"]').click(function(){
@@ -1633,7 +1641,7 @@
               //点击去结算，数量更新后需要重新计算运费和验证折扣码
               updateDeliverFee();
               check_promotion_code();
-            });
+            }); 
 
       }
 
@@ -1652,13 +1660,13 @@
 
             $('.plusBtn').click(function(){
                 var _val = $(this).prev('input').val()*1 + 1;
-
-
+				
+				
 				var max_val= $(this).prev('.shopping-cart-item-qty').data('limit-qty');
 				if(max_val ==0) {
 				max_val=999999;
 				}
-
+			
 			var main_coupon_id = $(this).prev('.shopping-cart-item-qty').data('maincouponid');
 			var sub_coupon_id = $(this).prev('.shopping-cart-item-qty').data('subid');
 			//alert(main_coupon_id + ' ' + sub_coupon_id);
@@ -1668,10 +1676,10 @@
       }else{
   			if (_val>max_val) {
   			   _val =max_val;
-  			   htmlMessage('<{$lang->max_quantity}>'+max_val+'!');
+  			   htmlMessage('<{$lang->max_quantity}>'+max_val+'!'); 
   			 }
 			 }
-
+			
           $(this).prev('input').val(_val);
           $(this).prev('input').prev('.minusBtn').removeClass('disabled');
           refresh();
@@ -1785,15 +1793,15 @@
                     $('input#address').val('<{$loginUser.address}>');
                     $('input#id_number').val(' ');
 					$('input#Street_number').val(' ');
-					$(".addr_house_number").css('display','none');
-					$(".addr_street").css('display','none');
-					$(".addr_city").css('display','none');
-					$(".addr_state").css('display','none');
-					$(".addr_country").css('display','none');
-					$(".addr_post_code").css('display','none');
-					$(".addr_hint99").css('display','none');
-					$(".Street_number").css('display','none');
-
+					$(".addr_house_number").css('display','none'); 
+					$(".addr_street").css('display','none'); 
+					$(".addr_city").css('display','none'); 
+					$(".addr_state").css('display','none'); 
+					$(".addr_country").css('display','none'); 
+					$(".addr_post_code").css('display','none'); 
+					$(".addr_hint99").css('display','none'); 
+					$(".Street_number").css('display','none'); 
+									
                 }else{
                     $('input#firstname').val($(target).data('first-name'));
                     $('input#lastname').val($(target).data('last-name'));
@@ -1813,10 +1821,10 @@
     <script src="<{$SKIN_PATH}>mobile/js/jquery.mobile-events.js"></script>
     <script>
     $(function(){
-        $('.m-cart li').on('swipeleft', function(e) {
+        $('.m-cart li').on('swipeleft', function(e) { 
             $(this).find('.content').addClass('open');
         });
-        $('.m-cart li').on('swiperight', function(e) {
+        $('.m-cart li').on('swiperight', function(e) { 
             $(this).find('.content').removeClass('open');
         });
 
@@ -1828,7 +1836,7 @@
             $('.content').removeClass('open');
         })
     })
-
+        
     </script>
 
     <script type="text/javascript">
@@ -1850,7 +1858,7 @@
 
         function initializeClock(obj, endtime){
           var clock = obj.get(0);//jeuqry to DOM obj
-
+          
           var timeinterval = setInterval(function(){
             var t = getTimeRemaining(endtime);
             if(t.total<0){
@@ -1859,7 +1867,7 @@
                 window.location.href=obj.data('action-url');
             }else if(t.total<60000){
                  clock.innerHTML =  t.minutes + ':' +t.seconds +'<small style="color:orange;font-size:12px">(到期自动删除)</small>';
-
+                
             }else{
                 clock.innerHTML =  t.minutes + ':' +t.seconds;
             }
@@ -1895,7 +1903,7 @@
                     //console.log('not enough money to use');
                     confirmedMoneyAppliedAmount=0;
                     $('.use-money-error').html(bootstrapAlertHtml('你看起来没有足够的零钱哦','warning'));
-
+                   
                 }else if(vTotal<amountApply){
                     //console.log('the money applied is more than grand total');
                     $('.use-money-error').html(bootstrapAlertHtml('$'+amountApply+'太多了,只需要$'+vTotal+'就够了！'));
@@ -1933,9 +1941,9 @@
             var code = $('#promotion_code').val();
 			//alert(code);
             var total_cart_amount=$('#checkout-confirmation-total').text();
-
+           
             if(!code)return;
-
+            
             $.ajax({
               method:"GET",
               url: "<{$http_root_www}>company/check_promotion_code",
@@ -1963,7 +1971,7 @@
                     $('.promotion-loading').html(data.msg);
                     $('#verified_image').css('display','none');
                 }
-
+               
               })
               .always(function(){
                 refresh();
@@ -1976,13 +1984,13 @@
              updateDeliverFee();
 
              var firstname=$('input#firstname').val();
-
+			
 			 //如果street_number 本身不为空，则取该值，否则自动存储 google分出来的门票号码
  			 var  addr_house_number=$('input#Street_number').val();
 			 if (!addr_house_number) {
 			   addr_house_number = $('input#addr_house_number').val();
 			 }
-
+			
              var lastname=$('input#lastname').val();
              var phone=$('input#phone').val();
              var email=$('input#email').val();
@@ -2012,7 +2020,7 @@
          }
     </script>
 
-
+   
    <script type="text/javascript">
        // this is the id of the form
         $(function(){
@@ -2022,7 +2030,7 @@
         $(".ajaxFormSubmitBtn").on('click',function(event) {
 
             if(ajaxFormSubmit)return false;
-
+            
             saveAddress();
                normalSubmit();
 
@@ -2034,7 +2042,7 @@
               $.ajax({
                    method: $('.ajaxForm').attr('method'),
                    url: $('.ajaxForm').attr('action'),
-                   data: $('.ajaxForm').serialize(),
+                   data: $('.ajaxForm').serialize(), 
                    cache: false,
                    dataType: "text",
                    beforeSend: function( xhr ) {
@@ -2045,7 +2053,7 @@
                             $('.ajaxFormResponse').html("<i class='fa fa-cog fa-spin fa-lg' style='color:#39BF21'></i> Processing");
                       },
                    success: function(data)
-                   {
+                   {  
                        try{
                           data = jQuery.parseJSON(data);
                        }catch(err){
@@ -2102,7 +2110,7 @@
               var hcashAmount=$('input[name="hcashAmount"]').val();
               var hcashOrderTag =$('input[name="hcashOrderTag"]').val();
               var hcashOrderId =$('input[name="hcashOrderId"]').val();
-
+              
               if(!hcashRate||!hcashAmount){
                   alert('还没有获得汇率和hcash价格');
                   return false;
@@ -2121,11 +2129,11 @@
    </script>
 
     <script type="text/javascript">
-        //special checkout action;
+        //special checkout action; 
         $(function(){
             var specialCheckout = '<{$specialCheckout}>';
             var errormsg = '<{$ERRORMSG}>';
-
+            
             if(specialCheckout!='NONE' && specialCheckout!='ERROR'){
                 $('#go-checkout-btn').click();
                 // $('.go-back-btn').addClass('disabled');
@@ -2192,11 +2200,11 @@
             $('.hcashRefreshText').html("<{$lang->exchange_rate_lock}>");
 
             if(!timer) {
-              timer =setInterval(function() {
+              timer =setInterval(function() { 
                 timerFunction();
-              }, 1000);
+              }, 1000); 
             }
-          }
+          } 
       </script>
 
       <script type="text/javascript">
@@ -2230,11 +2238,9 @@
                 newAddress:'',
                 newOther:'',
                 newEmail:'',
-                selectDateIndex:-1,
                 orderTimeAndDeliveryTime:[
                 ],
                 businessDispSchedule:[],
-                dispCenterUserSelectedDeliveryDate:0,
 
 
 
@@ -2252,11 +2258,6 @@
 
                 // 获得当前客户可以下单的日期列表显示，
                 this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
-                // 获得当前的语言环境
-                this.isLanguageEn =parseInt('<{$user_setting}>');
-
-                //根据当前语言环境改变pop menu 的关于语言的提示；
-                this.langStrDisplay =setLanguageContext(this.isLanguageEn);
 
                 //设置默认的配送日期
                 this.selectDefaultDeliveryDate();
@@ -2264,7 +2265,7 @@
 
                 console.log( this.orderTimeAndDeliveryTime);
 
-                console.log('ispopdate value is :' +this.isDatePop);
+               console.log('ispopdate value is :' +this.isDatePop);
 
 
 
@@ -2302,13 +2303,11 @@
                     //系统解析选择日期时用了一个特殊符号@，符号前是日期的unix 数字，后面是 morning afternoon ,anytime ,这里暂时设置为anytime .
                     let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
                     this.setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
-                    this.dispCenterUserSelectedDeliveryDate =datetime;
 
-                    $('#dispCenterUserSelectedDeliveryDate').val( this.dispCenterUserSelectedDeliveryDate);
-                  //  alert(  $('#dispCenterUserSelectedDeliveryDate').val());
-                  //  console.log('index is' + index);
-                 //   console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
-                  //  console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + this.getCookie('DispCenterUserSelectedDeliveryDate'));
+
+                    console.log('index is' + index);
+                    console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
+                    console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + this.getCookie('DispCenterUserSelectedDeliveryDate'));
 
                 },
                 // 设置默认配送日期

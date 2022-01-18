@@ -13,7 +13,9 @@
 	</head>
 	<body class="bgF2F2F2" sroll="no">
 		<div id="me" v-cloak>
-			<div class="head bgfff mb10 f38 col333 f500 bold center">购物车</div>
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+			<div class="head bgfff mb10 f38 col333 f500 bold center"  v-if="isLanguageEn">Shopping Cart</div>
+			<div class="head bgfff mb10 f38 col333 f500 bold center" v-else>购物车</div>
 			<div style="height:3.5rem;"></div>
 			<!-- 主体部分 -->
 			<div class="item" v-for="(item,index) in dataList">
@@ -25,7 +27,7 @@
 				<div class="goodInfoBox" v-for="(item2,index2) in item.goodsList">
 					<div :class="item2.isTouch?'touchStart':'touchStart2'" class="flexBox3 goodInfo" @touchStart='touchStart'  @touchend='touchEnd($event,index,index2)'>
 						<input type="checkbox" name="btn" class="mycheckbox2" :checked="item2.status==1" @click="choseGood(index,index2)"/>
-						<img src="<{$SKIN_PATH}>/img/big.png" class="cartImg"/>
+						<img :src="item2.menu_pic" class="cartImgSmall"/>
 						<div class="goodInfo2">
 							<div>{{item2.title}}</div>
 							<div class="flexBox1 price">
@@ -39,48 +41,26 @@
 						</div>		
 					</div>
 					<div :class="item2.isTouch?'touchRemoveActive':'touchRemoveActive2'" class="touchRemove f25" @click="clickRemove(index,index2)">
-						删除
+						<span v-if="isLanguageEn">Delete</span>	<span v-else>删除</span>
+
 					</div>
 			    </div>
 				<div class="flexBox1 bottomItem" v-if="item.goodsList.length>0">
 					<div class="flexBox1">
 						<input type="checkbox" name="btn" class="mycheckbox" :checked="item.status==1" @click="allChose($event,index)"/>
-						<span>全选&nbsp;&nbsp;&nbsp;</span>
-						<span class="f28 col303134" @click="empty(index)">清空购物车&nbsp;</span>
+						<span v-if="isLanguageEn">ALl</span>	<span v-else>全选</span>
+
+						<span class="f28 col303134 pa10" @click="empty(index)" v-if="isLanguageEn">Remove&nbsp;</span><span class="f28 col303134 pa10" @click="empty(index)" v-else>清空购物车&nbsp;</span>
 						<img src="<{$SKIN_PATH}>/img/cartDelete.png" class="cartDelete" @click="empty(index)"/>
 					</div>
 					<div class="flexBox1">
-						<div class="cartBtn f25 colFD5305 again" @click="LookAgain">我再逛逛</div>
-						<div class="cartBtn f25 colfff" @click="placeOrder">下单</div>
+						<div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-if="isLanguageEn">Back</div><div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-else>我再逛逛</div>
+						<div class="cartBtn f25 colfff" @click="placeOrder" v-if="isLanguageEn">Buy</div><div class="cartBtn f25 colfff" @click="placeOrder" v-else>下单</div>
 					</div>
 				</div>
 			</div>
-			
-			<div style="height:3.125rem;"></div>
-			<div class="flexBox1 menuBox">
-				<div @click="changeMenu('1')">
-					<img src="<{$SKIN_PATH}>/img/menu1.png"/>
-					<span class="col333 f26">首页</span>
-				</div>
-				<div @click="changeMenu('2')">
-					<img src="<{$SKIN_PATH}>/img/menu2.png" />
-					<span class="col333 f26">订货</span>
-				</div>
-				<div @click="changeMenu('3')">
-					<img src="<{$SKIN_PATH}>/img/menu3.png" />
-					<span class="col333 f26">订单</span>
-				</div>
-				<div @click="changeMenu('4')">
-					<img src="<{$SKIN_PATH}>/img/menu4_.png"/>
-					<span class="colFD5001 f26">购物车</span>
-				</div>
-				<div @click="changeMenu('5')">
-					<img src="<{$SKIN_PATH}>/img/menu5.png" />
-					<span class="col333 f26">我的</span>
-				</div>
-			</div>
-			
-		</div>
+
+			<{include file ="mobile/b2bbottom4.htm"}>
 	</body>
 	<script>
 		var vm = new Vue({
@@ -90,9 +70,18 @@
 				currentMenu:4,   // 当前菜单
 				dataList:[],			
 				dataList1:[],
+				isLanguageEn:1,
 				
 				startX:0,
 				endX:0
+			},mounted:function(){
+				this.createcode();
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+
+				//根据当前语言环境改变pop menu 的关于语言的提示；
+				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
 			},
 		    methods:{
 			      createcode:function(){
@@ -111,7 +100,11 @@
                  
 				
 				 
-				},
+				}, changeMenu:function(index){
+					this.currentMenu=index;
+					changeMenuBottom(index,'<{$http_root_www}>'); //调用统一的底部导航菜单定义部分。
+
+				},//设置语言提示
 				numadd:function(index,index2){   //  数量增加
 					
 					
@@ -222,27 +215,8 @@
 				LookAgain:function(){   // 再逛逛
 					window.location.href="<{$http_root_www}>factorypage/place_order"
 				},
-				placeOrder:function(){    // 下单
-					window.location.href="<{$http_root_www}>member/showcart1?checkout=1"
-				},
-				changeMenu:function(index){
-					this.currentMenu=index
-					switch(index){
-					case '1':
-					    window.location.href="<{$http_root_www}>"
-						break;
-					case '2':
-				        window.location.href="orderGoodsPage/orderGoods.htm"
-						break;
-					case '3':
-					    window.location.href="<{$http_root_www}>member/myorders"
-						break;
-					case '5':
-					    window.location.href="<{$http_root_www}>member/index"
-						break;
-					default:
-						break;
-					}
+				placeOrder:function(businessId){    // 下单
+					window.location.href="<{$http_root_www}>member/showcart?checkout=1&business_userid=" +businessId
 				},
 				updateQuantity:function(id,num,type){
 					var params = new URLSearchParams();
@@ -278,12 +252,19 @@
 					  });
 				
 				
+				},
+				kh:function(){
+					window.location.href="<{$http_root_www}>index/set_up_account"
+				},
+				jm:function(){
+					window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
+				},
+				shareApp:function(){
+					this.isShare=true
+				},
+				dismissShare:function(){
+					this.isShare=false
 				}
-			},
-			mounted:function(){
-			 this.createcode();
-			 
-			
 			}
 		})	
 	</script>

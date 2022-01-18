@@ -4,26 +4,30 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>订单信息</title>
+		<title>Order Comfirmation </title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/placeOrder.css"/>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="success">
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
 			<div class="pTitle">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				订单信息
+				<span v-if="isLanguageEn">{{title_en}}</span><span v-else>{{title_cn}}</span>
 			</div><div style="height: 3rem;"></div>
 			<div class="pHead">
 				<div class="center"><img src="<{$SKIN_PATH}>/img/success.png" class="success"></div>  
-				<div class="center f40 col333 bold pmb10">订单已成功提交</div>
-				<div class="center f28 colccc">我们将尽快为您发货!</div>
+				<div class="center f40 col333 bold pmb10" v-if="isLanguageEn" >Order Successfully submit!</div>
+				<div class="center f40 col333 bold pmb10" v-else>订单已成功提交</div>
+				<div class="center f28 colccc" v-if="isLanguageEn">we will process order soon!</div>
+				<div class="center f28 colccc" v-else>我们将尽快为您发货!</div>
 				
-				<div class="continue" @click="continueOrder">继续下单</div>
+				<div class="continue" @click="continueOrder" v-if="isLanguageEn">Continue Shopping</div>
+				<div class="continue" @click="continueOrder" v-else>继续下单</div>
 				<div class="flexBox1">
-					 <div class="lookOrder" @click="lookOrder">查看订单</div>
-					 <div class="returnHome" @click="returnHome">返回首页</div>
+					 <div class="lookOrder" @click="lookOrder" v-if="isLanguageEn" >Order Details</div> <div class="lookOrder" @click="lookOrder" v-else>查看订单</div>
+					 <div class="returnHome" @click="returnHome" v-if="isLanguageEn">Return Home</div> <div class="returnHome" @click="returnHome" v-else>返回首页</div>
 				</div>
 			</div>
 		</div>
@@ -31,12 +35,22 @@
 	<script>
 		new Vue({
 			el:"#success",
+
 			data:{
-				
+				title_en:'Order Comfirmation ',
+				title_cn:'订货确认',
+				isLanguageEn:1, //语言环境
+			},mounted:function(){
+
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+
+
+				console.log('globe is:' +this.$a)
 			},
 		    methods:{
 				continueOrder:function(){
-					window.location.href="<{$http_root_www}>factorypage/place_order"
+					window.location.href="<{$http_root_www}>supplier/319188"
 				},
 				lookOrder:function(){
 				   let  currentOrderId = '<{$orderId}>';

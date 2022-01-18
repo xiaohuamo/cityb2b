@@ -8,41 +8,13 @@
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orders.css"/>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 </head>
 <body class="bgF2F2F2">
 <div id="me" v-cloak>
-	<div class="head bgfff mb10">
-		<div class="relative center">
-			<img src="<{$SKIN_PATH}>img/headIcon.png" class="headIcon"/>
-			<div class="f38 col333 f500 bold">我的订单</div>
-			<div class="flexBox1 headRight">
-				<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
-				<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
-			</div>
-			<div class="add" id="add" v-show="isAddShow">
-				<a href=""><div class="flexBox2">
-					<img src="<{$SKIN_PATH}>img/add_1.png"/>
-					<span class="colfff f30">EN</span>
-				</div></a>
-				<div class="flexBox2" @click="clickSC">
-					<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
-					<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
-					<span class="colfff f30">收藏</span>
-				</div>
-				<div class="flexBox2" @click="kh">
-					<img src="<{$SKIN_PATH}>img/add_3.png"/>
-					<span class="colfff f30">我要开户</span>
-				</div>
-				<div class="flexBox2" style="border:none;" @click="jm">
-					<img src="<{$SKIN_PATH}>img/add_4.png"/>
-					<span class="colfff f30">我是供应商</span>
-				</div>
-				<div class="triangle"></div>
-			</div>
-		</div>
-	</div><div style="height:3.5rem;"></div>
-	<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+	<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+	<{include file ="mobile/b2btop.htm"}>
 	<!-- 主体部分 -->
 	<div class="choseBox flexBox1 f28" @click="Chose">
 		<span class="col0F0F0F">{{choseData==''? '请选择供应商':choseData}}</span>
@@ -155,29 +127,7 @@
 		<span>正在加载中...</span>
 	</div>
 
-	<div style="height:3.125rem;"></div>
-	<div class="flexBox1 menuBox">
-		<div @click="changeMenu('1')">
-			<img src="<{$SKIN_PATH}>img/menu1.png"/>
-			<span class="col333 f26">首页</span>
-		</div>
-		<div @click="changeMenu('2')">
-			<img src="<{$SKIN_PATH}>img/menu2.png" />
-			<span class="col333 f26">订货</span>
-		</div>
-		<div @click="changeMenu('3')">
-			<img src="<{$SKIN_PATH}>img/menu3_.png"/>
-			<span class="colFD5001 f26">订单</span>
-		</div>
-		<div @click="changeMenu('4')">
-			<img src="<{$SKIN_PATH}>img/menu4.png" />
-			<span class="col333 f26">购物车</span>
-		</div>
-		<div @click="changeMenu('5')">
-			<img src="<{$SKIN_PATH}>img/menu5.png" />
-			<span class="col333 f26">我的</span>
-		</div>
-	</div>
+	<{include file ="mobile/b2bbottom3.htm"}>
 </div>
 </body>
 <script>
@@ -213,11 +163,49 @@
 			isShare:false,
 			choseData:'',
 			list:['供应商1','供应商2'],
-			currentMenu:3   // 当前菜单
+			currentMenu:3 ,  // 当前菜单
+			title_en:'My Orders',
+			title_cn:'我的订单',
+			isLanguageEn:1, //语言环境
+			langStrDisplay:'中文',
+			isReturnShow:false,
+		},mounted:function(){
+
+			// 获得当前的语言环境
+			this.isLanguageEn =parseInt('<{$user_setting}>');
+
+			//根据当前语言环境改变pop menu 的关于语言的提示；
+			this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
 		},
 		methods:{
-			clickAdd:function(){
+			changeMenu:function(index){
+				this.currentMenu=index;
+				changeMenuBottom(index,'<{$http_root_www}>'); //调用统一的底部导航菜单定义部分。
+
+			},//设置语言提示
+			switchDisplayLanguage:function(){
+				if(this.isLanguageEn) {
+					this.langStrDisplay='En';
+					this.isLanguageEn=0;
+				}else{
+					this.langStrDisplay='中文';
+					this.isLanguageEn=1;
+				}
+				setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+				this.isAddShow=!this.isAddShow; //关闭弹框
+				//向后台写入目前的语言环境状态；
+			},clickAdd:function(){
 				this.isAddShow=!this.isAddShow
+			},
+			kh:function(){
+				window.location.href="<{$http_root_www}>index/set_up_account"
+			},
+			jm:function(){
+				window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
+			},
+			shareApp:function(){
+				this.isShare=true
 			},
 			clickSC:function(){
 				_self=this
@@ -235,25 +223,7 @@
 			Chose2:function(data){
 				this.choseData=data
 			},
-			changeMenu:function(index){
-				this.currentMenu=index
-				switch(index){
-					case '1':
-						window.location.href="<{$http_root_www}>"
-						break;
-					case '2':
-						window.location.href="<{$http_root_www}>factorypage/choose_supplier"
-						break;
-					case '4':
-						window.location.href="<{$http_root_www}>member/showcart1"
-						break;
-					case '5':
-						window.location.href="<{$SKIN_PATH}><{$http_root_www}>member/index"
-						break;
-					default:
-						break;
-				}
-			},
+
 			orderDetail:function(orderid){
 			  alert(String(orderid));
 				window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=" +orderid;
@@ -269,7 +239,15 @@
 			},
 			jm:function(){
 				window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
-			}
+			},
+			returnPage(){
+				//this.isReturnShow=false
+				//this.isShowSearchRes=false
+				//this.isShowHistory=false
+			},
+		aboutUs(){
+			window.location.href="index/about_us"
+		}
 
 		}
 	})

@@ -345,6 +345,39 @@ class cmsPage extends corecms
 
 
          }
+
+
+
+
+
+         // 获取 用户设置
+        if($this->loginUser){
+            $mdl_user_setting =$this->loadModel('user_setting');
+            $user_setting=$mdl_user_setting->get($this->loginUser['id']);
+            if($user_setting) {
+
+                $this->setData($user_setting['isLanguageEng'],'user_setting');
+            }else{
+                $data=array(
+                    'id'=>$this->loginUser['id'],
+                    'isLanguageEng'=>1
+               );
+                $mdl_user_setting->insert($data);
+                $user_setting=$mdl_user_setting->get($this->loginUser['id']);
+
+                $this->setData($user_setting['isLanguageEng'],'user_setting');
+
+            }
+
+        //   var_dump($user_setting);exit;
+         }else{
+             if ($this->getLangStr()=='en') {
+                 $this->setData('1','user_setting');
+             }else{
+                 $this->setData('0','user_setting');
+             }
+
+        }
 		 
 		
 	}

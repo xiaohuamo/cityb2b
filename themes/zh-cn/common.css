@@ -326,7 +326,9 @@ body{
 .pa15-10{
 	padding:15px 10px;
 }
-
+.pa5-right{
+	padding-right:5px;
+}
 .pa5-0{
 	padding:5px 0px;
 }

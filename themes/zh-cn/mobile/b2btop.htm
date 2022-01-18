@@ -1,0 +1,47 @@
+<div class="head bgfff mb10">
+				<div class="relative center">
+					<img v-if="isReturnShow" src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage" style="top:0;left:0px;"/>
+					<img v-else src="<{$SKIN_PATH}>img/headIcon.png" class="headIcon" @click="aboutUs"/>
+					
+					
+					<div class="f38 col333 f500 bold" v-if="isLanguageEn" >{{title_en}}</div>
+					<div class="f38 col333 f500 bold" v-else >{{title_cn}}</div>
+					
+					<div class="flexBox1 headRight">
+						<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+						<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<div class="flexBox2"  @click="switchDisplayLanguage">
+							<img src="<{$SKIN_PATH}>img/add_1.png"/>
+							<span class="colfff f30">{{langStrDisplay}}</span>
+						</div>
+						<div class="flexBox2" @click="clickSC">
+							<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
+							<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
+							<span class="colfff f30" v-if="isLanguageEn">Saved</span>
+							<span class="colfff f30" v-else>收藏</span>
+						</div>
+						<div class="flexBox2" @click="kh">
+							<img src="<{$SKIN_PATH}>img/add_3.png"/>
+							<span class="colfff f30" v-if="isLanguageEn" >Open Account</span>
+							<span class="colfff f30" v-else>我要开户</span>
+						</div>
+						<div class="flexBox2" style="border:none;" @click="jm">
+							<img src="<{$SKIN_PATH}>img/add_4.png"/>
+							<span class="colfff f30" v-if="isLanguageEn">I am Supplier</span>
+							<span class="colfff f30" v-else>我是供应商</span>
+						</div>
+						<div class="triangle"></div>
+					</div>
+					
+				</div>
+			<!--	<div class="searchBoxHomepage flexBox1">
+					<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
+					<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+				    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+				</div>	 -->
+			</div>
+			<div style="height:3.8rem;"></div> <!--之前是 5.8 ，调小一些-->
+			
+			<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>

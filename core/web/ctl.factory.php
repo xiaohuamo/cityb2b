@@ -2033,7 +2033,7 @@ class ctl_factory extends cmsPage
         $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
         //var_dump($users);exit;
         foreach ($users as $key => $user) {
-            $expiredAt =strtotime("+3 months", time());
+            $expiredAt =strtotime("+36 months", time());
             $link = self::customer_login_link($user['id'], $expiredAt);
             $users[$key]['login_link'] = $link;
         }

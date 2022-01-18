@@ -199,7 +199,12 @@ class ctl_member1 extends cmsPage
 
         $userId = (int) get2('user_id');
         if (!$userId) {
+
             $userId = $this->loginUser['id'];
+
+          if(! $userId)  {
+              $userId =1;
+          }
         }
 
         if ($userId) {
@@ -305,11 +310,11 @@ class ctl_member1 extends cmsPage
              $this->setData($cartItems, 'items');
 
             echo json_encode($cartItems);
-
+            exit;
 
 
         }
-
+        echo json_encode(0);
 
     }
 //获得某个客户所有商家的订货，这个用在单独显示购物车页面
@@ -336,6 +341,7 @@ class ctl_member1 extends cmsPage
                 $subdata ['num'] =$value1['quantity'];
                 $subdata ['isTouch'] =false;
                 $subdata ['status'] =0;
+                $subdata['menu_pic'] =$value1['menu_pic'];
                $goodlist[$key1] =$subdata;
             }
            $data[$key]['goodsList'] = $goodlist;
@@ -465,6 +471,32 @@ class ctl_member1 extends cmsPage
         echo json_encode( $id);
 
    }
+
+    public function update_language_type_action() {
+
+        //  return json($_post());//判断当前用户是该数据拥有者
+
+
+        $languageValue =post('languageValue');
+
+        $mdl_user_setting =$this->loadModel('user_setting');
+
+        $data =array(
+            'isLanguageEng'=>$languageValue
+         );
+
+    // 如果发现则修改，如果未发现则新增
+        if($mdl_user_setting->get($this->loginUser['id'])) {
+            $mdl_user_setting->update($data,$this->loginUser['id']);
+        }else{
+            $data['id']=$this->loginUser['id'];
+            $mdl_user_setting->insert($data,$this->loginUser['id']);
+
+        }
+
+        echo json_encode( $data);
+
+    }
 
     function delivery_address_edit1_action(){
         $id=(int)get2('id');

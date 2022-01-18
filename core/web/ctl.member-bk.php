@@ -484,7 +484,7 @@ class ctl_member extends cmsPage
 					$displayStr .= " 14:00 pm - 20:00 pm";
 					break;
 				case 'anytime':
-				//	$displayStr .= " 8:00 am - 20:00 pm";
+					$displayStr .= " 8:00 am - 20:00 pm";
 					break;
 				
 			}
@@ -692,7 +692,7 @@ class ctl_member extends cmsPage
 
 
 
-        $this->setData(json_encode($businessDispScheduleFilledWithContinueDates), 'businessDispSchedule');
+        $this->setData($businessDispScheduleFilledWithContinueDates, 'businessDispSchedule');
         $this->setData(in_array($id, DispCenter::getSupplierList()), 'isDispCenterBusiness');
 
         $this->setData(join(DispCenter::getPostcode(DispCenter::getDispCenterIdOfSupplier($id)), ','), 'postcodeSupported'); //使用统配商家邮编信息
@@ -726,7 +726,7 @@ class ctl_member extends cmsPage
 
 
 
-        $this->setData(json_encode($list),'current_business_tuangou_time');
+        $this->setData($list,'current_business_tuangou_time');
 
 
 		
@@ -767,7 +767,7 @@ class ctl_member extends cmsPage
 		$this->setData( (string)$this->lang->shopping_cart, 'pagename' );
 		$this->setData( (string)$this->lang->shopping_cart.'- '.$this->site['pageTitle'], 'pageTitle' );
 
-		$this->display_pc_mobile('mobile/show_cart','mobile/show_cart');
+		$this->display_pc_mobile('member/show_cart','mobile/show_cart');
 
 	}
 

@@ -175,65 +175,98 @@ class ctl_factorypage extends cmsPage
 
 
         $id = (int) get2('id');
+
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
         $default_menu_page_items = 10;
 
         if (! $id) {
+          //  $this->sheader(HTTP_ROOT.$this->returnUrl);
             $this->sheader(null, 'Please choose the supplier');
         }
+
         $this->setData($id,'businessUserId');
+
 
         if(!$this->loginUser){
 
-            $this->sheader(null, 'Please login in and place the order ');
+            $returnUrl ='/supplier/'.$id ;
+            $url = HTTP_ROOT . "member/login?returnUrl=" . urlencode($returnUrl);
+            $this->sheader( $url);
+         //   $this->sheader(null, 'Please login in and place the order ');
         }
 
 
         //插入一段获取某用户购买历史的程序
         $deliveryTime = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
-        $menu_bought_list = $this->loadModel("restaurant_menu")->getUserBoughtMenu($userId, $id, $deliveryTime, $this->lang['lang'][0]);
-
-        $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
-        $mdl_user_factory = $this->loadModel('user_factory');
-        $userFactoryMenuPrices = $mdl_user_factory_menu_price->getUserFactoryPriceList($userId, $id);
-
-        foreach ($menu_bought_list as $key => $value) {
-            $show_origin_price = $mdl_user_factory->getByWhere([
-                'user_id' => $id,
-                'factory_id' => $this->loginUser['id']
-            ])['show_origin_price'];
-            if(!$show_origin_price) {
-                $menu_bought_list[$key]['price'] = 0;
-            }
-
-            if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
-                $menu_bought_list[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
-            }
-        }
-
-        //var_dump(menu_bougt_list);exit;
-        //加载配菜
-        $mdl_sidedish_menu=$this->loadModel('restaurant_sidedish_menu');
-        foreach ($menu_bought_list as $key => $value) {
-            if($menu_bought_list[$key]['sidedish_category']>0){
-                $menu_bought_list[$key]['sidedish_menu']=$mdl_sidedish_menu->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['sidedish_category']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
 
 
+      if($userId) {
 
-            }
-        }
+          $menu_bought_list = $this->loadModel("restaurant_menu")->getUserBoughtMenu($userId, $id, $deliveryTime, $this->lang['lang'][0]);
 
-        //加载菜品规格
-        $mdl_menu_option=$this->loadModel('restaurant_menu_option');
-        foreach ($menu_bought_list as $key => $value) {
-            if($menu_bought_list[$key]['menu_option']>0){
-                $menu_bought_list[$key]['menu_option_list']=$mdl_menu_option->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['menu_option']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+          $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
+          $mdl_user_factory = $this->loadModel('user_factory');
+          $userFactoryMenuPrices = $mdl_user_factory_menu_price->getUserFactoryPriceList($userId, $id);
+
+          foreach ($menu_bought_list as $key => $value) {
+              $show_origin_price = $mdl_user_factory->getByWhere([
+                  'user_id' => $id,
+                  'factory_id' => $this->loginUser['id']
+              ])['show_origin_price'];
+              if(!$show_origin_price) {
+                  $menu_bought_list[$key]['price'] = 0;
+              }
+
+              if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
+                  $menu_bought_list[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
+              }
+          }
+
+
+          //var_dump(menu_bougt_list);exit;
+          //加载配菜
+          $mdl_sidedish_menu=$this->loadModel('restaurant_sidedish_menu');
+          foreach ($menu_bought_list as $key => $value) {
+              if($menu_bought_list[$key]['sidedish_category']>0){
+                  $menu_bought_list[$key]['sidedish_menu']=$mdl_sidedish_menu->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['sidedish_category']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
 
 
 
-            }
-        }
+              }
+          }
+
+          //加载菜品规格
+          $mdl_menu_option=$this->loadModel('restaurant_menu_option');
+          foreach ($menu_bought_list as $key => $value) {
+              if($menu_bought_list[$key]['menu_option']>0){
+                  $menu_bought_list[$key]['menu_option_list']=$mdl_menu_option->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['menu_option']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+
+
+
+              }
+          }
+
+          $this->setData($menu_bought_list, 'menu_bought_list');
+
+          if($this->loginUser['password'] == $this->loginUser['init_password']) {
+              $this->setData(true, 'need_update');
+              $this->setData( $this->loadModel('wj_abn_application')->getByWhere([
+                  'userId' => $this->loginUser['id'],
+              ]), 'abnAccount');
+          }
+
+
+          $show_origin_price = $mdl_user_factory->getByWhere([
+              'user_id' => $this->loginUser['id'],
+              'factory_id' => $id
+          ])['show_origin_price'];
+          $this->setData($show_origin_price, 'show_origin_price');
+
+          $this->setData($mdl_user_factory->isUserApproved($userId, $id), 'userApproved');
+
+
+      }
 
 
 
@@ -241,23 +274,9 @@ class ctl_factorypage extends cmsPage
 
 
 
-        $this->setData($menu_bought_list, 'menu_bought_list');
-
-        if($this->loginUser['password'] == $this->loginUser['init_password']) {
-            $this->setData(true, 'need_update');
-            $this->setData( $this->loadModel('wj_abn_application')->getByWhere([
-                'userId' => $this->loginUser['id'],
-            ]), 'abnAccount');
-        }
 
 
-        $show_origin_price = $mdl_user_factory->getByWhere([
-            'user_id' => $this->loginUser['id'],
-            'factory_id' => $id
-        ])['show_origin_price'];
-        $this->setData($show_origin_price, 'show_origin_price');
 
-        $this->setData($mdl_user_factory->isUserApproved($userId, $id), 'userApproved');
 
 
         $where = [
@@ -377,6 +396,7 @@ class ctl_factorypage extends cmsPage
 		
 		//获得当前用户的实际商家所有者商家id
 		$factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
+      //  var_dump($factoryId);exit;
 		$id = $factoryId;
 		if(	$this->loginUser['role']==20) {
 			$salesManId = $this->loginUser['id'];

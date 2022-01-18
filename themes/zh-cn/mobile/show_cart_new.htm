@@ -12,7 +12,6 @@
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
-
 		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 
 		
@@ -24,9 +23,41 @@
 	</head>
 	<body class="bgF2F2F2">
 		<div id="order" v-cloak class="relative">
-			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
-			<{include file ="mobile/b2btop1.htm"}>
+			<div v-show="scroll">
+				<div class="head bgfff mb10 flexBox1">
+				<div class="flexBox2">
+					<img src="<{$SKIN_PATH}>img/return.png" class="return2" @click="returnPage"/>&nbsp;
 
+                    <div v-if="selectDateIndex !=-1">
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Delivery:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>Delivery:{{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</div>
+					</div>
+					<div v-else>
+						<div class="f33 col333 f500 bold" @click="datePop" v-if="isLanguageEn">Check Delivery Date </div>
+						<div class="f33 col333 f500 bold" @click="datePop" v-else>查看配送日期</div>
+					</div>
+				</div>
+				<div class="flexBox1">
+					<img v-if="isSC" src="<{$SKIN_PATH}>img/sc.png" class="star shareIcon" @click="scPage"/>
+					<img v-else src="<{$SKIN_PATH}>img/star2.png" class="star shareIcon" @click="scPage"/>
+					<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
+				</div>
+				</div><div style="height:3.4rem;"></div>
+				
+				<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+				<div class="add add2" id="add" v-show="isAddShow">
+					<div class="flexBox2"  @click="switchDisplayLanguage">
+						<img src="<{$SKIN_PATH}>img/add_1.png"/>
+						<span class="colfff f30">{{langStrDisplay}}</span>
+					</div>
+					<div @click="nextPage" class="flexBox2" style="border:none;">
+						<img src="<{$SKIN_PATH}>img/dpsm.png"/>
+						<span class="colfff f30">店铺说明</span>
+					</div>
+					<div class="triangle"></div>
+				</div>
+			</div>
 			<!-- 主体部分开始 -->
 			   <!-- 上面目录部分 -->
 			<div class="pa15 classifyBox z7">
@@ -46,8 +77,7 @@
 				 <!--	<div class="searchBox flexBox1" v-if="layout"  style=";    margin-bottom: 10px;"> -->
 				<div class="searchBox flexBox1"   style=";    margin-bottom: 10px;">
 						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
-						<input v-model="searchCon" placeholder="Please Input .." style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-if="isLanguageEn"/>
-					    <input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-else/>
+						<input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus"/>
 					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
 					</div>
 				</div>
@@ -75,7 +105,7 @@
 				<div class="flexBox6 maT15" v-show="scroll2">
 					<div class="bigclassify">
 						<div class="classify2 bold" @click="haveBuy">
-							<span v-if="isLanguageEn">Bought</span><span v-else>已购</span>
+							已购
 							<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==-1"/>  
 						</div>
 						<div class="classify2" v-for="(item,index) in classifyList2" @click="choseClassify(index,item.id)">
@@ -171,28 +201,28 @@
 			</div>
 
 			<!-- 点击加载 -->
-	<!--		<div class="col9A9A9A more flexBox4">
+			<div class="col9A9A9A more flexBox4">
 				<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
 			 	<span>正在加载中...</span>
-			</div> -->
+			</div>
 			
 			<!-- 底部 -->
 			<div style="height:3.125rem;"></div>
 			<div class="flexBox1 menuBox z5">
 				<div class="flexBox1">
-					<div @click="gohome('<{$http_root_www}>')" style="margin-right:2.8rem;">
+					<div @click="gohome" style="margin-right:2.8rem;">
 						<img src="<{$SKIN_PATH}>img/menu1.png"/>
-						<span class="col333 f26"  v-if="isLanguageEn">Home</span> <span class="col333 f26"  v-else>首页</span>
+						<span class="col333 f26">首页</span>
 					</div>
 					<div @click="cartPop" class="cartnumBox">
 						<img src="<{$SKIN_PATH}>img/menu4.png" />
-						<span class="col333 f26"  v-if="isLanguageEn">Cart</span><span class="col333 f26"  v-else>购物车</span>
+						<span class="col333 f26">购物车</span>
 						<div v-show="goodsList.length>0">{{goodsList.length}}</div>
 					</div>
 				</div>
 				<div class="flexBox1">
 					<div class="colFD5001 bold">$<span class="f40">{{allTotal}}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
-				    <div class="commonBtn" @click="placeOrder" v-if="isLanguageEn">Place Order</div><div class="commonBtn" @click="placeOrder"  v-else>下单</div>
+				    <div class="commonBtn" @click="placeOrder">下单</div>
 				</div>
 			</div>
 			<!-- 规格弹出框 -->
@@ -229,7 +259,7 @@
 							</div>
 						</div>
 						<div class="relative joinCartBtnBox">
-							<div class="joinCartBtn f30" @click="guige1AddTOCart" v-if="isLanguageEn">Add to Cart</div><div class="joinCartBtn f30" @click="guige1AddTOCart" v-else>加入购物车</div>
+							<div class="joinCartBtn f30" @click="guige1AddTOCart">加入购物车</div>
 						</div>
 					</div>
 				</div>	
@@ -257,7 +287,7 @@
 							</div>		
 						</div>
 						<div :class="item2.isTouch?'touchRemoveActive':'touchRemoveActive2'" class="touchRemove f25" @click.stop="clickRemove(index2,item2)">
-							<span v-if="isLanguageEn">Delete</span>	<span v-else>删除</span>
+							删除
 						</div>
 					</div>
 				</div>
@@ -348,7 +378,6 @@
 				current1:0, //规格1组当前选择索引
 				cuurent1ItemId:0, //规格1组当前对应的goodlist2 产品id
 				current2:0,
-
 
                 //仅有主类商家的大类数据
 				classifBigyList2:['已购','全部','火锅','火锅','蔬菜','水果','零食','吃的','喝的','用的','玩的'],
@@ -562,9 +591,7 @@
 				scrollOldPosition:0,
                 ScrollDirection:'',
 				scrollDownCount:0,
-				scrollUpCount:0,
-				user_setting:[],
-
+				scrollUpCount:0
 			},
 			mounted:function(){
 			  
@@ -581,14 +608,10 @@
 			computed:{
 				 allTotal() {
 				 	var sum=0
-					// alert('goodlist length is :' + this.goodList.length);
-                  //  alert('goods length is :' + this.goodsList.length);
-						 this.goodsList.map(
-								 (item)=>{
-									 sum+=item.price*item.num				 		}
-						 )
-
-
+				 	this.goodsList.map(
+				 		(item)=>{
+				 			sum+=item.price*item.num				 		}
+				 	)
                     sum = sum.toFixed(2);
 				 	return sum
 				 },
@@ -638,6 +661,8 @@
 				//获取商家关于该客户的下单及配送时间的文字表述；
 				this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
 
+				//设置语言环境
+                this.setLanguageContext();
 
 				// 获得当前客户可以下单的日期列表显示，
 				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
@@ -648,13 +673,6 @@
 
 
 
-                // 获得当前的语言环境
-				this.isLanguageEn =parseInt('<{$user_setting}>');
-
-				//根据当前语言环境改变pop menu 的关于语言的提示；
-				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
-
-				console.log('important !current language is :' + this.isLanguageEn);
 
 			},
 		    methods:{
@@ -713,10 +731,8 @@
 				 axios.get('<{$http_root_www}>member1/get_cart?businessUserId=<{$businessUserId}>')
 					  .then(function (response) {
 					   self.goodsList = response.data;
-
-					//	   alert('good lists is : ' +self.goodsList);
-
-					//   console.log('cart_date is :' +self.goodsList);
+  
+					   console.log(self.goodsList);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -726,7 +742,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					//   console.log(self.oldGoodsList2);
+					   console.log(self.oldGoodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -776,17 +792,28 @@
 						}
 						else {return false;}
 				},
-				//设置语言提示
+				//设置语言还环境
+				setLanguageContext:function() {
+					var currentLanguage ='<{$langStr}>';
+					if(currentLanguage.toUpperCase() =='ZH-CN'){
+						this.isLanguageEn =0;
+						this.langStrDisplay='En';//如果是中文环境，切换语言的地方提示为 EN
+					}else{
+						this.isLanguageEn =1;
+						this.langStrDisplay='中文';
+					}
 
+
+					// console.log(currentLanguage.toUpperCase());
+				},// 设置语言环境
 				switchDisplayLanguage:function(){
-					if(this.isLanguageEn) {
-						this.langStrDisplay='En';
-						this.isLanguageEn=0;
+
+				   	if(this.isLanguageEn) {
+						   this.langStrDisplay='En';
 					}else{
 						this.langStrDisplay='中文';
-						this.isLanguageEn=1;
 					}
-					setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+					this.isLanguageEn=!this.isLanguageEn; //切换语言
 					this.isAddShow=!this.isAddShow; //关闭弹框
 					//向后台写入目前的语言环境状态；
 				},
@@ -803,21 +830,21 @@
 					this.selectDateIndex =index;
 
 
-					setCookie("deliveryDateIndex",index,1);
+					this.setCookie("deliveryDateIndex",index,1);
 					//系统解析选择日期时用了一个特殊符号@，符号前是日期的unix 数字，后面是 morning afternoon ,anytime ,这里暂时设置为anytime .
 					let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
-					setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+					this.setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
 
 
 					console.log('index is' + index);
-					console.log('the setting cookie index is :' + getCookie('deliveryDateIndex'));
-					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					console.log('the setting cookie index is :' + this.getCookie('deliveryDateIndex'));
+					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + this.getCookie('DispCenterUserSelectedDeliveryDate'));
 
 				},
 				// 设置默认配送日期
 				selectDefaultDeliveryDate:function(){
 					// 清除所有的 select 标志
-					var i =getCookie('deliveryDateIndex');
+					var i =this.getCookie('deliveryDateIndex');
 				//	console.log('cookie index is :' +i );
 
 					if(i) {
@@ -834,10 +861,10 @@
 						if(this.businessDispSchedule[i].isAvaliable) {
 							this.businessDispSchedule[i].isselected =1;
 							this.selectDateIndex =i;
-							setCookie("deliveryDateIndex",i,1);
+							this.setCookie("deliveryDateIndex",i,1);
 
 
-							console.log('cam not find coolie,generate by default' + getCookie('deliveryDateIndex'));
+							console.log('cam not find coolie,generate by default' + this.getCookie('deliveryDateIndex'));
 
 
 						//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
@@ -1372,7 +1399,9 @@
 				nextPage:function(){  // 跳转店铺说明
 					window.location.href="serviceDescription.htm"
 				},
-
+				gohome:function(){
+					window.location.href="<{$http_root_www}>"
+				},
 				datePop:function(){
 					this.isDatePop=true
 				},
@@ -1382,6 +1411,22 @@
 				clickGoods(){
 					window.location.href="<{$SKIN_PATH}>/goods/detail.htm"
 				},
+				setCookie:function (cname,cvalue,exdays){
+			var d = new Date();
+			d.setTime(d.getTime()+(exdays*24*60*60*1000));
+			var expires = "expires="+d.toGMTString();
+		//	document.cookie =cname + "=";
+			document.cookie = cname+"="+cvalue+" ; "+expires + " ; path=/;";
+		},
+		getCookie:function (cname){
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0; i<ca.length; i++) {
+				var c = ca[i].trim();
+				if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+			}
+			return "";
+		}
 			}
 		});
 

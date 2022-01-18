@@ -64,8 +64,10 @@ class corecms
 
 		$this->setData($this->lang, 'lang');
 		$this->setData( $this->getLangStr(), 'langStr' );
+      //  var_dump('this lang is :'.$this->lang);
+      //  var_dump('this langstr is :'.$this->getLangStr()); exit;
 
-		$this->tpl->config_dir		= &$GLOBALS['TPL_SM_CONFIG_DIR'];
+        $this->tpl->config_dir		= &$GLOBALS['TPL_SM_CONFIG_DIR'];
 		$this->tpl->caching			= &$GLOBALS['TPL_SM_CACHEING'];
 		$this->tpl->template_dir	= &$GLOBALS['TPL_SM_TEMPLATE_DIR'];
 		$this->tpl->compile_dir		= &$GLOBALS['TPL_SM_COMPILE_DIR'];
@@ -119,9 +121,11 @@ class corecms
 		}
 	}
 	function getLangStr() {
+      //  var_dump($GLOBALS['lang']);exit;
 		if ( isset( $GLOBALS['lang'] ) ) {
 			$lang = $GLOBALS['lang'];
-		}
+
+  	}
 		else {
 			$lang = trim( $_COOKIE['lang'] );
 		}

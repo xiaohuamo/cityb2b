@@ -223,13 +223,14 @@ class ctl_orderpaymentprocess extends cmsPage
 		 */
 		$this->loadModel('freshfood_disp_suppliers_schedule');
 		$dispCenterUserSelectedDeliveryDate = post('dispCenterUserSelectedDeliveryDate');
+       // $this->form_response_msg('time is '.$dispCenterUserSelectedDeliveryDate);
 		$parts = explode("@", $dispCenterUserSelectedDeliveryDate);
 		$dispCenterUserSelectedDeliveryDateTimestamp = count($parts)==2 ? $parts[0] : 0 ;
 		foreach (array_intersect(array_unique($businessIdList), DispCenter::getSupplierList()) as $bid) {
 			if (!DispCenter::isDeliverDateStillValid($dispCenterUserSelectedDeliveryDateTimestamp,$bid)) {
 				//修改方面还有问题。。。。。 还没有调通
 				$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间',$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
-		 		$this->form_response_msg($bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
+		 		$this->form_response_msg($bid.' '.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
 			}
 		};
 
