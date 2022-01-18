@@ -310,7 +310,7 @@ class ctl_member1 extends cmsPage
              $this->setData($cartItems, 'items');
 
             echo json_encode($cartItems);
-           
+
 
 
         }
