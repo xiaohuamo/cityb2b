@@ -88,7 +88,7 @@
 				  var self = this;
 				  //alert('here');
 				
-				 axios.get('<{$http_root_www}>member1/get_cart_details')
+				 axios.get('<{$http_root_www}>factorypage/get_cart_json_details')
 					  .then(function (response) {
 					   self.dataList = response.data;
 					   console.log(self.dataList);
@@ -225,7 +225,7 @@
 					params.append('type', type);
                    
 
-					axios.post('<{$http_root_www}>member1/update_cart_item_quantity',params)
+					axios.post('<{$http_root_www}>factorypage/update_cart_item_quantity',params)
 					  .then(function (response) {
 					   console.log(response);
 					   
@@ -242,7 +242,7 @@
 					
 					params.append('businessId', businessId);
                   
-					axios.post('<{$http_root_www}>member1/clear_cart_of_business',params)
+					axios.post('<{$http_root_www}>factorypage/clear_cart_of_business',params)
 					  .then(function (response) {
 					   console.log(response);
 					   

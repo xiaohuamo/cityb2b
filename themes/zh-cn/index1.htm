@@ -579,7 +579,10 @@
 			    }
 			},
 			computed:{
-				 allTotal() {
+				allTotal(){
+					return 0;
+				},
+				/* allTotal() {
 				 	var sum=0
 					// alert('goodlist length is :' + this.goodList.length);
                   //  alert('goods length is :' + this.goodsList.length);
@@ -591,7 +594,7 @@
 
                     sum = sum.toFixed(2);
 				 	return sum
-				 },
+				 } , */
 				ProductList_filter() {
                 let _this=this;
                 let value =_this.searchCon;
@@ -722,18 +725,18 @@
 						 console.log(error);
 					  });
 				// 获取商品列表
-				axios.get('<{$http_root_www}>member1/get_good_list?id=319188')
+				axios.get('<{$http_root_www}>factorypage/get_good_list?id=319188')
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					//   console.log(self.oldGoodsList2);
+					  console.log(self.oldGoodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
 					  });
 					
                  // 获取商品大类列表
-				axios.get('<{$http_root_www}>member1/get_category_list?id=319188')
+				axios.get('<{$http_root_www}>factorypage/get_category_list_json?id=319188')
 					  .then(function (response) {
 					   self.classifBigyList = response.data;
 					   console.log(self.classifBigyList);
@@ -748,7 +751,7 @@
 				},
 				addDataToTable:function(itemData)
 					{
-                      var url = '<{$http_root_www}>member1/add_item_temp_cart_table'; 
+                      var url = '<{$http_root_www}>factorypage/add_item_temp_cart_table';
                    //   console.log(itemData);
 					//var businessId =319188;
 
@@ -758,7 +761,7 @@
 					params.append('itemlist', JSON.stringify(itemData));
 					params.append('businessId', 319188);
                   
-					axios.post('<{$http_root_www}>member1/add_item_temp_cart_table',params)
+					axios.post('<{$http_root_www}>factorypage/add_item_temp_cart_table',params)
 
 						 .then(function(res) {
 							console.log(res);

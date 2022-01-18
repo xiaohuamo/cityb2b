@@ -583,7 +583,7 @@
 				  var self = this;
 				 // alert('here');
 				
-				 axios.get('<{$http_root_www}>member1/get_cart?businessUserId=<{$businessUserId}>')
+				 axios.get('<{$http_root_www}>factorypage/get_cart_json?businessUserId=<{$businessUserId}>')
 					  .then(function (response) {
 					   self.goodsList = response.data;
 					   console.log(self.goodsList);
@@ -592,7 +592,7 @@
 						 console.log(error);
 					  });
 				// 获取商品列表
-				axios.get('<{$http_root_www}>member1/get_good_list?id=319188')
+				axios.get('<{$http_root_www}>factorypage/get_good_list?id=319188')
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
 					   console.log(self.goodsList2);
