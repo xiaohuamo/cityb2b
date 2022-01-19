@@ -63,7 +63,7 @@
 				<div class="flexBox6">
 					<div class="bigclassify">
 						<div class="classify" @click="choseBigClassify(index,item.id)" v-for="(item,index) in classifBigyList" :class="currentBigClassify==index?'colFD5001':''">
-						{{item.title_en}}
+						<span v-if="isLanguageEn">{{item.title_en}}</span> <span v-else>{{item.title_cn}}</span>
 						</div>
 					</div>
 					<div class="flexBox2">
@@ -79,7 +79,7 @@
 							<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==-1"/>  
 						</div>
 						<div class="classify2" v-for="(item,index) in classifyList2" @click="choseClassify(index,item.id)">
-						    {{item.title_en}}
+							<span v-if="isLanguageEn">{{item.title_en}}</span> <span v-else>{{item.title_cn}}</span>
 						    <img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==index"/>  
 						</div>
 					</div>
@@ -98,13 +98,14 @@
 			
 			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
 				<div v-for="(item,index) in classifBigyList" class="w33 center pmb10" @click="clickdetailBig(item.id,index)">
-					{{item.title_en}}
+					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
 				</div>
 			</div>
 
 			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory">
 				<div v-for="(item,index) in classifyList2" class="w33 center pmb10" @click="clickdetailSub(item.id,index)">
-					{{item.title_en}}
+					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
+
 				</div>
 			</div>
 
@@ -130,20 +131,32 @@
 						<div :class="layout?'':'flexBox3'">
 							
 							<div class="goodInfo2_" style="height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
-								<div class="classify colFD5001 bold">{{item2.parent_cate_en_name}}</div>
-								
+
+								<div class="classify colFD5001 bold" v-if="isLanguageEn" >{{item2.parent_cate_en_name}}</div>
+								<div class="classify colFD5001 bold" v-else>{{item2.parent_cate_cn_name}}</div>
 								
 							</div>	
 							<div class="goodInfo2_" style="height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">
 								
-								<div v-if="item2.sub_cate_en_name !='0'" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cate_en_name}}</div>
-							</div>		
+								<div v-if="item2.sub_cate_en_name !='0' && isLanguageEn" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cate_en_name}}</div>
+
+								<div v-if="!isLanguageEn" class="classify colFD5001 bold">
+
+
+									<span v-if="!item2.sub_cat_cn_name">{{item2.parent_cat_cn_name}}-{{item2.sub_cat_cn_name}}</span>
+									<span v-else>{{item2.parent_cat_cn_name}}<span v-if="item2.sub_cate_en_name!=0">-{{item2.sub_cate_en_name}}</span></span>
+
+								</div>
+
+
+							</div>
 
 						</div>
 						<div :class="layout?'':'flexBox3'">
-							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" />
+							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
+							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
 							<div class="goodInfo2_">
-								<div >{{item2.title}}</div><div v-if="CheckChinese(this.searchCon)">{{item2.title_cn}}</div>
+								<div >{{item2.title}}</div><div class ="f28" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
 								<div class="flexBox1 price" v-if="item2.hasGG==0">
 									<span class="colFD5001">${{item2.price}}</span>
 									<div class="flexBox2">
@@ -240,10 +253,14 @@
 			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
 				<div class="bgfff cartPop">
 					<img src="<{$SKIN_PATH}>/img/cha2.png" @click="closePop('c')" class="close3"/>
-					<div class="center col333 f30 pa15-0 borderB">共{{goodsList.length}}件</div>
+
+					<div class="center col333 f30 pa15-0 borderB" v-if="isLanguageEn">共{{goodsList.length}}件</div>
+					<div class="center col333 f30 pa15-0 borderB" v-else>Total {{goodsList.length}} items</div>
+
 					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" >
 						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
-							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods"/>
+							<img :src="item2.menu_pic" class="cartImgLarge"  @click.stop="clickGoods" v-if="isLargeScreen"/>
+							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods" v-else/>
 							<div class="goodInfo2_">
 								<div >{{item2.title}}</div><div v-if="item2.guige_ids">{{item2.guige_des}}</div>
 								<div class="flexBox1 price">
@@ -564,6 +581,7 @@
 				scrollDownCount:0,
 				scrollUpCount:0,
 				user_setting:[],
+				isLargeScreen:0,
 
 			},
 			mounted:function(){
@@ -646,7 +664,11 @@
 				this.selectDefaultDeliveryDate();
 				console.log(this.businessDispSchedule);
 
-
+				// 判断屏幕宽度
+				if(window.innerWidth>=500){
+					this.isLargeScreen=1;
+				}
+             //    console.log('window width is :' + window.innerWidth);
 
                 // 获得当前的语言环境
 				this.isLanguageEn =parseInt('<{$user_setting}>');
@@ -726,7 +748,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					//   console.log(self.oldGoodsList2);
+					   console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
