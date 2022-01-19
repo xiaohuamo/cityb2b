@@ -128,7 +128,9 @@
 				<!-- 橫版判斷 -->
 				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
 					<div :class="layout?'bgfff goodsbox':''" class="pa15bottom5 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
-						<div :class="layout?'':'flexBox3'">
+
+
+							<div :class="layout?'':'flexBox3'"  >
 							
 							<div class="goodInfo2_" style="height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
 
