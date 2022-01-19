@@ -115,7 +115,7 @@ class ctl_member extends cmsPage
 
 		$share_icon_link = ($this->loadModel('referral_rule_application')->getUserRuleList($this->loginUser['id'])>0)?HTTP_ROOT_WWW.'referal/manage_referral_rule_application':HTTP_ROOT_WWW.'referal/referrals?type=user';
 		$this->setData($share_icon_link,'share_icon_link');
-		$this->display_pc_mobile('member/index','mobile/member/index');
+		$this->display_pc_mobile('mobile/member/index','mobile/member/index');
 	}
 	
 	
@@ -1545,7 +1545,8 @@ class ctl_member extends cmsPage
 			}
 
 			$redirect_uri = HTTP_ROOT_WWW;
-			if($this->returnUrl){
+          //  var_dump($this->returnUrl);exit;
+			if(($this->returnUrl) && ($this->returnUrl !='/member/index')){
 				$redirect_uri = HTTP_ROOT.$this->returnUrl;
 			}elseif($user['role']==3 || $user['role']==6 || $user['role']==20 ){
 
