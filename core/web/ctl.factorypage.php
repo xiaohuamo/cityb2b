@@ -193,61 +193,17 @@ class ctl_factorypage extends cmsPage
             $returnUrl ='/supplier/'.$id ;
             $url = HTTP_ROOT . "member/login?returnUrl=" . urlencode($returnUrl);
             $this->sheader( $url);
-         //   $this->sheader(null, 'Please login in and place the order ');
+
         }
 
 
-        //插入一段获取某用户购买历史的程序
-        $deliveryTime = $this->cookie->getCookie('DispCenterUserSelectedDeliveryDate');
+
 
 
       if($userId) {
 
-          $menu_bought_list = $this->loadModel("restaurant_menu")->getUserBoughtMenu($userId, $id, $deliveryTime, $this->lang['lang'][0]);
 
-          $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
-          $mdl_user_factory = $this->loadModel('user_factory');
-          $userFactoryMenuPrices = $mdl_user_factory_menu_price->getUserFactoryPriceList($userId, $id);
-
-          foreach ($menu_bought_list as $key => $value) {
-              $show_origin_price = $mdl_user_factory->getByWhere([
-                  'user_id' => $id,
-                  'factory_id' => $this->loginUser['id']
-              ])['show_origin_price'];
-              if(!$show_origin_price) {
-                  $menu_bought_list[$key]['price'] = 0;
-              }
-
-              if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
-                  $menu_bought_list[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
-              }
-          }
-
-
-          //var_dump(menu_bougt_list);exit;
-          //加载配菜
-          $mdl_sidedish_menu=$this->loadModel('restaurant_sidedish_menu');
-          foreach ($menu_bought_list as $key => $value) {
-              if($menu_bought_list[$key]['sidedish_category']>0){
-                  $menu_bought_list[$key]['sidedish_menu']=$mdl_sidedish_menu->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['sidedish_category']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
-
-
-
-              }
-          }
-
-          //加载菜品规格
-          $mdl_menu_option=$this->loadModel('restaurant_menu_option');
-          foreach ($menu_bought_list as $key => $value) {
-              if($menu_bought_list[$key]['menu_option']>0){
-                  $menu_bought_list[$key]['menu_option_list']=$mdl_menu_option->getList(null,array('restaurant_id'=>$menu_bought_list[$key]['restaurant_id'],'restaurant_category_id'=>$menu_bought_list[$key]['menu_option']," (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
-
-
-
-              }
-          }
-
-          $this->setData($menu_bought_list, 'menu_bought_list');
+      //    var_dump($menu_bought_list);exit;
 
           if($this->loginUser['password'] == $this->loginUser['init_password']) {
               $this->setData(true, 'need_update');
@@ -257,13 +213,7 @@ class ctl_factorypage extends cmsPage
           }
 
 
-          $show_origin_price = $mdl_user_factory->getByWhere([
-              'user_id' => $this->loginUser['id'],
-              'factory_id' => $id
-          ])['show_origin_price'];
-          $this->setData($show_origin_price, 'show_origin_price');
 
-          $this->setData($mdl_user_factory->isUserApproved($userId, $id), 'userApproved');
 
 
       }
@@ -368,12 +318,6 @@ class ctl_factorypage extends cmsPage
 
 
 
-
-
-        $restaurant_category = self::get_category_list($id);
-        $this->setData($restaurant_category, 'restaurant_category');
-
-        $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id), 'storeOverWriteLink');
 
         $this->display_pc_mobile('index1', 'index1'); /*placeorder/index*/
 

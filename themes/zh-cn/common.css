@@ -332,6 +332,9 @@ body{
 .pa5-0{
 	padding:5px 0px;
 }
+.pa3-0{
+	padding:2px 0px;
+}
 .pa4-0-4-0{
 	padding:4px 0px 4px 0px;
 }
@@ -376,6 +379,9 @@ padding:2px;
 }
 .maT15{
 	margin-top: 15px !important;
+}
+.maL04rem{
+	margin-left: 0.4rem;
 }
 .star{
 	width: 1.5625rem;

@@ -62,9 +62,19 @@ class mdl_restaurant_menu extends mdl_base
 
         $sql_sum = "select * from  (select * from  ($sql_parent_cate_good_list ) as a union select * from ($sql_sub_cate_good_list) as b union select * from ($sql_main_table) as c )  as  bb order by parent_category_id,sub_category_id  ";
 
+
+        $sql_bought ="select a.restaurant_menu_id  as id from cc_wj_customer_coupon a   where userId = $userid and business_id =$factory_id  group by a.menu_id  ";
+
+
+        $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id ";
+
+
+
+
+
       // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
-        $goodList =$this->getListBySql($sql_sum);
-       // var_dump($sql_sum);exit;
+        $goodList =$this->getListBySql($sql_sum_final);
+      //  var_dump($sql_sum_final);exit;
         // get the temp carts record of current user of the business .
 
         $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.guige_des,a.guige_ids,a.menu_id as id   from cc_wj_user_temp_carts a
@@ -96,12 +106,6 @@ class mdl_restaurant_menu extends mdl_base
         }
 
 
-
-
-
-
-
-
         foreach ($cartItems as $key => $value) {
             foreach ($goodList as $keysub =>$valuesub){
                 if($value['id']==$valuesub['id']){
@@ -114,12 +118,83 @@ class mdl_restaurant_menu extends mdl_base
 
         }
 
+
+
+                
+
+
      //  var_dump($goodList);exit;
         return $goodList;
 
     }
 
+    public function getUserBoughtMenu_new($userId, $businessId)
+    {
+/*
+  1) 处理过程
+    获得 bought list 并已大类进行排询；
+        拿到大类后，建立一个大类列表，填充已购买的二级分类
 
+        点击已购买，可以弹出二级分类，点击二级分类，可以到指定的地方。
+
+        可能需要将这个产品列表封装到good_list2中，做为一个大类， 然后他的小类封装到小类里面。》》》》》》
+
+*/
+
+        $sql = "SELECT d.cn_displayName as category_cn_name ,
+                    d.en_displayName as category_en_name ,
+                    a.business_id as category_id,
+                    c.category_sort_id,
+                    a.`restaurant_menu_id`,
+                    a.`bonus_title`,
+                    sum(a.customer_buying_quantity) as sumofbuy ,
+                    b.*  
+                FROM `cc_wj_customer_coupon` a 
+                left join cc_restaurant_menu b on a.restaurant_menu_id = b.id  
+                left join cc_restaurant_category c on b.restaurant_category_id =c.id 
+                WHERE a.business_id =$businessId and a.userId=$userId  and a.restaurant_menu_id is not null 
+                and (b.menu_cn_name <> '' or b.menu_en_name <> '')
+               
+                group by a.restaurant_menu_id  
+                order by sumofbuy desc";
+
+        $menu = $this->getListBySql($sql);
+
+        $old_cat = "";
+        foreach ($menu as $key => $value) {
+            $menu[$key]['onSpecial'] = 0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
+            if ($value['original_price'] <= 0) { //如果原价为空
+                $menu[$key]['original_price'] = $value['price'];
+            }
+
+            $new_cat = $value['category_id'];
+            // 如果en不为空，则保存en cate名称
+            if (! $value['category_en_name']) {
+                $menu[$key]['category_en_name'] = $value['category_cn_name'];
+            }
+
+            //根据语言类型 统一处理中英文显示
+            if ($lang == '简体中文') {
+                $menu[$key]['category_name'] = $value['category_cn_name'];
+                $menu[$key]['menu_name'] = $value['menu_cn_name'];
+            } else {
+                if ($lang == 'English') {
+                    $menu[$key]['category_name'] = $value['category_en_name'];
+                    $menu[$key]['menu_desc'] = $value['menu_en_desc'];
+                    $menu[$key]['menu_name'] = $value['menu_cn_name'];
+                }
+            }
+
+            if ($old_cat <> $new_cat) {
+                $menu[$key]['new_cat'] = $new_cat;//新种类意味着需要在前端标示
+                $old_cat = $new_cat;
+            } else {
+                $menu[$key]['new_cat'] = 0;//如果种类和前边的相同怎不用特别标注
+            }
+        }
+
+        return $menu;
+    }
     public function getUserBoughtMenu($userId, $businessId, $deliveryTime, $lang = '简体中文')
     {
         //通过送货日期筛选可以包括在内的商家
