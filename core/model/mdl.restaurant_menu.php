@@ -60,13 +60,13 @@ class mdl_restaurant_menu extends mdl_base
        ";
 
 
-        $sql_sum = "select * from  (select * from  ($sql_parent_cate_good_list ) as a union select * from ($sql_sub_cate_good_list) as b union select * from ($sql_main_table) as c )  as  bb order by parent_category_id,sub_category_id  ";
+        $sql_sum = "select * from  (select * from  ($sql_parent_cate_good_list ) as a union select * from ($sql_sub_cate_good_list) as b union select * from ($sql_main_table) as c )  as  bb  ";
 
 
         $sql_bought ="select a.restaurant_menu_id  as id from cc_wj_customer_coupon a   where userId = $userid and business_id =$factory_id  group by a.menu_id  ";
 
 
-        $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id ";
+        $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id  order by parent_category_id,sub_category_id ";
 
 
 

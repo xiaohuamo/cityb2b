@@ -41,16 +41,32 @@
 						<img src="<{$SKIN_PATH}>img/xxx.png" class="xxx" @click="layoutChange"/>
 					</div>
 				</div> -->
+				<div class="bigclassifyall ">
+                   <div style="width:33%;display: inline-block;">
+					   <div class="classifyAll bold " :class="isBought==0?'colFD5001':''" @click="rangeOfproduct(1)" > <!-- -->
+						   <span v-if="isLanguageEn">All</span> <span v-else>全部</span>
+					   </div>
 
-				<div class="searchhead" >
-				 <!--	<div class="searchBox flexBox1" v-if="layout"  style=";    margin-bottom: 10px;"> -->
-				<div class="searchBox flexBox1"   style=";    margin-bottom: 10px;">
-						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
-						<input v-model="searchCon" placeholder="Please Input .." style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-if="isLanguageEn"/>
-					    <input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-else/>
-					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+
+
+					   <div class="classifyAll bold" :class="isBought==1?'colFD5001':''" @click="rangeOfproduct(0)">
+						   <span v-if="isLanguageEn">Bought</span><span v-else>已购</span>
+
+					   </div>
+
+				   </div>
+
+					<div class="searchhead" style="width:66%;">
+						<!--	<div class="searchBox flexBox1" v-if="layout"  style=";    margin-bottom: 10px;"> -->
+						<div class="searchBox flexBox1"   style=";    margin-bottom: 10px;">
+							<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
+							<input v-model="searchCon" placeholder="Please Input .." style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-if="isLanguageEn"/>
+							<input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-else/>
+							<img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+						</div>
 					</div>
 				</div>
+
 			<!--	<div class="searchhead"  v-else> 
 					<div class="searchBox flexBox1" style="margin-bottom: 10px;">
 						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
@@ -61,18 +77,7 @@
 				 	
 				 <!-- 一级分类 -->
 				<div class="flexBox6">
-					<div class="bigclassifyall ">
-						<div class="classifyAll bold " :class="isBought==0?'colFD5001':''" @click="rangeOfproduct(1)" > <!-- -->
-							<span v-if="isLanguageEn">All</span> <span v-else>全部</span>
-						</div>
 
-
-
-					<div class="classifyAll bold" :class="isBought==1?'colFD5001':''" @click="rangeOfproduct(0)">
-						<span v-if="isLanguageEn">Bought</span><span v-else>已购</span>
-
-					</div>
-					</div>
 
 					<div class="bigclassify">
 
@@ -141,12 +146,16 @@
 					<div :class="layout?'bgfff goodsbox':''" class="pa15bottom5 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
 
 
-							<div :class="layout?'':'flexBox3'"  >
+							<div :class="layout?'':'flexBox3'" pa5-0 >
 							
 							<div class="goodInfo2_" style="height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
 
 								<div class="classify colFD5001 bold" v-if="isLanguageEn" >{{item2.parent_cate_en_name}}</div>
-								<div class="classify colFD5001 bold" v-else>{{item2.parent_cate_cn_name}}</div>
+								<div class="classify colFD5001 bold" v-else>
+									<span v-if="item2.parent_cate_cn_name">{{item2.parent_cate_cn_name}}</span>
+									<span v-else>{{item2.parent_cate_en_name}}</span>
+
+								</div>
 								
 							</div>	
 							<div class="goodInfo2_" style="height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">

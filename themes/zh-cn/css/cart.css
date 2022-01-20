@@ -336,13 +336,13 @@ input[type='checkbox']:checked::after {
 	height: 5px;
 }
 .bigclassify{
-	width: calc(100% - 0rem);
+	width: calc(100% - 4rem);
 	overflow: scroll; /*超出部分滚动不换行*/
 	white-space: nowrap; /*超出不换行，必须加，否则横向超出部分会自动换行*/
 }
 
 .bigclassifyall{
-	width: 11rem;
+	/*width: 11rem; */
 	overflow: scroll; /*超出部分滚动不换行*/
 	white-space: nowrap; /*超出不换行，必须加，否则横向超出部分会自动换行*/
 }
