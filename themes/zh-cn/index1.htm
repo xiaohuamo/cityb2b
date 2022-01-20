@@ -118,7 +118,7 @@
 				</div>
 			</div>
 
-			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory">
+			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory" >
 				<div v-for="(item,index) in classifyList2" class="w33 center pmb10" @click="clickdetailSub(item.id,index)">
 					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
 
@@ -143,12 +143,13 @@
 				
 				<!-- 橫版判斷 -->
 				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
+
 					<div :class="layout?'bgfff goodsbox':''" class="pa15bottom5 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
 
 
 							<div :class="layout?'':'flexBox3'" pa5-0 >
 							
-							<div class="goodInfo2_" style="height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
+							<div class="goodInfo2_" style="display:inline; height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
 
 								<div class="classify colFD5001 bold" v-if="isLanguageEn" >{{item2.parent_cate_en_name}}</div>
 								<div class="classify colFD5001 bold" v-else>
@@ -156,10 +157,10 @@
 									<span v-else>{{item2.parent_cate_en_name}}</span>
 
 								</div>
-								
-							</div>	
-							<div class="goodInfo2_" style="height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">
-								
+
+							</div>
+							<div class="goodInfo2_" style="display:inline;height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">
+
 								<div v-if="item2.sub_cate_en_name !='0' && isLanguageEn" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cate_en_name}}</div>
 
 								<div v-if="!isLanguageEn" class="classify colFD5001 bold">
@@ -606,6 +607,7 @@
 				isLargeScreen:0,
 				isBought:0,
 
+
 			},
 			mounted:function(){
 			  
@@ -699,6 +701,8 @@
 				 
 			},
 			mounted:function(){
+
+				var _self =this;
 				window.addEventListener('scroll', this.scrollToTop);
 
 
@@ -730,7 +734,7 @@
 
 				console.log('important !current language is :' + this.isLanguageEn);
 				//this.choseBigClassify(0,0); //默认显示第一个大分类的小分类
-
+				//console.log('jere' + _self.classifBigyList);
 			},
 		    methods:{
 			
@@ -781,6 +785,12 @@
 				
 					this.isclassifyPop=false
 					this.isclassifyPopSubCategory =false
+
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
 		    	},createcode:function(){
 				  var self = this;
 				 // alert('here');
@@ -811,6 +821,7 @@
 				axios.get('<{$http_root_www}>factorypage/get_category_list_json?id=319188')
 					  .then(function (response) {
 					   self.classifBigyList = response.data;
+					   self.classifyList2=self.classifBigyList[0].subCategoryList;
 					   console.log(self.classifBigyList);
 					 })
 					  .catch(function (error) {
@@ -1393,11 +1404,14 @@
 						return false
 					}
 				},
-				classifyPopSubCategory:function(){  // 分类弹出框
-					if(this.scroll){
-						this.isclassifyPopSubCategory=!this.isclassifyPopSubCategory
-					}else{
+				classifyPopSubCategory:function() {  // 分类弹出框
+					if (this.classifyList2.length > 0) {
+
+					if (this.scroll) {
+						this.isclassifyPopSubCategory = !this.isclassifyPopSubCategory
+					} else {
 						return false
+					}
 					}
 				},
 				rangeOfproduct:function(type){
@@ -1418,7 +1432,11 @@
 					if(parseInt(id)>0) {
 						this.scrollToId(id);
 					}
-
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
 					
                       
 					//console.log(this.classifyList2);
@@ -1437,6 +1455,12 @@
 					this.isclassifyPop=false
 					this.isclassifyPopSubCategory =false
 					this.scrollToId(id);
+					//alert('here');
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
 					
 				},
 				clickdetailSub:function(id,index){
