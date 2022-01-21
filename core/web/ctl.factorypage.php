@@ -279,12 +279,7 @@ class ctl_factorypage extends cmsPage
         $where1 = [
             'restaurant_id' => $id,
         ];
-        $mdl_restaurant_promotion_manjian = $this->loadModel("restaurant_promotion_manjian");
-        $restaurant_promotion_manjian = $mdl_restaurant_promotion_manjian->getByWhere($where1);
-        $menu = self::get_menu_list($id, $restaurant_coupon, $restaurant_promotion_manjian);
-        $this->setData((int) (count($menu) / $default_menu_page_items), 'menu_pages');
-        $this->setData(array_slice($menu, 0, $default_menu_page_items), 'menu');
-        $this->setData(1, 'lazyload');
+
 
 
         //获得当前店铺得 订货时间
@@ -2284,7 +2279,8 @@ class ctl_factorypage extends cmsPage
             // $sql = "SELECT b.restaurant_category_id,category_sort_id,category_cn_name,category_en_name,a.*,b.menu_pic as pic,d.pic as coupon_pic ,e.displayName,e.businessName FROM `cc_wj_user_temp_carts` a left join `cc_restaurant_menu` b on b.id=a.`menu_id` left join `cc_restaurant_category` c on c.id=b.restaurant_category_id left join cc_coupons d on d.id=a.main_coupon_id   left join cc_user e on e.id=a.businessUserId where a.userId=".$userId."   and businessUserId =$id order by businessUserId,category_sort_id,b.menu_id";
             // $cartItems = $mdl_wj_user_temp_carts->getListBySql($sql);
             $uploadPath =UPLOAD_PATH;
-            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.single_amount as price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic
+            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.single_amount as price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic,
+            ifnull(b.unit,b.unit_en) as unit, ifnull(b.unit_en,b.unit) as unit_en 
             from cc_wj_user_temp_carts a 
                 left join cc_restaurant_menu b on a.menu_id =b.id 
             where a.userId=$userId and a.businessUserId=$id ";
@@ -2321,55 +2317,7 @@ class ctl_factorypage extends cmsPage
                         $mdl_wj_user_temp_carts->delete($val['idd']);
                     }
 
-                    ///如果是特价产品
-                    if ($val['onSpecial']) {
 
-                        if ($menu_rec['speical_price'] != $val['single_amount']) {
-
-
-                            $new_item_price_data = [
-                                'single_amount' => $menu_rec['speical_price'],
-                            ];
-                            $mdl_wj_user_temp_carts->update($new_item_price_data, $val['idd']);
-                        }
-                    } else {
-
-                        // 如果在菜单中找到该产品，检查价格是否和菜单中描述一致，不一致，则更新
-                        if ($menu_rec['price'] != $val['single_amount']) {
-
-
-                            $new_item_price_data = [
-                                'single_amount' => $menu_rec['price'],
-                            ];
-                            $mdl_wj_user_temp_carts->update($new_item_price_data, $val['idd']);
-                        }
-                    }
-
-                    // 如果在菜单中找到该产品，检查库存是否溢出，如果溢出，则把库存调整到当前最大值
-
-                    if ($menu_rec['qty'] < $val['quantity']) {
-                        $new_item_quantity_data = [
-                            'quantity' => $menu_rec['qty'],
-                        ];
-                        $mdl_wj_user_temp_carts->update($new_item_quantity_data, $val['idd']);
-                    }
-
-                    $show_origin_price = $this->loadModel('user_factory')->getByWhere([
-                        'user_id' => $userId,
-                        'factory_id' => $id
-                    ])['show_origin_price'];
-
-                    if(!$show_origin_price) {
-                        $mdl_wj_user_temp_carts->update([
-                            'single_amount' => 0,
-                        ], $val['idd']);
-                    }
-
-                    if (array_key_exists($val['idd'], $userFactoryMenuPrices)) {
-                        $mdl_wj_user_temp_carts->update([
-                            'single_amount' => $userFactoryMenuPrices[$val['idd']]['price'],
-                        ], $val['idd']);
-                    }
                 }
             }
 
@@ -2585,7 +2533,13 @@ class ctl_factorypage extends cmsPage
                 $subdata ['isTouch'] =false;
                 $subdata ['status'] =0;
                 $subdata['menu_pic'] =$value1['menu_pic'];
+                $subdata['unit'] =$value1['unit'];
+                $subdata['unit_en'] =$value1['unit_en'];
+                $subdata['guige_des'] =$value1['guige_des'];
+                $subdata ['title_cn'] =$value1['title_cn'];
+                $subdata ['title_en'] =$value1['title_en'];
                 $goodlist[$key1] =$subdata;
+
             }
             $data[$key]['goodsList'] = $goodlist;
 

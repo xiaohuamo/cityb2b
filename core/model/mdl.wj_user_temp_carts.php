@@ -140,7 +140,12 @@ class mdl_wj_user_temp_carts extends mdl_base
 	 * @return [Array]                Items
 	 */
 	function getDetailedItemOfBusiness($userId,$businessUserId){
-        $sql="select w.*,a.*,concat('/data/upload/',c.menu_pic) as menu_pic,b.pic,b.bonusType,b.sales_user_list,b.pickup_avaliable,b.deliver_avaliable,b.perCustomerLimitQuantity,b.EvoucherOrrealproduct from #@_wj_user_temp_carts a LEFT JOIN #@_coupons as b  on  b.id =a.main_coupon_id LEFT JOIN #@_wholesale AS w ON w.couponid=a.main_coupon_id left join cc_restaurant_menu c on c.id =a.menu_id where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order by a.main_coupon_id ,a.sub_coupon_id  ";
+        $sql="select w.*,a.*,concat('/data/upload/',c.menu_pic) as menu_pic,b.pic,b.bonusType,b.sales_user_list,b.pickup_avaliable,b.deliver_avaliable,b.perCustomerLimitQuantity,b.EvoucherOrrealproduct ,
+        ifnull(c.unit,c.unit_en) as unit, ifnull(c.unit_en,c.unit) as unit_en ,c.menu_cn_name as title_cn , c.menu_en_name as title_en
+from #@_wj_user_temp_carts a LEFT JOIN #@_coupons as b  on  b.id =a.main_coupon_id
+    LEFT JOIN #@_wholesale AS w ON w.couponid=a.main_coupon_id 
+    left join cc_restaurant_menu c on c.id =a.menu_id 
+where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order by a.main_coupon_id ,a.sub_coupon_id  ";
 
         $data=$this->getListBySql($sql);
         $mdl_menu = loadModel('restaurant_menu');

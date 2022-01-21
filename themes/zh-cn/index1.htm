@@ -243,6 +243,7 @@
 						<img :src="guige1Info[0]" class="cartImg"/>
 						<div class="goodInfo2 textLeft">
 							<div class="bold">{{guige1Info[1]}}</div>
+							<div class="pa5-0">{{guige1Info[5]}}</div>
 							<div class="flexBox1 price">
 
 								<span class="colFD5001" v-if="{selectedGuige1Item}">${{selectedGuige1Item['price']}}</span>
@@ -253,7 +254,11 @@
 						</div>
 					</div>
 					<div class="pa0-15">
-						<div class="f28 col333 textLeft bold pa15-0">{{guige1Info[4][4]}}</div>
+						<div class="f28 col333 textLeft bold pa15-0" v-if="isLanguageEn">{{guige1Info[4][5]}}</div>
+						<div class="f28 col333 textLeft bold pa15-0" v-else>
+							<span v-if="guige1Info[4][4].length>0">{{guige1Info[4][4]}} </span>	<span v-else>{{guige1Info[4][5]}} </span>
+
+						</div>
 						<div class="flexBox2 wrap">
 							<div :class="current1==index?'checkedBtn detail_btn_45':'detail_btn_45'" v-for="(item,index) in guige1List" @click.stop="choseGuige(index,1)">
 
@@ -282,7 +287,7 @@
 			<!-- 购物车弹出框 -->
 			
 			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
-				<div class="bgfff cartPop">
+				<div class="bgfff cartPop" @click="closePop('n')" >
 					<img src="<{$SKIN_PATH}>/img/cha2.png" @click="closePop('c')" class="close3"/>
 
 					<div class="center col333 f30 pa15-0 borderB" v-if="isLanguageEn">共{{goodsList.length}}件</div>
@@ -294,8 +299,12 @@
 							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods" v-else/>
 							<div class="goodInfo2_">
 								<div >{{item2.title}}</div><div v-if="item2.guige_ids">{{item2.guige_des}}</div>
+
+								<div class="pa5-0" v-if="isLanguageEn">{{item2.unit_en}}</div>
+								<div class="pa5-0" v-else>		{{item2.unit}}		</div>
+
 								<div class="flexBox1 price">
-									<span class="colFD5001">{{item2.price}}</span>
+									<span class="colFD5001">${{item2.price}}</span>
 									<div class="flexBox2">
 										<div class="numreduce" @click.stop="numreduceCart(index2,'c')"></div>
 										<input type="number" v-model="item2.num" class="numInput"  @focus="focus($event,index2,'c')" @click.stop="EnterCart(item2.num,index2)" @change.stop="EnterCart(item2.num,index2)"/>
@@ -783,9 +792,9 @@
 					}
                 
 
-                    console.log(this.ScrollDirection);
+                 //   console.log(this.ScrollDirection);
 					this.scrollOldPosition =scrollTop;
-					console.log(scrollTop);
+				//	console.log(scrollTop);
 		    	},scrollToId:function(id){
                     //alert(id);
 		    		document.getElementById(id).scrollIntoView(true);
@@ -813,7 +822,7 @@
 
 					//	   alert('good lists is : ' +self.goodsList);
 
-					//   console.log('cart_date is :' +self.goodsList);
+					  console.log('cart_date is :' +self.goodsList);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -857,7 +866,7 @@
 
 					params.append('itemlist', JSON.stringify(itemData));
 					params.append('businessId', 319188);
-                  
+
 					axios.post('<{$http_root_www}>factorypage/add_item_temp_cart_table',params)
 
 						 .then(function(res) {
@@ -1232,7 +1241,9 @@
 						menu_pic:goodItem.menu_pic,
 						id:goodItem.id,
 						guige_ids:0,
-						guige_des:''
+						guige_des:'',
+						unit:goodItem.unit,
+						unit_en:goodItem.unit_en
 					}];					
 					this.goodsList.push(this.newitem[0]);
 				
@@ -1249,7 +1260,10 @@
 						menu_pic:goodItem.menu_pic,
 						id:goodItem.id,
 						guige_ids:this.selectedGuige1Item.id,
-						guige_des:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name
+						guige_des:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name,
+						unit:goodItem.unit,
+						unit_en:goodItem.unit_en
+
 					}];					
 					this.goodsList.push(this.newitem[0]);
 				
@@ -1414,7 +1428,8 @@
 					this.guige1Info[2] =item['title_cn'];
 					this.guige1Info[3] =this.GetGuigeMinPrice(item);
 					this.guige1Info[4] =item['guige_des1'];
-
+					this.guige1Info[5] =item['unit_en'];
+					this.guige1Info[6] =item['unit'];
                     //赋值 规格列表
 					this.guige1List =item['menu_option_list'];
 
@@ -1458,6 +1473,10 @@
 						this.currentOnfucsInputItemIndexCart =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
 					}else if(source=='d'){
 						this.isDatePop=false
+					}else if(source=='n'){
+						alert('here');
+						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
+						return 1;
 					}else{
 						this.isPop=false;
 						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦

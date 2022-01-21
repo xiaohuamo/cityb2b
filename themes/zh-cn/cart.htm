@@ -29,7 +29,9 @@
 						<input type="checkbox" name="btn" class="mycheckbox2" :checked="item2.status==1" @click="choseGood(index,index2)"/>
 						<img :src="item2.menu_pic" class="cartImgSmall"/>
 						<div class="goodInfo2">
-							<div>{{item2.title}}</div>
+							<div v-if="isLanguageEn">{{item2.title_en}}</div><div v-else>{{item2.title_en}}&nbsp;{{item2.title_cn}}</div>
+						    <div v-if="item2.guige_des">{{item2.guige_des}}</div>
+						    <div v-if="isLanguageEn">{{item2.unit_en}}</div>  <div v-else>{{item2.unit}}</div>
 							<div class="flexBox1 price">
 								<span class="colFD5001">${{item2.price}}</span>
 								<div class="flexBox2">
@@ -54,7 +56,7 @@
 						<img src="<{$SKIN_PATH}>/img/cartDelete.png" class="cartDelete" @click="empty(index)"/>
 					</div>
 					<div class="flexBox1">
-						<div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-if="isLanguageEn">Back</div><div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-else>我再逛逛</div>
+						<div class="cartBtn f25 colFD5305 again" @click="LookAgain(item.business_userId)" v-if="isLanguageEn">Back</div><div class="cartBtn f25 colFD5305 again" @click="LookAgain(item.business_userId)" v-else>我再逛逛</div>
 						<div class="cartBtn f25 colfff" @click="placeOrder(item.business_userId)" v-if="isLanguageEn">Buy</div><div class="cartBtn f25 colfff" @click="placeOrder(item.business_userId)" v-else>下单</div>
 					</div>
 				</div>
@@ -212,8 +214,8 @@
 					
 					this.dataList[index].goodsList.splice(index2,1)
 				},
-				LookAgain:function(){   // 再逛逛
-					window.location.href="<{$http_root_www}>factorypage/place_order"
+				LookAgain:function(businessId){   // 再逛逛
+					window.location.href="<{$http_root_www}>supplier/" +businessId;
 				},
 				placeOrder:function(businessId){    // 下单
 					window.location.href="<{$http_root_www}>member/showcart?checkout=1&business_userid=" +businessId

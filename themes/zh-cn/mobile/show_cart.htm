@@ -168,7 +168,13 @@
 
 
                 </div>
-                <div class="continue sure"  @click="closePop('d')" >确定</div>
+				
+
+                <div class="continue sure"  @click="closePop('d')" v-if="isLanguageEn" >Confirm</div>
+				  <div class="continue sure"  @click="closePop('d')" v-else>确定</div>
+				
+				
+				
             </div>
         </div>
     </div>
@@ -704,9 +710,8 @@
        <div class="bgfff borR7 ma15 f28 col282828 ">
 
            <div class="order-pay" style="    padding-top: 10px;    border-radius: 7px;    border-bottom: 0px solid #e2e2e2;    padding-bottom: 10px;">
-               <p class="pmb5 bold  use-money-btn">购物清单
-
-               </p>
+               <p class="pmb5 bold  use-money-btn" > <{$lang->orderLists}> </p>
+			  
            </div>
 
          <div class="order-info order-info-1">
@@ -727,32 +732,47 @@
                         <{/if}>
                     </div>
                     <div class="con">
-                        <h4 style="white-space: normal;"> <{if $langStr=='en'}> <{if $item.coupon_name_en}><{$item.coupon_name_en}><{else}><{$item.coupon_name}><{/if}><{else}><{$item.coupon_name}> <{/if}>
-											</h4>
+                        <h4 style="white-space: normal;"> 
+						<{if $langStr=='en'}> 
+							<{if $item.coupon_name_en}>
+								<{$item.coupon_name_en}>
+							<{else}>
+								<{$item.coupon_name}>
+							<{/if}>
+						<{else}>
+							<{$item.coupon_name}>
+						<{/if}>
+						
+						</h4>
 
-                        <{if $item.bonusType=="10"}>
-                            <span><{$lang->seats}><{$item.seat_des}></span>
-                            <input  name="seat_des[]" type="hidden"  value="<{$item.seat_des}>"  />
-                            <input  name="seat_id[]" type="hidden"  value="<{$item.seat_id}>"  />
-                        <{else}>
-                            <span><{if $item.guige_des}><{$lang->specification}>:<{$item.guige_des}><{/if}></span>
+
+                      
+                        <span><{if $item.guige_des}><{$lang->specification}>:<{$item.guige_des}><{/if}></span>
                             <input  name="guige_des[]" type="hidden"  value="<{$item.guige_des}>"  />
                             <input  name="guige_ids[]" type="hidden"  value="<{$item.guige_ids}>"  />
-                        <{/if}>
-
+                     
+					<!--	<h4 style="white-space: normal;padding-bottom: 4px;"> 
+						<{if $langStr=='en'}> 
+								<{$item.unit_en}>
+						<{else}>
+								<{$item.unit}>
+						<{/if}>
+						
+						</h4> -->
+						
                         <span class="s-price" data-couponid='<{$item.couponid}>'  data-id='<{$item.id}>'>
                                <{if $item.couponid != ''&&$item.quantity>=$item.amount}>
                                       <{if $item.quantity<$item.amount1}>
-                                           <{$item.price}>
+                                          $ <{$item.price}>
                                       <{/if}>
                                       <{if $item.quantity>=$item.amount1 && $item.quantity<$item.amount2}>
-                                           <{$item.price1}>
+                                           $<{$item.price1}>
                                       <{/if}>
                                       <{if $item.quantity>=$item.amount2}>
-                                           <{$item.price2}>
+                                           $<{$item.price2}>
                                       <{/if}>
                                  <{else}>
-                                       <{$item.single_amount}>
+                                       $<{$item.single_amount}>
                                  <{/if}>
                             </span>
 
@@ -766,7 +786,14 @@
                             </p>
 
                     </div>
-                    <em class="num">x <input name="quantity[]" class='checkout-confirmation-qty' data-couponid='<{$item.couponid}>' data-id='<{$item.id}>' value='' readonly style='width: 30px;border:none;background: none'></em>
+                    <em class="num">x <input name="quantity[]" class='checkout-confirmation-qty' data-couponid='<{$item.couponid}>' data-id='<{$item.id}>' value='' readonly style='width: 40px;border:none;background: none'>(
+					
+					<{if $langStr=='en'}> 
+								<{$item.unit_en}>
+						<{else}>
+								<{$item.unit}>
+						<{/if}>
+					)</em>
                 </li>
 
                 <input type="hidden" name="ids[]" value="<{$item.id}>" />
@@ -1599,7 +1626,7 @@
                     $(this).html(" ");
                   }
                 }else{
-                  $(this).html("Evoucher");
+                  $(this).html("");
                 }
                 })
             }
