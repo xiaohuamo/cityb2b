@@ -5,12 +5,12 @@
 	overflow: auto;
 	position: absolute;
 	left: 5%;
-	/*top: 100px; */
+	top: calc(5% + 1.5rem);
 	background: #FFFFFF;
 	border-radius: 5px;
 	padding: 0 10px;
 	box-sizing: border-box;
-	bottom:5%;
+	
 } 
 .datePop .title{
 	height: 2.968rem;
