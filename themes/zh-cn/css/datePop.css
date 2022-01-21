@@ -48,6 +48,16 @@
 	height: 1.25rem;
 }
 
+
+.datePopDelete{
+	right: 5%;
+	top: calc(5% );
+    width: 24px;
+    height: 24px;
+    right: 5%;
+    position: absolute;
+}
+
 .ad2{
   width: 0.9375rem;
   height: 0.9375rem;

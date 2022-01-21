@@ -107,8 +107,9 @@
         </div>
 
         <div class="mask z6" v-if="isDatePop">
+		<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="datePopDelete"/>
             <div class="datePop">
-                <img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="delete"/>
+                
                 <div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
                 <div class="flexBox1" style="flex-wrap:wrap;">
                     <div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
@@ -403,14 +404,7 @@
                          <{if $business_delivery_info.deliver_enable}>
                             <div class='delivery-des' style='display:none'>
 
-                                <{if $dispCenterUserSelectedDeliveryDate}>
-                                  <div>
-
-                                        <{$lang->logistic_delivery_date}> <em><{$dispCenterUserSelectedDeliveryDate_display}></em>
-
-                                  </div>
-
-                                <{/if}>
+                              
 
                                 <{if $business_delivery_info.amount_for_free_delivery>0}>
                                   <strong>

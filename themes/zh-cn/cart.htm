@@ -55,7 +55,7 @@
 					</div>
 					<div class="flexBox1">
 						<div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-if="isLanguageEn">Back</div><div class="cartBtn f25 colFD5305 again" @click="LookAgain" v-else>我再逛逛</div>
-						<div class="cartBtn f25 colfff" @click="placeOrder" v-if="isLanguageEn">Buy</div><div class="cartBtn f25 colfff" @click="placeOrder" v-else>下单</div>
+						<div class="cartBtn f25 colfff" @click="placeOrder(item.business_userId)" v-if="isLanguageEn">Buy</div><div class="cartBtn f25 colfff" @click="placeOrder(item.business_userId)" v-else>下单</div>
 					</div>
 				</div>
 			</div>
@@ -88,7 +88,7 @@
 				  var self = this;
 				  //alert('here');
 				
-				 axios.get('<{$http_root_www}>factorypage/get_cart_json_details')
+				 axios.get('<{$http_root_www}>factorypage/get_cart_details')
 					  .then(function (response) {
 					   self.dataList = response.data;
 					   console.log(self.dataList);
