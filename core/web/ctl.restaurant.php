@@ -3000,6 +3000,12 @@ function category_migration_action(){
 
 				$allOrspecial = trim(get2('allOrspecial'));
 
+				$onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
+				$this->setData($onoffguigecatinfo,'onoffguigecatinfo');
+
+				$onoffcninfo = trim(get2('onoffcninfo'));
+				$this->setData($onoffcninfo,'onoffcninfo');
+			//	var_dump($onoffcninfo);exit;
 
 				$sub_category =trim(get2('sub_category'));
 			    $this->setData($sub_category,'sub_category');
@@ -3042,7 +3048,7 @@ function category_migration_action(){
 						$whereStr.=" and onSpecial =1";
 						$this->setData($allOrspecial,'allOrspecial');
 					}else{
-					$this->setData($allOrspecial,'all');
+					$this->setData('all','allOrspecial');
 				}
 
 				// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
@@ -3052,8 +3058,8 @@ function category_migration_action(){
 				$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
 				//var_dump($pageSql);exit;
 				$pageUrl = $this->parseUrl()->set('page');
-				$pageSize =50;
-				$maxPage =500;
+				$pageSize =30;
+				$maxPage =200;
 				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
 
@@ -3069,9 +3075,9 @@ function category_migration_action(){
                 $customerInfo = $mdl_user->get($customer_id);
 
 				//var_dump($customerInfo);exit;
-				
-		
-				
+
+
+
 				
 
 			}else{  //如果可以管理更多店铺

@@ -52,7 +52,7 @@ class ctl_category extends cmsPage
         $pageSql ="SELECT DISTINCT c.createUserId as id  , c.EvoucherOrrealproduct, c.categoryId ,c.pic ,c.hits,u.pic as business_pic ,u.displayName as title ,u.displayName_en ,
 		0 as countOfSale ,u.deliver_avaliable,u.pickup_avaliable
 		from cc_coupons  c left join  cc_user u on c.createUserId =u.id 
-		where c.isApproved=1 and c.status=4 and u.id <>319188 
+		where c.isApproved=1 and c.status=4 
 		and (c.categoryId like '%,$cid%' or u.categoryId like '%,$cid%' )
 		group by id 
 		order by id desc ";

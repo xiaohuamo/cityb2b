@@ -129,7 +129,7 @@
 
 <div class="container">
 	<div class="wrap clearfix">
-        <{include file='company/side.htm'}>
+        <{include file='company/side.htm'}> 
 		<div class="main">
 			<div class="box2">
                 <{include file='company/side_restaurant_info.htm'}>
@@ -143,7 +143,7 @@
 
                         <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 							<select class='chooseCustomer'>
-								<option>请选择管理的账户</option>
+								<option>选择管理的账户</option>
 								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
                                     <{$loginUser.displayName}>
 								</option>
@@ -256,24 +256,29 @@
 							导入品类更新
 						</button>
 						<br> <br>
-							<input type="checkbox" name="onoffsku"  id="onoffsku"   >
-						<span >
-								<span >SKU 及图片导入 </span>
-						</span>
+							
 						
-				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  checked >
+				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  <{if $onoffcninfo}> checked<{/if}>    >
 						<span >
-								<span >显示中文版编辑列</span>
+								<span >中文编辑</span>
 						</span>
-							<input type="checkbox" name="onoffeninfo"  id="onoffeninfo"   >
+							<input type="checkbox" name="onoffeninfo"  id="onoffeninfo" <{if $onoffeninfo}> checked<{/if}>     >
 						<span >
-								<span >显示英文版编辑列</span>
+								<span >英版编列</span>
 						</span>
 						<input type="checkbox" name="onoffspecialinfo"  id="onoffspecialinfo"  <{if $allOrspecial=='special'}> checked<{/if}>  >
 						<span >
-								<span >显示特价编辑列</span>
+								<span >特价</span>
+						</span>
+						<input type="checkbox" name="onoffguigecatinfo"  id="onoffguigecatinfo" <{if $onoffguigecatinfo}> checked<{/if}>    >
+						<span >
+								<span >规格分类</span>
 						</span>
 					
+						<input type="checkbox" name="onoffsku"  id="onoffsku"   >
+						<span >
+								<span >SKU及图片 </span>
+						</span>
 											
 											<br>
 										
@@ -379,12 +384,12 @@
 									<th>排序</th>
 									<th>产品编号</th>
 									<th name="cn_name1" >产品名称-中文</th>
-									<th name="cn_name1">中文单位</th>
-									<th>进价</th>
-									<th>原价</th>
+									
+									<!--<th>进价</th> -->
+								
 									<th>售价</th>
 									<th>库存</th>
-									<th name="cn_name1">描述</th>
+								
 									
 									
 									
@@ -399,15 +404,18 @@
 									
 							
                                     <{if $menu_option_list}>
-										<th>菜品规格</th>
+										<th name="guigecat">菜品规格</th>
                                     <{/if}>
                                     <{if $sidedish_category_list}>
-										<th>选择配菜</th>
+										<th name="guigecat">选择配菜</th>
                                     <{/if}>
-											<th>设置分类</th>
+											<th name="guigecat">设置分类</th>
 								
-									<th>ID</th>
+								
 									<th>放入回收站</th>
+									<th>原价</th>
+									<th name="cn_name1">中文单位</th>
+									<th name="cn_name1">描述</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -524,7 +532,7 @@
 										</td>
 										<td name="cn_name1">
 										
-										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:180px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
+										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:120px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
 											
 											<span class='promote-ajax'></span>
 										</td>
@@ -533,22 +541,14 @@
 										
 										
 										
-										<td name="cn_name1" >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
-												   value="<{$item.unit}>">
-											<span class='promote-ajax'></span>
-										</td>
-										<td >
+										
+									<!--	<td >
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
 												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
 											<span class='promote-ajax'></span>
-										</td>
+										</td> -->
 										
-										 <td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="original_price-<{$item.id}>" style="width:50px;" name="original_price"
-												   value="<{if $item.original_price >0}><{$item.original_price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
-											<span class='promote-ajax'></span>
-										</td>
+										
 									   <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>" style="width:50px;" name="price"
 												   value="<{if $item.price >0}><{$item.price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
@@ -558,10 +558,7 @@
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="qty-<{$item.id}>" style="width:30px;" name="qty" value="<{$item.qty}>">
 											<span class='promote-ajax'></span>
 										</td>
-										<td name="cn_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" name="menu_desc"><{$item.menu_desc}></textarea>
-											<span class='promote-ajax'></span>
-										</td>
+										
 										
 										
 										
@@ -577,8 +574,7 @@
 										
 										<td name="en_name1">
 
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:150px;" name="menu_en_name"
-												   value="<{$item.menu_en_name}>">
+											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:120px;" name="menu_en_name"><{$item.menu_en_name}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 										<td name="en_name1">
@@ -587,7 +583,7 @@
 											<span class='promote-ajax'></span>
 										</td>
 										<td name="en_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" name="menu_en_desc"><{$item.menu_en_desc}></textarea>
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 										<!--<{if $loginUser.id !=318951}>
@@ -606,7 +602,7 @@
 											<br>
 										</td><{/if}> -->
                                         <{if $menu_option_list}>
-											<td style="width:150px;">
+											<td name="guigecat" style="width:150px;">
 												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
 													<option value='0'>请选择规格</option>
                                                     <{foreach from=$menu_option_list item=sitem}>
@@ -621,7 +617,7 @@
 											</td>
                                         <{/if}>
                                         <{if $sidedish_category_list}>
-											<td>
+											<td name="guigecat">
 												<select name='sidedish_category' data-id='<{$item.id}>'>
 													<option value='0'>请选择配菜</option>
                                                     <{foreach from=$sidedish_category_list item=sitem}>
@@ -636,7 +632,7 @@
 											</td>
                                         <{/if}>
 								
-										<td id="restaurant_categories-td-<{$item.id}>">
+										<td  name="guigecat" id="restaurant_categories-td-<{$item.id}>">
 										  <{if $item.category_cn_name}>
 											<span style="height:16px;background-color: grey;color: white" id="menu-<{$item.id}>"><{$item.category_cn_name}> <a style="color:red" onclick="deleteMenuCategory1('<{$item.id}>','<{$item.categoryId}>')">X&nbsp;</a></span>
                                          <br>  <{/if}>
@@ -661,9 +657,7 @@
 											<br>
 										</td>
 							
-										<td>
-											<span><{$item.id}></span>
-										</td>
+										
 										
 										
 										<td>
@@ -688,9 +682,20 @@
 											
 										
 										</td>
-										
-										
-										
+										 <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="original_price-<{$item.id}>" style="width:50px;" name="original_price"
+												   value="<{if $item.original_price >0}><{$item.original_price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
+											<span class='promote-ajax'></span>
+										</td>
+										<td name="cn_name1" >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
+												   value="<{$item.unit}>">
+											<span class='promote-ajax'></span>
+										</td>
+										<td name="cn_name1">
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" style="width:120px;" name="menu_desc"><{$item.menu_desc}></textarea>
+											<span class='promote-ajax'></span>
+										</td>
 									</tr>
                                 <{/foreach}>
 								</tbody>
@@ -708,7 +713,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=barcode_number],input[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
+    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -864,6 +869,26 @@
 			$("#onoffspecialinfo").attr("checked",true);
 			
 			 $('[name="special_name1"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+		 $('input[name=onoffguigecatinfo]').on('click', function () {
+       
+		 if ($('#onoffguigecatinfo').attr('checked')) {
+			//alert('checked');
+			$("#onoffguigecatinfo").attr("checked",false);
+			
+			 $('[name="guigecat"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffguigecatinfo").attr("checked",true);
+			
+			 $('[name="guigecat"]').show();
 			}
 
 	 
@@ -1115,8 +1140,11 @@ $('input[name=filePath]').on('change', function () {
                 window.location.href = "<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1&customer_id=" + $(this).val();
         });
 		
-		$('[name="en_name1"]').hide();
-	
+		<{if $onoffcninfo =='on'}> $('[name="cn_name1"]').show();<{else}>$('[name="cn_name1"]').hide();<{/if}>
+		<{if $onoffeninfo =='on'}> $('[name="en_name"]').show();<{else}>$('[name="en_name"]').hide();<{/if}>
+		<{if $onoffguigecatinfo =='on'}> $('[name="guigecat"]').show();<{else}>$('[name="guigecat"]').hide();<{/if}>
+		
+		  
 		
 		<{if $allOrspecial=='special'}> 
 			$('[name="special_name1"]').show();
@@ -1131,6 +1159,8 @@ $('input[name=filePath]').on('change', function () {
 			$('[name="sku"]').hide();
 		
 		<{/if}>
+		
+		
 		
     })
 </script>

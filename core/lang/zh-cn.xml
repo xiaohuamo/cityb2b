@@ -585,7 +585,7 @@
     <business_center>商家首页</business_center>
     <business_center_mall>商家中心（商城版）</business_center_mall>
     <business_center_freshfood>商家中心（生鲜/超市）</business_center_freshfood>
-    <business_center_freshfoodFactory>商家中心（批发商2b）</business_center_freshfoodFactory>
+    <business_center_freshfoodFactory>商家中心（批发商）</business_center_freshfoodFactory>
 	<business_center_freshfoodFactory2c>商家中心（总控台2B2C）</business_center_freshfoodFactory2c>
  	<publish_center>发布中心</publish_center>
     <online_store>线上商城</online_store>

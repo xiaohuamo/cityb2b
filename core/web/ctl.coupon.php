@@ -249,7 +249,7 @@ class ctl_coupon extends cmsPage
 				where c.EvoucherOrrealproduct = 'restaurant_menu' 
 				and m.visible=1 
 				and  c.isApproved=1 and c.status=4 
-				and m.restaurant_id <> 319188
+				
 				and ( menu_cn_name like  '%$searchKeywords%'   or menu_en_name like  '%$searchKeywords%'  or menu_desc   like  '%$searchKeywords%'   or menu_en_desc like  '%$searchKeywords%'  ) 
 				
 				) a 

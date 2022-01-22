@@ -119,8 +119,8 @@ span.search-short-link a{padding:3px;}
 .container .wrap { position:relative;padding:0px 0; }
 .container .box { position:relative; background:#fff; }
 .container .box2 { background:#fff; border:1px solid #E7E7E7; padding: 10px}
-.container .side {position:relative; float:left; width:20%;margin-right: 1%; z-index:3; }
-.container .main { float:left;width: 79%;position: relative;}
+.container .side {position:relative; float:left; width:12%;margin-right: 1%; z-index:3; }
+.container .main { float:left;width: 87%;position: relative;}
 .container .middlesection{ position:relative; float:left; width:636px; margin:0px -10px 0px 11px;}
 .container .fenlei_middlesection{ position:relative; float:left; width:380px; margin:0px -10px 0px 2px;}
 
