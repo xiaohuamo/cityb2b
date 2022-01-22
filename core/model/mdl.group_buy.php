@@ -673,7 +673,7 @@ class mdl_group_buy extends mdl_base{
 		//User list
 		$userList= $this->getGroupList($groupid);
 
-		$checkoutUrl ="https://ubonus365.com/member/showcart?specialGroupBuyCheckoutCode=".$group['current_reward'];
+		$checkoutUrl ="https://cityb2b.com/member/showcart?specialGroupBuyCheckoutCode=".$group['current_reward'];
 		$checkoutQRCode = generateQRCode($checkoutUrl);
 
 
@@ -689,12 +689,12 @@ class mdl_group_buy extends mdl_base{
 	        $g_name = str_replace(' ', '-', $group['name']); // Replaces all spaces with hyphens.
 	        $g_name= preg_replace('/[^\pL\pS0-9]/u', '-', $g_name); // Removes special chars.
 
-	        $msg="您在Ubonus美食生活上参加的凑团(".$g_name.")已经达成，商家已经发放了奖励。本次凑团奖励为折扣码(".$group['current_reward'].")请点击下面的链接直接使用折扣码领取奖品。+"."ubonus365.com%2Fmember%2Fshowcart%3FspecialGroupBuyCheckoutCode%3D".$group['current_reward'];
+	        $msg="您在Ubonus美食生活上参加的凑团(".$g_name.")已经达成，商家已经发放了奖励。本次凑团奖励为折扣码(".$group['current_reward'].")请点击下面的链接直接使用折扣码领取奖品。+"."cityb2b.com%2Fmember%2Fshowcart%3FspecialGroupBuyCheckoutCode%3D".$group['current_reward'];
 
 	        $content= json_encode($msg);
 	        $content = substr($content, 1,-1);  
 	        $content=str_replace("\\", '%', $content);
-	        $url ='http://livechatserver.ubonus365.com:1500/?RequestNo=9703&cid='.$cid.'&bid='.$bid.'&chatrecord='.$content;
+	        $url ='http://livechatserver.cityb2b.com:1500/?RequestNo=9703&cid='.$cid.'&bid='.$bid.'&chatrecord='.$content;
 	        $result = file_get_contents($url);
 
 	        //Email Notification
@@ -703,7 +703,7 @@ class mdl_group_buy extends mdl_base{
 	        $subject='凑团成功--奖励发放--Ubonus美食生活';
 
 	        $email_content='';
-	        $email_content.="<h1 style='text-align:center'><img src='https://ubonus365.com/themes/zh-cn/mobile/images/logo.png'><br>恭喜您凑团已经成功！</h1>";
+	        $email_content.="<h1 style='text-align:center'><img src='https://cityb2b.com/themes/zh-cn/mobile/images/logo.png'><br>恭喜您凑团已经成功！</h1>";
 	        $email_content.="<p style='text-align:center'>";
 			$email_content.="您在Ubonus美食生活上参加的凑团（".$group['name']."）已经达成，商家已经发放了奖励<br>";
 	        $email_content.="本次凑团奖励为折扣码 (<em>".$group['current_reward']."</em>)<br>";
@@ -715,11 +715,11 @@ class mdl_group_buy extends mdl_base{
 
 	        $email_content.="或者您可以通过下面的链接直接购买<br>";
 
-	       	$email_content.="<a href='https://ubonus365.com/coupon/".$group['coupon_id']."'>产品在这里 Link</a><br>";
+	       	$email_content.="<a href='https://cityb2b.com/coupon/".$group['coupon_id']."'>产品在这里 Link</a><br>";
 
 	       	$email_content.="提示：如果不知道登录密码，请用手机微信扫码登录。您参团的用户名：".$user['user_name'].",默认密码000000<br>";
 
-	        $email_content.="www.ubonus365.com";
+	        $email_content.="www.cityb2b.com";
 	        $email_content.="</p>";
 
 

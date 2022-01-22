@@ -1159,7 +1159,7 @@ class ctl_lottery extends cmsPage
 				$data['status'] ='over_max_times';
 				$data['error']=1;
 				$data['success']=0;
-				$data['msg']='您需要购买澳纽集团的一对一课程$9.95,才能参与抽奖. ubonus365.com/coupon/4833';
+				$data['msg']='您需要购买澳纽集团的一对一课程$9.95,才能参与抽奖. cityb2b.com/coupon/4833';
 				$data['prizetype']=null;
 				$data['sn']=0;
 				

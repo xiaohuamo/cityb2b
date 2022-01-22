@@ -865,7 +865,7 @@ function object2array($object) {
 		   if($cityparent) {
 			   $str1=$str1.' '.$cityparent['name'];
 		   } 
-		   $description =$cityparent['name'].' ' .$city['name'].' ' . $category['name'].", Ubonus365 ";
+		   $description =$cityparent['name'].' ' .$city['name'].' ' . $category['name'].", cityb2b ";
 		   //var_dump($coupons);exit;
 		   if ($coupons){
 			   $i=0;

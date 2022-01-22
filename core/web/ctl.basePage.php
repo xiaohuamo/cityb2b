@@ -55,7 +55,7 @@ class cmsPage extends corecms
 		
         
 		$ua =$this->getUserDevice();
-		if( $ua=='wechat' && ($_SERVER['HTTP_HOST']!='ubonus365.com') )header("Location: https://ubonus365.com/".$_SERVER['REQUEST_URI']);
+		if( $ua=='wechat' && ($_SERVER['HTTP_HOST']!='cityb2b.com') )header("Location: https://cityb2b.com/".$_SERVER['REQUEST_URI']);
 		$this->setData( $ua, 'ua' );
 
 		$this->setData(HTTP_ROOT, 'http_root');

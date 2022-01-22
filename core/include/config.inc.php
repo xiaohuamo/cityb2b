@@ -54,7 +54,7 @@ if($_SERVER['HTTPS']){
 }
 
 
-define('HTTP_ROOT_WX', APPLICATION_PROTOCOL."ubonus365.com/");//same as wx security config
+define('HTTP_ROOT_WX', APPLICATION_PROTOCOL."cityb2b.com/");//same as wx security config
 define('HTTP_ROOT', APPLICATION_PROTOCOL.$_SERVER['HTTP_HOST'].'/'.BASE_DIR);
 define('HTTP_ROOT_WWW', $_SERVER['REQUIST_URI'].'/'.BASE_DIR);
 

@@ -49,10 +49,10 @@ function call_url(){
 						</button>
 						
 						<!-- 商家联系Ubonus -->
-						<button><a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_ubonus}>	</a></button>
+						<button><a target='_blank' onclick="window.open('http://livechat.cityb2b.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$businessChatId}>&orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_ubonus}>	</a></button>
 
 						<!-- 客户联系商家 -->
-						<button><a target='_blank' onclick="window.open('http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$data.business_userId}>orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_business}></a></button>
+						<button><a target='_blank' onclick="window.open('http://livechat.cityb2b.com/WebClientComputer.aspx?ClientID=<{$clientChatId}>&BusinessID=<{$data.business_userId}>orderId=<{$data.orderId}>','singleChat')"  ><{$lang->contact_business}></a></button>
 
 						<{if $data.status==0&&$data.coupon_status=='c01'}>
 						<!-- 未支付&&申领中 -->

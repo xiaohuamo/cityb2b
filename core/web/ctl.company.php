@@ -175,7 +175,7 @@ class ctl_company extends cmsPage
             $order = $this->loadModel('order')->getByOrderId($systemId);
             $customerEmail = $order['email'];
 
-            $title = (string)$this->lang->email_order_confirmed ."-- $orderName --ubonus365.com";
+            $title = (string)$this->lang->email_order_confirmed ."-- $orderName --cityb2b.com";
             $body  = $template->customerOrderNotification($systemId,$this->getLangStr());
             $to    = $customerEmail;
 
@@ -8689,7 +8689,7 @@ function freshfood_edit_action()    {
                         $data['perCustomerMinLimitQuantity']=1;
 						$data['voucher_deal_amount']=2.00;
 						$data['voucher_deal_amount']=2.00;
-						$data['redeemProcedure']='<p><span style="font-size:14px">1) 请出示订单信息给商家服务人员. (订单信息在邮件中(请检查Junk Mail ) 或 您在Ubonus平台的账户中,请访问 <a href="https://www.ubonus365.com/member/exchange">我的订单</a> 或 (https://www.ubonus365.com/member/exchange)</span></p>
+						$data['redeemProcedure']='<p><span style="font-size:14px">1) 请出示订单信息给商家服务人员. (订单信息在邮件中(请检查Junk Mail ) 或 您在Ubonus平台的账户中,请访问 <a href="https://www.cityb2b.com/member/exchange">我的订单</a> 或 (https://www.cityb2b.com/member/exchange)</span></p>
 
 <p><span style="font-size:14px">2)商家服务员检查优惠券是否可以使用,如可以使用,核兑后即可使用.</span></p>';
 						
@@ -11205,11 +11205,11 @@ function get_data($url, $ch) {
         $body="<html>";
 
         $body.="<h1 style='text-align:center'>重磅！Ubonus美食生活近万商品超级1元秒杀！今晚8点开抢！</h1>";
-        $body.="<h1 style='text-align:center'><a href='https://ubonus365.com/shoppingday'>点击进入，开始抢购！</a></h1>";
+        $body.="<h1 style='text-align:center'><a href='https://cityb2b.com/shoppingday'>点击进入，开始抢购！</a></h1>";
         $body.="<div style='text-align:center'>";
-        $body.="<img src='https://ubonus365.com/themes/zh-cn/email/emailad2.jpg'>";
+        $body.="<img src='https://cityb2b.com/themes/zh-cn/email/emailad2.jpg'>";
         $body.="<br>";
-        $body.="<img src='https://ubonus365.com/themes/zh-cn/email/emailad1.jpg'>";
+        $body.="<img src='https://cityb2b.com/themes/zh-cn/email/emailad1.jpg'>";
         $body.="</div>";
         $body.="</html>";
 

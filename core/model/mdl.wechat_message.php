@@ -108,7 +108,7 @@ class mdl_wechat_message extends mdl_base
                 $this->tableName = '#@_wechat_registry_msg';
                 $customerRegistry= $mdl_user->get($id);//用户注册id
                 $data['openid']         =$customerRegistry['wx_openID'];
-                $data['url']            ='http://livechat.ubonus365.com/WebClientComputer.aspx?ClientID='.$id.'&BusinessID=25201';
+                $data['url']            ='http://livechat.cityb2b.com/WebClientComputer.aspx?ClientID='.$id.'&BusinessID=25201';
                 $data['title']          ="尊敬的客户，恭喜您注册ubonus账号成功";
                 $data['username']      =$customerRegistry['name'];
                 $data['remark']        ="感谢您的注册，有疑问请联系客服！";

@@ -40,7 +40,7 @@ class mdl_system_notification_center extends mdl_base
 						
 					}
 					//var_dump($full_number);exit;
-					  $content= ' 【Ubonus-亿折扣】 您预定成功：'.'https://ubonus365.com/member/exchange_detail?type=member&id='.$id;
+					  $content= ' 【Ubonus-亿折扣】 您预定成功：'.'https://cityb2b.com/member/exchange_detail?type=member&id='.$id;
 					  send_sms($full_number, $content);
 					
 				}

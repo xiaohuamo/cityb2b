@@ -928,9 +928,9 @@ class ctl_restaurant extends cmsPage
 			$this->setData( $menu_totalprice, 'totalprice' );
 			$this->setData( $voucher_totalprice, 'voucher_totalprice' );
 			$title = str_replace('|' ,'',$restaurant_coupon['title']);
-			$this->setData(  $title. ' | '.'Ubonus365' , 'pageTitle' );
-			$this->setData($title. ' | '.'Ubonus365', 'pageKeywords' );
-			$this->setData( $title. ' | '.'Ubonus365', 'pageDescription' );
+			$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
+			$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
+			$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
 
 		//wx share
 			require_once "wx/wxjssdk.php";
@@ -1925,9 +1925,9 @@ class ctl_restaurant extends cmsPage
 			$this->setData( $menu_totalprice, 'totalprice' );
 			$this->setData( $voucher_totalprice, 'voucher_totalprice' );
 			$title = str_replace('|' ,'',$restaurant_coupon['title']);
-			$this->setData(  $title. ' | '.'Ubonus365' , 'pageTitle' );
-			$this->setData($title. ' | '.'Ubonus365', 'pageKeywords' );
-			$this->setData( $title. ' | '.'Ubonus365', 'pageDescription' );
+			$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
+			$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
+			$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
 
 			$this->setData( get2('action'), 'returnAction' );
 

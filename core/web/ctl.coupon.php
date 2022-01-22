@@ -468,7 +468,7 @@ function get_google_seo_info_base_search($coupons,$city,$category,$keywords) {
 				   if($cityparent) {
 					   $str1=$str1.' '.$cityparent['en_name'];
 				   } 
-				   $description =$cityparent['en_name'].' ' .$city['en_name'].' ' . $category['name'].", Ubonus365 ";
+				   $description =$cityparent['en_name'].' ' .$city['en_name'].' ' . $category['name'].", cityb2b ";
 				   //var_dump($coupons);exit;
 				   if ($coupons){
 					   $i=0;
@@ -495,7 +495,7 @@ function get_google_seo_info_base_search($coupons,$city,$category,$keywords) {
 				   if($cityparent) {
 					   $str1=$str1.' '.$cityparent['name'];
 				   } 
-				   $description =$cityparent['name'].' ' .$city['name'].' ' . $category['name'].", Ubonus365 ";
+				   $description =$cityparent['name'].' ' .$city['name'].' ' . $category['name'].", cityb2b ";
 				   //var_dump($coupons);exit;
 				   if ($coupons){
 					   $i=0;

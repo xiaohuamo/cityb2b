@@ -154,7 +154,7 @@ class ctl_index_old extends cmsPage
          
             
 			  if($this->getLangStr()=='en'){
-	  			$this->setData('Ubonus365 masks  Hand sanitizer  ','h1_footer'); 
+	  			$this->setData('cityb2b masks  Hand sanitizer  ','h1_footer'); 
 			 }else{
 				 $this->setData('墨尔本 团购 | 墨尔本 打折','h1_footer');
 				
@@ -209,7 +209,7 @@ class ctl_index_old extends cmsPage
 			//var_dump($list);exit;
 			
 			  if($this->getLangStr()=='en'){
-	  			$this->setData('Ubonus365 masks  Hand sanitizer  ','h1_footer'); 
+	  			$this->setData('cityb2b masks  Hand sanitizer  ','h1_footer'); 
 			 }else{
 				 $this->setData('墨尔本 团购 | 墨尔本 打折','h1_footer');
 				

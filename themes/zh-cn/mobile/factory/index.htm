@@ -124,15 +124,15 @@
 	    {
 	        $.ajax({
 	            //获取商家未读信息
-	            url: "http://livechatserver.ubonus365.com:1500?RequestNo=8709&cid=<{$clientChatId}>",
+	            url: "http://livechatserver.cityb2b.com:1500?RequestNo=8709&cid=<{$clientChatId}>",
 	            type: 'GET',
 	            dataType: 'jsonp',
 	            success: function (data) {
 	                if (data.Code == "9613") {
 	                    $(".getMessage").html("");
 	                    //消息块的样式
-	                    //var vChatUrl="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID="+data.ListData.bid+"";
-	                    var vChatUrl="http://livechat.ubonus365.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID=25201";
+	                    //var vChatUrl="http://livechat.cityb2b.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID="+data.ListData.bid+"";
+	                    var vChatUrl="http://livechat.cityb2b.com/WebClientMobile.aspx?ClientID="+data.ListData.cid+"&BusinessID=25201";
 	                    //聊天地址
 	                    var vLiHtml = $('.getMessage').html() + "<a target=\"_blank\"  href=\""+vChatUrl+"\"><i class=\"ico7\"><em class=\"after\">"+data.ListData.count+"</em></i>消息</a>";
 	                    $(".getMessage").html(vLiHtml);

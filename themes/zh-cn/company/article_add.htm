@@ -448,7 +448,7 @@ function catChg(obj) {
 										
 										<label for=""><strong>对应某一商家</strong></label>
 										<br>
-										<input type="text" id="business_id" name="business_id"   onkeydown ="$('#product_id').val('');" class="input-text" value="<{if $data.business_id}><{$data.business_id}><{else if $data.product_id}><{else}><{$loginUser.id}><{/if}>" placeholder="请输入商家id" style="width:50%;font-size:12px;" />	<em id="business_id_em" ><br>商家中心(www.ubonus365.com/company/index 右上角(查看本页面右上角)括弧里的编号(<strong style="color:blue;">433222)</strong>就是商家ID</em>
+										<input type="text" id="business_id" name="business_id"   onkeydown ="$('#product_id').val('');" class="input-text" value="<{if $data.business_id}><{$data.business_id}><{else if $data.product_id}><{else}><{$loginUser.id}><{/if}>" placeholder="请输入商家id" style="width:50%;font-size:12px;" />	<em id="business_id_em" ><br>商家中心(www.cityb2b.com/company/index 右上角(查看本页面右上角)括弧里的编号(<strong style="color:blue;">433222)</strong>就是商家ID</em>
 									</div>	
 									<div>
 										<input type="radio"name="Business_products" value="0" onclick ="set_business_product_display(this,2);" <{if $data.product_id}>checked<{/if}>/>
@@ -457,7 +457,7 @@ function catChg(obj) {
 										<label for=""><strong>对应某一产品</strong></label>
 										<br>
 										<input type="text" id = "product_id" name="product_id"  onkeydown ="$('#business_id').val('')"; class="input-text"  value="<{$data.product_id}>" placeholder="请输入产品id,只能输入一个产品" style="width:50%;font-size:12px;" />
-										<em id = "product_id_em"><br>产品id可以在ubonus网上看到自己的产品,产品链接地址最后边的编号www.ubonus365.com/coupon1/7322 的 <strong style="color:blue;">7322</strong> 就是产品id</em>
+										<em id = "product_id_em"><br>产品id可以在ubonus网上看到自己的产品,产品链接地址最后边的编号www.cityb2b.com/coupon1/7322 的 <strong style="color:blue;">7322</strong> 就是产品id</em>
 										</div>
 							</div>
 

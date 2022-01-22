@@ -256,7 +256,7 @@ class mdl_system_mail_queue extends mdl_base
 
                 $orderName=loadModel('order')->generateOrderName($systemId,$this->lang);
 
-                $title = (string)$this->lang->email_order_confirmed . " -- $orderName -- Ubonus365.com";
+                $title = (string)$this->lang->email_order_confirmed . " -- $orderName -- cityb2b.com";
                 $body  = $template->customerOrderNotification($systemId,$this->getLang());
                 $to    = $queueItem['to'];
 
@@ -270,7 +270,7 @@ class mdl_system_mail_queue extends mdl_base
             
             case EmailType::BusinessOrderNotification:
                 
-                $title = (string)$this->lang->email_order_confirmed ."-- ubonus365.com";
+                $title = (string)$this->lang->email_order_confirmed ."-- cityb2b.com";
                 $body  = $template->businessOrderNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -284,7 +284,7 @@ class mdl_system_mail_queue extends mdl_base
 
             case EmailType::CustomerCancelOrderNotification:
 
-                $title = (string)$this->lang->email_order_cancelled."-- ubonus365.com";
+                $title = (string)$this->lang->email_order_cancelled."-- cityb2b.com";
                 $body  = $template->customerCancelOrderNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -298,7 +298,7 @@ class mdl_system_mail_queue extends mdl_base
 
             case EmailType::BusinessCancelOrderNotification:
 
-                $title = (string)$this->lang->email_order_cancelled."-- ubonus365.com";
+                $title = (string)$this->lang->email_order_cancelled."-- cityb2b.com";
                 $body  = $template->businessCancelOrderNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -312,7 +312,7 @@ class mdl_system_mail_queue extends mdl_base
 
             case EmailType::CustomerRegistryNotification:
 
-                $title = (string)$this->lang->email_new_register."-- ubonus365.com";
+                $title = (string)$this->lang->email_new_register."-- cityb2b.com";
                 $body  = $template->customerRegistryNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -326,7 +326,7 @@ class mdl_system_mail_queue extends mdl_base
 
             case EmailType::BusinessDeliveryNotification:
 
-                $title = (string)$this->lang->email_business_send_item." -- ubonus365.com";
+                $title = (string)$this->lang->email_business_send_item." -- cityb2b.com";
                 $body  = $template->businessDeliveryNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -340,7 +340,7 @@ class mdl_system_mail_queue extends mdl_base
 
             case EmailType::BusinessBalanceNotification:
 
-                $title = (string)$this->lang->email_payments_notice."-- ubonus365.com";
+                $title = (string)$this->lang->email_payments_notice."-- cityb2b.com";
                 $body  = $template->businessBalanceNotification($systemId);
                 $to    = $queueItem['to'];
 
@@ -353,7 +353,7 @@ class mdl_system_mail_queue extends mdl_base
                 break;
             case EmailType::CustomerSubscribeNotification:
 
-                $title = (string)$this->lang->email_subscriptions."-- ubonus365.com";
+                $title = (string)$this->lang->email_subscriptions."-- cityb2b.com";
                 $body  = $template->customerSubscribeNotification($systemId);
 
                 $to    = $queueItem['to'];

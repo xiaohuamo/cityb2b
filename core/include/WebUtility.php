@@ -545,7 +545,7 @@ function pprof_log($msg='init'){
 }
 
 function addBaseHref($str){
-	return preg_replace('/\/data\/upload\//', 'https://www.ubonus365.com/data/upload/', $str);
+	return preg_replace('/\/data\/upload\//', 'https://www.cityb2b.com/data/upload/', $str);
 }
 
 function verify_recaptcha($g_recaptcha_response)
@@ -597,7 +597,7 @@ function send_sms($to,$content)
 
 }
 
-function watermarkImage ($SourceFile, $WaterMarkText='Copyright Ubonus365.com', $DestinationFile=null) { 
+function watermarkImage ($SourceFile, $WaterMarkText='Copyright cityb2b.com', $DestinationFile=null) { 
   	   if(!$DestinationFile)$DestinationFile=$SourceFile;
 
 	   list($width, $height) = getimagesize($SourceFile);

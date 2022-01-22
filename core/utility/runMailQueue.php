@@ -1,7 +1,7 @@
 <?php 
 	$_SERVER['DOCUMENT_ROOT']='/mnt/www/';
-	$_SERVER['REQUIST_URI']='https://ubonus365.com';
-	$_SERVER['HTTP_HOST']='ubonus365.com';
+	$_SERVER['REQUIST_URI']='https://cityb2b.com';
+	$_SERVER['HTTP_HOST']='cityb2b.com';
 	require_once('/mnt/www/core/include/config.inc.php');
 	$mail_services =loadModel('system_mail_queue');
 	$mail_services->run();

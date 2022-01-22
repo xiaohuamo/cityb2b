@@ -747,7 +747,7 @@ class ctl_test extends cmsPage
 
             $orderName=$this->loadModel('order')->generateOrderName($systemId);
 
-            $title = (string)$this->lang->email_order_confirmed ." -- $orderName --  ubonus365.com";
+            $title = (string)$this->lang->email_order_confirmed ." -- $orderName --  cityb2b.com";
             $body  = $template->customerOrderNotification($systemId,$this->getLangStr());
 
             $system_mailer->title($title);
@@ -762,7 +762,7 @@ class ctl_test extends cmsPage
         
         // case EmailType::BusinessOrderNotification:
             
-            $title = (string)$this->lang->email_order_confirmed ." -- ubonus365.com";
+            $title = (string)$this->lang->email_order_confirmed ." -- cityb2b.com";
             $body  = $template->businessOrderNotification($systemId);
 
             $system_mailer->title($title);
@@ -778,7 +778,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::CustomerCancelOrderNotification:
 
-            $title = "用户取消订单通知 -- Ubonus美食生活 ubonus365.com";
+            $title = "用户取消订单通知 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->customerCancelOrderNotification($systemId);
 
             $system_mailer->title($title);
@@ -793,7 +793,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::BusinessCancelOrderNotification:
 
-            $title = "商家取消订单通知 -- Ubonus美食生活 ubonus365.com";
+            $title = "商家取消订单通知 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->businessCancelOrderNotification($systemId);
 
             $system_mailer->title($title);
@@ -808,7 +808,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::CustomerRegistryNotification:
 
-            $title = "新用户注册通知 -- Ubonus美食生活 ubonus365.com";
+            $title = "新用户注册通知 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->customerRegistryNotification($systemId);
 
             $system_mailer->title($title);
@@ -825,7 +825,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::BusinessDeliveryNotification:
 
-            $title = "商家发货通知 -- Ubonus美食生活 ubonus365.com";
+            $title = "商家发货通知 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->businessDeliveryNotification($systemId);
 
             $system_mailer->title($title);
@@ -840,7 +840,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::BusinessBalanceNotification:
 
-            $title = "Ubonus结算通知 -- Ubonus美食生活 ubonus365.com";
+            $title = "Ubonus结算通知 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->businessBalanceNotification($systemId);
 
             $system_mailer->title($title);
@@ -855,7 +855,7 @@ class ctl_test extends cmsPage
 
         // case EmailType::CustomerSubscribeNotification:
 
-            $title = "产品订阅 -- Ubonus美食生活 ubonus365.com";
+            $title = "产品订阅 -- Ubonus美食生活 cityb2b.com";
             $body  = $template->customerSubscribeNotification($systemId);
 
 
