@@ -574,7 +574,7 @@
 										
 										<td name="en_name1">
 
-											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:120px;" name="menu_en_name"><{$item.menu_en_name}></textarea>
+											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="<{if !$onoffcninfo}>width:180px;<{else}>width:120px;<{/if}>" name="menu_en_name"><{$item.menu_en_name}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 										<td name="en_name1">
