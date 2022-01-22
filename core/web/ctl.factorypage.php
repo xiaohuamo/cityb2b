@@ -1334,7 +1334,7 @@ class ctl_factorypage extends cmsPage
             $this->session('member_user_id', $userId);
             $this->session('member_user_shell', $this->md5($userId.$user['name'].$user['password']));
 
-            $this->sheader(HTTP_ROOT_WWW.'factorypage/'.$factoryId);
+            $this->sheader(HTTP_ROOT_WWW.'supplier/'.$factoryId);
         } else {
             print_r('Link has expired or user did not be approved');
             die();
