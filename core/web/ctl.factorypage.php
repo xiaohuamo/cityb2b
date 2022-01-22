@@ -2279,7 +2279,7 @@ class ctl_factorypage extends cmsPage
             // $sql = "SELECT b.restaurant_category_id,category_sort_id,category_cn_name,category_en_name,a.*,b.menu_pic as pic,d.pic as coupon_pic ,e.displayName,e.businessName FROM `cc_wj_user_temp_carts` a left join `cc_restaurant_menu` b on b.id=a.`menu_id` left join `cc_restaurant_category` c on c.id=b.restaurant_category_id left join cc_coupons d on d.id=a.main_coupon_id   left join cc_user e on e.id=a.businessUserId where a.userId=".$userId."   and businessUserId =$id order by businessUserId,category_sort_id,b.menu_id";
             // $cartItems = $mdl_wj_user_temp_carts->getListBySql($sql);
             $uploadPath =UPLOAD_PATH;
-            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.single_amount as price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic,
+            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name_en as title ,a.coupon_name as title_cn,a.quantity as num,a.single_amount as price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic,
             ifnull(b.unit,b.unit_en) as unit, ifnull(b.unit_en,b.unit) as unit_en 
             from cc_wj_user_temp_carts a 
                 left join cc_restaurant_menu b on a.menu_id =b.id 
@@ -2590,7 +2590,9 @@ class ctl_factorypage extends cmsPage
 
     }
 
-    public function  add_item_temp_cart_table_action(){
+
+
+    public function  add_items_temp_cart_table_action(){
 
         // 接收购物车中的数据
 
@@ -2608,32 +2610,69 @@ class ctl_factorypage extends cmsPage
 
 
 
-        $mdl_wj_user_temp_carts =$this->loadModel( 'wj_user_temp_carts' );
-        //remove original items of current user of this business
-        $mdl_wj_user_temp_carts->deleteAllItemOfThisBusinessId($user_id,$businessId);
-
+        /*   $mdl_wj_user_temp_carts =$this->loadModel( 'wj_user_temp_carts' );
+           //remove original items of current user of this business
+           $mdl_wj_user_temp_carts->deleteAllItemOfThisBusinessId($user_id,$businessId);
+   */
         // get the main coupon ID of this business which include the shop card information .
         $mdl_coupons =$this->loadModel('coupons');
         $currentCoupon = $mdl_coupons->getByWhere(array('createUserId'=>$businessId,'EvoucherOrrealproduct'=>restaurant_menu));
-
+        $mdl_wj_user_temp_carts =$this->loadModel('wj_user_temp_carts');
 
         //insert new record .
 
+        // 标记所有的seat_id=0 ,表示未处理记录 （如果最后 循环完成之后还未处理，表示前面已经删除，最后做一次删除处理。
 
+        $where =array(
+            'userId'=>$user_id,
+            'businessUserId'=>$businessId,
+         );
+        $data =array(
+            'seat_id'=>0
+        );
 
+        $mdl_wj_user_temp_carts->updateByWhere($data,$where);
+
+        //标记结束
 
 
         foreach ($itemData as $key=>$value){
+            $where =array(
+                'userId'=>$user_id,
+                'businessUserId'=>$businessId,
+                'menu_id'=>$value['id']
+            );
+            if($value['guige_ids']) {
+                $where['guige_ids'] =$value['guige_ids'];
+            }
+            $isfindItem = $mdl_wj_user_temp_carts->getByWhere($where);
 
-            if(!$mdl_wj_user_temp_carts->addItemsToCart($value,$user_id,$currentCoupon,$businessId)){
+            if($isfindItem) {
+                $data =array(
+                    'quantity'=>$value['num'],
+                    'seat_id'=>1
+                );
+                $mdl_wj_user_temp_carts->updateByWhere($data,$where);
+                //update
+            }else{
 
-                echo json_encode('0');
-                exit;
+                if(!$mdl_wj_user_temp_carts->addItemsToCart($value,$user_id,$currentCoupon,$businessId)){
+
+                    echo json_encode('0');
+                    exit;
+                }
+
             }
 
         }
 
+        $whereDelete =array(
+            'userId'=>$user_id,
+            'businessUserId'=>$businessId,
+            'seat_id'=>'0'
+        );
 
+        $mdl_wj_user_temp_carts->deleteByWhere($whereDelete);
 
         echo json_encode('1');
 

@@ -298,7 +298,10 @@
 							<img :src="item2.menu_pic" class="cartImgLarge"  @click.stop="clickGoods" v-if="isLargeScreen"/>
 							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods" v-else/>
 							<div class="goodInfo2_">
-								<div >{{item2.title}}</div><div v-if="item2.guige_ids">{{item2.guige_des}}</div>
+								<div v-if="isLanguageEn">{{item2.title}}</div>
+								<div v-else>{{item2.title}} {{item2.title_cn}} </div>
+
+								<div v-if="item2.guige_ids">{{item2.guige_des}}</div>
 
 								<div class="pa5-0" v-if="isLanguageEn">{{item2.unit_en}}</div>
 								<div class="pa5-0" v-else>		{{item2.unit}}		</div>
@@ -627,6 +630,7 @@
 				currentOnfucsInputItemIndex:-1, //记录当前获得焦点的输入框的索引
 				currentOnfucsInputItemIndexCart:-1,
 				currentOnfucsInputItemIndexGuige:-1,
+				isUpdatedCart:0,
 
 			},
 			mounted:function(){
@@ -653,6 +657,7 @@
 
 
                     sum = sum.toFixed(2);
+
 				 	return sum
 				 },
 
@@ -756,6 +761,7 @@
 				this.choseBigClassify(0,0); //默认显示第一个大分类的小分类
 				//console.log('jere' + _self.classifBigyList);
 				//this.classifyList2 =_self.classifyList2;
+
 			},
 		    methods:{
 			
@@ -844,30 +850,41 @@
 					   self.classifBigyList = response.data;
 
 					   self.classifyList2=self.classifBigyList[0].subCategoryList;
-					   console.log(self.classifBigyList);
-					   console.log('first sub cate list is :' + self.classifyList2);
+					  // console.log(self.classifBigyList);
+					  // console.log('first sub cate list is :' + self.classifyList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
 					  });
-				
-					
+
+					var timer = setInterval(function() {
+
+						if(self.isUpdatedCart ==1){
+							console.log('before process' + self.goodsList);
+							self.addDataToTable(self.goodsList);
+							self.isUpdatedCart =0;
+							//调用临时购物车表同步数据程序；
+							console.log('start to update temp table!')
+						}
+					}, 500);
+
 				
 				 
 				},
 				addDataToTable:function(itemData)
 					{
-                      var url = '<{$http_root_www}>factorypage/add_item_temp_cart_table';
+                      var url = '<{$http_root_www}>factorypage/add_items_temp_cart_table';
                    //   console.log(itemData);
 					//var businessId =319188;
 
 					var params = new URLSearchParams();
 				
-
+				   	console.log(JSON.stringify(itemData));
+					//   alert('here');
 					params.append('itemlist', JSON.stringify(itemData));
 					params.append('businessId', 319188);
 
-					axios.post('<{$http_root_www}>factorypage/add_item_temp_cart_table',params)
+					axios.post('<{$http_root_www}>factorypage/add_items_temp_cart_table',params)
 
 						 .then(function(res) {
 							console.log(res);
@@ -878,6 +895,7 @@
 
 
 					},
+
 				CheckChinese:function(str1)	{
 						let str =this.searchCon;
 						if (escape(str).indexOf('%u') != -1)
@@ -1132,7 +1150,7 @@
 					
 					this.goodsList2[indexOfiteminGoodslist].num=goodItem.num;
 				  }
-				 
+					this.isUpdatedCart =1; //设置cart被改变
 				  // update the database 
 				  
 				},guiGeitemNumUpdateOnCart:function(goodItem,source){ // gooditem为主产品信息
@@ -1154,9 +1172,9 @@
 				   //alert('not find the item');
 					this.guigeAdditemtocart(goodItem,source); // 没有发现，则添加一个产品到购物车列表
 				  }
-				 
 
 
+				  this.isUpdatedCart =1; //设置cart被改变
 
 
 				},
@@ -1175,6 +1193,7 @@
                     // if the num equal 0 , then delete the item on the cart .
                     if(goodItem.num ==0) {
                         this.clickRemove(indexOfiteminGoodslist);
+
                      }else{
 						this.goodsList[indexOfiteminGoodslist].num=goodItem.num;
 					}
@@ -1185,7 +1204,7 @@
 				  }
 				 
 				  // update the database 
-				  
+					this.isUpdatedCart =1; //设置cart被改变
 				},
 				
 				//check if item in the cart , will details whne do guige 
@@ -1233,25 +1252,29 @@
 				  this.newitem=
 					[ {
 						title:goodItem.title,
+						title_cn:goodItem.title_cn,
 						price:goodItem.price,
 						num:goodItem.num,
 						isTouch:false,   // 是否显示删除按钮
 						hasGG:false,
 						status:0,     // 是否选中状态  1为选中  2是不选中
 						menu_pic:goodItem.menu_pic,
-						id:goodItem.id,
+						id:goodItem.id, //产品编号
 						guige_ids:0,
 						guige_des:'',
 						unit:goodItem.unit,
 						unit_en:goodItem.unit_en
 					}];					
 					this.goodsList.push(this.newitem[0]);
+
+
 				
 				},//添加一个有规格产品到购物车
 				guigeAdditemtocart:function(goodItem,source){
 				  this.newitem=
 					[ {
 						title:goodItem.title,
+						title_cn:goodItem.title_cn,
 						price:this.selectedGuige1Item.price,
 						num:this.num,
 						isTouch:false,   // 是否显示删除按钮
@@ -1264,7 +1287,8 @@
 						unit:goodItem.unit,
 						unit_en:goodItem.unit_en
 
-					}];					
+					}];
+
 					this.goodsList.push(this.newitem[0]);
 				
 				},
@@ -1358,15 +1382,16 @@
 
 					//循环查找产品列表中的对应menu id匹配，并清楚数量。
 					var arrlength =this.goodsList2.length;
-					
-				    for (let i = 0; i < arrlength; i++) {
-					   if(item.id ==this.goodsList2[i].id) {
-					    
-						this.goodsList2[i].num=0;
-						
-					   }
-					} 
-					
+					if(item) {
+						for (let i = 0; i < arrlength; i++) {
+							if (item.id == this.goodsList2[i].id) {
+
+								this.goodsList2[i].num = 0;
+
+							}
+						}
+					}
+					this.isUpdatedCart =1; //标记需要处理
 				},
 				focus:function(event,index2,source){
 					event.currentTarget.select();
@@ -1401,6 +1426,9 @@
 					}
 					// 修改购物车列表数量
 				this.itemNumUpdateOnList(this.goodsList[index2],'c');
+					if(num==0){
+						this.clickRemove(index2,0);
+					}
 				}, //获得某个产品规格组中的最小价格
 				GetGuigeMinPrice:function(item){
 					let GuigeItemArr = item['menu_option_list'];
@@ -1474,7 +1502,7 @@
 					}else if(source=='d'){
 						this.isDatePop=false
 					}else if(source=='n'){
-						alert('here');
+						//alert('here');
 						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
 						return 1;
 					}else{

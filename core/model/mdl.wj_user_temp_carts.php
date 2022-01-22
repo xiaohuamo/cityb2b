@@ -167,7 +167,8 @@ where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order b
        $data['createTime']=time();
        $data['main_coupon_id']=$currentCoupon['id'];
        $data['sub_coupon_id']=$currentCoupon['id'];
-       $data['coupon_name']=$value['title'];
+       $data['coupon_name']=$value['title_cn'];
+       $data['coupon_name_en']=$value['title'];
        $data['businessUserId']=$businessId;
        $data['quantity']=$value['num'];
        $data['single_amount']=$value['price'];
@@ -175,12 +176,13 @@ where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order b
        $data['guige_ids']=$value['guige_ids'];
        $data['menu_id']=$value['id'];
        $data['coupon_name_en']=$value['title'];
+       $data['seat_id'] =1; //做一个标记，标记、、、
 
        $newId =$this->insert($data);
        if(!$newId){
            return 0;
        }
-      return 1;
+      return $newId;
    }
 
 
