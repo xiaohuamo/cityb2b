@@ -834,7 +834,7 @@
 						 console.log(error);
 					  });
 				// 获取商品列表
-				axios.get('<{$http_root_www}>factorypage/get_good_list?id=319188')
+				axios.get('<{$http_root_www}>factorypage/get_good_list?id=<{$businessUserId}>')
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
@@ -845,7 +845,7 @@
 					  });
 					
                  // 获取商品大类列表
-				axios.get('<{$http_root_www}>factorypage/get_category_list_json?id=319188')
+				axios.get('<{$http_root_www}>factorypage/get_category_list_json?id=<{$businessUserId}>')
 					  .then(function (response) {
 					   self.classifBigyList = response.data;
 
@@ -882,7 +882,7 @@
 				   	console.log(JSON.stringify(itemData));
 					//   alert('here');
 					params.append('itemlist', JSON.stringify(itemData));
-					params.append('businessId', 319188);
+					params.append('businessId', <{$businessUserId}>);
 
 					axios.post('<{$http_root_www}>factorypage/add_items_temp_cart_table',params)
 

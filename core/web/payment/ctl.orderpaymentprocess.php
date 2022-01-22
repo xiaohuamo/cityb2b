@@ -530,6 +530,7 @@ class ctl_orderpaymentprocess extends cmsPage
 		$arr_post=$this->loadModel('wj_temp_orderID_carts')->get_temp_data($orderId);
 
   		$order_data = $this->loadModel('order')->getByOrderId($orderId);
+          $this->setData($order_data['business_userId'],'business_userId');
 
   		if(!$arr_post&&!$order_data){
   			$this->sheader(null,(string)$this->lang->no_data);

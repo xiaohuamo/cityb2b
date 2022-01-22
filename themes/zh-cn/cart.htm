@@ -90,7 +90,7 @@
 				  var self = this;
 				  //alert('here');
 				
-				 axios.get('<{$http_root_www}>factorypage/get_cart_details')
+				 axios.get('<{$http_root_www}>factorypage/get_cart_details ')
 					  .then(function (response) {
 					   self.dataList = response.data;
 					   console.log(self.dataList);

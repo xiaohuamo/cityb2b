@@ -2501,7 +2501,7 @@ class ctl_factorypage extends cmsPage
     public function get_category_list_json_action() {
 
         $id = (int) get2('id');
-        $id =319188;
+       
 
         $categoryList =$this->loadModel('restaurant_category')->getCategoryList($id);
         echo json_encode($categoryList);
@@ -2512,7 +2512,7 @@ class ctl_factorypage extends cmsPage
     public function get_cart_details_action(){
 
         $business_userid = (int)get2('business_userid');
-        $business_userid =319188;
+       // $business_userid =319188;
         $userid = $this->loginUser['id'];
         $mdl_wj_user_temp_carts = $this->loadModel( 'wj_user_temp_carts' );
         $cartItems=$mdl_wj_user_temp_carts->getDetailedItem( $userid , $business_userid,$this->getLangStr());
@@ -2552,7 +2552,7 @@ class ctl_factorypage extends cmsPage
     public function get_good_list_action(){
 
         $id = (int) get2('id');
-        $id =319188;
+
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
         $default_menu_page_items = 10;
