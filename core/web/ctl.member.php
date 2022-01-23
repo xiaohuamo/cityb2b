@@ -1436,6 +1436,7 @@ class ctl_member extends cmsPage
 				exit;
 			}
 		}else{
+          /*
 			//multiple user login
 			if(get2('openId')){
 				$where['wx_openID']=get2('openId');
@@ -1443,7 +1444,7 @@ class ctl_member extends cmsPage
 
 				$this->setData($accounts,'accounts');
 				$this->display('member/multiple_wx_login');
-			}
+			} */
 		}
 		
 	}
@@ -1525,11 +1526,7 @@ class ctl_member extends cmsPage
 			);
 			
 		    
-			// 判断当前用户是否为华姐报名,如果是则转向公司页面,并转向miss页面
-			$mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
-			$sql22= "select * from cc_wj_customer_coupon where userId=".$user['id']. " and bonus_id=7176 ";
-			$miss= $mdl_wj_customer_coupon->getListBySql($sql22);
-			
+
 
 			//end
 
@@ -1574,12 +1571,13 @@ class ctl_member extends cmsPage
 			
 		}
 		else {
+
 			if($this->loginUser){
 				$this->sheader( HTTP_ROOT.$this->returnUrl );
 			}
 
 			$ua =$this->getUserDevice();
-			if ($ua=='wechat') {
+			/*if ($ua=='wechat') {
 
 					$new_url =HTTP_ROOT_WX."member/wx_register?returnUrl=".urlencode($this->returnUrl);
 					$query = array(
@@ -1605,7 +1603,7 @@ class ctl_member extends cmsPage
 				$this->setData( $this->lang->log_in.' - '.$ua. $this->site['pageTitle'], 'pageTitle' );
 				$this->display( 'welcome/login' );
 				
-			}
+			} */
 		}
 	}
 
