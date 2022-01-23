@@ -18,7 +18,7 @@
 			</div><div style="height: 3rem;"></div>
 			<div class="pHead">
 				<div class="center"><img src="<{$SKIN_PATH}>/img/success.png" class="success"></div>  
-				<div class="center f40 col333 bold pmb10" v-if="isLanguageEn" >Order Successfully submit!</div>
+				<div class="center f40 col333 bold pmb10" v-if="isLanguageEn" > Order Successfully submit!</div>
 				<div class="center f40 col333 bold pmb10" v-else>订单已成功提交</div>
 				<div class="center f28 colccc" v-if="isLanguageEn">we will process order soon!</div>
 				<div class="center f28 colccc" v-else>我们将尽快为您发货!</div>
@@ -50,7 +50,13 @@
 			},
 		    methods:{
 				continueOrder:function(){
-					window.location.href="<{$http_root_www}>supplier/'<{$business_userId}>'"
+					let  agentid = '<{$agentid}>';
+					if(agentid) {
+						window.location.href="<{$http_root_www}>factory/order_for_customer_new"
+					}else{
+						window.location.href="<{$http_root_www}>supplier/" +'<{$supplierId}>'
+					}
+
 				},
 				lookOrder:function(){
 				   let  currentOrderId = '<{$orderId}>';

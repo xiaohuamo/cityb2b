@@ -960,7 +960,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 
 		if($this->getUserDevice()=='desktop'){
-			$this->display( 'payment/royalpay/return' );
+			$this->display( 'orderPage/orderSuccess' );
 		}else{
 			$this->display( 'orderPage/orderSuccess' );
 		}
@@ -973,8 +973,18 @@ class ctl_orderpaymentprocess extends cmsPage
 
 		$this->setData( (string)$this->lang->offline_success_description1.'－ '.$this->site['pageTitle'], 'pageTitle' );
 		$this->setData( $orderId, 'orderId' );
+
+        $orderRec =$this->loadModel('order')->getByWhere(array('orderId'=>$orderId));
+        $this->setData($orderRec['business_userId'],'supplierId' );
+
+        $agentId =$this->cookie->getCookie('agentcityb2b');
+        if($agentId ) {
+            $this->setData($agentId,'agentid');
+        }
+
+
 		if($this->getUserDevice()=='desktop'){
-			$this->display( 'payment/offline_success' );
+			$this->display( 'orderPage/orderSuccess' );
 
 		}else{
 			$this->display( 'orderPage/orderSuccess' );

@@ -2144,7 +2144,7 @@ class ctl_factory extends cmsPage
             $this->session( 'member_user_id', $user['id'] );
             $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
 
-            $this->sheader(HTTP_ROOT_WWW . 'factory/' . $url);
+          //  $this->sheader(HTTP_ROOT_WWW . 'factory/order_for_customer_new');
         }
     }
  public function order_for_customer_new_action()
@@ -2156,12 +2156,28 @@ class ctl_factory extends cmsPage
         $id = $this->loginUser['id'];
 		
 		if ($agentId !=$id) {
-			$this->login_as_agent($agentId,'order_for_customer_new');
+			 $mdl_user =$this->loadModel('user');
 			
+			$user = $mdl_user->getUserById( $agentId );
+            $data = array(
+                'lastLoginIP'	=> ip(),
+                'lastLoginDate'	=> time(),
+                'loginCount'	=> $user['loginCount'] + 1
+            );
+
+            $mdl_user->updateUserById( $data, $user['id'] );
+
+            $this->session( 'member_user_id', $user['id'] );
+            $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+
+			$this->loginUser=$user;
 		}
 
         $mdl_user_factor = $this->loadModel('user_factory');
 
+       //var_dump($this->loginUser['id']);
+		//  var_dump('role'.$this->loginUser['role']);exit;
+		
         //获得当前用户的实际商家所有者商家id
         $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
         //  var_dump($factoryId);exit;
