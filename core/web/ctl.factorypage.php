@@ -319,6 +319,7 @@ class ctl_factorypage extends cmsPage
         return;
     }
 
+
     public function order_for_customer_action()
     {
         $default_menu_page_items = 10;

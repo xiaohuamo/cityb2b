@@ -382,6 +382,25 @@ class cmsPage extends corecms
 		
 	}
 
+    //get the company /index page accroding to login role and permissions
+
+    public function  getindexPageOfUser($loginuser,$pclogin){
+        if($pclogin) {
+            return 'factory/index';
+
+        }else{
+
+            if($loginuser['role'] ==3) {
+                // var_dump('3');exit;
+                return 'factory/salesman';
+            }elseif ($loginuser['role']==20) {
+                // var_dump('20');exit;
+                return 'factory/salesman';
+            }
+        }
+
+    }
+
 	protected function page( $sql, $pageUrl, $pageSize, $maxPage = 5,$pageUntil=false ) {
 		$pageUrl		= preg_replace( '/&?perPageCount=\d+/', '', $pageUrl );
 		$perPageCount	= (int)get2( 'perPageCount' );

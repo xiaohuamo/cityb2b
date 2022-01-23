@@ -2126,7 +2126,67 @@ class ctl_factory extends cmsPage
             $this->sheader(HTTP_ROOT_WWW . 'factorypage/' . $this->loginUser['id']);
         }
     }
+	
+	 function login_as_agent($userid,$url) {
+        
+     
+        $mdl_user = $this->loadModel( 'user' );
+        if(1){
+            $user = $mdl_user->getUserById( $userId );
+            $data = array(
+                'lastLoginIP'	=> ip(),
+                'lastLoginDate'	=> time(),
+                'loginCount'	=> $user['loginCount'] + 1
+            );
 
+            $mdl_user->updateUserById( $data, $user['id'] );
+
+            $this->session( 'member_user_id', $user['id'] );
+            $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+
+            $this->sheader(HTTP_ROOT_WWW . 'factory/' . $url);
+        }
+    }
+ public function order_for_customer_new_action()
+    {
+        $agentId =$this->cookie->getCookie('agentcityb2b');
+		
+		
+		
+        $id = $this->loginUser['id'];
+		
+		if ($agentId !=$id) {
+			$this->login_as_agent($agentId,'order_for_customer_new');
+			
+		}
+
+        $mdl_user_factor = $this->loadModel('user_factory');
+
+        //获得当前用户的实际商家所有者商家id
+        $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
+        //  var_dump($factoryId);exit;
+        $id = $factoryId;
+        if(	$this->loginUser['role']==20) {
+            $salesManId = $this->loginUser['id'];
+
+        }
+        //var_dump($factoryId);exit;
+        $factoryList = $mdl_user_factor->getUserFactoryList($factoryId,null,$salesManId);
+		
+		
+		 foreach ($factoryList as $key => $user) {
+		   $expiredAt =strtotime("+36 months", time());
+            $link = self::customer_login_link($user['id'], $expiredAt);
+            $factoryList[$key]['login_link'] = $link;
+		 }
+       // var_dump($factoryList);exit;
+        $this->setData(json_encode($factoryList), 'factoryUsers');
+
+
+        $this->display_pc_mobile('factory/order_for_customer_new', 'factory/order_for_customer_new');
+
+
+    }
     public function customer_login_link_action() {
         $userId = get2('user_id');
         $mdl_user_factory = $this->loadModel('user_factory');
