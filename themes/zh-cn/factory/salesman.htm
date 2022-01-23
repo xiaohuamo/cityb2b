@@ -40,7 +40,7 @@
 					</div>
 					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 				</div>
-				<div class="flexBox1 settingBox"  @click="changeMenu('5')">
+				<div class="flexBox1 settingBox"  @click="changeMenu('6')">
 					<div class="flexBox1">
 						<img src="<{$SKIN_PATH}>img/storeMe2.png" class="icon"/>
 						<span class="col1C1C1C f30">帮客户下单</span>
@@ -74,7 +74,7 @@
 					<img src="<{$SKIN_PATH}>img/menuCustomer2.png" />
 					<span class="col333 f26">客户</span>
 				</div>
-				<div>
+				<div @click="changeMenu('6')">
 					<img src="<{$SKIN_PATH}>img/menu3.png" />
 					<span class="col333 f26">下订单</span>
 				</div>
@@ -120,9 +120,11 @@
 					    window.location.href="storeChangeOrderList.html"
 						break;
 					case '5':
-						window.location.href='<{$http_root_www}>' + "factory/order_for_customer_new"
+						window.location.href='<{$http_root_www}>' +  "company/index"
 						break;
-
+					case '6':
+							window.location.href='<{$http_root_www}>' + "factory/order_for_customer_new"
+							break;
 					case '9':
 						window.location.href='<{$http_root_www}>' + "company/index?pclogin=1"
 						break;
