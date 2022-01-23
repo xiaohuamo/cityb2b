@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff center">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				新增地址
+			</div>
+			<div style="height:3.5rem;"></div>
+			
+			<!-- 主体部分开始 -->
+			
+			<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="flexBox1 pa15 borderB">
+					<span>名</span>
+					<input  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span>姓</span>
+					<input  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span>电话</span>
+					<input  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span>邮件</span>
+					<input  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15">
+					<span>地址</span>
+					<textarea rows="4" class="inputW mytextarea">
+						
+					</textarea>
+				</div>
+				<div class="flexBox2 pa15">
+					<span>默认地址</span> &nbsp;&nbsp;
+					<img src="../img/addressActive.png" class="activeDH"/>
+				</div>
+			</div>
+			<div class="ma15">
+				<div class="bigBtn f30 colfff" @click="add">增加</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				lastName:''
+			},
+		    methods:{
+				add:function(){
+					window.history.go(-1)
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/signUp.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="sign" v-cloak>
+			<div class="center">
+				<img src="../img/headIcon.png" class="loginIcon"/>
+			</div>
+			<div class="f40 col333 center maT15">用户注册</div>
+			<div class="myInputBox flexBox1">
+				<div class="f28 col000 bold">账户注册</div>
+				<input placeholder="请输入用户名" />
+			</div>
+			<div class="myInputBox flexBox1">
+				<div class="f28 col000 bold">密   码</div>
+				<input placeholder="请输入密码" />
+			</div>
+			<div class="myInputBox flexBox1">
+				<div class="f28 col000 bold">确认密码</div>
+				<input placeholder="请再次输入密码" />
+			</div>
+			
+			
+			
+			<div class="remberBox f28 col000 bold">
+				<div class="flexBox2">
+					<input type="checkbox"/>我阅读并同意 <span class="colFD5001">用户协议</span>
+				</div>
+			</div>
+			<div class="bigBtn loginBtn" @click="goSign">注册</div>
+			<div class="f28 col666 center noAccount">
+				 已有账号？
+			    <span class="colFD5001" @click="goLogin">登录</span>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#sign",
+			data:{},
+			methods:{
+				goSign:function(){
+				   	window.location.href="../me/accountSetting.html"
+				},
+				goLogin:function(){
+					window.location.href="login.html"
+				}
+			}
+		})
+		
+	</script>
+</html>

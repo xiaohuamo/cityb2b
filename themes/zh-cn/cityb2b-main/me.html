@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/me.css"/>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff mb10">
+				<div class="relative center">
+					<img src="img/headIcon.png" class="headIcon"/>
+					<div class="f38 col333 f500 bold">我的</div>
+					<div class="flexBox1 headRight">
+						<img src="img/share.png" class="w40 shareIcon" @click="shareApp"/>
+						<img src="img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<a href=""><div class="flexBox2">
+							<img src="img/add_1.png"/>
+							<span class="colfff f30">EN</span>
+						</div></a>
+						<div class="flexBox2" @click="clickSC">
+							<img src="img/sc.png" v-if="isSC"/>
+							<img src="img/add_2.png" v-else />
+							<span class="colfff f30">收藏</span>
+						</div>
+						<a href=""><div class="flexBox2">
+							<img src="img/add_3.png"/>
+							<span class="colfff f30">我要开户</span>
+						</div></a>
+						<a href=""><div class="flexBox2" style="border:none;">
+							<img src="img/add_4.png"/>
+							<span class="colfff f30">我是供应商</span>
+						</div></a>
+						<div class="triangle"></div>
+					</div>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			<img src="img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<!-- 头像部分 -->
+			<div class="flexBox1 personInfoBox" @click="editPersonInfo">
+				<div class="flexBox2">
+					<img src="img/portrait.png" class="portrait"/>
+					<span class="f35" v-if="isLogin">昵称</span>
+					<span class="f35" v-else @click.stop="goSign">登录/注册</span>
+				</div>
+				<img src="img/arrow2.png" class="Me_arrow" />
+			</div>
+			
+			<div class="flexBox1 orderBox">
+				<div class="order flexBox1" @click="toOrders">
+					<span class="f35">订单</span>
+					<img src="img/me_1.png" class="Meicon" />
+				</div>
+				<div class="order flexBox1">
+					<span class="f35">优惠券</span>
+					<img src="img/me_2.png" class="Meicon" @click="toMyCounpon"/>
+				</div>
+			</div>
+			<div class="infoSetting">
+				<div class="flexBox1 settingBox" @click="changeAccount">
+					<div class="flexBox1">
+						<img src="img/setting1.png" class="icon"/>
+						<span class="col1C1C1C f30">账户切换</span>
+					</div>
+					<img src="img/arrow2.png" class="arrow" />
+				</div>
+				<div class="flexBox1 settingBox" @click="address">
+					<div class="flexBox1">
+						<img src="img/setting2.png" class="icon"/>
+						<span class="col1C1C1C f30">收货地址</span>
+					</div>
+					<img src="img/arrow2.png" class="arrow" />
+				</div>
+				<div class="flexBox1 settingBox" @click="AccountSetting">
+					<div class="flexBox1">
+						<img src="img/setting3.png" class="icon"/>
+						<span class="col1C1C1C f30">账户设置</span>
+					</div>
+					<img src="img/arrow2.png" class="arrow" />
+				</div>
+				<div class="flexBox1 settingBox" @click="AQsetting">
+					<div class="flexBox1">
+						<img src="img/setting4.png" class="icon"/>
+						<span class="col1C1C1C f30">安全设置</span>
+					</div>
+					<img src="img/arrow2.png" class="arrow" />
+				</div>	
+			</div>
+			<div class="signOut f35 col1C1C1C" @click="loginOut">退出登录</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="img/menu1.png"/>
+					<span class="col333 f26">首页</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="img/menu2.png" />
+					<span class="col333 f26">订货</span>
+				</div>
+				<div @click="changeMenu('3')">
+					<img src="img/menu3.png" />
+					<span class="col333 f26">订单</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="img/menu4.png"/>
+					<span class="col333 f26">购物车</span>
+				</div>
+				<div @click="changeMenu('5')">
+					<img src="img/menu5_.png"/>
+					<span class="colFD5001 f26">我的</span>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				isLogin:true,
+				isShare:false,
+				currentMenu:5,   // 当前菜单
+				isAddShow:false,      // 点击＋ 
+				isSC:false           // 是否收藏
+			},
+		    methods:{
+				clickAdd:function(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC:function(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				shareApp:function(){
+				  	this.isShare=true
+				},
+				dismissShare:function(){
+					this.isShare=false
+				},
+				toOrders:function(){
+				   	window.location.href="orderPage/orders.html"
+				},
+				changeAccount:function(){
+					window.location.href="me/accountChange.html"
+				},
+				address:function(){
+					window.location.href="me/addressList.html"
+				},
+				AccountSetting:function(){
+					window.location.href="me/accountSetting.html"
+				},
+				AQsetting:function(){
+					window.location.href="me/passwordSetting.html"
+				},
+				editPersonInfo:function(){
+					window.location.href="me/editMeInfo.html"
+				},
+				toMyCounpon:function(){
+					window.location.href="KH/mycoupon.html"
+				},
+				goSign:function(){
+					window.location.href="signUp/signUp.html"
+				},
+				loginOut:function(){
+					this.isLogin=false
+				},
+				changeMenu:function(index){
+					this.currentMenu=index
+					switch(index){
+					case '1':
+					    window.location.href="home.html"
+						break;
+					case '2':
+				        window.location.href="orderGoodsPage/orderGoods.html"
+						break;
+					case '3':
+					    window.location.href="orderPage/orders.html"
+						break;
+					case '4':
+					    window.location.href="cart.html"
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		})	
+	</script>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>下单页面</title>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="css/datePop.css"/>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="order" v-cloak class="relative">
+			<div class="pTitle">
+				<img src="img/return.png" class="return" @click="returnPage"/>
+				下单页面
+			</div><div style="height: 3rem;"></div>
+			<div class="pHead f28 col0F0F0F">
+				<div class="pmb5 bold">配送日期</div>
+				<div class="flexBox1">
+				  <span>2021年11月28日 星期6</span>	
+				  <div class="pbtn f25 colfff" @click="changeDate">修改</div>
+				</div>
+			</div>
+			<div class="bgfff borR7 ma15 f28 col282828">
+				<div class="pa15 borderB">
+					<div class="flexBox3 pmb5">
+						<img src="img/location.png" class="plocation"/>&nbsp;&nbsp;
+						<div><span class="f500">收货人</span> xxxxxx</div>&nbsp;&nbsp;
+						<span>1879987765</span>
+					</div>
+					<div>500 Dorset rd，croydon south，vic，3136</div>
+				</div>
+				
+				
+				<div class="flexBox1 pa15 borderB f28 col282828 bold" @click="UpdateAddress">
+					更换地址
+					<img src="img/down.png" class="arrow" />
+				</div>
+				<div class="mask z9" v-show="isUpdateAddress">
+					<div class="bgfff updateBox pa15 borR7">
+						<img src="img/cha2.png" @click="remove"/>
+						<div class="center  f33 bold center">
+							更换地址
+						</div>
+						<div class="pa15-0" @click="addAddress">
+							新建地址
+						</div>
+						<div class="pmb15" @click="UpdateAddress">
+							地址地址地址地址地址地址地址地址地址
+						</div>
+						<div @click="UpdateAddress">
+							地址地址地址地址地址地址地址地址地址
+						</div>
+					</div>
+				</div>
+				
+				
+				
+				<div v-show="isaddAddress">
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+					名 <input placeholder="mo" class="H80"/>
+					</div>
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+						姓 <input  class="H80"/>
+					</div>
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+						电话 <input  class="H80"/>
+					</div>
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+						邮件 <input  class="H80"/>
+					</div>
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+						地址 <input  class="H80"/>
+					</div>
+					<div class="flexBox1 pa15 borderB col1C1C1C">
+						附加 <input class="H80"/>
+					</div>
+					<div class="pa15 col1C1C1C center f25 col686868">
+						添加地址辅助信息（如果地址无法精准）
+					</div>
+				</div>
+			</div>
+			<div class="pgoodsList">
+				<div class="cartTitle flexBox2">
+					<img src="img/big.png" class="cartIcon"/>&nbsp;&nbsp;
+					<span>wwwww</span>
+				</div>
+				<div class="flexBox3 goodInfo">
+					<img src="img/big.png" class="cartImg"/>
+					<div class="goodInfo2">
+						<div>色泽自然利隆赤峰天山大 金苗小米2斤/袋</div>
+						<div class="f25 col8D8D8D">x2</div>
+						<div class="flexBox1 price colFD5001">
+							<span>$6</span>
+							<span>$6</span>
+						</div>
+					</div>		
+				</div>
+				<div class="flexBox3 goodInfo">
+					<img src="img/big.png" class="cartImg"/>
+					<div class="goodInfo2">
+						<div>色泽自然利隆赤峰天山大 金苗小米2斤/袋</div>
+						<div class="f25 col8D8D8D">x2</div>
+						<div class="flexBox1 price colFD5001">
+							<span>$6</span>
+							<span>$6</span>
+						</div>
+					</div>		
+				</div>
+				<div class="f28 col303134 pinfoBox">
+					<div>商品金额  <span class="colFD5001">$7</span></div>
+					<div>折扣码  $7</div>
+					<div>运费  $7</div>
+					<div>第三方  Surcharge :$xxx </div>
+					<div>总金额  <span class="colFD5001">$7</span></div>
+				</div>
+			</div>
+			
+			<div class="flexBox1 discount">
+				<span class="col888888">折扣码</span>
+				<!-- <span class="col282828">234558899</span> -->
+				<input placeholder="请输入折扣码" v-model="code"/>
+				<div class="pbtn haveBtn f25" v-if="isUse">已使用</div>
+				<div class="commonBtn" v-else @click="use">开始使用</div>
+			</div>
+			
+			 <!-- 顾客留言区 -->
+		    <div class="messageArea">
+			  <div class="messageAreaTitle bold">顾客留言区</div>
+			  <textarea placeholder="请输入留言"></textarea>
+		    </div>
+		    <div style="height:3.875rem;"></div>
+		    <div class="flexBox1 fixBottom">
+			  <div class="flexBox1">
+				  <span class="col303134 f28 bold">总金额</span>&nbsp;&nbsp;
+				  <div>
+					<span class="f25 colFD5001 bold">$</span><span class="bold colFD5001 f40">120.00</span>   
+				  </div>
+			  </div>
+			  <div class="flexBox1">
+				  <div class="pbtn f28 colFD590E againBtn">我再逛逛</div>&nbsp;&nbsp;
+				  <div class="pbtn f28 colfff" @click="next">下单</div>
+			  </div>
+		    </div>
+			
+			<!-- 配送日期弹框 -->
+			
+			<div class="mask" v-if="isPop" @click="closePop">
+				<div class="datePop">
+					<img src="img/cha2.png" @click="closePop" class="delete"/>
+					<div class="title col333 f30 bold">配送日程</div>
+					<div class="flexBox1" style="flex-wrap:wrap;">
+						<div class="dateBox2" v-for="item in dateList">
+							<div class="f30 col333">{{item.name}}</div>
+							<div class="f25 colFD5203">{{item.status}}</div>
+							<div class="f25 col999">{{item.date}}</div>
+						</div>
+					</div>
+					<div class="title col333 f30 bold">下单时间及配送时间</div>
+					<div class="flexBox1 pa15">
+						<div class="journal">下单时间</div>
+						<div class="journal">配送时间</div>
+					</div>
+					<div class="pa15 f28 col0B0B0B">
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+						<div class="flexBox1 pmb15">
+							<span>周二零点-周日早五点</span>
+							<span>周三</span>
+						</div>
+					</div>
+					<div class="continue sure">确定</div>
+				</div>
+			</div>
+			
+			<div class="mask z10" @click="close" v-show="isUsePop">
+				<div class="bgfff borR7 codePop center">
+					<img src="img/success2.png"/>
+					<div class="bold f35 text">验证成功</div>
+					<div class="f30 col282828">验证码有效将节约$10刀</div>
+					<div class="bigBtn btn ma0-15" @click="sure">确定</div>
+				</div>
+			</div>
+			
+		</div>  
+	</body>
+	<script>
+		new Vue({
+			el:"#order",
+			data:{
+				code:'',
+				isUse:false,
+				isUsePop:false,
+				isPop:false,
+				isUpdateAddress:false,
+				isaddAddress:false,
+				dateList:[
+					{
+						name:'明天',
+						status:'已选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'已选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'不可选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26'
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26'
+					}
+				]
+			},
+		    methods:{
+				next:function(){
+				   window.location.href="orderPage/orderSuccess.html"
+				},
+				closePop:function(){
+				   this.isPop=false
+				},
+				changeDate:function(){
+					this.isPop=true
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				},
+				UpdateAddress:function(){
+					if(this.isaddAddress){
+						this.isaddAddress=false
+					}
+					this.isUpdateAddress=!this.isUpdateAddress
+				},
+				addAddress:function(){
+					this.isaddAddress=true
+					this.isUpdateAddress=false
+				},
+				remove:function(){
+					this.isUpdateAddress=false
+				},
+				use(){
+					if(this.code==''){
+						alert('请输入折扣码')
+					}else{
+						this.isUsePop=true
+					}
+				},
+				close(){
+					this.isUsePop=false
+				},
+				sure(){
+					this.isUse=true
+					this.isUsePop=false
+				}
+			}
+		})	
+	</script>
+</html>

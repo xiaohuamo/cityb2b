@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body class="bgf2f2f2">
+		<div id="home" v-cloak class="w100">
+			<div class="head bgfff mb10">
+				<div class="relative center">
+					<img v-if="isReturnShow" src="img/return.png" class="return" @click="returnPage" style="top:0;left:0px;"/>
+					<img v-else src="img/headIcon.png" class="headIcon" @click="aboutUs"/>
+					
+					<div class="f38 col333 f500 bold">CityB2B</div>
+					<div class="flexBox1 headRight">
+						<img src="img/share.png" class="w40 shareIcon" @click="shareApp"/>
+						<img src="img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<a href=""><div class="flexBox2">
+							<img src="img/add_1.png"/>
+							<span class="colfff f30">EN</span>
+						</div></a>
+						<div class="flexBox2" @click="clickSC">
+							<img src="img/sc.png" v-if="isSC"/>
+							<img src="img/add_2.png" v-else />
+							<span class="colfff f30">收藏</span>
+						</div>
+						<div class="flexBox2" @click="kh">
+							<img src="img/add_3.png"/>
+							<span class="colfff f30">我要开户</span>
+						</div>
+						<div class="flexBox2" style="border:none;" @click="jm">
+							<img src="img/add_4.png"/>
+							<span class="colfff f30">我是供应商</span>
+						</div>
+						<div class="triangle"></div>
+					</div>
+					
+				</div>
+				<div class="searchBox flexBox1">
+					<img src="img/search.png" class="searchIcon"/>
+					<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+				    <img v-if="searchCon!=''" src="img/cha.png" class="cha" @click="remove"/>
+				</div>	
+			</div>
+			<div style="height:6.8rem;"></div>
+			
+			<img src="img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			
+			<div class="searchPage" v-if="isShowHistory||isShowSearchRes">
+				<!-- <div v-if="list.length==0" class="nothing">
+					<img src="img/nothing.png"/>
+					<div class="f40 col363636 bold p1">搜索无结果</div>
+					<div class="f30 col919191">重新搜索一下试试吧！ </div>
+				</div> -->
+				<div v-if="isShowSearchRes">
+					<div class="flexBox1 have borderB" v-for="item in searchList" @click="searchNext(1)">
+						<div class="flexBox3 w100">
+							<img src="img/headIcon.png" class="searchImg"/>
+							<div class="haveCon">
+								<div class="f35 col333 mb5">鸡肉条</div>
+								<div class="col8D8D8D f25">dnl肉联厂</div>
+								<div class="f28 colFD5001 price">$6/kg</div>
+							</div>
+						</div>
+						<img src="img/arrow.png" class="arrow"/>
+					</div>
+				</div>
+				<div v-if="isShowHistory">
+					<div class="f35 col333 have bold flexBox1">
+						历史搜索
+						<img src="img/cartDelete.png" class="searchDelete" @click="searchDelete('0')"/>
+					</div>
+					<div class="flexBox1 have" v-for="(item,index) in historyList" @click="searchNext(0)">
+						<span class="f30 col333">xxxxxx</span>
+						<img src="img/cha3.png" class="cha2" @click.stop="searchDelete('1',index)"/>
+					</div>
+				</div>
+			</div>
+			<div class="bgfff mb10">
+				<div class="flexBox2 mainConHead mainConHeadbg1">
+					<img src="img/meat.png" class="bigicon"/>
+					<div>
+						<div class="f35 colDBA000 mb5">鲜肉类</div>
+						<div class="col7E7E7E f25">查看全部</div>
+					</div>
+				</div>
+				<div class="pa10">
+					<img  @click="pop" src="img/big.png" class="categoryImg"/>
+				</div>
+				<div class="flexBox1 pa15-10">
+					<div class="flexBox1">
+						<img src="img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">许记猪肉肉铺</span>
+					</div>
+					<div class="flexBox1">
+						<div class="colFD5305 collection f25" v-if="isStoreSC" @click="StoreSC">收藏</div>
+						<div class="colFD5305 collection f25 iscollection" v-else @click="StoreSC">已收藏</div>
+						<div class="colfff enter f25" @click="pop">进店</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="bgfff mb10">
+				<div class="flexBox2 mainConHead mainConHeadbg2">
+					<img src="img/icon.png" class="bigicon"/>
+					<div>
+						<div class="f35 col768F52 mb5">蔬菜水果</div>
+						<div class="col7E7E7E f25">查看全部</div>
+					</div>
+				</div>
+				<div class="pa10">
+					<a href=""><img src="img/big.png" class="categoryImg"/></a>
+				</div>
+				<div class="flexBox1 pa15-10">
+					<div class="flexBox1">
+						<img src="img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">许记猪肉肉铺</span>
+					</div>
+					<div class="flexBox1">
+						<div class="colFD5305 collection f25 iscollection">已收藏</div>
+						<div class="colfff enter f25">进店</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="bgfff mb10">
+				<div class="flexBox2 mainConHead mainConHeadbg3">
+					<img src="img/hx.png" class="bigicon"/>
+					<div>
+						<div class="f35 col7E3530 mb5">海鲜类</div>
+						<div class="col7E7E7E f25">查看全部</div>
+					</div>
+				</div>
+				<div class="pa10">
+					<a href=""><img src="img/big.png" class="categoryImg"/></a>
+				</div>
+				<div class="flexBox1 pa15-10">
+					<div class="flexBox1">
+						<img src="img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">东港福海鲜</span>
+					</div>
+					<div class="flexBox1">
+						<div class="colFD5305 collection f25">收藏</div>
+						<div class="colfff enter f25">进店</div>
+					</div>
+				</div>
+			</div>
+			<div class="bgfff mb10">
+				<div class="flexBox2 mainConHead mainConHeadbg4">
+					<img src="img/jh.png" class="bigicon"/>
+					<div>
+						<div class="f35 col768F52 mb5">杂货类</div>
+						<div class="col7E7E7E f25">查看全部</div>
+					</div>
+				</div>
+				<div class="pa10">
+					<a href=""><img src="img/big.png" class="categoryImg"/></a>
+				</div>
+				<div class="flexBox1 pa15-10">
+					<div class="flexBox1">
+						<img src="img/headIcon.png" class="storeIcon"/>
+						<span class="f500 col333 f30">东港福海鲜</span>
+					</div>
+					<div class="flexBox1">
+						<div class="colFD5305 collection f25">收藏</div>
+						<div class="colfff enter f25">进店</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col9A9A9A more flexBox4">
+				<img src="img/loading.png" class="loadingIcon"/>&nbsp;
+			 	<span>正在加载中...</span>
+			</div>
+			
+			<div class="flexBox1 bgfff ma10 borR10 khbox">
+				<div class="flexBox1">
+					<img src="img/kh.png" class="kh"/>
+					<span class="f35 col333 f500">零售店开户</span>
+				</div>
+				<div class="khBtn" @click="kh">开户</div>
+			</div>
+			<div class="flexBox1 bgfff ma10 borR10 khbox">
+				<div class="flexBox1">
+					<img src="img/jm.png" class="kh"/>
+					<span class="f35 col333 f500">批发商加盟</span>
+				</div>
+				<div class="khBtn" @click="jm">更多优势</div>
+			</div>
+			
+			<div v-show="!isShowSearchRes&&!isShowHistory">
+				<div style="height:3.125rem;"></div>
+				<div class="flexBox1 menuBox">
+					<div @click="changeMenu('1')">
+						<img src="img/menu1_.png"/>
+						<span class="colFD5001 f26">首页</span>
+					</div>
+					<div @click="changeMenu('2')">
+						<img src="img/menu2.png" />
+						<span class="col333 f26">订货</span>
+					</div>
+					<div @click="changeMenu('3')">
+						<img src="img/menu3.png" />
+						<span class="col333 f26">订单</span>
+					</div>
+					<div @click="changeMenu('4')">
+						<img src="img/menu4.png" />
+						<span class="col333 f26">购物车</span>
+					</div>
+					<div @click="changeMenu('5')">
+						<img src="img/menu5.png" />
+						<span class="col333 f26">我的</span>
+					</div>
+				</div> 
+			</div> 
+			<!--<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="img/menu1_.png"/>
+					<span class="colFD5001 f26">首页</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="img/menuCustomer2.png" />
+					<span class="col333 f26">客户</span>
+				</div>
+				<div>
+					<img src="img/menu3.png" />
+					<span class="col333 f26">下订单</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="img/menuChangeOrder2.png"/>
+					<span class="col333 f26">改单</span>
+				</div>
+				<div @click="changeMenu('5')">
+					<img src="img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>-->
+			
+			
+			
+			
+			<div class="mask" v-if="isPop">
+				<div class="pop center">
+					<div class="col000 f35 bold title">选择当前下单用</div>
+					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
+					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
+					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
+					<div class="f30 col282828 p" @click="joinSrore">商家名字</div>
+					<img src="img/cha2.png" @click="closePop" class="close"/>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#home",
+			data:{
+				searchCon:'',     // 搜索关键字
+				currentMenu:1,   // 当前菜单
+				isAddShow:false,      // 点击＋ 
+				isSC:false,            // 是否收藏
+				isShowSearchRes:false, // 搜索结果
+				isShowHistory:false,  // 历史搜索
+				isPop:false,   // 点击进店或者图片弹框
+				searchList:['','',''],
+				historyList:['','',''],
+				list:[
+					{
+						name:'内容'
+					}	
+				],
+				isShare:false,
+				isStoreSC:false,
+				isReturnShow:false
+			},
+		    methods:{
+				 changeMenu:function(index){
+				 	this.currentMenu=index
+				 	switch(index){
+				 	case '1':
+				 		break;
+				 	case '2':
+                           window.location.href="orderGoodsPage/orderGoods.html"
+				 		break;
+				 	case '3':
+				 	    window.location.href="orderPage/orders.html"
+				 		break;
+				 	case '4':
+				 	    window.location.href="cart.html"
+				 		break;
+				 	default:
+				 		window.location.href="me.html"
+				 		break;
+				 	}
+				 },
+//				changeMenu:function(index){   商家端
+//					this.currentMenu=index
+//					switch(index){
+//					case '2':
+//				        window.location.href="me/storeCustomer.html"
+//						break;
+//					case '3':
+//					    window.location.href="me/storeChangeOrder2.html"
+//						break;
+//					case '4':
+//					    window.location.href="me/storeChangeOrderList.html"
+//						break;
+//					case '5':
+//					    window.location.href="me/storeMe.html"
+//						break;	
+//					default:
+//						break;
+//					}
+//				},
+				search:function(){
+					if(this.searchCon!=''){
+						this.isShowSearchRes=true
+						this.isShowHistory=false
+					}else{
+						this.isShowHistory=true
+						this.isShowSearchRes=false
+					}
+				},
+				aboutUs(){
+					window.location.href="me/aboutUs.html"
+				},
+				StoreSC(){
+					this.isStoreSC=!this.isStoreSC
+				},
+				remove:function(){
+					this.searchCon=''
+				},
+				clickAdd:function(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC:function(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				getFocus(){
+					this.isReturnShow=true
+					if(this.isShowSearchRes){
+						this.isShowHistory=false
+					}else{
+						this.isShowHistory=true
+					}
+				},
+				loseFocus:function(){
+					//this.isShowHistory=false
+					
+				},
+				searchDelete:function(source,index){
+					if(source=='0'){
+						this.isShowHistory=false
+					}else{
+						this.historyList.splice(index,1)
+					}	
+				},
+				pop:function(){
+					this.isPop=true
+				},
+				closePop:function(){
+					this.isPop=false
+				},
+				searchNext(source){
+					if(source==0){
+						this.isShowSearchRes=true
+						this.isShowHistory=false
+					}else{  //来自历史
+						window.location.href="goods/detail.html"
+					}
+				},
+				joinSrore:function(){
+					window.location.href="orderGoodsPage/orderGoodsDetail.html"
+				},
+				kh:function(){
+					window.location.href="KH.html"
+				},
+				jm:function(){
+					window.location.href="jm.html"
+				},
+				shareApp:function(){
+				  	this.isShare=true
+				},
+				dismissShare:function(){
+					this.isShare=false
+				},
+				returnPage(){
+					this.isReturnShow=false
+					this.isShowSearchRes=false
+					this.isShowHistory=false
+				}
+			}
+		})
+	</script>	
+</html>

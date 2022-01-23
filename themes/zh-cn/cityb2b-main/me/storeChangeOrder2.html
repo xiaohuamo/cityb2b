@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>修改订单</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff mb10">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<div class="f38 col333 f500 bold center">修改订单</div>
+			</div><div style="height:3.5rem;"></div>	
+		
+			 <!-- 主體部分開始 -->
+		
+			<div class="flexBox1 menuBox2 ma0-15 f28 col7E7E7E">
+				<div class="menu1">品名</div>
+				<div class="menu2">规格</div>
+				<div class="menu2">数量</div>
+				<div class="menu4">价格</div>
+			</div>
+			
+			<div class="borR7 ma0-15 col303134 f26" style="overflow: hidden;">
+				<div class="flexBox1 menuBox2 bgfff borderB" v-for="item in list">
+					<div class="menu1">chicken mince</div>
+					<div class="menu2">5mm</div>
+					<div style="min-width: 25%;" class="flexBox1">
+						<input class="menu2Input" v-model="item.num" type="number"/>
+						<img v-if="item.status==0" src="../img/editSuc.png"/>
+						<img v-else src="../img/editFail.png"/>
+					</div>
+					<div class="menu4">$5.9</div>
+				</div>
+			</div>
+			<div class="flexBox1 ma15 pa0-15">
+				<div class="btnL" @click="add">增加订货项</div>
+				<div class="btnR" @click="look">查看明细</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				list:[
+				   {
+				   	 num:'8',
+				   	 status:0
+				   },
+				   {
+				   	 num:'8',
+				   	 status:0
+				   },
+				   {
+				   	 num:'8',
+				   	 status:1
+				   },
+				   {
+				   	 num:'8',
+				   	 status:1
+				   },
+				   {
+				   	 num:'8',
+				   	 status:1
+				   }
+				]
+			},
+		    methods:{
+				returnPage:function(){
+					window.history.go(-1)
+				},
+				add:function(){
+					window.location.href="../orderGoodsPage/orderGoodsDetail.html"
+				},
+				look:function(){
+					window.location.href="../orderPage/orderDetail.html"
+				}
+			}
+		})	
+	</script>
+</html>

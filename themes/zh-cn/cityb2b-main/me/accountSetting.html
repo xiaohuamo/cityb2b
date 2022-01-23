@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>客户信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style>
+			#file {
+			    display: none;
+			}
+		</style>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff mb10">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<div class="relative">
+					<div class="f38 col333 f500 bold center">账户设置</div>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			
+			<!-- 主体部分开始 -->
+			
+			<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="f35 col1C1C1C center pa15-0 borderB bold">商家资料</div>
+				<div class="flexBox2 pa15 borderB">
+					<div class="labelW">商家实体名</div>
+					<input placeholder="请输入商家实体名" class="H30 inputW2"/>
+				</div>
+				<div class="flexBox2 pa15 borderB relative">
+					<div class="labelW f25" style="width:6rem;">trading name或个人名</div>
+					<input class="H30 inputW2"/>
+					<span class="f25 colFD5204 checked">必填</span>
+				</div>
+				<div class="flexBox2 pa15 borderB">
+					<div class="labelW">ABN</div>
+					<input placeholder="XXXXXX"  class="H30 inputW2"/>
+				</div>
+			</div>
+			
+			<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="f35 col1C1C1C center pa15-0 borderB bold">联系信息</div>
+				<div class="flexBox2 pa15 borderB relative">
+					<div class="labelW">联系人</div>
+					<input placeholder="请输入联系人" class="H30 inputW2"/>
+					<span class="f25 colFD5204 checked">必填</span>
+				</div>
+				<div class="flexBox2 pa15 borderB">
+					<div class="labelW">座机电话</div>
+					<div class="flexBox1">
+					   <div style="width:2rem;">区号</div> &nbsp;&nbsp;<select class="H30">
+							<option>61</option>
+							<option>86</option>
+					   </select>&nbsp;&nbsp;
+					</div>
+					<input placeholder="XXXXXX"  class="w50 H30 inputCommon"/>
+				</div>
+			</div>
+			
+			<div class="borR7 ma15 pa15 bgfff flexBox1">
+				<div>手机号</div>
+				<input placeholder="0425 6666" class="H30 inputCommon"/>
+				<div class="f30 colFD5204 yys">已验视</div>
+			</div>
+			<div class="borR7 ma15 pa15 bgfff flexBox1">
+				<div>Email</div>&nbsp;
+				<input placeholder="0425 6666" class="H30 inputCommon"/>
+				<div class="f30 colFD5204 yys">已验视</div>
+			</div>
+			<!-- 发验证码 -->
+			<!-- <div class="borR7 ma15 pa15 bgfff flexBox1">
+				<div>Email</div>
+				<input placeholder="0425 6666" v-model="lastName" class="H30 inputCommon"/>
+				<div class="f30 colFD5204 yys2">验证码</div>
+			</div> -->
+			<!-- 未验视的 -->
+			<!-- <div class="borR7 ma15 pa15 bgfff">
+				<div class="flexBox1">
+					<div>Email</div>
+					<input placeholder="0425 6666" v-model="lastName" class="H30 inputCommon"/>
+					<div class="f30 colFD5204 yys2">重发</div>
+				</div>
+				<div class="flexBox1 maT15">
+					<div>验证码</div>
+					<input placeholder="6666" v-model="lastName" class="H30 inputCommon"/>
+					<div class="f30 colFD5204 yys2">确认</div>
+				</div>
+			</div> -->
+			<div class="borR7 ma15 pa15 bgfff flexBox1 relative">
+				<div>地址</div>
+				<textarea class="inputW2 col686868 mytextarea" style="width:calc(100% - 3rem);"/>
+				</textarea>
+				<span class="f25 colFD5204 checked">必填</span>
+			</div>
+			<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="f35 col1C1C1C center pa15-0 borderB bold">司机送货辅助信息</div>
+				<div class="flexBox2 pa15 borderB">
+					<div class="labelW">营业时间</div>
+					<input placeholder="营业时间" class="H30 inputW2"/>
+				</div>
+				<div class="flexBox3 pa15 borderB">
+					<div class="labelW">如何到达</div>
+					<textarea class="inputW2 col686868 mytextarea"/>
+					</textarea>
+				</div>
+				<div class="flexBox3 pa15 borderB">
+					<div class="labelW">门店照片</div>
+					<div class="inputW2" style="padding-left:0;"><img src="../img/big.png " class="w100 avatar"/>
+							<!--<input type="file" id="file" accept="image/*" capture='camera' multiple>-->
+							<input type="file" id="file" accept="image/*"/>
+					</div>
+				</div>
+				<div class="flexBox3 pa15 borderB">
+					<div class="labelW">如何投递</div>
+					<textarea class="inputW2 col686868 mytextarea"/>
+					</textarea>
+				</div>
+			</div>
+				
+			<div class="ma15">
+				<div class="bgFEE9DF bigBtn f30 colFD5305 flexBox4">
+					<img src="../img/cartActive.png" class="addIcon" />&nbsp;&nbsp;
+					<span class="colFD5305">审核通过</span>
+				</div>
+				<div class="bigBtn">保存</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				lastName:'',
+				currentMenu:5,   // 当前菜单
+				isAddShow:false,      // 点击＋ 
+				isSC:false           // 是否收藏
+			},
+			mounted:function(){
+				
+				$(".avatar").click(function(){
+				    $("#file").trigger("click")
+				})
+				var file = document.querySelector('input');
+				if (getIos()) {
+				    file.removeAttribute("capture");
+				}
+				function getIos() {
+				    var ua = navigator.userAgent.toLowerCase();
+				    if (ua.match(/iPhone\sOS/i) == "iphone os") {
+				       return true;
+				   } else {
+				      return false;
+				   }
+				}
+				//转成base64
+				$('input[type=file]').on('change', function () {
+				    var reader = new FileReader();
+				    reader.onload = function (e) {
+				       // console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+				        $(".avatar").attr("src", reader.result);
+				    }
+				    reader.readAsDataURL(this.files[0])
+				     //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一    个图片文件转化为base64的码
+				}) 	
+				
+				
+			},
+		    methods:{
+				returnPage:function(){
+				  window.history.go(-1)
+				}
+			}
+		})
+	</script>
+</html>

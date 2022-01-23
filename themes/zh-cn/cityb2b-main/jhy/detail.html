@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>拣货员</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jhy.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/jquery-1.11.0.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff center borderB">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				顾客备货清单</div><div style="height:3.5rem;">
+			</div>
+			<div class="pa15 bgfff">
+				<div class="flexBox1 pmb5"> 物流号 12232 <span>司机 xxxx</span>站号 17</div>
+				<div class="flexBox1 pmb5"> 商家简称 xxx <span> 联系方式 xxxxx</span></div>
+				<div class="flexBox2">
+					备货状态 
+				   <div style="background: #FCD633;" class="pa0-15 borR7">12/17</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="flexBox1 ma15">
+				<span>产品简码</span>
+				<span>产品名称</span>
+				<span>规格</span>
+				<span>数量</span>
+				<span>状态</span>
+			</div>
+			
+			<div class="borR7 f25 ma15 bgfff flexBox2 H" v-for="(a,index) in list">
+				<div class="leftsb paT15">
+					<div class="pmb10">IP009</div>
+					<div class="f45" @click="toEdit(index)">
+						<img src="../img/edit.png" class="edit"/>
+						<p class="f25 colA0A0A0">去编辑</p>
+					</div>
+				</div>
+				<div class="pa15 flexBox1 rightsb">
+					<div style="width: calc(80% - 3rem);">
+						<div class="flexBox1 pmb5">
+							司机   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							车辆   <span>jason</span>
+						</div>
+						<div class="flexBox1 pmb5">
+							站号   <span class="f40">17</span>
+						</div>
+						<div class="flexBox1">
+							客户简称   <span>jason</span>
+						</div>
+					</div>
+					<div class="yellow f45" v-if='a.status==1'>
+						<span class="blink">备货中</span>
+						<img src="../img/jhy1.png" />
+					</div>
+					<div class="yellow f45 bg4ED44F" v-if='a.status==2'>
+						部分有货
+						<img src="../img/jhy1.png" />
+					</div>
+					<div class="yellow f45 bgEF4444" v-if='a.status==3'>
+						无货
+						<img src="../img/jhy1.png" />
+					</div>
+				</div>
+			</div>
+			<div class="mask z10 col181818" v-show="isPopShow">
+				<div class="bgfff detailpop">
+					<div style="padding: 20px 30px 0;">
+						<div class="pmb15">
+							<input type="checkbox" name="btn" class="mycheckbox" onclick="chose(this,0)"/>
+							无货
+						</div>
+						<div class="pmb15">
+							<input type="checkbox" name="btn" class="mycheckbox" onclick="chose(this,1)"/>
+							部分有货
+						</div>
+						<div class="flexBox1">
+							实际数量
+							<input class="numInput2" v-model="num" type="number"/>
+							订单数量38
+						</div>
+					</div>
+					<div class="flexBox1 sureBox">
+						<div class="cancel" @click="cancel">取消</div>
+						<div class="colFD5001" @click="sure">确定</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+		</div>
+	</body>
+	<script>
+		function chose(obj,index){
+			if(index==0){
+				v.$data.isHave=0
+			}else{
+				v.$data.isHave=1
+			}
+			var item = $('.mycheckbox');
+			for (var i = 0; i < item.length; i++) {
+				item[i].checked = false;
+			}
+			obj.checked = true;
+		}
+	</script>
+	<script>
+	let v=new Vue({
+		  el:"#me",
+		  data:{
+			 isPopShow:false,
+			 isHave:0,   // 0  无货 1 部分有货
+			 current:0,  // 第几个
+			 list:[
+				 {
+					status:1     
+				 },
+				 {
+					status:1     
+				 },
+				 {
+					 status:2  
+				 },
+				 {
+					 status:3  
+				 }
+			 ],
+			 num:''
+		  },
+		  methods:{
+			returnPage(){
+				window.history.go(-1)
+			},
+			toEdit(index){
+				this.isPopShow=true
+				this.current=index
+			},
+			cancel(){
+				this.isPopShow=false
+				this.num=''
+			},
+			sure(){
+				this.isPopShow=false
+				this.num=''
+				if(this.isHave==0){
+					this.list[this.current].status=3
+				}else{
+					this.list[this.current].status=2
+				}	
+			}
+		  }
+	   })
+	</script>
+</html>

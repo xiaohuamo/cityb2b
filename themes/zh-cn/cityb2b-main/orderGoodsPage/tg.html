@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>团购</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="goods" v-cloak>
+			<div class="head bgfff mb10 flexBox1">
+				<div class="flexBox2">
+					<img src="../img/return.png" class="return2"/>
+					<div class="f38 col333 f500 bold">11月15日星期二</div>
+				</div>
+				<div class="flexBox1">
+					<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+				</div>
+			</div><div style="height:3.5rem;"></div>
+			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			
+			<div class="addPop" v-show="isAddShow">
+				<a href=""><div class="flexBox2">
+					<img src="../img/add_1.png"/>
+					<span class="colfff f30">EN</span>
+				</div></a>
+				<div class="flexBox2" @click="clickSC">
+					<img src="../img/sc.png" v-if="isSC"/>
+					<img src="../img/add_2.png" v-else />
+					<span class="colfff f30">收藏</span>
+				</div>
+				<div class="flexBox2" @click="kh">
+					<img src="../img/add_3.png"/>
+					<span class="colfff f30">我要开户</span>
+				</div>
+				<div class="flexBox2" style="border:none;" @click="jm">
+					<img src="../img/add_4.png"/>
+					<span class="colfff f30">我是供应商</span>
+				</div>
+				<div class="triangle"></div>
+			</div>
+			<!-- main -->
+			
+			<img src="../img/big.png" class="w100"/>
+			
+			<div class="borR7 bgfff ma15 flexBox1 pa15">
+				<div class="flexBox1">
+					<img src="../img/big.png" class="storeIcon"/>
+					<div>
+						<div class="f35 col000">亚冠超市</div>
+						<div class="f28 col333">200个关注者</div>
+					</div>
+				</div>
+				<div v-if="isFollw" class="commonBtn" @click="follow">正在关注</div>
+				<div v-else class="commonBtn bgFEE9DF colFD5001" @click="follow">关注</div>
+			</div>
+			
+			<div class="ma0-15 tzBox col333 f28 flexBox2">
+				<img src="../img/tz.png" class="tz"/>
+				本周留店铺休息，团购活动正正常进行中，休假
+			</div>	
+			<div class="borR7 bgfff center ma15">
+				<div class="f33 col333 pa15-0">本店店铺</div>
+				<img src="../img/big.png" class="w100"/>
+			</div>
+			
+			<div class="onlineBtn ma0-15 pa15-0">
+				本店线上团购
+			</div>
+			<div class="bgfff ma0-15 pa15-0 relative" @click="toTG">
+				<div class="flexBox1 pa0-15">
+					<span class="f45 col333">海鲜</span>
+					<span class="f33 col333">本周六取</span>
+					<span class="f33 colFD5203">团购进行</span>
+				</div>
+				<div class="flexBox3 pa15">
+					<img src="../img/big.png" class="tgImg"/>
+					<div class="textBox">
+						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
+						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
+					    <div class="f26 col6E6E6E numbox">已有20人下单</div>
+					</div>
+				</div>
+				<div class="f30 col303134 ma0-15" style="margin-bottom:5px;">截单时间：本周四11月20日晚8</div>
+				<div class="flexBox2 ma0-15 pmb15">
+					<div class="tgtime">3</div>&nbsp;天&nbsp;
+					<div class="tgtime">3</div>&nbsp;时&nbsp;
+					<div class="tgtime">3</div>&nbsp;分&nbsp;
+					<div class="tgtime">3</div>&nbsp;秒&nbsp;
+				</div>
+				<div class="commonBtn rtbtn">入团</div>
+			</div>
+			
+			<div class="bgfff ma0-15 pa15-0 relative maT15" @click="toTG">
+				<div class="flexBox1 pa0-15">
+					<span class="f45 col333">海鲜</span>
+					<span class="f33 col333">本周六取</span>
+					<span class="f33 colFD5203">团购进行</span>
+				</div>
+				<div class="flexBox3 pa15">
+					<img src="../img/big.png" class="tgImg"/>
+					<div class="textBox">
+						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
+						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
+					    <div class="f26 col6E6E6E numbox">已有20人下单</div>
+					</div>
+				</div>
+				<div class="f30 col303134 ma0-15" style="margin-bottom:5px;">截单时间：本周四11月20日晚8</div>
+				<div class="flexBox2 ma0-15 pmb15">
+					<div class="tgtime">{{leftd}}</div>&nbsp;天&nbsp;
+					<div class="tgtime">{{lefth}}</div>&nbsp;时&nbsp;
+					<div class="tgtime">{{leftm}}</div>&nbsp;分&nbsp;
+					<div class="tgtime">{{lefts}}</div>&nbsp;秒&nbsp;
+				</div>
+				<div class="commonBtn rtbtn">入团</div>
+			</div>
+			
+			
+			<div class="bgfff ma0-15 pa15-0 relative maT15">
+				<div class="flexBox1 pa0-15">
+					<span class="f45 col333">海鲜</span>
+					<span class="f33 col333">本周六取</span>
+					<span class="f33 colFD5203">团购进行</span>
+				</div>
+				<div class="flexBox3 pa15">
+					<img src="../img/big.png" class="tgImg"/>
+					<div class="textBox">
+						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
+						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
+						<div class="f26 col6E6E6E numbox">已有20人下单</div>
+					</div>
+				</div>
+				<div class="f30 col303134 ma0-15" style="margin-bottom:5px;">截单时间：本周四11月20日晚8</div>
+				<div class="flexBox2 ma0-15 pmb15">
+					<div class="tgtime">3</div>&nbsp;天&nbsp;
+					<div class="tgtime">3</div>&nbsp;时&nbsp;
+					<div class="tgtime">3</div>&nbsp;分&nbsp;
+					<div class="tgtime">3</div>&nbsp;秒&nbsp;
+				</div>
+				
+				<div class="commonBtn rtbtn">入团</div>
+				<div class="tgmask center">
+					<span class="ysj">已售尽</span>
+					<div class="tips pa15 bgfff borR7 flexBox1 f35 col000 bold">
+						期待下次开团 获得最新信息
+						<div class="flexBox2">
+							<img src="../img/weixin.png" class="weixin"/>
+							<img src="../img/up.png" class="up"/>
+						</div>
+						<img src="../img/big.png" class="wximg"/>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#goods",
+			data:{
+				isAddShow:false,      // 点击＋
+				isShare:false,
+			    isSC:false,
+				isFollw:false,
+				leftd:'',
+				lefth:'',
+				leftm:'',
+				lefts:''
+			},
+			mounted(){
+				var self=this
+			    var showtime = function () {
+			        var nowtime = new Date(),  //获取当前时间
+			            endtime = new Date("2021/12/25");  //定义结束时间
+			        var lefttime = endtime.getTime() - nowtime.getTime();  //距离结束时间的毫秒数
+			            self.leftd = Math.floor(lefttime/(1000*60*60*24));  //计算天数
+			            self.lefth = Math.floor(lefttime/(1000*60*60)%24);  //计算小时数
+			            self.leftm = Math.floor(lefttime/(1000*60)%60);  //计算分钟数
+			            self.lefts = Math.floor(lefttime/1000%60);  //计算秒数
+			    }
+				setInterval (function () {
+				    showtime();
+				}, 1000);  
+			},
+		    methods:{
+				clickAdd(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				kh(){
+					window.location.href="../KH.html"
+				},
+				jm:function(){
+					window.location.href="../jm.html"
+				},
+				returnPage(){
+					window.history.go(-1)
+				},
+				toTG(){
+					window.location.href="../orderGoodsPage/tgdetail.html"
+				},
+				shareApp(){
+				  	this.isShare=true
+				},
+				follow(){
+					this.isFollw=!this.isFollw
+				},
+				dismissShare(){
+					this.isShare=false
+				}
+			}
+		})	
+	</script>
+</html>

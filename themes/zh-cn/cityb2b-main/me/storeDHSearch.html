@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>客户信息</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<script src="../js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me" v-cloak>
+			<div class="head bgfff mb10">
+				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<div class="f38 col333 f500 bold center">客户订货查询</div>
+			</div><div style="height:3.5rem;"></div>
+			<!-- 主体部分开始 -->
+			<div class="ma15 borR7 bgfff pa15">
+				<div class="bold pmb10 flexBox1">
+					<span class="f35 col0F0F0F bold">商家资料</span>
+					<span class="f28 colFD570B">必填</span>
+				</div>
+				<div class="pmb5">地址为空！</div>
+				<div class="pmb5">电话未验证！</div>
+				<div class="pmb5">abn为空！</div>
+			</div>
+			<div class="ma0-15 pa0-15">
+				<div @click="nextPage" class="continue" style="margin-top:0;margin-bottom:15px;">补充资料</div>
+			</div>
+			
+			<!-- 商家配送日期 -->
+			<div class="ma15 pa15 borR7 bgfff">
+				<div class="flexBox1 pmb15">
+					<span class="f35 col0F0F0F bold">商家配送日期</span>
+					<span class="f28 colFD570B">选填</span>
+				</div>
+				<div class="flexBox2 pmb15">
+					<input type="checkbox" checked="checked" class="chose" onclick="chose(this)"/> 当前未选择 
+				</div>
+				<div class="flexBox2 pmb15">
+					<input type="checkbox" class="chose" onclick="chose(this)"/> 使用通用配送日期 
+				</div>
+				<div class="flexBox1">
+					<div class="dateBox checkedData">
+						<div>周一</div>
+						<div class="f25 colFD5203">已选</div>
+						<img src="../img/sj.png" />
+					</div>
+					<div class="dateBox">
+						<div>周二</div>
+					</div>
+					<div class="dateBox">
+						<div>周三</div>
+					</div>
+					<div class="dateBox">
+						<div>周四</div>
+					</div>
+				</div>
+				<div class="flexBox2 pmb15">
+					<div class="dateBox dateBox2">
+						<div>周五</div>
+					</div>
+					<div class="dateBox dateBox2">
+						<div>周六</div>
+					</div>
+					<div class="dateBox dateBox2">
+						<div>周日</div>
+					</div>
+				</div>
+				
+				<div class="flexBox2 pmb15">
+					<input type="checkbox" class="chose" onclick="chose(this)"/> 使用特定配送日期 
+				</div>
+				<div class="flexBox1">
+					<div class="dateBox checkedData">
+						<div>周一</div>
+						<div class="f25 colFD5203">已选</div>
+						<img src="../img/sj.png" />
+					</div>
+					<div class="dateBox">
+						<div>周二</div>
+					</div>
+					<div class="dateBox">
+						<div>周三</div>
+					</div>
+					<div class="dateBox">
+						<div>周四</div>
+					</div>
+				</div>
+				<div class="flexBox2">
+					<div class="dateBox dateBox2">
+						<div>周五</div>
+					</div>
+					<div class="dateBox dateBox2">
+						<div>周六</div>
+					</div>
+					<div class="dateBox dateBox2">
+						<div>周日</div>
+					</div>
+				</div>
+			</div>
+			<div class="borR7 bgfff ma15 pa15">
+				<div class="flexBox1 pmb15">
+					<span class="f35 col0F0F0F bold">账户审核状态</span>
+					<span class="f28 colFD570B">选填</span>
+				</div>
+				<div class="flexBox2 pmb15">
+					<input type="checkbox" checked="checked"/> 已通过 
+				</div>
+				<div class="flexBox2">
+					<img src="../img/shz.png" class="shz"/>&nbsp; 审核中
+				</div>
+			</div>
+			
+			<div class="ma15 pa15 bgfff borR7">
+				<div @click="nextPage2" class="continue maT15" style="margin-top:0;margin-bottom:15px;">账户已就绪</div>
+				<div class="f28 col0F0F0F pmb10">免登录链接</div>
+				<div class="borR7 borFD5204 pa15 maT15 flexBox1 pmb5">
+				   <div>www.baidu.com www.baidu.com www.baidu.com</div>
+				   <img src="../img/copyIcon.png" class="copyIcon"/>
+				</div>
+				<!-- <div class="commonBtn copySuccess">复制成功</div> -->
+				<div class="f28 col0F0F0F mb10">复制后发送给客户</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		function chose(obj){
+			var item = $('.chose');
+			for (var i = 0; i < item.length; i++) {
+				item[i].checked = false;
+			}
+			obj.checked = true;
+		}
+	</script>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				
+			},
+			mounted(){
+		 
+			},
+		    methods:{
+				returnPage:function(){  // 跳转店铺说明
+					window.history.go(-1)
+				},
+				nextPage:function(){  // 補充資料
+					window.location.href="accountSetting.html"
+				},
+				nextPage2:function(){  //賬戶已就緒
+					window.location.href="storeChangeOrder.html"
+				}
+			}
+		})	
+	</script>
+</html>

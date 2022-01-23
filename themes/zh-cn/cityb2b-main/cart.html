@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/cart.css"/>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2" sroll="no">
+		<div id="me" v-cloak>
+			<div class="head bgfff mb10 f38 col333 f500 bold center">购物车</div>
+			<div style="height:3.5rem;"></div>
+			<!-- 主体部分 -->
+			<div class="item" v-for="(item,index) in dataList">
+				<div class="cartTitle flexBox2" v-if="item.goodsList.length>0">
+					<input type="checkbox" name="btn" class="mycheckbox" :checked="item.status==1"  @click="allChose($event,index)"/>
+					<img src="img/big.png" class="cartIcon"/>&nbsp;&nbsp;
+					<span>{{item.goodsTitle}}</span>
+				</div>
+				<div class="goodInfoBox" v-for="(item2,index2) in item.goodsList">
+					<div :class="item2.isTouch?'touchStart':'touchStart2'" class="flexBox3 goodInfo" @touchStart='touchStart'  @touchend='touchEnd($event,index,index2)'>
+						<input type="checkbox" name="btn" class="mycheckbox2" :checked="item2.status==1" @click="choseGood(index,index2)"/>
+						<img src="img/big.png" class="cartImg"/>
+						<div class="goodInfo2">
+							<div>{{item2.title}}</div>
+							<div class="flexBox1 price">
+								<span class="colFD5001">${{item2.price}}</span>
+								<div class="flexBox2">
+									<div class="numreduce" @click="numreduce(index,index2)"></div>
+									<input type="number" v-model="item2.num" class="numInput" @input="Enter(item2.num,index,index2)"/>
+									<div class="numadd" @click="numadd(index,index2)"></div>
+								</div>
+							</div>
+						</div>		
+					</div>
+					<div :class="item2.isTouch?'touchRemoveActive':'touchRemoveActive2'" class="touchRemove f25" @click="clickRemove(index,index2)">
+						删除
+					</div>
+			    </div>
+				<div class="flexBox1 bottomItem" v-if="item.goodsList.length>0">
+					<div class="flexBox1">
+						<input type="checkbox" name="btn" class="mycheckbox" :checked="item.status==1" @click="allChose($event,index)"/>
+						<span>全选&nbsp;&nbsp;&nbsp;</span>
+						<span class="f28 col303134" @click="empty(index)">清空购物车&nbsp;</span>
+						<img src="./img/cartDelete.png" class="cartDelete" @click="empty(index)"/>
+					</div>
+					<div class="flexBox1">
+						<div class="cartBtn f25 colFD5305 again" @click="LookAgain">我再逛逛</div>
+						<div class="cartBtn f25 colfff" @click="placeOrder">下单</div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox">
+				<div @click="changeMenu('1')">
+					<img src="img/menu1.png"/>
+					<span class="col333 f26">首页</span>
+				</div>
+				<div @click="changeMenu('2')">
+					<img src="img/menu2.png" />
+					<span class="col333 f26">订货</span>
+				</div>
+				<div @click="changeMenu('3')">
+					<img src="img/menu3.png" />
+					<span class="col333 f26">订单</span>
+				</div>
+				<div @click="changeMenu('4')">
+					<img src="img/menu4_.png"/>
+					<span class="colFD5001 f26">购物车</span>
+				</div>
+				<div @click="changeMenu('5')">
+					<img src="img/menu5.png" />
+					<span class="col333 f26">我的</span>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				currentMenu:4,   // 当前菜单
+				dataList:[   //几个对象就几个组
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{
+						goodsTitle:'del 肉联厂',
+						status:false,  // 是否全选
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,   // 是否显示删除按钮
+								status:0     // 是否选中状态  1为选中  2是不选中
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2222,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					},
+					{   goodsTitle:'del 肉联厂',
+					    status:false,
+						goodsList:[
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,
+								status:0
+							},
+							{
+								title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+								price:6,
+								num:2,
+								isTouch:false,
+								status:0
+							}
+						]
+						
+					}
+				],
+				startX:0,
+				endX:0
+			},
+		    methods:{
+				numadd:function(index,index2){   //  数量增加
+					this.dataList[index].goodsList[index2].num++
+				},
+				numreduce:function(index,index2){   // 数量减少
+					if(this.dataList[index].goodsList[index2].num==1){
+						return false
+					}else{
+						this.dataList[index].goodsList[index2].num--
+					}
+				},
+				Enter:function(num,index,index2){
+					if(num.length==1){
+					   this.dataList[index].goodsList[index2].num=this.dataList[index].goodsList[index2].num.replace(/[^1-9]/g,'')
+					}else{
+					   this.dataList[index].goodsList[index2].num=this.dataList[index].goodsList[index2].num.replace(/\D/g,'')
+					}
+				},
+				check:function(num){   // 校验输入正整数
+					if(this.num.length==1){
+					    this.num=this.num.replace(/[^1-9]/g,'')
+					}else{
+					    this.num=this.num.replace(/\D/g,'')
+					}
+				},
+				choseGood:function(index,index2){   // 选择商品
+					if(this.dataList[index].goodsList[index2].status==0){
+						this.dataList[index].goodsList[index2].status=1
+					}else{
+						this.dataList[index].goodsList[index2].status=0
+					}
+					//  判断是否全选了
+					var choseList=[]
+					for(let obj of this.dataList[index].goodsList) {
+					   if(obj.status==1){
+						   choseList.push(obj)
+					   } 
+					}
+					if(choseList.length==this.dataList[index].goodsList.length){
+						this.dataList[index].status=true
+					}else{
+						this.dataList[index].status=false
+					}	
+				},
+				allChose:function($event,index){   // 全选
+					if($event.target.checked==true){
+						this.dataList[index].status=true
+						for(let obj of this.dataList[index].goodsList) {
+						   obj.status=1
+						}
+					}else{
+						this.dataList[index].status=false
+						for(let obj of this.dataList[index].goodsList) {
+						   obj.status=0
+						}
+					}	
+				},
+				empty:function(index){  // 清空购物车
+					this.dataList.splice(index,1)
+				},
+				touchStart:function(e){ //滑动开始
+				   // 记录初始位置
+				   this.startX = e.touches[0].clientX;
+				},
+				touchEnd:function(e,index,index2){   //滑动删除
+				  // 当前滑动的元素
+				  let parentElement = e.currentTarget;
+				  // 记录结束位置
+				  this.endX = e.changedTouches[0].clientX;
+				  // 左滑,计算滑动距离
+				  if (this.startX - this.endX > 30) {
+						this.dataList[index].goodsList[index2].isTouch=true
+				  }
+				  // 右滑,计算滑动距离
+				  if (this.startX - this.endX < -30) {
+						this.dataList[index].goodsList[index2].isTouch=false	
+				  }
+				  this.startX = 0;
+				  this.endX = 0;
+				},
+				clickRemove:function(index,index2){ // 点击删除
+					this.dataList[index].goodsList.splice(index2,1)
+				},
+				LookAgain:function(){   // 再逛逛
+					window.location.href="orderGoodsPage/orderGoodsDetail.html"
+				},
+				placeOrder:function(){    // 下单
+					window.location.href="placeOrder.html"
+				},
+				changeMenu:function(index){
+					this.currentMenu=index
+					switch(index){
+					case '1':
+					    window.location.href="home.html"
+						break;
+					case '2':
+				        window.location.href="orderGoodsPage/orderGoods.html"
+						break;
+					case '3':
+					    window.location.href="orderPage/orders.html"
+						break;
+					case '5':
+					    window.location.href="me.html"
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		})	
+	</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<script src="js/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="me">
+			<div class="head bgfff center">
+				<img src="img/return.png" class="return" @click="returnPage"/>
+				供应商加盟
+			</div>
+			<div style="height:3.5rem;"></div>
+			<img src="img/jmpage.png" class="w100"/>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				
+			},
+		    methods:{
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

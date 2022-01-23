@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>忘记密码</title>
+		<link rel="stylesheet" type="text/css" href="../common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/signUp.css"/>
+		<script src="../js/vue.min.js"></script>
+	    <style>
+			.myInput::-webkit-input-placeholder{
+　　　　　　　　color:red;
+　　　　　　 }
+		</style>
+	</head>
+	<body class="bgF2F2F2">
+		<div class="pTitle">
+			<img src="../img/return.png" class="return" @click="returnPage"/>
+			忘记密码
+		</div><div style="height: 3rem;"></div>
+		
+		<div class="ma15">
+			<input placeholder="请输入邮件、手机号或用户名" class="myInput"/>
+		</div>
+		<div class="textRight f26 colFD5001 ma0-15" style="position:relative;top:-7px">
+			手机号、邮件、用户名输入错误，请重新输入
+		</div>
+		<div class="bigBtn ma0-15">找回密码-手机号</div>
+		
+		
+	</body>
+</html>
