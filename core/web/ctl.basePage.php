@@ -384,7 +384,7 @@ class cmsPage extends corecms
 
     //get the company /index page accroding to login role and permissions
 
-    public function  getindexPageOfUser($loginuser,$pclogin){
+    public function  getindexPageOfUser($loginuser,$pclogin,$countOfRoles){
         if($pclogin) {
             return 'factory/index';
 
@@ -392,10 +392,10 @@ class cmsPage extends corecms
 
             if($loginuser['role'] ==3) {
                 // var_dump('3');exit;
-                return 'factory/salesman';
+                return 'factory/index_factory';
             }elseif ($loginuser['role']==20) {
                 // var_dump('20');exit;
-                return 'factory/salesman';
+                return 'factory/index_factory';
             }
         }
 
