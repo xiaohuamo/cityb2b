@@ -401,7 +401,7 @@
 								
 									<th name="en_name1">英文单位</th>
 									<th name="en_name1">描述-英文</th>
-									
+									<th name="guigecat">设置主分类</th>
 							
                                     <{if $menu_option_list}>
 										<th name="guigecat">菜品规格</th>
@@ -586,8 +586,8 @@
 											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
-										<!--<{if $loginUser.id !=318951}>
-											<td>
+								
+										<td>
 											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
                                               <option value="0"  selected>选择分类</option>
 											  <{foreach from=$restaurant_category item=category}>
@@ -600,7 +600,7 @@
 											</select>
 											<span class='promote-ajax'></span>
 											<br>
-										</td><{/if}> -->
+										</td>
                                         <{if $menu_option_list}>
 											<td name="guigecat" style="width:150px;">
 												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>

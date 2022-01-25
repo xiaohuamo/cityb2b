@@ -2204,41 +2204,16 @@ class ctl_factory extends cmsPage
 
     }
 
+
     //定义企业员工导向页面入口
-    public function employee_navigation_panel_action($role_id){
+    public function employee_navigation_panel_action(){
+
+        $role_id=get2('role_id');
         //检测员工是否拥有权限；
-     /*   $isHasRole = $this->loadModel('staff_roles')->isHasRoles($this->loginUser['id'],$role_id); */
-        $isHasRole =1;
-        if($isHasRole){
-            switch ($role_id) {
-                case '5':
-                    $nav_page ="salesman";
-                    break;
-                case '6':
-                    $nav_page ="salesman";
-                    break;
-                case '9':
-                    $nav_page ="dispatching";
-                    break;
-                case '10':
-                    $nav_page ="dispatching";
-                    break;
-                case '11':
-                    $nav_page ="operator";
-                    break;
-                case '12':
-                    $nav_page ="dispatching";
-                    break;
-                case '16':
-                    $nav_page ="driver";
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-        $this->display('factory/' + $nav_page);
+        /*   $isHasRole = $this->loadModel('staff_roles')->isHasRoles($this->loginUser['id'],$role_id); */
+        $nav_page = $this->employee_navigation_panel($role_id);
+       //  var_dump();
+        $this->display('factory/' . $nav_page);
 
     }
 

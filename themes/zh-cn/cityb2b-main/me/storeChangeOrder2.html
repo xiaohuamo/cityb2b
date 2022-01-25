@@ -5,14 +5,14 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>修改订单</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/me.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="me">
 			<div class="head bgfff mb10">
-				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage"/>
 				<div class="f38 col333 f500 bold center">修改订单</div>
 			</div><div style="height:3.5rem;"></div>	
 		
@@ -31,8 +31,8 @@
 					<div class="menu2">5mm</div>
 					<div style="min-width: 25%;" class="flexBox1">
 						<input class="menu2Input" v-model="item.num" type="number"/>
-						<img v-if="item.status==0" src="../img/editSuc.png"/>
-						<img v-else src="../img/editFail.png"/>
+						<img v-if="item.status==0" src="<{$SKIN_PATH}>img/editSuc.png"/>
+						<img v-else src="<{$SKIN_PATH}>img/editFail.png"/>
 					</div>
 					<div class="menu4">$5.9</div>
 				</div>
@@ -75,10 +75,10 @@
 					window.history.go(-1)
 				},
 				add:function(){
-					window.location.href="../orderGoodsPage/orderGoodsDetail.html"
+					window.location.href="<{$SKIN_PATH}>orderGoodsPage/orderGoodsDetail.html"
 				},
 				look:function(){
-					window.location.href="../orderPage/orderDetail.html"
+					window.location.href="<{$SKIN_PATH}>orderPage/orderDetail.html"
 				}
 			}
 		})	

@@ -5,49 +5,49 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>Homepage</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="goods" v-cloak>
 			<div class="head bgfff mb10">
-				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage"/>
 				<div class="relative">
 					<div class="f38 col333 f500 bold center">商家服务说明</div>
 					<div class="flexBox1 headRight">
-						<!-- <img src="../img/star2.png" class="star shareIcon"/>
-						<img src="../img/share.png" class="w40"/> -->
-						<img v-if="isSC" src="../img/sc.png" class="star shareIcon" @click="scPage"/>
-						<img v-else src="../img/star2.png" class="star shareIcon" @click="scPage"/>
-						<img src="../img/share.png" class="w40" @click="shareApp"/>
+						<!-- <img src="<{$SKIN_PATH}>img/star2.png" class="star shareIcon"/>
+						<img src="<{$SKIN_PATH}>img/share.png" class="w40"/> -->
+						<img v-if="isSC" src="<{$SKIN_PATH}>img/sc.png" class="star shareIcon" @click="scPage"/>
+						<img v-else src="<{$SKIN_PATH}>img/star2.png" class="star shareIcon" @click="scPage"/>
+						<img src="<{$SKIN_PATH}>img/share.png" class="w40" @click="shareApp"/>
 					</div>
 				</div>
 			</div><div style="height:3.5rem;"></div>
-			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
 			<!-- 主体部分开始 -->
-			<img src="../img/big.png" class="w100"/>
+			<img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 			<div class="ma15 borR7 bgfff">
 				<div class="center pa15-0 borderB bold">订单信息</div>
-				<div class="flexBox2 pa15"><img src="../img/location2.png" class="location2"/>  纽约帝国大厦</div>
+				<div class="flexBox2 pa15"><img src="<{$SKIN_PATH}>img/location2.png" class="location2"/>  纽约帝国大厦</div>
 				<div style="height: 200px;" class="pa0-15">
 					  此处是地图
 				</div>
-				<div class="flexBox2 pa0-15 pmb10"><img src="../img/service1.png" class="location3"/>  
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service1.png" class="location3"/>  
 				周一到周日7田24小时，早8点到晚8点。节假日早9点到晚7点。
 				</div>
-				<div class="flexBox2 pa0-15 pmb10"><img src="../img/service2.png" class="location2"/>
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service2.png" class="location2"/>
 				0425 616 988
 				</div>
-				<div class="flexBox2 pa0-15 pmb10"><img src="../img/service3.png" class="location2"/>  
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service3.png" class="location2"/>  
 				0425 616 988
 				</div>
-				<div class="flexBox2 pa0-15 pmb10"><img src="../img/service4.png" class="location2"/>  
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service4.png" class="location2"/>  
 				0425 616 988
 				</div>
-				<div class="flexBox2 pa0-15" style="padding-bottom:15px;"><img src="../img/service5.png" class="location2"/>  
+				<div class="flexBox2 pa0-15" style="padding-bottom:15px;"><img src="<{$SKIN_PATH}>img/service5.png" class="location2"/>  
 				0425 616 988
 				</div>
 			</div>
@@ -109,7 +109,7 @@
 					this.isShare=false
 				},
 				nextPage:function(){
-					window.location.href="../orderGoodsPage/tg.html"
+					window.location.href="<{$SKIN_PATH}>orderGoodsPage/tg.html"
 				}
 			}
 		})	

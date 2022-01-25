@@ -5,48 +5,48 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>团购</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="goods" v-cloak>
 			<div class="head bgfff mb10 flexBox1">
 				<div class="flexBox2">
-					<img src="../img/return.png" class="return2"/>
+					<img src="<{$SKIN_PATH}>img/return.png" class="return2"/>
 					<div class="f38 col333 f500 bold">11月15日星期二</div>
 				</div>
 				<div class="flexBox1">
-					<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
-					<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+					<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
 				</div>
 			</div><div style="height:3.5rem;"></div>
-			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
 			
 			<div class="addPop" v-show="isAddShow">
 				<a href=""><div class="flexBox2">
-					<img src="../img/add_1.png"/>
+					<img src="<{$SKIN_PATH}>img/add_1.png"/>
 					<span class="colfff f30">EN</span>
 				</div></a>
 				<div class="flexBox2" @click="clickSC">
-					<img src="../img/sc.png" v-if="isSC"/>
-					<img src="../img/add_2.png" v-else />
+					<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
+					<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
 					<span class="colfff f30">收藏</span>
 				</div>
 				<div class="flexBox2" @click="kh">
-					<img src="../img/add_3.png"/>
+					<img src="<{$SKIN_PATH}>img/add_3.png"/>
 					<span class="colfff f30">我要开户</span>
 				</div>
 				<div class="flexBox2" style="border:none;" @click="jm">
-					<img src="../img/add_4.png"/>
+					<img src="<{$SKIN_PATH}>img/add_4.png"/>
 					<span class="colfff f30">我是供应商</span>
 				</div>
 				<div class="triangle"></div>
 			</div>
 			<!-- main -->
 			
-			<img src="../img/big.png" class="w100"/>
+			<img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 			
 			<div class="borR7 bgfff ma15 flexBox1 pa15">
 				<div class="commonBtn pa0-5">正在开团中</div>
@@ -73,8 +73,8 @@
 						<div class="classify" @click="choseBigClassify(index)" v-for="(item,index) in classifBigyList" :class="currentBigClassify==index?'colFD5001':''">{{item}}</div>
 					</div>
 					<div class="flexBox2">
-						<img src="../img/fl.png" class="xxx" @click="classifyPop"/>&nbsp;&nbsp;
-						<img src="../img/xxx.png" class="xxx" @click="layoutChange"/>
+						<img src="<{$SKIN_PATH}>img/fl.png" class="xxx" @click="classifyPop"/>&nbsp;&nbsp;
+						<img src="<{$SKIN_PATH}>img/xxx.png" class="xxx" @click="layoutChange"/>
 					</div>
 				</div>
 				      <!-- 二级分类 -->
@@ -82,15 +82,15 @@
 					<div class="bigclassify">
 						<div class="classify2 bold" @click="haveBuy">
 							已购
-							<img class="classify2Active" src="../img/tabActive.png" v-show="currentClassify==-1"/>  
+							<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==-1"/>  
 						</div>
 						<div class="classify2" v-for="(item,index) in classifyList2" @click="choseClassify(index)">
 						    海鲜
-						    <img class="classify2Active" src="../img/tabActive.png" v-show="currentClassify==index"/>  
+						    <img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==index"/>  
 						</div>
 					</div>
 					<div class="flexBox2">
-						<img src="../img/fl.png" class="xxx" @click="classifyPop"/>
+						<img src="<{$SKIN_PATH}>img/fl.png" class="xxx" @click="classifyPop"/>
 					</div>
 				</div>	
 			</div>
@@ -100,14 +100,14 @@
 			<!-- <div class="ma0-15 bgfff borR7">
 				<div class="pa15" style="padding-bottom:0;">
 					<div class="searchBox flexBox1" style="margin-top:5px;">
-						<img src="../img/search.png" class="searchIcon"/>
+						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
 						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
-					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
 					</div>
 				</div>
 				<div class="flexBox3 pa15 borderB" v-for="(item2,index2) in goodsList">
 					<div class="flexBox3">
-						<img src="../img/big.png" class="cartImg"/>
+						<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 						<div class="goodInfo2_">
 							<div>{{item2.title}}</div>
 							<div class="flexBox1 price">
@@ -123,7 +123,7 @@
 				</div>
 				<div class="flexBox3 pa15 borderB">
 					<div class="flexBox3">
-						<img src="../img/big.png" class="cartImg"/>
+						<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 						<div class="goodInfo2_">
 							<div>色泽自然利隆赤峰天山大金苗小米2斤/袋</div>
 							<div class="flexBox1 price">
@@ -140,16 +140,16 @@
 			<div class="ma0-15 bgfff borR7">
 				<div class="pa15"  v-if="layout">
 					<div class="searchBox flexBox1" style="margin-top:0px;">
-						<img src="../img/search.png" class="searchIcon"/>
+						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
 						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
-					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
 					</div>
 				</div>
 				<div class="pa15" style="padding-bottom:0;" v-else>
 					<div class="searchBox flexBox1" style="margin-top:0px;">
-						<img src="../img/search.png" class="searchIcon"/>
+						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
 						<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
-					    <img v-if="searchCon!=''" src="../img/cha.png" class="cha" @click="remove"/>
+					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
 					</div>
 				</div>
 				
@@ -157,7 +157,7 @@
 				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
 					<div :class="layout?'bgfff goodsbox':''" class="pa15 borderB" v-for="(item2,index2) in goodsList2" @click="clickGoods">
 						<div :class="layout?'':'flexBox3'">
-							<img src="../img/big.png" :class="layout?'cartImg2':'cartImg'"/>
+							<img src="<{$SKIN_PATH}>img/big.png" :class="layout?'cartImg2':'cartImg'"/>
 							<div class="goodInfo2_">
 								<div>{{item2.title}}</div>
 								<div class="flexBox1 price" v-if="item2.hasGG==0">
@@ -194,11 +194,11 @@
 			<div class="flexBox1 menuBox z5">
 				<div class="flexBox1">
 					<div @click="toHome" style="margin-right:2.8rem;">
-						<img src="../img/menu1.png"/>
+						<img src="<{$SKIN_PATH}>img/menu1.png"/>
 						<span class="col333 f26">首页</span>
 					</div>
 					<div @click="cartPop" class="cartnumBox">
-						<img src="../img/menu4.png" />
+						<img src="<{$SKIN_PATH}>img/menu4.png" />
 						<span class="col333 f26">购物车</span>
 						<div>{{goodsList.length}}</div>
 					</div>
@@ -212,10 +212,10 @@
 			
 			<!-- 规格弹出框 -->
 			<div class="mask z10" v-if="isPop" @click="closePop('g')">
-				<img src="../img/cha2.png" @click="closePop('g')" class="close2"/>
+				<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('g')" class="close2"/>
 				<div class="pop2 center" @click.stop="clickPop">
 					<div class="flexBox2 borderB pa15 relative">
-						<img src="../img/big.png" class="cartImg"/>
+						<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 						<div class="goodInfo2 textLeft">
 							<div class="bold">鸡肉条</div>
 							<div class="flexBox1 price">
@@ -250,11 +250,11 @@
 			
 			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
 				<div class="bgfff cartPop" @click.stop="clickPop">
-					<img src="../img/cha2.png" @click="closePop('c')" class="close3"/>
+					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('c')" class="close3"/>
 					<div class="center col333 f30 pa15-0 borderB">共{{goodsList.length}}件</div>
 					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" @click.stop="clickGoods">
 						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
-							<img src="../img/big.png" class="cartImg"/>
+							<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 							<div class="goodInfo2_">
 								<div>{{item2.title}}</div>
 								<div class="flexBox1 price">
@@ -506,10 +506,10 @@
 					},2000)
 				},
 				kh(){
-					window.location.href="../KH.html"
+					window.location.href="<{$SKIN_PATH}>KH.html"
 				},
 				jm(){
-					window.location.href="../jm.html"
+					window.location.href="<{$SKIN_PATH}>jm.html"
 				},
 				returnPage(){
 					window.history.go(-1)
@@ -620,13 +620,13 @@
 					this.currentClassify=index
 				},
 				placeOrder(){    // 下单
-					window.location.href="../placeOrder.html"
+					window.location.href="<{$SKIN_PATH}>placeOrder.html"
 				},
 				nextPage(){  // 跳转店铺说明
 					window.location.href="serviceDescription.html"
 				},
 				toHome(){
-					window.location.href="../home.html"
+					window.location.href="<{$SKIN_PATH}>home.html"
 				},
 				shareApp(){
 				  	this.isShare=true
@@ -638,7 +638,7 @@
 				   return false	
 				},
 				clickGoods(){
-					window.location.href="../goods/detail.html"
+					window.location.href="<{$SKIN_PATH}>goods/detail.html"
 				}
 			}
 		})	

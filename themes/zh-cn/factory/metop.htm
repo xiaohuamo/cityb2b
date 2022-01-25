@@ -1,0 +1,38 @@
+<div class="head bgfff mb10">
+				<div class="relative center">
+					<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage" style="top:0;left:0px;"/>
+				
+					
+					
+					<div class="f38 col333 f500 bold" v-if="isLanguageEn" >Me</div>
+					<div class="f38 col333 f500 bold" v-else >我</div>
+					
+					<div class="flexBox1 headRight">
+					
+						<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
+					</div>
+					<div class="add" id="add" v-show="isAddShow">
+						<div class="flexBox2"  @click="switchDisplayLanguage">
+							<img src="<{$SKIN_PATH}>img/add_1.png"/>
+							<span class="colfff f30">{{langStrDisplay}}</span>
+						</div>
+						<div class="flexBox2" >
+							
+							<img src="<{$SKIN_PATH}>img/add_2.png"  />
+							<span class="colfff f30" v-if="isLanguageEn">Manual</span>
+							<span class="colfff f30" v-else>手册</span>
+						</div>
+						
+						<div class="triangle"></div>
+					</div>
+					
+				</div>
+			<!--	<div class="searchBoxHomepage flexBox1">
+					<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
+					<input v-model="searchCon" placeholder="请输入商家或产品" @input="search" @focus="getFocus" @blur="loseFocus"/>
+				    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+				</div>	 -->
+			</div>
+			<div style="height:3.8rem;"></div> <!--之前是 5.8 ，调小一些-->
+			
+			

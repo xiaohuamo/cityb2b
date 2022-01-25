@@ -5,52 +5,52 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>团购</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="goods" v-cloak>
 			<div class="head bgfff mb10 flexBox1">
 				<div class="flexBox2">
-					<img src="../img/return.png" class="return2"/>
+					<img src="<{$SKIN_PATH}>img/return.png" class="return2"/>
 					<div class="f38 col333 f500 bold">11月15日星期二</div>
 				</div>
 				<div class="flexBox1">
-					<img src="../img/share.png" class="w40 shareIcon" @click="shareApp"/>
-					<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+					<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
+					<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
 				</div>
 			</div><div style="height:3.5rem;"></div>
-			<img src="../img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+			<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
 			
 			<div class="addPop" v-show="isAddShow">
 				<a href=""><div class="flexBox2">
-					<img src="../img/add_1.png"/>
+					<img src="<{$SKIN_PATH}>img/add_1.png"/>
 					<span class="colfff f30">EN</span>
 				</div></a>
 				<div class="flexBox2" @click="clickSC">
-					<img src="../img/sc.png" v-if="isSC"/>
-					<img src="../img/add_2.png" v-else />
+					<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
+					<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
 					<span class="colfff f30">收藏</span>
 				</div>
 				<div class="flexBox2" @click="kh">
-					<img src="../img/add_3.png"/>
+					<img src="<{$SKIN_PATH}>img/add_3.png"/>
 					<span class="colfff f30">我要开户</span>
 				</div>
 				<div class="flexBox2" style="border:none;" @click="jm">
-					<img src="../img/add_4.png"/>
+					<img src="<{$SKIN_PATH}>img/add_4.png"/>
 					<span class="colfff f30">我是供应商</span>
 				</div>
 				<div class="triangle"></div>
 			</div>
 			<!-- main -->
 			
-			<img src="../img/big.png" class="w100"/>
+			<img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 			
 			<div class="borR7 bgfff ma15 flexBox1 pa15">
 				<div class="flexBox1">
-					<img src="../img/big.png" class="storeIcon"/>
+					<img src="<{$SKIN_PATH}>img/big.png" class="storeIcon"/>
 					<div>
 						<div class="f35 col000">亚冠超市</div>
 						<div class="f28 col333">200个关注者</div>
@@ -61,12 +61,12 @@
 			</div>
 			
 			<div class="ma0-15 tzBox col333 f28 flexBox2">
-				<img src="../img/tz.png" class="tz"/>
+				<img src="<{$SKIN_PATH}>img/tz.png" class="tz"/>
 				本周留店铺休息，团购活动正正常进行中，休假
 			</div>	
 			<div class="borR7 bgfff center ma15">
 				<div class="f33 col333 pa15-0">本店店铺</div>
-				<img src="../img/big.png" class="w100"/>
+				<img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 			</div>
 			
 			<div class="onlineBtn ma0-15 pa15-0">
@@ -79,7 +79,7 @@
 					<span class="f33 colFD5203">团购进行</span>
 				</div>
 				<div class="flexBox3 pa15">
-					<img src="../img/big.png" class="tgImg"/>
+					<img src="<{$SKIN_PATH}>img/big.png" class="tgImg"/>
 					<div class="textBox">
 						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
 						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
@@ -103,7 +103,7 @@
 					<span class="f33 colFD5203">团购进行</span>
 				</div>
 				<div class="flexBox3 pa15">
-					<img src="../img/big.png" class="tgImg"/>
+					<img src="<{$SKIN_PATH}>img/big.png" class="tgImg"/>
 					<div class="textBox">
 						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
 						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
@@ -128,7 +128,7 @@
 					<span class="f33 colFD5203">团购进行</span>
 				</div>
 				<div class="flexBox3 pa15">
-					<img src="../img/big.png" class="tgImg"/>
+					<img src="<{$SKIN_PATH}>img/big.png" class="tgImg"/>
 					<div class="textBox">
 						<div class="f35 col303134">色泽自然利隆赤峰天 山大金苗小米2斤/袋</div>
 						<div class="f30 col303134">商品描述商品描述商品 描述商品描述</div>
@@ -149,10 +149,10 @@
 					<div class="tips pa15 bgfff borR7 flexBox1 f35 col000 bold">
 						期待下次开团 获得最新信息
 						<div class="flexBox2">
-							<img src="../img/weixin.png" class="weixin"/>
-							<img src="../img/up.png" class="up"/>
+							<img src="<{$SKIN_PATH}>img/weixin.png" class="weixin"/>
+							<img src="<{$SKIN_PATH}>img/up.png" class="up"/>
 						</div>
-						<img src="../img/big.png" class="wximg"/>
+						<img src="<{$SKIN_PATH}>img/big.png" class="wximg"/>
 					</div>
 				</div>
 			</div>
@@ -201,16 +201,16 @@
 					},2000)
 				},
 				kh(){
-					window.location.href="../KH.html"
+					window.location.href="<{$SKIN_PATH}>KH.html"
 				},
 				jm:function(){
-					window.location.href="../jm.html"
+					window.location.href="<{$SKIN_PATH}>jm.html"
 				},
 				returnPage(){
 					window.history.go(-1)
 				},
 				toTG(){
-					window.location.href="../orderGoodsPage/tgdetail.html"
+					window.location.href="<{$SKIN_PATH}>orderGoodsPage/tgdetail.html"
 				},
 				shareApp(){
 				  	this.isShare=true

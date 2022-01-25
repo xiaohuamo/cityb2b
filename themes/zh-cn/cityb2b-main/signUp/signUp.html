@@ -5,15 +5,15 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>忘记密码</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/signUp.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/signUp.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body>
 		<div id="sign" v-cloak>
 			<div class="center">
-				<img src="../img/headIcon.png" class="loginIcon"/>
+				<img src="<{$SKIN_PATH}>img/headIcon.png" class="loginIcon"/>
 			</div>
 			<div class="f40 col333 center maT15">用户注册</div>
 			<div class="myInputBox flexBox1">
@@ -49,7 +49,7 @@
 			data:{},
 			methods:{
 				goSign:function(){
-				   	window.location.href="../me/accountSetting.html"
+				   	window.location.href="<{$SKIN_PATH}>me/accountSetting.html"
 				},
 				goLogin:function(){
 					window.location.href="login.html"

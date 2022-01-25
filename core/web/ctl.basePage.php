@@ -103,6 +103,8 @@ class cmsPage extends corecms
 		 * 微信自动登录
 		 */
 		$mdl_user = $this->loadModel('user');
+
+
 		$openUser = null;
 
 		$this->wx_auth_code = get2( 'code' );
@@ -155,6 +157,10 @@ class cmsPage extends corecms
 				}
 			}
 		}
+
+
+        $nickname = $mdl_user->getUserDisplayName($this->loginUser['id']);
+        $this->setData($nickname,'nickname');
 
 		$this->setData( $this->loginUser, 'loginUser' );
 
@@ -382,22 +388,81 @@ class cmsPage extends corecms
 		
 	}
 
+
+
+    //定义企业员工导向页面入口
+    public function employee_navigation_panel($role_id){
+        //检测员工是否拥有权限；
+        /*   $isHasRole = $this->loadModel('staff_roles')->isHasRoles($this->loginUser['id'],$role_id); */
+        $isHasRole =1;
+        if($isHasRole){
+            switch ($role_id) {
+                case '5':
+                    $nav_page ="salesman";
+                    break;
+                case '6':
+                    $nav_page ="salesman";
+                    break;
+                case '9':
+                    $nav_page ="dispatching/index";
+                    break;
+                case '10':
+                    $nav_page ="dispatching/index";
+                    break;
+                case '11':
+                    $nav_page ="operator/index";
+                    break;
+                case '12':
+                    $nav_page ="dispatching/index";
+                    break;
+                case '16':
+                    $nav_page ="driver/index";
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        return $nav_page;
+
+    }
+
     //get the company /index page accroding to login role and permissions
 
-    public function  getindexPageOfUser($loginuser,$pclogin,$countOfRoles){
+    public function  getindexPageOfUser($loginuser,$pclogin,$countOfRoles,$id){
+        //如果是pc端直接进入pc端程序；
         if($pclogin) {
             return 'factory/index';
+          }
 
-        }else{
-
-            if($loginuser['role'] ==3) {
-                // var_dump('3');exit;
-                return 'factory/index_factory';
-            }elseif ($loginuser['role']==20) {
-                // var_dump('20');exit;
-                return 'factory/index_factory';
-            }
+        //如果role类型为3 ，则为商家的owner ,拥有全部权限；
+        if($loginuser['role'] ==3 || $countOfRoles !=1) {
+            // var_dump('3');exit;
+            return 'factory/index_factory';
         }
+
+
+
+        //如果只有1个用户角色，则进入相应的页面；
+        if($countOfRoles ==1) {
+
+
+         //   exit;
+            $nav_page = $this->employee_navigation_panel( $id);
+           //  $link;
+            //只显示这个pannel
+
+           return  'factory/' . $nav_page;
+
+        }
+
+
+
+
+
+
+
 
     }
 

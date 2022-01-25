@@ -7,64 +7,63 @@
 		<title>Homepage</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="me" v-cloak>
 			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
-			<div class="head bgfff mb10">
-				<div class="relative center">
-					<div class="f38 col333 f500 bold">我的</div>
-				</div>
-			</div><div style="height:3.5rem;"></div>
+			<{include file ="factory/metop.htm"}>
 			<!-- 头像部分 -->
-			<div class="flexBox1 personInfoBox" @click="editPersonInfo">
-				<div class="flexBox2">
-					<img src="<{$SKIN_PATH}>img/portrait.png" class="portrait"/>
-					<span class="f35 bold">昵称</span>
-				</div>
-				<img src="<{$SKIN_PATH}>img/arrow2.png" class="Me_arrow" />
-			</div>
+
+			<{include file ="factory/generalfile/avatar.htm"}>
+
+
 			<div class="maT15 infoSetting">
+				<div v-for="(item,index) in panelList" >
+					<div class="flexBox1 settingBox" @click="changeMenuUrl(item.link)">
+						<div class="flexBox1">
+							<img :src="item.role_pic" class="icon"/>
+							<span class="col1C1C1C f30" v-if="isLanguageEn">{{item.title}}</span><span class="col1C1C1C f30" v-else>{{item.title_cn}}</span>
+						</div>
+						<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+					</div>
+                 <!--
+						<div class="flexBox1 settingBox" @click="changeMenu('2')">
+							<div class="flexBox1">
+								<img src="<{$SKIN_PATH}>img/storeMe1.png" class="icon"/>
+								<span class="col1C1C1C f30">销售员入口</span>
+							</div>
+							<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+						</div>
+						<div class="flexBox1 settingBox"  @click="changeMenu('6')">
+							<div class="flexBox1">
+								<img src="<{$SKIN_PATH}>img/storeMe2.png" class="icon"/>
+								<span class="col1C1C1C f30">拣货员入口</span>
+							</div>
+							<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+						</div>
+						<div class="flexBox1 settingBox" @click="changeMenu('4')">
+							<div class="flexBox1">
+								<img src="<{$SKIN_PATH}>img/storeMe3.png" class="icon"/>
+								<span class="col1C1C1C f30">司机入口</span>
+							</div>
+							<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+						</div>
+						<div class="flexBox1 settingBox" @click="changeMenu('4')">
+							<div class="flexBox1">
+								<img src="<{$SKIN_PATH}>img/storeMe3.png" class="icon"/>
+								<span class="col1C1C1C f30">生产员入口</span>
+							</div>
+							<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+						</div> -->
+         		</div>
+				<{include file ="factory/generalfile/switchToPcDeskTop.htm"}>
 
-				<div class="flexBox1 settingBox" @click="changeMenu('2')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe1.png" class="icon"/>
-						<span class="col1C1C1C f30">销售员入口</span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
-				<div class="flexBox1 settingBox"  @click="changeMenu('6')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe2.png" class="icon"/>
-						<span class="col1C1C1C f30">拣货员入口</span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
-				<div class="flexBox1 settingBox" @click="changeMenu('4')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe3.png" class="icon"/>
-						<span class="col1C1C1C f30">司机入口</span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
-				<div class="flexBox1 settingBox" @click="changeMenu('4')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe3.png" class="icon"/>
-						<span class="col1C1C1C f30">生产员入口</span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
 
-				<div class="flexBox1 settingBox" @click="changeMenu('9')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe1.png" class="icon"/>
-						<span class="col1C1C1C f30">PC版入口 </span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
 			</div>
-			<div class="signOut f35 col1C1C1C">退出登录</div>
+
+			<{include file ="factory/generalfile/logout.htm"}>
 
 			<div style="height:3.125rem;"></div>
 			<div class="flexBox1 menuBox">
@@ -95,18 +94,48 @@
 		new Vue({
 			el:"#me",
 			data:{
-				currentMenu:5   // 当前菜单
+				currentMenu:5 ,  // 当前菜单
+				currentMenuUrl:'/',
+				panelList:[],
+				isLanguageEn:1,
+				isAddShow:false,      // 点击＋
+				langStrDisplay:'中文',
 			},
 			mounted:function(){
 				//alert('here');
-				setCookie('agentcityb2b','<{$loginUser.id}>',10);
-				console.log(getCookie('agentcityb2b'));
-			},
+				var _self =this;
+			//	setCookie('agentcityb2b','<{$loginUser.id}>',10);
+			//	console.log(getCookie('agentcityb2b'));
+				_self.panelList = <{$roles_list}>;
+				//console.log(_self.panelList);
+				//根据当前语言环境改变pop menu 的关于语言的提示；
+				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+
+				},
 		    methods:{
 				editPersonInfo:function(){
 					window.location.href="editMeInfo.html"
+				},	//设置语言提示
+
+				switchDisplayLanguage:function(){
+					if(this.isLanguageEn) {
+						this.langStrDisplay='En';
+						this.isLanguageEn=0;
+					}else{
+						this.langStrDisplay='中文';
+						this.isLanguageEn=1;
+					}
+					setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+					this.isAddShow=!this.isAddShow; //关闭弹框
+					//向后台写入目前的语言环境状态；
 				},
+					clickAdd:function(){
+						this.isAddShow=!this.isAddShow
+					},
 				changeMenu:function(index){
+					//alert(index);
 					this.currentMenu=index
 					switch(index){
 					case '1':
@@ -127,12 +156,25 @@
 					case '6':
 							window.location.href='<{$http_root_www}>' + "factory/order_for_customer_new"
 							break;
-					case '9':
-						window.location.href='<{$http_root_www}>' + "company/index?pclogin=1"
-						break;
 					default:
 						break;
 					}
+				},
+				switchToPcDeskTop:function() {
+					switchToPcDeskTop('<{$http_root_www}>');
+
+				},
+				changeMenuUrl:function(Url) {
+				//	alert(Url);
+					this.currentMenuUrl=Url;
+					window.location.href=Url;
+
+				},logout:function() {
+
+						logout('<{$http_root_www}>');
+				},
+				returnPage:function(){
+					window.history.go(-1)
 				}
 			}
 		})	

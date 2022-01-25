@@ -5,36 +5,36 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>Homepage</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/orderGoods.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="detail" v-cloak class="relative">
 			<div class="head bgfff mb10">
-				<img src="../img/return.png" class="return z10" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>img/return.png" class="return z10" @click="returnPage"/>
 				<div class="relative">
 					<div class="f38 col333 f500 bold center">商品详情</div>
 					<div class="flexBox1 headRight">
-						<img src="../img/jia.png" class="w40" @click="clickAdd"/>
+						<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
 					</div>
 					<div class="add" id="add" v-show="isAddShow">
 						<a href=""><div class="flexBox2">
-							<img src="../img/add_1.png"/>
+							<img src="<{$SKIN_PATH}>img/add_1.png"/>
 							<span class="colfff f30">EN</span>
 						</div></a>
 						<div class="flexBox2" @click="clickSC">
-							<img src="../img/sc.png" v-if="isSC"/>
-							<img src="../img/add_2.png" v-else />
+							<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
+							<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
 							<span class="colfff f30">收藏</span>
 						</div>
 						<a href=""><div class="flexBox2">
-							<img src="../img/add_3.png"/>
+							<img src="<{$SKIN_PATH}>img/add_3.png"/>
 							<span class="colfff f30">我要开户</span>
 						</div></a>
 						<a href=""><div class="flexBox2" style="border:none;">
-							<img src="../img/add_4.png"/>
+							<img src="<{$SKIN_PATH}>img/add_4.png"/>
 							<span class="colfff f30">我是供应商</span>
 						</div></a>
 						<div class="triangle"></div>
@@ -44,7 +44,7 @@
 		
 			<!-- 主体部分开始 -->
 		
-		    <img src="../img/big.png" class="w100"/>
+		    <img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 		    
 			<div class="ma15 pa15 borR7 bgfff col333 f35 bold">
 				福建漳州杨桃5斤应当季新鲜水果酸甜洋桃红扬桃现摘整箱
@@ -59,7 +59,7 @@
 				  同城服务: 同城24小时物流送货上门
 			  </div>
 			</div>
-		    <img src="../img/big.png" class="w100"/>
+		    <img src="<{$SKIN_PATH}>img/big.png" class="w100"/>
 		     
 			<div class="ma15 pa15 bgfff borR7">
 				<div>山东大草莓</div>
@@ -104,11 +104,11 @@
 			<div class="flexBox1 menuBox">
 				<div class="flexBox1">
 					<div @click="changeMenu('1')" style="margin-right:2.8rem;">
-						<img src="../img/menu1.png"/>
+						<img src="<{$SKIN_PATH}>img/menu1.png"/>
 						<span class="col333 f26">首页</span>
 					</div>
 					<div @click="changeMenu('2')" class="cartnumBox">
-						<img src="../img/menu4.png" />
+						<img src="<{$SKIN_PATH}>img/menu4.png" />
 						<span class="col333 f26">购物车</span>
 						<div>{{goodsList.length}}</div>
 					</div>
@@ -121,11 +121,11 @@
 			
 			<!-- 规格弹出框 -->
 			<div class="mask" v-if="isPop" @click="closePop">
-				<img src="../img/cha2.png" @click="closePop" class="close2"/>
+				<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop" class="close2"/>
 				<div class="pop2 center" @click.stop="clickPop">
 					<div style="height:350px;overflow:auto;">
 						<div class="flexBox2 borderB pa15 relative">
-							<img src="../img/big.png" class="cartImg"/>
+							<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 							<div class="goodInfo2 textLeft">
 								<div class="bold">鸡肉条</div>
 								<div class="flexBox1 price">
@@ -165,11 +165,11 @@
 			
 			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
 				<div class="bgfff cartPop" @click.stop="clickPop">
-					<img src="../img/cha2.png" @click="closePop('c')" class="close3"/>
+					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('c')" class="close3"/>
 					<div class="center col333 f30 pa15-0 borderB">共{{goodsList.length}}件</div>
 					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" @click.stop="clickGoods">
 						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
-							<img src="../img/big.png" class="cartImg"/>
+							<img src="<{$SKIN_PATH}>img/big.png" class="cartImg"/>
 							<div class="goodInfo2_">
 								<div>{{item2.title}}</div>
 								<div class="flexBox1 price">
@@ -385,18 +385,18 @@
 				   return false	
 				},
 				clickGoods(){
-					window.location.href="../goods/detail.html"
+					window.location.href="<{$SKIN_PATH}>goods/detail.html"
 				},
 				changeMenu(index){
 					switch(index){
 						case '1':
-						    window.location.href="../home.html"
+						    window.location.href="<{$SKIN_PATH}>home.html"
 							break;
 						case '2':
 						    this.iscartPop=true
 							break;
 						default:
-							window.location.href="../placeOrder.html"
+							window.location.href="<{$SKIN_PATH}>placeOrder.html"
 							break;
 					}
 				}

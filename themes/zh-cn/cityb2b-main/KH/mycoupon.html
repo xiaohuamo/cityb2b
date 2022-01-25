@@ -5,19 +5,19 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>我的优惠券</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="success" v-cloak>
 			<div class="pTitle">
-				<img src="../img/return.png" class="return" @click="returnPage"/>
+				<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage"/>
 				我的优惠券
 			</div><div style="height: 3rem;"></div>
 			
 			<div class="flexBox1 ma15" v-for="item in list">
-				<img src="../img/addressActive.png" class="couponChecked"/>
+				<img src="<{$SKIN_PATH}>img/addressActive.png" class="couponChecked"/>
 				<div class="flexBox1 couponBox borR7">
 					<div class="couponL pa15 bgfff">
 						<div class="f35 col000 pmb15 bold">MK果蔬</div>
@@ -37,7 +37,7 @@
 				<div class="borR7 bgfff counponPop center">
 					<div class="f35 col000 bold ma115-88">领取成功！</div>
 					<div class="counponBtn f35 colfff" @click="look">进店看看</div>
-					<img src="../img/cha2.png" @click="closePop" class="close"/>
+					<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop" class="close"/>
 				</div>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 			},
 		    methods:{
 				look:function(){
-					window.location.href="../orderGoodsPage/tg.html"
+					window.location.href="<{$SKIN_PATH}>orderGoodsPage/tg.html"
 				},
 				getcoupon:function(){
 					this.isPop=true

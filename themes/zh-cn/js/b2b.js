@@ -119,7 +119,20 @@ function changeMenuBottom(index,path,roleType){
 				 	}
 				
 				
-}				
+}
+function logout(path) {
+	
+	  window.location.href= path +'member/logout ';
+	
+}	
+
+function switchToPcDeskTop(path) {
+	  window.location.href= path + "company/index?pclogin=1"
+	
+}	
+
+
+	
 
 
 

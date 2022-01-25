@@ -5,9 +5,9 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
 		<title>拣货员</title>
-		<link rel="stylesheet" type="text/css" href="../common.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/jhy.css"/>
-		<script src="../js/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/jhy.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="me" v-cloak>
@@ -15,15 +15,15 @@
 			<div class="flexBox1 pa15 bgfff">
 				<div class="flexBox1" @click="pop(0)">
 					{{choseData0?choseData0:'选择配货商家'}}
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 				<div class="flexBox1" @click="pop(1)">
 					{{choseData1?choseData1:'2021-09-12'}}
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 				<div class="flexBox1" @click="pop(2)">
 					{{choseData2?choseData2:'xxxx'}}
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 			</div>
 			
@@ -36,15 +36,15 @@
 			<div class="borR7 bgfff pa15 ma15 flexBox1">
 				<div class="flexBox1">
 					物流号
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 				<div class="flexBox1">
 					站号
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 				<div class="flexBox1">
 					客户简称
-					<img src="../img/jhy7.png" class="sj"/>
+					<img src="<{$SKIN_PATH}>img/jhy7.png" class="sj"/>
 				</div>
 			</div>
 			
@@ -82,11 +82,11 @@
 					</div>
 					<div class="yellow f35 bg2970FE" v-if="isStart">
 						开始备货
-						<img src="../img/jhy1.png" />
+						<img src="<{$SKIN_PATH}>img/jhy1.png" />
 					</div>
 					<div class="yellow f45" @click="startBH" v-else>
 						<span class="blink">备货中</span>
-						<img src="../img/jhy1.png" />
+						<img src="<{$SKIN_PATH}>img/jhy1.png" />
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@
 					</div>
 					<div class="yellow f45" style="background: #4ED44F;">
 						已备好
-						<img src="../img/jhy2.png" />
+						<img src="<{$SKIN_PATH}>img/jhy2.png" />
 					</div>
 				</div>
 			</div>
@@ -140,7 +140,7 @@
 					</div>
 					<div class="yellow f35" style="background: #2970FE;">
 						开始备货
-						<img src="../img/jhy1.png" />
+						<img src="<{$SKIN_PATH}>img/jhy1.png" />
 					</div>
 				</div>
 			</div>
@@ -167,7 +167,7 @@
 					</div>
 					<div class="yellow f35" style="background: #B6B6B6;">
 						已有配货员
-						<img src="../img/ren12.png" />
+						<img src="<{$SKIN_PATH}>img/ren12.png" />
 					</div>
 				</div>
 			</div>
@@ -175,19 +175,19 @@
 			<div style="height:3.125rem;"></div>
 			<div class="flexBox1 menuBox">
 				<div @click="changeMenu('1')">
-					<img src="../img/jhy8.png"/>
+					<img src="<{$SKIN_PATH}>img/jhy8.png"/>
 					<span class="colFD5001 f26">拣货员</span>
 				</div>
 				<div @click="changeMenu2">
-					<img src="../img/jhy5.png"/>
+					<img src="<{$SKIN_PATH}>img/jhy5.png"/>
 					<span class="col333 f26">总进程</span>
 				</div>
 				<div>
-					<img src="../img/jhy4.png"/>
+					<img src="<{$SKIN_PATH}>img/jhy4.png"/>
 					<span class="col333 f26">设置</span>
 				</div>
 				<div @click="toMe">
-					<img src="../img/menu5.png" />
+					<img src="<{$SKIN_PATH}>img/menu5.png" />
 					<span class="col333 f26">我的</span>
 				</div>
 			</div>
