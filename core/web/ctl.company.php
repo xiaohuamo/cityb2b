@@ -136,7 +136,7 @@ class ctl_company extends cmsPage
         $this->setData('商家首页', 'pagename');
         $this->setData('index', 'menu');
         $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
-		//var_dump($this->current_business);exit;
+		var_dump($this->current_business['id'] . 'type id is'.$this->current_business['business_type_factory']);exit;
 		if($this->current_business['business_type_factory']==1) {
 
             $pclogin =trim(get2('pclogin')) ;
