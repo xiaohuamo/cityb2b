@@ -14,11 +14,16 @@ class mdl_user_factory extends mdl_base
     }
 
    public function isUserAuthorisedToOperate($userId, $factoryId) {
-        return !!$this->getByWhere([
-            'user_id' => $userId,
-            'factory_id' => $factoryId
-            
-        ]);
+
+       $where =array(
+           'user_id' => $userId,
+           'factory_id' => $factoryId
+       );
+
+       $rec = $this->getByWhere($where);
+       if($rec) return 1;
+
+        return 0;
     }
 
     public function getFactoryId($login_user)

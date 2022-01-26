@@ -218,7 +218,10 @@ body{
 	color: #FD5506;
 }
 
-
+.wid-4rem{
+	width: 4.4375rem;;
+	padding-left: 3px;
+}
 
 .center{
 	text-align: center;
@@ -284,6 +287,41 @@ body{
 	text-align: center;
 	color: #fff;
 }
+.form_response_alert{
+	width: 200px;
+    line-height: 20px;
+    position: fixed;
+    top: 40%;
+	margin: auto;
+	left: 0;
+	right: 0;
+    z-index: 99;
+    background-color: rgba(195,25,25,0.5);
+    color: #fff;
+    padding: 25px 0px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+.form_response_loader {
+    border: 15px solid #2bb8aa; /* Light grey */
+    border-top: 15px solid #FD5001 ; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 2s ease infinite;
+    position: fixed;
+    top: 40%;
+	margin: auto;
+	left: 0;
+	right: 0;
+    z-index: 99;
+}
+.bigBtnButton{
+	 background: linear-gradient(-87deg, #FD5001, #FC8F4F);   
+	 color: #fff; 
+	 border: 0px;
+}
 
 .w100{
 	width:100%;
@@ -308,9 +346,15 @@ body{
 .mb10{
 	margin-bottom:10px;
 }
+
 .mb5{
 	margin-bottom:5px;
 }
+
+.mt10{
+	margin-top:10px;
+}
+
 .pmb5{
 	margin-bottom: 5px;
 }
@@ -371,6 +415,11 @@ display: inline-block;
 }
 .ma15{
 	margin: 15px;
+}
+
+.ma15-5{
+	margin:5px 15px 5px 15px;
+	
 }
 .ma0-15{
 	margin: 0 15px;
@@ -439,6 +488,36 @@ display: inline-block;
 }
 
 
+.commonBtnSingle{
+	width: 4.4375rem;
+	height: 1.6875rem;
+	line-height: 1.6875rem;
+	background: linear-gradient(-87deg, #FD5001, #FC8F4F);
+	border-radius: 12px;
+	color: #fff;
+	text-align: center;
+	font-size: 0.78rem;
+	position: absolute;
+    right: 0px;
+    margin-right: 25px;
+}
+
+
+
+
+.commonBtnDisable{
+	width: 4.4375rem;
+	height: 1.6875rem;
+	line-height: 1.6875rem;
+	background: lightgrey;;
+	border-radius: 12px;
+	color: #fff;
+	text-align: center;
+	font-size: 0.78rem;
+}
+
+
+
 /* 通用样式结束 */
 .head{
 	padding:0.9375rem 0.9375rem 0.9375rem;
@@ -464,6 +543,12 @@ display: inline-block;
 	position:absolute;
 	right: 0;
 	top: 0;
+	
+}
+.topRightButtom{
+	top: 0.9375rem;
+    right: 0.9375rem;
+	position:absolute;
 }
 .searchBox{
 	height:1.875rem;
@@ -476,6 +561,22 @@ display: inline-block;
 	width:100%;
 	height:100%;
 	background: #FFF;
+	 border-radius:0.9375rem; 
+	padding-left:30px;
+	box-sizing: border-box;
+}
+
+.searchBox1 {
+	height:1.875rem;
+	background: #F2F2F2;
+	border-radius:0.9375rem;
+	position:relative;
+/*	margin-top:0.9375rem; */
+}
+.searchBox1 input{
+	width:100%;
+	height:100%;
+	background: #F2F2F2;
 	 border-radius:0.9375rem; 
 	padding-left:30px;
 	box-sizing: border-box;

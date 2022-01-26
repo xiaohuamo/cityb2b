@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+	<title>Trading Hours setting</title>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+	<script src="<{$SKIN_PATH}>js/jquery-1.11.0.js"></script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-json/2.4.0/jquery.json.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.2.17/jquery.timepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.2.17/jquery.timepicker.min.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/javascript.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/html.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="<{$STATIC_PATH}>businessHours-master/jquery.businessHours.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>businessHours-master/jquery.businessHours.css"/>
+    <link rel="stylesheet" type="text/css" href="<{$STATIC_PATH}>businessHours-master/libs/page.css"/>
+
+    <!-- START COPYING HERE -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.0/gh-fork-ribbon.min.css">
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.0/gh-fork-ribbon.ie.min.css">
+    <![endif]-->
+    <!-- END COPYING HERE -->
+
+
+
+</head>
+<body class="bgF2F2F2">
+
+
+			
+				<div class="head bgfff mb10">
+					<img src="<{$SKIN_PATH}>img/return.png" class="return" onclick=" window.history.go(-1);"/>
+					<div >
+						<div class="f38 col333 f500 bold center"><{$lang->tradinghours_setting}></div>
+					</div>
+				</div>
+			<div style="height:3.5rem;"></div>
+						
+		  	<div class="ma15 bgfff borR7 f28 col1C1C1C">
+						
+				   
+					
+		
+				<div class="flexBox3 pa15 borderB" id="businessHoursContainer1"></div>
+				<div class="clean">&nbsp;</div>
+		   
+				<div class="flexBox3 pa15 borderB" id="businessHoursContainer3"></div>
+				<div class="clean"/>
+		   
+			
+						
+						
+					<div class="ma15 bgfff borR7 f28 col1C1C1C">
+					
+					<div class="flexBox3 pb10 borderB">
+						<div class="labelW"><{$lang->tradinghours_setting_notes}></div>
+						<textarea  id="trading_hours_desc" class="inputW2 col686868 mytextarea"  name="trading_hours_desc" 
+						rows="4" cols="70" maxlength="100" placeholder='...'><{$trading_hours_desc}></textarea>
+						</textarea>
+					</div>
+
+                  </div>
+						
+				<div class="ma15" style="padding-bottom:1rem;">
+				
+				<div  id="btnSerialize" class="bigBtn" ><{$lang->save}></div>
+			</div>	
+
+						
+	</div>
+			
+
+  <script>
+        (function() {
+            Rainbow.color();
+            var businessHoursManager3 = $("#businessHoursContainer3").businessHours();
+			 var trading_hours = '<{$trading_hours}>';
+			 //alert(trading_hours);
+			try{
+                   // var businessHours = jQuery.parseJSON($("#businessHoursData").val());
+				    //alert(businessHours);
+				   
+				  if (!trading_hours) {
+				  trading_hours=' [{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},{"isActive":true,"timeFrom":"9:00","timeTill":"18:00"},{"isActive":false,"timeFrom":null,"timeTill":null},{"isActive":false,"timeFrom":null,"timeTill":null}]';
+				  }
+				  
+				   
+				   
+					var businessHours=jQuery.parseJSON(trading_hours);
+					
+					  var b3 = $("#businessHoursContainer3");
+            var businessHoursManagerBootstrap = b3.businessHours({
+                postInit:function(){
+                    b3.find('.operationTimeFrom, .operationTimeTill').timepicker({
+                        'timeFormat': 'H:i',
+                        'step': 15
+                    });
+                },
+                dayTmpl: '<div class="dayContainer" style="width: 80px;">' +
+                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"/></div>' +
+                        '<div class="weekday"></div>' +
+                        '<div class="operationDayTimeContainer">' +
+                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-sun-o"></i></span><input type="text" name="startTime" class="mini-time form-control operationTimeFrom" value=""/></div>' +
+                        '<div class="operationTime input-group"><span class="input-group-addon"><i class="fa fa-moon-o"></i></span><input type="text" name="endTime" class="mini-time form-control operationTimeTill" value=""/></div>' +
+                        '</div></div>',
+						operationTime: businessHours
+            });
+					
+					
+				   
+                   
+                }catch(e) {
+                    alert("JSON non valid: " + e.message);
+                }
+				
+				
+			
+           
+			
+			
+			
+			
+            $("#btnSerialize").click(function() {
+			   
+               // $("#businessHoursOutput1").val(JSON.stringify(businessHoursManager1.serialize()));
+			 
+				var trading_hours = JSON.stringify(businessHoursManager3.serialize());
+				var trading_hours_desc = $('#trading_hours_desc').val();
+				var customer_id ='<{$customer_id}>';
+				//alert(trading_hours_desc);
+				 $.ajax({
+                method: "get",
+                url: "<{$http_root_www}>query?cmd=set_business_trading_hours",
+                data: { trading_hours :trading_hours,trading_hours_desc:trading_hours_desc,customer_id:customer_id},
+                beforeSend:function(){
+                  
+                },
+                success:function(result){
+                    try{
+                        console.log(result);
+
+                       // result=JSON.parse(result);
+					alert('success!');
+                     window.history.go(-1);
+
+                       
+                    }catch(err){
+                         alert('something wrong!');
+                    }
+
+                    
+
+                },
+                complete:function(){
+                  $('.form_response_loader').remove();
+                },
+                error:function(result){
+                    
+                }
+              })
+				
+				
+				
+            });
+
+            $("#btnInit").click(function() {
+                try{
+                    var businessHours = jQuery.parseJSON($("#businessHoursData").val());
+				
+                    $("#businessHoursContainer3").businessHours({
+                        operationTime: businessHours
+                    });
+                }catch(e) {
+                    alert("JSON non valid: " + e.message);
+                }
+            });
+
+            var businessHoursManager2 = $("#businessHoursContainer2").businessHours({
+                checkedColorClass: "workingBusinssDay",
+                inputDisabled: true,
+                uncheckedColorClass: "dayOff",
+                dayTmpl: '<div class="dayContainer">' +
+                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"/></div>' +
+                        '<div class="weekday"></div></div>'
+            });
+ 
+          
+        })();
+    </script>
+<script>
+		new Vue({
+			el:"#me",
+			data:{
+				lastName:'',
+				currentMenu:5,   // 当前菜单
+				isAddShow:false,      // 点击＋ 
+				isSC:false           // 是否收藏
+			},
+			mounted:function(){
+				
+				
+				
+			},
+		    methods:{
+				returnPage:function(){
+				  window.history.go(-1)
+				},setTradingHours:function(userid){
+
+					window.location.href= '<{$http_root_www}>' +'factory/set_trading_hours?user_id=' +userid
+
+				}
+			}
+		})
+	</script>
+</body>
+</html>

@@ -596,6 +596,9 @@
     <edit_specification_link>规格链接编辑</edit_specification_link>
     <custome_classification>自定义分类</custome_classification>
 
+    <tradinghours_setting>设置营业时间</tradinghours_setting>
+	 <tradinghours_setting_notes>附加说明</tradinghours_setting_notes>
+
     <!-- 9 -->
     <local_services>本地服务</local_services>
     <all_product>全部产品</all_product>
@@ -627,7 +630,7 @@
     <save>保存</save>
     <delete>删除</delete>
 
-    <update_success>修改成功</update_success>
+    <update_success>保存成功</update_success>
     <update_failure>修改失败</update_failure>
 
 
@@ -864,6 +867,7 @@
     <administrators>管理员</administrators>
     <name_of_branch_store>分店名称</name_of_branch_store>
     <edit>编辑</edit>
+	<customer_edit>客户编辑</customer_edit>
     <banner_edit>Banner编辑</banner_edit>
     <store_notice>店铺通知</store_notice>
     <!-- 40 -->

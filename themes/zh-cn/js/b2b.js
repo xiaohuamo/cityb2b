@@ -120,6 +120,45 @@ function changeMenuBottom(index,path,roleType){
 				
 				
 }
+
+//设置底部导航菜单 
+function changeMenuSalesmanBottom(index,path){ 
+					
+				switch(index){
+					case '1':
+						window.location.href="/"
+						break;
+					case '2':
+				        window.location.href=path + "factory/customer_list_mobile"
+						break;
+					case '4':
+					    window.location.href=path + "factory/update_order"
+						break;
+					case '5':
+					    window.location.href=path + "company/index"
+						break;
+					case '6':
+						window.location.href=path + "factory/order_for_customer_new"
+						break;
+					
+					default:
+						break;
+					}
+				
+				
+}
+
+	 function copyToClip(value) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value",value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("copied");
+    }
+
 function logout(path) {
 	
 	  window.location.href= path +'member/logout ';

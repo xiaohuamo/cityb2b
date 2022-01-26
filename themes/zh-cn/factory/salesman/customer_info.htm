@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Customer Info</title>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries&libraries=places"></script>
+		<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+
+		<script>
+			$(function(){
+				$("#geocomplete").geocomplete({
+					map: ".map_canvas",
+					mapOptions: {
+						zoom: 5,
+						scrollwheel: false,
+						mapTypeId: "roadmap"
+					},
+					details: "form",
+					types: ["geocode", "establishment"],
+					location: "<{$user.googleMap}>"
+				});
+
+				$("#find").click(function(){
+					$("#geocomplete").trigger("geocode");
+				});
+				var map = $("#geocomplete").geocomplete("map");
+				map.setZoom(3);
+
+			});
+		</script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+			<div class="head bgfff mb10">
+				<img src="<{$SKIN_PATH}>img/return.png" class="return"  @click="returnPage"/>
+				<div >
+					<div class="f38 col333 f500 bold center" v-if="isLanguageEn" >Customer info</div><div class="f38 col333 f500 bold center" v-else>客户信息</div>
+					<div class="flexBox1 topRightButtom" @click="edit('<{$user.id}>')" v-if="isLanguageEn">Edit</div><div class="flexBox1 topRightButtom" @click="edit('<{$user.id}>')" v-else>修改</div>
+				</div>
+			</div>
+
+
+			<div style="height:3.5rem;"></div>
+			<!-- 主体部分开始 -->
+			<div class="ma15 borR7 bgfff">
+				<div class="flexBox2 pa15 bold"><{$user_abn.untity_name}></div>
+				<div class="flexBox2 pa0-15 pmb10"><{$user.name}></div>
+				<div class="flexBox2 pa0-15 pmb10">
+					ABN &nbsp;<{$user_abn.ABNorACN}>
+				</div>
+				<div class="flexBox2 pa0-15 pmb10">
+					Code &nbsp;<{$user_factory_info.nickname}>
+				</div>
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service2.png" class="location2"/>
+					<{$user.tel}>
+				</div>
+
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service3.png" class="location2"/>
+					<{$user.phone}>
+				</div>
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/menu5.png" class="location2"/>
+
+					<span><{$user.contactPersonFirstname}>&nbsp; <{$user.contactPersonLastname}></span>
+				</div>
+
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service5.png" class="location2"/>
+
+					<span>	<{$user.email}></span>
+				</div>
+
+
+
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/service1.png" class="location2"/>
+
+
+				</div>
+
+				<div class="flexBox2 pa0-15 pmb10"><img src="<{$SKIN_PATH}>img/location2.png" class="location2"/>
+					Address&nbsp;
+					<span>	<{$user.googleMap}></span>
+				</div>
+				<div style="height:250px;" class="pa0-15">
+
+
+					<div >
+
+						<input  type =hidden id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="input address"    value="<{$user.googleMap}>" name="googleMap" size="80" />
+						<input id="find" type="hidden" value="find" />
+					</div>
+
+					<div   >
+						<div  class="map_canvas" style ='width:100%;height:230px;'></div>
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+			
+		<!--
+			<div class="ma0-15 pa0-15">
+				<div @click="nextPage" class="continue" style="margin-top:0;margin-bottom:15px;">免登录功能-信息完善设置</div>
+			</div>
+		-->
+			<div class="ma15 pa15 bgfff borR7">
+				<div class="f28 col0F0F0F" v-if="isLanguageEn">Click,then share to this customer.</div><div class="f28 col0F0F0F" v-else>点击链接，然后分享给客户，客户将无需在登录。</div>
+				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-if="isLanguageEn" >customer auto login link</div>
+				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-else>客户免登录页面</div>
+				<div class="f28 col0F0F0F" v-if="isLanguageEn">auto login website link</div><div class="f28 col0F0F0F" v-else>免登录链接</div>
+				<div class="borR7 borFD5204 pa15 maT15 flexBox1">
+				   <div style="word-break: break-all;"><{$user.login_link}> </div>
+				   <img src="<{$SKIN_PATH}>img/copyIcon.png" class="copyIcon" @click="copyLink('<{$user.login_link}>')"       />
+				</div>
+			<!--	<div class="commonBtn copySuccess">复制成功</div> -->
+				<div class="f28 col0F0F0F mb10 mt10" v-if="isLanguageEn">copy then send to customer</div><div class="f28 col0F0F0F mb10 mt10" v-else>复制后发送给客户</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				isLanguageEn:1
+			},
+			mounted:function(){
+
+
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+				console.log('current language is :' + this.isLanguageEn);
+
+			},
+		    methods:{
+				edit:function(customer_id){
+				  window.location.href='<{$http_root_www}>' + 'factory/customer_info_edit?id=' +customer_id;
+				},
+				returnPage:function(){
+					//alert('here');
+					window.history.go(-1)
+				},
+				nextPage:function(url){
+					window.location.href=url;
+				},
+				copyLink:function(url){
+					//alert(url);
+					copyToClip(url);
+				}
+			}
+		})	
+	</script>
+</html>
+

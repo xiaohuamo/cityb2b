@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+	<title>Customer Edit </title>
+
+
+	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+	<style>
+		#file {
+			display: none;
+		}
+	</style>
+
+</head>
+<body class="bgF2F2F2">
+
+
+<div id="a">
+
+	<div class="head bgfff mb10">
+		<img src="<{$SKIN_PATH}>img/return.png" class="return" onclick= "window.history.go(-1);"/>
+		<div >
+			<div class="f38 col333 f500 bold center"><{$lang->customer_edit}></div>
+		</div>
+	</div><div style="height:3.5rem;"></div>
+
+
+
+
+					<form id="memberForm"  action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<div id="me">
+						<input type="text" name="userId" id="userId" value = "<{$userId}>"class="input-text" hidden/>
+						<div class="ma15 bgfff borR7 f28 col1C1C1C">
+							<div class="f35 col1C1C1C center pa15-0 borderB bold" v-if="isLanguageEn">Customer Info</div>
+							<div class="f35 col1C1C1C center pa15-0 borderB bold" v-else>客户信息</div>
+							<div class="flexBox2 pa15 borderB">
+								<div class="labelW"  v-if="isLanguageEn">Customer ID</div><div class="labelW"  v-else >客户ID</div>
+
+								<input name="ytreee" disabled    value ="<{$user.id}>" class="H30 inputW2"/>
+
+							</div>
+							<div class="flexBox2 pa15 bor	derB">
+								<div class="labelW" v-if="isLanguageEn" >Company name</div><div class="labelW" v-else>商家实体名</div>
+								<input name="untity_name" id="untity_name" placeholder="... pty ltd"  value ="<{$user_abn.untity_name}>" class="H30 inputW2"/>
+							</div>
+							<div class="flexBox2 pa15 borderB relative">
+								<div class="labelW f25" >Trading name</div>
+								<input name="username"  required id="username"  class="H30 inputW2" value="<{$user.name}>"/>
+								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+							</div>
+
+							<div class="flexBox2 pa15 borderB relative">
+								<div class="labelW f25" style="width:5rem;" v-if="isLanguageEn">Code</div>
+								<div class="labelW f25" style="width:5rem;" v-else>Code</div>
+								<input name="factory_code" id="factory_code" class="H30 inputW2" value="<{$user_factory_info.nickname}>"/>
+
+							</div>
+
+							<div class="flexBox2 pa15 borderB">
+								<div class="labelW">ABN</div>
+								<input name="abn" id="abn"   value ="<{$user_abn.ABNorACN}>" placeholder="abn"  class="H30 inputW2"/>
+							</div>
+						</div>
+
+						<div class="ma15 bgfff borR7 f28 col1C1C1C">
+							<div class="f35 col1C1C1C center pa15-0 borderB bold" v-if="isLanguageEn">Contact info</div><div class="f35 col1C1C1C center pa15-0 borderB bold" v-else>联系信息</div>
+							<div class="flexBox2 pa15 borderB relative">
+								<div class="labelW" v-if="isLanguageEn">First Name</div>	<div class="labelW" v-else>联系人 名</div>
+								<input name="contactPersonFirstname" required  id="contactPersonFirstname"  value= "<{$user.contactPersonFirstname}>" placeholder="first name.." class="H30 inputW2" />
+								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+							</div>
+							<div class="flexBox2 pa15 borderB relative">
+								<div class="labelW" v-if="isLanguageEn">Last Name</div><div class="labelW" v-else>联系人 姓</div>
+								<input name="contactPersonLastname" required  id="contactPersonLastname" value= "<{$user.contactPersonLastname}>"  placeholder="last name.." class="H30 inputW2"/>
+								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+							</div>
+							<div class="flexBox2 pa15 borderB">
+								<div class="labelW" v-if="isLanguageEn">Telephone</div><div class="labelW" v-else>座机电话</div>
+								<div class="flexBox1">
+									<div style="width:2rem;">Area Code</div> &nbsp;&nbsp;<select class="H30">
+									<option>61</option>
+
+								</select>&nbsp;&nbsp;
+								</div>
+								<input name="tel" id="tel" value ="<{$user.tel}>" placeholder="telephone number"  class="w50 H30 inputCommon"/>
+							</div>
+						</div>
+
+						<div class="borR7 ma15 pa15 bgfff flexBox1">
+							<div v-if="isLanguageEn">Mobile</div><div v-else>手机号</div>
+							<input  name="phone" id="phone" value ="<{$user.phone}>" required placeholder="mobile phone number" class="H30 inputCommon"/>
+							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
+						</div>
+						<div class="borR7 ma15 pa15 bgfff flexBox1">
+							<div>Email</div>&nbsp;
+							<input name="email" id="email" value ="<{$user.email}>" placeholder=" email" class="H30 inputCommon"/>
+							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
+						</div>
+
+						<{if $loginUser.role !=20}>
+						<div class="borR7 ma15 pa15 bgfff flexBox1">
+							<div v-if="isLanguageEn">Sales Name</div>&nbsp;<div v-else>指定销售员</div>&nbsp;
+							<select name="factory_sales_id" id='ifpaid'>
+								<option value="<{$loginUser.id}>"<{if ($user_factory_info.factory_sales_id==$loginUser.id || !$user_factory_info.factory_sales_id)}> selected<{/if}>>Company Own</option>
+
+								<{foreach from=$sales_list item=sales}>
+								<option value="<{$sales.id}>"<{if ($sales.id==$user_factory_info.factory_sales_id )}> selected<{/if}>><{$sales.contactPersonNickName}></option>
+
+
+								<{/foreach}>
+
+								<!--<input type="text" name="factory_sales_id" id="factory_sales_id" class="input-text" placeholder="" value="<{$user_factory_info.factory_sales_id}>"> -->
+							</select>
+						</div>
+						<{else}>
+
+						<input type="hidden" name="factory_sales_id" id="factory_sales_id" class="input-text" placeholder="" value="<{$user_factory_info.factory_sales_id}>">
+
+
+						<{/if}>
+
+						<{if isAdulted}>
+						<div class="borR7 ma15 pa15 bgfff flexBox1">
+							<div v-if="isLanguageEn">Approved <{$user_factory_info.approved}>Customer</div>&nbsp;<div v-else>审核客户</div>&nbsp;
+							&nbsp;<select  name="approved" id='ifpaid'  >
+							<option value="1"<{if $user_factory_info.approved}> selected<{/if}>>Approved</option>
+
+							<option value="0" <{if !$user_factory_info.approved}> selected<{/if}>>Not Approved</option>
+						</select>
+						</div>
+						<{else}>
+						<div class="borR7 ma15 pa15 bgfff flexBox1">
+							<div v-if="isLanguageEn">Status of Approved</div>&nbsp;<div v-else>客户审核状态</div>&nbsp;
+							<span> <{if $user.isApproved}>Approved <{else}>Not Approved<{/if}></span>
+							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
+						</div>
+						<{/if}>
+
+
+
+
+						<!-- 发验证码 -->
+						<!-- <div class="borR7 ma15 pa15 bgfff flexBox1">
+                            <div>Email</div>
+                            <input placeholder="0425 6666" v-model="lastName" class="H30 inputCommon"/>
+                            <div class="f30 colFD5204 yys2">验证码</div>
+                        </div> -->
+						<!-- 未验视的 -->
+						<!-- <div class="borR7 ma15 pa15 bgfff">
+                            <div class="flexBox1">
+                                <div>Email</div>
+                                <input placeholder="0425 6666" v-model="lastName" class="H30 inputCommon"/>
+                                <div class="f30 colFD5204 yys2">重发</div>
+                            </div>
+                            <div class="flexBox1 maT15">
+                                <div>验证码</div>
+                                <input placeholder="6666" v-model="lastName" class="H30 inputCommon"/>
+                                <div class="f30 colFD5204 yys2">确认</div>
+                            </div>
+                        </div> -->
+						<div class="borR7 ma15 pa15 bgfff flexBox1 relative">
+							<div v-if="isLanguageEn">Address</div><div v-else>地址</div>
+							<textarea   name="address" id="address" class="inputW2 col686868 mytextarea" /><{$user.googleMap}>
+							</textarea>
+							<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+						</div>
+
+
+						<div class="ma15 bgfff borR7 f28 col1C1C1C">
+							<div class="f35 col1C1C1C center pa15-0 borderB bold">Driver notes</div><div class="f35 col1C1C1C center pa15-0 borderB bold" v-else>司机送货辅助信息</div>
+							<div class="flexBox2 pa15 ">
+								<div class="labelW" v-if="isLanguageEn">Trading Hours</div><div class="labelW" v-else>营业时间</div>
+
+								<div  class=" flexBox1  pa15" >
+
+									<div class="flexBox1">
+										<span></span>
+
+										<div class="commonBtnSingle" @click="setTradingHours('<{$user.id}>')" v-if="isLanguageEn" >Set hours</div><div class="commonBtnSingle" @click="setTradingHours('<{$user.id}>')" v-else >设置时间</div>
+									</div>
+
+								</div>
+
+							</div>
+
+
+							<div class="flexBox3 pa15 borderB">
+								<div class="labelW" style="width:3rem;" v-if="isLanguageEn">Notes</div><div style="width:3rem;" class="labelW" v-else>附加说明</div>
+								<textarea class="inputW2 col686868 mytextarea"/><{$user.trading_hours_desc}>
+								</textarea>
+							</div>
+
+							<!--
+                                    <div class="flexBox3 pa15 borderB">
+                                        <div class="labelW">如何到达</div>
+                                        <textarea class="inputW2 col686868 mytextarea"/>
+                                        </textarea>
+                                    </div>
+                                    <div class="flexBox3 pa15 borderB">
+                                        <div class="labelW">门店照片</div>
+                                        <div class="inputW2" style="padding-left:0;"><img src="<{$SKIN_PATH}>img/big.png " class="w100 avatar"/>
+                                            ----<input type="file" id="file" accept="image/*" capture='camera' multiple>----
+                                                <input type="file" id="file" accept="image/*"/>
+                                        </div>
+                                    </div>
+                                    <div class="flexBox3 pa15 borderB">
+                                        <div class="labelW">如何投递</div>
+                                        <textarea class="inputW2 col686868 mytextarea"/>
+                                        </textarea>
+                                    </div> -->
+						</div>
+
+
+
+						<div class="ma15">
+							<div class="bgFEE9DF bigBtn f30 colFD5305 flexBox4">
+								<img src="<{$SKIN_PATH}>img/cartActive.png" class="addIcon" />&nbsp;&nbsp;
+								<{if $user_factory_info.approved}>
+								<span class="colFD5305" v-if="isLanguageEn">Approved</span><span class="colFD5305" v-else>审核通过</span>
+								<{else}>
+								<span class="colFD5305" v-if="isLanguageEn">Progressing...</span><span class="colFD5305" v-else>审核中...</span>
+
+								<{/if}>
+
+							</div>
+						</div>
+						<div class="ma15 bigBtn"  style="margin-bottom: 4.5rem;">
+
+							<button  type="submit" class="bigBtnButton"  > <{$lang->save}></button>
+
+
+						</div>
+						</div>
+					</form>
+
+
+</div>
+
+
+
+</body>
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places"></script>
+<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+<script type="text/javascript">
+	$(function(){
+		try {
+			initGeocomplete();
+		}
+		catch(err) {
+			console.log('google API not working. ');
+		}
+	});
+
+	function initGeocomplete(){
+		$("#address").geocomplete()
+				.bind("geocode:result", function(event, result){
+
+					$('.address-display').text($('input#address').val());
+				})
+				.bind("geocode:error", function(event, status){
+					console.log("ERROR: " + status);
+				})
+				.bind("geocode:multiple", function(event, results){
+					geocodeResultDisplay(results);
+				});
+	}
+
+	$(function(){
+		$("#address-validate-btn").click(function(){
+			$("#address").trigger("geocode");
+		});
+
+		$('body').on('click','#geocode-result input',function(){
+			$("#address").val($(this).val());
+		});
+
+	})
+
+	function geocodeResultDisplay(result) {
+		var html = " <ul>"
+
+		for (var i = result.length - 1; i >= 0; i--) {
+			var r = result[i].formatted_address;
+			html+="<li><label><input type='radio' name='geocode-result-list' value='"+r+"'>"+r+"<label></li>"
+		}
+		html+= " </ul>"
+
+		$('#geocode-result').html(html);
+	}
+
+
+</script>
+<script>
+	new Vue({
+		el:"#me",
+		data:{
+			lastName:'',
+			currentMenu:5,   // 当前菜单
+			isAddShow:false,      // 点击＋
+			isSC:false,           // 是否收藏
+			isLanguageEn:1
+		},
+		mounted:function(){
+
+			$(".avatar").click(function(){
+				$("#file").trigger("click")
+			})
+			var file = document.querySelector('input');
+			if (getIos()) {
+				file.removeAttribute("capture");
+			}
+			function getIos() {
+				var ua = navigator.userAgent.toLowerCase();
+				if (ua.match(/iPhone\sOS/i) == "iphone os") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+			//转成base64
+			$('input[type=file]').on('change', function () {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					// console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+					$(".avatar").attr("src", reader.result);
+				}
+				reader.readAsDataURL(this.files[0])
+				//filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一    个图片文件转化为base64的码
+			})
+			// 获得当前的语言环境
+			this.isLanguageEn =parseInt('<{$user_setting}>');
+			console.log('current language is :' + this.isLanguageEn);
+
+		},
+		methods:{
+			returnPage:function(){
+				window.history.go(-1)
+			},setTradingHours:function(userid){
+
+				window.location.href= '<{$http_root_www}>' +'factory/set_trading_hours?user_id=' +userid
+
+			}
+		}
+	})
+</script>
+</html>

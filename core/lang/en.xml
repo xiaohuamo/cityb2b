@@ -38,6 +38,11 @@
 	<customer_list_recycle>Hide Customers</customer_list_recycle>
 	<orderLists>Order Lists</orderLists>
 	
+	
+	
+	 <tradinghours_setting>Trading Hours Setting </tradinghours_setting>
+	 <tradinghours_setting_notes>Description</tradinghours_setting_notes>
+	
 	<add_new_order>Add New Order</add_new_order>
 	<order_done>order placed!</order_done>
 	<print_picking_list>Print Picking List</print_picking_list>
@@ -1163,6 +1168,7 @@
     <card_desc2>no card record at the moment.</card_desc2>
 
     <update_success>Success!</update_success>
+	<customer_edit>Customer Edit</customer_edit>
     <update_failure>Falied!</update_failure>
     <old_password_incorrect>Old password is incorrect</old_password_incorrect>
 

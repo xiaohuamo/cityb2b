@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>Homepage</title>
+		<title>Sales Management</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
 		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
@@ -26,17 +26,19 @@
 
 			<div class="maT15 infoSetting">
 
-				<div class="flexBox1 settingBox" @click="changeMenu('2')">
-					<div class="flexBox1">
-						<img src="<{$SKIN_PATH}>img/storeMe1.png" class="icon"/>
-						<span class="col1C1C1C f30" v-if="isLanguageEn">Customer Managements </span><span class="col1C1C1C f30" v-else>客户管理</span>
-					</div>
-					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-				</div>
+
 				<div class="flexBox1 settingBox"  @click="changeMenu('6')">
 					<div class="flexBox1">
 						<img src="<{$SKIN_PATH}>img/storeMe2.png" class="icon"/>
 						<span class="col1C1C1C f30"  v-if="isLanguageEn">Order for Customer</span><span class="col1C1C1C f30" v-else>帮客户下单</span>
+					</div>
+					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+				</div>
+
+				<div class="flexBox1 settingBox" @click="changeMenu('2')">
+					<div class="flexBox1">
+						<img src="<{$SKIN_PATH}>img/storeMe1.png" class="icon"/>
+						<span class="col1C1C1C f30" v-if="isLanguageEn">Customer Managements </span><span class="col1C1C1C f30" v-else>客户管理</span>
 					</div>
 					<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 				</div>
@@ -87,31 +89,8 @@
 				},
 				changeMenu:function(index){
 					this.currentMenu=index
-					switch(index){
-					case '1':
-						window.location.href="/"
-						break;
-					case '2':
-				        window.location.href="storeCustomer.html"
-						break;
-					case '3':
-					    window.location.href="storeChangeOrder2.html"
-						break;
-					case '4':
-					    window.location.href="storeChangeOrderList.html"
-						break;
-					case '5':
-						window.location.href='<{$http_root_www}>' +  "company/index"
-						break;
-					case '6':
-							window.location.href='<{$http_root_www}>' + "factory/order_for_customer_new"
-							break;
-					case '9':
-						window.location.href='<{$http_root_www}>' + "company/index?pclogin=1"
-						break;
-					default:
-						break;
-					}
+					changeMenuSalesmanBottom(index,'<{$http_root_www}>');
+
 				},returnPage:function(){
 					window.history.go(-1)
 				},logout:function() {

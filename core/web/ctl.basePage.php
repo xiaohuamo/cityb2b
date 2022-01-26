@@ -388,6 +388,36 @@ class cmsPage extends corecms
 		
 	}
 
+//如果当前已agent方式登陆，则强制转换为agent登陆方式
+public function AgentActiveCheck($id,$agentId){
+
+  // var_dump($agentId); exit;
+    $user_roles= $this->loadModel('staff_roles')->getByWhere(array('staff_id' => $agentId));
+    $this->setData($user_roles, 'user_roles');
+   // var_dump($user_roles); exit;
+
+    if ($agentId !=$id) {
+        $mdl_user =$this->loadModel('user');
+
+        $user = $mdl_user->getUserById( $agentId );
+        $data = array(
+            'lastLoginIP'	=> ip(),
+            'lastLoginDate'	=> time(),
+            'loginCount'	=> $user['loginCount'] + 1
+        );
+
+        $mdl_user->updateUserById( $data, $user['id'] );
+
+        $this->session( 'member_user_id', $user['id'] );
+        $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+
+
+
+        $this->loginUser=$user;
+    }
+}
+
+
 
 
     //定义企业员工导向页面入口
@@ -398,10 +428,10 @@ class cmsPage extends corecms
         if($isHasRole){
             switch ($role_id) {
                 case '5':
-                    $nav_page ="salesman";
+                    $nav_page ="salesman/index";
                     break;
                 case '6':
-                    $nav_page ="salesman";
+                    $nav_page ="salesman/index";
                     break;
                 case '9':
                     $nav_page ="dispatching/index";

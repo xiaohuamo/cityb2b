@@ -354,10 +354,46 @@ class ctl_factory extends cmsPage
         $this->display_pc_mobile('factory/customer_orders', 'factory/customer_orders');
         return true;
     }
+
+
+    public function set_trading_hours_action(){
+        //判断是否可以设置该用户的营业时间,该段程序稍后写。
+        //  var_dump('here');exit;
+        $customer_id =get2('user_id');
+        $mdl_user_factory =$this->loadModel('user_factory');
+
+        $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+        $where =array (
+            'factory_id' => $FactoryId,
+            'user_id' => $customer_id
+
+        );
+        $customer_rec  = $mdl_user_factory->getByWhere($where);
+        if(!$customer_rec) {
+            $this->form_response_msg('no access!');
+
+        }
+
+        $user =  $this->loadModel('user')->get($customer_id);
+        // var_dump($user);exit;
+        $this->setData($user['trading_hours'],'trading_hours');
+        $this->setData($user['trading_hours_desc'],'trading_hours_desc');
+        $this->setData($customer_id,'customer_id');
+
+        //var_dump($this->loginUser['trading_hours']);exit;
+
+        $this->setData('customer_list', 'submenu');
+        $this->setData('customer_management', 'menu');
+
+        $this->display_pc_mobile('factory/tradighours_mobile', 'factory/tradighours_mobile');
+   }
+
+
 	public function  business_hour_setting_action() {
 	  
 	  //判断是否可以设置该用户的营业时间,该段程序稍后写。
-	  
+	//  var_dump('here');exit;
 	  $customer_id =get2('user_id');
 	  $mdl_user_factory =$this->loadModel('user_factory');
 	  
@@ -384,7 +420,7 @@ class ctl_factory extends cmsPage
 	 
 	    $this->setData('customer_list', 'submenu');
         $this->setData('customer_management', 'menu');
-	   $this->display_pc_mobile('factory/business_hour_setting1', 'factory/business_hour_setting1');
+	   $this->display_pc_mobile('factory/tradighours_mobile', 'factory/tradighours_mobile');
 	//  $this->display_pc_mobile('company/index1', 'company/index1');
 }
 
@@ -1284,6 +1320,243 @@ class ctl_factory extends cmsPage
     }
 
 
+ public function customer_info_edit_action()
+    {
+        $userId = trim(get2('id'));
+        $this->setData($userId,'userId');
+
+
+
+        if (is_post()) {
+            //var_dump('here');exit;
+            $userId = trim(post('userId'));
+            //var_dump('userid is'.$userId);exit;
+            $forward_page =HTTP_ROOT_WWW."factory/customer_info?id=".$userId;
+            if($userId)  {
+                //var_dump($userId);exit;
+
+
+                //abn info
+                $abn = str_replace(' ', '', trim(post('abn')));
+                if(!$abn) $abn='00000000000';
+
+                $untity_name= trim(post('untity_name'));
+
+
+
+
+
+                //user_info
+                $phone = trim(post('phone'));
+
+                $tel = trim(post('tel'));
+
+                $contactPersonFirstname = trim(post('contactPersonFirstname'));
+
+                $contactPersonLastname = trim(post('contactPersonLastname'));
+
+                $email = trim(post('email'));
+                $username = trim(post('username'));
+
+
+                $googleMap = trim(post('address'));
+
+                //factory_info
+
+                $factory_code = trim(post('factory_code'));
+
+                $factory_sales_id = trim(post('factory_sales_id'));
+
+                $approved = trim(post('approved'));
+
+
+
+                if (! $this->loadModel('reg')->chkABN($abn)) {
+                    $this->setData($this->lang->remind_user_register_17, 'message');
+
+                } else {
+
+                    $data_user=array(
+                        //''=>$,
+                        'googleMap'=>$googleMap,
+                        'email'=>$email,
+                        'contactPersonFirstname'=>$contactPersonFirstname,
+                        'contactPersonLastname'=>$contactPersonLastname,
+                        'tel'=>$tel,
+                        'phone'=>$phone,
+                        'name'=>$username
+
+                    );
+                    $mdl_user = $this->loadModel('user');
+                    $mdl_user->update($data_user,$userId);
+
+
+                    $data_user_factory=array(
+                        //''=>$,
+                        'approved'=>$approved,
+                        'factory_sales_id'=>$factory_sales_id,
+                        'nickname'=>$factory_code
+
+
+                    );
+                    $mdl_user_factory = $this->loadModel('user_factory');
+                    $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+                    $where =array(
+                        'factory_id'=>$FactoryId,
+                        'user_id'=>$userId
+                    );
+
+                    $mdl_user_factory->updateByWhere($data_user_factory,$where);
+
+
+                    $data_abn =array(
+                        'untity_name'=>$untity_name,
+                        'ABNorACN'=>$abn
+
+                    );
+                    $mdl_wj_abn_applicationy = $this->loadModel('wj_abn_application');
+                    $where =array(
+                        'userId'=>$userId
+                    );
+                    $mdl_wj_abn_applicationy->updateByWhere($data_abn,$where);
+
+                  //  header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+                    $this->form_response(200, (string)$this->lang->update_success,$forward_page);
+                    /*
+                     if($result['success']) {
+                         $this->loadModel('wj_abn_application')->insert([
+                             'userId' => $result['userId'],
+                             'business_name' => $username,
+                             'ABNorACN' => $abn,
+                             'untity_name' => $nickname,
+                             'createDate' => time(),
+                             'isApproved' => 1,
+                         ]);
+                         self::approve_user_action($result['userId'], null, true);
+                         header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+                     } else {
+                         $this->setData($result['result'], 'message');
+                     }
+                     */
+                }
+            }else{
+
+                $this->form_response(201, 'no user info!');
+                return;
+            }
+        }else{
+            //get all customer information
+
+
+
+
+            // 获得当前操作用户代表的 供应商用户ID
+            $mdl_user_factory = $this->loadModel('user_factory');
+            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+           // var_dump($userId);exit;
+            if($mdl_user_factory->isUserAuthorisedToOperate($userId, $FactoryId)){
+                //如果当前用户对该客户操作合法，则 获取当前用户是否可以对客户有 aacount的审核权限
+                if( $this->getIfCurrentUserCanDOApprovedCustomer($this->loginUser))  {
+                  $this->setData(1,'$isAdulted');
+
+                }else{
+                    $this->setData(0,'$isAdulted');
+
+                }
+              // var_dump('dddd'.$this->loginUser['$isAdulted']);exit;
+
+
+
+            }else{
+                var_dump('no access');exit;
+
+            }
+            // 从cc_user 获取 name ,address ,phone ,contact person ,mobile ,email
+            // 从cc_factory_user 获取销售员，简称，是否approved
+            // 从 abn-application cc_wj_abn_application userId  	business_name 	ABNorACN untity_name isApproved
+
+            $user =$this->loadModel('user')->get($userId);
+            $where =array(
+                'user_id' => $userId,
+                'factory_id' => $FactoryId
+            );
+            $user_factory_info =$this->loadModel('user_factory')->getByWhere($where);
+            $where =array(
+                'userId' => $userId
+            );
+
+            $user_abn =$this->loadModel('wj_abn_application')->getByWhere($where);
+            //var_dump($user);
+            //var_dump($user_factory_info);
+            //var_dump($user_abn);
+
+
+
+            // get sales list ...
+            //如果该用户本身为销售员，则前端不显示该信息，后端也不读取，也不处理。
+            // 如果用户为owner 则 获得 user_belong_to_user =该用户，且用户role=101
+
+            if($this->loginUser['role']==20) {
+
+
+            }else {
+                $where =array (
+                    'user_belong_to_user'=>$this->loginUser['id'],
+                    'role'=>20
+                );
+                $sales_list = $this->loadModel('user')->getList(null,$where);
+                //var_dump($sales_list);exit;
+                $this->setData($sales_list,'sales_list');
+
+            }
+
+          // 获得当前用户是否拥有审批客户的权限
+
+
+
+
+
+            $this->setData($user,'user');
+            $this->setData($user_factory_info,'user_factory_info');
+            $this->setData($user_abn,'user_abn');
+            //exit;
+
+
+
+
+
+
+        }
+        $this->setData('customer_list', 'submenu_top');
+        $this->setData('customer_list', 'submenu');
+        $this->setData('customer_management', 'menu');
+        $this->display('factory/customerManagement/customer_info_edit');
+
+
+    }
+
+   //审核当前用户是否对指定的客户拥有审批权限 ;
+  public function getIfCurrentUserCanDOApprovedCustomer($user) {
+       $isAdulted =0;
+      //如果为企业owner
+      if($user['role']==3){
+          $isAdulted =1;
+      }
+      $userid =$user['id'];
+      $staff_roles_rec =$this->loadModel('staff_roles')->getByWhere(array('staff_id'=>$userid)) ;
+      $staff_roles = $staff_roles_rec['roles'];
+
+      if( substr_count($staff_roles,',4,') || substr_count($staff_roles,',5,') ||
+          substr_count($staff_roles,',0,') ||  substr_count($staff_roles,',1,') ) {
+          $isAdulted =1;
+      }
+
+
+     return $isAdulted;
+}
+
     public function add_new_customer_action()
     {
         if (is_post()) {
@@ -2044,6 +2317,9 @@ class ctl_factory extends cmsPage
         $this->setData('customer_list', 'submenu_top');
         $this->setData('customer_list', 'submenu');
         $this->setData('customer_management', 'menu');
+
+
+
         $this->display('factory/customer_list');
     }
 
@@ -2149,62 +2425,149 @@ class ctl_factory extends cmsPage
     }
  public function order_for_customer_new_action()
     {
-        $agentId =$this->cookie->getCookie('agentcityb2b');
-		
-		
-		
-        $id = $this->loginUser['id'];
-		
-		if ($agentId !=$id) {
-			 $mdl_user =$this->loadModel('user');
-			
-			$user = $mdl_user->getUserById( $agentId );
-            $data = array(
-                'lastLoginIP'	=> ip(),
-                'lastLoginDate'	=> time(),
-                'loginCount'	=> $user['loginCount'] + 1
-            );
 
-            $mdl_user->updateUserById( $data, $user['id'] );
+        //如果当前已agent方式登陆，则强制转换为agent登陆方式
+       $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 
-            $this->session( 'member_user_id', $user['id'] );
-            $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+        //获取当前操作者的客户列表
+        $factoryList =$this->get_customer_list_of_salesOrOwner();
+        //var_dump($factoryList);exit;
 
-			$this->loginUser=$user;
-		}
 
-        $mdl_user_factor = $this->loadModel('user_factory');
-
-       //var_dump($this->loginUser['id']);
-		//  var_dump('role'.$this->loginUser['role']);exit;
-		
-        //获得当前用户的实际商家所有者商家id
-        $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
-        //  var_dump($factoryId);exit;
-        $id = $factoryId;
-        if(	$this->loginUser['role']==20) {
-            $salesManId = $this->loginUser['id'];
-
-        }
-        //var_dump($factoryId);exit;
-        $factoryList = $mdl_user_factor->getUserFactoryList($factoryId,null,$salesManId);
-		
-		
-		 foreach ($factoryList as $key => $user) {
-		   $expiredAt =strtotime("+36 months", time());
-            $link = self::customer_login_link($user['id'], $expiredAt);
-            $factoryList[$key]['login_link'] = $link;
-		 }
-       // var_dump($factoryList);exit;
         $this->setData(json_encode($factoryList), 'factoryUsers');
 
 
-        $this->display_pc_mobile('factory/order_for_customer_new', 'factory/order_for_customer_new');
+        $this->display_pc_mobile('factory/salesman/order_for_customer_new', 'factory/salesman/order_for_customer_new');
 
 
     }
 
+    public function customer_info_action() {
 
+        $userId = trim(get2('id'));
+        $this->setData($userId,'userId');
+        //get all customer information
+
+        //如果当前已agent方式登陆，则强制转换为agent登陆方式
+        $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
+
+
+        // 获得相关的信息
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+        //var_dump($FactoryId);exit;
+        if($mdl_user_factory->isUserAuthorisedToOperate($userId, $FactoryId)){
+
+            //	var_dump('已授权');exit;
+
+        }else{
+            var_dump('no access');exit;
+
+        }
+        // 从cc_user 获取 name ,address ,phone ,contact person ,mobile ,email
+        // 从cc_factory_user 获取销售员，简称，是否approved
+        // 从 abn-application cc_wj_abn_application userId  	business_name 	ABNorACN untity_name isApproved
+
+        $user =$this->loadModel('user')->get($userId);
+        $where =array(
+            'user_id' => $userId,
+            'factory_id' => $FactoryId
+        );
+        $user_factory_info =$this->loadModel('user_factory')->getByWhere($where);
+        $where =array(
+            'userId' => $userId
+        );
+
+        $user_abn =$this->loadModel('wj_abn_application')->getByWhere($where);
+        //var_dump($user);
+        //var_dump($user_factory_info);
+        //var_dump($user_abn);
+
+
+
+        // get sales list ...
+        //如果该用户本身为销售员，则前端不显示该信息，后端也不读取，也不处理。
+        // 如果用户为owner 则 获得 user_belong_to_user =该用户，且用户role=101
+
+        if($this->loginUser['role']==20) {
+
+
+        }else {
+            $where =array (
+                'user_belong_to_user'=>$this->loginUser['id'],
+                'role'=>20
+            );
+            $sales_list = $this->loadModel('user')->getList(null,$where);
+            //var_dump($sales_list);exit;
+            $this->setData($sales_list,'sales_list');
+
+        }
+
+
+        $expiredAt =strtotime("+36 months", time());
+        $link = self::customer_login_link($userId, $expiredAt);
+        $user['login_link'] = $link;
+
+
+        $this->setData($user,'user');
+        $this->setData($user_factory_info,'user_factory_info');
+        $this->setData($user_abn,'user_abn');
+        //exit;
+
+
+
+
+
+
+
+        $this->setData('customer_list', 'submenu_top');
+        $this->setData('customer_list', 'submenu');
+        $this->setData('customer_management', 'menu');
+
+
+
+        $this->display_pc_mobile('factory/salesman/customer_info', 'factory/salesman/customer_info');
+
+
+
+    }
+
+    public function customer_list_mobile_action()
+    {
+
+        //如果当前已agent方式登陆，则强制转换为agent登陆方式
+        $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
+
+        //获取当前操作者的客户列表
+        $factoryList =$this->get_customer_list_of_salesOrOwner();
+        //var_dump($factoryList);exit;
+
+
+        $this->setData(json_encode($factoryList), 'factoryUsers');
+
+
+        $this->display_pc_mobile('factory/salesman/customer_list', 'factory/salesman/customer_list');
+
+
+    }
+
+  // 获取当前操作者的客户列表
+    function get_customer_list_of_salesOrOwner(){
+        $mdl_user_factor = $this->loadModel('user_factory');
+        //获得当前用户的实际商家所有者商家id
+        $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
+        if(	$this->loginUser['role']==20) {
+            $salesManId = $this->loginUser['id'];
+        }
+        $factoryList = $mdl_user_factor->getUserFactoryList($factoryId,null,$salesManId);
+        foreach ($factoryList as $key => $user) {
+            $expiredAt =strtotime("+36 months", time());
+            $link = self::customer_login_link($user['id'], $expiredAt);
+            $factoryList[$key]['login_link'] = $link;
+        }
+
+        return $factoryList;
+    }
     //定义企业员工导向页面入口
     public function employee_navigation_panel_action(){
 
