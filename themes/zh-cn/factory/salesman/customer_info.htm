@@ -116,8 +116,8 @@
 		-->
 			<div class="ma15 pa15 bgfff borR7">
 				<div class="f28 col0F0F0F" v-if="isLanguageEn">Click,then share to this customer.</div><div class="f28 col0F0F0F" v-else>点击链接，然后分享给客户，客户将无需在登录。</div>
-				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-if="isLanguageEn" >customer auto login link</div>
-				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-else>客户免登录页面</div>
+				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-if="isLanguageEn" >Place order for customer</div>
+				<div @click="nextPage('<{$user.login_link}>')" class="continue maT15 mb10 mt10" v-else>帮客户下单</div>
 				<div class="f28 col0F0F0F" v-if="isLanguageEn">auto login website link</div><div class="f28 col0F0F0F" v-else>免登录链接</div>
 				<div class="borR7 borFD5204 pa15 maT15 flexBox1">
 				   <div style="word-break: break-all;"><{$user.login_link}> </div>

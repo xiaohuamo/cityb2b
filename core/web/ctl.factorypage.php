@@ -1337,7 +1337,14 @@ class ctl_factorypage extends cmsPage
 
             $this->sheader(HTTP_ROOT_WWW.'supplier/'.$factoryId);
         } else {
-            print_r('Link has expired or user did not be approved');
+			if($loginData->expired_at <=time()) {
+				 print_r('Link has expired ');
+			}
+			if(!$mdl_user_factory->isUserApproved($userId, $loginData->factory_id)){
+				print_r('user did not be approved');
+			}
+			
+           // print_r('Link has expired or user did not be approved');
             die();
         }
     }

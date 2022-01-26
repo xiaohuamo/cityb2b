@@ -119,6 +119,10 @@ class ctl_company extends cmsPage
 
 
 
+
+        //如果当前已agent方式登陆，则强制转换为agent登陆方式
+        $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
+
         // 获取公司一段时间内的销售额,30天
         $mdl_order = $this->loadModel('order');
         $totalSales = $mdl_order->getTotalSales($this->loginUser['id'], 30);
