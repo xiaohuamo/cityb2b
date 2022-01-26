@@ -136,7 +136,7 @@ class ctl_company extends cmsPage
         $this->setData('商家首页', 'pagename');
         $this->setData('index', 'menu');
         $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
-		var_dump($this->current_business['id'] . 'type id is'.$this->current_business['business_type_factory']);exit;
+		// var_dump($this->current_business['id'] . 'type id is'.$this->current_business['business_type_factory']);exit;
 		if($this->current_business['business_type_factory']==1) {
 
             $pclogin =trim(get2('pclogin')) ;
@@ -158,7 +158,23 @@ class ctl_company extends cmsPage
 
 		}else{
 			
-			 var_dump('something wrong ,please contact your website supplier!'); exit;
+			
+            $pclogin =trim(get2('pclogin')) ;
+
+            //get role of the login user ,such as sales , operator , dispatching operator (拣货员）,driver etc
+            $mdl_roles =$this->loadModel('staff_roles');
+            $roles_list =$mdl_roles->getRoleList($this->loginUser['id'],$this->loginUser['role']);
+            $this->setData(json_encode($roles_list),'roles_list');
+           // var_dump($roles_list);exit;
+            // 记录当前员工的校色数量，并根据角色数量切换到不同的页面，如果没有角色，则切换到没有角色页面，如果只有一个校色，直接切换到
+            // 角色的管理台，如果角色大于1 ，则切换到总控台。
+
+            $countOfRoles =sizeof($roles_list);
+            $this->setData($countOfRoles,'countOfRoles');
+
+             $pageHtm = $this->getindexPageOfUser($this->loginUser,$pclogin,$countOfRoles,$roles_list[0]['id']);
+             //var_dump($pageHtm);exit;
+			 $this->display_pc_mobile($pageHtm, $pageHtm);
 		}
        
     }
