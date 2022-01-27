@@ -175,7 +175,7 @@ class ctl_factorypage extends cmsPage
 
 
         $id = (int) get2('id');
-
+		$id=319188;
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
         $default_menu_page_items = 10;
@@ -247,6 +247,7 @@ class ctl_factorypage extends cmsPage
 
             $this->setData($restaurant_coupon, 'coupon');
         } else {
+			var_dump('shopidis :' .$id. ' why here'.$restaurant_coupon['isApproved'].' '.$restaurant_coupon['status'].'id is '.$restaurant_coupon['id']);exit;
             $this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
             $this->sheader(null, 'current Business is not avaliable..');
         }
@@ -1334,7 +1335,7 @@ class ctl_factorypage extends cmsPage
 
             $this->session('member_user_id', $userId);
             $this->session('member_user_shell', $this->md5($userId.$user['name'].$user['password']));
-
+        //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
             $this->sheader(HTTP_ROOT_WWW.'supplier/'.$factoryId);
         } else {
 			if($loginData->expired_at <=time()) {

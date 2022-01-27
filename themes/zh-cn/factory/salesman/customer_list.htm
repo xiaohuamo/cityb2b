@@ -194,8 +194,12 @@
 				this.customer_lists=<{$factoryUsers}>;
 
              	//console.log(this.customer_lists);
-				setCookie('agentcityb2b','<{$loginUser.id}>',10);
-				//console.log(getCookie('agentcityb2b'));
+				let role ='<{$loginUser.role}>';
+					if(role !== 4){
+					setCookie('agentcityb2b','<{$loginUser.id}>',10);
+				}
+
+							console.log('login user is :'+ '<{$loginUser.id}>' + 'role is :' + '<{$loginUser.role}>' +'cookie userid is :' +  getCookie('agentcityb2b'));
 
 				// 获得当前的语言环境
 				this.isLanguageEn =parseInt('<{$user_setting}>');

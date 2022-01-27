@@ -6,11 +6,11 @@ class mdl_user_factory extends mdl_base
     protected $encryptMethod = 'aes-128-cbc';
 
     public function isUserApproved($userId, $factoryId) {
-        return !!$this->getByWhere([
-            'user_id' => $userId,
-            'factory_id' => $factoryId,
-            'approved' => true
-        ]);
+		
+		$sql ="select count(*) as count from cc_user_factory where user_id =$userId and (factory_id =$factoryId or factory_sales_id =$factoryId) and approved =1 ";
+         $rec = $this->getListBySql($sql);
+		 if($rec[0]['count']>0) return 1;
+		 return 0; 
     }
 
    public function isUserAuthorisedToOperate($userId, $factoryId) {

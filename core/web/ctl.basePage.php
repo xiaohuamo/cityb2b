@@ -391,13 +391,24 @@ class cmsPage extends corecms
 //如果当前已agent方式登陆，则强制转换为agent登陆方式
 public function AgentActiveCheck($id,$agentId){
 
-  // var_dump($agentId); exit;
+   // var_dump($agentId); exit;
+    $mdl_user =$this->loadModel('user');
+    $agentUser = $mdl_user->get($id);
+
+    //如果只是客户，则直接返回
+
+    if($agentUser['role'] ==3 || $agentUser['role'] == 20 ) {
+       // var_dump('gotit ' .$agentUser['role']); exit;
+        return 1;
+    }
+
+   // var_dump('not gotit ' .$agentUser['role']); exit;
     $user_roles= $this->loadModel('staff_roles')->getByWhere(array('staff_id' => $agentId));
     $this->setData($user_roles, 'user_roles');
    // var_dump($user_roles); exit;
 
     if ($agentId !=$id) {
-        $mdl_user =$this->loadModel('user');
+
 
         $user = $mdl_user->getUserById( $agentId );
         $data = array(
