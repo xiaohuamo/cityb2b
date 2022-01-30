@@ -481,7 +481,9 @@ class ctl_factorypage extends cmsPage
     {
         //加载餐馆菜单
         $mdl_restaurant_category = $this->loadModel('restaurant_category');
-        $restaurant_category = $mdl_restaurant_category->getListBySql("select * from cc_restaurant_category where restaurant_id = ".$id." and (length(category_cn_name)>0 or length(category_en_name)>0) order by `category_sort_id`");
+        $sql ="select * from cc_restaurant_category where restaurant_id = ".$id." and (length(category_cn_name)>0 or length(category_en_name)>0)  and (parent_category_id =0 or parent_category_id is null) order by `category_sort_id`";
+       // var_dump($sql);exit;
+        $restaurant_category = $mdl_restaurant_category->getListBySql($sql);
 
         foreach ($restaurant_category as $key => $value) {
             if ($restaurant_category[$key]['category_en_name'] == '') {
