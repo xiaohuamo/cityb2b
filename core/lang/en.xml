@@ -576,7 +576,7 @@
     <business_center>Home page</business_center>
     <business_center_mall>Seller centre（mall version）</business_center_mall>
     <business_center_freshfood>Seller(Fresh Supmakt）</business_center_freshfood>
-	<business_center_freshfoodFactory>Seller（Wholesale 2b）</business_center_freshfoodFactory>
+	<business_center_freshfoodFactory>Seller</business_center_freshfoodFactory>
 	<business_center_freshfoodFactory2c>Seller（Main Panel 2b2c）</business_center_freshfoodFactory2c>
     <publish_center>Publishing Center</publish_center>
     <online_store>Store Website</online_store>
@@ -644,15 +644,16 @@
 
     <!-- 15 -->
     <customer_center>Customer Center</customer_center>
-    <dispatching_center>Dispatching Management</dispatching_center>
-    <logistic_center>Logistic Management</logistic_center>
-    <order_management>Order management</order_management>
+    <dispatching_center>Dispatching</dispatching_center>
+    <logistic_center>Logistic</logistic_center>
+    <order_management>Orders</order_management>
     <order_statistic>Statistic</order_statistic>
     <custoemr_review_management>Ratings</custoemr_review_management>
     <customer_management>Customers</customer_management>
     <refund_and_return>Returned</refund_and_return>
     <i_will_refund>New Return</i_will_refund>
     <reason>Reason</reason>
+	<switch_to_mobile>Switch to Mobile</switch_to_mobile>
     <address_management>Address Management</address_management>
     <!-- 16 -->
     <search>Search</search>

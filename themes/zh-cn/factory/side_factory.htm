@@ -352,12 +352,26 @@
 				<a href="<{$http_root_www}>company/staff_permissions" <{if $submenu=='staff_permissions'}> class="current"<{/if}>>
 			<!--	<{$lang->staff_permissions}> -->员工授权
 				</a>
+				
+			</div>
+		</li>
+		
+		<{/if}>
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw  fa-money"></i>
+				
 				<a target="_blank" href="<{$http_root_www}>company/index">
-			<!--	<{$lang->staff_permissions}> -->switch to mobile
+			<!--	<{$lang->staff_permissions}> --> <{$lang->switch_to_mobile}> 
+				</a>
+			</div>
+			<div class='second-level'>
+			
+				<a target="_blank" href="<{$http_root_www}>company/index">
+			<!--	<{$lang->staff_permissions}> --> <{$lang->switch_to_mobile}> 
 				</a>
 			</div>
 		</li>
-		<{/if}>
 	</ul>
 
 

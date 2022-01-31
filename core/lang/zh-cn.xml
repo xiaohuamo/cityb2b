@@ -870,6 +870,7 @@
 	<customer_edit>客户编辑</customer_edit>
     <banner_edit>Banner编辑</banner_edit>
     <store_notice>店铺通知</store_notice>
+	<switch_to_mobile>切换至移动端</switch_to_mobile>
     <!-- 40 -->
     <support_customers_pickingup_goods>全局支持自取</support_customers_pickingup_goods>
     <self_pickup_desc>您将前往商家的店铺自行取货</self_pickup_desc>
