@@ -2353,6 +2353,38 @@ class ctl_factory extends cmsPage
         $this->display('factory/customer_list_recycle');
     }
 
+
+    public function customer_price_management_action() {
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $search = trim(get2('search'));
+        if($this->loginUser['role']==20) {
+            $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+            $salesManId = $this->loginUser['id'];
+        }else{
+            $factoryId =  $this->loginUser['id'];
+            $salesManId = 0;
+        }
+        //var_dump($salesManId );exit;
+
+        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        foreach ($users as $key => $user) {
+            $expiredAt =strtotime("+3 months", time());
+            $link = self::customer_login_link($user['id'], $expiredAt);
+            $users[$key]['login_link'] = $link;
+
+        }
+
+        $this->setData($search, 'search');
+        $this->setData($users, 'users');
+        $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
+        $this->setData('customer_price_management', 'submenu');
+        $this->setData('customer_management', 'menu');
+        $this->display('factory/customer_price_management');
+    }
+
+
+
     public function approve_customer_payments_and_discount_action() {
         $mdl_user_factory = $this->loadModel('user_factory');
 

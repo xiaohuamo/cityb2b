@@ -51,11 +51,16 @@
 							<thead>
 							<tr>
 								<th>用户名</th>
+								<th>当前折扣率</th>
+								<th>大类折扣设置</th>
+								<th>小类类折扣设置</th>
+								<th>定制产品折扣设置</th>
+								
 								<th>订单查询</th>
 								<th>手机号</th>
-								<th>当前账期</th>
+								
 
-								<th>当前折扣率</th>
+								
 								
 							</tr>
 							</thead>
@@ -69,44 +74,39 @@
                                         <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
 									</td>
 									<td>
-										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
-									</td>
-									<td>
-                                        <{$user.phone}>
-									</td>
-									<td>
-										<select name="account_type" data-id='<{$user.idd}>' id='account_type-<{$user.idd}>'  >
-
-
-
-											<option value="<{$user.account_type}>"
-											<{if $user.account_type=='COD'}> selected<{/if}>>COD</option>
-											<option value="1"	<{if $user.account_type=='1'}> selected<{/if}> >1 Week	</option>
-											<option value="2"	<{if $user.account_type=='2'}> selected<{/if}>>2 Weeks	</option>
-											<option value="3"	<{if $user.account_type=='3'}> selected<{/if}>>3 Weeks	</option>
-											<option value="4"	<{if $user.account_type=='4'}> selected<{/if}>>4 Weeks	</option>
-											<option value="5"	<{if $user.account_type=='5'}> selected<{/if}>>5 Weeks	</option>
-											<option value="6"	<{if $user.account_type=='6'}> selected<{/if}>>5 Weeks	</option>
-											<option value="7"	<{if $user.account_type=='7'}> selected<{/if}>>7 Weeks	</option>
-											<option value="8"	<{if $user.account_type=='8'}> selected<{/if}>>8 Weeks	</option>
-											<option value="9"	<{if $user.account_type=='9'}> selected<{/if}>>9 Weeks	</option>
-											<option value="10"	<{if $user.account_type=='10'}> selected<{/if}>>10 Weeks	</option>
-
-
-										</select>
-										<span class='promote-ajax'></span>
-									</td>
-
-									<td>
 
 
 										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="width:150px;" name="business_discount_rate"
 											   value="<{if !$user.business_discount_rate}>0<{else}><{$user.business_discount_rate}><{/if}>">%
 										<span class='promote-ajax'></span>
-										<a href="<{$http_root_www}>restaurant/price_edit_parant_category">&nbsp;&nbsp;更多设置</a>
+									
 
 
 									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/price_edit_parant_category">&nbsp;&nbsp;大类</a>
+										
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/price_edit_sub_category">&nbsp;&nbsp;小类</a>
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/price_edit_product">&nbsp;&nbsp;产品及规格</a>
+									</td>
+									
+									
+									<td>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
+									</td>
+									<td>
+                                        <{$user.phone}>
+									</td>
+								
+
+									
 
 								</tr>
 							<{/foreach}>

@@ -36,6 +36,8 @@
 	<add_new_customer>Add New Customer</add_new_customer>
 	<customer_list>Customer Lists</customer_list>
 	<customer_list_recycle>Hide Customers</customer_list_recycle>
+	<customer_price_management>price Management</customer_price_management>
+	
 	<orderLists>Order Lists</orderLists>
 	
 	

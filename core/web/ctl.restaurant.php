@@ -2142,111 +2142,191 @@ function updateStandProductUponMenuId($id) {
 			
 			
 		}
-		
-		
-		
 
-		/* 一级分类编辑*/
-
-function restaurant_parant_category_edit_action(){
+	function restaurant_parant_category_edit_action(){
 
 
 		$freshfood =get2('freshfood');
 		$this->setData($freshfood,'freshfood');
-		
-		
-	
+
+
+
 		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 		//var_dump($authoriseBusinessList);exit;
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
-		
-		 $customer_id =get2('customer_id');
-		 if(!$customer_id) {
-			  $customer_id =$this->loginUser['id'];
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
+		$customer_id =get2('customer_id');
+		if(!$customer_id) {
+			$customer_id =$this->loginUser['id'];
+
+		}
+		$isAuthoriseCustomer =0 ;
+		foreach ($authoriseBusinessList as $key => $value) {
+			if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+				$isAuthoriseCustomer =1;
 			}
-		 $isAuthoriseCustomer =0 ;
-		 foreach ($authoriseBusinessList as $key => $value) {
-				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
-						$isAuthoriseCustomer =1;
+
+		}
+
+
+
+
+
+
+		if ($isAuthoriseCustomer) {
+
+			$mdl_restaurant_category = $this->loadModel('restaurant_category');
+			$countOfcat =$mdl_restaurant_category->getCountOfCategory($customer_id);
+			$exist = $mdl_restaurant_category->getByWhere(array('createUserId'=>$customer_id));
+
+			if(!$exist){
+				$category_id =100;
+				$category_sort_id=200;
+
+				for($i=0;$i<50;$i++) {
+					$menu_category_info=array(
+						'category_cn_name'=>'',
+						'category_en_name'=>'',
+						'restaurant_id'=>$customer_id,
+						'category_id'=>$category_id,
+						'category_sort_id'=>$category_sort_id,
+						'createUserId'=>$customer_id,
+						'parent_category_id'=>0
+					);
+					$mdl_restaurant_category->insert($menu_category_info);
+					$category_id =$category_id+100;
+					$category_sort_id =$category_sort_id +10;
+				}
+			}else{
+
+				$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id  &&  parent_category_id =0 && (length(category_cn_name)=0 && length(category_en_name)=0) ";
+				$category_list = $mdl_restaurant_category->getListBySql($sqlexist);
+				if( $category_list[0]['count'] <=10)
+				{ //如果子分类下面可用分类不足10条，则增加10条子分类
+					$newAddRecordCount = 10;
+				}else{
+
+					$newAddRecordCount = 0;
 				}
 
-			}
-		
-		
-		 
-			
-			
+				//var_dump($newAddRecordCount);exit;
+				//增加该大类下的子分类
 
-			if ($isAuthoriseCustomer) {
+				$category_id   =100*(1+$countOfcat);
+				$category_sort_id=10*(1+$countOfcat);
+//var_dump ($category_list);exit;
+				for($i=0;$i<$newAddRecordCount;$i++) {
+					$menu_category_info=array(
+						'category_cn_name'=>'',
+						'category_en_name'=>'',
+						'restaurant_id'=>$customer_id,
+						'category_id'=>$category_id,
+						'category_sort_id'=>$category_sort_id,
+						'createUserId'=>$customer_id,
+						'parent_category_id'=>0
+					);
+					//var_dump($menu_category_info);exit;
+					$mdl_restaurant_category->insert($menu_category_info);
+					$category_id =$category_id+100;
+					$category_sort_id =$category_sort_id +10;
+				}
+
+
+
+
+
+
+
+			}
+
+			$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and (parent_category_id=0 or  parent_category_id is null) and isdeleted =0   order by  ishide,category_sort_id,category_cn_name desc ";
+
+
+			//var_dump($pageSql);exit;
+			$pageUrl = $this->parseUrl()->set('page');
+			$pageSize =50;
+			$maxPage = 100;
+			$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+			$data = $mdl_restaurant_category->getListBySql($page['outSql']);
+
+			$this->setData($data, 'data');
+			$this->setData($customer_id,'customer_id');
+
+			$sql_Parent_cate_list ="select  * from cc_restaurant_category where restaurant_id=".$customer_id. "  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0 order by parent_category_id,category_sort_id ";
+			$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+			$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+			//var_dump($sql_Parent_cate_list);exit;
+			$this->setData($page['pageStr'], 'pager');
+			$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+		}else {
+			//do nothing  attack
+
+		}
+
+
+
+
+
+
+		$this->setData('restaurant_parant_category_edit', 'submenu_top');
+		$this->setData('restaurant_parant_category_edit', 'submenu');
+		$this->setData('index_publish', 'menu');
+
+		$pagename = "店铺一级品类管理";
+		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+
+
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
+
+		$this->setData($this->loginUser['gst_type'], 'gstType');
+		$this->display_pc_mobile('restaurant/restaurant_parant_category_edit', 'restaurant/restaurant_parant_category_edit');
+
+	}
+		
+
+		/* 一级分类编辑*/
+
+function price_edit_parant_category_action(){
+
+	    //输入参数合法性验证
+	      $customer_id =get2('customer_id');
+			if(!$customer_id) {
+				var_dump('please choose the customer !'); exit;
+				
+			}
+
+        // 检查当前登陆用户是否具有对当前action的操作权限
+		$act = $GLOBALS['gbl_act'];
+        if($this->checkActCanBeExecuted($act,$this->loginUser['role'])) {
+			var_dump('can operate..');
+		}else{
+			var_dump('you can not operate the action ,and your operation has been saved and will be an investagation.');
+		}
+
+		exit;
+
+	    //检查当前用户对当前的客户是否拥有操作权限
+
+
+
+		//获取当前供应商大类及改客户关于各个大类的折扣率
+
+		$mdl = $this->loadModel('user_factory_category_discount_rate');
+		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business,$customer_id);
+
+
+	   //session传递值供前端操作 。
+
+
 
 				$mdl_restaurant_category = $this->loadModel('restaurant_category');
-				$countOfcat =$mdl_restaurant_category->getCountOfCategory($customer_id);
-				$exist = $mdl_restaurant_category->getByWhere(array('createUserId'=>$customer_id));
 
-				if(!$exist){
-					$category_id =100;
-					$category_sort_id=200;
-
-					for($i=0;$i<50;$i++) {
-						$menu_category_info=array(
-							'category_cn_name'=>'',
-							'category_en_name'=>'',
-							'restaurant_id'=>$customer_id,
-							'category_id'=>$category_id,
-							'category_sort_id'=>$category_sort_id,
-							'createUserId'=>$customer_id,
-							'parent_category_id'=>0
-						);
-						$mdl_restaurant_category->insert($menu_category_info);
-						$category_id =$category_id+100;
-						$category_sort_id =$category_sort_id +10;
-					}
-				}else{
-					
-					$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id  &&  parent_category_id =0 && (length(category_cn_name)=0 && length(category_en_name)=0) ";
-						$category_list = $mdl_restaurant_category->getListBySql($sqlexist);
-						if( $category_list[0]['count'] <=10)
-							{ //如果子分类下面可用分类不足10条，则增加10条子分类
-							$newAddRecordCount = 10;
-							}else{
-								
-								$newAddRecordCount = 0;
-							}
-					
-						//var_dump($newAddRecordCount);exit;
-								//增加该大类下的子分类
-
-								$category_id   =100*(1+$countOfcat);  
-								$category_sort_id=10*(1+$countOfcat);
-//var_dump ($category_list);exit;
-								for($i=0;$i<$newAddRecordCount;$i++) {
-									$menu_category_info=array(
-										'category_cn_name'=>'',
-										'category_en_name'=>'',
-										'restaurant_id'=>$customer_id,
-										'category_id'=>$category_id,
-										'category_sort_id'=>$category_sort_id,
-										'createUserId'=>$customer_id,
-										'parent_category_id'=>0
-									);
-									//var_dump($menu_category_info);exit;
-									$mdl_restaurant_category->insert($menu_category_info);
-									$category_id =$category_id+100;
-									$category_sort_id =$category_sort_id +10;
-								}
-				
-					
-					
-					
-					
-					
-					
-				}
 			
 				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and (parent_category_id=0 or  parent_category_id is null) and isdeleted =0   order by  ishide,category_sort_id,category_cn_name desc ";
 				
@@ -2268,29 +2348,25 @@ function restaurant_parant_category_edit_action(){
 				$this->setData($page['pageStr'], 'pager');
 				$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
 
-			}else {
-				//do nothing  attack
-
-			}
 
 
 	
 
 
 
-			$this->setData('restaurant_parant_category_edit', 'submenu_top');
-			$this->setData('restaurant_parant_category_edit', 'submenu');
-			$this->setData('index_publish', 'menu');
+			$this->setData('price_edit_parant_category', 'submenu_top');
+			$this->setData('customer_price_management', 'submenu');
+			$this->setData('customer_management', 'menu');
 
-		    $pagename = "店铺一级品类管理";
-			$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		    $pagename = "价格管理";
+			$pageTitle=  $pagename." - Business_centre - ". $this->site['pageTitle'];
 
 
 			$this->setData($pagename, 'pagename');
 			$this->setData($pageTitle, 'pageTitle');
 
 			$this->setData($this->loginUser['gst_type'], 'gstType');
-			$this->display_pc_mobile('restaurant/restaurant_parant_category_edit', 'restaurant/restaurant_parant_category_edit');
+			$this->display_pc_mobile('restaurant/price_edit_parant_category', 'restaurant/restaurant_parant_category_edit');
 
 	}
 
