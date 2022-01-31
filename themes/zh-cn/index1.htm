@@ -178,8 +178,8 @@
 						<div :class="layout?'':'flexBox3'">
 							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
 							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
-							<div class="goodInfo2_">
-								<div >{{item2.title}}</div><div class ="f28" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
+							<div   class="goodInfo2_">
+								<div >{{item2.id}}{{item2.title}}</div><div class ="f28" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
 								<div class="flexBox1 " >{{item2.unit_en}} </div>
 								<div class="flexBox1 price" v-if="item2.hasGG==0">
 									<span class="colFD5001">${{item2.price}}</span>

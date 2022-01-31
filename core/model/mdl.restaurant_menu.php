@@ -69,10 +69,20 @@ class mdl_restaurant_menu extends mdl_base
         $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id  order by parent_category_id,sub_category_id ";
 
 
+     // 获取当前客户的定制价格
 
 
+        $userFactoryMenuPrices = loadModel('user_factory_menu_price')->getUserFactoryPriceList($userid, $factory_id);
 
-      // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
+        $show_origin_price = loadModel('user_factory')->getByWhere([
+            'user_id' => $userid,
+            'factory_id' => $factory_id
+        ])['show_origin_price'];
+
+       // var_dump($userFactoryMenuPrices);exit;
+     //   var_dump('show_orginal_price:' . $show_origin_price);exit;
+
+        // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
         $goodList =$this->getListBySql($sql_sum_final);
       //  var_dump($sql_sum_final);exit;
         // get the temp carts record of current user of the business .
@@ -95,6 +105,9 @@ class mdl_restaurant_menu extends mdl_base
 
 
             //加载菜品规格
+            if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
+                $goodList[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
+            }
 
 
                 if ($goodList[$key]['menu_option'] > 0) {
