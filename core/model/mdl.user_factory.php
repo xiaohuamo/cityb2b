@@ -13,6 +13,18 @@ class mdl_user_factory extends mdl_base
 		 return 0; 
     }
 
+    public function getUserCodeandName($userId, $factoryId) {
+
+        $where =array(
+            'user_id' => $userId,
+            'factory_id' => $factoryId
+        );
+
+        $rec = $this->getByWhere($where);
+        return $rec;
+
+    }
+
    public function isUserAuthorisedToOperate($userId, $factoryId) {
 
        $where =array(

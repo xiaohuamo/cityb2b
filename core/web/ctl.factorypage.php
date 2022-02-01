@@ -247,7 +247,7 @@ class ctl_factorypage extends cmsPage
 
             $this->setData($restaurant_coupon, 'coupon');
         } else {
-			var_dump('shopidis :' .$id. ' why here'.$restaurant_coupon['isApproved'].' '.$restaurant_coupon['status'].'id is '.$restaurant_coupon['id']);exit;
+			//var_dump('shopidis :' .$id. ' why here'.$restaurant_coupon['isApproved'].' '.$restaurant_coupon['status'].'id is '.$restaurant_coupon['id']);exit;
             $this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
             $this->sheader(null, 'current Business is not avaliable..');
         }

@@ -48,7 +48,7 @@
 	<add_new_customer>添加新客户</add_new_customer>
 	<customer_list>客户列表</customer_list>
 	<customer_list_recycle>隐藏客户</customer_list_recycle>
-	<customer_price_management>价格管理</customer_price_management>
+	<customer_price_management>折扣管理</customer_price_management>
 	<orderLists>订货列表</orderLists>
 	
 	<add_new_order>新增订单</add_new_order>

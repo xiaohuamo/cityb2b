@@ -76,7 +76,7 @@
 									<td>
 
 
-										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="width:150px;" name="business_discount_rate"
+										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="padding-right: 4px;width:50px;text-align:right;" name="business_discount_rate"
 											   value="<{if !$user.business_discount_rate}>0<{else}><{$user.business_discount_rate}><{/if}>">%
 										<span class='promote-ajax'></span>
 									
@@ -85,16 +85,18 @@
 									</td>
 									
 									<td>
-										<a href="<{$http_root_www}>restaurant/price_edit_parant_category">&nbsp;&nbsp;大类</a>
+										<a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>">
+										大类
+										</a>
 										
 									</td>
 									
 									<td>
-										<a href="<{$http_root_www}>restaurant/price_edit_sub_category">&nbsp;&nbsp;小类</a>
+										<a href="<{$http_root_www}>restaurant/discount_edit_sub_category?customer_id=<{$user.id}>">&nbsp;&nbsp;小类</a>
 									</td>
 									
 									<td>
-										<a href="<{$http_root_www}>restaurant/price_edit_product">&nbsp;&nbsp;产品及规格</a>
+										<a href="<{$http_root_www}>restaurant/customer_product_discount_edit?user_id=<{$user.id}>">&nbsp;&nbsp;产品及规格</a>
 									</td>
 									
 									
