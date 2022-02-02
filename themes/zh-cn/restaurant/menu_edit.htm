@@ -405,7 +405,6 @@
 									<th name="en_name1">英文单位</th>
 									<th name="en_name1">描述-英文</th>
 									<th >主分类</th>
-									<th >子分类</th>
 							
                                     <{if $menu_option_list}>
 										<th name="guigecat">菜品规格</th>
@@ -595,25 +594,29 @@
 										<td>
 											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
                                               <option value="0"  selected>选择分类</option>
-											  <{foreach from=$restaurant_category item=category}>
-													<option value="<{$category.id}>" <{if $category.id==$item.restaurant_category_id}> selected<{/if}>>
-                                                        <{if $category.category_cn_name}><{$category.category_cn_name}><{/if}>
-                                                        <{if $category.category_cn_name && $category.category_en_name}>|<{/if}>
-                                                        <{if $category.category_en_name}><{$category.category_en_name}><{/if}>
-													</option>
-                                                <{/foreach}>
-											</select>
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-										<td>
-											<select data-id='<{$item.id}>' id="sub_cate_id-<{$item.id}>" name="sub_cate_id">
-                                              <option value="0"  selected>选择子分类</option>
-											  <{foreach from=$subCategoryList item=category}>
-													<option value="<{$category.sub_cate_id}>" <{if $category.sub_cate_id==$item.sub_cate_id}> selected<{/if}>>
-                                                        <{if $category.sub_cate_cn_name}><{$category.sub_cate_cn_name}><{/if}>
-                                                        <{if $category.sub_cate_cn_name && $category.sub_cate_en_name}>|<{/if}>
-                                                        <{if $category.sub_cate_en_name}><{$category.sub_cate_en_name}><{/if}>
+											  <{foreach from=$catList item=category}>
+													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
+													value="<{$category.id}>" 
+													
+													<{if $category.id == $item.sub_category_id}>
+														selected 
+													  
+													<{else}>
+													  <{if $category.id == $item.restaurant_category_id and $item.sub_category_id==0}>
+													  	selected 
+													  <{/if}>
+													
+													
+													<{/if}>
+													
+													 >
+													
+													<{if $langStr == 'zh-cn'}>
+															<{$category.title_cn}>
+															
+														<{else}>
+															<{$category.title_en}>
+														<{/if}>
 													</option>
                                                 <{/foreach}>
 											</select>

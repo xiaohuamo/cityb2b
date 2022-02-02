@@ -3109,8 +3109,8 @@ function category_migration_action(){
 
 
 				//$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
-				$data_parent_cate_list = $mdl_restaurant_category->getCateList($customer_id);
-
+				$catList = $mdl_restaurant_category->getCateList($customer_id);
+				$this->setData($catList, 'catList');
 				//var_dump($subCategoryList);exit;
 
 				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
@@ -4187,7 +4187,30 @@ function category_migration_action(){
 			if(isset($menu_en_desc))$data['menu_en_desc']=$menu_en_desc;
 
 			$restaurant_category_id = post('restaurant_category_id');
-			if(isset($restaurant_category_id))$data['restaurant_category_id']=$restaurant_category_id;
+			if(isset($restaurant_category_id)) {
+				//$mdl_restaurant_menu
+
+				$catRec =$this->loadModel('restaurant_category')->get($restaurant_category_id);
+				if($catRec['parent_category_id']>0) {
+					// its mean current user choose a sub category
+					// then update the product by both parent_category and sub category
+					$data['restaurant_category_id']=$catRec['parent_category_id'];
+					$data['sub_category_id']=$restaurant_category_id;
+
+				}else{
+					// user choose a parent category from category list
+					$data['restaurant_category_id']=$restaurant_category_id;
+					$data['sub_category_id']=0;
+				}
+
+
+
+
+			}
+
+
+
+
 
 			$sidedish_category = post('sidedish_category');
 			if(isset($sidedish_category))$data['sidedish_category']=$sidedish_category;
