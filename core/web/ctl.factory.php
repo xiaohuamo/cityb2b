@@ -477,7 +477,7 @@ class ctl_factory extends cmsPage
 		
 		$sql2 ="select concat(factory_user.nickname,'(',user.name ,')') as cust_name  from cc_user user ,cc_user_factory factory_user where user.id=factory_user.user_id and user.id=".$data['userId'];
          $data2 = $mdl_wj_customer_coupon->getListBySql($sql2);    
-	   $data['money'] = $data1[0]['ori_sum'];
+	      $data['money'] = $data1[0]['ori_sum'];
         $data['ajust_sum'] = $data1[0]['ajust_sum'];
 		 $data['cust_name'] = $data2[0]['cust_name'];
 		 
@@ -503,7 +503,7 @@ class ctl_factory extends cmsPage
         $this->setData($moneyDetail, 'moneyDetail');
 
         //订单详情
-        $items = $mdl_wj_customer_coupon->getList(null, ['order_id' => $orderId]);
+        $items = $mdl_wj_customer_coupon->getOrderItems($orderId);
 
         // 获取当前订单和当前客户的关系
         // 返回结果：

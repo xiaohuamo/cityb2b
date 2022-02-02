@@ -146,6 +146,14 @@ body{
 .col8D8D8D{
 	color: #8D8D8D;
 }
+
+.col9a9a9a{
+	color: #9a9a9a;
+}
+.linethrough {
+	text-decoration: line-through;
+}
+
 .colFD5001{
 	color:#FD5001 !important;
 }

@@ -319,12 +319,12 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
+								<th>编号</th>
 								<th>产品</th>
 								<th>规格</th>
 								<th>单位</th>
-								<th>价格</th>
-								<th>折扣</th>
-								<th>折扣后价格</th>
+								<th>原价</th>
+								<th>现价</th>
 								<th>数量</th>
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
@@ -337,20 +337,31 @@
 							<tbody>
                             <{foreach from=$items item=item name='dl'}>
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
-									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>"><{$item.bonus_title}></a></td>
+									<td><{$item.menu_id}></td>
+									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>">
+									
+									 <{if $langStr=='zh-cn'}>
+									   <{if $item.menu_cn_name}><{$item.menu_en_name}>&nbsp;<{$item.menu_cn_name}><{else}><{$item.bonus_title}> <{/if}>
+									<{else}>
+										<{if $item.menu_en_name}><{$item.menu_en_name}><{else}><{$item.bonus_title}> <{/if}>
+									
+									<{/if}>
+									
+									
+									
+									</a></td>
 
-									<td><{$item.guige_des}></td>
+									<td><{if $item.guige_des}><{$item.guige1_id}>:&nbsp;<{$item.guige_des}><{/if}></td>
 
 									<td><{$item.unit}></td>
 									<td>
+                                        <{$item.voucher_original_amount}>
+									</td>
+									<td>
                                         <{$item.voucher_deal_amount}>
 									</td>
-									<td>
-										6%
-									</td>
-									<td>
-										<{number_format($item.voucher_deal_amount*0.94,2)}>
-									</td>
+									
+								
 
 									<td>
                                         <{if $days>21}>

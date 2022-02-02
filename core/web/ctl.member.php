@@ -2548,7 +2548,7 @@ class ctl_member extends cmsPage
         $data['is_visible_for_business'] = $data1['is_visible_for_business'];
         $data['bonus_type'] = $data1['bonus_type'];
 
-        $items = $mdl_wj_customer_coupon->getList(null,array('order_id'=>$id));
+        $items = $mdl_wj_customer_coupon->getOrderItems($id);
         $this->setData($items,'items');
 
         $mdl_coupons = $this->loadModel('coupons');

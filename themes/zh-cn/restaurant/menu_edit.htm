@@ -405,6 +405,7 @@
 									<th name="en_name1">英文单位</th>
 									<th name="en_name1">描述-英文</th>
 									<th >主分类</th>
+									<th >子分类</th>
 							
                                     <{if $menu_option_list}>
 										<th name="guigecat">菜品规格</th>
@@ -419,6 +420,7 @@
 									<th>原价</th>
 									<th name="cn_name1">中文单位</th>
 									<th name="cn_name1">描述</th>
+									<th >最低价</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -604,6 +606,20 @@
 											<span class='promote-ajax'></span>
 											<br>
 										</td>
+										<td>
+											<select data-id='<{$item.id}>' id="sub_cate_id-<{$item.id}>" name="sub_cate_id">
+                                              <option value="0"  selected>选择子分类</option>
+											  <{foreach from=$subCategoryList item=category}>
+													<option value="<{$category.sub_cate_id}>" <{if $category.sub_cate_id==$item.sub_cate_id}> selected<{/if}>>
+                                                        <{if $category.sub_cate_cn_name}><{$category.sub_cate_cn_name}><{/if}>
+                                                        <{if $category.sub_cate_cn_name && $category.sub_cate_en_name}>|<{/if}>
+                                                        <{if $category.sub_cate_en_name}><{$category.sub_cate_en_name}><{/if}>
+													</option>
+                                                <{/foreach}>
+											</select>
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
                                         <{if $menu_option_list}>
 											<td name="guigecat" style="width:150px;">
 												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
@@ -699,6 +715,11 @@
 											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" style="width:120px;" name="menu_desc"><{$item.menu_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
+										 <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="lowest_price-<{$item.id}>" style="width:50px;" name="lowest_price"
+												   value="<{$item.lowest_price}>" >
+											<span class='promote-ajax'></span>
+										</td>
 									</tr>
                                 <{/foreach}>
 								</tbody>
@@ -716,7 +737,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
+    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";

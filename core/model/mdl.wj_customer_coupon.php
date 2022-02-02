@@ -124,7 +124,7 @@ class mdl_wj_customer_coupon extends mdl_base
 			$where['business_id'] = $business_id;
 		}
 		
-		$sql =" select c.id,m.menu_en_name,c.bonus_title,c.bonus_type,c.bonus_type_name,c.menu_id,c.customer_buying_quantity,c.guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
+		$sql =" select c.id,m.menu_en_name,c.bonus_title,c.bonus_type,c.bonus_type_name,c.voucher_original_amount,c.menu_id,c.customer_buying_quantity,c.guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
 		$sql.= " on c.restaurant_menu_id =m.id  where c.order_id =$order_id and ((c.business_id =$business_id ) or c.business_id in (select suppliers_id from cc_freshfood_disp_centre_suppliers where c.business_id =$business_id) or  c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$business_id) or  business_id in (select customer_id from cc_factory_2blist where factroy_id =$business_id) )";
 		
 		
@@ -162,6 +162,17 @@ class mdl_wj_customer_coupon extends mdl_base
 		return $containsItem;
 
 	}
+
+    function getOrderItems($orderId) {
+
+        $sql ="select a.*,m.menu_en_name,m.menu_cn_name, if(length(m.unit_en)>0,m.unit_en,m.unit) as unit  from cc_wj_customer_coupon a 
+                left join cc_restaurant_menu m on a.restaurant_menu_id = m.id 
+                where a.order_id =$orderId";
+        $list = $this->getListBySql($sql);
+    //   var_dump($list);exit;
+
+      return $list;
+    }
 	
 }
 

@@ -745,9 +745,9 @@
 						
 						</h4>
 
-
+					<span>Code:<{$item.menu_code_id}>&nbsp;</span>
                       
-                        <span><{if $item.guige_des}><{$lang->specification}>:<{$item.guige_des}><{/if}></span>
+                        <span><{if $item.guige_des}><{$lang->specification}>:<{$item.guige_ids}>&nbsp;<{$item.guige_des}><{/if}></span>
                             <input  name="guige_des[]" type="hidden"  value="<{$item.guige_des}>"  />
                             <input  name="guige_ids[]" type="hidden"  value="<{$item.guige_ids}>"  />
                      
@@ -803,6 +803,8 @@
                 <input type="hidden" name="coupon_names[]" value="<{$item.coupon_name}>" />
                 <input type="hidden" name="single_amount[]"  value="<{$item.single_amount}>"/>
                 <input type="hidden" name="original_amount[]"  value="<{$item.original_amount}>"/>
+				
+				
                 <input type="hidden" name="commission_free[]"  value="<{$item.commission_free && $item.onSpecial}>"/>
 
                 <input type="hidden" name="menu_id[]" value="<{$item.menu_id}>" />

@@ -2290,8 +2290,8 @@ class ctl_factorypage extends cmsPage
             // $sql = "SELECT b.restaurant_category_id,category_sort_id,category_cn_name,category_en_name,a.*,b.menu_pic as pic,d.pic as coupon_pic ,e.displayName,e.businessName FROM `cc_wj_user_temp_carts` a left join `cc_restaurant_menu` b on b.id=a.`menu_id` left join `cc_restaurant_category` c on c.id=b.restaurant_category_id left join cc_coupons d on d.id=a.main_coupon_id   left join cc_user e on e.id=a.businessUserId where a.userId=".$userId."   and businessUserId =$id order by businessUserId,category_sort_id,b.menu_id";
             // $cartItems = $mdl_wj_user_temp_carts->getListBySql($sql);
             $uploadPath =UPLOAD_PATH;
-            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name_en as title ,a.coupon_name as title_cn,a.quantity as num,a.single_amount as price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic,
-            ifnull(b.unit,b.unit_en) as unit, ifnull(b.unit_en,b.unit) as unit_en 
+            $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name_en as title ,a.coupon_name as title_cn,a.quantity as num,a.single_amount as price,a.original_amount as old_price,a.guige_des,a.guige_ids,a.menu_id as id,a.coupon_name_en,a.onSpecial,if(length(b.menu_pic)>0,concat('$uploadPath',b.menu_pic),'') as menu_pic,
+            ifnull(b.unit,b.unit_en) as unit, ifnull(b.unit_en,b.unit) as unit_en ,b.menu_id as menu_code_id
             from cc_wj_user_temp_carts a 
                 left join cc_restaurant_menu b on a.menu_id =b.id 
             where a.userId=$userId and a.businessUserId=$id ";

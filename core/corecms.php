@@ -562,7 +562,7 @@ class corecms
   	
   	$cn_action_name = $mdl_coupons->actionlist_info('c01');
 	$en_action_name =$cn_action_name;
-  	
+
 
   	$redeem_code =$this->createRnd(20);
   	$couponCreator = $mdl_user->getUserById($arr_post['business_userId']);
@@ -619,7 +619,7 @@ class corecms
 			$data['redeem_code'] =$redeem_code ;
 			$data['order_id']=$orderId;
 			// 插入订单的规格细节参数、当为门票的时候，插入的是门票的id号码
-			$data['voucher_original_amount']=$arr_post['sub_money'][$key];
+			$data['voucher_original_amount']=$arr_post['original_amount'][$key];
 			$data['voucher_deal_amount']=$arr_post['sub_money'][$key];
 			
 			
@@ -629,6 +629,7 @@ class corecms
 				  $data['related_id']=$arr_post['seat_id'][$key];
 	  		}else{
 				  $data['guige_des']=$arr_post['guige_des'][$key];
+                  $data['guige1_id']=$arr_post['guige_ids'][$key];
   			}
 		
 			//新增子卡ID
@@ -692,38 +693,7 @@ class corecms
   			$mdl_wj_customer_coupon->insert( $data );
 			
 			
-			// 如果该选美是用户购买佳丽带投票 7306 则要更新 cc_voting _item的count页面
-			
-			if($arr_post['ids'][$key]==7306) {
-				
-				//计算应该添加的选票数量
-				
-				$days = (int)((1563929999-time())/(60*60*24))+1;
-				$vote_id =$arr_post['business_staff_id'];
-				
-				$mdl_voteitem = $this->loadModel('voting_item') ;
-				$vote_arr=array(
-				 'vote_count = vote_count + '.$days
-				);
-			   // $mdl_voteitem->update($vote_arr,$vote_id);
-			    $sql_update_voting ="update cc_voting_item set vote_count = vote_count +".$days . " where id=".$vote_id ;
-				$mdl_voteitem->getListBySql($sql_update_voting );
-				//$mdl_voteitem->commit();
-				//var_dump($sql_update_voting);exit;
-				// 插入一条记录记录 某个用户 为某个佳丽 在什么时间 投了一组package 票,总共多少票
-				$data_miss_vote =array(
-				  'vote_id'=>$vote_id,
-				  'userId'=>$arr_post['userId'],
-				  'createTime'=>time(),
-				  'vote_count'=>$days,
-				  'message' =>$arr_post['message_to_business'],
-				  'ipaddress' =>ip(),
-				  'orderId'=>$orderId
-				);
-				$mdl_vote_miss_quick_vote=$this->loadModel('vote_miss_quick_vote');
-				$mdl_vote_miss_quick_vote->insert($data_miss_vote);
-				
-			}
+
 	  
 	  
 	  
@@ -731,48 +701,7 @@ class corecms
 			//  1 : 添加一个流水记录  id , 时间, ip ,userid ,miss_id,user_moneypay , 佳丽voucher_sum , 并更新人气汇总. voting_item
 			
 			
-			if($arr_post['ids'][$key]>=7310 and $arr_post['ids'][$key]<=7313) {
-				
-				//计算应该添加的选票数量
-				if($arr_post['ids'][$key]==7310) {
-					$extra_vote_count =4200;
-					$user_spend_money=168;
-				}else if ($arr_post['ids'][$key]==7311){
-					$extra_vote_count =450;
-					$user_spend_money=18;
-				}else if ($arr_post['ids'][$key]==7312){
-					$extra_vote_count =1700;
-					$user_spend_money=68;
-					
-				}else if ($arr_post['ids'][$key]==7313){
-					$extra_vote_count =22200;
-					$user_spend_money=888;
-				}else{
-					
-				}
-				$vote_id =$arr_post['business_staff_id'];
-				$mdl_voteitem = $this->loadModel('voting_item') ;
-				
-			   // $mdl_voteitem->update($vote_arr,$vote_id);
-			    $sql_update_voting ="update cc_voting_item set vote_count = vote_count +".$extra_vote_count . " where id=".$vote_id ;
-				$mdl_voteitem->getListBySql($sql_update_voting );
-				//$mdl_voteitem->commit();
-				//var_dump($sql_update_voting);exit;
-				// 插入一条记录记录 某个用户 为某个佳丽 在什么时间 买了什么礼物,投了一组package 票,总共多少票
-				$data_miss_gift =array(
-				  'vote_id'=>$vote_id,
-				  'userId'=>$arr_post['userId'],
-				  'createTime'=>time(),
-				  'user_spend_money'=>$user_spend_money,
-				  'vote_count'=>$extra_vote_count,
-				  'message' =>$arr_post['message_to_business'],
-				  'ipaddress' =>ip(),
-				  'orderId'=>$orderId
-				);
-				$mdl_vote_miss_gift_vote=$this->loadModel('vote_miss_gift_vote');
-				$mdl_vote_miss_gift_vote->insert($data_miss_gift);
-				
-			}
+
 			
 			
 	  

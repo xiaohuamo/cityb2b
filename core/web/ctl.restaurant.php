@@ -3106,9 +3106,14 @@ function category_migration_action(){
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 				//var_dump($sql_Parent_cate_list);exit;
 
+
+
+				//$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
+				$data_parent_cate_list = $mdl_restaurant_category->getCateList($customer_id);
+
+				//var_dump($subCategoryList);exit;
+
 				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
-
-
 				$sk = trim(get2('sk'));
 
 				$allOrspecial = trim(get2('allOrspecial'));
@@ -3994,6 +3999,11 @@ function category_migration_action(){
 
 			$price = post('price');
 			if($price)$data['price']=$price;
+
+
+			$lowest_price = post('lowest_price');
+			if($lowest_price)$data['lowest_price']=$lowest_price;
+
 			
 			$original_price = post('original_price');
 			if($original_price)$data['original_price']=$original_price;

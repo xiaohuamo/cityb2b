@@ -571,12 +571,14 @@ class OrderInvoice
   
     
         $this->pdf->ln(5);
-        $this->pdf->row("Item Code ", 0.10, 0, "L", 6);
-        $this->pdf->row('Description', 0.50, 0, "L", 6);
-        $this->pdf->row('Qty', 0.10, 0, "L", 6);
+        $this->pdf->row("Code ", 0.10, 0, "L", 6);
+        $this->pdf->row('Description', 0.40, 0, "L", 6);
+        $this->pdf->row('Qty', 0.05, 0, "L", 6);
         $this->pdf->row('Price', 0.10, 0, "L", 6);
+        $this->pdf->row('discount', 0.10, 0, "L", 6);
+        $this->pdf->row('new Price', 0.10, 0, "L", 6);
         $this->pdf->row('Amount', 0.10, 0, "L", 6);
-        $this->pdf->row('GST%', 0.10, 0, "L", 6);
+        $this->pdf->row('GST%', 0.05, 0, "L", 6);
         $this->pdf->ln(6);
         $this->pdf->row("", 1, 1, 'C', 0.1);
 
@@ -590,18 +592,80 @@ class OrderInvoice
         foreach ($this->items as $item) {
             $itemAmount = $this->calculateAmountWithGst($item['voucher_deal_amount'], $item['customer_buying_quantity'], $item['include_gst']);
             $this->pdf->ln();
-            $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+
 			
 			if ($item['menu_en_name']){
 				$item_name =$item['menu_en_name'];
 			} else{
 				$item_name =$item['bonus_title'];
 			}
-            $this->pdf->row($item_name, 0.50, 0, "L", 6);
-            $this->pdf->row($item['customer_buying_quantity'], 0.10, 0, "L", 6);
-            $this->pdf->row($item['voucher_deal_amount'], 0.10, 0, "L", 6);
-            $this->pdf->row(sprintf("%1\$.2f", $itemAmount['total_with_gst']), 0.10, 0, "L", 6);
-            $this->pdf->row($itemAmount['gst%'], 0.10, 0, "L", 6);
+           if($item['guige_des']) {
+               $item_name .=' Spec:'.$item['guige1_id'].' '.$item['guige_des'];
+
+           }
+
+            $discount =number_format($item['voucher_original_amount']-$item['voucher_deal_amount'],2);
+
+
+         //   $this->pdf->row1($item_name, 0.40, 0, "L", 6);
+
+
+            $title1 =$item_name;
+            $title_length=strlen($title1);
+            $count =ceil($title_length/45);
+
+            if($count ==1 ){
+                $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+                $title = mb_substr($title1, 0, 45);
+                $this->pdf->row($title, 0.40, 0, "L", 6);
+                $this->pdf->row($item['customer_buying_quantity'], 0.05, 0, "L", 6);
+                $this->pdf->row($item['voucher_original_amount'], 0.10, 0, "L", 6);
+                $this->pdf->row($discount, 0.10, 0, "L", 6);
+                $this->pdf->row($item['voucher_deal_amount'], 0.10, 0, "L", 6);
+                $this->pdf->row(sprintf("%1\$.2f", $itemAmount['total_with_gst']), 0.10, 0, "L", 6);
+                $this->pdf->row($itemAmount['gst%'], 0.05, 0, "L", 6);
+
+
+             }else{
+                   for($i=0;$i<$count;$i++) {
+                       if ($count==(1+$i)) {
+                               $title = substr($title1, $i*45, 45);
+                               $this->pdf->row('', 0.1, 0, "L", 6);
+                               $this->pdf->row($title, 0.40, 0, 'L', 6);
+
+                        }else{
+                           if($i==0) {
+                               $title = substr($title1, $i*45, 45);
+                               $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+                               $this->pdf->row($title, 0.4, 0, 'L', 6);
+                               $this->pdf->row($item['customer_buying_quantity'], 0.05, 0, "L", 6);
+                               $this->pdf->row($item['voucher_original_amount'], 0.10, 0, "L", 6);
+                               $this->pdf->row($discount, 0.10, 0, "L", 6);
+                               $this->pdf->row($item['voucher_deal_amount'], 0.10, 0, "L", 6);
+                               $this->pdf->row(sprintf("%1\$.2f", $itemAmount['total_with_gst']), 0.10, 0, "L", 6);
+                               $this->pdf->row($itemAmount['gst%'], 0.05, 0, "L", 6);
+                               $this->pdf->ln(5);
+
+                           }else{
+                               $title = substr($title1, $i*45, 45);
+                               $this->pdf->row('', 0.10, 0, "L", 6);
+                               $this->pdf->row($title, 0.4, 0, 'L', 6);
+                               $this->pdf->row('', 0.50, 0, "L", 6);
+
+                               $this->pdf->ln(5);
+
+                           }
+
+
+                          }
+
+
+                     }
+            }
+
+
+
+
             $totalAmount['total_with_gst'] += $itemAmount['total_with_gst'];
             $totalAmount['total_no_gst'] += $itemAmount['total_no_gst'];
             $totalAmount['total_gst'] += $itemAmount['total_gst'];

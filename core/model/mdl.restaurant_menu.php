@@ -22,11 +22,24 @@ class mdl_restaurant_menu extends mdl_base
     public function getGoodList($factory_id,$userid=null,$uploadpath) {
 
 
+        $discount_rates =0.00;
+        if($userid) {
+            $where =array(
+                'user_id'=>$userid,
+                'factory_id'=>$factory_id
+            );
+            $user_info =loadModel('user_factory')->getByWhere($where);
+            $discount_rates =$user_info['business_discount_rate'];
+        }
+
+
+
+
        // get the good list of business .
        //get the main table good list
         $sql_main_table =" select m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name, 
         0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn,
-        m.price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
+        ROUND(m.price,2) as old_price,ROUND((m.price * (100-$discount_rates)/100),2) as price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
         m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
         if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
         from cc_restaurant_menu m 
@@ -37,12 +50,12 @@ class mdl_restaurant_menu extends mdl_base
 
        $sql_sub_cate_good_list =" select sub.id,sub.restaurant_id,sub.parent_category_id,f.category_cn_name as parent_cat_cn_name,f.category_en_name as parent_cate_en_name, 
         sub.sub_category_id,sub.sub_cat_cn_name,sub.sub_cate_en_name,sub.menu_id,sub.menu_cn_name as title_cn,
-        sub.price,if(length(sub.menu_pic)>0,concat('$uploadpath',sub.menu_pic),'')  as menu_pic ,
+         ROUND(sub.price,2) as old_price,ROUND((sub.price * (100-$discount_rates)/100),2) as price,if(length(sub.menu_pic)>0,concat('$uploadpath',sub.menu_pic),'')  as menu_pic ,
         sub.menu_desc,sub.menu_en_desc,sub.menu_option,if(length(sub.menu_en_name)>0,sub.menu_en_name,sub.menu_cn_name) as title ,
         if(length(sub.unit_en)>0,sub.unit_en,sub.unit)as unit_en,if(length(sub.unit)>0,sub.unit,sub.unit_en) as unit,sub.onSpecial,0 as status,if(sub.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
        from (select  e.*,b.restaurant_menu_id,b.category_id as sub_category_id ,d.parent_category_id,d.category_cn_name as sub_cat_cn_name,d.category_en_name as sub_cate_en_name
         from cc_restaurant_menu_category b  left join cc_restaurant_category d   on  d.id=b.category_id 
-         left join cc_restaurant_menu e on e.id=b.restaurant_menu_id where e.restaurant_id =$factory_id and  (d.parent_category_id is not null or d.parent_category_id !=0)) as sub
+         left join cc_restaurant_menu e on e.id=b.restaurant_menu_id where e.restaurant_id =$factory_id and  (d.parent_category_id is not null and d.parent_category_id !=0)) as sub
          left join   cc_restaurant_category f  on f.id = sub.parent_category_id ";
 
 
@@ -50,7 +63,7 @@ class mdl_restaurant_menu extends mdl_base
        $sql_parent_cate_good_list  ="
          select   b.restaurant_menu_id as id,m.restaurant_id,b.category_id as parent_category_id,d.category_cn_name as parent_cat_cn_name,d.category_en_name as parent_cate_en_name,
                 0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cate_en_name,m.menu_id,m.menu_cn_name as title_cn,
-        m.price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
+         ROUND(m.price,2) as old_price,ROUND((m.price * (100-$discount_rates)/100),2) as price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
         m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
         if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
               
@@ -69,7 +82,10 @@ class mdl_restaurant_menu extends mdl_base
         $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id  order by parent_category_id,sub_category_id ";
 
 
+      //  这里接下来要做的是，找大类发现依次换，然后找小类，发现后依次换，最后找产品，发现后依次换，再最后，找最低价，发现后依次换，即可。
      // 获取当前客户的定制价格
+
+        //获取大类的折扣 ,
 
 
         $userFactoryMenuPrices = loadModel('user_factory_menu_price')->getUserFactoryPriceList($userid, $factory_id);
@@ -110,14 +126,22 @@ class mdl_restaurant_menu extends mdl_base
             }
 
 
-                if ($goodList[$key]['menu_option'] > 0) {
-                    $goodList[$key]['menu_option_list'] = $mdl_menu_option->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['menu_option'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
-                   // var_dump($goodList[$key]['menu_option_list']);exit;
-                    $goodList[$key]['guige_des1'] =$mdl_restaurant_menu_option_category->get($value['menu_option']);
+            if ($goodList[$key]['menu_option'] > 0) {
+
+                $guigeList = $mdl_menu_option->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['menu_option'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+                foreach ($guigeList as $key10=>$value10) {
+                    $guigeList[$key10]['old_price']=$value10['price'];
+                    $guigeList[$key10]['price']=number_format($value10['price']*(100-$discount_rates)/100,2);
+                }
+
+                $goodList[$key]['menu_option_list'] = $guigeList;
+
+                // var_dump($goodList[$key]['menu_option_list']);exit;
+                $goodList[$key]['guige_des1'] =$mdl_restaurant_menu_option_category->get($value['menu_option']);
 
 
 
-              }
+          }
 
         }
 

@@ -179,20 +179,29 @@
 							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
 							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
 							<div   class="goodInfo2_">
-								<div >{{item2.id}}{{item2.title}}</div><div class ="f28" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
-								<div class="flexBox1 " >{{item2.unit_en}} </div>
+								<div >{{item2.title}}</div><div class ="f28 pa5-0" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
+								<div class="flexBox1 pa5-0 " >Code:{{item2.menu_id}}&nbsp;&nbsp;{{item2.unit_en}} </div>
 								<div class="flexBox1 price" v-if="item2.hasGG==0">
-									<span class="colFD5001">${{item2.price}}</span>
+									<span><span class="colFD5001">${{item2.price}}</span> &nbsp;&nbsp;<span class="col9a9a9a linethrough f28 pa" v-if="item2.price != item2.old_price">${{item2.old_price}}</span></span>
 									<div class="flexBox2">
 										<div class="numreduce" @click.stop="numreduce(index2,'g',item2)"></div>
 										<input type="number" v-model="item2.num" class="numInput"  @focus="focus($event,index2,'g')"  @change="Enter(item2.num,index2,item2)" />
 										<div class="numadd" @click.stop="numadd(index2,'g',item2)"></div>
 									</div>
+								
+							
 								</div>
 								<div class="flexBox1 price" v-else>
-
-									<span class="colFD5001"  v-if="isLanguageEn">From &nbsp;${{GetGuigeMinPrice(item2)}}</span>
-									<span class="colFD5001"  v-else>从&nbsp;${{GetGuigeMinPrice(item2)}}&nbsp;起</span>
+                                   <span  v-if="isLanguageEn">
+								   
+								   <span class="colFD5001" >From &nbsp;${{GetGuigeMinPrice(item2)}}</span>
+								   <span  class="col9a9a9a linethrough f28 pa"  v-if ="GetGuigeMinPrice(item2) != GetGuigeOldMinPrice(item2)" >${{GetGuigeOldMinPrice(item2)}}</span>
+								 </span> 
+									<span  v-else>
+									   <span class="colFD5001" >从&nbsp;${{GetGuigeMinPrice(item2)}}</span>
+									   <span class="col9a9a9a linethrough f28 pa"  v-if ="GetGuigeMinPrice(item2) != GetGuigeOldMinPrice(item2)">&nbsp;${{GetGuigeOldMinPrice(item2)}}&nbsp;</span>
+									    <span class="colFD5001" >起</span>
+									</span>
 
 									<div class="commonBtn" @click.stop="Specifications(item2)" v-if="isLanguageEn">
 										Choose Spec
@@ -245,8 +254,12 @@
 							<div class="bold">{{guige1Info[1]}}</div>
 							<div class="pa5-0">{{guige1Info[5]}}</div>
 							<div class="flexBox1 price">
-
-								<span class="colFD5001" v-if="{selectedGuige1Item}">${{selectedGuige1Item['price']}}</span>
+                                <span>
+								   <span class="colFD5001" v-if="{selectedGuige1Item}">${{selectedGuige1Item['price']}}</span>
+								 <span  class="col9a9a9a linethrough f28 pa" v-if="{selectedGuige1Item} &&  selectedGuige1Item['price'] != selectedGuige1Item['old_price']">${{selectedGuige1Item['old_price']}}</span>
+								</span>
+								
+								
 								<span class="colFD5001" v-else >$-</span>
 
 
@@ -300,14 +313,23 @@
 							<div class="goodInfo2_">
 								<div v-if="isLanguageEn">{{item2.title}}</div>
 								<div v-else>{{item2.title}} {{item2.title_cn}} </div>
+								<div >Code：{{item2.menu_code_id}}</div>
 
-								<div v-if="item2.guige_ids">{{item2.guige_des}}</div>
+								<div v-if="item2.guige_ids >0 ">
+									<span v-if="isLanguageEn">Spec: {{item2.guige_des}}</span>
+									
+									<span v-else>规格: {{item2.guige_des}}</span>
+								
+								</div>
 
-								<div class="pa5-0" v-if="isLanguageEn">{{item2.unit_en}}</div>
-								<div class="pa5-0" v-else>		{{item2.unit}}		</div>
+								
 
 								<div class="flexBox1 price">
-									<span class="colFD5001">${{item2.price}}</span>
+									<span >
+										<span class="colFD5001">${{item2.price}}&nbsp;</span>
+										<span v-if="isLanguageEn">/&nbsp;{{item2.unit_en}} </span><span v-else>/{{item2.unit}} </span>
+									
+									</span>
 									<div class="flexBox2">
 										<div class="numreduce" @click.stop="numreduceCart(index2,'c')"></div>
 										<input type="number" v-model="item2.num" class="numInput"  @focus="focus($event,index2,'c')" @click.stop="EnterCart(item2.num,index2)" @change.stop="EnterCart(item2.num,index2)"/>
@@ -757,7 +779,7 @@
 				//根据当前语言环境改变pop menu 的关于语言的提示；
 				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
 
-				console.log('important !current language is :' + this.isLanguageEn);
+				//console.log('important !current language is :' + this.isLanguageEn);
 				this.choseBigClassify(0,0); //默认显示第一个大分类的小分类
 				//console.log('jere' + _self.classifBigyList);
 				//this.classifyList2 =_self.classifyList2;
@@ -838,7 +860,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					   console.log(self.goodsList2);
+					  // console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -860,11 +882,11 @@
 					var timer = setInterval(function() {
 
 						if(self.isUpdatedCart ==1){
-							console.log('before process' + self.goodsList);
+							//console.log('before process' + self.goodsList);
 							self.addDataToTable(self.goodsList);
 							self.isUpdatedCart =0;
 							//调用临时购物车表同步数据程序；
-							console.log('start to update temp table!')
+							//console.log('start to update temp table!')
 						}
 					}, 500);
 
@@ -879,7 +901,7 @@
 
 					var params = new URLSearchParams();
 				
-				   	console.log(JSON.stringify(itemData));
+				   //	console.log(JSON.stringify(itemData));
 					//   alert('here');
 					params.append('itemlist', JSON.stringify(itemData));
 					params.append('businessId', <{$businessUserId}>);
@@ -887,7 +909,7 @@
 					axios.post('<{$http_root_www}>factorypage/add_items_temp_cart_table',params)
 
 						 .then(function(res) {
-							console.log(res);
+						//	console.log(res);
 						})
 						.catch(function(err) {
 							console.log(err);
@@ -936,9 +958,9 @@
 					setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
 
 
-					console.log('index is' + index);
-					console.log('the setting cookie index is :' + getCookie('deliveryDateIndex'));
-					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					//console.log('index is' + index);
+					//console.log('the setting cookie index is :' + getCookie('deliveryDateIndex'));
+					//console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
 
 				},
 				// 设置默认配送日期
@@ -951,7 +973,7 @@
 						this.selectDateIndex =i;
 						//设置日期数组的对应index 为 isselected
 						this.businessDispSchedule[i].isselected=1;
-						console.log('find in cookie index is  :' +i);
+						//console.log('find in cookie index is  :' +i);
 						return 1;
 
 					}
@@ -964,7 +986,7 @@
 							setCookie("deliveryDateIndex",i,1);
 
 
-							console.log('cam not find coolie,generate by default' + getCookie('deliveryDateIndex'));
+							//console.log('cam not find coolie,generate by default' + getCookie('deliveryDateIndex'));
 
 
 						//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
@@ -1254,6 +1276,7 @@
 						title:goodItem.title,
 						title_cn:goodItem.title_cn,
 						price:goodItem.price,
+						old_price:goodItem.old_price,
 						num:goodItem.num,
 						isTouch:false,   // 是否显示删除按钮
 						hasGG:false,
@@ -1263,10 +1286,11 @@
 						guige_ids:0,
 						guige_des:'',
 						unit:goodItem.unit,
-						unit_en:goodItem.unit_en
+						unit_en:goodItem.unit_en,
+						menu_code_id :goodItem.menu_id
 					}];					
 					this.goodsList.push(this.newitem[0]);
-
+                    
 
 				
 				},//添加一个有规格产品到购物车
@@ -1276,6 +1300,7 @@
 						title:goodItem.title,
 						title_cn:goodItem.title_cn,
 						price:this.selectedGuige1Item.price,
+						old_price:this.selectedGuige1Item.old_price,
 						num:this.num,
 						isTouch:false,   // 是否显示删除按钮
 						hasGG:true,
@@ -1285,7 +1310,8 @@
 						guige_ids:this.selectedGuige1Item.id,
 						guige_des:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name,
 						unit:goodItem.unit,
-						unit_en:goodItem.unit_en
+						unit_en:goodItem.unit_en,
+						menu_code_id :goodItem.menu_id
 
 					}];
 
@@ -1363,11 +1389,11 @@
 				  this.endX = e.changedTouches[0].clientX;
 				  // 左滑,计算滑动距离
 				  if (this.startX - this.endX > 30) {
-					   console.log('///////')
+					  // console.log('///////')
 					   this.goodsList[index2].isTouch=true
 					   
-					   console.log(this.goodsList[index2].isTouch)
-					   console.log(this.goodsList)
+					  // console.log(this.goodsList[index2].isTouch)
+					  // console.log(this.goodsList)
 					   
 				  }
 				  // 右滑,计算滑动距离
@@ -1449,6 +1475,25 @@
 					return min_price;
 
 				},
+				GetGuigeOldMinPrice:function(item){
+					let GuigeItemArr = item['menu_option_list'];
+					let arrlength =GuigeItemArr.length;
+					let min_price =0.00;
+					let new_price =0.00;
+					for (let i = 0; i < arrlength; i++) {
+						let new_price =GuigeItemArr[i].old_price;
+						if(i==0){
+							min_price =new_price;
+						}else{
+							if(new_price<min_price){
+								min_price =new_price;
+							}
+
+						}
+					}
+					return min_price;
+
+				},
 				Specifications:function(item){  // 点击规格
 					//获得 该项目的实际产品
 					this.guige1Info[0] =item['menu_pic'];
@@ -1458,6 +1503,8 @@
 					this.guige1Info[4] =item['guige_des1'];
 					this.guige1Info[5] =item['unit_en'];
 					this.guige1Info[6] =item['unit'];
+					this.guige1Info[7] =this.GetGuigeOldMinPrice(item);
+					
                     //赋值 规格列表
 					this.guige1List =item['menu_option_list'];
 

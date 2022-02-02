@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>订单明细</title>
+		<title>Order Details</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/placeOrder.css"/>
 		<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
@@ -13,15 +13,14 @@
 	</head>
 	<body class="bgF2F2F2">
 		<div id="success" v-cloak>
+		<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
 			<div class="head bgfff mb10">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				<div class="f38 col333 f500 bold center">订单明细</div>
+				<div class="f38 col333 f500 bold center"  v-if="isLanguageEn">Order Detials</div><div class="f38 col333 f500 bold center" v-else >订单明细</div>
 			</div><div style="height:3.5rem;"></div>
 			
 			<div class="infoBox">
-				<div class="infoTitle bold">
-					订单信息
-				</div>
+				<div class="infoTitle bold"  v-if="isLanguageEn">Order info	</div><div class="infoTitle bold" v-else>订单信息	</div>
 				<div class="pa15 f28 col888888">
 					<div class="flexBox1 pmb10">
 						<span><{$lang->order_id}></span>
@@ -32,11 +31,11 @@
 						<span class="col282828"> <{$data.order_name}></span>
 					</div>
 					<div class="flexBox1 pmb10">
-						<span>购买时间</span>
+						<span  v-if="isLanguageEn">Purchased time</span><span v-else>购买时间</span>
 						<span class="col282828"><{date('Y-m-d H:i:s', $data.createTime)}></span>
 					</div>
 					<div class="flexBox1 pmb10">
-						<span>订单状态</span>
+						<span  v-if="isLanguageEn">Status</span><span v-else>订单状态</span>
 						<div class="col282828">
 							
 							 <{if $data.coupon_status=='c01'}><span class="col00B063"><{$lang-><{$data.coupon_status}>}>&nbsp;/</span><{/if}>
@@ -140,16 +139,43 @@
 					<{$lang->products}>
 				</div>
 				<div class="pa15 f28 col888888 flexBox1">
-					<div style="    width: 150px;"><{$lang->products}></div>
-					<div><{$lang->specification}></div>
+					<div >Code</div>
+					<div style="width: 150px;"><{$lang->products}></div>
+					
 					<div><{$lang->quantity}></div>
 					<div><{$lang->price}></div>
 				</div>
 				
 				 <{foreach from=$items item=item name='dl'}>
-				<div class="flexBox1 pa0-15 pmb10">
-					<div style="max-width: 150px;"><{$item.bonus_title}></div>
-					<div><{$item.guige_des}></div>
+				<div class="flexBox1 pa0-15 pmb10 f28 ">
+					<div ><{$item.menu_id}></div>
+					
+					<div v-if="isLanguageEn">
+						<div style="width: 150px;">
+						<{if $item.menu_en_name}>
+							<{$item.menu_en_name}>&nbsp;<{if $item.guige_des}>spec:<{$item.guige_des}><{/if}>
+						<{else}>
+						
+							<{$item.bonus_title}>&nbsp;<{if $item.guige_des}>spec:<{$item.guige_des}><{/if}>
+						<{/if}>
+						
+						</div>
+					</div>
+					
+					<div v-else>
+						<div style="width: 150px;">
+						
+						 <{if $item.menu_cn_name}>
+							<{$item.menu_en_name}>&nbsp;<{$item.menu_cn_name}>&nbsp;<{if $item.guige_des}>spec:<{$item.guige_des}><{/if}>
+						 <{else}>
+							<{$item.bonus_title}>&nbsp;<{if $item.guige_des}>spec:<{$item.guige_des}><{/if}>
+						 <{/if}>
+						
+						</div>
+					</div>
+					
+					
+					
 					<div>X <{$item.customer_buying_quantity}></div>
 					<div>$<{$item.voucher_deal_amount}></div>
 				</div>
@@ -183,7 +209,7 @@
 					</div>
 					<div class="flexBox1 pmb10">
 						<span><{$lang->address}> </span>
-						<span class="col0B0B0B"> <{$data.address}></span>
+						<span class="col0B0B0B" style ="text-align: right;"> <{$data.address}></span>
 					</div>
 					<div class="flexBox1 pmb10">
 						<span><{$lang->mail}></span>
@@ -239,7 +265,7 @@
 					</div>
 					 <{/if}>
 					<div class="flexBox6 pmb10">
-						<span>商家客服微信</span>
+						<span  v-if="isLanguageEn">Customer Service wechat</span><span v-else>商家客服微信</span>
 						<img src="<{$SKIN_PATH}>images/ubonus_support.jpeg" class="wx"/>
 					</div>
 					
@@ -308,7 +334,14 @@
 		new Vue({
 			el:"#success",
 			data:{
-				
+				isLanguageEn:1, //语言环境
+			},
+			mounted:function(){
+
+			
+			   // 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+			    console.log(this.isLanguageEn);
 			},
 		    methods:{
 				returnPage:function(){

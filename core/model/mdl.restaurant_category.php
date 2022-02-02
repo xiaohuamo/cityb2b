@@ -32,6 +32,49 @@ class mdl_restaurant_category extends mdl_base
     }
 
 
+    public function getCateList($customer_id){
+
+         $sql ="select a.*,c.id as sub_cate_id,c.category_sort_id as sub_sort_id,c.category_cn_name as sub_cate_cn_name, c.category_en_name as sub_cate_en_name 
+            from (SELECT id as parent_cate_id, category_sort_id as parent_sort_id, category_cn_name as parent_cate_cn_name ,
+                         category_en_name as parent_cate_en_name 
+            FROM `cc_restaurant_category` 
+            WHERE restaurant_id =$customer_id and (parent_category_id is null or parent_category_id=0) and (length(category_cn_name)>0 or 
+            length(category_en_name)>0) and isdeleted =0 order by category_sort_id) a
+                left join cc_restaurant_category c on ( a.parent_cate_id = c.parent_category_id or a.parent_cate_id =c.id) 
+            where (length(c.category_cn_name)>0 or length(c.category_en_name)>0) order by parent_sort_id,sub_sort_id";
+         $list =$this->getListBySql($sql);
+
+        //var_dump($list); exit;
+
+        foreach ($list as $key=>$val) {
+
+
+
+        }
+
+
+         return $list;
+
+
+    }
+    public function getParentCateList($customer_id){
+
+        $sql ="SELECT id as parent_cate_id, category_sort_id as parent_sort_id, category_cn_name as parent_cate_cn_name ,
+                category_en_name as parent_cate_en_name FROM `cc_restaurant_category`
+                WHERE restaurant_id  =$customer_id  and (parent_category_id is null or parent_category_id=0)
+                and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  
+                order by category_sort_id";
+        $list =$this->getListBySql($sql);
+
+
+        return $list;
+
+
+    }
+
+
+
+
 }
 
 ?>

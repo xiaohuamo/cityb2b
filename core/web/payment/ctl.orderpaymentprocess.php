@@ -230,7 +230,7 @@ class ctl_orderpaymentprocess extends cmsPage
 			if (!DispCenter::isDeliverDateStillValid($dispCenterUserSelectedDeliveryDateTimestamp,$bid)) {
 				//修改方面还有问题。。。。。 还没有调通
 				$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间',$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
-		 		$this->form_response_msg($bid.' '.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
+		 		$this->form_response_msg($bid.' '.'Please change the delivery data or picking up data which  is expired !');
 			}
 		};
 
@@ -297,20 +297,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 	
 
-		if(post( 'payment' )=='hcash'){
-			// $hcashOrderId =post('hcashOrderId');
-			// $hcashOrderTag =post('hcashOrderTag');
-			$hcashRate =post('hcashRate');
-			$hcashAmount =post('hcashAmount');
-
-			if(!$hcashRate||!$hcashAmount){
-				$this->form_response_msg("Hcash 核心数据缺失");
-			}
-
-			// if(!$hcashOrderId||!$hcashOrderTag){
-			// 	$this->form_response_msg("Hcash 钱包转账信息缺失");
-			// }
-		}
+		
 
 
 		if(post( 'payment' )=='creditcard'){
