@@ -38,42 +38,20 @@ class mdl_restaurant_menu extends mdl_base
        // get the good list of business .
        //get the main table good list
         $sql_main_table =" select m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name, 
-        0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn,
+        m.sub_category_id as sub_category_id,c02.category_cn_name as sub_cat_cn_name,c02.category_en_name as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn,
         ROUND(m.price,2) as old_price,ROUND((m.price * (100-$discount_rates)/100),2) as price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
         m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
         if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
         from cc_restaurant_menu m 
         left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
+        left join cc_restaurant_category c02 on c02.id = m.sub_category_id
         where m.restaurant_id=$factory_id   and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
          ";
 
 
-       $sql_sub_cate_good_list =" select sub.id,sub.restaurant_id,sub.parent_category_id,f.category_cn_name as parent_cat_cn_name,f.category_en_name as parent_cate_en_name, 
-        sub.sub_category_id,sub.sub_cat_cn_name,sub.sub_cate_en_name,sub.menu_id,sub.menu_cn_name as title_cn,
-         ROUND(sub.price,2) as old_price,ROUND((sub.price * (100-$discount_rates)/100),2) as price,if(length(sub.menu_pic)>0,concat('$uploadpath',sub.menu_pic),'')  as menu_pic ,
-        sub.menu_desc,sub.menu_en_desc,sub.menu_option,if(length(sub.menu_en_name)>0,sub.menu_en_name,sub.menu_cn_name) as title ,
-        if(length(sub.unit_en)>0,sub.unit_en,sub.unit)as unit_en,if(length(sub.unit)>0,sub.unit,sub.unit_en) as unit,sub.onSpecial,0 as status,if(sub.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
-       from (select  e.*,b.restaurant_menu_id,b.category_id as sub_category_id ,d.parent_category_id,d.category_cn_name as sub_cat_cn_name,d.category_en_name as sub_cate_en_name
-        from cc_restaurant_menu_category b  left join cc_restaurant_category d   on  d.id=b.category_id 
-         left join cc_restaurant_menu e on e.id=b.restaurant_menu_id where e.restaurant_id =$factory_id and  (d.parent_category_id is not null and d.parent_category_id !=0)) as sub
-         left join   cc_restaurant_category f  on f.id = sub.parent_category_id ";
 
 
-       //获取自定义大类的产品列表明细
-       $sql_parent_cate_good_list  ="
-         select   b.restaurant_menu_id as id,m.restaurant_id,b.category_id as parent_category_id,d.category_cn_name as parent_cat_cn_name,d.category_en_name as parent_cate_en_name,
-                0 as sub_category_id,0 as sub_cat_cn_name,0 as sub_cate_en_name,m.menu_id,m.menu_cn_name as title_cn,
-         ROUND(m.price,2) as old_price,ROUND((m.price * (100-$discount_rates)/100),2) as price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
-        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
-        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
-              
-        from cc_restaurant_menu_category b  left join cc_restaurant_category d   on  d.id=b.category_id 
-         left join cc_restaurant_menu m on m.id=b.restaurant_menu_id where m.restaurant_id =$factory_id and  (d.parent_category_id is null or d.parent_category_id =0)
-           and (length(m.menu_cn_name)>0 or length(m.menu_en_name)>0)    
-       ";
-
-
-        $sql_sum = "select * from  (select * from  ($sql_parent_cate_good_list ) as a union select * from ($sql_sub_cate_good_list) as b union select * from ($sql_main_table) as c )  as  bb  ";
+        $sql_sum =  $sql_main_table ;
 
 
         $sql_bought ="select a.restaurant_menu_id  as id from cc_wj_customer_coupon a   where userId = $userid and business_id =$factory_id  group by a.menu_id  ";
