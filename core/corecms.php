@@ -1175,6 +1175,12 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			$logistic_suppliers_info=$mdl_order->gen_logistic_suppliers_info($orderId,$this->lang);
 			
 		}
+        $approve_user = $this->loadModel('user_factory')->isUserApproved($couponBuyer['id'],$arr_post['business_userId']);
+        if($approve_user) {
+            $statusOfOrder = 1;
+        }else{
+           $statusOfOrder =0;
+       }
 		
 	//var_dump($logistic_suppliers_info);exit;
 		$data_order = array(
@@ -1188,7 +1194,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			'promotion_total'             => $arr_post['promotion_total'],
 			'promotion_id'                => $arr_post['promotion_id'],
 			'payment'                     => $arr_post['payment'] ,
-			'status'                      => 0,
+			'status'                      => $statusOfOrder,
 			'createTime'                  => time(),
 			'createIp'                    => ip(),
 			'business_userId'             => $arr_post['business_userId'],
