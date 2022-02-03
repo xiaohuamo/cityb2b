@@ -37,48 +37,47 @@ class mdl_restaurant_menu extends mdl_base
 
        // get the good list of business .
        //get the main table good list
-        $sql_main_table =" select m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name, 
-        m.sub_category_id as sub_category_id,c02.category_cn_name as sub_cat_cn_name,c02.category_en_name as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn,
-        ROUND(m.price,2) as old_price,ROUND((m.price * (100-$discount_rates)/100),2) as price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'')  as menu_pic ,
-        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title ,
-        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
-        from cc_restaurant_menu m 
-        left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
-        left join cc_restaurant_category c02 on c02.id = m.sub_category_id
-        where m.restaurant_id=$factory_id   and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
-         ";
+
+        $sql_sum_final ="select main_table.*,ifnull(bought_table.id,0) as bought from (
+    
+                select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
+                       ifnull(sub_cate_discount.discount_rate,0) as sub_cate_discount_rate ,ifnull(parent_cate_discount.discount_rate,0) as parent_cate_discount_rate ,
+                       $discount_rates as customer_dicount_rate, m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_sort_id as parent_cat_sort_id ,
+                       c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name,c02.category_sort_id as sub_cate_sort_id ,
+                       c02.category_cn_name as sub_cat_cn_name,c02.category_en_name as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn, 
+                       ROUND(m.price,2) as old_price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'') as menu_pic ,
+                       m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title , 
+                       if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,
+                       m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
+                    from cc_restaurant_menu m
+                    left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
+                    left join cc_restaurant_category c02 on c02.id = m.sub_category_id 
+                    left join cc_user_factory_category_discount_rate parent_cate_discount on ( m.restaurant_category_id =parent_cate_discount.category_id  and parent_cate_discount.userId =$userid)
+                    left join cc_user_factory_category_discount_rate sub_cate_discount on ( m.sub_category_id =sub_cate_discount.category_id and sub_cate_discount.userId =$userid)
+                    left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
+                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
+                
+                
+                ) as main_table 
+    
+                left join (select a.restaurant_menu_id as id from cc_wj_customer_coupon a where userId = $userid and business_id =$factory_id group by a.menu_id ) as bought_table on main_table.id = bought_table.id order by parent_cat_sort_id,sub_cate_sort_id
+                       
+                       
+                   ";
 
 
 
 
-        $sql_sum =  $sql_main_table ;
 
 
-        $sql_bought ="select a.restaurant_menu_id  as id from cc_wj_customer_coupon a   where userId = $userid and business_id =$factory_id  group by a.menu_id  ";
-
-
-        $sql_sum_final = "select main_table.*,ifnull(bought_table.id,0) as bought  from ( $sql_sum) as main_table  left join ($sql_bought) as bought_table on  main_table.id = bought_table.id  order by parent_category_id,sub_category_id ";
-
-
-      //  这里接下来要做的是，找大类发现依次换，然后找小类，发现后依次换，最后找产品，发现后依次换，再最后，找最低价，发现后依次换，即可。
-     // 获取当前客户的定制价格
-
-        //获取大类的折扣 ,
-
-
-        $userFactoryMenuPrices = loadModel('user_factory_menu_price')->getUserFactoryPriceList($userid, $factory_id);
-
-        $show_origin_price = loadModel('user_factory')->getByWhere([
-            'user_id' => $userid,
-            'factory_id' => $factory_id
-        ])['show_origin_price'];
+     //   $userFactoryMenuPrices = loadModel('user_factory_menu_price')->getUserFactoryPriceList($userid, $factory_id);
 
        // var_dump($userFactoryMenuPrices);exit;
      //   var_dump('show_orginal_price:' . $show_origin_price);exit;
 
         // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
         $goodList =$this->getListBySql($sql_sum_final);
-      //  var_dump($sql_sum_final);exit;
+
         // get the temp carts record of current user of the business .
 
         $sql ="select a.id as idd,a.userId,a.businessUserId,a.coupon_name as title,a.quantity as num,a.guige_des,a.guige_ids,a.menu_id as id   from cc_wj_user_temp_carts a
@@ -99,9 +98,11 @@ class mdl_restaurant_menu extends mdl_base
 
 
             //加载菜品规格
-            if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
+       /*     if (array_key_exists($value['id'], $userFactoryMenuPrices)) {
                 $goodList[$key]['price'] = $userFactoryMenuPrices[$value['id']]['price'];
-            }
+            } */
+
+            $goodList[$key]['price']=$this->calculate_current_menu_price($value,$value['old_price']);
 
 
             if ($goodList[$key]['menu_option'] > 0) {
@@ -109,7 +110,7 @@ class mdl_restaurant_menu extends mdl_base
                 $guigeList = $mdl_menu_option->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['menu_option'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
                 foreach ($guigeList as $key10=>$value10) {
                     $guigeList[$key10]['old_price']=$value10['price'];
-                    $guigeList[$key10]['price']=number_format($value10['price']*(100-$discount_rates)/100,2);
+                    $guigeList[$key10]['price']=$this->calculate_current_menu_price($value,$value10['price']);
                 }
 
                 $goodList[$key]['menu_option_list'] = $guigeList;
@@ -122,7 +123,7 @@ class mdl_restaurant_menu extends mdl_base
           }
 
         }
-
+       // var_dump($goodList);exit;
 
         foreach ($cartItems as $key => $value) {
             foreach ($goodList as $keysub =>$valuesub){
@@ -143,6 +144,34 @@ class mdl_restaurant_menu extends mdl_base
 
      //  var_dump($goodList);exit;
         return $goodList;
+
+    }
+
+    function  calculate_current_menu_price($value,$old_price){
+
+        if($value['menu_discount_rate']>0) {
+            //第一优先级 单品折扣率
+            $newPrice = $old_price*(100-$value['menu_discount_rate'])/100;
+            return round($newPrice,2);
+        }elseif($value['menu_discount_price']>0){
+            //第二优先级产品价格
+            return round($value['menu_discount_price'],2);
+        }elseif($value['sub_cate_discount_rate']>0){
+            //第三优先级小类
+            $newPrice = $old_price*(100-$value['sub_cate_discount_rate'])/100;
+            return round($newPrice,2);
+        }elseif($value['parent_cate_discount_rate']>0){
+            //第四优先级大类
+            $newPrice =$old_price*(100-$value['parent_cate_discount_rate'])/100;
+            return round($newPrice,2);
+         }elseif($value['customer_dicount_rate']>0){
+            //第五优先级客户
+            $newPrice = $old_price*(100-$value['customer_dicount_rate'])/100;
+            return round($newPrice,2);
+        }else{
+            return $old_price;
+        }
+
 
     }
 
