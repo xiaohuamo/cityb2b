@@ -318,9 +318,10 @@ input[type='checkbox']:checked::after {
 .classify{
   	background: #FFFFFF;
   	border-radius: 20px;
-	padding: 2px 6px;
+	padding: 2px 8px;
 	margin-right: 5px;
 	display: inline-block; /*切记不能使用flex*/
+	min-height: 20px;
 }
 
 .classifyAll{
@@ -336,6 +337,9 @@ input[type='checkbox']:checked::after {
 	margin-right: 6px;
 	position: relative;
 	min-height: 28px;
+	background: #FFFFFF;
+    border-radius: 20px;
+    padding: 2px 8px;
 }
 .classify2Active{
 	position: absolute;
@@ -420,7 +424,7 @@ div::-webkit-scrollbar {
 	top: 3rem;
 	right: 10px;
 	height: 7.31rem;
-  /*  position: fixed; */
+    position: fixed; 
 }
 .add2 div{
 	height:50%;

@@ -153,7 +153,7 @@
 
 								<div class="classify colFD5001 bold" v-if="isLanguageEn" >{{item2.parent_cate_en_name}}</div>
 								<div class="classify colFD5001 bold" v-else>
-									<span v-if="item2.parent_cate_cn_name">{{item2.parent_cate_cn_name}}</span>
+									<span v-if="item2.parent_cat_cn_name">{{item2.parent_cat_cn_name}}</span>
 									<span v-else>{{item2.parent_cate_en_name}}</span>
 
 								</div>
@@ -161,15 +161,22 @@
 							</div>
 							<div class="goodInfo2_" style="display:inline;height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">
 
-								<div v-if="item2.sub_cate_en_name !='0' && isLanguageEn" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cate_en_name}}</div>
+                                <div v-if="isLanguageEn">
 
-								<div v-if="!isLanguageEn" class="classify colFD5001 bold">
+                                    <div v-if="isexist(item2.sub_cat_en_name)" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cat_en_name}}</div>
 
 
-									<span v-if="!item2.sub_cat_cn_name">{{item2.parent_cat_cn_name}}-{{item2.sub_cat_cn_name}}</span>
-									<span v-else>{{item2.parent_cat_cn_name}}<span v-if="item2.sub_cate_en_name!=0">-{{item2.sub_cate_en_name}}</span></span>
+                                </div>
 
-								</div>
+                                <div v-else>
+
+                                    <div v-if="isexist(item2.sub_cat_cn_name)" class="classify colFD5001 bold">{{item2.parent_cat_cn_name}}-{{item2.sub_cat_cn_name}}</div>
+
+
+                                </div>
+
+
+
 
 
 							</div>
@@ -860,7 +867,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					  // console.log(self.goodsList2);
+					   console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -1655,6 +1662,14 @@
 				clickGoods(){
 				/*	window.location.href="<{$SKIN_PATH}>/goods/detail.htm" */
 				},
+                isexist:function(item1){
+                   if (item1 ) {
+                       return true;
+                   }else{
+                       return false;
+                   }
+
+                 }
 			}
 		});
 

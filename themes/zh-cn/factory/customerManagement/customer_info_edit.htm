@@ -182,7 +182,7 @@
 									<div class="flexBox1">
 										<span></span>
 
-										<div class="commonBtnSingle" @click="setTradingHours('<{$user.id}>')" v-if="isLanguageEn" >Set hours</div><div class="commonBtnSingle" @click="setTradingHours('<{$user.id}>')" v-else >设置时间</div>
+										<div  @click="setTradingHours('<{$user.id}>')" v-if="isLanguageEn" >Set hours</div><div class="commonBtnSingle"  style="position:relative;" @click="setTradingHours('<{$user.id}>')" v-else >设置时间</div>
 									</div>
 
 								</div>
