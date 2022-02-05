@@ -1794,8 +1794,16 @@ class ctl_factory extends cmsPage
     public function update_business_discount_rate_action()
     {
 
+        $business_discount_rate =post('business_discount_rate');
+        if(!is_numeric($business_discount_rate)){
+            $this->form_response(600, 'please input number! for example 5.5', 'no access');
+        }
 
         if (is_post()) {
+
+
+         
+
 
             $mdl_user_factory = $this->loadModel("user_factory");
 
@@ -1815,8 +1823,8 @@ class ctl_factory extends cmsPage
 
             $data = array();
 
-            $business_discount_rate = post('business_discount_rate');
-            if ($business_discount_rate) $data['business_discount_rate'] = $business_discount_rate;
+            $data['business_discount_rate']  = post('business_discount_rate');
+           // if ($business_discount_rate)= $business_discount_rate;
             $account_type = post('account_type');
             if ($account_type) $data['account_type'] = $account_type;
 

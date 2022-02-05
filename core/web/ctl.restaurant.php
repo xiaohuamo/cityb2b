@@ -3419,7 +3419,7 @@ function category_migration_action(){
 					}
 
 				}
-				
+
 				if($allOrspecial!='all'){
 
 					$whereStr.= " and cust.price is not null ";
