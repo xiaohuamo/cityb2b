@@ -18,19 +18,24 @@ class mdl_user_factory_category_discount_rate extends mdl_base
                 FROM `cc_restaurant_category`  cate  
                 left join cc_user_factory_category_discount_rate cate_discount on cate.`id` =cate_discount.category_id and cate_discount.userId =$customer_id
                 
-                WHERE cate.restaurant_id =319188 and (length(cate.category_cn_name)>0 or length(cate.category_en_name)>0)  and (cate.parent_category_id =0 or cate.parent_category_id is null)  and isHide=0 and isdeleted=0
+                WHERE cate.restaurant_id =$business_id and (length(cate.category_cn_name)>0 or length(cate.category_en_name)>0)  and (cate.parent_category_id =0 or cate.parent_category_id is null)  and isHide=0 and isdeleted=0
                 order by cate.category_sort_id" ;
         $list = $this->getListBySql($sql);
-
+        //var_dump($list);exit;
 
         foreach ($list as $key => $value){
 
             if(!$value['discount_rate']) {
                 if(!$value['customer_discount_rate']) {
                     $list[$key]['discout_rate'] =0;
+                    $list[$key]['issetDiscount'] =0;
                 }else{
                     $list[$key]['discount_rate'] =$value['customer_discount_rate'];
+                    $list[$key]['issetDiscount'] =0;
                 }
+
+            }else{
+                $list[$key]['issetDiscount'] =1;
 
             }
 
@@ -76,12 +81,17 @@ class mdl_user_factory_category_discount_rate extends mdl_base
                 }else{
                    // 如果定义对应的大类折扣，则将大类discount做为小类的discount
                     $list[$key]['discount_rate'] =$value['parent_cate_discount_rate'];
+
                 }
 
+                $list[$key]['issetDiscount'] =0;
 
 
+            }else{
+                $list[$key]['issetDiscount'] =1;
 
             }
+
 
 
         }

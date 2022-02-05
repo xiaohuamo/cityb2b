@@ -2288,9 +2288,61 @@ function updateStandProductUponMenuId($id) {
 		$this->display_pc_mobile('restaurant/restaurant_parant_category_edit', 'restaurant/restaurant_parant_category_edit');
 
 	}
-		
 
-		/* 一级分类折扣编辑*/
+
+public function delete_sub_category_discount_action(){
+
+		//输入参数合法性验证
+		$id =get2('id');
+
+		if(!$id) {
+			if (!$id) $this->form_response_msg(' id invalid');
+
+		}
+		$mdl = $this->loadModel('user_factory_category_discount_rate');
+		$curr_cat_discount_rec = $mdl->get($id);
+
+		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
+		if(!$this->loadModel('user_factory')->isUserAuthorisedToOperate($curr_cat_discount_rec['userId'],$this->current_business['id']))
+		{
+			$this->form_response_msg(' id you are not allow to operate this customer !');
+
+		}
+
+
+		$mdl->delete($id);
+		echo json_encode(array('deleted' =>1,'id'=>$curr_cat_discount_rec['category_id']));
+
+	}
+
+
+	public function delete_parent_category_discount_action(){
+
+		//输入参数合法性验证
+		$id =get2('id');
+
+		if(!$id) {
+			if (!$id) $this->form_response_msg(' id invalid');
+
+		}
+       $mdl = $this->loadModel('user_factory_category_discount_rate');
+		$curr_cat_discount_rec = $mdl->get($id);
+
+		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
+		if(!$this->loadModel('user_factory')->isUserAuthorisedToOperate($curr_cat_discount_rec['userId'],$this->current_business['id']))
+		{
+			$this->form_response_msg(' id you are not allow to operate this customer !');
+
+		}
+
+
+		$mdl->delete($id);
+		echo json_encode(array('deleted' =>1,'id'=>$curr_cat_discount_rec['category_id']));
+
+	}
+
+
+	/* 一级分类折扣编辑*/
 
 function discount_edit_parant_category_action(){
 
@@ -2323,11 +2375,14 @@ function discount_edit_parant_category_action(){
        // var_dump($parent_cate_discount_rate_data);exit;
 	   //session传递值供前端操作 。
 
-
+        //getcustomer discount rate
+		$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+	    $this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
+		//var_dump(number_format($customer_discount_rates,2));exit;
 
 
 		$this->setData($parent_cate_discount_rate_data, 'data');
-		//var_dump($sql_Parent_cate_list);exit;
+		//var_dump($parent_cate_discount_rate_data);exit;
 
 
 
@@ -2379,7 +2434,19 @@ function discount_edit_parant_category_action(){
 		$mdl = $this->loadModel('user_factory_category_discount_rate');
 		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business['id'],$customer_id);
 		$this->setData($parent_cate_discount_rate_data, 'data1');
-       //  var_dump($parent_cate_discount_rate_data);exit;
+       // var_dump(json_encode($parent_cate_discount_rate_data));exit;
+		//getcustomer discount rate
+         foreach ($parent_cate_discount_rate_data as $key =>$val){
+
+			 if($val['cate_id'] ==$parent_category_id) {
+				 $customer_discount_rates = $val['discount_rate'];
+			 }
+		 }
+
+	//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+
+
+		$this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
 
 
 		//获取当前供应商大类及改客户关于各个大类的折扣率
@@ -3273,6 +3340,9 @@ function category_migration_action(){
 		// 获得该用户餐厅的菜单分类信息
 
 		$user_id =get2('user_id');
+		$allOrspecial =get2('allOrspecial');
+
+		if(!$allOrspecial) $allOrspecial ='all';
 
 		$this->setData($user_id,'user_id');
 		$this->setData($user_id,'customer_id');
@@ -3349,6 +3419,12 @@ function category_migration_action(){
 					}
 
 				}
+				
+				if($allOrspecial!='all'){
+
+					$whereStr.= " and cust.price is not null ";
+				}
+
 
 				if (!empty($sk)) {
 					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";

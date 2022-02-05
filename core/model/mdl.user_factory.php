@@ -140,6 +140,19 @@ class mdl_user_factory extends mdl_base
         return $this->getListBySql($sql);
     }
 
+    public function   getCustomerDiscountRates($userId,$factoryId){
+
+        $where =array(
+            'user_id'=>$userId,
+            'factory_id'=>$factoryId
+
+        );
+        $rec = $this->getByWhere($where);
+        if($rec) return round($rec['business_discount_rate'],2);
+        return 0.00;
+
+}
+
     public function generateUserLoginToken($userId, $factoryId, $expiredAt) {
         $data = [
             'user_id' => $userId,

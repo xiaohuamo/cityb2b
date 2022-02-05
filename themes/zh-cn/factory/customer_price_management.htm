@@ -50,7 +50,8 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>用户名</th>
+								<th>客户号</th>
+								<th>客户名称</th>
 								<th>当前折扣率</th>
 								<th>大类折扣设置</th>
 								<th>小类类折扣设置</th>
@@ -68,7 +69,9 @@
 							<{foreach from=$users item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 
-
+									<td>
+                                       <{$user.id}>
+									</td>
 
 									<td>
                                         <a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>"><{$user.name}></a>
@@ -88,6 +91,7 @@
 										<a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>">
 										大类
 										</a>
+
 										
 									</td>
 									
