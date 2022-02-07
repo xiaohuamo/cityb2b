@@ -50,12 +50,17 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>用户名</th>
+								<th>客户编号</th>
+								<th>客户名</th>
 								<th>订单查询</th>
 								<th>手机号</th>
 								<th>当前账期</th>
-
-								<th>当前折扣率</th>
+								<th>城区</th>
+								<th>邮编</th>
+								<th>配送安排</th>
+								
+								
+								
 								
 							</tr>
 							</thead>
@@ -64,6 +69,9 @@
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 
 
+									<td>
+                                        <{$user.id}>
+									</td>
 
 									<td>
                                         <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
@@ -96,17 +104,69 @@
 										</select>
 										<span class='promote-ajax'></span>
 									</td>
+									<td>
+                                        <{$user.addrSuburb}>
+									</td>
+									
+									<td>
+                                        <{$user.addrPost}>
+									</td>
+									
+									
 
 									<td>
 
 
-										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="width:150px;" name="business_discount_rate"
-											   value="<{if !$user.business_discount_rate}>0<{else}><{$user.business_discount_rate}><{/if}>">%
-										<span class='promote-ajax'></span>
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Mon"
+											   <{if $user.delivery_mon}> checked <{/if}> >
+											<span style="padding-right: 10px;" >Mon</span><span  class='promote-ajax'></span>
 										
 
 
+								
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Tue"
+											     <{if $user.delivery_tue}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Tue</span><span  class='promote-ajax'></span>
+										
+
+
+									
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Wed"
+											      <{if $user.delivery_wed}> checked <{/if}> >
+											<span style="padding-right: 10px;" >Wed</span><span  class='promote-ajax'></span>
+										
+
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Thur"
+											      <{if $user.delivery_thur}> checked <{/if}>  >
+										<span style="padding-right: 10px;"  >Thur</span><span  class='promote-ajax'></span>
+										
+
+
+									
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Fri"
+											      <{if $user.delivery_fri}> checked <{/if}>  >
+										<span style="padding-right: 10px;" >Fri</span><span  class='promote-ajax'></span>
+										
+
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Sat"
+											     <{if $user.delivery_sat}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Sat</span><span  class='promote-ajax'></span>
+										
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Sun"
+											      <{if $user.delivery_sun}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Sun</span><span  class='promote-ajax'></span>
+
 									</td>
+									
 
 								</tr>
 							<{/foreach}>
@@ -137,8 +197,67 @@
 
 <script type="text/javascript">
     var loading = false;
+	
+	
+	  $('input[name=delivery_Mon],input[name=delivery_Tue],input[name=delivery_Wed],input[name=delivery_Thur],input[name=delivery_Fri],input[name=delivery_Sat],input[name=delivery_Sun]').on('change', function () {
 
-    $('input[name=business_discount_rate],select[name=account_type]').on('change', function () {
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value =0;
+ 
+        if($(this).is(':checked') ) value=1;
+        var updateData = {};
+		
+		//alert(update_field_name);
+		//alert(value);
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		 updateData['value'] = value;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_deliver_avaliable_date",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+	
+
+    $('select[name=account_type]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -161,7 +280,7 @@
 
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_business_discount_rate",
+            url: "<{$http_root_www}>factory/update_business_payment_terms",
             type: "POST",
             data: updateData,
             beforeSend: function () {

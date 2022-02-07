@@ -145,6 +145,11 @@
 					let name ='@';
 					let phone ='@';
 					let code='@';
+					let id='@';
+					let user_id='@';
+					let addrPost='@';
+					let addrSuburb='@';
+					let address='@';
 
 					if(arrvalue.length>0) { //有搜索内容
 						return    _this.customer_lists.filter(item=>{
@@ -152,8 +157,23 @@
 							for(let i=0;i<arrvalue.length;i++) {
 								if(!item.name){name='@';}else{name=item.name;}
 								if(!item.phone){phone='@';}else{phone=item.phone;}
-								if(!item.code){code='@';}else{codev=item.code;}
-									if ((name.toUpperCase().indexOf(arrvalue[i].trim().toUpperCase()) != -1) || (phone.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1) || (code.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)) {
+								if(!item.code){code='@';}else{code=item.code;}
+								if(!item.id){id='@';}else{id=item.id;}
+								if(!item.user_id){user_id='@';}else{user_id=item.user_id;}
+								if(!item.addrPost){addrPost='@';}else{addrPost=item.addrPost;}
+								if(!item.addrSuburb){addrSuburb='@';}else{addrSuburb=item.addrSuburb;}
+								if(!item.address){address='@';}else{address=item.address;}
+								
+								
+									if ((name.toUpperCase().indexOf(arrvalue[i].trim().toUpperCase()) != -1)
+									|| (phone.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)
+									|| (code.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)
+									|| (id.trim().indexOf(arrvalue[i]) != -1)
+									|| (user_id.trim().indexOf(arrvalue[i]) != -1)
+									|| (addrPost.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)
+									|| (addrSuburb.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)
+									|| (address.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)
+									) {
 										find++;
 									}
 
@@ -182,7 +202,7 @@
 				// 获得当前客户可以下单的日期列表显示，
 				this.customer_lists=<{$factoryUsers}>;
 
-             	//console.log(this.customer_lists);
+             	//console.log(_self.customer_lists);
 			    var  role =parseInt('<{$loginUser.role}>');
 				console.log('login role is :' + role  + 'login id is :' + '<{$loginUser.id}>');
 				if(role !== 4){

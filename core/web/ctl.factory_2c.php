@@ -2359,7 +2359,7 @@
     		return date('Y-m-d',$d['logistic_delivery_date']);
     	}, $availableDates);
     	$this->setData($availableDates, 'availableDates');
-//var_dump($availableDates);exit;
+		//var_dump($availableDates);exit;
   
   	  //查看是否打印总单和所有渠道配货单
 		$totalandeverychannelPrint =get2('printAllBusiness');

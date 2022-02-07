@@ -118,7 +118,9 @@ class mdl_user_factory extends mdl_base
 
 
 
-        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,u.googleMap as address,f.isHide,f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
+        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
+		f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
+		,f.delivery_mon,f.delivery_tue,f.delivery_wed,f.delivery_thur,f.delivery_fri,f.delivery_sat,f.delivery_sun
                 FROM cc_user_factory f
                 LEFT JOIN cc_user u ON u.id = f.user_id
 			    WHERE f.factory_id = $factoryId and f.isHide=$isHide";
@@ -138,6 +140,83 @@ class mdl_user_factory extends mdl_base
         }
 //var_dump($sql);exit;
         return $this->getListBySql($sql);
+    }
+
+
+    public function  filiterUserAvaliableDeliveryDate($datelist,$userId,$factoryId){
+
+    //   var_dump(json_encode($datelist));
+
+        $where =array(
+            'user_id'=>$userId,
+            'factory_id'=>$factoryId
+       );
+
+        $user_rec = $this->getByWhere($where);
+//  data('w',timestamp )函数  返回值为0 代表sunday ,然后顺次 周一-周六
+        if($user_rec){
+            for ($i=0;$i<8;$i++){
+                if($datelist[$i]->isAvaliable) {
+                    $days = date('w',$datelist[$i]->orderDeliveryTimestamp);
+                    $isStillAvaliable = $this->filterAvaliableDate($user_rec,$days);
+                    if(!$isStillAvaliable) {
+                        $datelist[$i]->isAvaliable=false;
+                    }
+                }
+
+            }
+                //逐个日期过滤
+
+
+     }
+
+
+     //  var_dump(json_encode($datelist));exit;
+        return $datelist;
+
+
+    }
+
+
+    function filterAvaliableDate($user_rec,$days){
+
+        if($days=='0') {
+            if($user_rec['delivery_sun'] ==0) return false;
+            return true;
+        }
+
+        if($days=='1') {
+            if($user_rec['delivery_mon'] ==0) return false;
+            return true;
+        }
+
+        if($days=='2') {
+            if($user_rec['delivery_tue'] ==0) return false;
+            return true;
+        }
+
+        if($days=='3') {
+            if($user_rec['delivery_wed'] ==0) return false;
+            return true;
+        }
+
+        if($days=='4') {
+            if($user_rec['delivery_thur'] ==0) return false;
+            return true;
+        }
+
+        if($days=='5') {
+            if($user_rec['delivery_fri'] ==0) return false;
+            return true;
+        }
+
+        if($days=='6') {
+            if($user_rec['delivery_sat'] ==0) return false;
+            return true;
+        }
+
+
+
     }
 
     public function   getCustomerDiscountRates($userId,$factoryId){

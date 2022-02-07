@@ -713,6 +713,8 @@ class ctl_member extends cmsPage
         $businessDispSchedule = DispCenter::getBusinessDispSchedule($id);
         $businessDispScheduleFilledWithContinueDates = DispCenter::getFollowingNDaysIncludeAvailableDeliver($businessDispSchedule);
 
+        //客户定制日期过滤
+        $businessDispScheduleFilledWithContinueDates =$this->loadModel('user_factory')->filiterUserAvaliableDeliveryDate($businessDispScheduleFilledWithContinueDates,$this->loginUser['id'],$id);
 
         //获得订货调度的具体日期及星期几
 

@@ -1802,9 +1802,6 @@ class ctl_factory extends cmsPage
         if (is_post()) {
 
 
-         
-
-
             $mdl_user_factory = $this->loadModel("user_factory");
 
             $id = post('id');
@@ -1842,6 +1839,101 @@ class ctl_factory extends cmsPage
         }
     }
 
+    public function update_business_payment_terms_action()
+    {
+
+
+        if (is_post()) {
+
+
+            $mdl_user_factory = $this->loadModel("user_factory");
+
+            $id = post('id');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'], $this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600, 'no access', 'no access');
+
+            }
+
+
+            $data = array();
+
+
+            // if ($business_discount_rate)= $business_discount_rate;
+            $account_type = post('account_type');
+            if ($account_type) $data['account_type'] = $account_type;
+
+            try {
+                $mdl_user_factory->update($data, $id);
+
+
+                $this->form_response(200, '', '');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(), '');
+            }
+
+        } else {
+            //wrong protocol
+        }
+    }
+
+    public function update_deliver_avaliable_date_action()
+    {
+
+
+        if (is_post()) {
+
+
+            $mdl_user_factory = $this->loadModel("user_factory");
+
+            $id = post('id');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'], $this->loginUser['role']);
+
+            if ($factory_user['factory_id'] != $FactoryId) {
+                $this->form_response(600, 'no access', 'no access');
+
+            }
+
+
+            $data = array();
+            $filedName = post('update_field_name');
+            $value =post('value');
+            $data[$filedName]  = $value;
+         /*   $data['delivery_tue']  = post('delivery_Tue');
+            $data['delivery_wed']  = post('delivery_Wed');
+            $data['delivery_thur']  = post('delivery_Thur');
+            $data['delivery_fri']  = post('delivery_Fri');
+            $data['delivery_sat']  = post('delivery_Sat');
+            $data['delivery_sun']  = post('delivery_Sun');
+        */
+
+            // if ($business_discount_rate)= $business_discount_rate;
+
+
+            try {
+                $mdl_user_factory->update($data, $id);
+
+
+                $this->form_response(200, '', '');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(), '');
+            }
+
+        } else {
+            //wrong protocol
+        }
+    }
 
     public function adjust_customer_payments_action(){
 
