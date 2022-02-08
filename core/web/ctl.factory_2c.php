@@ -2501,7 +2501,7 @@
 				}
 					 $report->setTradingName($this->loginUser['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("总配货单-".$this->loginUser['displayName'])
+					->title("producing List-".$this->loginUser['displayName'])
 					->OrderData($data)
 					->OrderDataEveryChannel($data1);
 					
