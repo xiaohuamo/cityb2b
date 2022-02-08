@@ -2868,6 +2868,7 @@ class ctl_factory extends cmsPage
     {
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
+
        $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 
         //获取当前操作者的客户列表
@@ -2890,6 +2891,7 @@ class ctl_factory extends cmsPage
         //get all customer information
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
+		if(!$this->trueLogin) 
         $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 
 
@@ -2977,6 +2979,7 @@ class ctl_factory extends cmsPage
     {
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
+
         $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 
         //获取当前操作者的客户列表

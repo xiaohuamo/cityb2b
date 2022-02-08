@@ -963,7 +963,8 @@ class ctl_orderpaymentprocess extends cmsPage
 
         $orderRec =$this->loadModel('order')->getByWhere(array('orderId'=>$orderId));
         $this->setData($orderRec['business_userId'],'supplierId' );
-
+		
+		if(!session('truelogin'))
         $agentId =$this->cookie->getCookie('agentcityb2b');
         if($agentId ) {
             $this->setData($agentId,'agentid');
@@ -1079,7 +1080,8 @@ class ctl_orderpaymentprocess extends cmsPage
 
 
 		if($this->getUserDevice()=='desktop'){
-			$this->display( 'payment/paypal/return' );
+			//$this->display( 'payment/paypal/return' );
+			$this->display( 'orderPage/orderSuccess' );
 		}else{
 			$this->display( 'orderPage/orderSuccess' );
 		}

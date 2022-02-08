@@ -15,6 +15,7 @@ class cmsPage extends corecms
 	protected $wx_openID = null;
 	protected $returnUrl = '';
     protected $current_business;
+    protected $trueLogin=0; //对于从登陆接口进来的登陆，且为客户类，truelogin =1 ,该标志放置有已登陆过agent的cookie留有agent强制登陆设置
 
 	function cmsPage ()
 	{
@@ -387,7 +388,14 @@ class cmsPage extends corecms
 		 
 		
 	}
+    // if it is customer login , the role ==4 ,then set trulogin =1
+public function  setCustomerTrueLogin($userrole){
+        if($userrole==4){
+            $this->session('truelogin',1);
 
+        }
+
+}
 //如果当前已agent方式登陆，则强制转换为agent登陆方式
 public function AgentActiveCheck($id,$agentId){
 

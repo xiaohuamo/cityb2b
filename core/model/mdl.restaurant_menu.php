@@ -30,6 +30,9 @@ class mdl_restaurant_menu extends mdl_base
             );
             $user_info =loadModel('user_factory')->getByWhere($where);
             $discount_rates =$user_info['business_discount_rate'];
+            if(!$discount_rates){
+                $discount_rates =0.00;
+            }
         }
 
 
@@ -37,10 +40,7 @@ class mdl_restaurant_menu extends mdl_base
 
        // get the good list of business .
        //get the main table good list
-
-        $sql_sum_final ="select main_table.*,ifnull(bought_table.id,0) as bought from (
-    
-                select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
+        $sql_main =" select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
                        ifnull(sub_cate_discount.discount_rate,0) as sub_cate_discount_rate ,ifnull(parent_cate_discount.discount_rate,0) as parent_cate_discount_rate ,
                        $discount_rates as customer_dicount_rate, m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_sort_id as parent_cat_sort_id ,
                        c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name,c02.category_sort_id as sub_cate_sort_id ,
@@ -56,13 +56,12 @@ class mdl_restaurant_menu extends mdl_base
                     left join cc_user_factory_category_discount_rate sub_cate_discount on ( m.sub_category_id =sub_cate_discount.category_id and sub_cate_discount.userId =$userid)
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
                     where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
-                
-                
-                ) as main_table 
+                ";
+      //  var_dump($sql_main);exit;
+
+        $sql_sum_final ="select main_table.*,ifnull(bought_table.id,0) as bought from (". $sql_main ." ) as main_table 
     
                 left join (select a.restaurant_menu_id as id from cc_wj_customer_coupon a where userId = $userid and business_id =$factory_id group by a.menu_id ) as bought_table on main_table.id = bought_table.id order by parent_cat_sort_id,sub_cate_sort_id
-                       
-                       
                    ";
 
 
@@ -74,7 +73,7 @@ class mdl_restaurant_menu extends mdl_base
 
        // var_dump($userFactoryMenuPrices);exit;
      //   var_dump('show_orginal_price:' . $show_origin_price);exit;
-
+        //var_dump($sql_sum_final);exit;
         // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
         $goodList =$this->getListBySql($sql_sum_final);
 

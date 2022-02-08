@@ -263,7 +263,7 @@ class ctl_factorypage extends cmsPage
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $businessDispSchedule = DispCenter::getBusinessDispSchedule($id);
         $businessDispScheduleFilledWithContinueDates = DispCenter::getFollowingNDaysIncludeAvailableDeliver($businessDispSchedule);
-
+       
         $businessDispScheduleFilledWithContinueDates =$this->loadModel('user_factory')->filiterUserAvaliableDeliveryDate($businessDispScheduleFilledWithContinueDates,$userId,$id);
 
        //获得订货调度的具体日期及星期几
@@ -271,7 +271,7 @@ class ctl_factorypage extends cmsPage
 
         $businessDispScheduleFilledWithContinueDates=$this->getWeekDayandDateOfSchedue($businessDispScheduleFilledWithContinueDates);
 
-
+      
         $this->setData(json_encode($businessDispScheduleFilledWithContinueDates), 'businessDispSchedule');
         $this->setData(in_array($id, DispCenter::getSupplierList()), 'isDispCenterBusiness');
 
@@ -2563,8 +2563,9 @@ class ctl_factorypage extends cmsPage
     public function get_good_list_action(){
 
         $id = (int) get2('id');
-
+        $id=319188;
         $userId = $this->loginUser['id'];
+
         $cart = (int) get2('cart');
         $default_menu_page_items = 10;
 

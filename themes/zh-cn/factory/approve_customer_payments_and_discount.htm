@@ -52,11 +52,11 @@
 							<tr>
 								<th>客户编号</th>
 								<th>客户名</th>
-								<th>订单查询</th>
+								
 								<th>手机号</th>
 								<th>当前账期</th>
-								<th>城区</th>
-								<th>邮编</th>
+								<th>城区邮编</th>
+								
 								<th>配送安排</th>
 								
 								
@@ -76,9 +76,7 @@
 									<td>
                                         <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
 									</td>
-									<td>
-										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
-									</td>
+									
 									<td>
                                         <{$user.phone}>
 									</td>
@@ -105,12 +103,10 @@
 										<span class='promote-ajax'></span>
 									</td>
 									<td>
-                                        <{$user.addrSuburb}>
+                                        <{$user.addrSuburb}>&nbsp;  <{$user.addrPost}>
 									</td>
 									
-									<td>
-                                        <{$user.addrPost}>
-									</td>
+								
 									
 									
 

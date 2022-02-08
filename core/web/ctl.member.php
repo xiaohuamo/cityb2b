@@ -108,11 +108,20 @@ class ctl_member extends cmsPage
 
 	function index_action() {
 
-        $agentId =$this->cookie->getCookie('agentcityb2b');
-
-
-
         $id = $this->loginUser['id'];
+
+     //   $this->form_response_msg('login role is' .$this->trueLogin );
+      //  var_dump(session('truelogin')); exit;
+        if(session('truelogin')) { //如果为真是客户登陆则不转换身份呢
+     //      var_dump(truelogin); exit;
+        }else{
+            $agentId =$this->cookie->getCookie('agentcityb2b');
+
+
+
+
+
+
 
 
         if ($agentId !=$id) {
@@ -134,7 +143,7 @@ class ctl_member extends cmsPage
             $this->sheader(HTTP_ROOT_WWW.'company/index');
         }
 
-
+        }
 
 		$this->setData( (string)$this->lang->member_center, 'pagename' );
 		$this->setData( 'index', 'menu' );
@@ -1454,7 +1463,7 @@ class ctl_member extends cmsPage
 
 					$this->session( 'member_user_id', $user['id'] );
 					$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
-
+                    $this->setCustomerTrueLogin($user['role']);
 					$this->sheader(HTTP_ROOT_WX.$this->returnUrl);
 				}
 				else {
@@ -1507,9 +1516,11 @@ class ctl_member extends cmsPage
 			);
 
 			$mdl_user->updateUserById( $data, $user['id'] );
-
+            $this->setCustomerTrueLogin($user['role']);
 			$this->session( 'member_user_id', $user['id'] );
 			$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+
+            $this->setCustomerTrueLogin($user['role']);
 
 			$this->cookie->setCookie( 'remember', $remember, 60 * 60 * 24 * 365 );
 			if ( $remember ) {
@@ -1523,9 +1534,11 @@ class ctl_member extends cmsPage
 
 	function login_action() {
 		if ( is_post() ) {
+
 			$name = trim(post( 'name' ));
 			$pwd = trim(post( 'pwd' ));
 			$remember = (int)post( 'remember' );
+
 			
 			if ( empty($name) ) $this->form_response_msg((string)$this->lang->please_input_username);
 
@@ -1568,14 +1581,17 @@ class ctl_member extends cmsPage
 
 			$this->session( 'member_user_id', $user['id'] );
 			$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
-
+           
 			$this->cookie->setCookie( 'remember', $remember, 60 * 60 * 24 * 365 );
+
 			if ( $remember ) {
 				$this->cookie->setCookie( 'remember_user_id', $user['id'], 60 * 60 * 24 * 365 );
 				$this->cookie->setCookie( 'remember_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ), 60 * 60 * 24 * 365 );
 			}
 
 			$redirect_uri = HTTP_ROOT_WWW;
+            // if the value of role of loginuser equel 4 ,then set up truelogin =1 ,menns its a customer login from login page
+            $this->setCustomerTrueLogin($user['role']);
           //  var_dump($this->returnUrl);exit;
 			if(($this->returnUrl) && ($this->returnUrl !='/member/index')){
 				$redirect_uri = HTTP_ROOT.$this->returnUrl;
@@ -1584,6 +1600,7 @@ class ctl_member extends cmsPage
 					$redirect_uri = HTTP_ROOT_WWW.'company/index';
 
 			}elseif($user['role']==4){
+
 
 					$redirect_uri = HTTP_ROOT_WWW.'member/index';
 
@@ -1643,6 +1660,7 @@ class ctl_member extends cmsPage
 	function logout_action() {
 		$this->session( 'member_user_id', null );
 		$this->session( 'member_user_shell', null );
+        $this->session( 'truelogin', null );
 		$this->cookie->clearCookie( 'wx_openID' );
 		$this->cookie->clearCookie( 'remember' );
 		$this->cookie->clearCookie( 'remember_user_id' );
@@ -1828,6 +1846,7 @@ class ctl_member extends cmsPage
 					else {
 						$mdl_user->commit();
                           $this->add_referrals ($name,$email,$mobile,$user['id']);
+                        $this->setCustomerTrueLogin($user['role']);
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
 						if($returnUrl){
@@ -1893,6 +1912,7 @@ class ctl_member extends cmsPage
                          $this->add_referrals ($name,$email,$mobile,$user['id']);
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+                        $this->setCustomerTrueLogin($user['role']);
 						
 						$this->loadModel('system_mail_queue')->add($user['id'],EmailType::CustomerRegistryNotification);
 						
@@ -1965,6 +1985,7 @@ class ctl_member extends cmsPage
 						 
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+                        $this->setCustomerTrueLogin($user['role']);
 						
 						if($returnUrl){
 							$this->form_response(200,(string)$this->lang->remind_user_register_12,HTTP_ROOT.$returnUrl);
@@ -1997,6 +2018,7 @@ class ctl_member extends cmsPage
 						$user = $mdl_user->getUserByName( $mobile );
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+                        $this->setCustomerTrueLogin($user['role']);
 						
 						if($returnUrl){
 							$this->form_response(200,(string)$this->lang->remind_user_register_12,HTTP_ROOT.$returnUrl);
@@ -2012,6 +2034,7 @@ class ctl_member extends cmsPage
 						$user = $mdl_user->getByWhere(['phone' => $mobile]);
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+                        $this->setCustomerTrueLogin($user['role']);
 						
 						if($returnUrl){
 							$this->form_response(200,(string)$this->lang->remind_user_register_12,HTTP_ROOT.$returnUrl);
@@ -2052,6 +2075,7 @@ class ctl_member extends cmsPage
 						 
 						$this->session( 'member_user_id', $user['id'] );
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+                        $this->setCustomerTrueLogin($user['role']);
 						
 						if($returnUrl){
 							$this->form_response(200,(string)$this->lang->remind_user_register_12,HTTP_ROOT.$returnUrl);
