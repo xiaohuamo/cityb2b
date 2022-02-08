@@ -405,7 +405,9 @@ body{
 .pa15-0{
 	padding:15px 0;
 }
-
+.pa15-left{
+	padding-left:15px;
+}
 .pa15{
 	padding:15px;
 }

@@ -325,6 +325,27 @@ class mdl_order extends mdl_base
         }
         return true;
     }
+
+    public function  getCustomerSupplierList($userid){
+      $sql ="select user.id, user.displayName ,user.businessName from cc_order o  
+            left join  cc_user user on o.business_userId =user.id where o.userId =$userid 
+            group by user.id";
+      $list =  $this->getListBySql($sql);
+
+        foreach ($list as $key =>$value) {
+            if($value['businessName']) {
+                if($value['displayName']) {
+                    $list[$key]['name'] =$value['businessName'].'('.$value['displayName'].')';
+                }else{
+                    $list[$key]['name'] =$value['businessName'];
+                }
+            }else{
+                $list[$key]['name'] =$value['displayName'];
+            }
+
+      }
+        return $list;
+    }
 }
 
 ?>

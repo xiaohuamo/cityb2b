@@ -2479,7 +2479,7 @@
 		// $mdl = $this->loadModel('authrise_manage_other_business_account');
         // $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($business_id);
 		 
-		// var_dump($pageSql);exit;
+		 var_dump($pageSql);exit;
 	   
 	 // var_dump(get2('output'));exit;
 	 if(trim(get2('output'))) {
@@ -2488,11 +2488,12 @@
 	  
 	   
         if(trim(get2('output'))=='totalOrderSummeryForDeliveryDate'){
-			
+								
 			
 			if($totalandeverychannelPrint){
 				$data = $mdl_order->getListBySql($pageSql);
 				$data1 = $mdl_order->getListBySql($sqlOfTotalAndGroupByBusiness);
+				
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
 				 if($this->loginUser['logo']) {

@@ -17,76 +17,93 @@
 	<{include file ="mobile/b2btop.htm"}>
 	<!-- 主体部分 -->
 	<div class="choseBox flexBox1 f28" @click="Chose">
-		<span class="col0F0F0F">{{choseData==''? '请选择供应商':choseData}}</span>
+		<span class="col0F0F0F" v-if="isLanguageEn">{{choseData==''? 'Choose Supplier':choseData}}</span>
+		<span class="col0F0F0F" v-else>{{choseData==''? '请选择供应商':choseData}}</span>
 		<img src="<{$SKIN_PATH}>img/arrow2.png" class="arr"/>
 		<div class="mySelect" v-if="isChose">
-			<div v-for="item in list" @click="Chose2(item)">{{item}}</div>
+			<div @click="Chose2(0,'ALL Suppliers')" v-if="isLanguageEn">All Suppliers</div>
+			<div @click="Chose2(0,'全部供应商')" v-else >全部供应商</div>
+			<div v-for="item in list" @click="Chose2(item.id,item.name)">{{item.name}}</div>
 		</div>
 	</div>
 	<div v-if="isChose" class="mask2"></div>
-	<div class="flexBox2 tab">
-		<div :class="currentShow=='0'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('0')">
-			全部
+	<div class="pa15-left flexBox2 tab">
+		<div   :class="currentShow=='0'?'col0F0F0F bold':''" class=" f28 col7E7E7E relative" @click="change('0')">
+			<span v-if="isLanguageEn">All</span><span v-else>全部</span>
 			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='0'"/>
 		</div>
 		<div :class="currentShow=='1'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('1')">
-			未发货
+			<span v-if="isLanguageEn">Placed</span><span v-else>未发货</span>
 			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='1'"/>
 		</div>
 		<div :class="currentShow=='2'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('2')">
-			已发货
+			<span v-if="isLanguageEn">Sent</span><span v-else>已发货</span>
 			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='2'"/>
+		</div>
+		<div :class="currentShow=='3'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('3')">
+			<span v-if="isLanguageEn">Cancelled</span><span v-else>已取消</span>
+			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='3'"/>
 		</div>
 	</div>
 	<!-- 全部 -->
-	<{if $data}>
-	<{foreach from=$data key=key item=item name='dl'}>
-	<div v-if="currentShow=='0'">
-		<div class="tab_con" >
-			<div class="tabTitle"><{substr($item.orderId,0,8)}>-<{substr($item.orderId,8,6)}>-<{substr($item.orderId,14)}></div>
+
+
+	<div v-for="(item,index) in alllist" v-if="currentShow=='0'
+	||  ( currentShow=='1' && item.coupon_status=='c01' )
+	||  ( currentShow=='2' && item.coupon_status=='b01' )
+	||  ( currentShow=='3' && item.coupon_status=='d01' )
+">
+		<div class="tab_con"  v-if="(item.business_userId ==current_supplier_id) || (current_supplier_id==0) " >
+			<div class="tabTitle">
+				{{item.orderId}}</div>
 			<div class="tabbottom">
-				<div class="info1"><{$item.order_name|truncate_cn:60}></div>
+				<div class="info1">{{item.order_name}}</div>
 				<div class="info2">
 				
-				<{if $item.status==1}>
-		<em style="float:left; left:2rem; color:#0db40f"><{$lang->paid}></em>
-		<{elseif $item.status==0}>
-		<em style="float:left; left:2rem; color:#d9534f"><{$lang->unpaid}></em>
-		<{elseif $item.status==2}>
-		<em style="float:left; left:2rem; color:#d9534f">Pending</em>
-		<{/if}>&nbsp;
-			<{if $item.coupon_status=='c01'}>
-					<!-- 如果该订单已经支付了，则客户不能删除-->
-				
-					 <{if $hours>12}>
-					 
-					 <{else}>
-					 <a href="<{$http_root_www}>member/cancel_order?orderId=<{$item.orderId}>"><{$lang->cancel_order}></a>
-					 <{/if}>
-					
-					<{else}>
-					<!--<a href="<{$http_root_www}>member/myorders"><{$lang->not_support_return}></a> -->
-					<{/if}>
-			  <{if $item.coupon_status=='c01'}> 	<span class="colFD5001">&nbsp;已购买&nbsp;</span> <{/if}>
-					  <{if $item.coupon_status=='b01'}> <span  class="colFD5001">&nbsp;已交易&nbsp;</span> <{/if}>
-				  <{if $item.coupon_status=='d01'}>	<span   class="col00B063">&nbsp;订单取消&nbsp;</span><{/if}>
+       <span  v-if="isLanguageEn">
+		   <em style="float:left; left:2rem; color:#0db40f" v-if="item.status==1">Paid</em>
+			<em style="float:left; left:2rem; color:#d9534f" v-if="item.status==0">Unpaid</em>
+			<em style="float:left; left:2rem; color:#d9534f" v-if="item.status==2">Pending</em>
+
+	   </span>
+
+		<span  v-else>
+		   <em style="float:left; left:2rem; color:#0db40f" v-if="item.status==1">已付款</em>
+			<em style="float:left; left:2rem; color:#d9534f" v-if="item.status==0">未付款</em>
+			<em style="float:left; left:2rem; color:#d9534f" v-if="item.status==2">付款处理中</em>
+
+	   </span>
+
+
+				<!--		 <a href="<{$http_root_www}>member/cancel_order?orderId=<{$item.orderId}>"><{$lang->cancel_order}></a> -->
+			 	<span  v-if="item.coupon_status=='c01'">
+					<span class="colFD5001"  v-if="isLanguageEn">&nbsp;&nbsp;Order Placed&nbsp;</span>
+					<span class="colFD5001" v-else>&nbsp;&nbsp;未发货&nbsp;</span>
+ 			   </span>
+
+				<span  v-if="item.coupon_status=='b01'">
+					 <span  class="colFD5001"  v-if="isLanguageEn">&nbsp;&nbsp;Order Sent&nbsp;</span>
+					<span  class="colFD5001" v-else>&nbsp;&nbsp;&nbsp;已发货&nbsp;</span>
+				 </span>
+
+					<span  v-if="item.coupon_status=='d01'">
+				<span   class="col00B063"  v-if="isLanguageEn">&nbsp;&nbsp;Order Cancelled&nbsp;</span>
+						<span   class="col00B063" v-else>&nbsp;&nbsp;&nbsp;已取消订单&nbsp;</span>
 					<!--<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>  -->
 					<span class="col0B0B0B">$<{$item.money}></span>
-				</div>
-				<div class="detailBtn f25 flexBox1" @click="orderDetail('<{$item.orderId}>')">
-					订单详情
+			  </span>
+		</div>
+				<div class="detailBtn f25 flexBox1" @click="orderDetail(item.orderId)">
+					 <span   v-if="isLanguageEn">Details&nbsp;</span> <span   v-else>订单详情&nbsp;</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<{/foreach}>
-	<{if $pager}><div class="pager"><{$pager}></div><{/if}>
-	<{else}>
-	<div class="order-num order-num-1">
-		<span><{$lang->no_related_records}></span>
-	</div>
 
-	<{/if}>
+
+
+
+
 
 	<!-- 未发货 -->
 	<!--	<div v-if="currentShow=='1'">
@@ -122,10 +139,10 @@
 			</div>
 		</div>
 	</div>-->
-	<div class="col9A9A9A more flexBox4">
+<!--	<div class="col9A9A9A more flexBox4">
 		<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
 		<span>正在加载中...</span>
-	</div>
+	</div> -->
 
 	<{include file ="mobile/b2bbottom3.htm"}>
 </div>
@@ -135,7 +152,7 @@
 		el:"#me",
 		data:{
 			alllist:[
-				{
+				/*{
 					orderID:'20217837218937128',
 					name:'供应商 mk果蔬',
 					status:'订单取消',
@@ -152,7 +169,7 @@
 					name:'供应商 mk果蔬',
 					status:'已发货',
 					amount:'156'
-				}
+				} */
 			],
 			list1:[],  // 未发货
 			list2:[],   // 已发货
@@ -162,20 +179,33 @@
 			isChose:false,
 			isShare:false,
 			choseData:'',
-			list:['供应商1','供应商2'],
+			list:[/*'供应商1','供应商2'*/],
 			currentMenu:3 ,  // 当前菜单
 			title_en:'My Orders',
 			title_cn:'我的订单',
 			isLanguageEn:1, //语言环境
 			langStrDisplay:'中文',
 			isReturnShow:false,
-		},mounted:function(){
-
+			current_supplier_id:0
+		},
+		mounted:function(){
+			var _self =this;
 			// 获得当前的语言环境
 			this.isLanguageEn =parseInt('<{$user_setting}>');
 
 			//根据当前语言环境改变pop menu 的关于语言的提示；
 			this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
+			// 获得当前客户可以下单的日期列表显示，
+			this.list=JSON.parse('<{$supplier_list}>');
+			console.log(this.list);
+
+			// 获得当前客户可以下单的日期列表显示，
+
+
+			this.alllist=JSON.parse('<{$order_data}>');
+			console.log(this.alllist);
+
 
 		},
 		methods:{
@@ -188,9 +218,12 @@
 				if(this.isLanguageEn) {
 					this.langStrDisplay='En';
 					this.isLanguageEn=0;
+					this.choseData='全部供应商';
 				}else{
 					this.langStrDisplay='中文';
 					this.isLanguageEn=1;
+
+					this.choseData='All Suppliers';
 				}
 				setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
 				this.isAddShow=!this.isAddShow; //关闭弹框
@@ -219,13 +252,15 @@
 			},
 			Chose:function(){
 				this.isChose=!this.isChose
+
 			},
-			Chose2:function(data){
-				this.choseData=data
+			Chose2:function(id,name){
+				this.choseData=name;
+				this.current_supplier_id =id;
 			},
 
 			orderDetail:function(orderid){
-			  alert(String(orderid));
+			 // alert(String(orderid));
 				window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=" +orderid;
 			},
 			shareApp:function(){

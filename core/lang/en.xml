@@ -1342,4 +1342,9 @@
 
 
     <waiting_for_approve>Your order has been saved and waiting for factory to approve</waiting_for_approve>
+	<checkout_message_tongpei>Please change the delivery data or picking up data which  is expired !</checkout_message_tongpei>
+	<checkout_message_overlimits>Sorry,Total orders of date you point is over limits ,please change another day !</checkout_message_overlimits>
+	<checkout_message_less_than_min_amount>Opps! Order amount is not enough ,Minium order amount is $</checkout_message_less_than_min_amount>
+	
+	
 </language>

@@ -188,23 +188,7 @@
 			</td>
 		</tr>
 
-        <{if $data.payment_note}>
-			<tr>
-				<th scope="row">Hcash</th>
-				<td>
-					<small><{$lang->amount}> : <{$data.payment_note.hcash}></small>
-					<small>单号 : <{$data.payment_note.hcash_order_id}></small>
-					<small>标签 : <{$data.payment_note.hcash_order_tag}></small>
-
-                    <{if $data.payment_note.note}>
-						<br>
-						<span>客服 Note : <{$data.payment_note.note}></span>
-                    <{/if}>
-
-				</td>
-			</tr>
-        <{/if}>
-
+       
 
         <{if $data.payment=='offline'}>
 			<tr>

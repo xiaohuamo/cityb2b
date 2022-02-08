@@ -112,6 +112,11 @@ class ctl_member extends cmsPage
 
      //   $this->form_response_msg('login role is' .$this->trueLogin );
       //  var_dump(session('truelogin')); exit;
+       // var_dump( $GLOBALS['KEY_']);
+       // $str = $GLOBALS['KEY_'].'dnlop01'.$GLOBALS['_KEY'];
+       // var_dump($str);
+       // var_dump( $this->md5($str));
+       // exit;
         if(session('truelogin')) { //如果为真是客户登陆则不转换身份呢
      //      var_dump(truelogin); exit;
         }else{
@@ -2336,7 +2341,7 @@ class ctl_member extends cmsPage
         $orderBy='id desc';
 
         $where['userId']=$this->loginUser['id'];
-
+        $userId =$this->loginUser['id'];
         /**
          * filter
          */
@@ -2371,29 +2376,29 @@ class ctl_member extends cmsPage
         $pageSql=$mdl_order->getListSql(null,$where,$orderBy);
 
         $pageUrl = $this->parseUrl()->set('page');
-        $pageSize = 20;
+        $pageSize = 30;
         $maxPage = 10;
         $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 
         $data = $mdl_order->getListBySql($page['outSql']);
+        $data =$mdl_order->getlistBySql("select id,business_userId,orderId,order_name,status,coupon_status,paytime,money,money_new from cc_order where userId =$userId order by id desc");
+
+
+        /* 获取当前用户订货的供应商列表*/
+        $supplier_list =$this->loadModel('order')->getCustomerSupplierList($this->loginUser['id']);
+        $this->setData(json_encode($supplier_list),'supplier_list');
+        //var_dump($supplier_list);exit;
 
         /**
          * Mobile page display items
          */
 		   $hours = (time()-$data['createTime'])/(60*60);
 		 $this->setData($hours,'hours');
-        if($this->getUserDevice()!='desktop'){
-    		foreach ($data as $key => $value) {
-    			$data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrderWithPic($value['orderId']);
-    			$data[$key]['businessChatId']=$mdl_user->getBusinessChatId($value['business_userId']);
-				$business_user= $mdl_user->get($value['business_userId']);
-				$data[$key]['no_refundable']=$business_user['no_refundable'];
-				$data[$key]['action_id']=$data[$key]['coupon_status'];
-    		}
-    	}
+
         //var_dump($data);exit;
         $this->setData($page['pageStr'],'pager');
-        
+        $this->setData(json_encode($data),'order_data');
+       // var_dump(json_encode($data));exit;
         $this->setData($data,'data');
 
         $this->setData($this->parseUrl()->set('filter')->set('page'),'listUrl');

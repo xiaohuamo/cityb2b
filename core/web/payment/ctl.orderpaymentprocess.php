@@ -230,7 +230,7 @@ class ctl_orderpaymentprocess extends cmsPage
 			if (!DispCenter::isDeliverDateStillValid($dispCenterUserSelectedDeliveryDateTimestamp,$bid)) {
 				//修改方面还有问题。。。。。 还没有调通
 				$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间',$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
-		 		$this->form_response_msg($bid.' '.'Please change the delivery data or picking up data which  is expired !');
+		 		$this->form_response_msg((string)$this->lang->checkout_message_tongpei);
 			}
 		};
 
@@ -239,9 +239,9 @@ class ctl_orderpaymentprocess extends cmsPage
 		 */
 		if (DispCenter::isOverMaxDailyOrderLimit($dispCenterUserSelectedDeliveryDateTimestamp))
 		{
-			$messge ='抱歉，您选择的递送日期订单爆表，我们递送能力有限，请改个日子吧';
+			$messge =(string)$this->lang->checkout_message_overlimits;
 			$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间',$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
-			$this->form_response_msg($message);
+			$this->form_response_msg($messge);
         }
 			
 		/**
@@ -278,7 +278,7 @@ class ctl_orderpaymentprocess extends cmsPage
 					if ($actualTotal < $dispach_user['amount_for_minimum_delivery'] && !$factory_id) {
 						$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,'Opps！小于最低起送金额$'.$dispach_user['amount_for_minimum_delivery'],'Opps！小于最低起送金额$'.$dispach_user['amount_for_minimum_delivery']);
 		
-						$this->form_response_msg('Opps！小于最低起送金额$'.$dispach_user['amount_for_minimum_delivery']);
+						$this->form_response_msg((string)$this->lang->checkout_message_less_than_min_amount.$dispach_user['amount_for_minimum_delivery']);
 					}
 				}
 			}else{ //如果非通配中心商家，直接获取当前商家的起送金额。
@@ -289,7 +289,7 @@ class ctl_orderpaymentprocess extends cmsPage
 						
 						$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,'Opps！小于最低起送金额$'.$general_business_user['amount_for_minimum_delivery'],'Opps！小于最低起送金额$'.$general_business_user['amount_for_minimum_delivery']);
 		
-						$this->form_response_msg('Opps！小于最低起送金额$'.$general_business_user['amount_for_minimum_delivery']);
+						$this->form_response_msg((string)$this->lang->checkout_message_less_than_min_amount.$general_business_user['amount_for_minimum_delivery']);
 					}
 				}
 			}

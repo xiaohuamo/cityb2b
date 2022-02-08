@@ -1387,5 +1387,10 @@
 	<delivery_date_open_end_time_setting>开截单及配送日期</delivery_date_open_end_time_setting>
 
     <waiting_for_approve>您的订单已经保存，需要等待店家审核</waiting_for_approve>
+	<checkout_message_tongpei>配送或取货日期失效，请更换日期</checkout_message_tongpei>
+	<checkout_message_overlimits>抱歉，您选择的递送日期订单爆表，我们递送能力有限，请改个日子吧!</checkout_message_overlimits>
+	<checkout_message_less_than_min_amount>Opps！小于最低起送金额$</checkout_message_less_than_min_amount>
+	
+	
 	
 </language>

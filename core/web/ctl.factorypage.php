@@ -175,7 +175,7 @@ class ctl_factorypage extends cmsPage
 
 
         $id = (int) get2('id');
-		$id=319188;
+		//$id=319188;
         $userId = $this->loginUser['id'];
         $cart = (int) get2('cart');
         $default_menu_page_items = 10;
@@ -2563,7 +2563,7 @@ class ctl_factorypage extends cmsPage
     public function get_good_list_action(){
 
         $id = (int) get2('id');
-        $id=319188;
+       // $id=319188;
         $userId = $this->loginUser['id'];
 
         $cart = (int) get2('cart');
@@ -2828,6 +2828,7 @@ class ctl_factorypage extends cmsPage
         $data		= $mdl_wj_user_delivery_info->getListBySql($page['outSql']);
 
         $this->setData( $data, 'data' );
+        $this->setData( json_encode($data), 'addressList' );
         $this->setData( $page['pageStr'], 'pager' );
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'editUrl' );
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'showUrl' );
@@ -2838,6 +2839,7 @@ class ctl_factorypage extends cmsPage
         $this->setData( $menu_item,'menu_item' );
         $this->setData( '配送地址 - 个人中心 - '.$this->site['pageTitle'], 'pageTitle' );
         $this->display_pc_mobile('member/delivery_address','member1/addressList');
+       // $this->display_pc_mobile('member1/delivery_address','member1/addressList');
     }
 
 }
