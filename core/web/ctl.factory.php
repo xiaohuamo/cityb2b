@@ -3000,6 +3000,7 @@ class ctl_factory extends cmsPage
         $mdl_user_factor = $this->loadModel('user_factory');
         //获得当前用户的实际商家所有者商家id
         $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
+
         if(	$this->loginUser['role']==20) {
             $salesManId = $this->loginUser['id'];
         }
@@ -3051,9 +3052,10 @@ class ctl_factory extends cmsPage
 
     public function customer_login_link($userId, $expired) {
         $mdl_user_factory = $this->loadModel('user_factory');
-        $token = $mdl_user_factory->generateUserLoginToken($userId, $this->loginUser['id'], $expired);
+        $factoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+        $token = $mdl_user_factory->generateUserLoginToken($userId,$factoryId, $expired);
 
-        return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $this->loginUser['id'] . "&token=$token";
+        return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
     }
 
     public function order_invoice_action(){

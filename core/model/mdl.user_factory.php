@@ -53,13 +53,16 @@ class mdl_user_factory extends mdl_base
 	
 	 public function getBusinessId($salesMan,$role)
     {
-     //  var_dump($salesMan.' '.$role);exit;
-	   if($role ==20) { //如果用户是销售员
+
+	   if(trim($role) ==20) { //如果用户是销售员
 		    $userFactory =loadModel('user')->get($salesMan);
+
 		    if($userFactory) {
+             //   var_dump('i'.$userFactory['user_belong_to_user']);exit;
            return $userFactory['user_belong_to_user'];
         }
 	   }else{
+         //  var_dump('p'.$salesMan);exit;
 		   return $salesMan;
 		   
 	   }
@@ -130,7 +133,7 @@ class mdl_user_factory extends mdl_base
 			$sql .= " and f.factory_sales_id = $salesmanId";
 			//var_dump($sql);exit;
 		}
-
+      //  var_dump($sql);exit;
         if($search) {
             $sql .= " AND (u.id ='%$search%'
                      OR u.phone like '%$search%'
