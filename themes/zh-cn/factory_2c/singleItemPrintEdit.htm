@@ -147,9 +147,11 @@
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
-								<option value="<{$item.id}>"
+								<option    <{if !$item.parent_category_id}>   style=" font-weight: 600;"  <{/if}>  value="<{$item.id}>"
                                         <{if $item.id==$category}> selected<{/if}>>
-                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                  
+										<{if $item.parent_category_id}>&nbsp;--<{/if}>
+								  <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
                                     <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
