@@ -1050,7 +1050,7 @@ class shippingLabel
 
         foreach ($this->OrderData as $key => $order) {
 
-         //  $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
+           $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
 			$this->pdf->ln();
             $orderID = "ORDER ID: ".$order['orderId'];
             $this->pdf->row($orderID, 0.4, 0, "L", 6);
@@ -1090,7 +1090,7 @@ class shippingLabel
             }
 
             $this->pdf->row($payment."|".$status."|".$customer_delivery_option, 0.3, 0, "L", 6);
-				 $this->pdf->ln();
+				 $this->pdf->ln(8);
             if($order['message_to_business']) {
 			
 			
