@@ -274,7 +274,8 @@
 					$mdl_restaurant_category = $this->loadModel('restaurant_category');
 					$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
 					$data = $mdl_restaurant_category->getListBySql($pageSql);
-					
+
+                    
 					
 					if(!$data) {
 						//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
@@ -296,9 +297,9 @@
 					$sql = "select  o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id";
 					
 					if($category =='all' or empty($category)) {
-						$whereStr.=" (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) and (o.restaurant_id=$customer_id  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) )";
+						$whereStr.=" o.isDeleted=0 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) and (o.restaurant_id=$customer_id  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) )";
 					}else{
-						$whereStr.=" (o.restaurant_id=$customer_id and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) )";
+						$whereStr.=" o.isDeleted=0 and  (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and (o.restaurant_id=$customer_id and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id=$customer_id ) )";
 					}
 					
 					if (!empty($category)) {
@@ -340,39 +341,7 @@
 					
 					//var_dump($customerInfo);exit;
 					
-					if(!$data){
 
-						if($category !='all' && !empty($category)) {
-							// 增加50个菜单分类
-							$menu_id =100;
-							
-							
-							for($i=0;$i<100;$i++) {
-								$menu_info=array(
-									'createUserId'=>$customer_id,
-									'restaurant_id'=>$customer_id,
-									'restaurant_category_id'=>$category,
-									'menu_id'=>$category.$menu_id,
-									'menu_cn_name'=>'',
-									'price'=>'',
-									'guige_group_id_2'=>'',
-									'menu_pic'=>'',
-									'Menu_desc'=>'',
-									'menu_en_name'=>'',
-									'include_gst' => $customerInfo['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
-								);
-								$mdl_restaurant_menu->insert($menu_info);
-								$menu_id =$menu_id+1;
-							}
-
-							$pageSql = "select  * from cc_restaurant_menu where createUserId=$customer_id and restaurant_category_id =".$category." order by menu_id";
-							$pageUrl = $this->parseUrl()->set('page');
-							$pageSize =200;
-							$maxPage = 10;
-							$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-							$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
-						}
-					}
 			  
 					//获取该商家是否有多个供应商，是否为集合店
 				 
@@ -477,39 +446,7 @@
 				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
 				
-				if(!$data){
 
-					if($category !='all' && !empty($category)) {
-						// 增加50个菜单分类
-						$menu_id =100;
-						
-						
-						for($i=0;$i<100;$i++) {
-							$menu_info=array(
-								'createUserId'=>$this->loginUser['id'],
-								'restaurant_id'=>$this->loginUser['id'],
-								'restaurant_category_id'=>$category,
-								'menu_id'=>$category.$menu_id,
-								'menu_cn_name'=>'',
-								'price'=>'',
-								'guige_group_id_2'=>'',
-								'menu_pic'=>'',
-								'Menu_desc'=>'',
-								'menu_en_name'=>'',
-								'include_gst' => $this->loginUser['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
-							);
-							$mdl_restaurant_menu->insert($menu_info);
-							$menu_id =$menu_id+1;
-						}
-
-						$pageSql = "select  * from cc_restaurant_menu where createUserId=".$this->loginUser['id']. " and restaurant_category_id =".$category." order by menu_id";
-						$pageUrl = $this->parseUrl()->set('page');
-						$pageSize =200;
-						$maxPage = 10;
-						$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-						$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
-					}
-				}
 		  
 				//获取该商家是否有多个供应商，是否为集合店
 			 
