@@ -3205,7 +3205,7 @@ class ctl_factory extends cmsPage
         $orderId = get2('order_id');
         $mel_user = $this->loadModel('user');
         $mdl_abn_application = $this->loadModel('wj_abn_application');
-        $mdl_user_account_iFnfo = $this->loadModel('user_account_info');
+        $mdl_user_account_info = $this->loadModel('user_account_info');
 
         $order = $this->loadModel('order')->getByOrderId($orderId);
         $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
@@ -3221,6 +3221,7 @@ class ctl_factory extends cmsPage
         $factoryWhere = [
             'userId' => $this->loginUser['id'],
         ];
+      //  var_dump($factoryWhere);
         $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
         $factoryABN = $mdl_abn_application->getByWhere($factoryWhere);
 		
