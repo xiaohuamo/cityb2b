@@ -435,9 +435,9 @@ class OrderInfoReport
         $this->pdf->row('Id', 0.1, 0, 'C', 12);
         $this->pdf->row('SEQ_No', 0.05, 0, 'C', 12);
 
-        $this->pdf->row('Addr', 0.35, 0, 'C', 12);
+        $this->pdf->row('Suburb', 0.10, 0, 'C', 12);
         $this->pdf->row('Truck', 0.05, 0, 'C', 12);
-        $this->pdf->row('Name', 0.3, 0, 'C', 12);
+        $this->pdf->row('Name', 0.55, 0, 'C', 12);
         $this->pdf->row('Qty', 0.05, 0, 'C', 12);
         $this->pdf->row('Unit', 0.05, 0, 'C', 12);
 
@@ -471,9 +471,9 @@ class OrderInfoReport
                 $this->pdf->setFontSize();
 
 
-                $this->pdf->row('', 0.35, 0, 'C');
+                $this->pdf->row('', 0.10, 0, 'C');
 
-                $this->pdf->row($order['customerName'], 0.3, 0, 'C');
+                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -502,10 +502,10 @@ class OrderInfoReport
                 $this->pdf->setFontSize();
 
                 $this->pdf->setFontSize(8);
-                $this->pdf->row($order['address'], 0.35, 0, 'C');
+                $this->pdf->row($order['address'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
-                $this->pdf->row($order['customerName'], 0.3, 0, 'C');
+                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -570,9 +570,9 @@ class OrderInfoReport
                 $this->pdf->row('Id', 0.10, 0, 'C', 12);
                 $this->pdf->row('SEQ_No', 0.05, 0, 'C', 12);
 
-                $this->pdf->row('Addr', 0.35, 0, 'C', 12);
+                $this->pdf->row('Suburb', 0.10, 0, 'C', 12);
                 $this->pdf->row('Truck', 0.05, 0, 'C', 12);
-                $this->pdf->row('Name', 0.3, 0, 'C', 12);
+                $this->pdf->row('Name', 0.55, 0, 'C', 12);
                 $this->pdf->row('Qty', 0.05, 0, 'C', 12);
                 $this->pdf->row('Unit', 0.05, 0, 'C', 12);
                 $this->pdf->setFontSize();
@@ -595,9 +595,9 @@ class OrderInfoReport
                 $this->pdf->setFontSize();
 
 
-                $this->pdf->row('', 0.35, 0, 'C');
+                $this->pdf->row('', 0.10, 0, 'C');
 
-                $this->pdf->row($order['customerName'], 0.3, 0, 'C');
+                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -624,10 +624,10 @@ class OrderInfoReport
                 $this->pdf->setFontSize();
 
                 $this->pdf->setFontSize(8);
-                $this->pdf->row($order['address'], 0.35, 0, 'C');
+                $this->pdf->row($order['address'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
-                $this->pdf->row($order['customerName'], 0.3, 0, 'C');
+                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
