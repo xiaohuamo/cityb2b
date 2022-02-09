@@ -1050,7 +1050,7 @@ class shippingLabel
 
         foreach ($this->OrderData as $key => $order) {
 
-            $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
+         //  $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
 			$this->pdf->ln();
             $orderID = "ORDER ID: ".$order['orderId'];
             $this->pdf->row($orderID, 0.4, 0, "L", 6);
@@ -1060,16 +1060,16 @@ class shippingLabel
             $phone = "PHONE: ".$order['phone'];
             $this->pdf->row($phone, 0.2, 0, "L", 6);
 
-            $this->pdf->ln();
+            $this->pdf->ln(10);
             $this->pdf->row("NAME: ", 0.1, 0, "L", 6);
             $name = $order['first_name']." ".$order['last_name'];
 			if(!trim($name)) {
 				$name = $this->findCustomerName($order['userId']);
 				
 			}
-			
+            $this->pdf->setFontSize(16);
             $this->pdf->row(substr($name,0,50), 0.5, 0, "L", 6);
-			
+            $this->pdf->setFontSize();
           //  
 		
 			$this->pdf->row('', 0.2, 0, 'L', 6);
@@ -1191,14 +1191,14 @@ class shippingLabel
                 $this->pdf->row("", 0.05);
                 $this->pdf->setFontSize(14);
 				
-				$title1 =$item['bonus_title'].$item['guige_des'];
+				$title1 =$item['bonus_title'].' '.$item['guige_des'];
 				$title_length=strlen($title1);
 				$count =ceil($title_length/60);
 				
 				if($count ==1 ){
 					
 					 $title = mb_substr($title1, 0, 60);
-					 $this->pdf->row('【  】'.$title.'(数量X'.$item['customer_buying_quantity'].')', 0.85, 0, 'L');
+					 $this->pdf->row('[  ]  '.$title.'(Qty X'.$item['customer_buying_quantity'].')', 0.85, 0, 'L');
 					 $this->pdf->setFontSize(16);
 					 $this->pdf->row('x'.$item['customer_buying_quantity'], 0.1, 0, 'C');
 
@@ -1214,7 +1214,7 @@ class shippingLabel
 						
 					  if ($count==(1+$i)) {
 						    $title = substr($title1, $i*60, ($i+1)*60);
-							$this->pdf->row($title.'(数量X'.$item['customer_buying_quantity'].')', 0.80, 0, 'L');
+							$this->pdf->row($title.'(Qty X'.$item['customer_buying_quantity'].')', 0.80, 0, 'L');
 							$this->pdf->setFontSize(16);
 							$this->pdf->row('x'.$item['customer_buying_quantity'], 0.15, 0, 'C');
 
@@ -1224,7 +1224,7 @@ class shippingLabel
 						  
 					  }else{
 						  $title = substr($title1, $i*60, ($i+1)*60);
-						  $this->pdf->row('【  】'.$title, 0.8, 0, 'L');
+						  $this->pdf->row('[  ]  '.$title, 0.8, 0, 'L');
 						  $this->pdf->ln(8);
 						 
 					  }
