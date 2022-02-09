@@ -575,8 +575,8 @@ class OrderInvoice
         $this->pdf->row('Description', 0.40, 0, "L", 6);
         $this->pdf->row('Qty', 0.05, 0, "L", 6);
         $this->pdf->row('Price', 0.10, 0, "L", 6);
-        $this->pdf->row('discount', 0.10, 0, "L", 6);
-        $this->pdf->row('new Price', 0.10, 0, "L", 6);
+        $this->pdf->row('Disc.', 0.10, 0, "L", 6);
+        $this->pdf->row('Newprice', 0.10, 0, "L", 6);
         $this->pdf->row('Amount', 0.10, 0, "L", 6);
         $this->pdf->row('GST%', 0.05, 0, "L", 6);
         $this->pdf->ln(6);
