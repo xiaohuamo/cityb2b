@@ -7,116 +7,107 @@
 	<title>Homepage</title>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
 </head>
 <body class="bgF2F2F2">
 <div id="me" v-cloak>
-	<div class="head bgfff mb10">
-		<div class="relative center">
-			<img src="<{$SKIN_PATH}>img/headIcon.png" class="headIcon"/>
-			<div class="f38 col333 f500 bold">我的</div>
-			<div class="flexBox1 headRight">
-				<img src="<{$SKIN_PATH}>img/share.png" class="w40 shareIcon" @click="shareApp"/>
-				<img src="<{$SKIN_PATH}>img/jia.png" class="w40" @click="clickAdd"/>
-			</div>
-			<div class="add" id="add" v-show="isAddShow">
-				<a href=""><div class="flexBox2">
-					<img src="<{$SKIN_PATH}>img/add_1.png"/>
-					<span class="colfff f30">EN</span>
-				</div></a>
-				<div class="flexBox2" @click="clickSC">
-					<img src="<{$SKIN_PATH}>img/sc.png" v-if="isSC"/>
-					<img src="<{$SKIN_PATH}>img/add_2.png" v-else />
-					<span class="colfff f30">收藏</span>
-				</div>
-				<a href=""><div class="flexBox2">
-					<img src="<{$SKIN_PATH}>img/add_3.png"/>
-					<span class="colfff f30">我要开户</span>
-				</div></a>
-				<a href=""><div class="flexBox2" style="border:none;">
-					<img src="<{$SKIN_PATH}>img/add_4.png"/>
-					<span class="colfff f30">我是供应商</span>
-				</div></a>
-				<div class="triangle"></div>
-			</div>
-		</div>
-	</div><div style="height:3.5rem;"></div>
-	<img src="<{$SKIN_PATH}>img/shareMask.png" class="w100 shareMask" v-show="isShare" @click="dismissShare"/>
+
+	<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+	<{include file ="factory/metop.htm"}>
+
 	<!-- 头像部分 -->
 	<div class="flexBox1 personInfoBox" @click="editPersonInfo">
 		<div class="flexBox2">
 			<img src="<{$SKIN_PATH}>img/portrait.png" class="portrait"/>
-			<span class="f35" v-if="isLogin">昵称</span>
-			<span class="f35" v-else @click.stop="goSign">登录/注册</span>
+			<span class="f35" v-if="isLogin"><{$loginUser.name}></span>
+
+			<span v-if="isLanguageEn">
+
+				<span class="f35" v-else @click.stop="goSign">Login/Register</span>
+			</span>
+
+			<span v-else>
+				<span class="f35" v-else @click.stop="goSign">登录/注册</span>
+
+			</span>
+
+
 		</div>
 		<img src="<{$SKIN_PATH}>img/arrow2.png" class="Me_arrow" />
 	</div>
 
 	<div class="flexBox1 orderBox">
 		<div class="order flexBox1" @click="toOrders">
-			<span class="f35">订单</span>
+			<span  class="f35" v-if="isLanguageEn">Orders 	</span>	<span  class="f35" v-else>	订单	</span>
 			<img src="<{$SKIN_PATH}>img/me_1.png" class="Meicon" />
 		</div>
 		<div class="order flexBox1">
-			<span class="f35">优惠券</span>
+			<span  class="f35" v-if="isLanguageEn">Vouchers 	</span>	<span  class="f35" v-else>优惠券	</span>
+
 			<img src="<{$SKIN_PATH}>img/me_2.png" class="Meicon" @click="toMyCounpon"/>
 		</div>
 	</div>
 	<div class="infoSetting">
-		<div class="flexBox1 settingBox" @click="changeAccount">
-			<div class="flexBox1">
-				<img src="<{$SKIN_PATH}>img/setting1.png" class="icon"/>
-				<span class="col1C1C1C f30">账户切换</span>
+		<{if $CountOfGroupMembers>0}>
+			<div class="flexBox1 settingBox" @click="orderForCustomer">
+
+				<div class="flexBox1">
+					<img src="<{$SKIN_PATH}>img/setting1.png" class="icon"/>
+					<span  class="col1C1C1C f30" v-if="isLanguageEn">Order for Users</span>	<span  class="col1C1C1C f30" v-else>分店下单</span>
+
+				</div>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 			</div>
-			<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
-		</div>
+
+	<!--		<div class="flexBox1 settingBox" @click="CustomerList">
+
+				<div class="flexBox1">
+					<img src="<{$SKIN_PATH}>img/setting1.png" class="icon"/>
+					<span class="col1C1C1C f30">分店管理</span>
+				</div>
+				<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
+			</div> -->
+
+     <{else}>
 		<div class="flexBox1 settingBox" @click="address">
 			<div class="flexBox1">
 				<img src="<{$SKIN_PATH}>img/setting2.png" class="icon"/>
-				<span class="col1C1C1C f30">收货地址</span>
+				<span  class="col1C1C1C f30" v-if="isLanguageEn">Address</span>	<span  class="col1C1C1C f30" v-else>收货地址</span>
+
+
 			</div>
 			<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 		</div>
 		<div class="flexBox1 settingBox" @click="AccountSetting">
 			<div class="flexBox1">
 				<img src="<{$SKIN_PATH}>img/setting3.png" class="icon"/>
-				<span class="col1C1C1C f30">账户设置</span>
+				<span  class="col1C1C1C f30" v-if="isLanguageEn">Account Setting</span>	<span  class="col1C1C1C f30" v-else>账户设置</span>
+
 			</div>
 			<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 		</div>
+		<{/if}>
+
 		<div class="flexBox1 settingBox" @click="AQsetting">
 			<div class="flexBox1">
 				<img src="<{$SKIN_PATH}>img/setting4.png" class="icon"/>
-				<span class="col1C1C1C f30">安全设置</span>
+				<span  class="col1C1C1C f30" v-if="isLanguageEn">Passwowrds</span>	<span  class="col1C1C1C f30" v-else>安全设置	</span>
+
+
 			</div>
 			<img src="<{$SKIN_PATH}>img/arrow2.png" class="arrow" />
 		</div>
 	</div>
-	<div class="signOut f35 col1C1C1C" @click="loginOut">退出登录</div>
+	<div class="signOut f35 col1C1C1C" @click="loginOut">
+		<span   v-if="isLanguageEn">Logout</span>	<span v-else>退出登录</span>
+
+
+	</div>
 
 	<div style="height:3.125rem;"></div>
-	<div class="flexBox1 menuBox">
-		<div @click="changeMenu('1')">
-			<img src="<{$SKIN_PATH}>img/menu1.png"/>
-			<span class="col333 f26">首页</span>
-		</div>
-		<div @click="changeMenu('2')">
-			<img src="<{$SKIN_PATH}>img/menu2.png" />
-			<span class="col333 f26">订货</span>
-		</div>
-		<div @click="changeMenu('3')">
-			<img src="<{$SKIN_PATH}>img/menu3.png" />
-			<span class="col333 f26">订单</span>
-		</div>
-		<div @click="changeMenu('4')">
-			<img src="<{$SKIN_PATH}>img/menu4.png"/>
-			<span class="col333 f26">购物车</span>
-		</div>
-		<div @click="changeMenu('5')">
-			<img src="<{$SKIN_PATH}>img/menu5_.png"/>
-			<span class="colFD5001 f26">我的</span>
-		</div>
-	</div>
+	<{include file ="mobile/b2bbottom5.htm"}>
 
 </div>
 </body>
@@ -128,9 +119,37 @@
 			isShare:false,
 			currentMenu:5,   // 当前菜单
 			isAddShow:false,      // 点击＋
-			isSC:false           // 是否收藏
+			isSC:false ,          // 是否收藏
+			isLanguageEn:1, //语言环境
+			langStrDisplay:'中文',
+		},mounted:function(){
+
+			// 获得当前的语言环境
+			this.isLanguageEn =parseInt('<{$user_setting}>');
+
+			//根据当前语言环境改变pop menu 的关于语言的提示；
+			this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+			//console.log('this loginuser id is :' + <{$loginUser.role}>);
+
 		},
 		methods:{
+			changeMenu:function(index){
+				this.currentMenu=index;
+				changeMenuBottom(index,'<{$http_root_www}>','<{$loginUser.role}>'); //调用统一的底部导航菜单定义部分。
+
+			},//设置语言提示
+			switchDisplayLanguage:function(){
+				if(this.isLanguageEn) {
+					this.langStrDisplay='En';
+					this.isLanguageEn=0;
+				}else{
+					this.langStrDisplay='中文';
+					this.isLanguageEn=1;
+				}
+				setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+				this.isAddShow=!this.isAddShow; //关闭弹框
+				//向后台写入目前的语言环境状态；
+			},
 			clickAdd:function(){
 				this.isAddShow=!this.isAddShow
 			},
@@ -149,6 +168,12 @@
 			},
 			toOrders:function(){
 				window.location.href="myorders"
+			},
+			orderForCustomer:function(){
+				window.location.href="<{$http_root_www}>factory/order_for_customer_new"
+			},
+			CustomerList:function(){
+				window.location.href="<{$http_root_www}>factory/customer_list_mobile"
 			},
 			changeAccount:function(){
 				window.location.href="me/accountChange.html"
@@ -175,24 +200,10 @@
 				this.isLogin=false
 				window.location.href="logout"
 			},
-			changeMenu:function(index){
-				this.currentMenu=index
-				switch(index){
-					case '1':
-						window.location.href="<{$http_root_www}>"
-						break;
-					case '2':
-						window.location.href="<{$http_root_www}>factorypage/choose_supplier"
-						break;
-					case '3':
-						window.location.href="<{$http_root_www}>member/myorders"
-						break;
-					case '4':
-						window.location.href="<{$http_root_www}>member/showcart1"
-						break;
-					default:
-						break;
-				}
+			returnPage(){
+				this.isReturnShow=false
+				this.isShowSearchRes=false
+				this.isShowHistory=false
 			}
 		}
 	})

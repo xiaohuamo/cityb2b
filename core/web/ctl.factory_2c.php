@@ -2472,7 +2472,7 @@
 		}
 		 if($totalandeverychannelPrint) {
 			$sqlOfTotalAndGroupByBusiness = $sql1 . $whereStr . " group by c.business_id,main_code_id,c.bonus_title order by c.business_id,cate.category_sort_id,r.menu_order_id";
-			var_dump($sqlOfTotalAndGroupByBusiness);exit;
+			//var_dump($sqlOfTotalAndGroupByBusiness);exit;
 			 }
 	   	//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 		
@@ -2902,7 +2902,7 @@
 				
 					 $report->setTradingName($business_tradingName)
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("配货单-".$business_tradingName)
+					->title("Item Producing Lists-".$business_tradingName)
 					->OrderData($data);
 				
 					
@@ -2932,7 +2932,7 @@
 				
 					 $report->setTradingName($business_tradingName)
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("配货单-".$business_tradingName)
+					->title("Item Producing Lists-".$business_tradingName)
 					->setSepratePage($sepratePage)
 					->OrderData($data);
 				
@@ -2959,7 +2959,7 @@
 				
 					 $report->setTradingName($business_tradingName)
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("配货单-".$business_tradingName)
+					->title("Item Producing Lists-".$business_tradingName)
 					->setSepratePage($sepratePage)
 					->OrderData($data);
 				

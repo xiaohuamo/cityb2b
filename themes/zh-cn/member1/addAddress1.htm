@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>Homepage</title>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
+		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
+
+</head>
+<body class="bgF2F2F2">
+		<div id="me">
+<form id="memberForm" action="<{$http_root_www}>member/delivery_address_edit?id=<{$data.id}>" method="post"  enctype="multipart/form-data">
+	<div class="head bgfff center">
+				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
+				新增地址
+			</div>
+			<div style="height:3.5rem;"></div>
+			
+			
+				<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="flexBox1 pa15 borderB">
+					<span><{$lang->first_name}></span>
+				
+					<input  name="last_name"  class="H30 inputW" type="text" value="<{$data.last_name}>"  />
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span><{$lang->last_name}></span>
+				
+					<input name="first_name" type="text" value="<{$data.first_name}>"  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span><{$lang->mobile_phone}>*</span>
+				
+					<input name="phone" type="number" value="<{$data.phone}>"  required  class="H30 inputW"/>
+				</div>
+				<div class="flexBox1 pa15 borderB">
+					<span>Email</span>
+					<input  name="email"  type="text"  value="<{$data.email}>"  class="H30 inputW"/>
+					
+				</div>
+				<div class="flexBox1 pa15">
+					<span><{$lang->address}>*</span>
+					<textarea  type="text"  name="address" id ='address'  rows="4" class="inputW mytextarea" class="g-input inp" required><{$data.address}>
+						
+					</textarea>
+					
+					
+				</div>
+				<div id='address-validate-btn'><{$lang->verified_address}></div>
+
+		    	<div id='geocode-result'></div>
+				<div class="flexBox2 pa15">
+					<span>默认地址</span> &nbsp;&nbsp;
+					<img src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>
+				</div>
+			</div>
+			<div class="ma15">
+				<button class="bigBtn f30 colfff"  type="submit" >增加</button>
+			</div>
+			
+			
+			
+			
+			
+			<!--
+
+	<section id="bd">
+		<div class="new-add">
+			<div class="con">
+				<em><{$lang->last_name}></em>
+				<input name="last_name" type="text" value="<{$data.last_name}>" class="g-input inp">
+			</div>
+			<div class="con">
+				<em><{$lang->first_name}></em>
+				<input name="first_name" type="text" value="<{$data.first_name}>" class="g-input inp">
+			</div>
+			<div class="con">
+				<em><{$lang->mobile_phone}>*</em>
+				<input name="phone" type="number" value="<{$data.phone}>" class="g-input inp" required>
+			</div>
+			
+			
+			<div class="con">
+				<em>Email</em>
+				<input name="email"  type="text"  value="<{$data.email}>"  class="g-input inp">
+			</div>
+
+			<div class="bot">
+				<p><{$lang->default_address}></p>
+				<input type="hidden" name="isDefaultAddress" value='<{$data.isDefaultAddress}>' class='js-on-value isDefaultAddress'>
+				<span class="js-on <{if $data.isDefaultAddress}>on<{/if}>"></span>
+			</div>
+			
+			<div class="con">
+				<em><{$lang->address}>*</em>
+				<input name="address"  id ='address' type="text"  value="<{$data.address}>"  class="g-input inp" required>
+			</div>
+
+			<div id='address-validate-btn'><{$lang->verified_address}></div>
+
+			<div id='geocode-result'></div>
+
+		</div>
+
+		<{if $data}>
+			<a class='btn btn-danger' style='width:100%;position: fixed;bottom: 55px' href="<{$http_root_www}>member/delivery_address_delete?id=<{$data.id}>"><{$lang->delete}></a>
+		<{/if}>
+	</section>
+   -->
+</form>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places"></script>
+<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+
+<script type="text/javascript">
+  $(function(){
+    $("#address").geocomplete()
+    .bind("geocode:result", function(event, result){
+        geocodeResultDisplay(result);
+    })
+    .bind("geocode:error", function(event, status){
+      console.log("ERROR: " + status);
+    })
+    .bind("geocode:multiple", function(event, results){
+        geocodeResultDisplay(results);
+    });
+    
+  });
+
+  $(function(){
+     $("#address-validate-btn").click(function(){
+      $("#address").trigger("geocode");
+    });
+
+     $('body').on('click','#geocode-result input',function(){
+         $("#address").val($(this).val());
+     });
+  })
+
+
+  function geocodeResultDisplay(result) {
+    console.log(result);
+    var html = " <ul>"
+
+    for (var i = result.length - 1; i >= 0; i--) {
+      var r = result[i].formatted_address;
+      html+="<li><label><input type='radio' name='geocode-result-list' value='"+r+"'>"+r+"</label></li>"
+    }
+     html+= " </ul>"
+
+    $('#geocode-result').html(html);
+  }
+</script>
+</div>
+</body>
+<script>
+		new Vue({
+			el:"#me",
+			data:{
+				lastName:''
+			},
+		    methods:{
+				add:function(){
+					window.history.go(-1)
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>

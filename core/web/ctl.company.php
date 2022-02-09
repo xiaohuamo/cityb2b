@@ -122,6 +122,9 @@ class ctl_company extends cmsPage
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
         $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
+		
+		//将可能存在的 groupmanager ，用户端的 管理多家分店管理员的cookie清掉，因为这个cookie的优先级比 agenta 高，有的底，不是一致的。
+		$this->cookie->setCookie( 'groupManager', '');
 
         // 获取公司一段时间内的销售额,30天
         $mdl_order = $this->loadModel('order');

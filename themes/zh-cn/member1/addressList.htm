@@ -4,16 +4,20 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>Homepage</title>
+		<title>Address Management </title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/jquery.js"></script>
 	</head>
 	<body class="bgF2F2F2">
 		<div id="address">
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
 			<div class="head bgfff center">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				收货地址
+				<span  v-if="isLanguageEn"> Delivery Address </span>	<span   v-else>收货地址	</span>
+				
 			</div>
 			<div style="height:3.5rem;"></div>
 			
@@ -21,7 +25,7 @@
 			
 			<div class="ma15 pa15 bgfff borR7 f28 col282828" v-for="(item,index) in list" @click="clickAddress(index)">
 				<div class="pmb10 flexBox1">
-					<div>王小明   176****8888</div>	
+					<div>{{item.first_name}}&nbsp;{{item.last_name}} &nbsp;&nbsp; {{item.phone}}</div>	
 				    <img v-if="item.isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>
 				    <img v-else src="<{$SKIN_PATH}>/img/grayDH.png" class="activeDH"/>
 				</div>
@@ -49,17 +53,31 @@
 		new Vue({
 			el:"#address",
 			data:{
+			    isLanguageEn:1, //语言环境
 				list:[
-					{
+					/*{
 						isActive:1,
 						address:'地址1'
 					},
 					{
 						isActive:0,
 						address:'地址2'
-					}
+					} */ 
 				]
 			},
+				mounted:function(){
+					var _self =this;
+					// 获得当前的语言环境
+					this.isLanguageEn =parseInt('<{$user_setting}>');
+
+					
+					// 获得当前客户的地址清单
+					this.list=JSON.parse('<{$address_list}>');
+					console.log(this.list);
+		
+
+
+				},
 		    methods:{
 				add:function(){
 					window.location.href="<{$http_root_www}>factorypage/delivery_address_edit1"

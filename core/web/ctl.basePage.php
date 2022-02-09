@@ -396,6 +396,28 @@ public function  setCustomerTrueLogin($userrole){
         }
 
 }
+
+//以groupmanager身份登陆
+public function  groupMangerCheckAndSheader($groupManager, $url){
+
+    $mdl_user =$this->loadModel('user');
+
+    $user = $mdl_user->getUserById($groupManager);
+    $data = array(
+        'lastLoginIP'	=> ip(),
+        'lastLoginDate'	=> time(),
+        'loginCount'	=> $user['loginCount'] + 1
+    );
+
+    $mdl_user->updateUserById( $data, $user['id'] );
+
+    $this->session( 'member_user_id', $user['id'] );
+    $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+    $this->session('truelogin',1);
+    $this->loginUser=$user;
+    $this->sheader(HTTP_ROOT_WWW.$url);
+}
+
 //如果当前已agent方式登陆，则强制转换为agent登陆方式
 public function AgentActiveCheck($id,$agentId){
 

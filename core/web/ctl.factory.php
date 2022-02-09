@@ -1062,6 +1062,8 @@ class ctl_factory extends cmsPage
                 $addrState = trim(post('addr_state'));
                 $country = trim(post('addr_country'));
                 $nickname = trim(post('nickname'));
+                $person_first_name = trim(post('person_first_name'));
+                $person_last_name = trim(post('person_last_name'));
 
                 $address = [
                     'address' => $addrAddress,
@@ -1086,8 +1088,11 @@ class ctl_factory extends cmsPage
                     $this->setData($addrPost, 'addrPost');
                     $this->setData($country, 'country');
                     $this->setData($nickname, 'nickname');
+                    $this->setData($person_last_name, 'person_last_name');
+                    $this->setData($person_first_name, 'person_first_name');
+
                 } else {
-                    $result = self::add_new_customer($username, $mobile, $address);
+                    $result = self::add_new_customer($username, $mobile, $address,$nickname,$person_last_name,$person_first_name);
 
                     if($result['success']) {
                         $this->loadModel('wj_abn_application')->insert([
@@ -1568,6 +1573,9 @@ class ctl_factory extends cmsPage
                 $username = trim(post('username'));
                 $mobile = trim(post('mobile'));
                 $abn = str_replace(' ', '', trim(post('abn')));
+                $person_last_name = trim(post('person_last_name'));
+                $person_first_name = trim(post('person_first_name'));
+
 				if(!$abn) $abn='00000000000';
                 $addrAddress = trim(post('address'));
                 $addrNumber = trim(post('addr_house_number'));
@@ -1601,8 +1609,10 @@ class ctl_factory extends cmsPage
                     $this->setData($addrPost, 'addrPost');
                     $this->setData($country, 'country');
                     $this->setData($nickname, 'nickname');
+                    $this->setData($person_last_name, 'person_last_name');
+                    $this->setData($person_first_name, 'person_first_name');
                 } else {
-                    $result = self::add_new_customer($username, $mobile, $address);
+                    $result = self::add_new_customer($username, $mobile, $address,$nickname,$person_last_name,$person_first_name);
 
                     if($result['success']) {
                         $this->loadModel('wj_abn_application')->insert([
@@ -1688,7 +1698,7 @@ class ctl_factory extends cmsPage
         return;
     }
 
-    public function add_new_customer($username, $mobile = '', $address = [])
+    public function add_new_customer($username, $mobile = '', $address = [],$nickname,$person_last_name,$person_first_name)
     {
         $mdl_user = $this->loadModel('user');
 
@@ -1710,8 +1720,13 @@ class ctl_factory extends cmsPage
 
         $userObject->setName($username);
 
+        $userObject->setBusinessName($username);
+        $userObject->setLegalName($nickname);
+
+
         $userObject->setBusinessMobile($mobile, true);
         $userObject->setAddress($address['address']);
+        $userObject->setFullName($person_last_name,$person_first_name);
 
         $mdl_user->begin();
         $mdl_user->addUser(array_merge($userObject->toDBArray(), $address));
@@ -2867,20 +2882,60 @@ class ctl_factory extends cmsPage
  public function order_for_customer_new_action()
     {
 
-        //如果当前已agent方式登陆，则强制转换为agent登陆方式
+        //检查当前用户是否为客户登陆，还是商家或agent登陆， 如果商家或agent登陆 truelogin is false;
+       if(session('truelogin') ){
+           //为客户登陆
+         //  var_dump('still true login!');exit;
+           // 如果该客户没有分店，则提示异常登陆，如果该客户有分店，则获取分店信息，进入帮助分店的点单页面
+           $mdl = $this->loadModel('user_group');
+           $count  =   $mdl->getCountOfMembers($this->loginUser['id']);
+           if($count>0) {
+               $userList =$this->get_customer_list_of_groupManager($this->loginUser['id']);
+                $this->setData($count,'count');
+               //目前暂时只有 319188下单，则在这里把购物链接生成，直接代入到前端页面
+               // 将来 这部分代码生成，需要选择前端 下单按钮后，在user_factory里面 获取该客户的供应商连接，然后依次生成带下单连接即可。
+               foreach ($userList as $key=>$user){
 
-       $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
-
-        //获取当前操作者的客户列表
-        $factoryList =$this->get_customer_list_of_salesOrOwner();
-        //var_dump($factoryList);exit;
+                       $expiredAt =strtotime("+36 months", time());
+                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt);
+                       $userList[$key]['login_link'] = $link;
 
 
-        $this->setData(json_encode($factoryList), 'factoryUsers');
+               }
+              // var_dump($userList);exit;
+               $this->setData(json_encode($userList), 'userList');
+               $this->display_pc_mobile('factory/salesman/order_for_group_member', 'factory/salesman/order_for_group_member');
+           }else{
+               var_dump('no access!');exit;
+           }
+       }else{
+
+           /*
+           获取 当前cookie的groupmanager历史否值，如果有代表目前是groupmanger在管理下单工作。
+           */
+           $groupManager =$this->cookie->getCookie('groupManager');
+           if($groupManager) { //如果当前有groupmanager登陆路过，则优先处理groupmanager
+               $this->groupMangerCheckAndSheader($groupManager, 'factory/order_for_customer_new');
+               return 1;
+           }
 
 
-        $this->display_pc_mobile('factory/salesman/order_for_customer_new', 'factory/salesman/order_for_customer_new');
 
+
+           //如果当前已agent方式登陆，则强制转换为agent登陆方式
+           $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
+
+           //获取当前操作者的客户列表
+           $factoryList =$this->get_customer_list_of_salesOrOwner();
+           //var_dump($factoryList);exit;
+
+
+           $this->setData(json_encode($factoryList), 'factoryUsers');
+
+
+           $this->display_pc_mobile('factory/salesman/order_for_customer_new', 'factory/salesman/order_for_customer_new');
+
+       }
 
     }
 
@@ -2891,7 +2946,7 @@ class ctl_factory extends cmsPage
         //get all customer information
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
-		if(!$this->trueLogin) 
+
         $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 
 
@@ -2977,6 +3032,51 @@ class ctl_factory extends cmsPage
 
     public function customer_list_mobile_action()
     {
+		
+		
+		
+		
+		
+		
+		   //检查当前用户是否为客户登陆，还是商家或agent登陆， 如果商家或agent登陆 truelogin is false;
+       if(session('truelogin')){
+           //为客户登陆
+         //  var_dump('still true login!');exit;
+           // 如果该客户没有分店，则提示异常登陆，如果该客户有分店，则获取分店信息，进入帮助分店的点单页面
+           $mdl = $this->loadModel('user_group');
+           $count  =   $mdl->getCountOfMembers($this->loginUser['id']);
+           if($count>0) {
+               $userList =$this->get_customer_list_of_groupManager($this->loginUser['id']);
+                $this->setData($count,'count');
+               //目前暂时只有 319188下单，则在这里把购物链接生成，直接代入到前端页面
+               // 将来 这部分代码生成，需要选择前端 下单按钮后，在user_factory里面 获取该客户的供应商连接，然后依次生成带下单连接即可。
+               foreach ($userList as $key=>$user){
+
+                       $expiredAt =strtotime("+36 months", time());
+                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt);
+                       $userList[$key]['login_link'] = $link;
+
+
+               }
+              // var_dump($userList);exit;
+               $this->setData(json_encode($userList), 'userList');
+               $this->display_pc_mobile('factory/group_manager/customer_list', 'factory/group_manager/customer_list');
+           }else{
+               var_dump('no access!');exit;
+           }
+       }else{
+
+           /*
+           获取 当前cookie的groupmanager历史否值，如果有代表目前是groupmanger在管理下单工作。
+           */
+           $groupManager =$this->cookie->getCookie('groupManager');
+           if($groupManager) { //如果当前有groupmanager登陆路过，则优先处理groupmanager
+               $this->groupMangerCheckAndSheader($groupManager, 'factory/customer_list_mobile');
+               return 1;
+           }
+
+
+
 
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
 
@@ -2991,6 +3091,23 @@ class ctl_factory extends cmsPage
 
 
         $this->display_pc_mobile('factory/salesman/customer_list', 'factory/salesman/customer_list');
+
+
+       }
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
     }
@@ -3013,6 +3130,23 @@ class ctl_factory extends cmsPage
 
         return $factoryList;
     }
+
+
+    // 获取当前操作者的客户列表
+    function get_customer_list_of_groupManager($manager_id){
+
+
+        //获得当前用户的实际商家所有者商家id
+
+        $mdl =$this->loadModel('user_group');
+        $factoryList = $mdl->getListOfGroupUser($manager_id);
+
+       // var_dump($factoryList);exit;
+        return $factoryList;
+    }
+
+
+
     //定义企业员工导向页面入口
     public function employee_navigation_panel_action(){
 
@@ -3050,6 +3184,15 @@ class ctl_factory extends cmsPage
         $this->display('factory/customer_login_link');
     }
 
+
+    public function customer_login_link_groupMember($userId, $expired) {
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $factoryId = 319188;
+        $token = $mdl_user_factory->generateUserLoginToken($userId,$factoryId, $expired);
+
+        return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
+    }
+
     public function customer_login_link($userId, $expired) {
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
@@ -3062,7 +3205,7 @@ class ctl_factory extends cmsPage
         $orderId = get2('order_id');
         $mel_user = $this->loadModel('user');
         $mdl_abn_application = $this->loadModel('wj_abn_application');
-        $mdl_user_account_info = $this->loadModel('user_account_info');
+        $mdl_user_account_iFnfo = $this->loadModel('user_account_info');
 
         $order = $this->loadModel('order')->getByOrderId($orderId);
         $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);

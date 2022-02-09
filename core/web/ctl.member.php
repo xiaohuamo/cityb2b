@@ -120,35 +120,42 @@ class ctl_member extends cmsPage
         if(session('truelogin')) { //如果为真是客户登陆则不转换身份呢
      //      var_dump(truelogin); exit;
         }else{
-            $agentId =$this->cookie->getCookie('agentcityb2b');
+                $groupManager =$this->cookie->getCookie('groupManager');
+                if($groupManager) { //如果当前有groupmanager登陆路过，则优先处理groupmanager
+                    $this->groupMangerCheckAndSheader($groupManager, 'member/index');
+                    return 1;
+                }
 
 
+                //如果不是groupmanager 检查是否为代理
+                $agentId =$this->cookie->getCookie('agentcityb2b');
+
+                if ($agentId !=$id) {
+                    $mdl_user =$this->loadModel('user');
+
+                    $user = $mdl_user->getUserById( $agentId );
+                    $data = array(
+                        'lastLoginIP'	=> ip(),
+                        'lastLoginDate'	=> time(),
+                        'loginCount'	=> $user['loginCount'] + 1
+                    );
+
+                    $mdl_user->updateUserById( $data, $user['id'] );
+
+                    $this->session( 'member_user_id', $user['id'] );
+                    $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
+
+                    $this->loginUser=$user;
+                    $this->sheader(HTTP_ROOT_WWW.'company/index');
+
+                 }
 
 
-
-
-
-
-        if ($agentId !=$id) {
-            $mdl_user =$this->loadModel('user');
-
-            $user = $mdl_user->getUserById( $agentId );
-            $data = array(
-                'lastLoginIP'	=> ip(),
-                'lastLoginDate'	=> time(),
-                'loginCount'	=> $user['loginCount'] + 1
-            );
-
-            $mdl_user->updateUserById( $data, $user['id'] );
-
-            $this->session( 'member_user_id', $user['id'] );
-            $this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
-
-            $this->loginUser=$user;
-            $this->sheader(HTTP_ROOT_WWW.'company/index');
         }
 
-        }
+        // 获取用户是否为组管理里用户
+        $this->setData($this->loadModel('user_group')->getCountOfMembers($this->loginUser['id']),'CountOfGroupMembers');
+
 
 		$this->setData( (string)$this->lang->member_center, 'pagename' );
 		$this->setData( 'index', 'menu' );

@@ -1337,6 +1337,7 @@ class ctl_factorypage extends cmsPage
 
             $this->session('member_user_id', $userId);
             $this->session('member_user_shell', $this->md5($userId.$user['name'].$user['password']));
+            $this->session('truelogin',0);
         //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
             $this->sheader(HTTP_ROOT_WWW.'supplier/'.$factoryId);
         } else {
@@ -2799,7 +2800,7 @@ class ctl_factorypage extends cmsPage
             $this->setData( 'myorder', 'menu' );
             $this->setData( 'delivery_address', 'submenu' );
             $this->setData( $this->lang->delivery.$this->lang->info .'-个人中心 '.$this->site['pageTitle'], 'pageTitle' );
-            $this->display_pc_mobile('member/delivery_address_edit','member1/addAddress');
+            $this->display_pc_mobile('member/delivery_address_edit','member1/addAddress1');
         }
 
 
@@ -2825,10 +2826,15 @@ class ctl_factorypage extends cmsPage
         $pageSize	= 10;
         $maxPage	= 10;
         $page		= $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
         $data		= $mdl_wj_user_delivery_info->getListBySql($page['outSql']);
 
+        if(sizeof($data)==1){
+            $data[0]['isActive']=1;
+        }
+       //var_dump(json_encode($data));exit;
         $this->setData( $data, 'data' );
-        $this->setData( json_encode($data), 'addressList' );
+        $this->setData( json_encode($data), 'address_list' );
         $this->setData( $page['pageStr'], 'pager' );
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'editUrl' );
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'showUrl' );
