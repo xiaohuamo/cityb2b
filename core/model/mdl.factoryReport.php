@@ -472,8 +472,9 @@ class OrderInfoReport
 
 
                 $this->pdf->row('', 0.10, 0, 'C');
-
+                $this->pdf->setFontSize(14);
                 $this->pdf->row($order['customerName'], 0.55, 0, 'C');
+                $this->pdf->setFontSize();
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -505,7 +506,9 @@ class OrderInfoReport
                 $this->pdf->row($order['address'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
+                $this->pdf->setFontSize(14);
                 $this->pdf->row($order['customerName'], 0.55, 0, 'C');
+                $this->pdf->setFontSize();
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -596,8 +599,9 @@ class OrderInfoReport
 
 
                 $this->pdf->row('', 0.10, 0, 'C');
-
+                $this->pdf->setFontSize(14);
                 $this->pdf->row($order['customerName'], 0.55, 0, 'C');
+                $this->pdf->setFontSize();
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
@@ -627,7 +631,9 @@ class OrderInfoReport
                 $this->pdf->row($order['address'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
+                $this->pdf->setFontSize(14);
                 $this->pdf->row($order['customerName'], 0.55, 0, 'C');
+                $this->pdf->setFontSize();
                 $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
