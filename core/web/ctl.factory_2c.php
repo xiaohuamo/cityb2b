@@ -2426,16 +2426,16 @@
 	
      
         if($business_id) {
-			    $pageSql=$sql . $whereStr . " group by c.business_id,main_code_id,c.bonus_title order by cate.category_sort_id,r.menu_order_id";
+			    $pageSql=$sql . $whereStr . " group by c.business_id,main_code_id,c.bonus_title,c.guige1_id order by cate.category_sort_id,r.menu_order_id";
     
 			
 		}else{ //打印总单
 			
-			    $pageSql=$sql . $whereStr . " group by main_code_id,c.bonus_title order by cate.category_sort_id,r.menu_order_id";
+			    $pageSql=$sql . $whereStr . " group by main_code_id,c.bonus_title,c.guige1_id  order by cate.category_sort_id,r.menu_order_id";
     
 		}
 		 if($totalandeverychannelPrint) {
-			$sqlOfTotalAndGroupByBusiness = $sql1 . $whereStr . " group by c.business_id,main_code_id,c.bonus_title order by c.business_id,cate.category_sort_id,r.menu_order_id";
+			$sqlOfTotalAndGroupByBusiness = $sql1 . $whereStr . " group by c.business_id,main_code_id,c.bonus_title,c.guige1_id order by c.business_id,cate.category_sort_id,r.menu_order_id";
 			//var_dump($sqlOfTotalAndGroupByBusiness);exit;
 			 }
 	   	//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
@@ -2443,7 +2443,7 @@
 		// $mdl = $this->loadModel('authrise_manage_other_business_account');
         // $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($business_id);
 		 
-		
+		//var_dump($pageSql);exit;
 	   
 	 // var_dump(get2('output'));exit;
 	 if(trim(get2('output'))) {
@@ -2495,14 +2495,14 @@
 					
 					 $report->setTradingName($business_user['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("配货单-".$business_user['displayName'])
+					->title("Stock lists-".$business_user['displayName'])
 					->OrderData($data);
 					
 					
 				}else{
 					 $report->setTradingName($this->loginUser['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("总配货单-".$this->loginUser['displayName'])
+					->title("Summery of stocks-".$this->loginUser['displayName'])
 					->OrderData($data);
 				}
 					
@@ -2736,12 +2736,12 @@
 	
      
         if($business_id) {
-			    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id ,c.guige_des order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
+			    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id ,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
     
 			
 		}else{ //打印总单
 			
-			    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id,c.guige_des order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
+			    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
     
 		}
 		//var_dump($pageSql);exit;
@@ -2791,6 +2791,8 @@
 		}
 		$business_id = trim(get2('business_id'));
 		$itemLists = trim(get2('itemLists'));
+        $guigeId = trim(get2('guigeId'));
+
 		$customer_delivery_date = trim(get2('customer_delivery_date'));
 		$printItemRange =trim(get2('output'));
 		//var_dump($sepratePage);exit;
@@ -2811,9 +2813,9 @@
 			$query_table_name='cc_order';
 		}
 		
-	
+
 		
- 	  $sql= Factory2c_centre::getSqlofOrdersOfDefinedItemOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id'],$printItemRange,$itemLists);
+ 	  $sql= Factory2c_centre::getSqlofOrdersOfDefinedItemOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id'],$printItemRange,$itemLists,$guigeId);
 		
 	      if (!empty($sk)) {
             $whereStr.=" and ( c.bonus_title like  '%" . $sk . "%'";

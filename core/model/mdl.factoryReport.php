@@ -670,21 +670,22 @@ class OrderInfoReport
         //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
         $this->pdf->setFontSize(12);
         $this->pdf->row('Tick', 0.05, 0, 'C', 12);
-        $this->pdf->row('Type', 0.20, 0, 'C', 12);
-        $this->pdf->row('Code', 0.05, 0, 'C', 12);
-        $this->pdf->row('Product Name', 0.5, 0, 'C', 12);
+        $this->pdf->row('Type', 0.15, 0, 'C', 12);
+        $this->pdf->row('Item ID', 0.10, 0, 'C', 12);
+        $this->pdf->row('Spec.Id', 0.10, 0, 'C', 12);
+        $this->pdf->row('Item Name', 0.4, 0, 'C', 12);
        
 
-        $this->pdf->row('quantity', 0.1, 0, 'C', 12);
+        $this->pdf->row('Quantity', 0.1, 0, 'C', 12);
         $this->pdf->row('Unit', 0.1, 0, 'C', 12);
         $this->pdf->setFontSize();
         $this->pdf->ln();
         $this->pdf->row("", 1, 1, 'C', 0.1);
 
         $limitCateLength=30;
-        $limitNameLength=60;
+        $limitNameLength=50;
         foreach ($this->OrderData as $key => $order) {
-            $nameLength =strlen($order['bonus_title'].' '.$order['guige_des'].' '.$order['guige_des']);
+            $nameLength =strlen($order['bonus_title'].' '.$order['guige_des']);
             $cateLength =strlen($order['category_en_name']);
 
             if($nameLength>$limitNameLength || $cateLength>$limitCateLength ){
@@ -692,19 +693,20 @@ class OrderInfoReport
                 $this->pdf->row("[  ]", 0.05, 0, 'C');
 
                 if($cateLength>$limitCateLength  ) {
-                    $this->pdf->row('', 0.20, 0, 'C');
+                    $this->pdf->row('', 0.15, 0, 'C');
                 }else{
                   //  $this->pdf->row($order['category_en_name'].'/'.$order['category_cn_name'], 0.20, 0, 'C');
-				$this->pdf->row($order['category_en_name'], 0.20, 0, 'C');
+				$this->pdf->row($order['category_en_name'], 0.15, 0, 'C');
 
                 }
-                $this->pdf->row($order['menu_id'], 0.05, 0, 'C');
+                $this->pdf->row($order['menu_id'], 0.10, 0, 'C');
+                $this->pdf->row($order['guige1_id'], 0.10, 0, 'C');
 
                 if($nameLength>$limitNameLength  ) {
                     // $this->pdf->row($order['bonus_title'], 0.4, 0, 'C');
-                    $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.5, 0, 'C');
+                    $this->pdf->row(' ', 0.4, 0, 'C');
                 }else{
-                    $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.5, 0, 'C');
+                    $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.4, 0, 'C');
                    // $this->pdf->row($order['menu_en_name'], 0.2, 0, 'C');
                 }
 
@@ -740,11 +742,12 @@ class OrderInfoReport
 
             }else{
                 $this->pdf->row("[  ]", 0.05, 0, 'C');
-                $this->pdf->row($order['category_en_name'], 0.20, 0, 'C');
+                $this->pdf->row($order['category_en_name'], 0.15, 0, 'C');
 
-                $this->pdf->row($order['menu_id'], 0.05, 0, 'C');
+                $this->pdf->row($order['menu_id'], 0.10, 0, 'C');
+                $this->pdf->row($order['guige1_id'], 0.10, 0, 'C');
 
-                $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.5, 0, 'C');
+                $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.4, 0, 'C');
                // $this->pdf->row($order['menu_en_name'], 0.2, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['total_quantity'], 0.1, 0, 'C');

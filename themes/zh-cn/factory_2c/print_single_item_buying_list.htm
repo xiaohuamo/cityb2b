@@ -115,9 +115,9 @@
 					  <{if $customer_delivery_date}>
 						<br><br>
 						 <div id="printer">
-							<button  id="printtotal" type="button" onclick="showPdf('allDefinedItem','');">全部预定义单品</button>
+							<button  id="printtotal" type="button" disabled onclick="showPdf('allDefinedItem','');">全部预定义单品</button>
 						&nbsp;&nbsp;
-							 <button  id="exportdata" type="button" onclick="showPdf('selectedItem','');">当前勾选单品</button>
+							 <button  id="exportdata" type="button" disabled  onclick="showPdf('selectedItem','');">当前勾选单品</button>
 								&nbsp;&nbsp; <input  type="checkbox" checked name="sepratePage" id='sepratePage' value='true'>分页
 							
 							</div>
@@ -136,19 +136,21 @@
 								<th>打印</th>	
 								<{/if}>
 							<{if $business_id}>								
-								<th>商家编号</th>								
+								<th>Business ID</th>								
 							<{/if}>
-									<th>配送日期</th>
-									<th>类别</th>
+									<th>Delivery Date</th>
+									<!--<th>Type</th> -->
 									
-									<th>类别英文名</th>
-									<th>产品编号</th>
-									<th>中文名</th>
-									<th>规格</th>
+									<th>Category Id</th>
+									<th>Product Code</th>
+								<!--	<th>prduct Name (cn)</th>  -->
 									
-									<th>英文名</th>		
-								<th>数量</th>	
-									<th>单位</th>	
+									
+									<th>Product Name</th>	
+									<th>Spec Id</th>		
+									<th>Spec Desc</th>									
+									<th>Quantity</th>	
+									<th>Unit</th>	
 									
 												
 									
@@ -159,26 +161,30 @@
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
 								 <{if $customer_delivery_date}>
 								 <td><input  type="checkbox"  name="printItemLists"  value='<{$item.main_code_id}>'></td>
-								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>);">打&nbsp;印</button></td>
+								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>,<{$item.guige1_id}>);">打&nbsp;印</button></td>
                                  <{/if}>
 								<{if $business_id}>		
 								<td><{$item.business_id}></td> <{/if}>
 								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
-									<td><{$item.category_cn_name}></td>
+								<!--	<td><{$item.category_cn_name}></td>  -->
 								  
 										<td><{$item.category_en_name}></td>
 									  <td><{$item.menu_id}></td>
 									
 									  
-									<td>
+								<!--	<td>
 										<{$item.bonus_title}>
+									</td> -->
+									<td><{$item.menu_en_name}></td>
+									<td>
+										<{$item.guige1_id}>
 									</td>
 									<td>
 										<{$item.guige_des}>
 									</td>
 									
 								
-									<td><{$item.menu_en_name}></td>
+									
 									
 										<td><{$item.total_quantity}></td>
 									<td><{$item.unit}></td>
@@ -272,7 +278,7 @@
 
 <script type="text/javascript">
 
-function showPdf(type,item_id)
+function showPdf(type,item_id,guige_id)
 {	
 	
 	
@@ -308,11 +314,12 @@ function showPdf(type,item_id)
 	
    if(type=='singItemPrint') {
 	   var vItemLists = item_id;
+	    var vGuigeId = guige_id;
 	  // alert( vItemLists);
 	}
 	
   
-	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&itemLists='+vItemLists+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
 	window.open(vUrl);
 }
 

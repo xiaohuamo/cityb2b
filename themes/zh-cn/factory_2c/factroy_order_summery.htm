@@ -138,16 +138,16 @@
 								<tr>	
                              <{if $business_id}>								
 								<th>商家编号</th>								
-									<{/if}><th>配送日期</th>
-									<th>类别</th>
+									<{/if}>
+									<th>Delivery Date</th>
 									
-									<th>类别英文名</th>
-									<th>产品编号</th>
-									<th>中文名</th>
-									
-									<th>英文名</th>		
-								<th>数量</th>	
-									<th>单位</th>	
+									<th>Category Name</th>
+									<th>Product Code</th>
+									<th>Product Name</th>
+									<th>Spec ID</th>
+									<th>Spec Name</th>
+									<th>Quantity</th>	
+									<th>Unit</th>	
 									
 												
 									
@@ -159,18 +159,14 @@
 								     <{if $business_id}>		
 								<td><{$item.business_id}></td> <{/if}>
 								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
-									<td><{$item.category_cn_name}></td>
+									
 								  
 										<td><{$item.category_en_name}></td>
 									  <td><{$item.menu_id}></td>
 									
-									  
-									<td>
-										<{$item.bonus_title}>
-									</td>
-									
-								
 									<td><{$item.menu_en_name}></td>
+									<td><{if $item.guige1_id}><{$item.guige1_id}><{else}>-<{/if}></td>
+									<td><{if $item.guige_des}><{$item.guige_des}><{else}>-<{/if}> </td>
 									
 										<td><{$item.total_quantity}></td>
 									<td><{$item.unit}></td>
