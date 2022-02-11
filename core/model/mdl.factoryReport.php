@@ -419,15 +419,15 @@ class OrderInfoReport
 
        if($first_rec ) {
 		   $this->pdf->ln(20);
-		//orderId//first_name+last_name//phone//status//payment//customer_delivery_option
-		$this->pdf->setFontSize(12);
-		$this->pdf->row('Item Code: '.$order['menu_id'], 0.2, 0, 'C', 12);
-		$this->pdf->row(' Name: '.$order['menu_en_name'].' '.$order['guige_des'], 0.7, 0, 'C', 12);
-           $this->pdf->setFontSize(14);
-        $this->pdf->row(' Unit:'.$order['unit'], 0.1, 0, 'C', 12);
+            //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
+            $this->pdf->setFontSize(12);
+            $this->pdf->row('Item Code: '.$order['menu_id'], 0.2, 0, 'C', 12);
+            $this->pdf->row(' Name: '.$order['menu_en_name'].' '.$order['guige_des'], 0.7, 0, 'C', 12);
+               $this->pdf->setFontSize(14);
+            $this->pdf->row(' Unit:'.$order['unit'], 0.1, 0, 'C', 12);
 
-		$this->pdf->ln();
-		   
+            $this->pdf->ln();
+
 		   
         //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
 
@@ -448,12 +448,6 @@ class OrderInfoReport
 	   }
 		
 
-  	  
-
-
-		
-
-     
       
             $nameLength =strlen($order['Address']);
 
@@ -529,6 +523,7 @@ class OrderInfoReport
 
 
         $old_menu_id =0;
+        $old_guige_id =0;
         $limitNameLength=60;
         //var_dump($this->sepratePage);exit;
         if(!$this->sepratePage) {
@@ -543,7 +538,7 @@ class OrderInfoReport
 
 
 
-            if($old_menu_id ==0 || $old_menu_id != $order['source_menu_id']) {
+            if($old_menu_id ==0 || ($old_menu_id != $order['source_menu_id'] ) ||   ($old_menu_id == $order['source_menu_id']  && $old_guige_id != $order['guige1_id'] )) {
 
 
 
@@ -557,26 +552,34 @@ class OrderInfoReport
                 if(!$order['menu_en_name']) {
                     $order['menu_en_name'] =$order['menu_cn_name'] ;
                 }
-                if($old_menu_id !=0)   $this->pdf->ln(20);
+                if($old_menu_id !=0)   $this->pdf->ln(15);
                 //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
                 $this->pdf->setFontSize(12);
 
-                $this->pdf->row('Item Code: '.$order['menu_id'], 0.2, 0, 'C', 12);
-                $this->pdf->row(' Name: '. $order['menu_en_name'].' '.$order['guige_des'], 0.7, 0, 'C', 12);
+                $this->pdf->row('   Item Code:'.$order['menu_id'], 0.2, 0, 'C', 12);
+                $this->pdf->row('Name:'.$order['menu_en_name'], 0.7, 0, 'C', 12);
                 $this->pdf->setFontSize(14);
                 $this->pdf->row(' Unit:'.$order['unit'], 0.1, 0, 'C', 12);
                 $this->pdf->setFontSize(12);
-                $this->pdf->ln();
+                $this->pdf->ln(7);
+
+                //如果含有规格
+                if($order['guige1_id']) {
+                    $this->pdf->row('Spec Code:'.$order['guige1_id'], 0.2, 0, 'C', 12);
+                    $this->pdf->row('Name:'.$order['guige_des'], 0.7, 0, 'C', 12);
+                    $this->pdf->row('', 0.1, 0, 'C', 12);
+                    $this->pdf->ln();
+                }
 
                 $this->pdf->setFontSize(10);
                 $this->pdf->row('Tick', 0.05, 0, 'C', 12);
                 $this->pdf->row('Id', 0.10, 0, 'C', 12);
-                $this->pdf->row('SEQ_No', 0.05, 0, 'C', 12);
+                $this->pdf->row('SEQ_No', 0.10, 0, 'C', 12);
 
-                $this->pdf->row('Suburb', 0.10, 0, 'C', 12);
+                $this->pdf->row('Suburb', 0.15, 0, 'C', 12);
                 $this->pdf->row('Truck', 0.05, 0, 'C', 12);
-                $this->pdf->row('Name', 0.55, 0, 'C', 12);
-                $this->pdf->row('Qty', 0.05, 0, 'C', 12);
+                $this->pdf->row('Customer Name', 0.40, 0, 'C', 12);
+                $this->pdf->row('Qty', 0.10, 0, 'C', 12);
                 $this->pdf->row('Unit', 0.05, 0, 'C', 12);
                 $this->pdf->setFontSize();
                 $this->pdf->ln();
@@ -593,21 +596,16 @@ class OrderInfoReport
                 $this->pdf->row("[  ]", 0.05, 0, 'C');
                 $length =strlen($order['order_id']);
                 $this->pdf->row(substr($order['order_id'],$length-6,6), 0.10, 0, 'C');
-                $this->pdf->setFontSize(16);
-                $this->pdf->row($order['logistic_sequence_No'], 0.05, 0, 'C');
-                $this->pdf->setFontSize();
-
-
-                $this->pdf->row('', 0.10, 0, 'C');
-                $this->pdf->setFontSize(14);
-                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
-                $this->pdf->setFontSize();
-                $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
+                $this->pdf->row($order['logistic_sequence_No'], 0.10, 0, 'C');
+                $this->pdf->setFontSize();
+                $this->pdf->row('', 0.15, 0, 'C');
+                $this->pdf->setFontSize(12);
+                $this->pdf->row($order['customerName'], 0.40, 0, 'C');
+                $this->pdf->row($order['customer_buying_quantity'], 0.10, 0, 'C');
                 $this->pdf->row($order['unit'], 0.05, 0, 'C');
                 $this->pdf->setFontSize();
                 $this->pdf->ln();
-                $this->pdf->setFontSize(8);
                 $this->pdf->row($order['address'], 0.6, 0, 'C');
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
                 $this->pdf->setFontSize();
@@ -619,31 +617,30 @@ class OrderInfoReport
 
 
             }else{
-                $this->pdf->row("", 1, 1, 'C', 0.1);
+                $this->pdf->row("", 1, 0, 'C', 0.1);
                 $this->pdf->row("[  ]", 0.05, 0, 'C');
                 $length =strlen($order['order_id']);
                 $this->pdf->row(substr($order['order_id'],$length-6,6), 0.10, 0, 'C');
-                $this->pdf->setFontSize(16);
-                $this->pdf->row($order['logistic_sequence_No'], 0.05, 0, 'C');
+                $this->pdf->setFontSize(12);
+                $this->pdf->row($order['logistic_sequence_No'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
 
-                $this->pdf->setFontSize(8);
-                $this->pdf->row($order['address'], 0.10, 0, 'C');
-                $this->pdf->setFontSize();
+
+                $this->pdf->row($order['address'], 0.15, 0, 'C');
                 $this->pdf->row($order['logistic_truck_No'], 0.05, 0, 'C');
-                $this->pdf->setFontSize(14);
-                $this->pdf->row($order['customerName'], 0.55, 0, 'C');
-                $this->pdf->setFontSize();
-                $this->pdf->row($order['customer_buying_quantity'], 0.05, 0, 'C');
                 $this->pdf->setFontSize(12);
-                $this->pdf->row($order['unit'], 0.05, 0, 'C');
+                $this->pdf->row($order['customerName'], 0.4, 0, 'C');
+                $this->pdf->row($order['customer_buying_quantity'], 0.10, 0, 'C');
                 $this->pdf->setFontSize();
+                $this->pdf->row($order['unit'], 0.05, 0, 'C');
+
 
 
                 $this->pdf->ln();
             }
 
             $old_menu_id = $order['source_menu_id'];
+            $old_guige_id = $order['guige1_id'];
 
 
         }

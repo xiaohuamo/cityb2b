@@ -2838,7 +2838,7 @@
 				
 			}
         }
-		$orderStr =" order by r.source_menu_id ";
+		$orderStr =" order by r.source_menu_id ,c.guige1_id ";
 		$sql.=$whereStr.$orderStr;
 	   
 	// var_dump($sql);exit;
@@ -2872,7 +2872,7 @@
 					->OrderData($data);
 				
 					
-				$report->generatePDFSingleItemBuyingList();
+				$report->generatePDFSelectedItemsBuyingList();
 				$report->outPutToBrowser($fileNameofOutput);
 				exit;
 				
@@ -2885,7 +2885,7 @@
 				//var_dump ('did not ');exit;
 				$data = $mdl_order->getListBySql($sql);
 				
-			   // var_dump($data);exit;
+			   // var_dump($sql);exit;
 			   
 
 				$this->loadModel('factoryReport');
@@ -2901,8 +2901,8 @@
 					->title("Item Producing Lists-".$business_tradingName)
 					->setSepratePage($sepratePage)
 					->OrderData($data);
-				
-					
+
+
 				$report->generatePDFSelectedItemsBuyingList();
 				$report->outPutToBrowser($fileNameofOutput);
 				exit;

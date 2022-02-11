@@ -160,7 +160,10 @@
 								<{foreach from=$data item=item name='dl'}>		
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
 								 <{if $customer_delivery_date}>
-								 <td><input  type="checkbox"  name="printItemLists"  value='<{$item.main_code_id}>'></td>
+								 <td><input  type="checkbox"  name="printItemLists"    value='<{$item.main_code_id}>'>
+								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
+								 
+								 </td>
 								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>,<{$item.guige1_id}>);">打&nbsp;印</button></td>
                                  <{/if}>
 								<{if $business_id}>		
@@ -196,6 +199,11 @@
 								
 								</tr>			
 								<{/foreach}>			
+								<tr>
+									<td><input  type="checkbox"  onclick ="selectAllCheckBox(this);" name="selectAllCheckbox" ></td>
+								    <td>全部选定</td>
+                               
+								</tr>
 							</tbody>		
 						</table>	
 
@@ -256,11 +264,30 @@
 
 
 		});
-	})
+		
+		
+		
+		
+	});
+	
+	
+	function selectAllCheckBox(obj) {
+	
+	 if($(obj).attr('checked')){
+	  
+		  $("input[name='printItemLists']").attr("checked",true);
+		
+	 }else{
+		  $("input[name='printItemLists']").attr("checked",false);
+	 };
+	
+	}
 
 	function IconUpdate (obj) {
 		this.target = $(obj).find('.status_updating');
 	}
+	
+	
 		
 	IconUpdate.prototype.iconUpdating = function(){
 		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
@@ -301,8 +328,15 @@ function showPdf(type,item_id,guige_id)
 	if(type=='selectedItem') {
 	 
 	  var vItemLists = [];
+	    var vGuigeId = [];
+		var guige_value =0;
         $("input[name='printItemLists']:checked").each(function(i){//把所有被选中的复选框的值存入数组
             vItemLists[i] =$(this).val();
+			guige_value =$(this).next().val();
+			if(!guige_value) guige_value =0;
+			vGuigeId[i] =guige_value;
+		
+			//alert(vItemLists[i] + ' ' + vGuigeId[i] );
         }); 
 	  // console.log(vItemLists);
 

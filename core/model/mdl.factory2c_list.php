@@ -239,13 +239,34 @@ class mdl_factory2c_list extends mdl_base
 			$whereProductRange = "r.source_menu_id in (".$menuList.") ";
 		
 		}else{
-			if(strstr($itemLists,',')){
-				
-				$whereProductRange = "r.source_menu_id in (".$itemLists.") ";
-			}else{
-				
-				$whereProductRange ="  r.source_menu_id =".$itemLists.' and c.guige1_id='.$guigeId ;
-			}
+
+            if(strstr($itemLists,',')){
+
+                $itemListsArr =explode(',',$itemLists);
+                $guigeIdArr =explode(',',$guigeId);
+                $whereProductRange = "  (" ;
+                foreach ($itemListsArr as $key=>$value){
+                   if($key >0) {
+                       $whereProductRange .=" or ";
+                   }
+                   $guige_value =$guigeIdArr[$key];
+                   if(!$guige_value) {
+                       $whereProductRange .= " (r.source_menu_id =$value)  ";
+                   }else{
+                       $whereProductRange .= " (r.source_menu_id =$value and c.guige1_id=$guige_value)  ";
+                   }
+
+                }
+                $whereProductRange .= "  )" ;
+             //   var_dump($whereProductRange);exit;
+
+            }else{
+
+                $whereProductRange ="  r.source_menu_id =".$itemLists.' and c.guige1_id='.$guigeId ;
+            }
+
+         //   var_dump($whereProductRange);exit;
+
 			
 		}
 
@@ -271,6 +292,9 @@ class mdl_factory2c_list extends mdl_base
 		return $sql;
 		
     }
+
+
+
 	
 	   
 }
