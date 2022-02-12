@@ -152,17 +152,21 @@
 		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
 	</div>
 	<div class='second-level'>
-		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
-		配货中心经理管理
+		<a  href="" <{if $submenu==''}> class="current"<{/if}>>
+		 <{$lang->manager}>
 		</a>
 		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
-				  <{$lang->print_picking_list}>
+			<{$lang->print_picking_list}>
+		</a>
+		
+		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
+			<{$lang->print_packing_slips}>
+		</a>
+		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
+				 <{$lang->print_label_logistic}>
 		</a>
 		<a  href="<{$http_root_www}>factory_2c/single_item_print_edit"<{if $submenu=='singleItemPrintEdit'}> class="current"<{/if}>>
 				<{$lang->Single_Picking_item_edit}>
-		</a>
-		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
-				<{$lang->print_packing_slips}>
 		</a>
 		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
 			   <{$lang->print_item_packing_slips}>
@@ -170,14 +174,36 @@
 	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
 				导入外部订单
 		</a>  -->
-		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
-				 <{$lang->print_label_logistic}>
-		</a>
-		<a  href="<{$http_root_www}>company/dispcenter_add_customer" <{if $submenu=='dispcenter_add_customer'}> class="current"<{/if}>>
+		
+	<!--	<a  href="<{$http_root_www}>company/dispcenter_add_customer" <{if $submenu=='dispcenter_add_customer'}> class="current"<{/if}>>
 				 <{$lang->add_dispatching_customer}>  
-		</a>
+		</a> -->
 			
 	</div>
+	
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='Producing_Centre'}> class="current"<{/if}>><{$lang->Producing_Centre}></a>
+	</div>
+	<div class='second-level'>
+		<a  href="" <{if $submenu==''}> class="current"<{/if}>>
+		 <{$lang->manager}>
+		</a>
+		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
+				  <{$lang->summer_product_list}>
+		</a>
+		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
+			   <{$lang->print_item_producing_slips}>
+		</a>
+		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
+				<{$lang->Single_Producint_item_edit}>
+		</a>
+		
+		<a target="_blank"  href="http://product.cooltechsolution.com/product/login">
+				<{$lang->producing_platform}>
+		</a>	
+	</div>
+	
 	
 	
 	<{include file='company/side_logistic_management.htm'}>

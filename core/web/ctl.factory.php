@@ -68,6 +68,7 @@ class ctl_factory extends cmsPage
         $this->display_pc_mobile('factory/index', 'mobile/factory/index');
     }
 
+
     public function customer_orders_action($dataFomOtherMethod = [])
     {
         if ($dataFomOtherMethod['file_path'] && $dataFomOtherMethod['business_id']) {
@@ -3201,6 +3202,96 @@ class ctl_factory extends cmsPage
         return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
     }
 
+
+    /**
+     *  Ajax update the driver of Truck 
+     */
+
+    public function update_truck_driver_action()
+    {
+        if(is_post()){
+
+            $mdl_truck = $this->loadModel('truck');
+
+            $id = post('id');
+
+
+            $truckRec  = $mdl_truck->get($id);
+
+            if($truckRec['business_id'] != $this->current_business['id']){
+                $this->form_response(600,'no access');
+            }
+
+
+
+
+
+            $data=array();
+
+            $update_field_name = post('update_field_name');
+
+            $value = post('value');
+
+            $data['current_driver'] =$value;
+
+
+            try {
+                $mdl_truck->update($data,$id);
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
+  /**
+     *  Ajax update the truck of the order 
+     */
+
+    public function update_order_truck_no_action()
+    {
+        if(is_post()){
+
+            $mdl_order = $this->loadModel('order');
+
+            $id = post('id');
+
+
+            $orderRec  = $mdl_order->get($id);
+
+            if($orderRec['business_userId'] != $this->current_business['id']){
+                $this->form_response(600,'no access');
+            }
+
+
+            $data=array();
+
+           
+            $value = post('value');
+
+            $data['logistic_truck_No'] =$value;
+
+
+            try {
+                $mdl_order->update($data,$id);
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
+
     public function order_invoice_action(){
         $orderId = get2('order_id');
         $mel_user = $this->loadModel('user');
@@ -3245,4 +3336,100 @@ class ctl_factory extends cmsPage
         $report->outPutToBrowser(  'Invoice-' . $order['orderId'] . '.pdf');
         //outPutToFile
     }
+	
+	  function truck_list_action()
+    {
+        $id = (int)get2('id');
+        $mdl_truck = $this->loadModel('truck');
+		
+		$mdl_staff_roles =  $this->loadModel('staff_roles');
+		$driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
+		$this->setData($driverList,'driverList');
+       
+	   $where = array('business_id' => $this->current_business['id']);
+        $list = $mdl_truck->getList(null, $where, ' id asc');
+		//var_dump($this->currentBusinessId);exit;
+        $this->setData($list, 'list');
+
+        $this->setData('Turck List', 'pagename');
+        $this->setData('trucklist', 'submenu');
+        $this->setData('Logistic_centre', 'menu');
+        $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('factory/truck_list');
+    }
+	
+	 function truck_edit_action()
+    {   
+      
+		$mdl_truck = $this->loadModel('truck');
+       
+
+        $id = (int)get2('id');
+
+        $truck = $mdl_truck->getByWhere(array('id' => $id, 'business_id' => $this->current_business['id']));
+		
+		$mdl_staff_roles =  $this->loadModel('staff_roles');
+		$driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
+		$this->setData($driverList,'driverList');
+		//var_dump($dirverList);exit;
+		
+        
+        if (is_post()) {
+			
+		
+				
+					//var_dump($id);exit;
+          
+            $truck_name = trim(post('truck_name'));
+            $plate_number = trim(post('plate_number'));
+            $current_driver = trim(post('diverId'));
+            
+            $made_factory = trim(post('made_factory'));
+            $load_tones = trim(post('load_tones'));
+			
+            $data = array(
+				'truck_name'=>$truck_name,
+				'plate_number'=>$plate_number,
+				'made_factory'=>$made_factory,
+				'load_tones'=>$load_tones,
+				'current_driver'=>$current_driver
+				);
+
+                  
+             if($truck && $id) {
+				 
+				  if ($mdl_truck->update($data, $id)) {
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/truck_list');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+				 
+			 }else{
+				  $data['business_id'] = $this->current_business['id'];
+				  if ($mdl_truck->insert($data)) {
+					
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/truck_list');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+			 }
+               
+
+			
+		
+            
+
+        } else {
+				$this->setData($truck, 'data');
+                $this->setData('Turck Edit', 'pagename');
+				$this->setData('trucklist', 'submenu');
+				$this->setData('Logistic_centre', 'menu');
+				$this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+			
+				$this->display('factory/truck_edit');
+        }
+    }
+
 }

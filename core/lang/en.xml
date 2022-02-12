@@ -47,12 +47,25 @@
 	
 	<add_new_order>Add New Order</add_new_order>
 	<order_done>order placed!</order_done>
-	<print_picking_list>Print Picking List</print_picking_list>
-	<Single_Picking_item_edit>Picking Item Selected</Single_Picking_item_edit> 
-	<print_packing_slips>Print Packing lists </print_packing_slips> 
-	<print_item_packing_slips>Print Item Packing List</print_item_packing_slips> 
+	<print_picking_list>Summery Picking List</print_picking_list>
+	<Single_Picking_item_edit>Item Picking Edit</Single_Picking_item_edit> 
+	<print_packing_slips>Customer Packing List</print_packing_slips> 
+	<print_item_packing_slips>item Picking List</print_item_packing_slips> 
 	<print_label_logistic>Print Logistic Label</print_label_logistic> 
 	<add_dispatching_customer>Add Dispatching Customer</add_dispatching_customer>
+	<choose_delivery_date>Choose Delviery Date</choose_delivery_date>
+	<no_truck_yet>Waiting for arrange truck</no_truck_yet>
+	
+	<Truck_list>Tuck Info </Truck_list>
+	<Truck_schedue>Logistic Schedule</Truck_schedue>
+	<Truck_schedue_histroy>Schedule Histroy</Truck_schedue_histroy>
+	
+	<summer_product_list> Summery Item List </summer_product_list>
+	<Single_Producint_item_edit>Producing Items edit</Single_Producint_item_edit> 
+	<print_item_producing_slips>Item producing List</print_item_producing_slips> 
+	<producing_platform>Enter Producing Platform</producing_platform> 
+	<manager>Manager</manager>
+	<producing_platform>Enter Producing Platform</producing_platform> 
 	
 	<switch_to_wholesale_pannel>Switch to Wholesale Panel</switch_to_wholesale_pannel>
 	<Sales_channel_management>Sales channel management </Sales_channel_management>
@@ -646,7 +659,8 @@
 
     <!-- 15 -->
     <customer_center>Customer Center</customer_center>
-    <dispatching_center>Dispatching</dispatching_center>
+    <dispatching_center>Dispatching Center</dispatching_center>
+	<Producing_Centre>Producing Center</Producing_Centre>
     <logistic_center>Logistic</logistic_center>
     <order_management>Orders</order_management>
     <order_statistic>Statistic</order_statistic>

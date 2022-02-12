@@ -3548,6 +3548,21 @@ class ctl_company extends cmsPage
 
 
         /**
+         * Driver List of Current Business
+         */
+        $mdl_truck =  $this->loadModel('truck');
+		$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+		$this->setData($all_avaliable_trucks,'all_avaliable_trucks');
+      //  var_dump($all_avaliable_trucks);exit;
+
+
+
+
+
+
+
+
+        /**
          * staff List
          */
         $where_staff = "((role = 5 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
@@ -3590,17 +3605,20 @@ class ctl_company extends cmsPage
 		$customer_delivery_date = trim(get2('customer_delivery_date'));
 		
 		$logistic_truck_No = trim(get2('logistic_truck_No'));
+		
 		$this->setData($logistic_truck_No,'logistic_truck_No');
 		$this->setData($status,'status');
 		$this->setData($ifpaid,'ifpaid');
 
-		$sql =" SELECT DISTINCT o.logistic_truck_No from 
-		(select * from cc_order where (`business_userId` = ". 
-		$this->loginUser['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->loginUser['id'].")) ) 
-		as o where o.logistic_delivery_date =".strtotime($customer_delivery_date)." order by logistic_truck_No ";
+		
+		
+		$sql ="  select o.logistic_truck_No,t.truck_name from cc_order o left join  cc_truck t on o.logistic_truck_No = t.id 
+ where o.business_userId =".$this->current_business['id']." and  logistic_delivery_date =".strtotime($customer_delivery_date)."  group by o.logistic_truck_No ";
 	   	$truckList = $this->loadModel('order')->getListBySql($sql);
-	   	$this->setData(array_column($truckList, 'logistic_truck_No'),'truckList');
-     
+		
+		
+	   	$this->setData($truckList,'truckList');
+      //  var_dump($sql);exit;
         $customer_delivery_option=trim(get2('customer_delivery_option'));
         $staff=trim(get2('staff'));
 
@@ -3660,14 +3678,20 @@ class ctl_company extends cmsPage
 		}
     
 	   if (!empty($logistic_truck_No)) {
+		   
             if ($logistic_truck_No != 'all') {
                $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
             }
         }
-     
+      if ($logistic_truck_No ==0 ) {
+		   
+           
+               $whereStr.= " and  logistic_truck_No =0 ";
+           
+        }
 
         $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
-       // var_dump ($pageSql);exit;
+      
      
             $pageUrl = $this->parseUrl()->set('page');
             $pageSize = 40;
@@ -3689,7 +3713,7 @@ class ctl_company extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('客户订单中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Order Logisitic Schedule - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('company/customer_orders_logistic_query','company/customer_orders_logistic_query');
     }
@@ -9721,6 +9745,23 @@ function freshfood_edit_action()    {
         $this->setData('分店管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staffnew');
     }
+	
+	  function truck_list_action()
+    {
+        $id = (int)get2('id');
+        $mdl_truck = $this->loadModel('truck');
+
+        $where = array('business_id' => $this->current_business['id']);
+        $list = $mdl_truck->getList(null, $where, ' id asc');
+		//var_dump($this->currentBusinessId);exit;
+        $this->setData($list, 'list');
+
+        $this->setData('Turck List', 'pagename');
+        $this->setData('trucklist', 'submenu');
+        $this->setData('Logistic_centre', 'menu');
+        $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('factory/truck_list');
+    }
     function staff_permissions_action()
     {
 
@@ -10210,6 +10251,9 @@ function freshfood_edit_action()    {
             $this->display('company/staff_edit_new');
         }
     }
+
+
+  
 
     function profile_pic_action()
     {

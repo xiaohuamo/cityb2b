@@ -69,12 +69,21 @@
 							</option>
 						<{/foreach}>
 						</select>
-						<label>选择配送日期：</label>
+						&nbsp;<label>选择配送日期：</label>
 						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
 						<option value="all"  ><{$lang->logistic_choosedate1}> </option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
 								<{$d}>
+							</option>
+						<{/foreach}>
+						</select>
+						&nbsp;<label>Choose Driver&Truck：</label>
+						<select class='chooseTruck' id="truck_id" name="DriverAndTruckName" >
+						<option value="all"  >All Drivers&Truck</option>
+						<{foreach from=$driver_truckList item=d}>
+							<option value="<{$d.id}>" <{if $d.id==$TruckId}>selected<{/if}>>
+								<{$d.TruckName}>
 							</option>
 						<{/foreach}>
 						</select>

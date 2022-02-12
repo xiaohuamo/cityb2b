@@ -52,13 +52,25 @@
 	<orderLists>订货列表</orderLists>
 	
 	<add_new_order>新增订单</add_new_order>
-	<print_picking_list>打印备货单</print_picking_list>
-	<Single_Picking_item_edit>预定义-备货单品编辑</Single_Picking_item_edit> 
-	<print_packing_slips>打印装箱单</print_packing_slips> 
-	<print_item_packing_slips>打印单品备货单</print_item_packing_slips> 
+	<print_picking_list>总备货单</print_picking_list>
+	<Single_Picking_item_edit>备货单品管理</Single_Picking_item_edit> 
+	<print_packing_slips>客户装箱单</print_packing_slips> 
+	<print_item_packing_slips>单品备货单</print_item_packing_slips> 
 	<print_label_logistic>打印标签</print_label_logistic> 
 	<add_dispatching_customer>添加配货客户</add_dispatching_customer>
+	<choose_delivery_date>选择配送日期</choose_delivery_date>
+	<no_truck_yet>等待安排车辆</no_truck_yet>
+
 	
+	<Truck_list>车辆信息</Truck_list>
+	<Truck_schedue>车辆调度</Truck_schedue>
+	<Truck_schedue_histroy>车辆调度历史</Truck_schedue_histroy>
+	
+	<summer_product_list>总生产列表</summer_product_list>
+	<Single_Producint_item_edit>生产单品管理</Single_Producint_item_edit> 
+	<print_item_producing_slips>单品生产列表</print_item_producing_slips> 
+	<producing_platform>进入生产端</producing_platform> 
+	<manager>管理经理</manager>
 	<switch_to_wholesale_pannel>切换到批发管理台</switch_to_wholesale_pannel>
 	
 	<Sales_channel_management>销售渠道管理</Sales_channel_management>
@@ -660,7 +672,8 @@
 
     <!-- 15 -->
     <customer_center>客户中心</customer_center>
-    <dispatching_center>配货管理</dispatching_center>
+    <dispatching_center>配货中心</dispatching_center>
+	<Producing_Centre>生产中心</Producing_Centre>
     <logistic_center>物流管理</logistic_center>
     <order_management>订单管理</order_management>
     <order_statistic>订单统计</order_statistic>

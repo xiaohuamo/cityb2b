@@ -55,7 +55,7 @@
 						<label><{$lang->filter}>:</label>
 						
 						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
-						<option value="all"  ><{$lang->logistic_choosedate}> </option>
+						<option value="all"  ><{$lang->choose_delivery_date}></option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
 								<{$d}>
@@ -66,9 +66,17 @@
 	                <select class='chooselogistic_truck_No' id="logistic_truck_No" name="logistic_truck_No" >
 						<option value="all"  ><{$lang->logistic_choosetruck}></option>
 						<{foreach from=$truckList item=d}>
-							<option value="<{$d}>" <{if $d==$logistic_truck_No}>selected<{/if}>>
-								Truck<{$d}>
+						
+						  <{if $d.logistic_truck_No ==0}>
+							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$lang->no_truck_yet}>
 							</option>
+						  <{else}>
+								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$d.truck_name}>-<{$d.logistic_truck_No}>
+							</option>
+						  <{/if}>
+							
 						<{/foreach}>
 					</select>
 
@@ -119,7 +127,7 @@
 						<br><br>
                        <div id="printer">
 							<button style="padding: 10px 5px;background: #43d1af">
-							<a onclick='return confirm("确认将OptimoRoute的订路线信息导入ubonus?");'href="<{$http_root_www}>company/oproute?date=<{$customer_delivery_date}>&task=syncdown&disp=1&logistic_truck_No=<{$logistic_truck_No}>&customer_delivery_date=<{$customer_delivery_date}>">下载调度时间</a>
+							<a onclick='return confirm("确认将OptimoRoute的订路线信息导入?");'href="<{$http_root_www}>company/oproute?date=<{$customer_delivery_date}>&task=syncdown&disp=1&logistic_truck_No=<{$logistic_truck_No}>&customer_delivery_date=<{$customer_delivery_date}>">下载调度时间</a>
 						</button>
 						
                         </div>
@@ -156,8 +164,31 @@
 								    <td><{date('Y-m-d H:i', $item.logisitic_schedule_time)}></td>
 									 <td><{date('Y-m-d H:i', $item.logistic_arrived_time)}></td>
 									
-									<td><{$item.logistic_truck_No}></td>
-									  <td><{$item.logistic_stop_No}></td>
+									<td>
+									
+									<select id="truck-<{$item.id}>" name='truckName' data-id='<{$item.id}>'>
+													<option value='0'>Choose Truck</option>
+                                                    <{foreach from=$all_avaliable_trucks item=sitem1}>
+														<option value='<{$sitem1.id}>'
+                                                                <{if $item.logistic_truck_No==$sitem1.id}>selected<{/if}>>
+                                                            <{$sitem1.truck_name}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+									
+									
+									<!-- <{$item.logistic_truck_No}> -->
+									
+									
+									
+									</td>
+									
+
+
+
+									<td><{$item.logistic_stop_No}></td>
 									    <td><{$item.logistic_sequence_No}></td>
 									  
 									<td>
@@ -252,6 +283,72 @@
 
 		});
 	})
+	
+	
+	var loading = false;
+	
+    $('select[name=truckName]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var  value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		updateData['value'] = value;
+		//alert(value);
+		//alert(id);
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_order_truck_no",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+				if(update_field_name='barcode_number'){
+				  //alert(data.msg + ' ' +id);
+				  if(data.msg) {
+				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
+				
+				  }else{
+				  }
+				}
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+
+
+    });
+	
+	
+	
+	
+	
+	
 
 	function IconUpdate (obj) {
 		this.target = $(obj).find('.status_updating');
