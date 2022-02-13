@@ -3120,7 +3120,12 @@ class ctl_factory extends cmsPage
         $factoryId = $mdl_user_factor->getBusinessId( $this->loginUser['id'], $this->loginUser['role']);
 
         if(	$this->loginUser['role']==20) {
-            $salesManId = $this->loginUser['id'];
+            if($this->loadModel('staff_roles')->CanOperateAllCustomer($this->loginUser['id'])){
+                //不做操作
+            }else{
+                $salesManId = $this->loginUser['id'];
+            }
+
         }
         $factoryList = $mdl_user_factor->getUserFactoryList($factoryId,null,$salesManId);
         foreach ($factoryList as $key => $user) {

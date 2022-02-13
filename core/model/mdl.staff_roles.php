@@ -209,6 +209,16 @@ class mdl_staff_roles extends mdl_base
          return $list;
 
     }
+
+    public function  CanOperateAllCustomer($user_id){
+      $rec =$this->getByWhere(array('staff_id'=>$user_id));
+      $roles =$rec['roles'];
+      if(strstr($roles,',0,') || strstr($roles,',1,') || strstr($roles,',2,')){
+          return 1;
+      }
+        return 0;
+    }
+
 }
 
 ?>
