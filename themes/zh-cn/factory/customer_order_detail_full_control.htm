@@ -106,20 +106,23 @@
                         <{$data.salesmanName}>
 					</div>
 
-                    <{if $userGroup}>
-						<div class="input-box clearfix ">
-							<span><label>拼单状态</label></span>
-                            <{if $userGroup.status==0}>
-								<span style="color:#FD5001 ">拼单还未完成</span>
-                            <{elseif $userGroup.status==1}>
-								<span style="color:green">拼单已经完成</span>
-                            <{elseif $userGroup.status==2}>
-								<span style="color:#f30">拼单已经过期</span>
-                            <{/if}>
-							<small>(User Group Id : <{$userGroup.id}> <a href="<{$http_root_www}>group_pin/user_group_show?id=<{$userGroup.id}>">查看</a>)</small>
+                   <div class="input-box clearfix  col-6">
+						<span><label>订单状态</label></span>
 
-						</div>
-                    <{/if}>
+						<{if $data.coupon_status=='c01'}>
+							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='b01'}>
+							<span style="color:green"><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='d01'}>
+							<span style="color:red"><{$data.cn_coupon_status_name}></span>
+						<{/if}>
+
+						<{if $data.coupon_status=='c01' && $editAble == true}>
+						
+							<!-- cancel id is the id of the first item in an order -->
+								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
+						<{/if}>
+					</div>
 
 					<div class="input-box clearfix  col-6">
 						<span><label>下单时间</label></span>

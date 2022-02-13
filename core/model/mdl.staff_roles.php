@@ -214,6 +214,7 @@ class mdl_staff_roles extends mdl_base
       $rec =$this->getByWhere(array('staff_id'=>$user_id));
       $roles =$rec['roles'];
       if(strstr($roles,',0,') || strstr($roles,',1,') || strstr($roles,',2,')){
+          var_dump('eiwowo');exit;
           return 1;
       }
         return 0;
