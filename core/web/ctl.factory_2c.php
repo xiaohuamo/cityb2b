@@ -2381,10 +2381,13 @@
 
         $this->setData($sk,'sk');
         $this->setData($customer_delivery_date,'customer_delivery_date');
-    
-		
-		
-		// 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
+
+        //获取当前用户点击的大类
+        $cate_id = trim(get2('cate_id'));
+        $this->setData($cate_id,'cate_id');
+
+
+        // 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
 		//获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
 		//var_dump($business_id);exit;
 		  $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id']);
@@ -2405,9 +2408,16 @@
 			$whereStr.=" or c.business_id like  '%" . $sk . "%')";
             $where[]=$whereStr;
         }
-      
- 	
 
+
+        if (!empty($cate_id)) {
+            if($cate_id !='all') {
+                $whereStr.=" and r.restaurant_category_id =$cate_id ";
+            }
+
+
+
+        }
 		//deleivery date
 		if (!empty($customer_delivery_date)) {
             if ($customer_delivery_date != 'all') {
@@ -2444,7 +2454,11 @@
         // $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($business_id);
 		 
 		//var_dump($pageSql);exit;
-	   
+
+
+        $cateData =$this->loadModel('restaurant_category')->getParentCateList($this->current_business['id']);
+        // var_dump($cateData);exit;
+        $this->setData($cateData,'cateData');
 	 // var_dump(get2('output'));exit;
 	 if(trim(get2('output'))) {
 	  $fileNameofOutput =$this->getOutputFileName($business_tradingName,$customer_delivery_date,trim(get2('output')),$business_id,$totalandeverychannelPrint);
@@ -2693,8 +2707,10 @@
         $this->setData($sk,'sk');
         $this->setData($customer_delivery_date,'customer_delivery_date');
     
-		
-	
+		//获取当前用户点击的大类
+         $cate_id = trim(get2('cate_id'));
+         $this->setData($cate_id,'cate_id');
+
 			
 		
 		// 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
@@ -2715,8 +2731,15 @@
 			$whereStr.=" or c.business_id like  '%" . $sk . "%')";
             $where[]=$whereStr;
         }
-      
- 	
+
+         if (!empty($cate_id)) {
+             if($cate_id !='all') {
+                 $whereStr.=" and r.restaurant_category_id =$cate_id ";
+             }
+
+
+
+         }
 
 		//deleivery date
 		if (!empty($customer_delivery_date)) {
@@ -2748,6 +2771,14 @@
 	   $data = $mdl_order->getListBySql($pageSql);
 	   
 	// var_dump($data);exit;
+
+         // 获得当前订单得大类汇总
+
+        $cateData =$this->loadModel('restaurant_category')->getParentCateList($this->current_business['id']);
+
+
+        // var_dump($cateData);exit;
+         $this->setData($cateData,'cateData');
 
         $this->setData($page['pageStr'],'pager');
 

@@ -171,7 +171,7 @@
                                                     <{foreach from=$all_avaliable_trucks item=sitem1}>
 														<option value='<{$sitem1.id}>'
                                                                 <{if $item.logistic_truck_No==$sitem1.id}>selected<{/if}>>
-                                                            <{$sitem1.truck_name}>
+                                                            <{$sitem1.truck_name}>- <{$sitem1.plate_number}>
 
 														</option>
                                                     <{/foreach}>

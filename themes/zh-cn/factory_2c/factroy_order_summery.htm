@@ -78,6 +78,17 @@
 							</option>
 						<{/foreach}>
 						</select>
+						
+						&nbsp;<label>选择大类：</label>
+						<select class='chooseCate' id="cate_id" name="cate_id" >
+						<option value="all"  >Choose Category </option>
+						<{foreach from=$cateData item=d}>
+							<option value="<{$d.parent_cate_id}>" <{if $d.parent_cate_id==$cate_id}>selected<{/if}>>
+								<{$d.parent_cate_en_name}>
+							</option>
+						<{/foreach}>
+						</select>
+						
 						&nbsp;<label>Choose Driver&Truck：</label>
 						<select class='chooseTruck' id="truck_id" name="DriverAndTruckName" >
 						<option value="all"  >All Drivers&Truck</option>
@@ -108,6 +119,19 @@
 							 
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
+								    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								   $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							$('.chooseCate').on('change',function(){
+							
+							 
+								var catestr = $(this).val();
+								if(catestr !='all'){
 								    $('#searchbutton').css({ "display": "" });
 								
 								}else{

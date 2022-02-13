@@ -68,7 +68,7 @@ class mdl_restaurant_category extends mdl_base
         $sql ="SELECT id as parent_cate_id, category_sort_id as parent_sort_id, category_cn_name as parent_cate_cn_name ,
                 category_en_name as parent_cate_en_name FROM `cc_restaurant_category`
                 WHERE restaurant_id  =$customer_id  and (parent_category_id is null or parent_category_id=0)
-                and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  
+                and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  and isHide =0 
                 order by category_sort_id";
         $list =$this->getListBySql($sql);
 
