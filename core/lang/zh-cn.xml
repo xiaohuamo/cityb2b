@@ -1371,7 +1371,7 @@
 	<logistic_delivery_date_choose>选择日期</logistic_delivery_date_choose>
 	<groupbuy_end>团购结束</groupbuy_end>
 	<logistic_schedule_time>指定配送时间</logistic_schedule_time>
-	<logistic_schedule_time1>具体时间段</logistic_schedule_time1>
+	<logistic_schedule_time1>订单物流安排</logistic_schedule_time1>
 	<logistic_truck_no>车辆编号</logistic_truck_no>
 	<logistic_sequenceNo>统一配货号</logistic_sequenceNo>
 	<logistic_delivery_or_pickup>物流-（自取和配送）</logistic_delivery_or_pickup>

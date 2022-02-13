@@ -69,11 +69,11 @@
 						
 						  <{if $d.logistic_truck_No ==0}>
 							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-								<{$lang->no_truck_yet}>
+								<{$lang->no_truck_yet}>-(<{$d.count}>&nbsp;orders)
 							</option>
 						  <{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-								<{$d.truck_name}>-<{$d.logistic_truck_No}>
+								<{$d.truck_name}>-(<{$d.count}>&nbsp;orders)
 							</option>
 						  <{/if}>
 							

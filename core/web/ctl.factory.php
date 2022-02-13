@@ -3306,7 +3306,7 @@ class ctl_factory extends cmsPage
             'userId' => $order['userId'],
         ];
         $userABN = $mdl_abn_application->getByWhere($userWhere);
-//var_dump($order['userId']);exit;
+		//var_dump($userABN);exit;
 
         $factory = $mel_user->getUserById($this->loginUser['id']);
         $factoryWhere = [
@@ -3314,6 +3314,7 @@ class ctl_factory extends cmsPage
         ];
       //  var_dump($factoryWhere);
         $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
+		
         $factoryABN = $mdl_abn_application->getByWhere($factoryWhere);
 		
 		// 获得该用户的简称
@@ -3328,9 +3329,11 @@ class ctl_factory extends cmsPage
                 $report->logoPath('data/upload/' . $this->loginUser['logo']);
             }
 			
-		
+		$user['address']=$order['address'];
         $report->setUser_Code($user_code_rec);
 		$report->setUser($user, $userABN);
+		
+		// var_dump($user);exit;
         $report->setFactory($factory, $factoryABN, $factoryAccount);
         $report->generatePDF();
         $report->outPutToBrowser(  'Invoice-' . $order['orderId'] . '.pdf');

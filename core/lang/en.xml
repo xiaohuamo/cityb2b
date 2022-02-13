@@ -23,7 +23,7 @@
     <wechat_log_in>Wechat Login</wechat_log_in>
 	<groupbuy_end>Open soon</groupbuy_end>
 	<logistic_delivery_date_choose>Choose Date</logistic_delivery_date_choose>
-	<logistic_schedule_time1>Time Details</logistic_schedule_time1>
+	<logistic_schedule_time1>Orders Logisti schedule</logistic_schedule_time1>
 	<approved>approved</approved>
 	
 	<unapproved>unapproved</unapproved>
@@ -1312,7 +1312,7 @@
     <logistic_management_panel>Logistic  Management</logistic_management_panel>
 
     <logistic_arrive_time>logistic Arrive Time</logistic_arrive_time>
-    <logistic_schedule_time1>Logistic Schedule time</logistic_schedule_time1>
+    <logistic_schedule_time1>Order Logistic Schedul</logistic_schedule_time1>
 	
 	<logistic_management>Logistic panel</logistic_management>
 	<logistic_choosedate1>Choose Delivery Date</logistic_choosedate1>

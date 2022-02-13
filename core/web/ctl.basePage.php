@@ -341,7 +341,7 @@ class cmsPage extends corecms
 
                  if(!$this->checkActCanBeExecuted($act,$user_roles['roles']) ) {
 
-                     $this->form_response(500, 'no access ,please contact admin');
+                  //   $this->form_response(500, 'no access ,please contact admin');
                  }else{
 
 

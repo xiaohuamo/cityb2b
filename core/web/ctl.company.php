@@ -3550,8 +3550,17 @@ class ctl_company extends cmsPage
         /**
          * Driver List of Current Business
          */
+		 
+		$customer_delivery_date = trim(get2('customer_delivery_date')); 
+			
         $mdl_truck =  $this->loadModel('truck');
-		$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+	//	if($customer_delivery_date){
+	//			$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusinessWithOrderCounts($this->current_business['id'],$customer_delivery_date);
+	//	}else{
+				$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+	//	}
+		
+	
 		$this->setData($all_avaliable_trucks,'all_avaliable_trucks');
       //  var_dump($all_avaliable_trucks);exit;
 
@@ -3602,23 +3611,24 @@ class ctl_company extends cmsPage
 				
         $sk = trim(get2('sk'));
 		$ifpaid=trim(get2('ifpaid'));
-		$customer_delivery_date = trim(get2('customer_delivery_date'));
+	
 		
 		$logistic_truck_No = trim(get2('logistic_truck_No'));
+	
 		
 		$this->setData($logistic_truck_No,'logistic_truck_No');
 		$this->setData($status,'status');
 		$this->setData($ifpaid,'ifpaid');
 
 		
-		
-		$sql ="  select o.logistic_truck_No,t.truck_name from cc_order o left join  cc_truck t on o.logistic_truck_No = t.id 
- where o.business_userId =".$this->current_business['id']." and  logistic_delivery_date =".strtotime($customer_delivery_date)."  group by o.logistic_truck_No ";
-	   	$truckList = $this->loadModel('order')->getListBySql($sql);
-		
+		if($customer_delivery_date){
+				$truckList = $mdl_truck->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+		}else{
+			$truckList = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+		}
 		
 	   	$this->setData($truckList,'truckList');
-      //  var_dump($sql);exit;
+      //  var_dump(json_encode($truckList));exit;
         $customer_delivery_option=trim(get2('customer_delivery_option'));
         $staff=trim(get2('staff'));
 
@@ -3676,18 +3686,18 @@ class ctl_company extends cmsPage
 			$three_days_times = time()-259200;
 				$whereStr.= " and  logistic_delivery_date > $three_days_times";
 		}
-    
+    	
 	   if (!empty($logistic_truck_No)) {
-		   
+		  
             if ($logistic_truck_No != 'all') {
                $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
+			   
             }
         }
-      if ($logistic_truck_No ==0 ) {
-		   
-           
-               $whereStr.= " and  logistic_truck_No =0 ";
-           
+		
+      if ($logistic_truck_No =='0' ) {
+		       $whereStr.= " and  logistic_truck_No =0 ";
+         // var_dump($logistic_truck_No);exit;
         }
 
         $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
