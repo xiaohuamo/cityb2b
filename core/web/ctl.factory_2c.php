@@ -2728,6 +2728,15 @@
 		//获取当前用户点击的大类
          $cate_id = trim(get2('cate_id'));
          $this->setData($cate_id,'cate_id');
+		 
+		 
+		     //获取当前用户点击的大类
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+        $this->setData($logistic_truck_No,'logistic_truck_No');
+
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
+
 
 			
 		
@@ -2758,6 +2767,12 @@
 
 
          }
+		 
+		  if (!empty($logistic_truck_No)) {
+            if($logistic_truck_No !='all') {
+                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+            }
+        }
 
 		//deleivery date
 		if (!empty($customer_delivery_date)) {

@@ -80,8 +80,8 @@
 						<{/foreach}>
 						</select>
 						
-						&nbsp;<label>选择大类：</label>
-						<select class='chooseCate' id="cate_id" name="cate_id" >
+						&nbsp;<label id="chooseCateLable" style='display:none;'>选择大类：</label>
+						<select class='chooseCate' id="cate_id" name="cate_id" style='display:none;'>
 						<option value="all"  >Choose Category </option>
 						<{foreach from=$cateData item=d}>
 							<option value="<{$d.parent_cate_id}>" <{if $d.parent_cate_id==$cate_id}>selected<{/if}>>
@@ -89,31 +89,50 @@
 							</option>
 						<{/foreach}>
 						</select>
+						
+						&nbsp;<label id="chooseTruckLable" style='display:none;'>Choose Driver&Truck：</label>
+						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
+						<option value="all"  >All Drivers&Truck</option>
+						<{foreach from=$TuckListOfTheDay item=d}>
+							<{if $d.logistic_truck_No==0}>
+							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$lang->no_truck_yet}>
+							</option>
+							
+							<{else}>
+								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+									<{$d.truck_name}>-<{$d.plate_number}>
+								</option>
+							<{/if}>
+						<{/foreach}>
+						</select>
 					 
 						<script type="text/javascript">
 						$(function(){
 							$('.chooseDate').on('change',function(){
 							$('#printer').css({ "display": "none" });
-							 
-								var datestr = $(this).val();
-								if(datestr !='all'){
-								    $('#searchbutton').css({ "display": "" });
-								
-								}else{
-								   $('#searchbutton').css({ "display": "none" });
-								}
+							 var sk ='<{$sk}>';
+							var customer_delivery_date =$(this).val();
+							var business_id ='<{$business_id}>';
+							var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list?sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
+							// alert(vUrl);
+							window.location.href =vUrl;
 								
 							})
+							 
+							
 							
 							$('.chooseCate').on('change',function(){
-							
+							$('#printer').css({ "display": "none" });
 							 
+								$('#printer').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
-								    $('#searchbutton').css({ "display": "" });
+								//    $('#searchbutton').css({ "display": "" });
 								
 								}else{
-								   $('#searchbutton').css({ "display": "none" });
+								 //  $('#searchbutton').css({ "display": "none" });
 								}
 								
 							})
@@ -130,6 +149,31 @@
 								}
 								
 							})
+							
+							$('.chooseTruck').on('change',function(){
+							
+							 	$('#printer').css({ "display": "none" });
+								var catestr = $(this).val();
+								if(catestr !='all'){
+								//    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								 //  $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							//if there are  date pointed , then show the category list and truck list 
+							var customer_delivery_date='<{$customer_delivery_date}>';
+							
+							if(customer_delivery_date && customer_delivery_date !='all') {
+							  $('#chooseCateLable').css('display','');
+							  $('#cate_id').css('display','');
+							  $('#chooseTruckLable').css('display','');
+							  $('#logistic_truck_No').css('display','');
+							  $('#searchbutton').css({ "display": "" });
+							
+							}
 
 						})
 					</script>
@@ -347,7 +391,8 @@ function showPdf(type,item_id,guige_id)
 
 	var sepratePage=$('#sepratePage').prop('checked');
 	
-	 
+	 var vcate_id ='<{$cate_id}>';
+	var vlogistic_truck_No ='<{$logistic_truck_No}>';
 	 
 	if(type=='selectedItem') {
 	 
@@ -377,7 +422,7 @@ function showPdf(type,item_id,guige_id)
 	}
 	
   
-	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
 	window.open(vUrl);
 }
 
