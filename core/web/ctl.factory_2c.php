@@ -2902,6 +2902,16 @@
 				
 			}
         }
+        
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+
+        if (!empty($logistic_truck_No)) {
+            if($logistic_truck_No !='all') {
+                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+            }
+        }
+
+
 		$orderStr =" order by r.source_menu_id ,c.guige1_id ";
 		$sql.=$whereStr.$orderStr;
 	   
