@@ -57,7 +57,7 @@
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
 						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
-						
+						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
 						<br><br>
 
 						<label>选择渠道：</label>
@@ -115,7 +115,8 @@
 							 var sk ='<{$sk}>';
 							var customer_delivery_date =$(this).val();
 							var business_id ='<{$business_id}>';
-							var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list?sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
+							var producing ='<{$producing}>';
+							var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list?producing='+producing+'&sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
 							// alert(vUrl);
 							window.location.href =vUrl;
 								
@@ -398,7 +399,7 @@ function showPdf(type,item_id,guige_id)
 
 	var sepratePage=$('#sepratePage').prop('checked');
 	
-	 var vcate_id ='<{$cate_id}>';
+	var vcate_id ='<{$cate_id}>';
 	var vlogistic_truck_No ='<{$logistic_truck_No}>';
 	 
 	if(type=='selectedItem') {

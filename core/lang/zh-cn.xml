@@ -52,10 +52,13 @@
 	<orderLists>订货列表</orderLists>
 	
 	<add_new_order>新增订单</add_new_order>
-	<print_picking_list>总备货单</print_picking_list>
+	<print_picking_list>非加工总备货单</print_picking_list>
 	<Single_Picking_item_edit>备货单品管理</Single_Picking_item_edit> 
+	<producing_item_edit>加工产品设置</producing_item_edit> 
 	<print_packing_slips>客户装箱单</print_packing_slips> 
 	<print_item_packing_slips>单品备货单</print_item_packing_slips> 
+	<single_item_buying_list>单品加工单</single_item_buying_list> 
+	
 	<print_label_logistic>打印标签</print_label_logistic> 
 	<add_dispatching_customer>添加配货客户</add_dispatching_customer>
 	<choose_delivery_date>选择配送日期</choose_delivery_date>
@@ -66,7 +69,8 @@
 	<Truck_schedue>车辆调度</Truck_schedue>
 	<Truck_schedue_histroy>车辆调度历史</Truck_schedue_histroy>
 	
-	<summer_product_list>总生产列表</summer_product_list>
+	<summer_product_list>非加工类总备货单</summer_product_list>
+	<summer_producing_list>加工类总备货单</summer_producing_list>
 	<Single_Producint_item_edit>生产单品管理</Single_Producint_item_edit> 
 	<print_item_producing_slips>单品生产列表</print_item_producing_slips> 
 	<producing_platform>进入生产端</producing_platform> 
@@ -1388,7 +1392,7 @@
 	<business_department> 商家分店</business_department>
 	<ifpaid> 支付状态</ifpaid>
 	<follow_deliver_intr>根据配送说明</follow_deliver_intr>
-	<logistic_schedule_time1>物流调度查询</logistic_schedule_time1>
+	
 	
 	<logistic_arrive_time>预计到达时间</logistic_arrive_time>
 	<logistic_management_panel>物流中心管理</logistic_management_panel>

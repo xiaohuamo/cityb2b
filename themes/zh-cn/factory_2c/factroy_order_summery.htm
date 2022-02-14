@@ -57,7 +57,8 @@
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
 						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
-						
+						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
+					
 						<br><br>
 
 						<label>选择渠道：</label>
@@ -113,7 +114,8 @@
 							var sk ='<{$sk}>';
 							var customer_delivery_date =$(this).val();
 							var business_id ='<{$business_id}>';
-							var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
+							var producing ='<{$producing}>';
+							var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?producing='+producing+'&sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
 							// alert(vUrl);
 							window.location.href =vUrl;
 								
@@ -184,7 +186,7 @@
 						  <{if $customer_delivery_date && $customer_delivery_date !='all'}>
 						<br><br>
                      <div id="printer">
-						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Summery Picking List(pdf)</button>
+						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Summery Picking List (pdf)</button>
 					
                     <{if !$business_id}>
 				<!--		<input  type="checkbox" name="printAllBusiness" id='printAllBusiness' value='true'>并打印所有渠道汇总分单 -->
@@ -346,7 +348,7 @@ function showPdf(type)
 	
 	var vcate_id ='<{$cate_id}>';
 	var vlogistic_truck_No ='<{$logistic_truck_No}>';
-	
+	var Vproducing ='<{$producing}>';
 	
 
 
@@ -359,7 +361,7 @@ function showPdf(type)
 	}
 	
    
-	var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&printAllBusiness='+printAllBusiness+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&fitInPage='+fitInPage;
+	var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?output='+type+'&producing='+Vproducing+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&printAllBusiness='+printAllBusiness+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&fitInPage='+fitInPage;
 	window.open(vUrl);
 }
 

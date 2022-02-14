@@ -189,7 +189,7 @@
 		<a  href="" <{if $submenu==''}> class="current"<{/if}>>
 		 <{$lang->manager}>
 		</a>
-		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
+	<!--	<a  href=""<{if $submenu==''}> class="current"<{/if}>>
 				  <{$lang->summer_product_list}>
 		</a>
 		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
@@ -197,11 +197,24 @@
 		</a>
 		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
 				<{$lang->Single_Producint_item_edit}>
+		</a>	-->
+		
+		
+		
+		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery?producing=1"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+			 <{$lang->summer_producing_list}>
 		</a>
 		
+		
+		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list?producing=1"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
+			   <{$lang->single_item_buying_list}>
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/single_producing_item_print_edit"<{if $submenu=='single_producing_item_print_edit'}> class="current"<{/if}>>
+				 <{$lang->producing_item_edit}>
+		</a>
 		<a target="_blank"  href="http://product.cooltechsolution.com/product/login">
-				<{$lang->producing_platform}>
-		</a>	
+				<{$lang->producing_platform}> 
+		</a>
 	</div>
 	
 	

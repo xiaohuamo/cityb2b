@@ -49,6 +49,8 @@
 	<order_done>order placed!</order_done>
 	<print_picking_list>Summery Picking List</print_picking_list>
 	<Single_Picking_item_edit>Item Picking Edit</Single_Picking_item_edit> 
+	<producing_item_edit>Producing Item Edit</producing_item_edit> 
+	<single_item_buying_list>Item Buying List</single_item_buying_list> 
 	<print_packing_slips>Customer Packing List</print_packing_slips> 
 	<print_item_packing_slips>item Picking List</print_item_packing_slips> 
 	<print_label_logistic>Print Logistic Label</print_label_logistic> 
@@ -61,6 +63,8 @@
 	<Truck_schedue_histroy>Schedule Histroy</Truck_schedue_histroy>
 	
 	<summer_product_list> Summery Item List </summer_product_list>
+	<summer_producing_list>Summery Producing Item</summer_producing_list>
+	
 	<Single_Producint_item_edit>Producing Items edit</Single_Producint_item_edit> 
 	<print_item_producing_slips>Item producing List</print_item_producing_slips> 
 	<producing_platform>Enter Producing Platform</producing_platform> 
