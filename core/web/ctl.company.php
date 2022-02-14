@@ -3827,10 +3827,10 @@ class ctl_company extends cmsPage
 		
 		$logistic_truck_No = trim(get2('logistic_truck_No'));
 		$this->setData($logistic_truck_No,'logistic_truck_No');
-		
 
-	  	$truckList = $this->loadModel('freshfood_logistic_customers')-> getDriversOfAvaliableDateOfThisLogisiticCompany($this->loginUser['id'],$customer_delivery_date);
-	   	$this->setData(array_column($truckList, 'logistic_truck_No'),'truckList');
+
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
      
         $customer_delivery_option=trim(get2('customer_delivery_option'));
         $staff=trim(get2('staff'));
@@ -13373,22 +13373,15 @@ function get_data($url, $ch) {
 	{
 		$datestr = trim(get2('datestr'));//Y-m-d
 
-		$date = strtotime($datestr);
-		
-		$sql =" SELECT DISTINCT o.logistic_truck_No from 
-		(select * from cc_order where (`business_userId` = ". 
-		$this->loginUser['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->loginUser['id'].")) ) 
-		as o where o.logistic_delivery_date =".$date." order by logistic_truck_No ";
+	//	$date = strtotime($datestr);
 
-
-      $truckList = $this->loadModel('freshfood_logistic_customers')->getDriversOfAvaliableDateOfThisLogisiticCompany($this->loginUser['id'],$date);
-    	 
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$datestr);
 
 
 
-	  $list = array_column($truckList, 'logistic_truck_No');
 
-	   echo json_encode($list);
+
+	   echo json_encode($TuckListOfTheDay);
 	}
 	
 	

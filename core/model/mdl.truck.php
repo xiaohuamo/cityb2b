@@ -37,7 +37,7 @@ class mdl_truck extends mdl_base
 				left join cc_truck t on o.logistic_truck_No=t.id    
                 left join cc_user u on t.current_driver =u.id
  		    	where o.logistic_delivery_date = ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and o.status=1 
-				group by o.logistic_truck_No";
+				group by o.logistic_truck_No order by o.logistic_truck_No";
 		//var_dump($sql);exit;
 		$allTruckList  = $this->getListBySql($sql);
 		//var_dump($allTruckList);exit;
