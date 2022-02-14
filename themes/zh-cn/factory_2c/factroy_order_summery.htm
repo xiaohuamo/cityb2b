@@ -134,7 +134,7 @@
 							
 							$('.chooseCate').on('change',function(){
 							
-							 
+							 	$('#printer').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -144,6 +144,20 @@
 								}
 								
 							})
+							
+								$('.chooseTruck').on('change',function(){
+							
+							 	$('#printer').css({ "display": "none" });
+								var catestr = $(this).val();
+								if(catestr !='all'){
+								//    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								 //  $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
 							//if there are  date pointed , then show the category list and truck list 
 							var customer_delivery_date='<{$customer_delivery_date}>';
 							

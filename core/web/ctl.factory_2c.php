@@ -2462,8 +2462,8 @@
 		 
 		//var_dump($pageSql);exit;
 
-
-        $cateData =$this->loadModel('restaurant_category')->getParentCateList($this->current_business['id']);
+        $mdl_cate = $this->loadModel('restaurant_category');
+        $cateData =$mdl_cate->getParentCateList($this->current_business['id']);
         // var_dump($cateData);exit;
         $this->setData($cateData,'cateData');
 	 // var_dump(get2('output'));exit;
@@ -2473,7 +2473,12 @@
 	  
 	   
         if(trim(get2('output'))=='totalOrderSummeryForDeliveryDate'){
-								
+
+            //获取打印表单上的分类名称
+            $cate_name = $mdl_cate->getCategoryName($cate_id);
+
+            $driverAndTruckInfo = $this->loadModel('truck')->getTruckAndDriverInfo($logistic_truck_No) ;
+          //  var_dump($cate_name);exit;
 			
 			if($totalandeverychannelPrint){
 				$data = $mdl_order->getListBySql($pageSql);
@@ -2486,7 +2491,9 @@
 				}
 					 $report->setTradingName($this->loginUser['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("producing List-".$this->loginUser['displayName'])
+                    ->setCate_name($cate_name)
+                    ->setDriverAndTruckInfo($driverAndTruckInfo)
+             		->title("Summery Packing List-".$this->loginUser['displayName'])
 					->OrderData($data)
 					->OrderDataEveryChannel($data1);
 					
@@ -2516,6 +2523,8 @@
 					
 					 $report->setTradingName($business_user['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
+                    ->setCate_name($cate_name)
+                    ->setDriverAndTruckInfo($driverAndTruckInfo)
 					->title("Stock lists-".$business_user['displayName'])
 					->OrderData($data);
 					
@@ -2523,7 +2532,9 @@
 				}else{
 					 $report->setTradingName($this->loginUser['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("Summery of stocks-".$this->loginUser['displayName'])
+					->title("Summery of Packing List-".$this->loginUser['displayName'])
+                    ->setCate_name($cate_name)
+                    ->setDriverAndTruckInfo($driverAndTruckInfo)
 					->OrderData($data);
 				}
 					

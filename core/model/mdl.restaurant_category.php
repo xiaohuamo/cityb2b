@@ -78,6 +78,17 @@ class mdl_restaurant_category extends mdl_base
 
     }
 
+    public function  getCategoryName($id) {
+
+        $cateRec = $this->get($id);
+        if($cateRec) {
+            $cate_name = $cateRec['category_en_name'];
+        }else{
+            $cate_name ='All';
+        }
+        return $cate_name;
+    }
+
 
 
 

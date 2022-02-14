@@ -331,6 +331,10 @@ class OrderInfoReport
 
     public $tradingName;
 
+    public $cate_name;
+
+    public $driverAndTruckInfo;
+
     function __construct()
     {
         $this->pdf = new pdfGenerator();
@@ -368,6 +372,22 @@ class OrderInfoReport
 
         return $this;
     }
+
+    function setCate_name($cate_name)
+    {
+        $this->cate_name = $cate_name;
+
+        return $this;
+    }
+
+     function setDriverAndTruckInfo($driverAndTruckInfo)
+     {
+         $this->driverAndTruckInfo = $driverAndTruckInfo;
+
+         return $this;
+     }
+
+
     function setSepratePage($sepratePage)
     {
         $this->sepratePage = $sepratePage;
@@ -665,6 +685,12 @@ class OrderInfoReport
 
 
         //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
+
+        $this->pdf->setFontSize(14);
+        $this->pdf->row('Truck&Driver: '.$this->driverAndTruckInfo, 0.6, 0, 'l', 12);
+        $this->pdf->row('Category: '.$this->cate_name, 0.40, 0, 'L', 12);
+
+        $this->pdf->ln();
         $this->pdf->setFontSize(12);
         $this->pdf->row('Tick', 0.05, 0, 'C', 12);
         $this->pdf->row('Type', 0.15, 0, 'C', 12);
