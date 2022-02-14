@@ -76,6 +76,11 @@ class corecms
 		$this->tpl->right_delimiter	= &$GLOBALS['TPL_SM_DELIMITER_RIGHT'];
 		$this->tpl->force_compile	= true;
 
+        $lang = trim( $_COOKIE['lang'] );
+        if(!lang){
+            $lang='en';
+        }
+
 	}
 
 	function getUserDevice( $ua = null ) {
@@ -128,6 +133,7 @@ class corecms
   	}
 		else {
 			$lang = trim( $_COOKIE['lang'] );
+            //var_dump($lang);exit;
 		}
 		return $lang;
 	}
