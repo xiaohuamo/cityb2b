@@ -66,7 +66,7 @@ function setLanguage(languageValue,path) {
 		 console.log(error);
 	  });
 	 // cookie 设置 为 选择语言，如果 未登陆也会有记录。
-	//  setCookie('lang',langstr,3650);
+	  setCookie('lang',langstr,3650);
 	  
 	 
 }
