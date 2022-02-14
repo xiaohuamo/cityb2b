@@ -127,6 +127,7 @@ class corecms
 	}
 	function getLangStr() {
       //  var_dump($GLOBALS['lang']);exit;
+
 		if ( isset( $GLOBALS['lang'] ) ) {
 			$lang = $GLOBALS['lang'];
 

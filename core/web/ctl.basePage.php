@@ -369,6 +369,7 @@ class cmsPage extends corecms
                     'id'=>$this->loginUser['id'],
                     'isLanguageEng'=>1
                );
+                $this->lang ='en';
                 $mdl_user_setting->insert($data);
                 $user_setting=$mdl_user_setting->get($this->loginUser['id']);
 
