@@ -127,6 +127,7 @@
 							$('#printer').css({ "display": "none" });
 							 
 								$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -139,6 +140,7 @@
 							
 							$('.choosebusiness').on('change',function(){
 								$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
 							 
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
@@ -153,6 +155,7 @@
 							$('.chooseTruck').on('change',function(){
 							
 							 	$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -172,6 +175,7 @@
 							  $('#chooseTruckLable').css('display','');
 							  $('#logistic_truck_No').css('display','');
 							  $('#searchbutton').css({ "display": "" });
+							  $('#main_table').css({ "display": "" });
 							
 							}
 
@@ -196,7 +200,7 @@
 
 				<div class="main-list">		
 					<{if $data}>				
-						<table cellspacing="0" cellpadding="0" width="100%">
+						<table cellspacing="0" cellpadding="0" width="100%" id="main_table" style="display:none;">
 							<thead>				
 								<tr>	
 								<{if $customer_delivery_date}>
