@@ -31,7 +31,7 @@ class mdl_truck extends mdl_base
 	
 	public function getAllOrdersTruckListwithCount($business_id,$delivery_date) {
 		
-		$sql =" select o.logistic_truck_No ,t.truck_name,count(*) as count  from cc_order o 
+		$sql =" select o.logistic_truck_No ,t.*,ifnull(count(*),0) as count  from cc_order o 
 				left join cc_truck t on o.logistic_truck_No=t.id
 				where o.logistic_delivery_date = ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and o.status=1 
 				group by o.logistic_truck_No";

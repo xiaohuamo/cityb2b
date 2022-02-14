@@ -2375,17 +2375,21 @@
 		
 		
         $sk = trim(get2('sk'));
+        $this->setData($sk,'sk');
 		
 		$customer_delivery_date = trim(get2('customer_delivery_date'));
-		
-
-        $this->setData($sk,'sk');
-        $this->setData($customer_delivery_date,'customer_delivery_date');
+		$this->setData($customer_delivery_date,'customer_delivery_date');
 
         //获取当前用户点击的大类
         $cate_id = trim(get2('cate_id'));
         $this->setData($cate_id,'cate_id');
 
+        //获取当前用户点击的大类
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+        $this->setData($logistic_truck_No,'logistic_truck_No');
+
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
 
         // 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
 		//获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
@@ -2414,9 +2418,12 @@
             if($cate_id !='all') {
                 $whereStr.=" and r.restaurant_category_id =$cate_id ";
             }
+        }
 
-
-
+        if (!empty($logistic_truck_No)) {
+            if($logistic_truck_No !='all') {
+                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+            }
         }
 		//deleivery date
 		if (!empty($customer_delivery_date)) {
