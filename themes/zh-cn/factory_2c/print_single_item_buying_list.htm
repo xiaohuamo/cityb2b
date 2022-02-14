@@ -128,6 +128,7 @@
 							 
 								$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
+								     $('#pager').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -141,6 +142,7 @@
 							$('.choosebusiness').on('change',function(){
 								$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
+								     $('#pager').css({ "display": "none" });
 							 
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
@@ -156,6 +158,7 @@
 							
 							 	$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
+								     $('#pager').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -176,7 +179,7 @@
 							  $('#logistic_truck_No').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
-							
+							   $('#pager').css({ "display": "" });
 							}
 
 						})
@@ -190,7 +193,7 @@
 							<button  id="printtotal" type="button"  onclick="showPdf('allDefinedItem','');">全部预定义单品</button>
 						&nbsp;&nbsp;
 							 <button  id="exportdata" type="button"   onclick="showPdf('selectedItem','');">当前勾选单品</button>
-								&nbsp;&nbsp; <input  type="checkbox" checked name="sepratePage" id='sepratePage' value='true'>分页
+								&nbsp;&nbsp; <input  type="checkbox" <{if $sepratePage}>checked<{/if}> name="sepratePage" id='sepratePage' value='true'>分页
 							
 							</div>
 						<{/if}>
@@ -282,7 +285,7 @@
 						
 
 						<{if $pager}>
-						<div class="pager"><{$pager}></div>
+						<div  id="pager" class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
 						没有任何订单	

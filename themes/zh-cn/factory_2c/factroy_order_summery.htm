@@ -122,6 +122,7 @@
 							$('.choosebusiness').on('change',function(){
 								$('#printer').css({ "display": "none" });
 							   $('#main_table').css({ "display": "none" });
+							      $('#pager').css({ "display": "none" });
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
 								 //   $('#searchbutton').css({ "display": "" });
@@ -135,6 +136,7 @@
 							$('.chooseCate').on('change',function(){
 							  $('#main_table').css({ "display": "none" });
 							 	$('#printer').css({ "display": "none" });
+								   $('#pager').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -147,6 +149,8 @@
 							
 								$('.chooseTruck').on('change',function(){
 							  $('#main_table').css({ "display": "none" });
+							   $('#pager').css({ "display": "none" });
+							  
 							 	$('#printer').css({ "display": "none" });
 								var catestr = $(this).val();
 								if(catestr !='all'){
@@ -168,6 +172,8 @@
 							  $('#logistic_truck_No').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
+							  $('#main_table').css({ "pager": "" });
+							  
 							}
 
 						})
@@ -178,13 +184,13 @@
 						  <{if $customer_delivery_date}>
 						<br><br>
                      <div id="printer">
-						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">备货单(pdf)</button>
+						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Summery Picking List(pdf)</button>
 					
                     <{if !$business_id}>
-						<input  type="checkbox" name="printAllBusiness" id='printAllBusiness' value='true'>并打印所有渠道汇总分单
+				<!--		<input  type="checkbox" name="printAllBusiness" id='printAllBusiness' value='true'>并打印所有渠道汇总分单 -->
 						<{/if}>
 						
-                        <button  id="exportdata" type="button" onclick="showPdf('excel');">导出备货单（xls)</button>
+                    <!--    <button  id="exportdata"  type="button" onclick="showPdf('excel');">导出备货单（xls)</button> -->
 						 
 						<!--  <span id="print4" ><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>factory_2c/export_freshfood_summery?customer_delivery_date=<{$customer_delivery_date}>&business_id=<{$business_id}>">&nbsp;<{$lang->logistic_export_Prepare_stock_summery}>-<{$customer_delivery_date}>&nbsp;</a></span>
 						-->
@@ -247,7 +253,7 @@
 						
 
 						<{if $pager}>
-						<div class="pager"><{$pager}></div>
+						<div id="pager" class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
 						没有任何订单	

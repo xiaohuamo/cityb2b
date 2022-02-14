@@ -2327,8 +2327,8 @@
   
   	  //查看是否打印总单和所有渠道配货单
 		$totalandeverychannelPrint =get2('printAllBusiness');
-		
-  
+
+       
         //** 获取该商家管辖工厂渠道商家
 		
 		$mdl = $this->loadModel('factory2c_list');
@@ -2670,9 +2670,10 @@
     	$this->setData($availableDates, 'availableDates');
 //var_dump($availableDates);exit;
   
-  	  //查看是否打印总单和所有渠道配货单
+  	 
 		$sepratePage =get2('sepratePage');
-		
+		$this->setData($sepratePage,'sepratePage');
+	//	var_dump($sepratePage);exit;
   
         //** 获取该商家管辖工厂渠道商家
 		
@@ -2902,7 +2903,7 @@
 				
 			}
         }
-        
+
         $logistic_truck_No = trim(get2('logistic_truck_No'));
 
         if (!empty($logistic_truck_No)) {
