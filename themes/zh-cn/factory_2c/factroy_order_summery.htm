@@ -100,6 +100,7 @@
 							
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}>
 									<{$d.truck_name}>-<{$d.plate_number}>
 								</option>
 							<{/if}>

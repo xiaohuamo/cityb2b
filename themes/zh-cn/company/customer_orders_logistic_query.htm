@@ -73,6 +73,7 @@
 							</option>
 						  <{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{if $d.driverName}><{$d.driverName}>-<{/if}>
 								<{$d.truck_name}>-(<{$d.count}>&nbsp;orders)
 							</option>
 						  <{/if}>
@@ -171,6 +172,7 @@
                                                     <{foreach from=$all_avaliable_trucks item=sitem1}>
 														<option value='<{$sitem1.id}>'
                                                                 <{if $item.logistic_truck_No==$sitem1.id}>selected<{/if}>>
+																	<{if $sitem1.driverName}><{$sitem1.driverName}>-<{/if}>
                                                             <{$sitem1.truck_name}>- <{$sitem1.plate_number}>
 
 														</option>
