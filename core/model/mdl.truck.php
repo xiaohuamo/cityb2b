@@ -51,7 +51,8 @@ class mdl_truck extends mdl_base
         $rec = $this->get($logistic_truck_No);
         if($rec){
              if($rec['current_driver']) {
-                 $driverAndTruckInfo = $rec['current_driver'].'-'.$rec['truck_name'].'-'.$rec['plate_number'];
+                 $driver = loadModel('user')->get($rec['current_driver']);
+                 $driverAndTruckInfo = $driver['contactPersonFirstname'].' '.$driver['contactPersonLastname'].'-'.$rec['truck_name'].'-'.$rec['plate_number'];
              }else{
                  $driverAndTruckInfo =$rec['truck_name'].'-'.$rec['plate_number'];
              }
