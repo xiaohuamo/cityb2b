@@ -2328,7 +2328,7 @@
   	  //查看是否打印总单和所有渠道配货单
 		$totalandeverychannelPrint =get2('printAllBusiness');
 
-       
+
         //** 获取该商家管辖工厂渠道商家
 		
 		$mdl = $this->loadModel('factory2c_list');

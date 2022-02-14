@@ -128,7 +128,7 @@
 							 
 								$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
-								     $('#pager').css({ "display": "none" });
+							
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -142,7 +142,7 @@
 							$('.choosebusiness').on('change',function(){
 								$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
-								     $('#pager').css({ "display": "none" });
+							
 							 
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
@@ -158,7 +158,7 @@
 							
 							 	$('#printer').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
-								     $('#pager').css({ "display": "none" });
+								
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -179,7 +179,7 @@
 							  $('#logistic_truck_No').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
-							   $('#pager').css({ "display": "" });
+							
 							}
 
 						})
@@ -201,9 +201,9 @@
 				</div>
 				
 
-				<div class="main-list">		
+				<div class="main-list" id="main_table" style="display:none;" >		
 					<{if $data}>				
-						<table cellspacing="0" cellpadding="0" width="100%" id="main_table" style="display:none;">
+						<table cellspacing="0" cellpadding="0" width="100%" >
 							<thead>				
 								<tr>	
 								<{if $customer_delivery_date}>
@@ -285,7 +285,7 @@
 						
 
 						<{if $pager}>
-						<div  id="pager" class="pager"><{$pager}></div>
+						<div   class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
 						没有任何订单	

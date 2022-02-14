@@ -122,7 +122,7 @@
 							$('.choosebusiness').on('change',function(){
 								$('#printer').css({ "display": "none" });
 							   $('#main_table').css({ "display": "none" });
-							      $('#pager').css({ "display": "none" });
+							  
 								var datestr1 = $('#customer_delivery_date').val();
 								if(datestr1 !='all'){
 								 //   $('#searchbutton').css({ "display": "" });
@@ -136,7 +136,7 @@
 							$('.chooseCate').on('change',function(){
 							  $('#main_table').css({ "display": "none" });
 							 	$('#printer').css({ "display": "none" });
-								   $('#pager').css({ "display": "none" });
+							
 								var catestr = $(this).val();
 								if(catestr !='all'){
 								//    $('#searchbutton').css({ "display": "" });
@@ -149,7 +149,7 @@
 							
 								$('.chooseTruck').on('change',function(){
 							  $('#main_table').css({ "display": "none" });
-							   $('#pager').css({ "display": "none" });
+							
 							  
 							 	$('#printer').css({ "display": "none" });
 								var catestr = $(this).val();
@@ -172,7 +172,7 @@
 							  $('#logistic_truck_No').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
-							  $('#main_table').css({ "pager": "" });
+							
 							  
 							}
 
@@ -181,7 +181,7 @@
 	              
 			
 						<button id="searchbutton" style="display:none; margin-left:0.5rem;" type="submit"><{$lang->search}></button>
-						  <{if $customer_delivery_date}>
+						  <{if $customer_delivery_date && $customer_delivery_date !='all'}>
 						<br><br>
                      <div id="printer">
 						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Summery Picking List(pdf)</button>
@@ -200,9 +200,9 @@
 				</div>
 				
 
-				<div class="main-list">		
+				<div class="main-list" id="main_table" style="display:none;" >		
 					<{if $data}>				
-						<table cellspacing="0" cellpadding="0" width="100%" id="main_table" style="display:none;">
+						<table cellspacing="0" cellpadding="0" width="100%" >
 							<thead>				
 								<tr>	
                              <{if $business_id}>								
@@ -253,7 +253,7 @@
 						
 
 						<{if $pager}>
-						<div id="pager" class="pager"><{$pager}></div>
+						<div  class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
 						没有任何订单	
