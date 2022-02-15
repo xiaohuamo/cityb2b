@@ -3620,6 +3620,8 @@ class ctl_company extends cmsPage
 		$this->setData($status,'status');
 		$this->setData($ifpaid,'ifpaid');
 
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
 		
 		if($customer_delivery_date){
 				$truckList = $mdl_truck->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
