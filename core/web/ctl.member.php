@@ -560,6 +560,7 @@ class ctl_member extends cmsPage
 			
 			$wj_user_delivery_info=array(
 					'userId'=>$this->loginUser['id'],
+                    'displayName'=>$this->loginUser['displayName'],
 					'first_name'=>$this->loginUser['person_first_name'],
 					'last_name'=>$this->loginUser['person_last_name'],
 					'address'=>$this->loginUser['googleMap'],
@@ -575,6 +576,7 @@ class ctl_member extends cmsPage
 				'userId'=>$this->loginUser['id'],
 		);
 		$wj_user_delivery_info_list = $mdl_wj_user_delivery_info->getList(null,$where);
+       // var_dump($wj_user_delivery_info_list);exit;
 		$this->setData( $wj_user_delivery_info_list,'delivery_info_list');
 		
 		// 获取该商家可用邮编

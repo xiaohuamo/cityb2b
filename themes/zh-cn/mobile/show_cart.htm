@@ -304,12 +304,18 @@
                     </option>
 
                     <{foreach from=$delivery_info_list item=item}>
-                    <option data-id='<{$item.id}>' data-first-name ='<{$item.first_name}>' data-last-name='<{$item.last_name}>' data-address='<{$item.address}>' data-phone='<{$item.phone}>' data-email='<{$item.email}>' data-Street_number='<{$item.Street_number}>' data-id-number='<{$item.id_number}>' <{if $item.isDefaultAddress}> class='defaultAddress' <{/if}> >
-                         <{$item.first_name}> <{$item.last_name}> <{$item.address}>
+                    <option data-id='<{$item.id}>' data-first-name ='<{$item.first_name}>' data-displayname ='<{$item.displayName}>' data-last-name='<{$item.last_name}>' data-address='<{$item.address}>' data-phone='<{$item.phone}>' data-email='<{$item.email}>' data-Street_number='<{$item.Street_number}>' data-id-number='<{$item.id_number}>' <{if $item.isDefaultAddress}> class='defaultAddress' <{/if}> >
+                     <{$item.displayName}> (<{$item.first_name}> <{$item.last_name}>) <{$item.address}>
                     </option>
                     <{/foreach}>
                 </select>
                 <br>
+                    <div class="form-group row">
+                        <label for="displayName"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->displayName}><em><{$lang->optional1}></em></label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control new_input" id="displayName" placeholder="Customer Name"  name="delivery_displayName">
+                        </div>
+                    </div>
                   <div class="form-group row">
                     <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
                     <div class="col-xs-9">
@@ -1404,7 +1410,7 @@
                         $('.deliver-fee-display').html('');
                     break;
                 case 'personal-info':
-                    $('.name-display').text($('input#firstname').val()+" "+$('input#lastname').val());
+                    $('.name-display').text($('input#displayName').val()+" "+$('input#firstname').val()+" "+$('input#lastname').val());
                     $('.phone-display').text($('input#phone').val());
                     $('.address-display').text($('input#address').val());
                     break;
@@ -1483,8 +1489,8 @@
         }
 
         $(function(){
-            $('input#firstname,input#lastname').on('keyup',function(){
-                $('.name-display').text($('input#firstname').val()+" "+$('input#lastname').val());
+            $('input#firstname,input#lastname,input#displayName').on('keyup',function(){
+                $('.name-display').text($('input#displayName').val()+" "+$('input#firstname').val()+" "+$('input#lastname').val());
             })
             $('input#phone').on('keyup',function(){
                  $('.phone-display').text($('input#phone').val());
@@ -1801,6 +1807,7 @@
 
             function populateAddress(target) {
                if($(target).hasClass('new')){
+                    $('input#displayName').val('<{$loginUser.displayName}>');
                     $('input#firstname').val('<{$loginUser.person_first_name}>');
                     $('input#lastname').val('<{$loginUser.person_last_name}>');
                     $('input#phone').val('<{$loginUser.phone}>');
@@ -1818,6 +1825,7 @@
 					$(".Street_number").css('display','none');
 
                 }else{
+                   $('input#displayName').val($(target).data('displayname'));
                     $('input#firstname').val($(target).data('first-name'));
                     $('input#lastname').val($(target).data('last-name'));
                     $('input#phone').val($(target).data('phone'));
@@ -2005,7 +2013,7 @@
 			 if (!addr_house_number) {
 			   addr_house_number = $('input#addr_house_number').val();
 			 }
-
+             var displayName=$('input#displayName').val();
              var lastname=$('input#lastname').val();
              var phone=$('input#phone').val();
              var email=$('input#email').val();
@@ -2018,11 +2026,11 @@
 
              if (id==null||id==''||id=='undefined')
              {
-                 url = '<{$http_root_www}>query?cmd=saveAddress&firstname='+firstname+'&lastname='+lastname+'&addr_house_number='+addr_house_number+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type=0';
+                 url = '<{$http_root_www}>query?cmd=saveAddress&displayName='+displayName+'&firstname='+firstname+'&lastname='+lastname+'&addr_house_number='+addr_house_number+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type=0';
              }
              else
              {
-                 url = '<{$http_root_www}>query?cmd=saveAddress&firstname='+firstname+'&lastname='+lastname+'&addr_house_number='+addr_house_number+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type='+id+'';
+                 url = '<{$http_root_www}>query?cmd=saveAddress&displayName='+displayName+'&firstname='+firstname+'&lastname='+lastname+'&addr_house_number='+addr_house_number+'&phone='+phone+'&email='+email+'&address='+address+'&id_number='+id_number+'&type='+id+'';
              }
 
              $.ajax({
@@ -2244,9 +2252,11 @@
                 isUpdateAddress:false,
                 isaddAddress:false,
                 currentDeliveryAddressFirstName:'',
+                currentDeliveryAddressDisplayName:'',
                 currentDeliveryAddressLastName:'',
                 currentDeliveryAddress:'',
                 currentDeliveryAddressPhone:'',
+                newDisplayName:'',
                 newFirstName:'',
                 newLastName:'',
                 newPhone:'',
@@ -2265,6 +2275,7 @@
             mounted:function(){
                 this.currentDeliveryAddress='<{$delivery_info.address}>';
                 this.currentDeliveryAddressPhone='<{$delivery_info.phone}>';
+                this.currentDeliveryAddressDisplayName ='<{$delivery_info.displayName}>';
                 this.currentDeliveryAddressFirstName ='<{$delivery_info.first_name}>';
                 this.currentDeliveryAddressLastName='<{$delivery_info.last_name}>';
 

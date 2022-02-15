@@ -10,6 +10,7 @@ class User{
 	$businessName,
 	$abn,
 	$googleMap,
+	$address,
 	$name,
 	$email,
 	$phone,
@@ -89,6 +90,7 @@ class User{
 		$this->businessName='';
 		$this->abn='';
 		$this->googleMap='';
+		$this->address='';
 		$this->isAdmin='';
 		$this->name='';
 		$this->email='';
@@ -214,6 +216,7 @@ class User{
 
 	public function setAddress($business_address){
 		$this->googleMap=$business_address;
+		$this->address=$business_address;
 	}
 
 	public function setBusinessPlan($plan){

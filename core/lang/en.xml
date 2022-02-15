@@ -800,6 +800,7 @@
     <user_name>User name</user_name>
     <mail>Mail</mail>
     <nickename>Nickname</nickename>
+	<displayName>Customer Name</displayName>
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
     <telephone>Tele</telephone>

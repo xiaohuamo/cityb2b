@@ -1734,6 +1734,7 @@ class ctl_query extends cmsPage
             case 'saveAddress':
                 $addressID=trim(get2('type'));
                 $data = array(
+					'displayName'=>trim(get2('displayName')),
                     'userId'=>$this->loginUser['id'],
                     'createTime'=>time(),
                     'first_name'=>trim(get2('firstname')),

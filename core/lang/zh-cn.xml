@@ -808,6 +808,7 @@
     <mail>邮件</mail>
     <nickename>昵称</nickename>
     <first_name>名</first_name>
+	<displayName>客户名称</displayName>
     <last_name>姓</last_name>
     <telephone>电话</telephone>
     <set_withdraw_account>设置取现账户</set_withdraw_account>

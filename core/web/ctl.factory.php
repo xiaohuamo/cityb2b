@@ -1180,12 +1180,17 @@ class ctl_factory extends cmsPage
                    $data_user=array(
 				   //''=>$,
 				   'googleMap'=>$googleMap,
+                   'address'=>$googleMap,
 				   'email'=>$email,
 				   'contactPersonFirstname'=>$contactPersonFirstname,
 				   'contactPersonLastname'=>$contactPersonLastname,
+                   'person_first_name'=>$contactPersonFirstname,
+                   'person_last_name'=>$contactPersonLastname,
 				   'tel'=>$tel,
 				   'phone'=>$phone,
-				   'name'=>$username
+				   'name'=>$username,
+                   'displayName'=>$username,
+                   'businessName'=>$untity_name
 				   
 				   );
 				   $mdl_user = $this->loadModel('user');
@@ -1213,7 +1218,8 @@ class ctl_factory extends cmsPage
 				   
 				   $data_abn =array(
 				    'untity_name'=>$untity_name,
-					'ABNorACN'=>$abn
+					'ABNorACN'=>$abn,
+                    'business_name'=>$username
 				   
 				   );
 				    $mdl_wj_abn_applicationy = $this->loadModel('wj_abn_application');
