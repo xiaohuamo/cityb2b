@@ -30,11 +30,12 @@ class ctl_orderpaymentprocess extends cmsPage
 			$checkResponseMsg[]= (string)($this->lang->remind_payment);
 		}
 
-
+/*
 		if(!trim(post('delivery_first_name'))||!trim(post('delivery_last_name'))){
 			$checkResponseCode[]='501';
 			$checkResponseMsg[]=(string)$this->lang->remind_name.'';
 		}
+*/
 
 		if(!trim(post('delivery_phone'))){
 			$checkResponseCode[]='501';

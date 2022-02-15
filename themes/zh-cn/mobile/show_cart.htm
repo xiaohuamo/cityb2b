@@ -305,7 +305,7 @@
 
                     <{foreach from=$delivery_info_list item=item}>
                     <option data-id='<{$item.id}>' data-first-name ='<{$item.first_name}>' data-displayname ='<{$item.displayName}>' data-last-name='<{$item.last_name}>' data-address='<{$item.address}>' data-phone='<{$item.phone}>' data-email='<{$item.email}>' data-Street_number='<{$item.Street_number}>' data-id-number='<{$item.id_number}>' <{if $item.isDefaultAddress}> class='defaultAddress' <{/if}> >
-                     <{$item.displayName}> (<{$item.first_name}> <{$item.last_name}>) <{$item.address}>
+                     <{$item.displayName}> <{if ($item.first_name ||  $item.last_name)}>(<{$item.first_name}> <{$item.last_name}>) <{/if}><{$item.address}>
                     </option>
                     <{/foreach}>
                 </select>
@@ -317,14 +317,14 @@
                         </div>
                     </div>
                   <div class="form-group row">
-                    <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
+                    <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}><em><{$lang->optional1}></label>
                     <div class="col-xs-9">
                       <input type="text" class="form-control new_input" id="lastname" placeholder="Last Name"  name="delivery_last_name">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="firstname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}></label>
+                    <label for="firstname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}><em><{$lang->optional1}></label>
                     <div class="col-xs-9">
                       <input type="text" class="form-control new_input" id="firstname" placeholder="First Name"  name="delivery_first_name" >
                     </div>
@@ -1410,7 +1410,12 @@
                         $('.deliver-fee-display').html('');
                     break;
                 case 'personal-info':
-                    $('.name-display').text($('input#displayName').val()+" "+$('input#firstname').val()+" "+$('input#lastname').val());
+                    if($('input#firstname').val() || $('input#lastname').val()) {
+                        $('.name-display').text($('input#displayName').val()+" "+$('input#firstname').val()+" "+$('input#lastname').val());
+                    }else{
+                        $('.name-display').text($('input#displayName').val());
+                    }
+
                     $('.phone-display').text($('input#phone').val());
                     $('.address-display').text($('input#address').val());
                     break;
@@ -1517,7 +1522,7 @@
                 var target = selected.val();
 
                 if (target == 'creditcard' && creditcardFirstTimeBuyerLimit()) {
-                  alert('新用户首次购买信用卡支付上限为$100');
+                  alert('new customer credit card payment can not over $100');
                   $(this).prop("checked", false);
                    $('.'+target+'-payment-des').hide();
                   currentPaymentMethod='';
