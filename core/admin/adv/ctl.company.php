@@ -14,7 +14,7 @@ class ctl_company extends adminPage
 		$keyword			= get2('keyword');
 		$onlyNotApproved	= limitInt(get2('onlyNotApproved'), 0, 1);
 		$search = array(
-			'role'				=> $role,
+		//	'role'				=> $role,
 			'type'				=> $type,
 			'keyword'			=> $keyword,
 			'onlyNotApproved'	=> $onlyNotApproved
@@ -24,7 +24,7 @@ class ctl_company extends adminPage
 		$roles	= $this->loadModel('role');
 
 		$where	= array();
-		$where[] = " (t0.role=3) ";
+		$where[] = " (t0.role=3 or t0.role=20) ";
 		
 		$where[] = " (t0.id='$keyword' or t0.name like '%$keyword%' or t0.businessName like '%$keyword%' or t0.displayName like '%$keyword%') ";
 		//如果登录 用户组为6 role=6 ,那么是属于商家代理组
@@ -162,7 +162,7 @@ class ctl_company extends adminPage
 		
 		$oldData = $data;
 
-		if ($data['role'] != 3 && $data['role'] != 4 && $data['role'] != 5 && $data['role'] != 6)
+		if ($data['role'] != 3 && $data['role'] != 4 && $data['role'] != 20 && $data['role'] != 5 && $data['role'] != 6)
 		{
 		   
 			$this->sheader(null, $this->lang->no_permission_to_edit_this_user);
