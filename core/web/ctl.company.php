@@ -3595,7 +3595,7 @@ class ctl_company extends cmsPage
         $three_days_times = time()-259200;
 		
         $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ". 
-		$this->loginUser['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->loginUser['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+		$this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
        // var_dump($sql_avaliable_date);exit;
 	   
 	       $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->loginUser['id']);
@@ -3639,7 +3639,7 @@ class ctl_company extends cmsPage
         $this->setData($staff,'staff');
 		$this->setData($customer_delivery_date,'customer_delivery_date');
 
-        $sql = "SELECT o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
         $whereStr.=" (business_userId= ".$this->loginUser['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id']."))";
         //var_dump($sql);exit;
@@ -3660,7 +3660,7 @@ class ctl_company extends cmsPage
        
 		
 		
-               $whereStr.= " and o.status=1 ";
+               $whereStr.= " and (o.status =1 or o.accountPay=1) ";
         
 		
         if (!empty($customer_delivery_option)) {
@@ -3704,7 +3704,7 @@ class ctl_company extends cmsPage
 
         $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
       
-     
+    // var_dump($pageSql); exit;
             $pageUrl = $this->parseUrl()->set('page');
             $pageSize = 40;
             $maxPage = 10;
@@ -3712,7 +3712,10 @@ class ctl_company extends cmsPage
 
             $data = $mdl_order->getListBySql($page['outSql']);
 
-  
+            foreach ($data as $key => $value) {
+                $data[$key]['name'] =$this->getCustomerName($value);
+
+            }
 
         $this->setData($page['pageStr'],'pager');
 
@@ -3851,13 +3854,13 @@ class ctl_company extends cmsPage
 			  
 		if($business_id) {
 			//var_dump($business_id);//exit;
-			$sql = "SELECT o.* ,uu.name,cust.ori_sum from ".$query_table_name." as o left join cc_user uu on o.userId=uu.id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+			$sql = "SELECT f.nickname,o.* ,uu.displayName as name,cust.ori_sum from ".$query_table_name." as o  left join cc_user_factory f on o.userId =f.user_id and o.business_userId = f.factory_id left join cc_user uu on o.userId=uu.id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
             $whereStr.=" (business_userId= $business_id or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where  (business_id =$business_id  or business_id in (select customer_id from cc_factory2c_list where factroy_id =$business_id ))) )";
       
 			
 		}else{
 			
-			  $sql = "SELECT o.* ,uu.name ,cust.ori_sum from ".$query_table_name." as o  left join cc_user uu on o.userId=uu.id left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+			  $sql = "SELECT  f.nickname, o.* ,uu.displayName as name ,cust.ori_sum from ".$query_table_name." as o  left join cc_user_factory f on o.userId =f.user_id and o.business_userId = f.factory_id  left join cc_user uu on o.userId=uu.id left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
           $whereStr.=" (business_userId= ".$this->loginUser['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id']."))";
      
 			
@@ -3887,7 +3890,7 @@ class ctl_company extends cmsPage
 		
 		 if (!empty($ifpaid)) {
           
-               $whereStr.= " and o.status = '$ifpaid' ";
+               $whereStr.= " and ( o.status = 1 or o.accountPay =1) ";
           
         }
 		
@@ -3961,6 +3964,8 @@ class ctl_company extends cmsPage
 					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
 					
 				}
+                //获得用户的名称
+                $data[$key]['name'] =$this->getCustomerName($value);
                
             }
 
@@ -4015,6 +4020,7 @@ class ctl_company extends cmsPage
                     $data[$key]['hasLottery']=$this->loadModel('lottery')->getUserRewardItems($value['userId'],$value['business_userId']);
                     array_push($lotteryUserList, $value['userId']);
                 }
+                $data[$key]['name'] =$this->getCustomerName($value);
             }
 
             $this->loadModel('invoice');
@@ -4038,6 +4044,11 @@ class ctl_company extends cmsPage
             $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 
             $data = $mdl_order->getListBySql($page['outSql']);
+
+            foreach ($data as $key => $value) {
+                $data[$key]['name'] =$this->getCustomerName($value);
+
+            }
 
         }
 
@@ -12512,14 +12523,14 @@ function get_data($url, $ch) {
 		
 		if($customer_delivery_date) {
 			$sql ="SELECT wj.`menu_id` , wj.`bonus_title`, sum(wj.`customer_buying_quantity`) as sum  FROM `cc_wj_customer_coupon` wj ,cc_order o
-		WHERE  wj.order_Id =o.orderid and  o.logistic_delivery_date =$customer_delivery_date and   wj.`business_id` =$business_id and wj.`coupon_status`='c01' and o.status=1  group by wj.`menu_id`,
+		WHERE  wj.order_Id =o.orderid and  o.logistic_delivery_date =$customer_delivery_date and   wj.`business_id` =$business_id and wj.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)  group by wj.`menu_id`,
 		`bonus_title` order by menu_id desc";
 		
 		//	var_dump($sql);exit;
 		}else{
 			
 			$sql ="SELECT c.`menu_id` , c.`bonus_title`, sum(c.`customer_buying_quantity`) as sum  FROM `cc_wj_customer_coupon` c left join cc_order o on c.order_id =o.orderId 
-		WHERE c.`business_id` =".$this->loginUser['id']." and c.`coupon_status`='c01' and o.status =1   group by `menu_id`,
+		WHERE c.`business_id` =".$this->loginUser['id']." and c.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)   group by `menu_id`,
 		`bonus_title` order by menu_id desc";
 		//var_dump($sql);exit;
 		
@@ -12578,7 +12589,7 @@ function get_data($url, $ch) {
 			$sql ="SELECT a.address,a.logistic_truck_No,a.logistic_stop_No,a.logistic_suppliers_info,a.logistic_suppliers_count,a.logistic_delivery_date,a.logistic_sequence_No,a.`phone`, b.menu_id,b.bonus_title,b.customer_buying_quantity,b.voucher_deal_amount,
 		(b.customer_buying_quantity *b.voucher_deal_amount) as sub_total,concat(a.`first_name` ,a.`last_name`) as name , 
 		a.`address`,a.orderId,a.house_number,a.street,a.city,a.state,a.message_to_business,a.postalcode,a.money  FROM `cc_order` a ,
-		cc_wj_customer_coupon b where b.order_id=a.orderId and ( a.`business_userId` =".$this->loginUser['id']."  or   a.`business_userId` =$dispaitch_business_id ) and b.business_id =".$this->loginUser['id'] ."  and a.status=1 and  a.`coupon_status` ='c01' order by a.phone,a.address,a.orderId";
+		cc_wj_customer_coupon b where b.order_id=a.orderId and ( a.`business_userId` =".$this->loginUser['id']."  or   a.`business_userId` =$dispaitch_business_id ) and b.business_id =".$this->loginUser['id'] ."  and (o.status =1 or o.accountPay=1) and  a.`coupon_status` ='c01' order by a.phone,a.address,a.orderId";
        
     
 			
@@ -13184,7 +13195,7 @@ function get_data($url, $ch) {
 		
 		
     	require_once( DOC_DIR.'static/OptimoRoute.php');
-    	$opRoute = new OptimoRoute($this->loginUser['id']);
+    	$opRoute = new OptimoRoute($this->current_business['id']);
     		
     	$date = get2('date');
     	$this->setData($date,'date');
@@ -13200,6 +13211,11 @@ function get_data($url, $ch) {
 	    	}
 
 	    	$orders = $opRoute->getOrderOnDeliverDate($date);
+            foreach ($orders as $key => $value) {
+                $orders[$key]['name'] =$this->getCustomerName($value);
+
+            }
+
     		$this->setData($orders,'orders');
     	}
        
@@ -13211,7 +13227,7 @@ function get_data($url, $ch) {
     	
 	 	$this->setData($availableDates, 'availableDates');
 
-    	$this->setData('OptimoRoute 控制面板 - ' . $this->site['pageTitle'], 'pageTitle');
+    	$this->setData('OptimoRoute panel - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->setData('dispatching_center', 'menu');
         $this->setData('print_label_admin', 'submenu');
 		
@@ -14304,25 +14320,18 @@ public function custom_delivery_fee_add_action()
 
             
 			$parsed['orderId'] = $order['orderId'];
-			
-			// if firstname and lastname is null ,then find the customer name 
-		    $name = $order['first_name'].$order['last_name'];
-			if(!trim($name)) {
-				$name = $this->findCustomerName($order['userId']);
-				$name=str_replace("'","‘",$name);
-				$parsed['first_name'] = substr($name,0,30);
-				$parsed['last_name'] = '';
-				//$parsed['first_name'] = $order['first_name'];
-				//$parsed['last_name'] = $order['last_name'];
-				$name =  substr($name,0,30);
-			}else{
-				$order['first_name']=str_replace("'","‘",$order['first_name']);
-				$order['last_name']=str_replace("'","‘",$order['last_name']);
+
+            $name= substr($this->getCustomerName($order),0,30);
+
+
+
+				$order['first_name']=str_replace("'","‘",$name);
+				$order['last_name']='';
 				
 				$parsed['first_name'] = $order['first_name'];
-				$parsed['last_name'] = $order['last_name'];
-				$name =   $order['first_name'];
-			}
+				$parsed['last_name'] = '';
+				//$name =   $order['first_name'];
+
 			
 			
 			

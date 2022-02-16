@@ -213,8 +213,9 @@
 									<th>stopNum</th>
 									
 									<th><{$lang->order_id}></th>		
+									
 								
-									<th><{$lang->user}></th>	
+									<th><{$lang->customer_name}></th>	
 									<th>phone</th>	
 									
 									<th><{$lang->delivery}></th>				
@@ -241,15 +242,8 @@
 										<a target='_blank' href="<{$http_root_www}><{if $loginUser.business_type_factory==1}>factory<{else}>company<{/if}>/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
-								
 									<td>
-									<{if (!$item.first_name && !$item.last_name)}>
-										<{$item.name}>
-									<{else}>
-										<{$item.first_name}> <{$item.last_name}>
-									<{/if}>
-								
-									
+									<{$item.name}>
 									</td>
 									
 									

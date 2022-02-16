@@ -729,7 +729,7 @@ class OrderInfoReport
                     // $this->pdf->row($order['bonus_title'], 0.4, 0, 'C');
                     $this->pdf->row(' ', 0.4, 0, 'C');
                 }else{
-                    $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.4, 0, 'C');
+                    $this->pdf->row($order['bonus_title'].' '.$order['guige_des'], 0.4, 0, 'C');
                    // $this->pdf->row($order['menu_en_name'], 0.2, 0, 'C');
                 }
 
@@ -745,7 +745,7 @@ class OrderInfoReport
 
                 if($nameLength>$limitNameLength && $cateLength>$limitCateLength  ) {
                     $this->pdf->row("category: ".$order['category_en_name'], 0.30, 0, 'C');
-                    $this->pdf->row("item Name: ".$order['menu_en_name'].' '.$order['guige_des'], 0.7, 0, 'C');
+                    $this->pdf->row("item Name: ".$order['bonus_title'].' '.$order['guige_des'], 0.7, 0, 'C');
                     $this->pdf->ln();
                     $this->pdf->row("", 1, 1, 'C', 0.1);
 
@@ -755,7 +755,7 @@ class OrderInfoReport
                     $this->pdf->row("", 1, 1, 'C', 0.1);
 
                 }elseif($nameLength>$limitNameLength && $cateLength<=$limitCateLength) {
-                    $this->pdf->row("item Name: ".$order['menu_en_name'].' '.$order['guige_des'], 0.7, 0, 'C');
+                    $this->pdf->row("item Name: ".$order['bonus_title'].' '.$order['guige_des'], 0.7, 0, 'C');
                     $this->pdf->ln();
                     $this->pdf->row("", 1, 1, 'C', 0.1);
                 }else{
@@ -770,7 +770,7 @@ class OrderInfoReport
                 $this->pdf->row($order['menu_id'], 0.10, 0, 'C');
                 $this->pdf->row($order['guige1_id'], 0.10, 0, 'C');
 
-                $this->pdf->row($order['menu_en_name'].' '.$order['guige_des'], 0.4, 0, 'C');
+                $this->pdf->row($order['bonus_title'].' '.$order['guige_des'], 0.4, 0, 'C');
                // $this->pdf->row($order['menu_en_name'], 0.2, 0, 'C');
                 $this->pdf->setFontSize(12);
                 $this->pdf->row($order['total_quantity'], 0.1, 0, 'C');

@@ -805,12 +805,14 @@
     <website_and_social>网站／社交</website_and_social>
     <administrator_information>管理员管理</administrator_information>
     <user_name>用户名</user_name>
+	<customer_name>客户名</customer_name>
     <mail>邮件</mail>
     <nickename>昵称</nickename>
     <first_name>名</first_name>
 	<displayName>客户名称</displayName>
     <last_name>姓</last_name>
     <telephone>电话</telephone>
+	<logistic_number>统配号</logistic_number>
     <set_withdraw_account>设置取现账户</set_withdraw_account>
 
 
@@ -1393,7 +1395,9 @@
 	<business_department> 商家分店</business_department>
 	<ifpaid> 支付状态</ifpaid>
 	<follow_deliver_intr>根据配送说明</follow_deliver_intr>
-	
+	<driver>司机</driver>
+	<stop_number>站号</stop_number>
+	<Estimate_arrive_time>预计到达时间</Estimate_arrive_time>
 	
 	<logistic_arrive_time>预计到达时间</logistic_arrive_time>
 	<logistic_management_panel>物流中心管理</logistic_management_panel>

@@ -398,6 +398,57 @@ public function  setCustomerTrueLogin($userrole){
 
 }
 
+//根据订单信息获得客户名称
+    public function getCustomerName($order){
+
+        //第一优先级 客户简码;
+        // 如果有客户填写的客户名，同时附上
+        if ($order['nickname']) {
+            if($order['displayName']){
+                return $order['nickname'].'('. $order['displayName'].')';
+            }else{
+                return $order['nickname'];
+            }
+
+        }
+
+        //如果没有客户简码，则客户提交订单时的 客户名 为第二优先级 ，如果客户同时填写了姓名，附上姓名；
+        if($order['displayName']){
+            if($order['first_name'] || $order['last_name'] ) {
+                return $order['displayName'].'('. $order['first_name'].' '.$order['last_name'].')';
+            }else{
+                return $order['displayName'];
+            }
+
+        }
+
+        //  如果客户无简码，并且提交订单时未填写客户户名，则，客户填写的 姓 ，名 做为第三优先级 ；
+        if($order['first_name'] || $order['last_name'] ) {
+            return  $order['first_name'].' '.$order['last_name'];
+        }
+
+        //如果以上均为捕获到客户信息，则获取用户注册时的用户信息做为标记；
+        $user = loadModel('user')->get($order['userId']);
+        if($user){
+            if($user['displayName']){
+                return $user['displayName'];
+            }
+            if($user['businessName']){
+                return $user['businessName'];
+
+            }
+            if($user['person_first_name'] || $user['person_last_name']){
+                return $user['person_first_name'].' '. $user['person_last_name'];
+            }
+            return $user['name'];
+        }
+
+
+    }
+
+
+
+
 //以groupmanager身份登陆
 public function  groupMangerCheckAndSheader($groupManager, $url){
 

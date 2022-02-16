@@ -798,9 +798,14 @@
     <website_and_social>Website/ social</website_and_social>
     <administrator_information>Administrator information</administrator_information>
     <user_name>User name</user_name>
+	<customer_name>Customer Name</customer_name>
     <mail>Mail</mail>
     <nickename>Nickname</nickename>
 	<displayName>Customer Name</displayName>
+	<logistic_number>Logistic Number</logistic_number>
+	<driver>Driver</driver>
+	<stop_number>Stop Number</stop_number>
+	<Estimate_arrive_time>ETA</Estimate_arrive_time>
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
     <telephone>Tele</telephone>

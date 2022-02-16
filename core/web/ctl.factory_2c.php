@@ -3359,14 +3359,14 @@ public function  getOutputFileName($tradingName,$DataDate,$type,$business_id,$to
 		
 		if($customer_delivery_date) {
 			$sql ="SELECT wj.`menu_id` , wj.`bonus_title`, sum(wj.`customer_buying_quantity`) as sum  FROM `cc_wj_customer_coupon` wj ,cc_order o
-		WHERE  wj.order_Id =o.orderid and  o.logistic_delivery_date =$customer_delivery_date and   wj.`business_id` =$business_id and wj.`coupon_status`='c01' and o.status=1  group by wj.`menu_id`,
+		WHERE  wj.order_Id =o.orderid and  o.logistic_delivery_date =$customer_delivery_date and   wj.`business_id` =$business_id and wj.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)  group by wj.`menu_id`,
 		`bonus_title` order by menu_id desc";
 		
 		//	var_dump($sql);exit;
 		}else{
 			
 			$sql ="SELECT c.`menu_id` , c.`bonus_title`, sum(c.`customer_buying_quantity`) as sum  FROM `cc_wj_customer_coupon` c left join cc_order o on c.order_id =o.orderId 
-		WHERE c.`business_id` =".$this->loginUser['id']." and c.`coupon_status`='c01' and o.status =1   group by `menu_id`,
+		WHERE c.`business_id` =".$this->loginUser['id']." and c.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)   group by `menu_id`,
 		`bonus_title` order by menu_id desc";
 		//var_dump($sql);exit;
 		

@@ -41,7 +41,7 @@ class OptimoRoute
 			try {
 				$response = $this->api->syncOrder($data);	
 			} catch (Exception $e) {
-				throw new Exception("同步订单时出错,请检查订单(".$order['orderId'].")后再同步:".$e->getMessage(), 1);
+				throw new Exception("Error when upload order ,please check info of address etc of (".$order['orderId']."),then do upload again!:".$e->getMessage(), 1);
 			}
 		}
 	}
@@ -116,7 +116,7 @@ class OptimoRoute
 		$loginUserId =$this->loginUser['id'];
 		
 		
-		$sql ="select * from cc_order where logistic_delivery_date =$timestamp and coupon_status='c01' and status=1 ";
+		$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( status=1 or accountPay =1)  ";
 		
 		$sql .= " and ( business_userId =$current_user_id  ";
 		$sql .= " or business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id) ";
@@ -131,7 +131,7 @@ class OptimoRoute
 		
 		$ubonusOrderList =$mdl_order->getListBySql($sql);
 		//var_dump($sql);exit;
-		$sql ="select * from cc_order_import where logistic_delivery_date =$timestamp and coupon_status='c01' and status=1 and business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id)";
+		$sql ="select * from cc_order_import where logistic_delivery_date =$timestamp and coupon_status='c01' and  status =1   and business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id)";
 	    $ubonusOrderImportList =$mdl_order->getListBySql($sql);
 		
 		
@@ -168,7 +168,7 @@ class OptimoRoute
 		$mdl_order = loadModel('order');
 		$current_user_id =$this->dispCenterId;
 		
-		$sql ="select * from cc_order where logistic_delivery_date =$timestamp and coupon_status='c01' ";
+		$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id  where logistic_delivery_date =$timestamp and coupon_status='c01'   and ( status=1 or accountPay =1) ";
 		
 		$ubonusOrderList =$mdl_order->getListBySql($sql);
 		//var_dump($sql);exit;
@@ -214,7 +214,7 @@ class OptimoRoute
 		if(!$data_resource) $data_resource =1;
 		
 		if ($data_resource ==1 ) {
-			$sql ="select * from cc_order where logistic_delivery_date =$timestamp and coupon_status='c01' ";
+			$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id  where logistic_delivery_date =$timestamp and coupon_status='c01'  and ( status=1 or accountPay =1) ";
 			$sql .=" and ( business_userId =$bid ";
 			$sql .=" or  orderId in (select DISTINCT order_id from cc_wj_customer_coupon c where business_id = $bid)";
 			$sql .=" or  business_userId in (select customer_id from cc_factory2c_list c where factroy_id = $bid)";
@@ -259,7 +259,7 @@ class OptimoRoute
 
 		$mdl_order = loadModel('order');
 
-		$sql = "SELECT o.*, c.business_id FROM `cc_order` as o left JOIN cc_wj_customer_coupon as c on o.orderId = c.order_id  where o.business_userId = ".$this->dispCenterId." and c.business_id = $supplierId and o.logistic_delivery_date =$timestamp and o.coupon_status='c01'";
+		$sql = "SELECT o.*, c.business_id FROM `cc_order` as o left JOIN cc_wj_customer_coupon as c on o.orderId = c.order_id  where o.business_userId = ".$this->dispCenterId." and c.business_id = $supplierId and o.logistic_delivery_date =$timestamp and o.coupon_status='c01' and (o.status=1 or o.accountPay=1) ";
 
 		return $mdl_order->getListBySql($sql);
 	}

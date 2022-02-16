@@ -116,7 +116,7 @@ class mdl_factory_2blist extends mdl_base
    public static  function getAvaliableDateOfAllSalesChannelOfThisFactory($businessId) {
 		
        //获取cc_order可以配送的日期
-		$sql_cc_order_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order where status=1 and coupon_status="c01" and logistic_delivery_date >'.(time()-3600*24*7). ' and ';
+		$sql_cc_order_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order where (status =1 or accountPay=1) and coupon_status="c01" and logistic_delivery_date >'.(time()-3600*24*7). ' and ';
         $sql_cc_order_avaliabe_date .= '  ( business_userId = '.$businessId ;
 		$sql_cc_order_avaliabe_date .='  	or business_userId in (select customer_id  from cc_factory_2blist where factroy_id ='.$businessId.'))';
 	
@@ -138,20 +138,20 @@ class mdl_factory_2blist extends mdl_base
 				//var_dump($totalandeverychannelPrint);exit;
 		  if($businessId) {
 			$sql =" select o.logistic_delivery_date,c.business_id,cate.category_sort_id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,r.unit,c.bonus_title,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c left join $tableName o on c.order_id =o.orderId left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";
-			$sql .= " where (c.business_id =$businessId )  and o.coupon_status='c01' and o.status=1 ";
+			$sql .= " where (c.business_id =$businessId )  and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) ";
 				
 	
 			}else{
 				
 				$sql =" select o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,r.unit,c.bonus_title,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c left join $tableName o on c.order_id =o.orderId left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";
-				$sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id))  and o.coupon_status='c01' and o.status=1 ";
+				$sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id))  and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) ";
 			
 				//var_dump($sql);exit;
 			}
 				
 		}else{
 			 $sql =" select c.business_id,u.displayName,o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,r.unit,c.bonus_title,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c left join $tableName o on c.order_id =o.orderId left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join cc_user u on c.business_id =u.id left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";
-			 $sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id))  and o.coupon_status='c01' and o.status=1 ";
+			 $sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id))  and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) ";
 			//var_dump($sql);exit;
 		}
       
@@ -196,14 +196,14 @@ class mdl_factory_2blist extends mdl_base
 		  if($businessId) {
 			$sql =" SELECT r.source_menu_id,c.restaurant_menu_id ,r.menu_id,r.menu_cn_name,r.menu_en_name,r.unit ,c.order_id,u.googleMap,u.displayName,o.address,concat(o.first_name,' ',o.last_name) as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity,r.unit  from ";
 			$sql .=" cc_wj_customer_coupon c left join  cc_order o on c.order_id=o.orderId left join cc_user u on c.business_id=u.id  left join cc_restaurant_menu r on c.restaurant_menu_id =r.id  ";
-			$sql .= " where c.business_id=$businessId and ".$whereProductRange."  and o.coupon_status='c01' and o.status=1 ";
+			$sql .= " where c.business_id=$businessId and ".$whereProductRange."  and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) ";
 				
 	
 		}else{
 				
 			$sql =" SELECT  r.source_menu_id,c.restaurant_menu_id ,r.menu_id,r.menu_cn_name,r.menu_en_name,r.unit ,c.order_id,u.googleMap,u.displayName,o.address,concat(o.first_name,' ',o.last_name) as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity,r.unit from ";
 			$sql .=" cc_wj_customer_coupon c left join  cc_order o on c.order_id=o.orderId left join cc_user u on c.business_id=u.id  left join cc_restaurant_menu r on c.restaurant_menu_id =r.id  ";
-			$sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id)) and o.coupon_status='c01' and o.status=1 and  ".$whereProductRange ." ";
+			$sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id)) and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) and  ".$whereProductRange ." ";
 	
 					
 				

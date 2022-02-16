@@ -177,7 +177,7 @@
 						<br><br>
                        <div id="printer">
 							<button style="padding: 10px 5px;background: #43d1af">
-							<a onclick='return confirm("确认将OptimoRoute的订路线信息导入?");'href="<{$http_root_www}>company/oproute?date=<{$customer_delivery_date}>&task=syncdown&disp=1&logistic_truck_No=<{$logistic_truck_No}>&customer_delivery_date=<{$customer_delivery_date}>">下载调度时间</a>
+							<a onclick='return confirm(" import OptimoRoute route schedule?");'href="<{$http_root_www}>company/oproute?date=<{$customer_delivery_date}>&task=syncdown&disp=1&logistic_truck_No=<{$logistic_truck_No}>&customer_delivery_date=<{$customer_delivery_date}>">下载调度时间</a>
 						</button>
 						
                         </div>
@@ -249,7 +249,7 @@
 									</td>
 									
 								
-									<td><{$item.first_name}> <{$item.last_name}></td>
+									<td><{$item.name}></td>
 									
 									
 									<td><{$item.phone}></td>

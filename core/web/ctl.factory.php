@@ -133,9 +133,9 @@ class ctl_factory extends cmsPage
             $this->setData(1, 'dispatching_user');
         }
         if ($currentBusinessId && $currentBusinessId != 'all') {
-            $sql = "SELECT cust.displayName,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+            $sql = "SELECT cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
         } else {
-            $sql = "SELECT cust.displayName,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id     group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$FactoryId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+            $sql = "SELECT  cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id     group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$FactoryId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
         }
         $whereStr = " ( business_userId= ".$FactoryId;
         $whereStr .= "  or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$FactoryId.")";
@@ -242,7 +242,7 @@ class ctl_factory extends cmsPage
 		
 
         $pageSql = $sql." where ".$whereStr." order by createTime desc";
-       // var_dump($pageSql);exit;
+        //var_dump($pageSql);exit;
         if (trim(get2('output')) == 'pdf') {
 
             $where12 = [
@@ -256,6 +256,7 @@ class ctl_factory extends cmsPage
             foreach ($data as $key => $value) {
 
                 $data[$key]['items'] = $mdl_wj_customer_coupon->getItemsInOrder($value['orderId'], $FactoryId);
+                $data[$key]['name'] =$this->getCustomerName($value);
             }
 
             $this->loadModel('invoice');
@@ -289,6 +290,7 @@ class ctl_factory extends cmsPage
                     $data[$key]['hasLottery'] = $this->loadModel('lottery')->getUserRewardItems($value['userId'], $value['business_userId']);
                     array_push($lotteryUserList, $value['userId']);
                 }
+                $data[$key]['name'] =$this->getCustomerName($value);
             }
 
             $this->loadModel('invoice');
@@ -327,7 +329,7 @@ class ctl_factory extends cmsPage
 				 }else{
 					  $data[$key]['merge']=2;
 				 }
-				
+                 $data[$key]['name'] =$this->getCustomerName($value);
 
                
             }
@@ -344,7 +346,7 @@ class ctl_factory extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('客户订单中心 - '.$this->site['pageTitle'], 'pageTitle');
+        $this->setData('Customer Orders - '.$this->site['pageTitle'], 'pageTitle');
 		
 		//date_default_timezone_set(Australia/Sydney);
 		//$this->setData(date_default_timezone_get(), 'currentTimeZone'); 

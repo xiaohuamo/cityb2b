@@ -16,7 +16,7 @@ class mdl_recharge extends mdl_base
 	public function getBalance($userid){
 		$sql = "SELECT sum(`money`)
 		FROM `#@_recharge`
-		where `userId` ='".$userid."' and (status=1 )  ";
+		where `userId` ='".$userid."' and status =1   ";
 		
 		$sum_money = $this->getListBySql($sql);
 		

@@ -1201,7 +1201,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			'promotion_total'             => $arr_post['promotion_total'],
 			'promotion_id'                => $arr_post['promotion_id'],
 			'payment'                     => $arr_post['payment'] ,
-			'status'                      => $statusOfOrder,
+			'status'                      => 0,
 			'createTime'                  => time(),
 			'createIp'                    => ip(),
 			'business_userId'             => $arr_post['business_userId'],
@@ -1213,6 +1213,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			'customer_delivery_option'    => $arr_post['customer_delivery_option'], 
 			'delivery_fees'               => $arr_post['delivery_fees'],
 			'booking_fees'                => $arr_post['booking_fees'],
+            'displayName'                  => $arr_post['displayName'],
 			'first_name'                  => $arr_post['first_name'],
 			'last_name'                   => $arr_post['last_name'],
 			'phone'                       => $arr_post['phone'],
@@ -1232,6 +1233,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			'surcharge'                   => $arr_post['surcharge'],
 			'surcharge_new'                => $arr_post['surcharge'],
 			'multi_use'                   => $arr_post['multi_use'],
+            'accountPay'                   => $statusOfOrder,
 			
 		);
 

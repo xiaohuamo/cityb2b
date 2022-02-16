@@ -365,6 +365,8 @@ class ctl_orderpaymentprocess extends cmsPage
 			'customer_delivery_option'=>$delivery_option, 
 			'delivery_fees'=>post('delivery_fee'),
 			'booking_fees'=>post('booking_total'),
+
+            'displayName'=>post('delivery_displayName'),
 			'first_name'=>post('delivery_first_name'),
 			'last_name'=>post('delivery_last_name'),
 			'phone'=>post('delivery_phone'),
@@ -464,7 +466,7 @@ class ctl_orderpaymentprocess extends cmsPage
 					$menu_rec = $mdl_restaurant_menu->get($arr_post['menu_id'][$key]);
 					if($menu_rec['qty']<$arr_post['quantities'][$key]){
 						
-						$msg .=$arr_post['coupon_names'][$key]."数量超过最大库存： ".$menu_rec['qty']." 请调整数量！ ";
+						$msg .=$arr_post['coupon_names'][$key]."not enough stock ： ".$menu_rec['qty']." please adjust quantity！ ";
 					}
 					
 					
@@ -473,7 +475,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 		  	}
 
-		  	if($msg!='')$this->form_response_msg($msg."哦～");
+		  	if($msg!='')$this->form_response_msg($msg."oh～");
 
 		  	/**
 			 * END
@@ -562,7 +564,7 @@ class ctl_orderpaymentprocess extends cmsPage
 					$this->create_order($orderId);
 					if($status==1) { //if the status ==1 means from b2b order ,and just marketd at paid .
 						
-						$this->update_order_paid($orderId);
+					//	$this->update_order_paid($orderId);
 					}
 					
 					$this->loadModel('system_notification_center')->notify(SystemNotification::NewOrder,$orderId);

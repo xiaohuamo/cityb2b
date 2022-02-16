@@ -43,7 +43,7 @@
 			<div class="box2">
 
 					<select class='chooseDate'>
-						<option>请选择日期</option>
+						<option><{$lang->logistic_choosedate1}></option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$date}>selected<{/if}>>
 								<{$d}>
@@ -54,7 +54,7 @@
 					<{if $orders}>
 						
                          <button style="padding: 10px 5px;background: #65dfff">
-							<a onclick='return confirm("Label 打印需要定制的打印机，如果您没有请联系微奖网客服。");'href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'>Label 打印</a>
+							<a onclick='return confirm("Label printing need special printer ,please contact admin。");'href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'><{$lang->print_label_logistic}></a>
 						</button>
 						
 					<{/if}>
@@ -64,17 +64,17 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>			
-									<th>订单号</th>
-									<th>地址</th>
-									<th>姓名</th>
-									<th>电话</th>
+									<th><{$lang->order_id}></th>
+									<th><{$lang->address}></th>
+									<th><{$lang->customer_name}></th>
+									<th><{$lang->telephone}></th>
 
-									<th style="background: #FD5001 ">统配号</th>	
+									<th style="background: #FD5001 "><{$lang->logistic_number}></th>	
 
-									<th style="background: #43d1af">Truck</th>	
-									<th style="background: #43d1af">Driver</th>
-									<th style="background: #43d1af">Stop</th>
-									<th style="background: #43d1af">ETA</th>
+									<th style="background: #43d1af"><{$lang->logistic_truck_no}></th>	
+									<th style="background: #43d1af"><{$lang->driver}></th>
+									<th style="background: #43d1af"><{$lang->stop_number}></th>
+									<th style="background: #43d1af"><{$lang->Estimate_arrive_time}></th>
 
 									
 								</tr>			
@@ -86,7 +86,7 @@
 										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									<td><{$item.address}></td>
-									<td><{$item.first_name}> <{$item.last_name}></td>
+									<td><{$item.name}></td>
 									<td><{$item.phone}></td>
 
 									<td>

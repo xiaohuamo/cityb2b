@@ -6,6 +6,8 @@ define('eol', PHP_EOL);
 
 class  mdl_invoice
 {
+
+
 }
 
 /**
@@ -608,12 +610,8 @@ class OrderInfoReport
         foreach ($this->OrderData as $key => $order) {
             //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
 
-           
-			$name = $order['first_name'].$order['last_name'];
-			if(!trim($name)) {
-				$name = $this->findCustomerName($order['userId']);
-				
-			}
+            $name =$order['name'];
+
 			 $this->pdf->row('Cust Id:'.$order['userId'], 0.15, 0, 'C');
             $this->pdf->row('Cust Name:'.$name, 0.7, 0, 'C');
 			 $this->pdf->ln();
@@ -691,11 +689,7 @@ class OrderInfoReport
             $orderID = $order['orderId'];
             $this->pdf->row($orderID, 0.2, 1);
 
-            $name = $order['first_name'].$order['last_name'];
-			if(!trim($name)) {
-				$name = $this->findCustomerName($order['userId']);
-				
-			}
+            $name =$order['name'];
 		
             $this->pdf->row(substr($name,0,45), 0.35, 1, 'C');
 
@@ -785,8 +779,14 @@ class OrderInfoReport
         $this->pdf->myText(178, 45, "$".$total);
     }
 	
-	function findCustomerName($userId){
-		
+
+
+
+
+    function findCustomerName($userId){
+
+
+
 		//首先找displayName 
 		$user =loadModel('user')->get($userId) ;
 		if($user['displayName']) {
@@ -845,11 +845,7 @@ class OrderInfoReport
             $orderID = $order['orderId'];
             $this->pdf->row($orderID, 0.2, 1);
 
-            $name = $order['first_name'].$order['last_name'];
-			if(!trim($name)) {
-				$name = $this->findCustomerName($order['userId']);
-				
-			}
+            $name =$order['name'];
             $this->pdf->row($name, 0.25, 1, 'C');
 
             $this->pdf->row($order['phone'], 0.25, 1, 'C');
@@ -1062,11 +1058,7 @@ class shippingLabel
 
             $this->pdf->ln(10);
             $this->pdf->row("NAME: ", 0.1, 0, "L", 6);
-            $name = $order['first_name']." ".$order['last_name'];
-			if(!trim($name)) {
-				$name = $this->findCustomerName($order['userId']);
-				
-			}
+            $name =$order['name'];
             $this->pdf->setFontSize(16);
             $this->pdf->row(substr($name,0,50), 0.5, 0, "L", 6);
             $this->pdf->setFontSize();
