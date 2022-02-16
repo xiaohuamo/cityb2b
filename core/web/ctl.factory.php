@@ -295,7 +295,7 @@ class ctl_factory extends cmsPage
 
             $this->loadModel('invoice');
             $report = new shippingLabel();
-            $report->setStarttime(date('Y-m-d H:i:s', $st))->setEndtime(date('Y-m-d H:i:s', $et))->title("Shipping Label")->setReturnAddress($this->loginUser['googleMap'])->fitInPage($fitInPage)->OrderData($data);
+            $report->setStarttime(date('Y-m-d H:i:s', $st))->setEndtime(date('Y-m-d H:i:s', $et))->title("Shipping Label")->setReturnAddress($this->current_business['googleMap'])->fitInPage($fitInPage)->OrderData($data);
             $report->generatePDF();
 
             if ($filePath) {//如果是系统内部调用会直接在指定路径创建文件
@@ -365,7 +365,7 @@ class ctl_factory extends cmsPage
         $customer_id =get2('user_id');
         $mdl_user_factory =$this->loadModel('user_factory');
 
-        $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
 
         $where =array (
             'factory_id' => $FactoryId,

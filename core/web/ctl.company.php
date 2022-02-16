@@ -2954,7 +2954,7 @@ class ctl_company extends cmsPage
         $data = $mdl_order->getByOrderId($orderId);
 		
 		// 获得该商家的精确订单汇总 （可能上面的是含多个商家的汇总）
-		$busi_id=$this->loginUser['id'];
+		$busi_id=$this->current_business['id'];
         $sql1= "select sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,sum(adjust_subtotal_amount) as ajust_sum from cc_wj_customer_coupon  where order_id=$orderId and  business_id=$busi_id";
 		//var_dump($sql1);exit;
 		$data1 =$mdl_wj_customer_coupon->getListBySql($sql1);
@@ -2963,7 +2963,7 @@ class ctl_company extends cmsPage
 		
 		//coding end 
 
-        $operator = $this->loginUser['id'];
+        $operator = $this->current_business['id'];
       //  if($data['business_userId']!=$operator&&$data['business_staff_id']!=$operator&&!$this->loadModel('redeem_staff')->isRedeemStaff($operator))$this->sheader(null,'越权查看');
 
         $this->setData($data,'data');
@@ -2986,10 +2986,10 @@ class ctl_company extends cmsPage
 		// 每种状态对应相应的显示页面。
 		
 		// 如果当前用户就是订单中的商家，代表，其是通配中心商家。
-		if($data['business_userId']==$this->loginUser['id']){
+		if($data['business_userId']==$this->current_business['id']){
 			$display_status=4;
 		}else{
-			$order_details_and_related = $this->get_order_details_and_related($items,$this->loginUser['id']);
+			$order_details_and_related = $this->get_order_details_and_related($items,$this->current_business['id']);
 			$items =$order_details_and_related['data'];
 			$display_status = $order_details_and_related['status'];
 		}
@@ -3071,7 +3071,7 @@ class ctl_company extends cmsPage
 		// 检查当前商家settle的时间，如果settle超过14天，那么前面的价格不能再调整。
 		
 		// $mdl_settlement_log = $this->loadModel('settlement_log');
-		// $settle_record = $mdl_settlement_log->getByWhere(array('user_id'=>$this->loginUser['id']));
+		// $settle_record = $mdl_settlement_log->getByWhere(array('user_id'=>$this->current_business['id']));
 		 $days = (time()-$data['createTime'])/(24*60*60);
 
         $this->setData($mdl_order->isOrderEditable($orderId), 'editAble');
@@ -3249,7 +3249,7 @@ class ctl_company extends cmsPage
         /**
          * staff List
          */
-        $where_staff = "((role = 5 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
+        $where_staff = "((role = 5 and user_belong_to_user =".$this->current_business['id'].") or id = ".$this->current_business['id'].")";
         $list = $mdl_user->getList(null, $where_staff, 'createdDate asc');
 		
 		
@@ -3316,7 +3316,7 @@ class ctl_company extends cmsPage
 		// 如果该商家是统配中心商家，那么查询条件增加一个
 		
 		$mdl_freshfood_disp_centre_suppliers=$this->loadModel('freshfood_disp_centre_suppliers');
-		$sql_tongpei =" select * from cc_freshfood_disp_centre_suppliers where business_id =".$this->loginUser['id'];
+		$sql_tongpei =" select * from cc_freshfood_disp_centre_suppliers where business_id =".$this->current_business['id'];
 		$rec = $mdl_freshfood_disp_centre_suppliers->getListBySql($sql_tongpei);
 		//var_dump($rec);exit;
 		if($rec) {
@@ -3329,23 +3329,23 @@ class ctl_company extends cmsPage
 		       $sql = "SELECT cust.displayName,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu. displayName from cc_wj_customer_coupon tt , cc_user uu where tt.business_id =uu.id  group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
  
 		}else{
-		     $sql = "SELECT cust.displayName,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu. displayName from cc_wj_customer_coupon tt , cc_user uu where tt.business_id =uu.id  group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+		     $sql = "SELECT cust.displayName,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu. displayName from cc_wj_customer_coupon tt , cc_user uu where tt.business_id =uu.id  group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
 		
 		}
    
-      //  $whereStr.=" (business_userId= ".$this->loginUser['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id']."))";
+      //  $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
         //var_dump($sql);exit;
-        $whereStr.=" ( business_userId= ".$this->loginUser['id'];
-	  $whereStr.="  or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id'].")";
+        $whereStr.=" ( business_userId= ".$this->current_business['id'];
+	  $whereStr.="  or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id'].")";
 	  //plus 如果该用户是统配中心用户，其下所有商家的订单
-	  $whereStr.=" or  business_userId in (select business_id from  cc_dispatching_centre_customer_list where dispatching_centre_id =".$this->loginUser['id'].")";
+	  $whereStr.=" or  business_userId in (select business_id from  cc_dispatching_centre_customer_list where dispatching_centre_id =".$this->current_business['id'].")";
       //如果该商家是集合店铺所有人，则所有其下店铺的订单
-	  $whereStr.=" or  business_userId in (select suppliers_id from  cc_freshfood_disp_centre_suppliers where business_id =".$this->loginUser['id'].")";
+	  $whereStr.=" or  business_userId in (select suppliers_id from  cc_freshfood_disp_centre_suppliers where business_id =".$this->current_business['id'].")";
 	  // 如果该用户为授权用户，则其下所有订单均可以看到。
-	  $whereStr.=" or  business_userId in (select customer_id from  cc_authrise_manage_other_business_account where authorise_business_id =".$this->loginUser['id'].")";
-      $whereStr.=" or  business_userId in (select customer_id from  	cc_factory2c_list where factroy_id =".$this->loginUser['id'].")";
-      $whereStr.=" or  business_userId in (select customer_id from  	cc_factory_2blist where factroy_id =".$this->loginUser['id'].")";
+	  $whereStr.=" or  business_userId in (select customer_id from  cc_authrise_manage_other_business_account where authorise_business_id =".$this->current_business['id'].")";
+      $whereStr.=" or  business_userId in (select customer_id from  	cc_factory2c_list where factroy_id =".$this->current_business['id'].")";
+      $whereStr.=" or  business_userId in (select customer_id from  	cc_factory_2blist where factroy_id =".$this->current_business['id'].")";
 
       $whereStr.=")";
     
@@ -3445,7 +3445,7 @@ class ctl_company extends cmsPage
         if(trim(get2('output'))=='pdf'){
 			
 			$where12=array(
-					   'userId'=>$this->loginUser['id']
+					   'userId'=>$this->current_business['id']
 					   
 					);
 			  $user_abn = $this->loadModel('wj_abn_application')->getByWhere($where12);
@@ -3455,7 +3455,7 @@ class ctl_company extends cmsPage
 
             foreach ($data as $key => $value) {
 
-                $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
+                $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->current_business['id']);
             }
 
             $this->loadModel('invoice');
@@ -3485,7 +3485,7 @@ class ctl_company extends cmsPage
 
             $lotteryUserList=array();
             foreach ($data as $key => $value) {
-                $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
+                $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->current_business['id']);
 
                 $data[$key]['redeemQRCode']=redeemQRCode($value['redeem_code']);
 
@@ -3500,7 +3500,7 @@ class ctl_company extends cmsPage
             $report->setStarttime(date('Y-m-d H:i:s',$st))
                 ->setEndtime(date('Y-m-d H:i:s',$et))
                 ->title("Shipping Label")
-                ->setReturnAddress($this->loginUser['googleMap'])
+                ->setReturnAddress($this->current_business['googleMap'])
                 ->fitInPage($fitInPage)
                 ->OrderData($data);
             $report->generatePDF();
@@ -3574,7 +3574,7 @@ class ctl_company extends cmsPage
         /**
          * staff List
          */
-        $where_staff = "((role = 5 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
+        $where_staff = "((role = 5 and user_belong_to_user =".$this->current_business['id'].") or id = ".$this->current_business['id'].")";
         $list = $mdl_user->getList(null, $where_staff, 'createdDate asc');
         foreach ($list as $key => $value) {
            $list[$key]['displayName']=$mdl_user->getBusinessDisplayName($value['id']);
@@ -3598,7 +3598,7 @@ class ctl_company extends cmsPage
 		$this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
        // var_dump($sql_avaliable_date);exit;
 	   
-	       $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->loginUser['id']);
+	       $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
 
 	   // $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
     	$availableDates = array_map(function($d){
@@ -3639,9 +3639,9 @@ class ctl_company extends cmsPage
         $this->setData($staff,'staff');
 		$this->setData($customer_delivery_date,'customer_delivery_date');
 
-        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->loginUser['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
-        $whereStr.=" (business_userId= ".$this->loginUser['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id']."))";
+        $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
         //var_dump($sql);exit;
         if (!empty($sk)) {
             $whereStr.=" and (o.redeem_code like  '%" . $sk . "%'";
@@ -3750,7 +3750,7 @@ class ctl_company extends cmsPage
         /**
          * staff List
          */
-        $where_staff = "((role = 5 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
+        $where_staff = "((role = 5 and user_belong_to_user =".$this->current_business['id'].") or id = ".$this->current_business['id'].")";
         $list = $mdl_user->getList(null, $where_staff, 'createdDate asc');
         foreach ($list as $key => $value) {
            $list[$key]['displayName']=$mdl_user->getBusinessDisplayName($value['id']);
@@ -3769,7 +3769,7 @@ class ctl_company extends cmsPage
          * customer_delivery_option Type List
          */
         $three_days_times = time()-2592000;
-	    $availableDates = $this->loadModel('dispatching_centre_customer_list')->getAvaliableDateOfThisDispatchingCentre($this->loginUser['id']);
+	    $availableDates = $this->loadModel('dispatching_centre_customer_list')->getAvaliableDateOfThisDispatchingCentre($this->current_business['id']);
     	$availableDates = array_map(function($d){
     		return date('Y-m-d',$d['logistic_delivery_date']);
     	}, $availableDates);
@@ -3780,7 +3780,7 @@ class ctl_company extends cmsPage
 		
 		
 		
-		$suplierList=$this->loadModel('dispatching_centre_customer_list')->getALLAvaliableCustomerListsForCurrentBusiness($this->loginUser['id'],$this->loginUser['business_type_factory_2c']);
+		$suplierList=$this->loadModel('dispatching_centre_customer_list')->getALLAvaliableCustomerListsForCurrentBusiness($this->current_business['id'],$this->current_business['business_type_factory_2c']);
 			//suplierList
 		
 		//var_dump($suplierList);exit;
@@ -3823,8 +3823,8 @@ class ctl_company extends cmsPage
 		
 		// 获得商家是否允许自提，以决定前端是否显示pickup 选择项
 		
-		$this->setData($this->loginUser['pickup_avaliable'],'pickup_avaliable');
-		//var_dump ($this->loginUser['pickup_avaliable']);exit;
+		$this->setData($this->current_business['pickup_avaliable'],'pickup_avaliable');
+		//var_dump ($this->current_business['pickup_avaliable']);exit;
 		
         $sk = trim(get2('sk'));
 		
@@ -3861,7 +3861,7 @@ class ctl_company extends cmsPage
 		}else{
 			
 			  $sql = "SELECT  f.nickname, o.* ,uu.displayName as name ,cust.ori_sum from ".$query_table_name." as o  left join cc_user_factory f on o.userId =f.user_id and o.business_userId = f.factory_id  left join cc_user uu on o.userId=uu.id left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
-          $whereStr.=" (business_userId= ".$this->loginUser['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->loginUser['id']."))";
+          $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
      
 			
 		}
@@ -3912,7 +3912,7 @@ class ctl_company extends cmsPage
 				
 				
 			   require_once( DOC_DIR.'static/OptimoRoute.php');
-				$opRoute = new OptimoRoute($this->loginUser['id']);
+				$opRoute = new OptimoRoute($this->current_business['id']);
 				
 				$opRoute->generateLogisticSequence($customer_delivery_date);
                $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
@@ -3961,7 +3961,7 @@ class ctl_company extends cmsPage
 					
 					
 				}else{
-					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
+					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->current_business['id']);
 					
 				}
                 //获得用户的名称
@@ -4008,7 +4008,7 @@ class ctl_company extends cmsPage
 					// var_dump($data[$key]['items']);exit;
 					
 				}else{
-					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
+					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->current_business['id']);
 					
 				}
 
@@ -4025,13 +4025,13 @@ class ctl_company extends cmsPage
 
             $this->loadModel('invoice');
             $report = new shippingLabel();
-            if($this->loginUser['logo']) {
-                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+            if($this->current_business['logo']) {
+                $report->logoPath('data/upload/' . $this->current_business['logo']);
             }
             $report->setStarttime(date('Y-m-d H:i:s',$st))
                 ->setEndtime(date('Y-m-d H:i:s',$et))
                 ->title("Shipping Label")
-                ->setReturnAddress($this->loginUser['googleMap'])
+                ->setReturnAddress($this->current_business['googleMap'])
                 ->fitInPage($fitInPage)
                 ->OrderData($data);
             $report->generatePDF($this->lang);
@@ -4092,7 +4092,7 @@ class ctl_company extends cmsPage
         $three_days_times = time()-2592000;
 		
         $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ". 
-		$this->loginUser['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->loginUser['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+		$this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
       
 	   $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
     	$availableDates = array_map(function($d){
@@ -4107,7 +4107,7 @@ class ctl_company extends cmsPage
 		
 		
 			//suplierList
-		$sql = "select * from cc_dispatching_centre_customer_list where dispatching_centre_id = ". $this->loginUser['id']." and data_source =2  order by sort ";
+		$sql = "select * from cc_dispatching_centre_customer_list where dispatching_centre_id = ". $this->current_business['id']." and data_source =2  order by sort ";
 		$suplierList = loadModel('dispatching_centre_customer_list')->getListBySql($sql);
 
 	if($suplierList) {
@@ -4178,7 +4178,7 @@ class ctl_company extends cmsPage
 		
 		// 获得商家是否允许自提，以决定前端是否显示pickup 选择项
 		
-		$this->setData($this->loginUser['pickup_avaliable'],'pickup_avaliable');
+		$this->setData($this->current_business['pickup_avaliable'],'pickup_avaliable');
 		//var_dump ($this->loginUser['pickup_avaliable']);exit;
 		
         $sk = trim(get2('sk'));
@@ -4311,7 +4311,7 @@ class ctl_company extends cmsPage
         /**
          * staff List
          */
-        $where_staff = "((role = 5 and user_belong_to_user =".$this->loginUser['id'].") or id = ".$this->loginUser['id'].")";
+        $where_staff = "((role = 5 and user_belong_to_user =".$this->current_business['id'].") or id = ".$this->current_business['id'].")";
         $list = $mdl_user->getList(null, $where_staff, 'createdDate asc');
         foreach ($list as $key => $value) {
            $list[$key]['displayName']=$mdl_user->getBusinessDisplayName($value['id']);
@@ -4356,7 +4356,7 @@ class ctl_company extends cmsPage
 		
 		//var_dump($sql);exit;
 		
-        $whereStr.=" ( business_userId= ".$this->loginUser['id'].  " or amend.createUserId  =".$this->loginUser['id'] .") " ;
+        $whereStr.=" ( business_userId= ".$this->current_business['id'].  " or amend.createUserId  =".$this->current_business['id'] .") " ;
 
         if (!empty($sk)) {
             $whereStr.=" and (o.redeem_code like  '%" . $sk . "%'";
@@ -4409,7 +4409,7 @@ class ctl_company extends cmsPage
 		
 		
 		$where12=array(
-					   'userId'=>$this->loginUser['id']
+					   'userId'=>$this->current_business['id']
 					   
 					);
 				   $user_abn = $this->loadModel('wj_abn_application')->getByWhere($where12);
@@ -4468,7 +4468,7 @@ class ctl_company extends cmsPage
             $report->setStarttime(date('Y-m-d H:i:s',$st))
                 ->setEndtime(date('Y-m-d H:i:s',$et))
                 ->title("Shipping Label")
-                ->setReturnAddress($this->loginUser['googleMap'])
+                ->setReturnAddress($this->current_business['googleMap'])
                 ->fitInPage($fitInPage)
                 ->OrderData($data);
           $report->generatePDF($this->lang);
@@ -4525,7 +4525,7 @@ class ctl_company extends cmsPage
 	  $this->setData($this->get_order_amend_reson_type_list(),'order_amend_reson_type_list');
 	   
 	   $mdl_order_amend =$this->loadModel('order_amend');
-	   $sql ="select a.*,b.bonus_title from cc_order_amend a , cc_wj_customer_coupon b where b.id=a.item_buying_id and a.item_buying_id=".$id . " and createUserId =".$this->loginUser['id'];
+	   $sql ="select a.*,b.bonus_title from cc_order_amend a , cc_wj_customer_coupon b where b.id=a.item_buying_id and a.item_buying_id=".$id . " and createUserId =".$this->current_business['id'];
 		//var_dump($sql);exit;	  
 	  $list = $mdl_order_amend->getListBySql($sql);
 	   if(!$list){
@@ -4607,7 +4607,7 @@ class ctl_company extends cmsPage
             if(post('staff'))       array_push($fields, $modelClassName::CLN_BUSINESSSTAFFID);
             if(post('status'))      array_push($fields, $modelClassName::CLN_COUPONSTATUS);
             
-            $static = $mdl_wj_customer_coupon->getStatics($this->loginUser['id'],$fields,strtotime(post('fromdate')),strtotime(post('todate')));
+            $static = $mdl_wj_customer_coupon->getStatics($this->current_business['id'],$fields,strtotime(post('fromdate')),strtotime(post('todate')));
 
             $this->setData($mdl_wj_customer_coupon->replaceStaticTableLabel($static),'static');
 
@@ -9776,7 +9776,7 @@ function freshfood_edit_action()    {
 
         $where = array('business_id' => $this->current_business['id']);
         $list = $mdl_truck->getList(null, $where, ' id asc');
-		//var_dump($this->currentBusinessId);exit;
+		//var_dump($this->current_businessId);exit;
         $this->setData($list, 'list');
 
         $this->setData('Turck List', 'pagename');
@@ -11461,7 +11461,7 @@ function get_data($url, $ch) {
 				$tongpei_busi_rec = $mdl_wj_customer_coupon ->getListBySql($sql1);
 				 if($tongpei_busi_rec) {
 					 
-					 if ( ($tongpei_busi_rec[0]['business_id'] != $this->loginUser['id']) && ( $uni_business_id!=$this->loginUser['id']) ) {
+					 if ( ($tongpei_busi_rec[0]['business_id'] != $this->current_business['id']) && ( $uni_business_id!=$this->current_business['id']) ) {
 						///	var_dump();exit;
 							$this->form_response(600,'aa无授权','aa无授权'); 
 						 
@@ -13220,7 +13220,7 @@ function get_data($url, $ch) {
     	}
        
         //$availableDates =$this->loadModel("order")->getListofAvailableDates($this->loginUser['id']);
-        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->loginUser['id']);
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
 		$availableDates = array_map(function($d){
     		return date('Y-m-d',$d['logistic_delivery_date']);
     	}, $availableDates);
@@ -13240,8 +13240,8 @@ function get_data($url, $ch) {
 
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $mdl_user_account_info	= $this->loadModel('user_account_info');
-        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->loginUser['id']));
-	/*	if (!in_array($this->loginUser['id'], DispCenter::getDispCenterList())) {
+        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
+	/*	if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
 			$this->sheader(null,'您无权限访问该页面');
 		} */ 
 		
@@ -13250,7 +13250,7 @@ function get_data($url, $ch) {
 		$logistic_truck_No = get2('logistic_truck_No');
 		
     	require_once( DOC_DIR.'static/OptimoRoute.php');
-    	$opRoute = new OptimoRoute($this->loginUser['id'], $accountInfo['op_route_key']);
+    	$opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
     		
     	$date = get2('date');
     	$this->setData($date,'date');
@@ -13368,9 +13368,9 @@ function get_data($url, $ch) {
     		$this->setData($orders,'orders');
     	}
 
-    	//$availableDates = $this->loadModel('order')->getListBySql('SELECT DISTINCT logistic_delivery_date from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and business_userId = '.$this->loginUser['id']);
+    	//$availableDates = $this->loadModel('order')->getListBySql('SELECT DISTINCT logistic_delivery_date from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and business_userId = '.$this->current_business['id']);
     	
-		$availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->loginUser['id']);
+		$availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
     	 
 //var_dump($availableDates);exit;
 		$availableDates = array_map(function($d){
@@ -13418,9 +13418,9 @@ function get_data($url, $ch) {
 
 			$idCreateUser = $mdl_freshfood_disp_centre_suppliers->get($id);
 			$mdl  = $this->loadModel('authrise_manage_other_business_account');
-			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$idCreateUser['suppliers_id']);
+			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->current_business['id'],$idCreateUser['suppliers_id']);
 
-	       if ($idCreateUser['suppliers_id'] != $this->loginUser['id']  || $idCreateUser['business_id'] != $this->loginUser['id']  ) {
+	       if ($idCreateUser['suppliers_id'] != $this->current_business['id']  || $idCreateUser['business_id'] != $this->current_business['id']  ) {
 			   	if(!$isAuthoriseCustomer ) $this->form_response(500,'未发现产品','未发现产品');
 		   }
 
@@ -13466,7 +13466,7 @@ function get_data($url, $ch) {
 		$this->setData($type, 'type');
 		$mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
 
-		$loginUserId = $this->loginUser['id'];
+		$loginUserId = $this->current_business['id'];
 
 		$isSuplier = in_array($loginUserId, DispCenter::getSupplierList());
 		$isDispCenter = in_array($loginUserId, DispCenter::getDispCenterList());
@@ -13508,7 +13508,7 @@ function get_data($url, $ch) {
 		
 	  
 
-		$business_id = $this->loginUser['id'];
+		$business_id = $this->current_business['id'];
 		
 		$delivery_desc=$this->get_business_delivery_des ($business_id);
 
@@ -13544,7 +13544,7 @@ function get_data($url, $ch) {
 			
 		}else{
 			
-		   $this->setData($this->loginUser['amount_for_minimum_delivery'],'start_amount');
+		   $this->setData($this->current_business['amount_for_minimum_delivery'],'start_amount');
 				
 		}	
 			
@@ -13569,8 +13569,8 @@ public function custom_delivery_fee_delete_action()
 	 
 	  	$mdl_custom_freight_rates = $this->loadModel('custom_freight_rates');
 	    $data = $mdl_custom_freight_rates->get(get2('deleteid'));
-	     //var_dump($this->loginUser['id']);exit;
-		if($this->loginUser['id'] == $data['business_id'] ) {
+	     //var_dump($this->current_business['id']);exit;
+		if($this->current_business['id'] == $data['business_id'] ) {
 			$mdl_custom_freight_rates->delete(get2('deleteid'));
 			$this->sheader(HTTP_ROOT_WWW . 'company/custom_delivery_fee');
 		}else{
@@ -13645,7 +13645,7 @@ public function custom_delivery_fee_add_action()
 
 		$mdl_custom_freight_rates = $this->loadModel('custom_freight_rates');
 
-		 $loginUserId = $this->loginUser['id'];
+		 $loginUserId = $this->current_business['id'];
 		
 		 $data = array(
                         'business_id' => $loginUserId,
@@ -14271,16 +14271,16 @@ public function custom_delivery_fee_add_action()
 		$this->setData($bid, 'bid');
 
         $mdl_user_account_info	= $this->loadModel('user_account_info');
-        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->loginUser['id']));
+        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
 		
 		//调用生成本商家的相关的物流公司的所有order的sequenceNumber
 		require_once( DOC_DIR.'static/OptimoRoute.php');
-    	$opRoute = new OptimoRoute($this->loginUser['id']);
+    	$opRoute = new OptimoRoute($this->current_business['id']);
 		$opRoute->generateLogisticSequence($date);
 		
 
     	require_once( DOC_DIR.'static/OptimoRoute.php');
-		$opRoute = new OptimoRoute($this->loginUser['id'], $accountInfo['op_route_key']);
+		$opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
 		$orders = [];
 		if ($date && $bid) {
 			$orders = $opRoute->getBusinessOrderOnDeliverDate($date,$bid,$data_resource,$ref_seq_num);
@@ -14382,7 +14382,7 @@ public function custom_delivery_fee_add_action()
  
 		//operators
 		$mdl_user =  $this->loadModel('user');
-		$operators = $mdl_user->getAllStaff1($this->loginUser['id'], ture);
+		$operators = $mdl_user->getAllStaff1($this->current_business['id'], ture);
 		$operators = array_map(function($o) use ($mdl_user){
 			return [
 				'id' => $o['id'],
@@ -14390,21 +14390,21 @@ public function custom_delivery_fee_add_action()
 			];
 		}, $operators);
 
-		$availableDates =$this->loadModel("order")->getListofAvailableDates($this->loginUser['id']);
+		$availableDates =$this->loadModel("order")->getListofAvailableDates($this->current_business['id']);
 
     	
 		 
 		 
 	
 
-        $newsuplierList= $this->loadModel('dispatching_centre_customer_list')->getALLAvaliableCustomerListsForCurrentBusiness($this->loginUser['id'],$this->loginUser['business_type_factory_2c']);
+        $newsuplierList= $this->loadModel('dispatching_centre_customer_list')->getALLAvaliableCustomerListsForCurrentBusiness($this->current_business['id'],$this->current_business['business_type_factory_2c']);
 		
 		if(!$newsuplierList) {
 			$index=0;
-			 $newsuplierList[$index]['dispatching_centre_id']= $this->loginUser['id'];
-			  $newsuplierList[$index]['dispatching_name']=$this->loginUser['displayName'];
-			  $newsuplierList[$index]['business_id']= $this->loginUser['id'];
-			  $newsuplierList[$index]['business_name']= $this->loginUser['displayName'];
+			 $newsuplierList[$index]['dispatching_centre_id']= $this->current_business['id'];
+			  $newsuplierList[$index]['dispatching_name']=$this->current_business['displayName'];
+			  $newsuplierList[$index]['business_id']= $this->current_business['id'];
+			  $newsuplierList[$index]['business_name']= $this->current_business['displayName'];
 			  $newsuplierList[$index]['data_source']= 1;
 			   $newsuplierList[$index]['ref_seq_num']= 1;
 			
@@ -14496,7 +14496,7 @@ public function custom_delivery_fee_add_action()
 
         $printLogs = $this->loadModel('order_print_log')->getRecordList($this->loginUser['id'], $conditions);
 
-        $staffs = $this->loadModel('redeem_staff')->getStaffList($this->loginUser['id']);
+        $staffs = $this->loadModel('redeem_staff')->getStaffList($this->current_business['id']);
         array_push($staffs, [
             'id' => $this->loginUser['id'],
             'name' =>$this->loginUser['name']
@@ -14512,13 +14512,13 @@ public function custom_delivery_fee_add_action()
 	public function export_driver_route_action() {
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $mdl_user_account_info	= $this->loadModel('user_account_info');
-        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->loginUser['id']));
-        if (!in_array($this->loginUser['id'], DispCenter::getDispCenterList())) {
+        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
+        if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
             $this->sheader(null,'您无权限访问该页面');
         }
 
         require_once( DOC_DIR.'static/OptimoRoute.php');
-        $opRoute = new OptimoRoute($this->loginUser['id'], $accountInfo['op_route_key']);
+        $opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
 
         $date = get2('date');
         $this->setData($date,'date');
@@ -14539,18 +14539,18 @@ public function custom_delivery_fee_add_action()
             }
         }
 
-       // $dateOptions = $this->loadModel('order')->getListBySql('select DISTINCT  logistic_delivery_date from  ( (SELECT DISTINCT logistic_delivery_date  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->loginUser['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->loginUser['id'].'))) as a union (SELECT DISTINCT logistic_delivery_date  from cc_order_import where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->loginUser['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->loginUser['id'].'))) as b) ');
+       // $dateOptions = $this->loadModel('order')->getListBySql('select DISTINCT  logistic_delivery_date from  ( (SELECT DISTINCT logistic_delivery_date  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->current_business['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->current_business['id'].'))) as a union (SELECT DISTINCT logistic_delivery_date  from cc_order_import where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->current_business['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->current_business['id'].'))) as b) ');
        
-        $dateOptions = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->loginUser['id']);
+        $dateOptions = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
 
 	    $dateOptions = array_map(function($dateOption){
             return date('Y-m-d',$dateOption['logistic_delivery_date']);
         }, $dateOptions);
         
 		
-		//$driversOptions = $this->loadModel('order')->getListBySql('SELECT DISTINCT logistic_driver_code  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and business_userId = '.$this->loginUser['id']);
+		//$driversOptions = $this->loadModel('order')->getListBySql('SELECT DISTINCT logistic_driver_code  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and business_userId = '.$this->current_business['id']);
       
-          $driversOptions = $this->loadModel('freshfood_logistic_customers')->getDriversOfAvaliableDateOfThisLogisiticCompany($this->loginUser['id'],$date);
+          $driversOptions = $this->loadModel('freshfood_logistic_customers')->getDriversOfAvaliableDateOfThisLogisiticCompany($this->current_business['id'],$date);
     	  $driversOptions = array_map(function($dateOption){
             return str_pad($dateOption['logistic_truck_No'],3,'0',STR_PAD_LEFT);
         }, $driversOptions);

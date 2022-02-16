@@ -227,7 +227,7 @@
 			$customer_id =get2('customer_id');
 			
 		 if(!$customer_id) {
-			  $customer_id =$this->loginUser['id'];
+			  $customer_id =$this->current_business['id'];
 				
 			}
 			$this->setData($customer_id,'customer_id');
@@ -417,7 +417,7 @@
 
 
                 if(!$customer_id) {
-                    $customer_id =$this->loginUser['id'];
+                    $customer_id =$this->current_business['id'];
 
                 }
                 $this->setData($customer_id,'customer_id');
@@ -431,7 +431,7 @@
                 $this->setData($dataType,'dataType');
 
                 $mdl = $this->loadModel('authrise_manage_other_business_account');
-                $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+                $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->current_business['id']);
 
                 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
@@ -442,7 +442,7 @@
 
                     $isAuthoriseCustomer =0 ;
                     foreach ($authoriseBusinessList as $key => $value) {
-                        if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+                        if($customer_id ==$value['customer_id'] || $customer_id ==$this->current_business['id']) {
                             $isAuthoriseCustomer =1;
                         }
 
@@ -560,7 +560,7 @@
                 }else{ //如果只管理自己的店铺
 
                     $mdl_restaurant_category = $this->loadModel('restaurant_category');
-                    $pageSql = "select  * from cc_restaurant_category where createUserId=".$this->loginUser['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
+                    $pageSql = "select  * from cc_restaurant_category where createUserId=".$this->current_business['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
                     $data = $mdl_restaurant_category->getListBySql($pageSql);
 
 
@@ -584,9 +584,9 @@
                     $sql = "select  o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id";
 
                     if($category =='all' or empty($category)) {
-                        $whereStr.=" (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) and (o.restaurant_id= ".$this->loginUser['id'] ."  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) )";
+                        $whereStr.=" (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) and (o.restaurant_id= ".$this->current_business['id'] ."  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) )";
                     }else{
-                        $whereStr.=" (o.restaurant_id= ".$this->loginUser['id'] ." and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) )";
+                        $whereStr.=" (o.restaurant_id= ".$this->current_business['id'] ." and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) )";
                     }
 
                     if (!empty($category)) {
@@ -628,8 +628,8 @@
 
                             for($i=0;$i<100;$i++) {
                                 $menu_info=array(
-                                    'createUserId'=>$this->loginUser['id'],
-                                    'restaurant_id'=>$this->loginUser['id'],
+                                    'createUserId'=>$this->current_business['id'],
+                                    'restaurant_id'=>$this->current_business['id'],
                                     'restaurant_category_id'=>$category,
                                     'menu_id'=>$category.$menu_id,
                                     'menu_cn_name'=>'',
@@ -638,13 +638,13 @@
                                     'menu_pic'=>'',
                                     'Menu_desc'=>'',
                                     'menu_en_name'=>'',
-                                    'include_gst' => $this->loginUser['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
+                                    'include_gst' => $this->current_business['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
                                 );
                                 $mdl_restaurant_menu->insert($menu_info);
                                 $menu_id =$menu_id+1;
                             }
 
-                            $pageSql = "select  * from cc_restaurant_menu where createUserId=".$this->loginUser['id']. " and restaurant_category_id =".$category." order by menu_id";
+                            $pageSql = "select  * from cc_restaurant_menu where createUserId=".$this->current_business['id']. " and restaurant_category_id =".$category." order by menu_id";
                             $pageUrl = $this->parseUrl()->set('page');
                             $pageSize =200;
                             $maxPage = 10;
@@ -656,9 +656,9 @@
                     //获取该商家是否有多个供应商，是否为集合店
 
                     $this->loadModel('freshfood_disp_suppliers_schedule');
-                    $suppliersList = DispCenter::getSupplierListWithName($this->loginUser['id']);
+                    $suppliersList = DispCenter::getSupplierListWithName($this->current_business['id']);
                     //var_dump($suppliersList);exit;
-                    if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$this->loginUser['id'] ) {  //如果该配货中心下只有一个商家
+                    if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$this->current_business['id'] ) {  //如果该配货中心下只有一个商家
 
 
                     }
@@ -674,7 +674,7 @@
                      */
                     $where=array();
                     $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-                    $where['restaurant_id']=$this->loginUser['id'];
+                    $where['restaurant_id']=$this->current_business['id'];
                     $restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
                     $this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
                     /**
@@ -682,7 +682,7 @@
                      */
                     $where=array();
                     $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-                    $where['restaurant_id']=$this->loginUser['id'];
+                    $where['restaurant_id']=$this->current_business['id'];
                     $restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
                     $this->setData($restaurant_menu_option_list,'menu_option_list');
 
@@ -709,7 +709,7 @@
 
                 $this->setData($pageTitle, 'pageTitle');
 
-                $this->setData($this->loginUser['gst_type'], 'gstType');
+                $this->setData($this->current_business['gst_type'], 'gstType');
                 $this->display_pc_mobile('factory_2c/singleItemPrintEdit', 'factory_2c/singleItemPrintEdit');
             }
 
@@ -734,13 +734,13 @@
 			$customer_id =get2('customer_id');
 			
 			if(!$customer_id) {
-			  $customer_id =$this->loginUser['id'];
+			  $customer_id =$this->current_business['id'];
 				
 			}
 			$this->setData($customer_id,'customer_id');
 			
 			 $mdl = $this->loadModel('authrise_manage_other_business_account');
-			 $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+			 $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->current_business['id']);
 			
 			 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 			
@@ -751,7 +751,7 @@
 				
 				$isAuthoriseCustomer =0 ;
 				foreach ($authoriseBusinessList as $key => $value) {
-					if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+					if($customer_id ==$value['customer_id'] || $customer_id ==$this->current_business['id']) {
 							$isAuthoriseCustomer =1;
 					}
 					
@@ -904,7 +904,7 @@
 			}else{ //如果只管理自己的店铺 
 				
 				$mdl_restaurant_category = $this->loadModel('restaurant_category');
-				$pageSql = "select  * from cc_restaurant_category where createUserId=".$this->loginUser['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
+				$pageSql = "select  * from cc_restaurant_category where createUserId=".$this->current_business['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
 				$data = $mdl_restaurant_category->getListBySql($pageSql);
 				
 				
@@ -928,9 +928,9 @@
 				$sql = "select  o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id";
 				
 				if($category =='all' or empty($category)) {
-					$whereStr.=" (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) and (o.restaurant_id= ".$this->loginUser['id'] ."  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) )";
+					$whereStr.=" (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) and (o.restaurant_id= ".$this->current_business['id'] ."  or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) )";
 				}else{
-					$whereStr.=" (o.restaurant_id= ".$this->loginUser['id'] ." and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->loginUser['id']." ) )";
+					$whereStr.=" (o.restaurant_id= ".$this->current_business['id'] ." and  o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." )   or o.restaurant_category_id in (select id from cc_restaurant_category where restaurant_id= ".$this->current_business['id']." ) )";
 				}
 				
 				if (!empty($category)) {
@@ -971,8 +971,8 @@
 						
 						for($i=0;$i<100;$i++) {
 							$menu_info=array(
-								'createUserId'=>$this->loginUser['id'],
-								'restaurant_id'=>$this->loginUser['id'],
+								'createUserId'=>$this->current_business['id'],
+								'restaurant_id'=>$this->current_business['id'],
 								'restaurant_category_id'=>$category,
 								'menu_id'=>$category.$menu_id,
 								'menu_cn_name'=>'',
@@ -981,13 +981,13 @@
 								'menu_pic'=>'',
 								'Menu_desc'=>'',
 								'menu_en_name'=>'',
-								'include_gst' => $this->loginUser['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
+								'include_gst' => $this->current_business['gst_type'] % 2 //默认gst根据公司gst类型，1，3为全部gst和多数gst，2，4为全部无gst和少数gst
 							);
 							$mdl_restaurant_menu->insert($menu_info);
 							$menu_id =$menu_id+1;
 						}
 
-						$pageSql = "select  * from cc_restaurant_menu where createUserId=".$this->loginUser['id']. " and restaurant_category_id =".$category." order by menu_id";
+						$pageSql = "select  * from cc_restaurant_menu where createUserId=".$this->current_business['id']. " and restaurant_category_id =".$category." order by menu_id";
 						$pageUrl = $this->parseUrl()->set('page');
 						$pageSize =200;
 						$maxPage = 10;
@@ -999,9 +999,9 @@
 				//获取该商家是否有多个供应商，是否为集合店
 			 
 				$this->loadModel('freshfood_disp_suppliers_schedule');
-				$suppliersList = DispCenter::getSupplierListWithName($this->loginUser['id']);
+				$suppliersList = DispCenter::getSupplierListWithName($this->current_business['id']);
 				//var_dump($suppliersList);exit;
-				if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$this->loginUser['id'] ) {  //如果该配货中心下只有一个商家
+				if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$this->current_business['id'] ) {  //如果该配货中心下只有一个商家
 					
 					
 				}
@@ -1017,7 +1017,7 @@
 				 */
 				$where=array();
 				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$this->loginUser['id'];
+				$where['restaurant_id']=$this->current_business['id'];
 				$restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
 				$this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
 				/**
@@ -1025,7 +1025,7 @@
 				 */
 				$where=array();
 				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$this->loginUser['id'];
+				$where['restaurant_id']=$this->current_business['id'];
 				$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
 				$this->setData($restaurant_menu_option_list,'menu_option_list');
 
@@ -1052,7 +1052,7 @@
 
 			$this->setData($pageTitle, 'pageTitle');
 
-			$this->setData($this->loginUser['gst_type'], 'gstType');
+			$this->setData($this->current_business['gst_type'], 'gstType');
 			$this->display_pc_mobile('factory_2c/menu_edit', 'factory_2c/menu_edit');
 		}
 
@@ -2535,7 +2535,7 @@
 
         $three_days_times = time()-60*60*24*7;
 		$mdl = $this->loadModel('factory2c_list');
-	    $availableDates = Factory2c_centre::getAvaliableDateOfAllSalesChannelOfThisFactory($this->loginUser['id']);
+	    $availableDates = Factory2c_centre::getAvaliableDateOfAllSalesChannelOfThisFactory($this->current_business['id']);
     	$availableDates = array_map(function($d){
     		return date('Y-m-d',$d['logistic_delivery_date']);
     	}, $availableDates);
@@ -2549,9 +2549,9 @@
         //** 获取该商家管辖工厂渠道商家
 		
 		$mdl = $this->loadModel('factory2c_list');
-		$SalesChannelCustomerList= Factory2c_centre::getCustmerListsIncludeFactoryWithBusinessName($this->loginUser['id'],$this->loginUser['displayName']);
+		$SalesChannelCustomerList= Factory2c_centre::getCustmerListsIncludeFactoryWithBusinessName($this->current_business['id'],$this->current_business['displayName']);
 		$mdl = $this->loadModel('factory_2blist');
-		$SalesChannelCustomerList2b= Factory2b_centre::getCustmerListsIncludeFactoryWithBusinessName($this->loginUser['id'],$this->loginUser['displayName']);
+		$SalesChannelCustomerList2b= Factory2b_centre::getCustmerListsIncludeFactoryWithBusinessName($this->current_business['id'],$this->current_business['displayName']);
 	    
 		$SalesChannelCustomerList =array_merge($SalesChannelCustomerList,$SalesChannelCustomerList2b);
 		//var_dump($SalesChannelCustomerList);exit;
@@ -2572,7 +2572,7 @@
 			 $business_user = $mdl_user->get($business_id) ;
 			 $business_tradingName=$business_user ['displayName'];
 		 } else{
-			 $business_tradingName=$this->loginUser['displayName']; 			 
+			 $business_tradingName=$this->current_business['displayName'];
 		 }
 		 
 		// 做到这里，如果 是suppliersID 且数据源!=1 则要使用cc_order_import 做为引导。
@@ -2613,10 +2613,10 @@
         // 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
 		//获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
 		//var_dump($business_id);exit;
-		  $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id']);
+		  $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id']);
 		
 		  if($totalandeverychannelPrint) { //如果是同时打印总单及分单 
-			    $sql1= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id'],$totalandeverychannelPrint);
+			    $sql1= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id'],$totalandeverychannelPrint);
 	
 		  }
 	 
@@ -2713,14 +2713,14 @@
 				
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
-				 if($this->loginUser['logo']) {
-					$report->logoPath('data/upload/' . $this->loginUser['logo']);
+				 if($this->current_business['logo']) {
+					$report->logoPath('data/upload/' . $this->current_business['logo']);
 				}
-					 $report->setTradingName($this->loginUser['displayName'])
+					 $report->setTradingName($this->current_business['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
                     ->setCate_name($cate_name)
                     ->setDriverAndTruckInfo($driverAndTruckInfo)
-             		->title("Summery Packing List-".$this->loginUser['displayName'])
+             		->title("Summery Packing List-".$this->current_business['displayName'])
 					->OrderData($data)
 					->OrderDataEveryChannel($data1);
 					
@@ -2741,8 +2741,8 @@
 
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
-				 if($this->loginUser['logo']) {
-					$report->logoPath('data/upload/' . $this->loginUser['logo']);
+				 if($this->current_business['logo']) {
+					$report->logoPath('data/upload/' . $this->current_business['logo']);
 				}
 				
 				//如果打印的是某一个商家，则获得该商家的商家名称
@@ -2757,9 +2757,9 @@
 					
 					
 				}else{
-					 $report->setTradingName($this->loginUser['displayName'])
+					 $report->setTradingName($this->current_business['displayName'])
 					->setCustomer_delivery_date($customer_delivery_date)
-					->title("Summery of Packing List-".$this->loginUser['displayName'])
+					->title("Summery of Packing List-".$this->current_business['displayName'])
                     ->setCate_name($cate_name)
                     ->setDriverAndTruckInfo($driverAndTruckInfo)
 					->OrderData($data);
@@ -2788,7 +2788,7 @@
 					// var_dump($data[$key]['items']);exit;
 					
 				}else{
-					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->loginUser['id']);
+					 $data[$key]['items']=$mdl_wj_customer_coupon->getItemsInOrder($value['orderId'],$this->current_business['id']);
 					
 				}
 
@@ -2804,13 +2804,13 @@
 
             $this->loadModel('invoice');
             $report = new shippingLabel();
-            if($this->loginUser['logo']) {
-                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+            if($this->current_business['logo']) {
+                $report->logoPath('data/upload/' . $this->current_business['logo']);
             }
             $report->setStarttime(date('Y-m-d H:i:s',$st))
                 ->setEndtime(date('Y-m-d H:i:s',$et))
                 ->title("Shipping Label")
-                ->setReturnAddress($this->loginUser['googleMap'])
+                ->setReturnAddress($this->current_business['googleMap'])
                 ->fitInPage($fitInPage)
                 ->OrderData($data);
             $report->generatePDF();
@@ -2896,7 +2896,7 @@
          */
         $three_days_times = time()-60*60*24*7;
 		$mdl = $this->loadModel('factory2c_list');
-	    $availableDates = Factory2c_centre::getAvaliableDateOfAllSalesChannelOfThisFactory($this->loginUser['id']);
+	    $availableDates = Factory2c_centre::getAvaliableDateOfAllSalesChannelOfThisFactory($this->current_business['id']);
     	$availableDates = array_map(function($d){
     		return date('Y-m-d',$d['logistic_delivery_date']);
     	}, $availableDates);
@@ -2911,7 +2911,7 @@
         //** 获取该商家管辖工厂渠道商家
 		
 		$mdl = $this->loadModel('factory2c_list');
-		$SalesChannelCustomerList= Factory2c_centre::getCustmerListsIncludeFactoryWithBusinessName($this->loginUser['id'],$this->loginUser['displayName']);
+		$SalesChannelCustomerList= Factory2c_centre::getCustmerListsIncludeFactoryWithBusinessName($this->current_business['id'],$this->current_business['displayName']);
 		$this->setData($SalesChannelCustomerList, 'SalesChannelCustomerList');
 		
 	
@@ -2984,7 +2984,7 @@
 		// 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
 		//获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
 		//var_dump($business_id);exit;
-		  $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id']);
+		  $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id']);
 		
 		
 		 
@@ -3116,7 +3116,7 @@
 			 $business_user = $mdl_user->get($business_id) ;
 			 $business_tradingName=$business_user ['displayName'];
 		 } else{
-			 $business_tradingName=$this->loginUser['displayName']; 			 
+			 $business_tradingName=$this->current_business['displayName'];
 		 }
 		 
 		// 做到这里，如果 是suppliersID 且数据源!=1 则要使用cc_order_import 做为引导。
@@ -3131,7 +3131,7 @@
 		
 
 		
- 	  $sql= Factory2c_centre::getSqlofOrdersOfDefinedItemOfCurrentBusiness($business_id,$query_table_name,$this->loginUser['id'],$printItemRange,$itemLists,$guigeId);
+ 	  $sql= Factory2c_centre::getSqlofOrdersOfDefinedItemOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id'],$printItemRange,$itemLists,$guigeId);
 		
 	      if (!empty($sk)) {
             $whereStr.=" and ( c.bonus_title like  '%" . $sk . "%'";
@@ -3186,8 +3186,8 @@
 
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
-				 if($this->loginUser['logo']) {
-					$report->logoPath('data/upload/' . $this->loginUser['logo']);
+				 if($this->current_business['logo']) {
+					$report->logoPath('data/upload/' . $this->current_business['logo']);
 				}
 				
 				//如果打印的是某一个商家，则获得该商家的商家名称
@@ -3216,8 +3216,8 @@
 
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
-				 if($this->loginUser['logo']) {
-					$report->logoPath('data/upload/' . $this->loginUser['logo']);
+				 if($this->current_business['logo']) {
+					$report->logoPath('data/upload/' . $this->current_business['logo']);
 				}
 				
 				//如果打印的是某一个商家，则获得该商家的商家名称
@@ -3243,8 +3243,8 @@
 
 				$this->loadModel('factoryReport');
 				$report = new OrderInfoReport();
-				 if($this->loginUser['logo']) {
-					$report->logoPath('data/upload/' . $this->loginUser['logo']);
+				 if($this->current_business['logo']) {
+					$report->logoPath('data/upload/' . $this->current_business['logo']);
 				}
 				
 				//如果打印的是某一个商家，则获得该商家的商家名称
@@ -3351,7 +3351,7 @@ public function  getOutputFileName($tradingName,$DataDate,$type,$business_id,$to
 			
 		}else{
 			
-			$business_id =$this->loginUser['id'];
+			$business_id =$this->current_business['id'];
 			
 		}
 		
@@ -3366,7 +3366,7 @@ public function  getOutputFileName($tradingName,$DataDate,$type,$business_id,$to
 		}else{
 			
 			$sql ="SELECT c.`menu_id` , c.`bonus_title`, sum(c.`customer_buying_quantity`) as sum  FROM `cc_wj_customer_coupon` c left join cc_order o on c.order_id =o.orderId 
-		WHERE c.`business_id` =".$this->loginUser['id']." and c.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)   group by `menu_id`,
+		WHERE c.`business_id` =".$this->current_business['id']." and c.`coupon_status`='c01' and (o.status =1 or o.accountPay=1)   group by `menu_id`,
 		`bonus_title` order by menu_id desc";
 		//var_dump($sql);exit;
 		

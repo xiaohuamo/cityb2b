@@ -113,7 +113,7 @@ class OptimoRoute
 
 		$mdl_order = loadModel('order');
 		$current_user_id =$this->dispCenterId;
-		$loginUserId =$this->loginUser['id'];
+		$loginUserId =$this->current_business['id'];
 		
 		
 		$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( status=1 or accountPay =1)  ";
