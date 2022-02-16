@@ -14337,13 +14337,13 @@ public function custom_delivery_fee_add_action()
 			
 			
 			
-			$order['address']=str_replace("'","‘",$order['address']);
+			$order['address']=str_replace("'","",$order['address']);
 			
 			$parsed['address'] = $order['address'];
 			
 			
 			$parsed['phone'] = $order['phone'];
-			$order['message_to_business']=str_replace("'","‘",$order['message_to_business']);
+			$order['message_to_business']=str_replace("'","",$order['message_to_business']);
 			$parsed['message_to_business'] = $order['message_to_business'];
 			
 			$parsed['logistic_truck_No'] = $order['logistic_truck_No'];
