@@ -438,7 +438,7 @@ public function  setCustomerTrueLogin($userrole){
 
             }
             if($user['person_first_name'] || $user['person_last_name']){
-                return $user['person_first_name'].' '. $user['person_last_name'];
+                return $user['person_first_name'].' '.$user['person_last_name'];
             }
             return $user['name'];
         }
