@@ -802,6 +802,9 @@
     <mail>Mail</mail>
     <nickename>Nickname</nickename>
 	<displayName>Customer Name</displayName>
+	<customer_id>Cust. ID </customer_id>
+	<customer_ordering_link>Ordering Link</customer_ordering_link>
+	<customer_Code>Code</customer_Code>
 	<logistic_number>Logistic Number</logistic_number>
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
@@ -810,7 +813,7 @@
 
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
-    <telephone>Tele</telephone>
+    <telephone>Phone</telephone>
     <mobile_phone>Mobile</mobile_phone>
     <Account_name>Account Name</Account_name>
     <set_withdraw_account>Set withdraw account</set_withdraw_account>

@@ -806,6 +806,10 @@
     <administrator_information>管理员管理</administrator_information>
     <user_name>用户名</user_name>
 	<customer_name>客户名</customer_name>
+	<customer_id>编号</customer_id>
+	<customer_Code>简码</customer_Code>
+	<customer_ordering_link>下单链接</customer_ordering_link>
+	
     <mail>邮件</mail>
     <nickename>昵称</nickename>
     <first_name>名</first_name>

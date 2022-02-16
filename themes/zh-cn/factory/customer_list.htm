@@ -141,18 +141,17 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>用户ID</th>
-								<th>商家CODE</th>
+								<th><{$lang->customer_id}></th>
+								<th><{$lang->customer_Code}></th>
+								<th><{$lang->customer_ordering_link}></th>
+								<th><{$lang->customer_name}></th>
+								<th><{$lang->myorder}></th>
+								<th><{$lang->telephone}></th>
+								<th><{$lang->approved}></th>
+						<!--		<th>价格显示方式</th>
+								<th>设置营业时间</th> -->
 								
-								<th>登陆链接</th>
-								<th>用户名</th>
-								<th>订单查询</th>
-								<th>手机号</th>
-								<th>已经审核</th>
-								<th>价格显示方式</th>
-								<th>设置营业时间</th>
-								<th>隐藏客户</th>
-								
+								<th><{$lang->customer_list_recycle}></th>
 							</tr>
 							</thead>
 							<tbody>
@@ -194,7 +193,7 @@
 											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
 										<{/if}>
 									</td>
-									<td>
+								<!--	<td>
                                         <{if $user.show_origin_price}>
 											显示原价  <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/show_origin_price?user_id=<{$user.id}>&show_origin_price=0" class="button">修改</a>)
                                         <{else}>
@@ -204,7 +203,7 @@
 									<td>
                                       <{if $user.trading_hours}> <i class='fa fa-fw fa-check ' style='color:green'></i> <{/if}> <a target=_blank  href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$user.id}>">设置</a>
 									</td>
-
+-->
 
 	
 									<td>
