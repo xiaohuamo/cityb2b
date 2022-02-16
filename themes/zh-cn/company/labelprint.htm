@@ -378,12 +378,12 @@
 	var PRINT_MODE_SINGLE_LABEL_PER_PAGE = 'SINGLE_LABEL_PER_PAGE';
 	var PRINT_MODE_THREE_LABEL_PER_PAGE = 'THREE_LABEL_PER_PAGE';
 	
-	var parsedOrders1 = '<{$parsedOrdersJson}>';
+	//var parsedOrders1 = '';
 	//alert(parsedOrders1);
    
-var parsedOrders = JSON.parse(parsedOrders1);
+var parsedOrders = JSON.parse('<{$parsedOrdersJson}>');
 
-	
+	console.log(parsedOrders);
 	var DEFAULE_PAGE_SIZE = 50;
 	var DEFAULT_PRINT_MODE = PRINT_MODE_THREE_LABEL_PER_PAGE;
 	

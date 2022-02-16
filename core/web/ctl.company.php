@@ -14374,9 +14374,9 @@ public function custom_delivery_fee_add_action()
 	            $customer_delivery_option='No Delivery';
 	        }
 			//$parsed['subtitle'] = $payment."|".$status."|".$customer_delivery_option;
-			$parsed['subtitle'] = $payment."|".$customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 100%;font-size:25px;font-weight:bolder\" >'. $name."</strong>" ;
-           
-         
+			//$parsed['subtitle'] = $payment."|".$customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 100%;font-size:25px;font-weight:bolder\" >'. $name."</strong>" ;
+
+            $parsed['subtitle']='aa';
 			$parsedOrders[$order['orderId']] = $parsed;
 		}
  
