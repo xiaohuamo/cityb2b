@@ -14324,7 +14324,7 @@ public function custom_delivery_fee_add_action()
             $name= substr($this->getCustomerName($order),0,30);
 
 
-
+                $name=str_replace("'","",$name);
 				$order['first_name']=str_replace("'","",$name);
 				$order['last_name']='';
 				
