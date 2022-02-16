@@ -58,7 +58,7 @@
 	<print_packing_slips>客户装箱单</print_packing_slips> 
 	<print_item_packing_slips>单品备货单</print_item_packing_slips> 
 	<single_item_buying_list>单品加工单</single_item_buying_list> 
-	
+	<sales_statistics>Sales Statistics</sales_statistics>
 	<print_label_logistic>打印标签</print_label_logistic> 
 	<add_dispatching_customer>添加配货客户</add_dispatching_customer>
 	<choose_delivery_date>选择配送日期</choose_delivery_date>

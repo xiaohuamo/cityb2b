@@ -77,6 +77,8 @@
 
 		<{if in_array('3', explode(',', $user_roles.roles))
 		||  in_array('4', explode(',', $user_roles.roles))
+		||  in_array('5', explode(',', $user_roles.roles))
+		||  in_array('6', explode(',', $user_roles.roles))
 		||  in_array('0', explode(',', $user_roles.roles))
 		|| $user_roles.role==3}>
 
@@ -104,11 +106,13 @@
 					<{$lang->customer_list}>
 				</a>
 				
-				
+				<{if in_array('3', explode(',', $user_roles.roles))
+				||  in_array('0', explode(',', $user_roles.roles))
+				|| $user_roles.role==3}>
 				<a href="<{$http_root_www}>factory/customer_price_management"<{if $submenu=='customer_price_management'}> class="current"<{/if}>>
 					<{$lang->customer_price_management}>
 				</a>
-
+				<{/if}>
 			</div>
 		</li>
 
@@ -119,9 +123,9 @@
 				<a <{if $menu=='online_center'}> class="current"<{/if}>><{$lang->order_management}></a>
 			</div>
 			<div class='second-level'>
-				<a href="<{$http_root_www}>factorypage/order_for_customer"<{if $submenu=='customer_list'}> class="current"<{/if}> target="_blank">
+			<!--	<a href="<{$http_root_www}>factorypage/order_for_customer"<{if $submenu=='customer_list'}> class="current"<{/if}> target="_blank">
 						<{$lang->add_new_order}>
-				</a>
+				</a> -->
 
 				<a href="<{$http_root_www}>factory/customer_orders"<{if $submenu=='customer_coupon_process'}> class="current"<{/if}>>
                     <{$lang->order_management}>
@@ -294,7 +298,7 @@
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw fa-edit" ></i>
-				<a <{if $menu=='selling'}> class="current"<{/if}>>销售分析</a>
+				<a <{if $menu=='selling'}> class="current"<{/if}>><{$lang->sales_statistics}></a>
 			</div>
 
 			<div class='second-level'>

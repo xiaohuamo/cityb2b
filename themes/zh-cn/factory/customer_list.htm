@@ -143,8 +143,8 @@
 							<tr>
 								<th>用户ID</th>
 								<th>商家CODE</th>
-								<th>以此用户下单</th>
-								<th>登陆链接(due to: <{$expiredAt}>)</th>
+								
+								<th>登陆链接</th>
 								<th>用户名</th>
 								<th>订单查询</th>
 								<th>手机号</th>
@@ -167,13 +167,14 @@
 											<span class='promote-ajax'></span>
 									
 										
-									<td>
+							<!--		<td>
                                         <{if $user.approved}>
 											<a href="<{$http_root_www}>factorypage/order_for_customer?user_id=<{$user.id}>" target="_blank">下单</a>
                                         <{else}>
 											尚未审核
                                         <{/if}>
-									</td>
+									</td>  -->
+									
 									<td>
 										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
 									</td>

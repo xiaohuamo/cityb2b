@@ -806,6 +806,8 @@
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
+	<sales_statistics>Sales Statistics</sales_statistics>
+
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
     <telephone>Tele</telephone>
