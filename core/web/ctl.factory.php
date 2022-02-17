@@ -71,7 +71,7 @@ class ctl_factory extends cmsPage
 
     public function customer_orders_action($dataFomOtherMethod = [])
     {
-        if ($dataFomOtherMethod['file_path'] && $dataFomOtherMethod['business_id']) {
+       if ($dataFomOtherMethod['file_path'] && $dataFomOtherMethod['business_id']) {
             $filePath = $dataFomOtherMethod['file_path'];
             $this->loginUser['id'] = $dataFomOtherMethod['business_id'];
         }
@@ -234,8 +234,13 @@ class ctl_factory extends cmsPage
 		// 检查如果当前用户为销售员，则生成查询sql语句。
 		
 		if($this->loginUser['role']==20){
-			$whereStr .= " and o.userId in (select user_id from cc_user_factory where factory_sales_id =".$this->loginUser['id'].")";
-			
+            //如果该用户含有销售员角色，则过滤
+            $rec =$this->loadModel('staff_roles')->getByWhere(array('staff_id'=>$this->loginUser['id']));
+          //  var_dump($this->loginUser['id']); var_dump($rec);exit;
+            if(substr_count($rec[roles],',5,')>0 || substr_count($rec[roles],',6,')>0 ) {
+                $whereStr .= " and o.userId in (select user_id from cc_user_factory where factory_sales_id =".$this->loginUser['id'].")";
+            }
+
 		}
 		
 		

@@ -129,8 +129,15 @@ class mdl_user_factory extends mdl_base
 			    WHERE f.factory_id = $factoryId and f.isHide=$isHide";
 				//var_dump ($sql);exit;
 		if($salesmanId ){
-			
-			$sql .= " and f.factory_sales_id = $salesmanId";
+
+            $rec =loadModel('staff_roles')->getByWhere(array('staff_id'=>$salesmanId));
+            //  var_dump($this->loginUser['id']); var_dump($rec);exit;
+            if(substr_count($rec[roles],',5,')>0 || substr_count($rec[roles],',6,')>0 ) {
+                $sql .= " and f.factory_sales_id = $salesmanId";
+            }
+
+
+
 			//var_dump($sql);exit;
 		}
       //  var_dump($sql);exit;
