@@ -769,6 +769,9 @@
 
 				// 获得当前客户可以下单的日期列表显示，
 				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
+                console.log(this.businessDispSchedule);
+			//	this.checkcookievalue();
+			//	console.log('current cookie is :'. getCookie('DispCenterUserSelectedDeliveryDate'));
 
 				//设置默认的配送日期
 				this.selectDefaultDeliveryDate();
@@ -793,7 +796,11 @@
 
 			},
 		    methods:{
-			
+			     checkcookievalue:function(){
+					 console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					// let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
+					// setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+				 },
 		    	scrollToTop:function(){
 		    		var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
   　　				if(scrollTop>207){
@@ -967,42 +974,83 @@
 
 					//console.log('index is' + index);
 					//console.log('the setting cookie index is :' + getCookie('deliveryDateIndex'));
-					//console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
 
 				},
 				// 设置默认配送日期
 				selectDefaultDeliveryDate:function(){
-					// 清除所有的 select 标志
-					var i =getCookie('deliveryDateIndex');
-				//	console.log('cookie index is :' +i );
 
-					if(i) {
-						this.selectDateIndex =i;
-						//设置日期数组的对应index 为 isselected
-						this.businessDispSchedule[i].isselected=1;
-						//console.log('find in cookie index is  :' +i);
-						return 1;
 
-					}
-
+                   //获取第一个可用日期
+					var firstAvaliableDeliveryDateTime = 0;
+					var cookieDeiveryDatewithanytime =''; //获取cookie的值带有@
+					var cookieDeiveryDatetime =0;//获取具体的delivery Date 时间戳
 					var arrlength =this.businessDispSchedule.length;
 					for (let i = 0; i < arrlength; i++) {
 						if(this.businessDispSchedule[i].isAvaliable) {
-							this.businessDispSchedule[i].isselected =1;
+							firstAvaliableDeliveryDateTime =parseInt(this.businessDispSchedule[i].orderDeliveryTimestamp);
 							this.selectDateIndex =i;
-							setCookie("deliveryDateIndex",i,1);
-
-
-							//console.log('cam not find coolie,generate by default' + getCookie('deliveryDateIndex'));
-
-
-						//	this.DeiveryDate=this.businessDispSchedule[i].disPlayDate + ' ' + this.businessDispSchedule[i].days;
-							break;
+						    break;
 						}
-
-
-
+  					}
+					if(firstAvaliableDeliveryDateTime ==0) {
+						alert('There is no available Date for ordering ,please contact the supplier!')
 					}
+
+					cookieDeiveryDatewithanytime =getCookie('DispCenterUserSelectedDeliveryDate');
+					if(!cookieDeiveryDatewithanytime) {
+					//	alert('cookie is null');
+					}else{
+						//将时间拆分出来
+                       let pos = cookieDeiveryDatewithanytime.indexOf('@');
+						cookieDeiveryDatetime = parseInt(cookieDeiveryDatewithanytime.substr(0,pos));
+						//alert('current time is ' +cookieDeiveryDatetime);
+					}
+                  // alert('first'+firstAvaliableDeliveryDateTime);
+					//alert('cookie'+cookieDeiveryDatetime);
+
+					if(!cookieDeiveryDatetime) {
+						//alert('cookie no value ,just set the first date ,then return !');
+						//alert(this.selectDateIndex);
+						this.businessDispSchedule[this.selectDateIndex].isselected =1;
+						let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+						setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+						//console.log('current cookie is :'+ getCookie('DispCenterUserSelectedDeliveryDate'));
+					}else{
+                    //  alert('has cookie already');
+					  //console.log('current cookie is :'+ getCookie('DispCenterUserSelectedDeliveryDate'));4
+						if(cookieDeiveryDatetime >= firstAvaliableDeliveryDateTime) {
+							//如果cookie的time大于等于ccc，表示客户设置了配送日期，则选择该日期做为当前配送的日期，那样需要获取该时间的索引索引，然后设置，如果
+							//找不到则使用第一个可用配送时间
+							let find =0;
+							for (let i = 0; i < arrlength; i++) {
+								if(this.businessDispSchedule[i].isAvaliable && this.businessDispSchedule[i].orderDeliveryTimestamp ==cookieDeiveryDatetime ) {
+									this.businessDispSchedule[i].isselected =1;
+									let datetime = this.businessDispSchedule[i].orderDeliveryTimestamp +'@anytime';
+									setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+									find =1;
+									//alert('发现并重新设置cookie!' +i + ' ' + datetime);
+									break;
+								}
+							}
+							if(!find){ //如果没有发现，则使用之前发现的第一个可用日期做为默认配送日，并设置cookie .
+								this.businessDispSchedule[this.selectDateIndex].isselected =1;
+								let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+								setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+
+							}
+						}else{
+							//如果小于，表示cookie里面的日期不可用，将当前默认日期换成第一个可配送日，并且存入cookie .
+							this.businessDispSchedule[this.selectDateIndex].isselected =1;
+							let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+							setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+
+
+						}
+			    	}
+
+
+					//this.businessDispSchedule[i].isselected =1; 设置某个为默认项，这个语法需要用哦到
 				},
 				isDiffOfLastCateId:function(currentCateId,index2,type){
                     if(index2<0)	return 1;

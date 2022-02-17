@@ -231,7 +231,8 @@ class ctl_orderpaymentprocess extends cmsPage
 			if (!DispCenter::isDeliverDateStillValid($dispCenterUserSelectedDeliveryDateTimestamp,$bid)) {
 				//修改方面还有问题。。。。。 还没有调通
 				$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间',$bid.'统配时间已经过期或失效，请返回产品页面重新下单或修改时间');
-		 		$this->form_response_msg((string)$this->lang->checkout_message_tongpei);
+               // $this->form_response_msg((string)$dispCenterUserSelectedDeliveryDate);
+                $this->form_response_msg((string)$this->lang->checkout_message_tongpei);
 			}
 		};
 
