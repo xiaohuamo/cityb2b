@@ -1573,7 +1573,10 @@ class ctl_factory extends cmsPage
         $up_dir =$up_dir1.$up_dir2 ;
 
         if(!file_exists($up_dir)){
-            mkdir($up_dir,0777);
+            $file = new file;
+
+            $file->createdir( $up_dir, 0777 );
+          //  mkdir($up_dir,0777);
         }
 
         if(preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_img, $result)){
