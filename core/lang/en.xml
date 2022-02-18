@@ -810,6 +810,10 @@
 	<stop_number>Stop Number</stop_number>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
 	<sales_statistics>Sales Statistics</sales_statistics>
+	
+	<payWhenPurchase1>Transfer Money</payWhenPurchase1>
+	<payWhenPurchase2>（Devliery after Paid）</payWhenPurchase2>
+	<no_access>no access </no_access>
 
     <first_name>First name</first_name>
     <last_name>Last name</last_name>

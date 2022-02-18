@@ -25,26 +25,29 @@
 			
 			<div class="ma15 pa15 bgfff borR7 f28 col282828" v-for="(item,index) in list" @click="clickAddress(index)">
 				<div class="pmb10 flexBox1">
-					<div>{{item.first_name}}&nbsp;{{item.last_name}} &nbsp;&nbsp; {{item.phone}}</div>	
+				<div @click="edit(item.id)"> {{item.displayName}}&nbsp;{{item.first_name}}&nbsp;{{item.last_name}} &nbsp;&nbsp; {{item.phone}}</div>
 				    <img v-if="item.isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>
 				    <img v-else src="<{$SKIN_PATH}>/img/grayDH.png" class="activeDH"/>
 				</div>
-				<div class="pmb15">{{item.address}}</div>
+				<div class="pmb15"  @click="edit(item.id)">{{item.address}}</div>
 				<div class="flexBox1">
 					<div class="flexBox2">
 						<img v-if="item.isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>&nbsp;
-						<span v-if="item.isActive==1" class="f25 colFD5001">已设为默认</span>
+						<span v-if="item.isActive==1" class="f25 colFD5001">
+							<span v-if="isLanguageEn">Default</span>
+							<span v-else>已设为默认</span>
+						</span>
 					</div>
-					<div class="flexBox2" @click="remove(index)">
+					<div class="flexBox2" @click="remove(index,item.id)">
 						<img src="<{$SKIN_PATH}>/img/cartDelete.png" class="activeDH" />&nbsp;
-						<span class="col9C978F">删除</span>
+						<span class="col9C978F" v-if="isLanguageEn">Delete</span><span class="col9C978F"v-else>删除</span>
 					</div>
 				</div>
 			</div>
 			<div class="ma15">
 				<div class="bigBtn f30 colfff flexBox4" @click="add">
 					<img src="<{$SKIN_PATH}>/img/addAddress.png" class="addIcon" />&nbsp;&nbsp;
-					<span>新增地址</span>
+					<span v-if="isLanguageEn" >Add New Address </span><span v-else >新增地址</span>
 				</div>
 			</div>
 		</div>
@@ -82,19 +85,65 @@
 				add:function(){
 					window.location.href="<{$http_root_www}>factorypage/delivery_address_edit1"
 				},
-				returnPage:function(){
-					window.history.go(-1)
+				edit:function(index){
+					window.location.href="<{$http_root_www}>factorypage/delivery_address_edit1?id="+index;
 				},
-				remove:function(index){
-					this.list.splice(index,1)
+				returnPage:function(){
+				//	window.history.go(-1)
+					window.location.href="<{$http_root_www}>member/index";
+
+				},
+				remove:function(index,id){
+					let str='';
+					if(this.isLanguageEn){
+						 str ="confirm to delete this address?";
+					}else{
+						 str ="确认删除地址吗？";
+					}
+					let deleted=confirm(str)
+					if(deleted)
+					{
+
+						let isdeleted =deleteAddress(id);
+					//	alert(isdeleted);
+
+							//alert('here');
+							this.list.splice(index,1);
+
+					}
 				},
 				clickAddress:function(index){
-					for(var i=0;i<this.list.length;i++){
-						this.list[i].isActive=0
-					}
-					this.list[index].isActive=1
+				//	for(var i=0;i<this.list.length;i++){
+				//		this.list[i].isActive=0
+				//	}
+				//	this.list[index].isActive=1
 				}
 			}
 		})	
 	</script>
+
+
+<script>
+	function deleteAddress(id){
+		var isdeleted =0;
+		axios.post('<{$http_root_www}>factorypage/delete_address?id='+id)
+				.then(function (response) {
+				//	console.log('return result after update:' + response.data);
+                   let message =parseInt(response.data);
+                //  alert('result is '+message);
+				   if (message ==1 ){
+
+					   isdeleted=1;
+				   }else{
+					   isdeleted=0;
+				   }
+
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		return isdeleted;
+	}
+
+</script>
 </html>

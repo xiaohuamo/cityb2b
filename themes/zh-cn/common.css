@@ -332,6 +332,21 @@ body{
 	 color: #fff; 
 	 border: 0px;
 }
+.bigBtnButtonNew{
+	 background: linear-gradient(-87deg, #FD5001, #FC8F4F);   
+	 color: #fff; 
+	 border: 0px;
+	height: 42px;
+    line-height: 42px;
+    background: linear-gradient(-87deg, #FD5001, #FC8F4F);
+    border-radius: 21px;
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    border-width: 0px;
+	margin-bottom: 2rem;
+    margin-top: 2rem;
+}
 
 .w100{
 	width:100%;

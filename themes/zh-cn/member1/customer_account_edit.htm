@@ -55,12 +55,7 @@
 								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
 							</div>
 
-							<div class="flexBox2 pa15 borderB relative">
-								<div class="labelW f25" style="width:5rem;" v-if="isLanguageEn">Code</div>
-								<div class="labelW f25" style="width:5rem;" v-else>Code</div>
-								<input name="factory_code" id="factory_code" class="H30 inputW2" value="<{$user_factory_info.nickname}>"/>
 
-							</div>
 
 							<div class="flexBox2 pa15 borderB">
 								<div class="labelW">ABN</div>
@@ -83,7 +78,7 @@
 							<div class="flexBox2 pa15 borderB">
 								<div class="labelW" v-if="isLanguageEn">Telephone</div><div class="labelW" v-else>座机电话</div>
 								<div class="flexBox1">
-									<div style="width:3rem;">Country code</div> &nbsp;&nbsp;<select class="H30">
+									<div style="width:3rem;">Country Code</div> &nbsp;&nbsp;<select class="H30">
 									<option>61</option>
 
 								</select>&nbsp;&nbsp;
@@ -104,44 +99,6 @@
 							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
 						</div>
 
-						<{if $loginUser.role !=20}>
-						<div class="borR7 ma15 pa15 bgfff flexBox1">
-							<div v-if="isLanguageEn">Sales Name</div>&nbsp;<div v-else>指定销售员</div>&nbsp;
-							<select name="factory_sales_id" id='ifpaid'>
-								<option value="<{$loginUser.id}>"<{if ($user_factory_info.factory_sales_id==$loginUser.id || !$user_factory_info.factory_sales_id)}> selected<{/if}>>Company Own</option>
-
-								<{foreach from=$sales_list item=sales}>
-								<option value="<{$sales.id}>"<{if ($sales.id==$user_factory_info.factory_sales_id )}> selected<{/if}>><{$sales.contactPersonNickName}></option>
-
-
-								<{/foreach}>
-
-								<!--<input type="text" name="factory_sales_id" id="factory_sales_id" class="input-text" placeholder="" value="<{$user_factory_info.factory_sales_id}>"> -->
-							</select>
-						</div>
-						<{else}>
-
-						<input type="hidden" name="factory_sales_id" id="factory_sales_id" class="input-text" placeholder="" value="<{$user_factory_info.factory_sales_id}>">
-
-
-						<{/if}>
-
-						<{if isAdulted}>
-						<div class="borR7 ma15 pa15 bgfff flexBox1">
-							<div v-if="isLanguageEn">Approved <{$user_factory_info.approved}>Customer</div>&nbsp;<div v-else>审核客户</div>&nbsp;
-							&nbsp;<select  name="approved" id='ifpaid'  >
-							<option value="1"<{if $user_factory_info.approved}> selected<{/if}>>Approved</option>
-
-							<option value="0" <{if !$user_factory_info.approved}> selected<{/if}>>Not Approved</option>
-						</select>
-						</div>
-						<{else}>
-						<div class="borR7 ma15 pa15 bgfff flexBox1">
-							<div v-if="isLanguageEn">Status of Approved</div>&nbsp;<div v-else>客户审核状态</div>&nbsp;
-							<span> <{if $user.isApproved}>Approved <{else}>Not Approved<{/if}></span>
-							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
-						</div>
-						<{/if}>
 
 
 
@@ -218,23 +175,9 @@
                                     </div> -->
 						</div>
 
-
-
-						<div class="ma15">
-							<div class="bgFEE9DF bigBtn f30 colFD5305 flexBox4">
-								<img src="<{$SKIN_PATH}>img/cartActive.png" class="addIcon" />&nbsp;&nbsp;
-								<{if $user_factory_info.approved}>
-								<span class="colFD5305" v-if="isLanguageEn">Approved</span><span class="colFD5305" v-else>审核通过</span>
-								<{else}>
-								<span class="colFD5305" v-if="isLanguageEn">Progressing...</span><span class="colFD5305" v-else>审核中...</span>
-
-								<{/if}>
-
-							</div>
-						</div>
 							<div>
 
-							<button  type="submit" class="bigBtnButtonNew"  > <{$lang->save}></button>
+								<button  type="submit" class="bigBtnButtonNew"  > <{$lang->save}></button>
 							</div>
 						</div>
 					</form>

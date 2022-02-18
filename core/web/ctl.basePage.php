@@ -446,7 +446,29 @@ public function  setCustomerTrueLogin($userrole){
 
     }
 
+    //check if the loginuser have the right to operate user id
+public function checkifLoginUserCanOperatedUserId($loginuser,$userId){
 
+   // 如果接收的用户与Loginuser相同则允许
+   // var_dump($loginuser['id']); exit;
+    if($loginuser['id']==$userId) {
+        return 1;
+    }else{
+        if($loginuser['role']==20 || $loginuser['role']==3 ) {
+            $mdl_user_factory =$this->loadModel('user_factory');
+            $FactoryId = $mdl_user_factory->getBusinessId($loginuser['id'],$loginuser['role']);
+              //  var_dump($FactoryId.$loginuser['id']); exit;
+            if($mdl_user_factory->isUserAuthorisedToOperate($userId,$FactoryId)) {
+                return 1;
+            }
+        }
+
+    }
+
+    return 0;
+
+
+}
 
 
 //以groupmanager身份登陆

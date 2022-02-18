@@ -487,14 +487,51 @@
              <div class=" payment-option" >
                    <div class='spec-option  payment-option-sec well'>
                     <div class="list-group">
+
+
                       <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
-                       <label  class="list-group-item ">
+
+                            <{if $accountType=='payWhenPurchase'}>
+                                <label  class="list-group-item ">
+
+                                    <h5 class="list-group-item-heading f28">
+                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->payWhenPurchase1}><strong><{$lang->payWhenPurchase2}></strong>
+                                    </h5>
+                                </label>
+                            <{elseif $accountType=='COD'}>
+                                <label  class="list-group-item ">
+
+                                    <h5 class="list-group-item-heading f28">
+                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" >货到付款
+                                    </h5>
+                                </label>
+                            <{else}>
+                                <label  class="list-group-item ">
+
+                                    <h5 class="list-group-item-heading f28">
+                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" >货到<{$accountType}>周内付款
+                                    </h5>
+                                </label>
+                            <{/if}>
+
+                  <!--     <label  class="list-group-item ">
 
                         <h5 class="list-group-item-heading f28">
                             <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->pay_offline}>
                         </h5>
                       </label>
+                    -->
+
+
                       <{/if}>
+
+
+
+
+
+
+
+
 
                        <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
                           <label  class="list-group-item ">
@@ -520,13 +557,7 @@
                       </label>
                       <{/if}>
 -->
-                       <{if $business_delivery_info.supporthcashpayment=='supporthcashpayment'}>
-                           <label  class="list-group-item ">
-                            <h5 class="list-group-item-heading f28">
-                                <input type="radio" name="payment" value="hcash" data-text="<{$lang->pay_hcahs}>" > <{$lang->pay_hcahs}>
-                            </h5>
-                          </label>
-                        <{/if}>
+
 
                         <{if $business_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
                            <label  class="list-group-item ">
@@ -767,7 +798,7 @@
 						</h4> -->
 						
                         <span class="s-price" data-couponid='<{$item.couponid}>'  data-id='<{$item.id}>'>
-                               <{if $item.couponid != ''&&$item.quantity>=$item.amount}>
+                               <{if $item.couponid != ''&& $item.quantity>=$item.amount}>
                                       <{if $item.quantity<$item.amount1}>
                                           $ <{$item.price}>
                                       <{/if}>
@@ -904,7 +935,7 @@
 			  <select class="form-control "  id ="promotion_code" name="promotion_code"  >
 			   <{foreach from=$promotion_code_list item=item}>
                      <option  value ="<{$item.promotion_code}>" selected="selected">
-                       <{$item.promotion_des}>-$<{$item.value}>优惠券
+                       <{$item.promotion_des}>-$<{$item.value}><{$lang->voucher}>
                     </option>
 
 

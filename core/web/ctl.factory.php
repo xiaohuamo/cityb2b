@@ -368,20 +368,15 @@ class ctl_factory extends cmsPage
         //判断是否可以设置该用户的营业时间,该段程序稍后写。
         //  var_dump('here');exit;
         $customer_id =get2('user_id');
-        $mdl_user_factory =$this->loadModel('user_factory');
 
-            $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
 
-        $where =array (
-            'factory_id' => $FactoryId,
-            'user_id' => $customer_id
+         //操作权限检查
+        if(!$this->checkifLoginUserCanOperatedUserId($this->loginUser,$customer_id)){
+			
+			var_dump((string)$this->lang->no_access);
+			exit;
+		}
 
-        );
-        $customer_rec  = $mdl_user_factory->getByWhere($where);
-        if(!$customer_rec) {
-            $this->form_response_msg('no access!');
-
-        }
 
         $user =  $this->loadModel('user')->get($customer_id);
         // var_dump($user);exit;
@@ -1351,12 +1346,15 @@ class ctl_factory extends cmsPage
             $userId = trim(post('userId'));
             //var_dump('userid is'.$userId);exit;
             $forward_page =HTTP_ROOT_WWW."factory/customer_info?id=".$userId;
-            if($userId)  {
+                if($userId)  {
                 //var_dump($userId);exit;
 
 
                 //abn info
                 $abn = str_replace(' ', '', trim(post('abn')));
+                if(strlen($abn)>11) {
+                    $abn=substr($abn,0,11);
+                }
                 if(!$abn) $abn='00000000000';
 
                 $untity_name= trim(post('untity_name'));
@@ -1390,20 +1388,22 @@ class ctl_factory extends cmsPage
 
 
 
-                if (! $this->loadModel('reg')->chkABN($abn)) {
-                    $this->setData($this->lang->remind_user_register_17, 'message');
 
-                } else {
 
                     $data_user=array(
                         //''=>$,
+
                         'googleMap'=>$googleMap,
+                        'address'=>$googleMap,
                         'email'=>$email,
                         'contactPersonFirstname'=>$contactPersonFirstname,
                         'contactPersonLastname'=>$contactPersonLastname,
+                        'person_first_name'=>$contactPersonFirstname,
+                        'person_last_name'=>$contactPersonLastname,
+                        'displayName'=>$username,
+                        'businessName'=>$untity_name,
                         'tel'=>$tel,
                         'phone'=>$phone,
-                        'name'=>$username
 
                     );
                     $mdl_user = $this->loadModel('user');
@@ -1431,6 +1431,7 @@ class ctl_factory extends cmsPage
 
                     $data_abn =array(
                         'untity_name'=>$untity_name,
+                        'business_name'=>$username,
                         'ABNorACN'=>$abn
 
                     );
@@ -1458,7 +1459,7 @@ class ctl_factory extends cmsPage
                          $this->setData($result['result'], 'message');
                      }
                      */
-                }
+
             }else{
 
                 $this->form_response(201, 'no user info!');
@@ -1556,6 +1557,58 @@ class ctl_factory extends cmsPage
 
     }
 
+    public  function upload_image_action(){
+
+
+
+        $userid =post('userid');
+
+
+       $userid =$this->loginUser['id'];
+
+        header("content-type:text/html;charset=utf-8");
+        $base64_img =post('imgbase64');
+        $up_dir1 = './data/upload/';
+        $up_dir2 =date('y-m').'/avatar/';//存放在当前目录的upload文件夹下
+        $up_dir =$up_dir1.$up_dir2 ;
+
+        if(!file_exists($up_dir)){
+            mkdir($up_dir,0777);
+        }
+
+        if(preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_img, $result)){
+            $type = $result[2];
+            if(in_array($type,array('pjpeg','jpeg','jpg','gif','bmp','png'))){
+                $new_file = $up_dir.$userid.'.'.$type;
+                $filename = $up_dir2.$userid.'.'.$type;
+
+                if(file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_img)))){
+                    $img_path = str_replace('../../..', '', $new_file);
+                    $this->loadModel('user')->saveAvatar($this->loginUser['id'],$filename);
+                    $str = '图片上传成功</br>![](' .$img_path. ')';
+                }else{
+                    $str =  '图片上传失败</br>';
+
+                }
+            }else{
+                //文件类型错误
+                $str =  '图片上传类型错误';
+            }
+
+        }else{
+            //文件错误
+            $str =  '文件错误';
+        }
+
+
+
+
+
+        echo json_encode($str.'  '.$filename);
+
+
+
+    }
    //审核当前用户是否对指定的客户拥有审批权限 ;
   public function getIfCurrentUserCanDOApprovedCustomer($user) {
        $isAdulted =0;

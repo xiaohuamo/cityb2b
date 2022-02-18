@@ -8,19 +8,27 @@
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 <body class="bgF2F2F2">
 		<div id="me">
-<form id="memberForm" action="<{$http_root_www}>member/delivery_address_edit?id=<{$data.id}>" method="post"  enctype="multipart/form-data">
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+<form id="memberForm" action="<{$http_root_www}>factorypage/delivery_address_edit1?id=<{$data.id}>" method="post"  enctype="multipart/form-data">
 	<div class="head bgfff center">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				新增地址
+					<{$lang->address_management}>
 			</div>
 			<div style="height:3.5rem;"></div>
 			
 			
 				<div class="ma15 bgfff borR7 f28 col1C1C1C">
+				<div class="flexBox1 pa15 borderB">
+						<span><{$lang->displayName}></span>
+
+						<input  name="displayName"  class="H30 inputW" type="text" value="<{$data.displayName}>"  />
+					   <input  name="isDefaultAddress"  class="H30 inputW" type="hidden" :value="isActive"  />
+				</div>
 				<div class="flexBox1 pa15 borderB">
 					<span><{$lang->first_name}></span>
 				
@@ -52,13 +60,20 @@
 				<div id='address-validate-btn'><{$lang->verified_address}></div>
 
 		    	<div id='geocode-result'></div>
-				<div class="flexBox2 pa15">
-					<span>默认地址</span> &nbsp;&nbsp;
-					<img src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>
+				<div class="flexBox2 pa15" @click="setDefualtAddress">
+					<span v-if="isLanguageEn">Default Address</span>&nbsp;&nbsp;<span v-else>默认地址</span> &nbsp;&nbsp;
+					<img v-if="isActive==1" src="<{$SKIN_PATH}>/img/addressActive.png" class="activeDH"/>&nbsp;
+					<img v-else src="<{$SKIN_PATH}>/img/grayDH.png" class="activeDH"/>
+
 				</div>
 			</div>
 			<div class="ma15">
-				<button class="bigBtn f30 colfff"  type="submit" >增加</button>
+				<button class="bigBtn f30 colfff"  type="submit" >
+
+					<span v-if="isLanguageEn" >Saved </span><span v-else >保存</span>
+
+
+				</button>
 			</div>
 			
 			
@@ -165,7 +180,26 @@
 		new Vue({
 			el:"#me",
 			data:{
-				lastName:''
+				lastName:'',
+				isActive:0,
+				isLanguageEn:1
+			},
+			mounted:function(){
+
+				var _self =this;
+
+
+				//获取商家关于该客户的下单及配送时间的文字表述；
+				this.isActive='<{$data.isActive}>';
+
+
+
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+
+
+
+
 			},
 		    methods:{
 				add:function(){
@@ -173,6 +207,14 @@
 				},
 				returnPage:function(){
 					window.history.go(-1)
+				},
+				setDefualtAddress:function (){
+					if(this.isActive){
+						this.isActive =0;
+					}else{
+						this.isActive =1;
+					}
+
 				}
 			}
 		})	

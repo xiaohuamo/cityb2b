@@ -545,6 +545,15 @@ class ctl_member extends cmsPage
 		$processingBusinessUserId =$cartItems[0]['businessUserId'];
 		$this->setData($processingBusinessUserId,'processingBusinessUserId');
 
+
+        //获取用户是否已经被商家approve ,如果 approve ,收货后2周内支付； 如果cod ,为 货到付款 cod Cash on Delivery .
+        // 未approve 或没有账户， 收到款后安排支付。
+
+        $mdl_user_factory = $this->loadModel('user_factory');
+      //  var_dump($processingBusinessUserId);exit;
+        $accountType = $mdl_user_factory->getAccountType($this->loginUser['id'],$processingBusinessUserId);
+       // var_dump($accountType);exit;
+        $this->setData($accountType,'accountType');
 		/**
 		 * 登录用户的送货地址
 		 */

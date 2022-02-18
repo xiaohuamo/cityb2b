@@ -20,7 +20,7 @@
 	<!-- 头像部分 -->
 	<div class="flexBox1 personInfoBox" @click="editPersonInfo">
 		<div class="flexBox2">
-			<img src="<{$SKIN_PATH}>img/portrait.png" class="portrait"/>
+			<img src="/data/upload/<{$loginUser.avatar}>" class="portrait"/>
 			<span class="f35" v-if="isLogin"><{$loginUser.name}></span>
 
 			<span v-if="isLanguageEn">
@@ -182,13 +182,13 @@
 				window.location.href="<{$http_root_www}>factorypage/delivery_address1"
 			},
 			AccountSetting:function(){
-				window.location.href="<{$http_root_www}>factorypage/account_setting"
+				window.location.href="<{$http_root_www}>member1/customer_account_edit"
 			},
 			AQsetting:function(){
 				window.location.href="<{$http_root_www}>factorypage/changepwd"
 			},
 			editPersonInfo:function(){
-				window.location.href="me/editMeInfo.html"
+				window.location.href="<{$http_root_www}>member1/avatar?id=<{$loginUser.id}>"
 			},
 			toMyCounpon:function(){
 				window.location.href="KH/mycoupon.html"

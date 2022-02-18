@@ -543,7 +543,9 @@
     <coupon>代金券</coupon>
     <online_store>在线商城/商品</online_store>
     <Cash_Voucher>代金券</Cash_Voucher>
-
+	
+	<payWhenPurchase1>转账付款</payWhenPurchase1>
+	<payWhenPurchase2>（款到后发货）</payWhenPurchase2>
 
     <setting_business_type>设置商业类型</setting_business_type>
     <choose_type>选择类型</choose_type>
@@ -687,6 +689,8 @@
     <i_will_refund>我要退货</i_will_refund>
     <reason>原因</reason>
     <address_management>地址管理</address_management>
+	<no_access>访问不允许</no_access>
+	
     <!-- 16 -->
     <search>搜索</search>
     <filter>过滤</filter>

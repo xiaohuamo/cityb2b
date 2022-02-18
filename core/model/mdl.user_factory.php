@@ -152,6 +152,31 @@ class mdl_user_factory extends mdl_base
         return $this->getListBySql($sql);
     }
 
+    public  function getAccountType($userid,$business_id){
+        $where11= array(
+          'user_id'=>$userid,
+            'factory_id'=>$business_id
+          );
+        $rec =$this->getByWhere($where11);
+      //  var_dump('userid'.$userid.' and '.$business_id);exit;
+        if(!$rec){
+            //did not find the record mean it is not a customer of business
+            $accountType ='payWhenPurchase';
+        }else{
+            if($rec['approved']){
+                if($rec['account_type']=='COD'){
+                    $accountType ='COD';
+                }else{
+                    $accountType =$rec['account_type'];
+                }
+            }else{
+                $accountType ='payWhenPurchase';
+            }
+
+        }
+        return $accountType;
+
+    }
 
     public function  filiterUserAvaliableDeliveryDate($datelist,$userId,$factoryId){
 

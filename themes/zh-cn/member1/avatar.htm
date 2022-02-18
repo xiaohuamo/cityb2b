@@ -9,6 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
 		<script src="<{$SKIN_PATH}>/js/jquery-1.11.0.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<style>
 			#file {
 			    display: none;
@@ -19,25 +20,25 @@
 		<div id="me">
 			<div class="head bgfff center">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				个人信息
+				头像
 			</div>
 			<div style="height:3.5rem;"></div>
 			
 			<div class="borR7 ma15 bgfff">
 				<div class="flexBox1 pa15">
-					<img src="<{$SKIN_PATH}>/img/portrait.png" class="portrait avatar"/>
-					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow" />
+					<img src="/data/upload/<{$loginUser.avatar}>" class="portrait avatar"/>
+					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow  " />
 					<input type="file" id="file" accept="image/*" capture='camera' multiple>
 				</div>
-				<div class="flexBox1 pa15" @click="editNickName">
+			<!--	<div class="flexBox1 pa15" @click="editNickName">
 					confident
 					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow" />
-				</div>
+				</div>  -->
 			</div>
 			
-			<div class="borR7 pa15 ma15 bgfff" @click="accountSetting">
+	<!--		<div class="borR7 pa15 ma15 bgfff" @click="accountSetting">
 				賬戶設置
-			</div>
+			</div> -->
 		</div>
 	</body>
 	<script>
@@ -67,8 +68,34 @@
 				    reader.onload = function (e) {
 				       // console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
 				        $(".avatar").attr("src", reader.result);
+
+
+						var imgbase64 = reader.result;
+
+						var params = new URLSearchParams();
+						params.append('imgbase64',imgbase64);
+						params.append('userid','<{$loginUser.id}>');
+
+
+						axios.post('<{$http_root_www}>factory/upload_image?userId=<{$loginUser.id}>',params)
+								.then(function (response) {
+									console.log('return result after update:' + response.data);
+
+								})
+								.catch(function (error) {
+									console.log(error);
+								});
+
+
+
+
+
+
+
+
 				    }
 				    reader.readAsDataURL(this.files[0])
+					console.log(reader);
 				     //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一    个图片文件转化为base64的码
 				}) 	
 			},

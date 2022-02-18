@@ -88,6 +88,138 @@ class ctl_member1 extends cmsPage
     }
 
 
+    function avatar_action() {
+        if ( is_post() ) {
+            $data['avatar'] = post('avatar');
+            $mdl_user = $this->loadModel( 'user' );
+            if ( $mdl_user->updateUserById( $data, $this->loginUser['id'] ) ) {
+
+                $this->form_response(200,'保存头像成功',HTTP_ROOT_WWW."company/avatar");
+            }
+            else {
+                $this->form_response_msg('保存头像失败');
+            }
+        }
+        else {
+            $this->setData( '修改头像 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle' );
+
+            $this->setData( 'user_setting','menu' );
+            $this->setData( 'avatar','submenu' );
+
+            $id =get2('id');
+            $this->setData( $id,'id' );
+            $this->display_pc_mobile('member1/avatar','member1/avatar');
+        }
+    }
+
+     function customer_account_edit_action()
+    {
+
+        $userId =$this->loginUser['id'];
+        if (is_post()) {
+
+            if($userId)  {
+
+                //abn info
+                $abn = str_replace(' ', '', trim(post('abn')));
+                if(!$abn) $abn='00000000000';
+
+                $untity_name= trim(post('untity_name'));
+
+
+                //user_info
+                $phone = trim(post('phone'));
+
+                $tel = trim(post('tel'));
+
+                $contactPersonFirstname = trim(post('contactPersonFirstname'));
+                $contactPersonLastname = trim(post('contactPersonLastname'));
+
+                $email = trim(post('email'));
+                $username = trim(post('username'));
+
+
+                $googleMap = trim(post('address'));
+
+
+
+
+                    $data_user=array(
+                        //''=>$,
+                        'googleMap'=>$googleMap,
+                        'address'=>$googleMap,
+                        'email'=>$email,
+                        'contactPersonFirstname'=>$contactPersonFirstname,
+                        'contactPersonLastname'=>$contactPersonLastname,
+                        'person_first_name'=>$contactPersonFirstname,
+                        'person_last_name'=>$contactPersonLastname,
+                        'displayName'=>$username,
+                        'businessName'=>$untity_name,
+                        'tel'=>$tel,
+                        'phone'=>$phone,
+                 );
+                    $mdl_user = $this->loadModel('user');
+                    $mdl_user->update($data_user,$userId);
+
+
+                    $data_abn =array(
+                        'untity_name'=>$untity_name,
+                        'business_name'=>$username,
+                        'ABNorACN'=>$abn
+
+                    );
+                    $mdl_wj_abn_applicationy = $this->loadModel('wj_abn_application');
+                    $where =array(
+                        'userId'=>$userId
+                    );
+                    $mdl_wj_abn_applicationy->updateByWhere($data_abn,$where);
+
+                    //  header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+                    $this->form_response(200, (string)$this->lang->update_success,HTTP_ROOT_WWW.'member/index');
+                    /*
+                     if($result['success']) {
+                         $this->loadModel('wj_abn_application')->insert([
+                             'userId' => $result['userId'],
+                             'business_name' => $username,
+                             'ABNorACN' => $abn,
+                             'untity_name' => $nickname,
+                             'createDate' => time(),
+                             'isApproved' => 1,
+                         ]);
+                         self::approve_user_action($result['userId'], null, true);
+                         header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+                     } else {
+                         $this->setData($result['result'], 'message');
+                     }
+                     */
+
+            }else{
+
+                $this->form_response(500, 'no id');
+                return;
+            }
+        }else{
+            //get all customer information
+
+            $userId =$this->loginUser['id'];
+            $user =$this->loadModel('user')->get($userId);
+            $where =array(
+                'userId' => $userId
+            );
+             $user_abn =$this->loadModel('wj_abn_application')->getByWhere($where);
+
+            $this->setData($user,'user');
+            $this->setData($user_abn,'user_abn');
+
+
+        }
+       $this->setData('customer_list', 'submenu');
+        $this->setData('customer_management', 'menu');
+        $this->display('member1/customer_account_edit');
+
+
+    }
+
     function changepwd_action() {
 
         $menu_item = trim(get2( 'menu_item' ));

@@ -20,25 +20,30 @@
 			<!-- 主体部分开始 -->
 			
 			<div class="ma15 bgfff borR7 f28 col1C1C1C">
+
+				<div class="flexBox1 pa15 borderB">
+					<span>客户名称（店名）</span>
+					<input  class="H30 inputW" name="$displayName" value ="<{$data.displayName}>"/>
+				</div>
 				<div class="flexBox1 pa15 borderB">
 					<span>名</span>
-					<input  class="H30 inputW"/>
+					<input  class="H30 inputW" name="first_name" value ="<{$data.first_name}>"/>
 				</div>
 				<div class="flexBox1 pa15 borderB">
 					<span>姓</span>
-					<input  class="H30 inputW"/>
+					<input  class="H30 inputW" name="last_name" value ="<{$data.last_name}>"/>
 				</div>
 				<div class="flexBox1 pa15 borderB">
 					<span>电话</span>
-					<input  class="H30 inputW"/>
+					<input  class="H30 inputW" name="phone" value ="<{$data.phone}>"/>
 				</div>
 				<div class="flexBox1 pa15 borderB">
 					<span>邮件</span>
-					<input  class="H30 inputW"/>
+					<input  class="H30 inputW" name="address" value ="<{$data.email}>"/>
 				</div>
-				<div class="flexBox1 pa15">
+				<div class="flexBox1 pa15 borderB">
 					<span>地址</span>
-					<textarea rows="4" class="inputW mytextarea">
+					<textarea rows="4" class="inputW mytextarea"  name="address" value ="<{$data.address}>"/>
 						
 					</textarea>
 				</div>

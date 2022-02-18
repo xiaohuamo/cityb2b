@@ -2428,35 +2428,24 @@ class ctl_factorypage extends cmsPage
 
             if ( $this->md5( $oldpwd ) != $this->loginUser['password'] ) {
 
-                if($this->getUserDevice()=='desktop'){
                     $this->form_response_msg((string)$this->lang->old_password_incorrect);
-                }else{
-
-                    $this->sheader(null,(string)$this->lang->old_password_incorrect);
-                }
 
             }
 
             $mdl_reg = $this->loadModel( 'reg' );
             if ( ! $mdl_reg->chkPassword( $password ) ) {
 
-                if($this->getUserDevice()=='desktop'){
-                    $this->form_response_msg((string)$this->lang->password_requirement);
-                }else{
 
-                    $this->sheader(null,(string)$this->lang->password_requirement);
-                }
+                    $this->form_response_msg((string)$this->lang->password_requirement);
+
 
 
             }
             if ( $password != $password2 ) {
 
-                if($this->getUserDevice()=='desktop'){
-                    $this->form_response_msg((string)$this->lang->remind_user_register_7);
-                }else{
 
-                    $this->sheader(null,(string)$this->lang->remind_user_register_7);
-                }
+                    $this->form_response_msg((string)$this->lang->remind_user_register_7);
+
 
 
             }
@@ -2472,23 +2461,20 @@ class ctl_factorypage extends cmsPage
 
 
 
-                if($this->getUserDevice()=='desktop'){
-                    $this->form_response_msg((string)$this->lang->update_success);
 
-                }else{
-                    $this->sheader(HTTP_ROOT_WWW."member/index");
-                }
+                    $this->form_response(200,(string)$this->lang->update_success,HTTP_ROOT_WWW."member/index");
+
+
+
 
 
             }
             else {
 
-                if($this->getUserDevice()=='desktop'){
+
                     $this->form_response_msg((string)$this->lang->update_failure);
 
-                }else{
-                    $this->sheader(null,(string)$this->lang->update_failure);
-                }
+
 
 
             }
@@ -2753,6 +2739,8 @@ class ctl_factorypage extends cmsPage
 
 
         if ( is_post() ) {
+            $displayName =trim(post('displayName'));
+            //var_dump($displayName);exit;
             $first_name =trim(post('first_name'));
             $last_name =trim(post('last_name'));
             $address = trim(post('address'));
@@ -2760,10 +2748,16 @@ class ctl_factorypage extends cmsPage
             $email =trim(post('email'));
             $id_number =trim(post('id_number'));
 
+
             $country = trim(post('country'));
             $isDefaultAddress = trim(post('isDefaultAddress'));
+
+            if(!is_numeric($phone) || strlen($phone)<=10) {
+              //  $this->form_response_msg('phone number is 10 digit ,please check! ');
+            }
             //echo json_encode($title);exit;
             $data = array(
+                'displayName'=>$displayName,
                 'userId'=>$this->loginUser['id'],
                 'createTime'=>time(),
                 'first_name'=>$first_name,
@@ -2789,23 +2783,35 @@ class ctl_factorypage extends cmsPage
                 $mdl_delivery_addres->insert( $data );
             }
 
-            $this->sheader( HTTP_ROOT_WWW.'member/delivery_address' );
+            $this->sheader( HTTP_ROOT_WWW.'factorypage/delivery_address1' );
         }
         else {
             $data_delivery_address =$mdl_delivery_addres->get($id);
 
+            $data_delivery_address['isActive'] = $data_delivery_address['isDefaultAddress'];
             $this->setData( $data_delivery_address, 'data' );
 
             $this->setData( $lang->delivery.$this->lang->info, 'pagename' );
             $this->setData( 'myorder', 'menu' );
             $this->setData( 'delivery_address', 'submenu' );
-            $this->setData( $this->lang->delivery.$this->lang->info .'-个人中心 '.$this->site['pageTitle'], 'pageTitle' );
-            $this->display_pc_mobile('member/delivery_address_edit','member1/addAddress1');
+            $this->setData( $this->lang->delivery.$this->lang->info .$this->site['pageTitle'], 'pageTitle' );
+            $this->display_pc_mobile('member1/addAddress1','member1/addAddress1');
         }
 
 
     }
+   public function delete_address_action(){
 
+        $id=get2('id');
+        $mdl = $this->loadModel('wj_user_delivery_info');
+        $rec =$mdl->get($id);
+        if($rec && $rec['userId']=$this->loginUser['id']){
+            $mdl->delete($id);
+            echo (json_encode('1'));
+        }else{
+             echo(json_encode('0'));
+        }
+   }
 
     function delivery_address1_action(){
 
@@ -2816,8 +2822,17 @@ class ctl_factorypage extends cmsPage
         if ( $id > 0 ) {
             $wj_user_delivery_info = $mdl_wj_user_delivery_info->get( $id );
             // 此处要加入判断一下该Id 所对应的用户是不是当前登陆的用户
-            if ( ! $wj_user_delivery_info || $wj_user_delivery_info['userId']!=$this->loginUser['id'] ) $this->sheader( null, '记录不存在' );
+            if ( ! $wj_user_delivery_info || $wj_user_delivery_info['userId']!=$this->loginUser['id'] ) $this->sheader( null, 'no record' );
             $this->sheader( $this->parseUrl()->set( 'id' ) );
+        }
+        $count = $mdl_wj_user_delivery_info->getCount(array('userId'=>$this->loginUser['id']));
+
+        if($count==1){
+            $data1=array(
+              'isDefaultAddress' =>1
+            );
+            $mdl_wj_user_delivery_info->updateByWhere($data1,array('userId'=>$this->loginUser['id']));
+
         }
 
         $pageSql	= $mdl_wj_user_delivery_info->getListSql( null, array( 'userId' => $this->loginUser['id'] ), 'id desc' );
@@ -2829,9 +2844,11 @@ class ctl_factorypage extends cmsPage
 
         $data		= $mdl_wj_user_delivery_info->getListBySql($page['outSql']);
 
-        if(sizeof($data)==1){
-            $data[0]['isActive']=1;
+        foreach ($data as $key => $val ) {
+            $data[$key]['isActive']  =$val['isDefaultAddress'];
+
         }
+
        //var_dump(json_encode($data));exit;
         $this->setData( $data, 'data' );
         $this->setData( json_encode($data), 'address_list' );
@@ -2839,12 +2856,12 @@ class ctl_factorypage extends cmsPage
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'editUrl' );
         $this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'showUrl' );
 
-        $this->setData( '配送地址', 'pagename' );
+        $this->setData( 'Delivery Address', 'pagename' );
         $this->setData( 'myorder', 'menu' );
         $this->setData( 'delivery_address', 'submenu' );
         $this->setData( $menu_item,'menu_item' );
-        $this->setData( '配送地址 - 个人中心 - '.$this->site['pageTitle'], 'pageTitle' );
-        $this->display_pc_mobile('member/delivery_address','member1/addressList');
+        $this->setData( 'Delivery Address Management  '.$this->site['pageTitle'], 'pageTitle' );
+        $this->display_pc_mobile('member1/addressList','member1/addressList');
        // $this->display_pc_mobile('member1/delivery_address','member1/addressList');
     }
 

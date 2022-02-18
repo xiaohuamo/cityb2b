@@ -1020,6 +1020,13 @@ class mdl_user extends mdl_base
 
 		return 1;
 	}
+	
+	public function saveAvatar($userid,$filename){
+		$data =array(
+		'avatar'=>$filename
+		);
+		$this->update($data,$userid);
+	}
 }
 
 ?>
