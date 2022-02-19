@@ -1569,9 +1569,9 @@ class ctl_factory extends cmsPage
         header("content-type:text/html;charset=utf-8");
         $base64_img =post('imgbase64');
         $up_dir1 = './data/upload/';
-        $up_dir2 =date('y-m').'/avatar/';//存放在当前目录的upload文件夹下
+        $up_dir2 =date('y-m').'/';//存放在当前目录的upload文件夹下
         $up_dir =$up_dir1.$up_dir2 ;
-
+        $up_dir2_cut ='thumbnails/'.date('y-m').'/';//存放在当前目录的upload文件夹下
         if(!file_exists($up_dir)){
             $file = new file;
 
@@ -1583,11 +1583,14 @@ class ctl_factory extends cmsPage
             $type = $result[2];
             if(in_array($type,array('pjpeg','jpeg','jpg','gif','bmp','png'))){
                 $new_file = $up_dir.$userid.'.'.$type;
-                $filename = $up_dir2.$userid.'.'.$type;
+                $filename= $up_dir2.$userid.'.'.$type;
+
+                $filename_cut = $up_dir2_cut.$userid.'_100x100_cut.'.$type;
 
                 if(file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_img)))){
                     $img_path = str_replace('../../..', '', $new_file);
                     $this->loadModel('user')->saveAvatar($this->loginUser['id'],$filename);
+                    $this->cut_image($filename,100,100,'fill');
                     $str = '图片上传成功</br>![](' .$img_path. ')';
                 }else{
                     $str =  '图片上传失败</br>';

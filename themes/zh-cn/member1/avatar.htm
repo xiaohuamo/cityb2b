@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-		<title>個人信息</title>
+		<title>Avatar nickName</title>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
 		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
@@ -20,13 +20,13 @@
 		<div id="me">
 			<div class="head bgfff center">
 				<img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
-				头像
+				<span v-if="isLanguageEn" >Avatar </span><span v-else >头像</span>
 			</div>
 			<div style="height:3.5rem;"></div>
 			
 			<div class="borR7 ma15 bgfff">
 				<div class="flexBox1 pa15">
-					<img src="/data/upload/<{$loginUser.avatar}>" class="portrait avatar"/>
+					<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait avatar"/>
 					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow  " />
 					<input type="file" id="file" accept="image/*" capture='camera' multiple>
 				</div>
@@ -45,6 +45,7 @@
 		new Vue({
 			el:"#me",
 			data:{
+				isLanguageEn:1
 			},
 			mounted:function(){
 				$(".avatar").click(function(){
@@ -62,16 +63,23 @@
 				      return false;
 				   }
 				}
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
 				//转成base64
 				$('input[type=file]').on('change', function () {
 				    var reader = new FileReader();
 				    reader.onload = function (e) {
-				       // console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+
 				        $(".avatar").attr("src", reader.result);
 
 
 						var imgbase64 = reader.result;
 
+						//console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+					//	console.log('length of base64:' + imgbase64.length);
+					//	var aa = this.dealImage(imgbase64, 50, this.useImg);
+
+						//console.log('new length of base64:' + aa.length);
 						var params = new URLSearchParams();
 						params.append('imgbase64',imgbase64);
 						params.append('userid','<{$loginUser.id}>');
@@ -108,6 +116,51 @@
 				},
 				accountSetting:function(){
 					window.location.href="accountSetting.htm"
+				},
+				useImg:function(base64) {
+					str= base64;
+					console.log(str.length);
+				},
+				dealImage:function(base64, w, callback){
+					var newImage = new Image();
+					var quality = 0.6;    //压缩系数0-1之间
+					newImage.src = base64;
+					newImage.setAttribute("crossOrigin", 'Anonymous');	//url为外域时需要
+					var imgWidth, imgHeight;
+					newImage.onload = function () {
+						imgWidth = this.width;
+						imgHeight = this.height;
+						var canvas = document.createElement("canvas");
+						var ctx = canvas.getContext("2d");
+						if (Math.max(imgWidth, imgHeight) > w) {
+							if (imgWidth > imgHeight) {
+								canvas.width = w;
+								canvas.height = w * imgHeight / imgWidth;
+							} else {
+								canvas.height = w;
+								canvas.width = w * imgWidth / imgHeight;
+							}
+						} else {
+							canvas.width = imgWidth;
+							canvas.height = imgHeight;
+							quality = 0.6;
+						}
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+						ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
+						var base64 = canvas.toDataURL("image/jpeg", quality); //压缩语句
+						// 如想确保图片压缩到自己想要的尺寸,如要求在50-150kb之间，请加以下语句，quality初始值根据情况自定
+						// while (base64.length / 1024 > 150) {
+						// 	quality -= 0.01;
+						// 	base64 = canvas.toDataURL("image/jpeg", quality);
+						// }
+						// 防止最后一次压缩低于最低尺寸，只要quality递减合理，无需考虑
+						// while (base64.length / 1024 < 50) {
+						// 	quality += 0.001;
+						// 	base64 = canvas.toDataURL("image/jpeg", quality);
+						// }
+					//	callback(base64);//必须通过回调函数返回，否则无法及时拿到该值
+						return base64;
+					}
 				}
 			}
 		})
