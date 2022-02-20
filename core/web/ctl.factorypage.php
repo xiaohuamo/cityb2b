@@ -2849,7 +2849,7 @@ class ctl_factorypage extends cmsPage
 
         }
 
-       //var_dump(json_encode($data));exit;
+      // var_dump(json_encode($data));exit;
         $this->setData( $data, 'data' );
         $this->setData( json_encode($data), 'address_list' );
         $this->setData( $page['pageStr'], 'pager' );

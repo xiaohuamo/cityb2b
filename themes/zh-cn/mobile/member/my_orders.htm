@@ -37,7 +37,7 @@
 			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='1'"/>
 		</div>
 		<div :class="currentShow=='2'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('2')">
-			<span v-if="isLanguageEn">Sent</span><span v-else>已发货</span>
+			<span v-if="isLanguageEn">Shipped</span><span v-else>已发货</span>
 			<img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentShow=='2'"/>
 		</div>
 		<div :class="currentShow=='3'?'col0F0F0F bold':''" class="f28 col7E7E7E relative" @click="change('3')">
@@ -82,7 +82,7 @@
  			   </span>
 
 				<span  v-if="item.coupon_status=='b01'">
-					 <span  class="colFD5001"  v-if="isLanguageEn">&nbsp;&nbsp;Order Sent&nbsp;</span>
+					 <span  class="colFD5001"  v-if="isLanguageEn">&nbsp;&nbsp;Order Shipped&nbsp;</span>
 					<span  class="colFD5001" v-else>&nbsp;&nbsp;&nbsp;已发货&nbsp;</span>
 				 </span>
 
