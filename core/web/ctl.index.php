@@ -24,13 +24,13 @@ class ctl_index extends cmsPage
 
 
 
-
+/*
             //wx share
             require_once "wx/wxjssdk.php";
             $jssdk = new WXjsSDK();
             $signPackage = $jssdk->GetSignPackage();
             $this->setData($signPackage,'signPackage');
-
+*/
             $this->setData( 'index', 'mobile_menu' );
 
             if($type==old){
