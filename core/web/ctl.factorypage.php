@@ -1321,7 +1321,12 @@ class ctl_factorypage extends cmsPage
         $userId = get2('user_id');
         $factoryId = get2('factory_id');
         $token = get2('token');
+        $notAgent =get2('notAgent');
 
+        if($notAgent) {
+            $this->cookie->setCookie('agentcityb2b',null);
+
+        }
         $mdl_user_factory = $this->loadModel('user_factory');
 
         $loginData = $mdl_user_factory->decryptUserLoginToken($userId, $factoryId, $token);
@@ -1337,7 +1342,13 @@ class ctl_factorypage extends cmsPage
 
             $this->session('member_user_id', $userId);
             $this->session('member_user_shell', $this->md5($userId.$user['name'].$user['password']));
-            $this->session('truelogin',0);
+
+             if($notAgent) {
+                 $this->session('truelogin',1);
+             }else{
+                 $this->session('truelogin',0);
+             }
+
         //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
             $this->sheader(HTTP_ROOT_WWW.'supplier/'.$factoryId);
         } else {

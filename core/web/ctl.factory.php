@@ -2495,7 +2495,7 @@ class ctl_factory extends cmsPage
         //var_dump($users);exit;
         foreach ($users as $key => $user) {
             $expiredAt =strtotime("+36 months", time());
-            $link = self::customer_login_link($user['id'], $expiredAt);
+            $link = self::customer_login_link($user['id'], $expiredAt,1);
             $users[$key]['login_link'] = $link;
         }
 
@@ -3271,12 +3271,12 @@ class ctl_factory extends cmsPage
         return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
     }
 
-    public function customer_login_link($userId, $expired) {
+    public function customer_login_link($userId, $expired,$notAgent) {
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
         $token = $mdl_user_factory->generateUserLoginToken($userId,$factoryId, $expired);
 
-        return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
+        return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&notAgent=".$notAgent."&factory_id=" . $factoryId. "&token=$token";
     }
 
 

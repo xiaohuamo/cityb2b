@@ -4,44 +4,11 @@ class ctl_index extends cmsPage
 {
 	function index_action() {
 
-       $type= get2('type');
 
+      $this->setData( 'index', 'mobile_menu' );
 
-       if($this->getLangStr()=='en')
-       {            $lang=" and lang=1";       }
-       else      {            $lang=" and lang=0";      }
+     $this->display('home');
 
-   
-	
-
-      if($this->cookie->getCookie('bannerOpened')){
-            $this->setData( $this->cookie->getCookie('bannerOpened'),'bannerOpened');
-      }else{
-             $this->cookie->setCookie('bannerOpened','true',3600*24);
-      }
-
-
-
-
-
-/*
-            //wx share
-            require_once "wx/wxjssdk.php";
-            $jssdk = new WXjsSDK();
-            $signPackage = $jssdk->GetSignPackage();
-            $this->setData($signPackage,'signPackage');
-*/
-            $this->setData( 'index', 'mobile_menu' );
-
-            if($type==old){
-                $this->display_pc_mobile('index-pc','mobile/index');
-            }else{
-                $this->display('home');
-            }
-
-		
-
-			  
 
 	}
 	

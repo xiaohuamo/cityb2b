@@ -517,6 +517,7 @@ class ctl_member extends cmsPage
        // var_dump($str);
        // var_dump( $this->md5($str));
        // exit;
+
         if(session('truelogin')) { //如果为真是客户登陆则不转换身份呢
      //      var_dump(truelogin); exit;
         }else{
@@ -529,6 +530,7 @@ class ctl_member extends cmsPage
 
                 //如果不是groupmanager 检查是否为代理
                 $agentId =$this->cookie->getCookie('agentcityb2b');
+                $this->cookie->setCookie('agentcityb2b',null);
 
                 if ($agentId !=$id) {
                     $mdl_user =$this->loadModel('user');
@@ -1622,7 +1624,7 @@ class ctl_member extends cmsPage
 			if(($this->returnUrl) && ($this->returnUrl !='/member/index')){
 				$redirect_uri = HTTP_ROOT.$this->returnUrl;
 			}elseif($user['role']==3 || $user['role']==6 || $user['role']==20 ){
-
+                   $this->session('truelogin',0);
 					$redirect_uri = HTTP_ROOT_WWW.'company/index';
 
 			}elseif($user['role']==4){
@@ -1791,7 +1793,8 @@ class ctl_member extends cmsPage
 			
 			
 			
-			
+
+
 			if ( $mdl_user->errno() ) {
 				$mdl_user->rollback();
 				$this->form_response_msg((string)$this->lang->remind_user_register_11);
