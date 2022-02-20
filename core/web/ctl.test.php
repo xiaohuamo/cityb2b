@@ -1142,17 +1142,37 @@ public function index3_action() {
 
     public function index_action()
     {
-    	
 
-    	$str1='30049,30054,30055,30057,30058,30059,30060,30061';
-    	$str2='30049,30054,30055';
-    	$str3='30057,30058,30059,30060';
-    	$str4='30049,30055,30058,30060';
+//var_dump('aa');exit;
+		$signature = $_GET["signature"];
 
-    	$str_array=[$str1,$str2,$str3,$str4];
+		$timestamp = $_GET["timestamp"];
 
-    	$this->dump($this->loadModel('user')->findCommonStaff($str_array));
+		$nonce = $_GET["nonce"];
 
+		$token = 'cityb2b005';
+
+		$tmpArr = array($token, $timestamp, $nonce);
+
+		sort($tmpArr, SORT_STRING);
+
+		$tmpStr = implode( $tmpArr );
+
+		$tmpStr = sha1( $tmpStr );
+
+		$echostr = $_GET['echostr'];
+
+
+
+		if( $tmpStr == $signature ){
+
+			return $echostr;
+
+		}else{
+
+			return false;
+
+		}
     }
 
     public function test_referral_rule_action()

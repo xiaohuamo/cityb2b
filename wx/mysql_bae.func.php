@@ -11,7 +11,7 @@
 
 /***配置数据库名称***/
 /*替换为你自己的数据库名（可从管理中心查看到）*/
-if(empty($dbname)){$dbname = "ubonusco_tinybonus";}	// test   txl
+if(empty($dbname)){$dbname = "cityb2b";}	// test   txl
  
 /*从环境变量里取出数据库连接需要的参数*/
 //$host = getenv('HTTP_BAE_ENV_ADDR_SQL_IP');

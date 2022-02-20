@@ -20,7 +20,38 @@ class ctl_index extends cmsPage
              $this->cookie->setCookie('bannerOpened','true',3600*24);
       }
 
-	      
+
+        $signature = $_GET["signature"];
+
+        $timestamp = $_GET["timestamp"];
+
+        $nonce = $_GET["nonce"];
+
+        $token = 'weixin';
+
+        $tmpArr = array($token, $timestamp, $nonce);
+
+        sort($tmpArr, SORT_STRING);
+
+        $tmpStr = implode( $tmpArr );
+
+        $tmpStr = sha1( $tmpStr );
+
+        $echostr = $_GET['echostr'];
+
+
+
+        if( $tmpStr == $signature ){
+
+            return $echostr;
+
+        }else{
+
+            return false;
+
+        }
+
+
 
             //wx share
             require_once "wx/wxjssdk.php";
