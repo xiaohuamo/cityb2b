@@ -29,32 +29,7 @@ class cmsPage extends corecms
         // 获取当前登陆用户的角色
 
 
-		// 获得导入源 ，并存储导入源，最终观察转化
-		
-		$source =get2('source_code');
-		
-		if($source) {
-			$mdl_referal_link_click_details=$this->loadModel('referal_link_click_details');
-			$data=array(
-			 'referal_id'=>$source,
-			 'ipaddress'=>ip(),
-			 'createtime'=> time(),
-			 'userId'=>$this->loginUser['id'],
-			 'url'=> $_SERVER['REQUEST_URI']
-			);
-			$mdl_referal_link_click_details->insert($data);
-			
-			$mdl_referal_link_info=$this->loadModel('referal_link_info');
-			$rec =$mdl_referal_link_info->get($source);
-			$data =array(
-			
-			 'total_click'=> $rec['total_click']+1
-			);
-			
-			$mdl_referal_link_info->update($data,$source);
-		}
-		
-        
+
 		$ua =$this->getUserDevice();
 		if( $ua=='wechat' && ($_SERVER['HTTP_HOST']!='cityb2b.com') )header("Location: https://cityb2b.com/".$_SERVER['REQUEST_URI']);
 		$this->setData( $ua, 'ua' );
@@ -108,6 +83,8 @@ class cmsPage extends corecms
 
 		$openUser = null;
 
+
+/*微信程序关闭
 		$this->wx_auth_code = get2( 'code' );
 		
 		if ( !empty( $this->wx_auth_code ) ) {
@@ -119,6 +96,8 @@ class cmsPage extends corecms
 		else {
 			$this->wx_openID=$this->cookie->getCookie( 'wx_openID');
 		}
+
+
 
 		$multiWxLoginIgnoreList=array('multiple_wx_login','success');
 		if(!in_array($GLOBALS['gbl_act'], $multiWxLoginIgnoreList) && !session( 'member_user_id')&&$this->wx_openID){
@@ -137,8 +116,8 @@ class cmsPage extends corecms
 
 			$this->loginUser = $openUser;
 		}
-
-		//cookie remember login
+  */
+        //cookie remember login
 		if ( !$this->loginUser ) {
 			$userId = session( 'member_user_id' );
 			$userShell = session( 'member_user_shell' );

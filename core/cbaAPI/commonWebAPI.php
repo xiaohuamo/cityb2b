@@ -63,7 +63,7 @@ class CommonWebAPI
 		$data['sourceOfFunds']['provided']['card']['securityCode']=$source->security_code;
 
 		$data['order']['amount']=$amount;
-		$data['order']['description']="Online purchese Ubonus Pty Ltd";
+		$data['order']['description']="Online purchese CityB2B  Pty Ltd";
 		$data['order']['currency']='AUD';
 
 

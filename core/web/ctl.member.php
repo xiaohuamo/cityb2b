@@ -1351,7 +1351,7 @@ class ctl_member extends cmsPage
 
 		return $avatar;
 	  }
-
+/*
 	function wx_register_action(){
 	        if($this->loginUser){
 				$this->sheader(HTTP_ROOT.$this->returnUrl);
@@ -1436,7 +1436,7 @@ class ctl_member extends cmsPage
 				}
 			}
 	}
-
+*/
 	public function wx_register_send_email_action()
 	{	
 		$email=post('email');
@@ -1501,6 +1501,7 @@ class ctl_member extends cmsPage
 			}
 		}else{
 			//multiple user login
+		/*
 			if(get2('openId')){
 				$where['wx_openID']=get2('openId');
 				$accounts =$this->loadModel('user')->getList(array('id','name','password'),$where);
@@ -1508,6 +1509,7 @@ class ctl_member extends cmsPage
 				$this->setData($accounts,'accounts');
 				$this->display('member/multiple_wx_login');
 			}
+		*/
 		}
 		
 	}
@@ -1651,7 +1653,7 @@ class ctl_member extends cmsPage
 			}
 
 			$ua =$this->getUserDevice();
-			if ($ua=='wechat') {
+		/*	if ($ua=='wechat') {
 
 					$new_url =HTTP_ROOT_WX."member/wx_register?returnUrl=".urlencode($this->returnUrl);
 					$query = array(
@@ -1665,7 +1667,7 @@ class ctl_member extends cmsPage
 					$query = http_build_query( $query );
 					$url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'.$query.'#wechat_redirect';
 					$this->sheader( $url );
-			}else{
+			}else{ */
 
 				$newid =$this->loadModel('wj_pc_weixin_login_temp_info')->init();
 
@@ -1677,7 +1679,7 @@ class ctl_member extends cmsPage
 				$this->setData( $this->lang->log_in.' - '.$ua. $this->site['pageTitle'], 'pageTitle' );
 				$this->display( 'welcome/login' );
 				
-			}
+			/*} */
 		}
 	}
 

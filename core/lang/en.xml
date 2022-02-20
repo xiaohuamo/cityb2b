@@ -97,7 +97,7 @@
     <customer_services>Services</customer_services>
     <site_navigation>Navigation</site_navigation>
 	 <site_category>Category</site_category>
-    <ubonus_legal_name>Ubonus Pty Ltd</ubonus_legal_name>
+    <ubonus_legal_name>CityB2B Pty Ltd</ubonus_legal_name>
     <log_in_succ>login successful</log_in_succ>
     <customer>Customer</customer>
     <help_center>Help</help_center>
@@ -175,7 +175,7 @@
     <get_password_from_Username>Find Password from Username -phonenumber</get_password_from_Username>
     <get_password_from_Username1>Find Password from Username -email</get_password_from_Username1>
 
-    <get_password_from_ubonus_service>Find password via Ubonus customer service</get_password_from_ubonus_service>
+    <get_password_from_ubonus_service>Find password via CityB2B customer service</get_password_from_ubonus_service>
     <reset_succ_login>Reset successful,logining in...</reset_succ_login>
     <!-- Nav -->
     <home>Home</home>
@@ -184,7 +184,7 @@
     <family>Family</family>
     <wool_quilt>Wool Quilt</wool_quilt>
     <promotion_event>Promotion</promotion_event>
-    <ubonus_store>Ubonus Store</ubonus_store>
+    <ubonus_store>CityB2B Store</ubonus_store>
     <ubonus_index>Home</ubonus_index>
     <brand_store>Brands</brand_store>
     <group_buy>Group</group_buy>
@@ -708,7 +708,7 @@
     <money_account_balance>Account Balance</money_account_balance>
 
     <withdraw_desc1>Please confirmed your account information.</withdraw_desc1>
-    <withdraw_desc2>Ubonus will deal with in 48 hours</withdraw_desc2>
+    <withdraw_desc2>CityB2B will deal with in 48 hours</withdraw_desc2>
     <withdraw_desc3>administration fees may occur</withdraw_desc3>
     <withdraw_amount>Withdraw amount</withdraw_amount>
     <money_account_desc>Transactions/Settlementas/Withdraws</money_account_desc>
@@ -726,12 +726,12 @@
     <wx_panding_fail_later>Unlock wechat failed ,try later...</wx_panding_fail_later>
 
     <wx_manage_desc1>other accounts pinding on this wechat account . we chat logon on will direct to default account if set default we chat account .</wx_manage_desc1>
-    <wx_manage_desc2>follow offical Ubonus wechat account -Ubonus- , will received order ,customer services messages.</wx_manage_desc2>
+    <wx_manage_desc2>follow offical CityB2B wechat account -CityB2B- , will received order ,customer services messages.</wx_manage_desc2>
     <default_login>Default Login</default_login>
     <set_default_login>Set default login account</set_default_login>
 
     <login_current_account>Current Login account</login_current_account>
-    <follow_wechat>Follow Ubonus</follow_wechat>
+    <follow_wechat>Follow CityB2B</follow_wechat>
     <order_had_been_processed>order been processed</order_had_been_processed>
     <withdraw>Withdraw</withdraw>
     <wx_unlock_wechat>Unlock current wechat account</wx_unlock_wechat>
@@ -930,7 +930,7 @@
     <shop_staff>Shop staff</shop_staff>
     <cashing_employee>Clerk(checkingout)</cashing_employee>
     <delivery_setting>Delivery setting</delivery_setting>
-    <ubonus_charged_with_thepayment>Payment handled by Ubonus</ubonus_charged_with_thepayment>
+    <ubonus_charged_with_thepayment>Payment handled by CITYB2B</ubonus_charged_with_thepayment>
     <surcharge_fees>Transcation fees</surcharge_fees>
     <myorder>Orders</myorder>
 
@@ -1121,7 +1121,7 @@
     <delivery_pickup_instructions>Delivery/pickup instructions</delivery_pickup_instructions>
     <redeem_qrcode>QR code</redeem_qrcode>
     <qrcode_explain>QR code（seller scan only)</qrcode_explain>
-    <contact_ubonus>Contact ubonus</contact_ubonus>
+    <contact_ubonus>Contact CityB2B</contact_ubonus>
     <face_to_face_payment>Offline payment</face_to_face_payment>
     <!--Email 模板 END-->
 
@@ -1179,7 +1179,7 @@
 
     <homepage_pc_newproduct>newest products</homepage_pc_newproduct>
     <home_pc_desc>most popular trading platform in Melbourne with over 300s import/wholesale/retail business online</home_pc_desc>
-    <home_pc_title>Medical masks,Hand sanitiser,Wool quilt,gifts | Ubonus Ubonus365</home_pc_title>
+    <home_pc_title>Medical masks,Hand sanitiser,Wool quilt,gifts | CityB2B</home_pc_title>
     <home_pc_newest>Newest</home_pc_newest>
     <home_pc_quicksale>Quick sale</home_pc_quicksale>
     <home_pc_quicksale_desc>Lowest price quick sale</home_pc_quicksale_desc>
@@ -1239,10 +1239,10 @@
     <input_post_code>Please input post code</input_post_code>
     <mobile_verification_daley>May delay message sent during busy time</mobile_verification_daley>
     <your_verification_code>Your verification code is:</your_verification_code>
-    <mobile_sent_code_desc>Welcome to Ubonus，the last step for registration，Please input the verification code :</mobile_sent_code_desc>
+    <mobile_sent_code_desc>Welcome to CityB2B，the last step for registration，Please input the verification code :</mobile_sent_code_desc>
 
-    <welcome_to_ubonus>Welcome to Ubonus</welcome_to_ubonus>
-    <thanks_for_choose_ubonus>Thank you for choose Ubonus</thanks_for_choose_ubonus>
+    <welcome_to_ubonus>Welcome to CityB2B</welcome_to_ubonus>
+    <thanks_for_choose_ubonus>Thank you for choose CityB2B</thanks_for_choose_CityB2B>
 
 
     <!--100  wallet -->
@@ -1278,16 +1278,16 @@
     <email_customer_message>Customer message</email_customer_message>
     <email_customer>Customer</email_customer>
 
-    <email_user_notice_no_reply>Ubonus notice -no need replying</email_user_notice_no_reply>
-    <email_user_notice_1>For receiving Ubonus email without block ,please</email_user_notice_1>
+    <email_user_notice_no_reply>CityB2B notice -no need replying</email_user_notice_no_reply>
+    <email_user_notice_1>For receiving CityB2B email without block ,please</email_user_notice_1>
     <email_user_notice_2>set to your email book</email_user_notice_2>
 
     <email_dear>Dear</email_dear>
     <email_welcome></email_welcome>
     <email_order_received>We have received your order ,your order is</email_order_received>
-    <email_order_cancellation>your order has been cancelled ,if you have any problems ,please contact Ubonus</email_order_cancellation>
+    <email_order_cancellation>your order has been cancelled ,if you have any problems ,please contact CityB2B</email_order_cancellation>
     <email_welcome_business>Dear Business</email_welcome_business>
-    <email_order_cancellation1>Customer order has been cancelled,if you have any problems ,please contact Ubonus</email_order_cancellation1>
+    <email_order_cancellation1>Customer order has been cancelled,if you have any problems ,please contact CityB2B</email_order_cancellation1>
     <email_order_shipping>Your items is now shipping(Order ID ：</email_order_shipping>
     <email_order_shipping_id>tracking number check</email_order_shipping_id>
     <email_order_infor_update>Order information and you can update by click</email_order_infor_update>
@@ -1300,22 +1300,22 @@
     <email_notice_002>If this order include muti items, and if seller only shipping part of items , the order still traded,the seller will contact buyer discuss about the
         unshipping items
     </email_notice_002>
-    <email_notice_003>You can login on Ubonus,and check your orders.</email_notice_003>
+    <email_notice_003>You can login on CityB2B,and check your orders.</email_notice_003>
 
     <email_notice_004>Account information notice</email_notice_004>
     <email_notice_005>For making sure the shipping items will be shipped ,please</email_notice_005>
     <email_notice_006>Fill in correct address and phone number.</email_notice_006>
 
-    <email_notice_007>The reason you received the email is you had registered to become Ubonus customer before.</email_notice_007>
+    <email_notice_007>The reason you received the email is you had registered to become CityB2B customer before.</email_notice_007>
     <email_notice_008>This email is automatical sending email, please do not reply.</email_notice_008>
     <email_notice_009>If you are not want to receive the email ,please click</email_notice_009>
     <email_notice_010>to cancel subscription.</email_notice_010>
-    <email_notice_011>Ubonus message -Please do not reply.</email_notice_011>
-    <email_notice_012>Congratulations, you are successful to become Ubonus customer by Wechat account .your wechat account has pinding this email.</email_notice_012>
-    <email_notice_013>Ubonus registration email verification code - please do not reply.</email_notice_013>
-    <email_notice_014>you need input the verification code to finalize Ubonus registration via email</email_notice_014>
+    <email_notice_011>CityB2B message -Please do not reply.</email_notice_011>
+    <email_notice_012>Congratulations, you are successful to become CityB2B customer by Wechat account .your wechat account has pinding this email.</email_notice_012>
+    <email_notice_013>CityB2B registration email verification code - please do not reply.</email_notice_013>
+    <email_notice_014>you need input the verification code to finalize CityB2B registration via email</email_notice_014>
     <email_notice_015>your email registration verification code is</email_notice_015>
-    <email_notice_016>you can update you profile via your account on Ubonus, please contact Ubonus is you need help.</email_notice_016>
+    <email_notice_016>you can update you profile via your account on CityB2B, please contact CityB2B is you need help.</email_notice_016>
     <delivery_fee_combine_free>Combine items,free delivery</delivery_fee_combine_free>
     <update>Update</update>
     <max_quantity>Max quantity limit:</max_quantity>

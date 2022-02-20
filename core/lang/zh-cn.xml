@@ -33,7 +33,7 @@
     <customer_services>客户服务</customer_services>
     <site_navigation>导航</site_navigation>
 	 <site_category>分类</site_category>
-    <ubonus_legal_name>Ubonus美食生活</ubonus_legal_name>
+    <ubonus_legal_name>Cityb2b</ubonus_legal_name>
 	<confirm_update_delivery_date>确认修改配送日期?</confirm_update_delivery_date>
 	
 	<approved>已审核</approved>
@@ -125,7 +125,7 @@
     <input_username_phone_email>请输入用户名/手机/邮箱</input_username_phone_email>
 
 
-    <mobile_sent_code_desc>欢迎访问Ubonus，作为注册的最后一步，请输入您收到的验证码 :</mobile_sent_code_desc>
+    <mobile_sent_code_desc>欢迎访问CityB2B，作为注册的最后一步，请输入您收到的验证码 :</mobile_sent_code_desc>
     <msg_input_new_unit_number>如有必要，可在下行填写公寓或Unit号码</msg_input_new_unit_number>
     <msg_input_new_address>如果上面街名等不对，请在上面地址框中修改</msg_input_new_address>
     <do_not_have_account_yet>还没有账户</do_not_have_account_yet>
@@ -431,7 +431,7 @@
     <order_had_been_processed>该订单已经在处理中</order_had_been_processed>
 
     <sys_message_detail3>由于网络或者信用卡问题暂时无法完成支付。</sys_message_detail3>
-    <sys_message_detail2>现阶段我们不会扣除任何费用。请稍后再试，或者随时联系Ubonus客服!重要提示:使用信用卡支付购买本产品,必须在消费时出示Photo ID及信用卡, 并与您购买时信息一致.否则,商家会拒绝提供相关服务.</sys_message_detail2>
+    <sys_message_detail2>现阶段我们不会扣除任何费用。请稍后再试，或者随时联系CityB2B客服!重要提示:使用信用卡支付购买本产品,必须在消费时出示Photo ID及信用卡, 并与您购买时信息一致.否则,商家会拒绝提供相关服务.</sys_message_detail2>
     <sys_message_detail4>您已经下单并完成了支付，我们将向您的邮箱发送订单确认邮件，您也可以在订单中心中查看您的订单
     </sys_message_detail4>
 
@@ -735,7 +735,7 @@
     <recharge>充值</recharge>
     <recharge_amount>充值金额</recharge_amount>
     <withdraw>取现</withdraw>
-    <withdraw_desc1>请确认您的账户信息是正确的。目前Ubonus支持澳洲境内的各大银行账户</withdraw_desc1>
+    <withdraw_desc1>请确认您的账户信息是正确的。目前CityB2B支持澳洲境内的各大银行账户</withdraw_desc1>
     <withdraw_desc2>提交请求后我们会在48小时之内处理</withdraw_desc2>
     <withdraw_desc3>首次取现可能会发生手续费</withdraw_desc3>
 
@@ -938,7 +938,7 @@
     <shop_staff>门店员工</shop_staff>
     <cashing_employee>兑付员工</cashing_employee>
     <delivery_setting>递送设置</delivery_setting>
-    <ubonus_charged_with_thepayment>目前由ubonus负责款项收取</ubonus_charged_with_thepayment>
+    <ubonus_charged_with_thepayment>目前由CityB2B负责款项收取</ubonus_charged_with_thepayment>
     <service_charge_is_taken_by_user>手续费由用户承担</service_charge_is_taken_by_user>
     <add_paypal_fee_to_the_user>向用户加收paypal手续费</add_paypal_fee_to_the_user>
     <royalpay>Royalpay 支付</royalpay>
@@ -959,7 +959,7 @@
     <payment_instructions_with_underline>线下支付说明</payment_instructions_with_underline>
 
     <!-- 46 -->
-    <platform_reservation>平台预订费为Ubonus平台向客户收取的购买费用。</platform_reservation>
+    <platform_reservation>平台预订费为CityB2B平台向客户收取的购买费用。</platform_reservation>
     <flat_rate>Flat Rate:按每笔订单收取</flat_rate>
     <per_item>Per item: Per Item:按每笔订单内的产品数量收取</per_item>
     <platform_reservation_fee>预订费</platform_reservation_fee>
@@ -1129,9 +1129,9 @@
     <offline_success_description1>购买成功</offline_success_description1>
     <offline_success_description2>订单编号</offline_success_description2>
     <offline_success_description3>您选择的支付方式是转账支付，请在下单后30分钟转账至指定账户</offline_success_description3>
-    <offline_success_description4>账户名称： Ubonus Pty Ltd</offline_success_description4>
+    <offline_success_description4>账户名称： CityB2B Pty Ltd</offline_success_description4>
     <offline_success_description5>BsB 063 105 账户号码：1063 2298 留言（订单后5位+姓名）</offline_success_description5>
-    <offline_success_description6>转账后截图发给 Ubonus 客服</offline_success_description6>
+    <offline_success_description6>转账后截图发给 CityB2B 客服</offline_success_description6>
     <offline_success_description7>返回首页</offline_success_description7>
     <offline_success_description8>提示：如有问题请加微信 澳洲美食生活客服3 微信号 Ubonus003</offline_success_description8>
     <!--offline_success_mobile end-->
@@ -1153,7 +1153,7 @@
 
     <redeem_qrcode>兑付二维码：</redeem_qrcode>
     <qrcode_explain>商家扫描此二维码即可兑付</qrcode_explain>
-    <contact_ubonus>联系Ubonus</contact_ubonus>
+    <contact_ubonus>联系CityB2B</contact_ubonus>
     <face_to_face_payment>当面兑付</face_to_face_payment>
     <!--Email 模板 END-->
 
@@ -1262,9 +1262,9 @@
     <input_post_code>请输入邮编</input_post_code>
 
     <mobile_verification_daley>提示：手机验证信息在繁忙时段可能稍有延迟</mobile_verification_daley>
-    <mobile_sent_code_desc>欢迎使用Ubonus，距离注册成功仅一步之遥，您的手机验证码：</mobile_sent_code_desc>
-    <welcome_to_ubonus>感谢您来到Ubonus</welcome_to_ubonus>
-    <thanks_for_choose_ubonus>感谢您选择Ubonus</thanks_for_choose_ubonus>
+    <mobile_sent_code_desc>欢迎使用CityB2B，距离注册成功仅一步之遥，您的手机验证码：</mobile_sent_code_desc>
+    <welcome_to_ubonus>感谢您来到CityB2B</welcome_to_ubonus>
+    <thanks_for_choose_ubonus>感谢您选择CityB2b</thanks_for_choose_ubonus>
 
 
     <reset>重置</reset>
@@ -1300,7 +1300,7 @@
     <email_business_send_item>商家发货通知</email_business_send_item>
     <email_payments_notice>结算通知</email_payments_notice>
     <email_subscriptions>产品订阅</email_subscriptions>
-    <email_subscriptions_1>用户购买了您在Ubonus上的产品</email_subscriptions_1>
+    <email_subscriptions_1>用户购买了您在CityB2B上的产品</email_subscriptions_1>
     <email_business_qr_code>商家使用二维码</email_business_qr_code>
     <email_free_no_need_pay>该产品领取不涉及任何款项支付,是免费产品</email_free_no_need_pay>
     <email_your_message>你的留言</email_your_message>
@@ -1313,8 +1313,8 @@
     <not_support_return>不支持退单</not_support_return>
     <email_customer>客户</email_customer>
 
-    <email_user_notice_no_reply>Ubonus用户通知 - 请勿回复</email_user_notice_no_reply>
-    <email_user_notice_1>为了您能够正常收到来自Ubonus的邮件通知，请将</email_user_notice_1>
+    <email_user_notice_no_reply>CityB2B用户通知 - 请勿回复</email_user_notice_no_reply>
+    <email_user_notice_1>为了您能够正常收到来自CityB2B的邮件通知，请将</email_user_notice_1>
     <email_user_notice_2>添加进您的通讯录</email_user_notice_2>
     <email_dear>尊敬的</email_dear>
     <email_welcome>您好</email_welcome>
@@ -1331,22 +1331,22 @@
 
     <email_notice_001>本邮件仅表明商家已收到了您的订单；在销售方出库后，订单是为成交；</email_notice_001>
     <email_notice_002>如果订单里订购多种商品，且商家只发出了部分商品时，订单将部分有效。</email_notice_002>
-    <email_notice_003>您可以登陆Ubonus，查询订单。</email_notice_003>
+    <email_notice_003>您可以登陆CityB2B，查询订单。</email_notice_003>
 
     <email_notice_004>账户信息提醒。</email_notice_004>
     <email_notice_005>为了保障您的商品顺利到达，请在</email_notice_005>
     <email_notice_006>，需要填写收货地址和电话。</email_notice_006>
 
-    <email_notice_007>您之所以收到这封邮件，是因为您曾经注册成为Ubonus的用户。</email_notice_007>
-    <email_notice_008>本邮件由Ubonus系统自动发出，请勿直接回复！</email_notice_008>
+    <email_notice_007>您之所以收到这封邮件，是因为您曾经注册成为CityB2B的用户。</email_notice_007>
+    <email_notice_008>本邮件由CityB2B系统自动发出，请勿直接回复！</email_notice_008>
     <email_notice_009>如果您不想收到此订阅邮件，请点击</email_notice_009>
     <email_notice_010>取消订阅</email_notice_010>
-    <email_notice_011>Ubonus用户通知 - 请勿回复</email_notice_011>
-    <email_notice_012>恭喜您！成功通过微信注册成为Ubonus用户。您的微信账号和该邮箱已经自动绑定了您的账号。</email_notice_012>
-    <email_notice_013>Ubonus注册邮箱验证码 - 请勿回复</email_notice_013>
-    <email_notice_014>通过邮箱注册Ubonus账户，您需要在注册时输入以下验证码</email_notice_014>
+    <email_notice_011>CityB2B用户通知 - 请勿回复</email_notice_011>
+    <email_notice_012>恭喜您！成功通过微信注册成为CityB2B用户。您的微信账号和该邮箱已经自动绑定了您的账号。</email_notice_012>
+    <email_notice_013>CityB2B注册邮箱验证码 - 请勿回复</email_notice_013>
+    <email_notice_014>通过邮箱注册CityB2B账户，您需要在注册时输入以下验证码</email_notice_014>
     <email_notice_015>您的邮箱验证码</email_notice_015>
-    <email_notice_016>您可以在个人中心中修改您的信息。如需帮助请联系Ubonus客服</email_notice_016>
+    <email_notice_016>您可以在个人中心中修改您的信息。如需帮助请联系CityB2B客服</email_notice_016>
 
     <delivery_fee_combine_free>自动合单递送，免运费</delivery_fee_combine_free>
     <update>编辑购物车</update>

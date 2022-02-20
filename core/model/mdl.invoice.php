@@ -1661,7 +1661,7 @@ class settlementReport
         $this->pdf->row("TAX INVOICE ", 0.6, 0, "L", 6);
         $this->pdf->setFontSize();
         $this->pdf->row("Invoice Date: ", 0.2, 0, "L", 6);
-        $this->pdf->row("UBONUS PTY LTD", 0.2, 0, "L", 6);
+        $this->pdf->row("CityB2B  Pty Ltd", 0.2, 0, "L", 6);
 
         $this->pdf->ln();
 
@@ -2306,7 +2306,7 @@ class settlementReportDispatchingSupplier
         $this->pdf->row("TAX INVOICE ", 0.6, 0, "L", 6);
         $this->pdf->setFontSize();
         $this->pdf->row("Invoice Date: ", 0.2, 0, "L", 6);
-        $this->pdf->row("UBONUS PTY LTD", 0.2, 0, "L", 6);
+        $this->pdf->row("CityB2B  Pty Ltd", 0.2, 0, "L", 6);
 
         $this->pdf->ln();
 
