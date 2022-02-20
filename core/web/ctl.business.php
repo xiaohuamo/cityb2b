@@ -18,16 +18,16 @@ class ctl_business extends cmsPage
 		$content = trim(get2('content'));
 		$yzm = trim(get2('yzm'));
 
-		$to='sales@ubonus.com.au';
+		$to='sales@cityb2b.com.au';
 		$subject='新客户咨询：$name ';
 
-		if($phone)$subject .='--电话：'.$phone;
-		if($company)$subject .='--公司：'.$company;
+		if($phone)$subject .='--Phone：'.$phone;
+		if($company)$subject .='--Company：'.$company;
 
 		$email_content=$content;
 		$from=$email;
 
-		echo '邮件已经发送，我们会尽快联系你的。页面将在5秒后跳回。';
+		echo 'mail has been sent ,page will return in few secconds...';
 		echo "<script>setTimeout(function(){window.location.href='".HTTP_ROOT_WWW."business/index'},5000);</script>";
 	}
 

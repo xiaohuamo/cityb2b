@@ -1707,7 +1707,7 @@ public function scan_barcode_action(){
     	$this->setData($this->loadModel('info')->getListByClass('114',10,'ordinal'),'bannerData');
 
 
-    	$this->setData('Ubonus美食生活 － 扫码就送 福利享不停','pageTitle');
+    	$this->setData('Cityb2b','pageTitle');
     	$this->display('promotion_voucher_center');
     }
 

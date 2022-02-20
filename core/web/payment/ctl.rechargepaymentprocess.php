@@ -204,7 +204,7 @@ class ctl_rechargepaymentprocess extends cmsPage
 			$input->setPrice($money * 100);
 			$input->setCurrency("AUD");
 			$input->setNotifyUrl(HTTP_ROOT.'payment/rechargepaymentprocess/royalpay_notify');
-			$input->setOperator("Ubonus-System");
+			$input->setOperator("Cityb2b-System");
 
 			//支付下单
 			$result = RoyalPayApi::jsApiOrder($input);
@@ -224,7 +224,7 @@ class ctl_rechargepaymentprocess extends cmsPage
 			$input->setPrice($money * 100);
 			$input->setCurrency("AUD");
 			$input->setNotifyUrl(HTTP_ROOT.'payment/rechargepaymentprocess/royalpay_notify');
-			$input->setOperator("Ubonus-System");
+			$input->setOperator("Cityb2b-System");
 
 			$result = RoyalPayApi::qrOrder($input);
 

@@ -375,7 +375,7 @@ class ctl_voucher_subscription extends cmsPage
 
 		$this->setData($this->loadModel('recharge')->getBalanceOfUser($this->loginUser['id'] ),'userMoneyBalance');
 
-		$this->setData( $mdl_user->getBusinessDisplayName($businessUser['id']).'-Ubonus美食生活', 'pageTitle' );
+		$this->setData( $mdl_user->getBusinessDisplayName($businessUser['id']).'-cityb2b', 'pageTitle' );
 
 
 		$this->setData( $this->parseUrl()->set( 'page' )->set( 'listType' ), 'listTypeUrl' );

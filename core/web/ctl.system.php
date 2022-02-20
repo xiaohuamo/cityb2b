@@ -65,7 +65,7 @@ class ctl_system extends cmsPage
 		$template = $this->loadModel('system_mail_template');
 		$system_mailer = $this->loadModel('system_mail');
 
-		$title = "Email Verification Ubonus";
+		$title = "Email Verification cityb2b";
 		$body  = $template->emailVerificationCodeNotification($code);
 		$to    = $userEmail;
 

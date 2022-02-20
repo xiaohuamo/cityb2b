@@ -520,7 +520,7 @@ function bindWxQRCode($userId){
 		$url =HTTP_ROOT_WX."member/bind_wx?userid=".$userId;
 
 		$query = array(
-				'appid' => 'wx8320e8511d65c1b4',
+				'appid' => 'wx7a7df86983f3dc7f',
 				'redirect_uri' =>$url,
 				'response_type' => 'code',
 				'scope' => 'snsapi_userinfo',
