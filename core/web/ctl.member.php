@@ -1312,7 +1312,7 @@ class ctl_member extends cmsPage
 		$url =HTTP_ROOT_WX."member/wx_register?returnUrl=".urlencode($this->returnUrl);
 
 		$query = array(
-				'appid' => 'wx8320e8511d65c1b4',
+				'appid' => 'wx7a7df86983f3dc7f',
 				'redirect_uri' =>$url,
 				'response_type' => 'code',
 				'scope' => 'snsapi_userinfo',
@@ -1386,7 +1386,7 @@ class ctl_member extends cmsPage
 
 				$username='User';
 				while($mdl_user->getCount( "name='$username'" ) > 0) {
-					$randnumber =rand(100,999);
+					$randnumber =rand(1000,9099);
 					$username .=$randnumber; // append 3 digit until a new one
 				}
 				

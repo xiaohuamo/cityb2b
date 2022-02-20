@@ -1,7 +1,7 @@
 <?php
 require_once 'mysql_bae.func.php';
-define("WX_APPID",		"wx8320e8511d65c1b4");
-define("WX_APPSECRET",	"52678d223bcbbfe16f57fc9fd9def521");
+define("WX_APPID",		"wx7a7df86983f3dc7f");
+define("WX_APPSECRET",	"5b7dc262abeb22d48cb580dbe14e9e1d");
 define("WX_TIMESTAMP",	"1420774989");
 define("WX_NONCESTR",	"2nDgiWM7gCxhL8v0");
 define("OPENID_TEDDY",	"ooeQYtxlPXx6wf1DdDyj7ROXxHPc");
