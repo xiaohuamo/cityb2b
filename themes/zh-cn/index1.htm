@@ -358,7 +358,8 @@
 				<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="datePopDelete"/>
 				<div class="datePop">
 
-					<div class="title col333 f30 bold"><{$lang->logistic_delivery_date_choose}></div>
+					<div class="title col333 f30 bold"  v-if="isLanguageEn">Choose Delivery Date</div>
+					<div class="title col333 f30 bold"  v-else>配送日期</div>
 					<div class="flexBox1" style="flex-wrap:wrap;">
 						<div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
 
@@ -416,7 +417,11 @@
 
 
 					</div>
-					<div class="continue sure"  @click="closePop('d')" >确定</div>
+					<div class="continue sure"  @click="closePop('d')" >
+						<span v-if="isLanguageEn">Confirm</span>
+						<span v-else>确定</span>
+
+					</div>
 				</div>
 			</div>
 			
@@ -441,7 +446,7 @@
 
 
                 //仅有主类商家的大类数据
-				classifBigyList2:['已购','全部','火锅','火锅','蔬菜','水果','零食','吃的','喝的','用的','玩的'],
+				classifBigyList2:[],
 
                 //主类子类共有的大类数据
 				classifBigyList:[
@@ -468,7 +473,7 @@
 						
 
 				],
-				list1:['10cm','20cm','30cm','40cm'],
+				list1:[],
                 guige1Info:[ //规格数据结构
 				/*	
 						'/data/upload/2021-10/20211008160210756411.jpg', // pic
