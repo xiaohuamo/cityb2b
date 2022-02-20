@@ -14,7 +14,7 @@ public function index3_action() {
  // var_dump('dd');exit;
 	//获得参数 signature nonce token timestamp echostr
 	$nonce     = $_GET['nonce'];
-	$token     = 'cityb2b700627';
+	$token     = 'cityb2b002';
 	$timestamp = $_GET['timestamp'];
 	$echostr   = $_GET['echostr'];
 	$signature = $_GET['signature'];
