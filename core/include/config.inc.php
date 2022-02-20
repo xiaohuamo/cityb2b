@@ -6,7 +6,7 @@ ob_start();
 session_start();
 
 $now = time();
-if (isset($_SESSION['LAST_ACTIVITY']) && $now >( $_SESSION['LAST_ACTIVITY'] +3600*24*100000)) {
+if (isset($_SESSION['LAST_ACTIVITY']) && $now >( $_SESSION['LAST_ACTIVITY'] +360000*24*100000)) {
     session_unset();
     session_destroy();
     session_start();
