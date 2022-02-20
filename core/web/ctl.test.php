@@ -11,21 +11,34 @@ class ctl_test extends cmsPage
 // 修改 cc_wj_customer_coupon 表种的 menu_id menu_cat_id 字段 
 
 public function index3_action() {
- // var_dump('dd');exit;
-	//获得参数 signature nonce token timestamp echostr
-	$nonce     = $_GET['nonce'];
-	$token     = 'cityb2b002';
-	$timestamp = $_GET['timestamp'];
-	$echostr   = $_GET['echostr'];
-	$signature = $_GET['signature'];
-//形成数组，然后按字典序排序
-	$array = array($nonce, $timestamp, $token);
-	sort($array);
-//拼接成字符串,sha1加密 ，然后与signature进行校验
-	$str = sha1( implode( $array ) );
-	if( $str == $signature && $echostr ){
-		echo  $echostr;//第一次接入weixin api接口的时候
-		exit;
+	$signature = $_GET["signature"];
+
+	$timestamp = $_GET["timestamp"];
+
+	$nonce = $_GET["nonce"];
+
+	$token = 'cityb2b005';
+
+	$tmpArr = array($token, $timestamp, $nonce);
+
+	sort($tmpArr, SORT_STRING);
+
+	$tmpStr = implode( $tmpArr );
+
+	$tmpStr = sha1( $tmpStr );
+
+	$echostr = $_GET['echostr'];
+
+
+
+	if( $tmpStr == $signature ){
+
+		return $echostr;
+
+	}else{
+
+		return false;
+
 	}
 
 }
