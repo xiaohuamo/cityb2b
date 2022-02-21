@@ -515,7 +515,7 @@
                                         <{/if}>
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
-												<img src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
+												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
 												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">修改</a>
                                             <{else}>
 												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">添加</a>

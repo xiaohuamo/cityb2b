@@ -2076,7 +2076,7 @@ function updateStandProductUponMenuId($id) {
 					else
 						$images[$key]=trim($value);
 				}
-
+				$image = reset($images);
 				$data=array(
 					'menu_pic'=>trim(reset($images)),
 					'menu_pics'=>trim(serialize(array_slice($images, 1)))
@@ -2085,13 +2085,20 @@ function updateStandProductUponMenuId($id) {
 			//  var_dump($data);exit;
 
 				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+				//cut 两个图象
+				$newimage_100 = $this->cut_image( $image, 100, 100, $method = 'fill') ;
+				$newimage_300 = $this->cut_image( $image, 300, 300, $method = 'fill') ;
+				$data['menu_pic_100'] =$newimage_100;
+				$data['menu_pic_300'] =$newimage_300;
+
 				if ($mdl_restaurant_menu->update($data,$id)) {
 					//以下程序为： 如果用户更新了图片，则要检查对应的条形码在产品库中是否存在，如果不存在，可以将该信息更新到产品苦衷，如果存在，那检查这条标准库中的产品图片来源
 					// 如果该来源为该用户，那么，该用户的图片更新可以覆盖之前的图片，如果该图片来源与其它渠道，该用户的图片更新无法更新产品库。
 					
 					$this->updateStandProductUponMenuId($id);
-					
-					$this->form_response_msg( '保存成功');
+
+
+					$this->form_response_msg( 'saved');
 				} else {
 
 					$this->form_response_msg('保存失败');

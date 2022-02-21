@@ -1140,39 +1140,37 @@ public function index3_action() {
 
     }
 
+	public function  cut_image_business_action() {
+
+		$business_id =get2('id');
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+		$sql ="select * from cc_restaurant_menu where restaurant_id = $business_id and (length(menu_cn_name)>0 or length(menu_en_name)>0 )";
+		$data1 = $mdl_restaurant_menu->getListBySql($sql);
+		$data =array();
+
+		foreach ($data1 as $key=>$value) {
+			$image =$value['menu_pic'];
+			$newimage_100 = $this->cut_image( $image, 100, 100, $method = 'fill') ;
+			$newimage_300 = $this->cut_image( $image, 300, 300, $method = 'fill') ;
+			$data['menu_pic_100'] =$newimage_100;
+			$data['menu_pic_300'] =$newimage_300;
+			$mdl_restaurant_menu->update($data,$value['id']);
+
+
+		}
+
+
+
+
+	}
+
     public function index_action()
     {
 
 //var_dump('aa');exit;
-		$signature = $_GET["signature"];
 
-		$timestamp = $_GET["timestamp"];
-
-		$nonce = $_GET["nonce"];
-
-		$token = 'cityb2b005';
-
-		$tmpArr = array($token, $timestamp, $nonce);
-
-		sort($tmpArr, SORT_STRING);
-
-		$tmpStr = implode( $tmpArr );
-
-		$tmpStr = sha1( $tmpStr );
-
-		$echostr = $_GET['echostr'];
-
-
-
-		if( $tmpStr == $signature ){
-
-			return $echostr;
-
-		}else{
-
-			return false;
-
-		}
     }
 
     public function test_referral_rule_action()
