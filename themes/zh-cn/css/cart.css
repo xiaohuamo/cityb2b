@@ -103,7 +103,7 @@ input[type='checkbox']:checked::after {
 }
 
 .goodInfo2_{
-	height: 6.25rem;
+	height: 7.25rem;
 	position: relative;
 	width: 100%;
 }
