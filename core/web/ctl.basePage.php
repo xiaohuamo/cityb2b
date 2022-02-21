@@ -1662,7 +1662,7 @@ public function save_pic($url,$filename){
 	
 	
 	
- public  function cut_image( $string, $width, $height, $method = 'fill',$baseOnSkinPath=false) {
+ public  function cut_image( $string, $width, $height, $method = 'fill',$baseOnSkinPath=false,$forceNew=false) {
   //  $string ="2020-12/1609828130-d8c7131ef7db494f2ad9d19dac7c4208.jpg";
 	$baseDir = $baseOnSkinPath?TPL_DIR:UPDATE_DIR;
 	
@@ -1708,7 +1708,7 @@ public function save_pic($url,$filename){
 	$newImageUrl = $file->nameExtend( $string, "_{$width}x{$height}_{$method}" );
 	//$newImageUrl = $file->nameExtend( $string, "" );
 
-	if ( file_exists( $newImageDir.$newImageUrl ) ) {
+	if ( file_exists( $newImageDir.$newImageUrl )&& !$forceNew) {
 		return 'thumbnails/'.$newImageUrl;
 	}
 

@@ -1590,7 +1590,7 @@ class ctl_factory extends cmsPage
                 if(file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_img)))){
                     $img_path = str_replace('../../..', '', $new_file);
                     $this->loadModel('user')->saveAvatar($this->loginUser['id'],$filename);
-                    $this->cut_image($filename,100,100,'fill');
+                    $this->cut_image($filename,100,100,'fill',false,true);
                     $str = '图片上传成功</br>![](' .$img_path. ')';
                 }else{
                     $str =  '图片上传失败</br>';
