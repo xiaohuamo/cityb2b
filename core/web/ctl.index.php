@@ -12,18 +12,7 @@ class ctl_index extends cmsPage
 
 	}
 	
-  public function about_us_action(){
 
-      $this->display('index/aboutUs');
-  }
 
-   public function set_up_account_action(){
 
-        $this->display('index/KH');
-    }
-
-   public function suppliers_set_up_account_action(){
-
-        $this->display('index/suppliers_set_up_account');
-    }
 }

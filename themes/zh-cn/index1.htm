@@ -310,8 +310,8 @@
 				<div class="bgfff cartPop" @click="closePop('n')" >
 					<img src="<{$SKIN_PATH}>/img/cha2.png" @click="closePop('c')" class="close3"/>
 
-					<div class="center col333 f30 pa15-0 borderB" v-if="isLanguageEn">Total {{goodsList.length}} items</div>
-					<div class="center col333 f30 pa15-0 borderB" v-else>共{{goodsList.length}}件</div>
+					<div class="center col333 f30 pa15-0 borderB" v-if="isLanguageEn">Total {{goodsList.length}} items（finger slip left see delete button）</div>
+					<div class="center col333 f30 pa15-0 borderB" v-else>共{{goodsList.length}}件（手指左滑显示删除按钮）</div>
 
 					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" >
 						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>

@@ -2131,7 +2131,7 @@ class ctl_member extends cmsPage
 			}
 
 			$this->setData( $this->wx_openID, 'openID' );
-			$this->setData( '会员注册 - '.$this->site['pageTitle'], 'pageTitle' );
+			$this->setData( 'Member Register - '.$this->site['pageTitle'], 'pageTitle' );
 			$this->display( 'welcome/register' );
 		}
 	}

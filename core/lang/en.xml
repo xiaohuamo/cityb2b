@@ -773,7 +773,7 @@
 
     <verified_address>Verfiy address</verified_address>
     <logo>LOGO</logo>
-    <logo_path>images/logo_en.png</logo_path>
+    <logo_path>images/logo.png</logo_path>
     <image>Picture</image>
 	 <shop_image>Shop Picture</shop_image>
     <social_network>Social contact</social_network>
