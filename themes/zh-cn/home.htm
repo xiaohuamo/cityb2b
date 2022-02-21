@@ -70,10 +70,17 @@
 						<span class="f500 col333 f30"  v-else >DNL 肉类批发</span>
 					</div>
 					<div class="flexBox1">
-						<div class="colFD5305 collection f25" v-if="isStoreSC" @click="StoreSC"  v-if="isLanguageEn" >Save</div>
-						<div class="colFD5305 collection f25" v-if="isStoreSC" @click="StoreSC"  v-else >收藏</div>
-						<div class="colFD5305 collection f25 iscollection" v-else @click="StoreSC"  v-if="isLanguageEn">Saved</div>
-						<div class="colFD5305 collection f25 iscollection" v-else @click="StoreSC"  v-else>已收藏</div>
+						<div v-if="isStoreSC">
+							<div class="colFD5305 collection f25 iscollection"  @click="StoreSC"  v-if="isLanguageEn">Saved</div>
+							<div class="colFD5305 collection f25 iscollection"  @click="StoreSC"  v-else>已收藏</div>
+						</div>
+						<div v-else>
+							<div class="colFD5305 collection f25"  @click="StoreSC"  v-if="isLanguageEn" >Save</div>
+							<div class="colFD5305 collection f25" @click="StoreSC"  v-else >收藏</div>
+
+						</div>
+
+
 						<div class="colfff enter f25" @click = "storeLink(319188)"  v-if="isLanguageEn" >Enter</div>
 						<div class="colfff enter f25" @click = "storeLink(319188)"  v-else >进店</div>
 					</div>
@@ -263,7 +270,7 @@
 				isStoreSC:false,
 				isReturnShow:false,
 				title_en:'CityB2B',
-				title_cn:'批发市场',
+				title_cn:'墨尔本批发',
 				isLanguageEn:1, //语言环境
 				langStrDisplay:'中文',
 			},mounted:function(){
