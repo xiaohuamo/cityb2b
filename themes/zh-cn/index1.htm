@@ -774,7 +774,7 @@
 
 				// 获得当前客户可以下单的日期列表显示，
 				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
-                console.log(this.businessDispSchedule);
+               // console.log(this.businessDispSchedule);
 			//	this.checkcookievalue();
 			//	console.log('current cookie is :'. getCookie('DispCenterUserSelectedDeliveryDate'));
 
@@ -802,7 +802,7 @@
 			},
 		    methods:{
 			     checkcookievalue:function(){
-					 console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					// console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
 					// let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
 					// setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
 				 },
@@ -869,7 +869,7 @@
 
 					//	   alert('good lists is : ' +self.goodsList);
 
-					  console.log('cart_date is :' +self.goodsList);
+					//  console.log('cart_date is :' +self.goodsList);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
@@ -879,7 +879,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					   console.log(self.goodsList2);
+					  // console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
