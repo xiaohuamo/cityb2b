@@ -28,7 +28,8 @@
 				<div class="flexBox1 pa15">
 					<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait avatar"/>
 					<img src="<{$SKIN_PATH}>/img/arrow2.png" class="arrow  " />
-					<input type="file" id="file" accept="image/*" capture='camera' multiple>
+			<!--		<input type="file" id="file" accept="image/*" capture='camera' multiple>  -->
+					nput type="file" id="file" accept="image/*"  multiple>
 				</div>
 			<!--	<div class="flexBox1 pa15" @click="editNickName">
 					confident
@@ -49,6 +50,7 @@
 			},
 			mounted:function(){
 				$(".avatar").click(function(){
+
 				    $("#file").trigger("click")
 				})
 				var file = document.querySelector('input');
