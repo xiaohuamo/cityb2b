@@ -1591,7 +1591,8 @@ class ctl_factory extends cmsPage
                     $img_path = str_replace('../../..', '', $new_file);
                     $this->loadModel('user')->saveAvatar($this->loginUser['id'],$filename);
                     $this->cut_image($filename,100,100,'fill',false,true);
-                    $str = '图片上传成功</br>![](' .$img_path. ')';
+                    $str = '图片上传成功</br>![](' .$img_path.' '.$new_file. ')';
+                    $this->loginUser['avatar'] =$filename;
                 }else{
                     $str =  '图片上传失败</br>';
 
