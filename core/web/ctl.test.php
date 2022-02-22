@@ -1152,7 +1152,7 @@ public function index3_action() {
 
 		foreach ($data1 as $key=>$value) {
 			$image =$value['menu_pic'];
-			$newimage_100 = $this->cut_image( $image, 100, 100, $method = 'fill') ;
+			$newimage_100 = $this->cut_image( $image, 150, 150, $method = 'fill') ;
 			$newimage_300 = $this->cut_image( $image, 300, 300, $method = 'fill') ;
 			$data['menu_pic_100'] =$newimage_100;
 			$data['menu_pic_300'] =$newimage_300;

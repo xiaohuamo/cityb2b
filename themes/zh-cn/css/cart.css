@@ -18,19 +18,19 @@
 	border-radius: 5px;
 }
 .cartImg{
-	width: 30%;
-	height: 30%;
-	margin-right: 10px;
+	width: 8.25rem;
+	height: 8.25rem;
+	margin-right: 6px;
 }
 .cartImgLarge{
 	width: 20%;
 	height: 20%;
-	margin-right: 10px;
+	margin-right: 6px;
 }
 .cartImgSmall{
 	width: 25%;
 	height: 25%;
-	margin-right: 10px;
+	margin-right: 6px;
 }
 
 .cartImg2{
@@ -103,7 +103,7 @@ input[type='checkbox']:checked::after {
 }
 
 .goodInfo2_{
-	height: 7.25rem;
+	height: 8.25rem;
 	position: relative;
 	width: 100%;
 }
