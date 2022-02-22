@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>cdn-cropper-simple</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="<{$SKIN_PATH}>member1/avatar_cuter/dist/index.js"></script>
+  <script src="<{$SKIN_PATH}>/js/jquery-1.11.0.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/common.css"/>
+  <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>/css/me.css"/>
+    <style>
+        .dome {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 22px;
+        }
+
+        .cropper {
+            width: 3.9rem;
+            height:3.9rem;
+            line-height: 3.9rem;
+            /* 切记position: relative一点要有 */
+            position: relative;
+            border-radius: 3.9rem;
+            overflow: hidden;
+            text-align: center;
+          margin-left: 15px;
+          margin-top: 15px;
+        }
+
+        .img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .info {
+            font-size: 18px;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 30px;
+            flex: 1;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div  id="app">
+        <!-- <img :src="require('@/assets/logo.png')"></img> -->
+      <div class="head bgfff center">
+        <img src="<{$SKIN_PATH}>/img/return.png" class="return" @click="returnPage"/>
+        <span v-if="isLanguageEn" >Avatar </span><span v-else >头像</span>
+      </div>
+      <div style="height:3.5rem;"></div>
+
+
+
+
+
+
+        <div   class="flexBox1 pa15 cropper">
+            <img :src="img" class="portrait img" />
+            <!-- option是配置，格式是对象，getbase64Data是组件的一个方法获取裁剪完的头像 -->
+            <h5-cropper @getbase64="getbase64Data" @getblob="getBlob" @get-file="getFile"></h5-cropper>
+        </div>
+
+
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: function() {
+                return {
+                    img: "<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>",
+                  isLanguageEn:1
+                }
+
+            },
+          mounted:function(){
+
+          // 获得当前的语言环境
+          this.isLanguageEn =parseInt('<{$user_setting}>');
+          //转成base64
+
+        },
+            methods: {
+              returnPage:function(){
+                window.history.go(-1)
+              },getbase64Data(data) {
+                    this.img = data;
+                  var imgbase64 =this.img;
+                  var params = new URLSearchParams();
+                  params.append('imgbase64',imgbase64);
+                  params.append('userid','<{$loginUser.id}>');
+
+
+                  axios.post('<{$http_root_www}>factory/upload_image?userId=<{$loginUser.id}>',params)
+                    .then(function (response) {
+                      console.log('return result after update:' + response.data);
+
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });
+
+                },
+                getBlob(blob){
+                    console.log(blob)
+                },
+                getFile(file){
+                    console.log(file)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

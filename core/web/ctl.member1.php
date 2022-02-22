@@ -86,7 +86,32 @@ class ctl_member1 extends cmsPage
             $this->display_pc_mobile('member/profile','member1/accountSetting');
         }
     }
+    function avatar_cuter_action() {
 
+        /*
+        if ( is_post() ) {
+            $data['avatar'] = post('avatar');
+            $mdl_user = $this->loadModel( 'user' );
+            if ( $mdl_user->updateUserById( $data, $this->loginUser['id'] ) ) {
+
+                $this->form_response(200,'保存头像成功',HTTP_ROOT_WWW."company/avatar");
+            }
+            else {
+                $this->form_response_msg('保存头像失败');
+            }
+        }
+        else {
+            $this->setData( '修改头像 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle' );
+
+            $this->setData( 'user_setting','menu' );
+            $this->setData( 'avatar','submenu' );
+
+            $id =get2('id');
+            $this->setData( $id,'id' );
+            $this->display_pc_mobile('member1/avatar','member1/avatar');
+        } */
+        $this->display_pc_mobile('member1/avatar_cuter/example/cdn/simple','member1/avatar_cuter/example/cdn/simple');
+    }
 
     function avatar_action() {
         if ( is_post() ) {
