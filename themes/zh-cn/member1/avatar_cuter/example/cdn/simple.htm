@@ -17,7 +17,14 @@
             justify-content: space-between;
             padding-left: 22px;
         }
-
+        // h5cropper样式问题，部分浏览器底部导航会挡住确定和取消按钮
+           div.btndiv {
+             position: fixed;
+             bottom: 15vh;
+             width: 80%;
+             left: 50%;
+             transform: translateX(-50%);
+           }
         .cropper {
             width: 3.9rem;
             height:3.9rem;
