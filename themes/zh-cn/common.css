@@ -417,16 +417,16 @@ body{
 	padding:0px 5px;
 }
 .pa0-15{
-	padding: 0 15px;
+	padding: 0 10px;
 }
 .pa15-0{
-	padding:15px 0;
+	padding:10px 0;
 }
 .pa15-left{
-	padding-left:15px;
+	padding-left:10px;
 }
 .pa15{
-	padding:15px;
+	padding:10px;
 }
 .pa15bottom5{
 	padding:5px;
@@ -441,18 +441,18 @@ padding:2px;
 display: inline-block;
 }
 .ma15{
-	margin: 15px;
+	margin: 10px;
 }
 
 .ma15-5{
-	margin:5px 15px 5px 15px;
+	margin:5px 10px 5px 10px;
 	
 }
 .ma0-15{
-	margin: 0 15px;
+	margin: 0 10px;
 }
 .ma10-15{
-	margin:10px 15px;
+	margin:10px 10px;
 }
 .maT15{
 	margin-top: 15px !important;
