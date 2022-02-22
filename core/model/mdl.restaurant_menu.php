@@ -45,7 +45,7 @@ class mdl_restaurant_menu extends mdl_base
                        $discount_rates as customer_dicount_rate, m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_sort_id as parent_cat_sort_id ,
                        c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name,c02.category_sort_id as sub_cate_sort_id ,
                        c02.category_cn_name as sub_cat_cn_name,c02.category_en_name as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn, 
-                       ROUND(m.price,2) as old_price,if(length(m.menu_pic)>0,concat('$uploadpath',m.menu_pic),'') as menu_pic,if(length(m.menu_pic_100)>0,concat('$uploadpath',m.menu_pic_100),concat('$uploadpath',m.menu_pic)) as menu_pic_100 ,
+                       ROUND(m.price,2) as old_price,if(length(m.menu_pic_100)>0,concat('$uploadpath',m.menu_pic_100),concat('$uploadpath',m.menu_pic)) as menu_pic,
                         if(length(m.menu_pic_300)>0,concat('$uploadpath',m.menu_pic_300),concat('$uploadpath',m.menu_pic)) as menu_pic_300 ,
                        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title , 
                        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,
