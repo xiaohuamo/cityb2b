@@ -774,7 +774,7 @@
 
 				// 获得当前客户可以下单的日期列表显示，
 				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
-               // console.log(this.businessDispSchedule);
+                console.log(this.businessDispSchedule);
 			//	this.checkcookievalue();
 			//	console.log('current cookie is :'. getCookie('DispCenterUserSelectedDeliveryDate'));
 
@@ -879,7 +879,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					   console.log(self.goodsList2);
+					 //  console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
