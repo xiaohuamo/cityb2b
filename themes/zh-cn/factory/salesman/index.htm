@@ -85,7 +85,9 @@
 			},
 		    methods:{
 				editPersonInfo:function(){
-					window.location.href="<{$http_root_www}>member1/avatar?id=<{$loginUser.id}>"
+					editPersonInfo('<{$http_root_www}>','<{$loginUser.id}>');
+				//	window.location.href="<{$http_root_www}>member1/avatar_cuter?id=<{$loginUser.id}>"
+					
 				},
 				changeMenu:function(index){
 					this.currentMenu=index

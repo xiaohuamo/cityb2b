@@ -15,6 +15,7 @@
     <message>Message</message>
     <account_login>Account Login</account_login>
     <mobile_login>Mobile Login</mobile_login>
+	 <login>Login</login>
     <register>Register</register>
     <account_register>Account Register</account_register>
     <email_register>Email Register</email_register>
@@ -92,6 +93,7 @@
 
     <log_out>Sign Out</log_out>
     <forget_password>Forget</forget_password>
+	 <forget_password_header>Forget Password</forget_password_header>
     <remember_me>Remember</remember_me>
     <my_orders>Orders</my_orders>
     <customer_services>Services</customer_services>
@@ -175,7 +177,7 @@
     <get_password_from_Username>Find Password from Username -phonenumber</get_password_from_Username>
     <get_password_from_Username1>Find Password from Username -email</get_password_from_Username1>
 
-    <get_password_from_ubonus_service>Find password via CityB2B customer service</get_password_from_ubonus_service>
+    <get_password_from_ubonus_service>couldn't find login info ,please try again or contact admin</get_password_from_ubonus_service>
     <reset_succ_login>Reset successful,logining in...</reset_succ_login>
     <!-- Nav -->
     <home>Home</home>
@@ -1156,7 +1158,7 @@
     <remind_user_register_16>user exist,forgot password?</remind_user_register_16>
     <remind_user_register_17>ABN format is incorrect, it should be 11 digital number.</remind_user_register_17>
     <find_password>Find password</find_password>
-    <find_username_phone_emial_password>username/phone/email</find_username_phone_emial_password>
+    <find_username_phone_emial_password>please input username/phone/email</find_username_phone_emial_password>
     <your_verification_code>your verification code is:</your_verification_code>
     <continue_after_input_verification_code>continue after you input verification code .</continue_after_input_verification_code>
     <please_input_username>Please input user name</please_input_username>

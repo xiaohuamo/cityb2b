@@ -28,6 +28,7 @@
     <log_in_please>请先登录</log_in_please>
     <log_out>退出</log_out>
     <forget_password>忘记密码</forget_password>
+	 <forget_password_header>忘记密码</forget_password_header>
     <remember_me>记住我</remember_me>
     <my_orders>我的订单</my_orders>
     <customer_services>客户服务</customer_services>
@@ -1185,7 +1186,7 @@
     <remind_user_register_16>系统已检查到此用户名，是否需要找回密码？</remind_user_register_16>
     <remind_user_register_17>ABN格式错误，应该为11为纯数字</remind_user_register_17>
     <find_password>找回密码</find_password>
-    <find_username_phone_emial_password>用户名/手机/邮箱</find_username_phone_emial_password>
+    <find_username_phone_emial_password>请输入用户名/手机/邮箱</find_username_phone_emial_password>
 
     <your_verification_code>您的验证码为:</your_verification_code>
     <continue_after_input_verification_code>，请输入验证码后继续。</continue_after_input_verification_code>

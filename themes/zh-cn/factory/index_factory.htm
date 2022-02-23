@@ -116,7 +116,7 @@
 				},
 		    methods:{
 				editPersonInfo:function(){
-					window.location.href="<{$http_root_www}>member1/avatar?id=<{$loginUser.id}>"
+						editPersonInfo('<{$http_root_www}>','<{$loginUser.id}>');
 				},	//设置语言提示
 
 				switchDisplayLanguage:function(){
@@ -174,7 +174,7 @@
 						logout('<{$http_root_www}>');
 				},
 				returnPage:function(){
-					window.history.go(-1)
+					window.location.href='<{$http_root_www}>'
 				}
 			}
 		})	

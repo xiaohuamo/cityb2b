@@ -14,8 +14,9 @@ function getLanguageSetting(user_setting) {
 	
 }
 
-
-
+function editPersonInfo(path,id) {
+		window.location.href=path +'member1/avatar_cuter?id='+id;
+}
 
 function setCookie(cname,cvalue,exdays){
 			var d = new Date();

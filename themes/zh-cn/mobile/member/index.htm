@@ -20,7 +20,7 @@
 	<!-- 头像部分 -->
 	<div class="flexBox1 personInfoBox" @click="editPersonInfo">
 		<div class="flexBox2">
-			<img src="/data/upload/<{$loginUser.avatar}>" class="portrait"/>
+			<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait"/>
 			<span class="f35" v-if="isLogin"><{$loginUser.name}></span>
 
 			<span v-if="isLanguageEn">
@@ -188,7 +188,7 @@
 				window.location.href="<{$http_root_www}>factorypage/changepwd"
 			},
 			editPersonInfo:function(){
-				window.location.href="<{$http_root_www}>member1/avatar_cuter?id=<{$loginUser.id}>"
+					editPersonInfo('<{$http_root_www}>','<{$loginUser.id}>');
 			},
 			toMyCounpon:function(){
 				window.location.href="KH/mycoupon.html"
@@ -201,9 +201,7 @@
 				window.location.href="logout"
 			},
 			returnPage(){
-				this.isReturnShow=false
-				this.isShowSearchRes=false
-				this.isShowHistory=false
+				window.location.href='<{$http_root_www}>'
 			}
 		}
 	})

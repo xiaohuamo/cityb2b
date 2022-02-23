@@ -5,9 +5,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title><{$pageTitle}></title>
-	<meta name="keywords" content="<{$pageKeywords}>"/>
-	<meta name="description" content="<{$pageDescription}>"/>
+	<title><{$lang->login}></title>
+	<meta name="keywords" content="<{$lang->login}>"/>
+	<meta name="description" content="<{$lang->login}>"/>
 
 	<!-- Elegant font icons -->
 	<link href="<{$SKIN_PATH}>welcome/assets/vendor/elegant_font/HTMLCSS/style.css" rel="stylesheet">
@@ -57,7 +57,7 @@
 <body class="ui-rounded">
 <div class="head bgfff center">
 	<img src="<{$SKIN_PATH}>img/return.png" class="return" onclick="window.history.go(-1);"/>
-	<span >Sign In </span>
+	<span ><{$lang->login}> </span>
 </div>
 <!-- Begin page content -->
 <main class="flex-shrink-0 main-container">
@@ -130,7 +130,7 @@
 																					  class="text-default"><{$lang->register}></a></p>
 					</div>
 
-					<div class='wx_login'>
+				<!--	<div class='wx_login'>
                         <{if $ua=='wechat'}>
 							<div class='wx_login'>
 								<a class='wx_login_item' href="<{$http_root_www}>member/wx_redirect?returnUrl=<{$returnUrl}>"><{$lang->wechat_log_in}></a>
@@ -145,7 +145,7 @@
 								</div>
 							</div> -->
                         <{/if}>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
