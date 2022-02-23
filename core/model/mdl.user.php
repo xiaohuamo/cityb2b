@@ -1027,6 +1027,50 @@ class mdl_user extends mdl_base
 		);
 		$this->update($data,$userid);
 	}
+
+    public function updatenewCustomerInfo($data_order){
+        $user = $this->get($data_order['userId']);
+        $data_user=array();
+        if($user) {
+            if(!$user['person_first_name']) {
+                $data_user['person_first_name'] =$data_order['first_name'];
+                $data_user['contactPersonFirstname'] =$data_order['first_name'];
+            }
+            if(!$user['person_last_name']) {
+                $data_user['person_last_name'] =$data_order['last_name'];
+                $data_user['contactPersonLastname'] =$data_order['last_name'];
+            }
+            if(!$user['displayName']) {
+                $data_user['displayName'] =$data_order['displayName'];
+            }
+            if(!$user['phone']) {
+                $data_user['phone'] =$data_order['phone'];
+            }
+            if(!$user['email']) {
+                $data_user['email'] =$data_order['email'];
+                $data_user['backupEmail'] =$data_order['email'];
+
+            }
+            if(!$user['address']) {
+                $data_user['googleMap'] =$data_order['address'];
+                $data_user['address'] =$data_order['address'];
+                $data_user['addrNumber'] =$data_order['house_number'];
+                $data_user['addrStreet'] =$data_order['street'];
+                $data_user['addrPost'] =$data_order['postalcode'];
+                $data_user['addrSuburb'] =$data_order['city'];
+                $data_user['addrState'] =$data_order['state'];
+                $data_user['countryCode'] =$data_order['country'];
+
+            }
+         if($data_user){
+             $this->update($data_user,$data_order['userId']);
+         }
+
+
+
+        }
+
+    }
 }
 
 ?>

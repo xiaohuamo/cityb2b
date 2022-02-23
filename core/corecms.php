@@ -631,14 +631,10 @@ class corecms
 			
 			
 
-  			if ($coupon['bonusType']=="10" ){
-				  $data['guige_des']=$arr_post['seat_des'][$key];
-				  $data['related_id']=$arr_post['seat_id'][$key];
-	  		}else{
+
 				  $data['guige_des']=$arr_post['guige_des'][$key];
                   $data['guige1_id']=$arr_post['guige_ids'][$key];
-  			}
-		
+
 			//新增子卡ID
 		  	if($subCoupon){
 		  		$data['sub_bouns_id_code'] = (int)$subCoupon['id'];  //如果没有子卡，则等于0
@@ -676,15 +672,7 @@ class corecms
 			}
   	
 	
-	        // 现在如果coupon是7306 7310-7313 name bonus_tile 过不来, 不知道为什么?
-			
-			if($arr_post['ids'][$key]==7306) {
-				
-				$data['bonus_title'] = $arr_post['order_name'];
-			}else if($arr_post['ids'][$key]>=7310 and $arr_post['ids'][$key]<=7313) {
-				$data['bonus_title'] = $arr_post['order_name'];
-				
-			}
+
 			
 		    $data['adjust_subtotal_amount']=$data['customer_buying_quantity']*$data['voucher_deal_amount'];
 		
@@ -699,35 +687,12 @@ class corecms
   
   			$mdl_wj_customer_coupon->insert( $data );
 			
-			
 
-	  
-	  
-	  
-	        // 如果是选美用户购买礼品购物券给佳丽,则做如下处理
-			//  1 : 添加一个流水记录  id , 时间, ip ,userid ,miss_id,user_moneypay , 佳丽voucher_sum , 并更新人气汇总. voting_item
-			
-			
 
-			
-			
-	  
-		  
-		  	//商品9 的 stock
-		  	if($this->loadModel('shop_guige')->couponHasGuige($coupon['id'])&&$coupon['bonusType']=='9'){
 
-		  		$guige_ids_array=explode(',', $arr_post['guige_ids'][$key]);
-			  	$guige1Id=$guige_ids_array[0];
-			  	$guige2Id=$guige_ids_array[1];
-			  	if($guige1Id=='null'||$guige1Id==null||$guige1Id==''||$guige1Id<0||$guige1Id=='undefined'){$guige1Id=-1;}
-			  	if($guige2Id=='null'||$guige2Id==null||$guige2Id==''||$guige2Id<0||$guige2Id=='undefined'){$guige2Id=-1;}
-			  	
-			  	if(!$this->loadModel('shop_stock')->stockSale($coupon['id'],$guige1Id,$guige2Id,$customer_buy_quantities)){
-			  		$rollback=1;
-			  		$tablename = 'shop_stock'.$coupon['id']."#".$guige1Id.'#'.$guige2Id.':'.$customer_buy_quantities;
-			  	}
-		  		
-		  	}else{
+
+
+
 
 			  	if($arr_post['sub_or_main'][$key]=='s'){
 			  		$mdl_coupons_sub->updateBuy( $coupon['id'],$arr_post['sub_ids'][$key] ,$customer_buy_quantities);
@@ -753,186 +718,17 @@ class corecms
 				
 				
 
-		  	}
 
 
-		  	// 座位销售
-		  	if($coupon['bonusType']=='10') {
-		  		$mdl_show_seats =$this->loadModel('wj_show_seats');
 
-		  		$seats_data=$mdl_show_seats->get($arr_post['seat_id'][$key]);
-		  		if($seats_data['sold']==1)$rollback=1;//  有可能重单，购买失败
 
-		  		$data_show['sold'] =true;
-		  		$mdl_show_seats->update($data_show,$arr_post['seat_id'][$key]);
-		  	}
   			
 			
 		  	$ubonus_commission = ($data['voucher_deal_amount'] * $coupon['platform_commission_rate'] + $coupon['platform_commission_base']) *$customer_buy_quantities;
 		  
 		  	$total_ubonus_commission += $ubonus_commission;
 			
-			
-			
 
-		  	/**
-		  	 * 根据订单中每个产品逐一分配介绍费
-		  	 */
-		  	$customer_ref_userid=$mdl_referral_relation->getCouponRefUserId($couponBuyer['id'],$coupon['id']);
-			
-			// 检查如果该介绍用户为华姐,则生成一条记录,记录华姐介绍一个用户购买产品,且 为华姐增加相应点数.
-			$refUser =$this->loadModel('user')->get($customer_ref_userid);
-			if ($refUser['business_type_miss']==1) {
-				//var_dump('华姐');exit;
-				$mdl_voting_item = $this->loadModel('voting_item');
-				$vote_miss =$mdl_voting_item->getByWhere(array('couponid'=>$customer_ref_userid));
-				if ($vote_miss) {
-					$vote_miss_id =$vote_miss['id'];					
-				}else{
-					$vote_miss_id =$customer_ref_userid;					
-					
-				}
-				// id, 去找华姐vote_id , 
-				$mdl_vote_miss_selling=$this->loadModel('vote_miss_selling');
-				$data_miss_selling =array(
-				  'userId'=>$arr_post['userId'],
-				  'createTime'=>time(),
-				  'vote_count'=>(int)$arr_post['money']*15,
-				  'vote_id'=>$vote_miss_id,
-				  'message'=>$arr_post['first_name'].' '.$arr_post['last_name']."(".$arr_post['phone'].")". '购买了'. $coupon['title']."--为您增加了".(int)($arr_post['money']*15)."票",
-				  'ipaddress'=>ip(),
-				  'orderId'=>$orderId
-				);
-				//var_dump($data_miss_selling);exit;
-				$mdl_vote_miss_selling->insert($data_miss_selling);
-				
-				
-				$mdl_voteitem = $this->loadModel('voting_item') ;
-				$extra_vote_count=(int)$arr_post['money']*15;
-			   // $mdl_voteitem->update($vote_arr,$vote_id);
-			    $sql_update_voting ="update cc_voting_item set vote_count = vote_count +".$extra_vote_count . " where id=".$vote_miss_id ;
-				$mdl_voteitem->getListBySql($sql_update_voting );
-				
-			}
-			
-			
-			
-			
-			
-			
-			//如果发现则标记找到
-			if($customer_ref_userid){
-				$find_ref=1;
-				
-			}else{
-				
-				$find_ref=0;
-			}
-		
-			
-			// 在这里,首先看是否该用户已经被某个介绍人锁定,如果锁定,那么该用户的commission将分配给锁定他的用户. 如果没有锁定用户,看当前cookie中是否存在推荐商家
-			// 如果有推荐商家,那么 commission将分配给推荐的商家.
-			if(!$customer_ref_userid){
-				//检查当前cookie中是否有其它商家,如果有,那么置该商家为推荐用户.
-				 $bid = $this->cookie->getCookie('store_display_bid');
-				//var_dump($bid);exit;
-				$customer_ref_userid =$bid;
-				
-			}
-            	
-			
-		  	if($customer_ref_userid){
-				// 如果该产品有推荐人(当然这个推荐因为之前的程序判断,可能是没有推荐人但是有bid,那么,如果推荐人是由bid产生的一律20%
-				
-		  		$customer_ref_user=$mdl_referrals->getByWhere(array('userId'=>$customer_ref_userid));
-			
-			   // 当$customer_ref_userid 为真,且$find_ref =0 时,表示推荐人从cookie来的,因此一律20%
-				if(!$find_ref) {
-					
-					$refer_rates =0.20;
-				}else{
-									
-					if($customer_ref_user) {
-						//如果在推荐人里找到记录,则获取相应commission,如果未找到,则直接写为0.2 20%
-						$refer_rates = $customer_ref_user['customerRefRate'];
-					}else{
-						// 未能获得推荐人rates, 可能时该用户在rates表中没有信息,一律为20%
-						$refer_rates=0.20;
-					}
-				}
-				//var_dump($refer_rates . 'refer id is :' . $customer_ref_userid);exit;					
-		  		$customer_ref_amount = $refer_rates * $ubonus_commission;
-
-
-				 // 对于当前推荐介绍人如果在具体的推荐列表中有具体的rate,那么执行那个.
-		  		$special_rule=$this->loadModel('referral_rule_application')->userHasAppliableRuleOnCoupon($customer_ref_userid,$coupon['id']);
-
-				
-		  		if($special_rule){
-		  			if($special_rule['type']=='percent'){
-		  				$appliable_amount = $special_rule['special_rate'] * $ubonus_commission;
-
-		  			}elseif($special_rule['type']=='fixed'){
-		  				$appliable_amount = $special_rule['special_rate'] * $customer_buy_quantities;
-		  			}
-		  			$customer_ref_amount=($appliable_amount<$ubonus_commission)?$appliable_amount:$ubonus_commission;
-		  		}
-
-		  		$to = $customer_ref_userid;
-		  		if($this->getLangStr()=='zh-cn') {
-					$desc="您介绍的客户".$couponBuyer['id']."购买了产品".$coupon['id']."当订单最终交易完成后,您将获得佣金";
-				}else{
-					$desc="You ref customer ".$couponBuyer['id']."Bought item:".$coupon['id']."you will get commission when traded.";
-				}
-		  		
-
-		  		$mdl_referral_relation->payUserRefCommission($customer_ref_amount,$to,$orderId,$desc,$coupon['id'],$couponBuyer['id'],$special_rule['rule_id']);
-				
-				//像运营商写入一笔反向withdraw . 如果该产品的商家属于某个运营商的话
-				
-				$businessUser =$mdl_user->get($coupon['createUserId']);
-				if($businessUser) {
-					$agentUser=$mdl_user->get($businessUser['user_belong_to_agent']);
-					if($agentUser) {
-					$desc0="运营商付给介绍人（".$customer_ref_userid."）推广费,用户".$couponBuyer['id']."购买了产品".$coupon['id'];
-					  $mdl_referral_relation->payUserRefCommission((-1)*$customer_ref_amount,$agentUser['id'],$orderId,$desc0,$coupon['id'],$couponBuyer['id'],$special_rule['rule_id']);
-					
-					}else{
-						
-						
-					}
-					
-				}
-			
-				
-				
-				
-				
-				
-				
-			}
-		  	// 显示具体的commission 计算结果.
-	         // var_dump("refer" . $customer_ref_userid . " totalcommission: " .$ubonus_commission . " refer's commission rate: " . $refer_rates . " ref_money_income" . $customer_ref_amount);exit;
-		  	
-		  	$business_ref_userid=$mdl_referral_relation->getBusinessRefUserId($couponCreator['id']);
-			
-		
-			
-
-		  	if($business_ref_userid){
-				$business_ref_user=$mdl_referrals->getByWhere(array('userId'=>$business_ref_userid));
-
-		  		$business_ref_amount = $business_ref_user['businessRefRate'] * ($ubonus_commission-$customer_ref_amount);
-
-		  		if($business_ref_amount>0){
-		  			$to = $business_ref_userid;
-		  		
-			  		$desc="您介绍的商家".$mdl_user->getBusinessDisplayName($couponCreator['id'])."的产品".$coupon['id']."产生了销售，当订单最终交易完成后,您将获得佣金";
-
-			  		$mdl_referral_relation->payBusinessRefCommission($business_ref_amount,$to,$orderId,$desc,$coupon['id'],$couponCreator['id']);
-		  		}
-		  		
-		  	}
   		}
 		
 		$balanceProcess = new BalanceProcess($couponBuyer['id'],$arr_post['business_userId'],$orderId);
@@ -1079,25 +875,6 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
 			$balanceProcess->initDeliverFee($arr_post['delivery_fees'],BalanceProcess::USER,BalanceProcess::PLATFORM);
 
-		}elseif($arr_post['payment']=='hcash'){
-
-			switch ($couponCreator['transactionFeeChargeFrom_hcash']) {
-				case BalanceProcess::USER:
-					$balanceProcess->initTransactionSurcharge($couponCreator['hcashsurcharge'],BalanceProcess::USER,BalanceProcess::PLATFORM);
-					break;
-				case BalanceProcess::BUSINESS:
-					$balanceProcess->initTransactionSurcharge(DEFAULT_HCASH_SURCHARGE,BalanceProcess::BUSINESS,BalanceProcess::PLATFORM);
-					break;
-				case BalanceProcess::PLATFORM:
-					$balanceProcess->initTransactionSurcharge(DEFAULT_HCASH_SURCHARGE,BalanceProcess::PLATFORM,BalanceProcess::PLATFORM);
-					break;
-				default:
-					# code...
-					break;
-			}
-
-			$balanceProcess->initDeliverFee($arr_post['delivery_fees'],BalanceProcess::USER,BalanceProcess::PLATFORM);
-
 		}elseif($arr_post['payment']=='creditcard'){
 
 			switch ($couponCreator['transactionFeeChargeFrom_creditcard']) {
@@ -1145,43 +922,14 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 		$this->loadModel('group_pin')->realiseGroupPinRecord($arr_post['promotion_id'],$couponBuyer['id'],$orderId,$arr_post['specialGroupPinCheckoutUserGroupId']);
 		
 
-		//Hcash 支付增加 记录Hcash record
-		if($arr_post['payment']=='hcash'){
-
-			 $data = array();
-
-			 $data['order_id']=$orderId;
-
-			 $data['aud']=$arr_post['money'];
-
-			 $data['rate']=$arr_post['hcashRate'];
-
-			 $data['hcash']=$arr_post['hcashAmount'];
-
-			 $data['hcash_order_id']=$arr_post['hcashOrderId'];
-
-			 $data['hcash_order_tag']=$arr_post['hcashOrderTag'];
-
-			 $data['status']=0;
-
-			 if(!$this->loadModel('hcash_record')->insert($data)){
-				$rollback=1;
-				$tablename='hcash_record';
-			}
-		}
 
 
-		//插入记录到order中
-		if($arr_post['ids'][$key]>=7310 and $arr_post['ids'][$key]<=7313) {
-			$order_names=$arr_post['order_name'];
-		}else if($arr_post['ids'][$key]==7306) {
-			
-			$order_names=$arr_post['order_name'];
-		}else{
+
+
 			$order_names=$mdl_order->generateOrderName($orderId,$this->lang);
 			$logistic_suppliers_info=$mdl_order->gen_logistic_suppliers_info($orderId,$this->lang);
 			
-		}
+
         $approve_user = $this->loadModel('user_factory')->isUserApproved($couponBuyer['id'],$arr_post['business_userId']);
         if($approve_user) {
             $statusOfOrder = 1;
@@ -1254,6 +1002,24 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			$rollback=1;
 			$tablename='order';
 		}
+
+        //如果新客户第一次购买，之前没有填过用户的基本信息，系统挂自动给补填一下；
+
+
+
+      //补填供应商客户表
+      $mdl_user_factory = $this->loadModel('user_factory');
+      $user_factory_rec = $mdl_user_factory->getUserCodeandName($couponBuyer['id'],$coupon['createUserId']);
+      if(!$user_factory_rec) {
+          $mdl_user_factory->addCustomerInfo($couponBuyer['id'],$coupon['createUserId'],$data_order);
+      }
+     // 如果用户表中没有数据则补充一下用户表的数据，包括 姓名，trading name
+      $mdl_user = $this->loadModel('user');
+      $mdl_user->updatenewCustomerInfo($data_order);
+
+
+
+
 
 
 		$mdl_wj_user_coupon_activity_log

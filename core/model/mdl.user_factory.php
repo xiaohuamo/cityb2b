@@ -25,6 +25,31 @@ class mdl_user_factory extends mdl_base
 
     }
 
+   public function addCustomerInfo($userId, $factoryId,$data_order) {
+     $data=array(
+          'user_id'=>$data_order['userId'],
+          'factory_id'=>$data_order['business_userId'],
+          'nickname'=>'',
+          'approved'=>0,
+          'show_origin_price'=>0,
+          'factory_sales_id'=>0,
+          'account_type'=>'COD',
+          'business_discount_rate'=>0.0,
+          'isHide'=>0,
+          'delivery_mon'=>1,
+          'delivery_tue'=>1,
+         'delivery_wed'=>1,
+         'delivery_thur'=>1,
+         'delivery_fri'=>1,
+         'delivery_sat'=>1,
+         'delivery_sun'=>1
+    );
+    $this->insert($data);
+
+   }
+
+
+
    public function isUserAuthorisedToOperate($userId, $factoryId) {
 
        $where =array(
