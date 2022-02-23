@@ -72,7 +72,7 @@ class mdl_restaurant_category extends mdl_base
                 order by category_sort_id";
         $list =$this->getListBySql($sql);
 
-
+     //   var_dump($sql);exit;
         return $list;
 
 
