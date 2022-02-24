@@ -109,10 +109,11 @@
 				_self.panelList = <{$roles_list}>;
 				//console.log(_self.panelList);
 				//根据当前语言环境改变pop menu 的关于语言的提示；
-				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
 				// 获得当前的语言环境
 				this.isLanguageEn =parseInt('<{$user_setting}>');
-
+				//console.log('语言环境'+ this.isLanguageEn);
+					this.langStrDisplay =setLanguageContext(this.isLanguageEn);
 				},
 		    methods:{
 				editPersonInfo:function(){

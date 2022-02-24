@@ -87,7 +87,7 @@
             data: function() {
                 return {
                     img: "<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>",
-                  isLanguageEn:1
+                    isLanguageEn:1
                 }
 
             },
@@ -97,6 +97,13 @@
           this.isLanguageEn =parseInt('<{$user_setting}>');
           //转成base64
 
+            var avatar ='<{$loginUser.avatar}>';
+            if(!avatar){
+             avatar = '<{$SKIN_PATH}>img/default-avatar.png';
+            }else{
+              avatar = "<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>";
+            }
+           this.img =avatar;
         },
             methods: {
               returnPage:function(){

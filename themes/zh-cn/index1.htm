@@ -111,14 +111,29 @@
 			<!-- 只有一级分类占位 -->
 			<!-- <div style="height:43px;"></div> -->
 			<!-- 两级分类弹出框 -->
-			
+			<div v-if="scroll">
+
+
 			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
 				<div v-for="(item,index) in classifBigyList" class="w33 center pmb10" @click="clickdetailBig(item.id,index)">
 					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
 				</div>
 			</div>
 
-			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory" >
+			</div>
+
+			<div v-else>
+
+
+				<div class="classifyPop0  bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
+					<div v-for="(item,index) in classifBigyList" class="w33 center pmb10" @click="clickdetailBig(item.id,index)">
+						<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="classifyPops  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory" >
 				<div v-for="(item,index) in classifyList2" class="w33 center pmb10" @click="clickdetailSub(item.id,index)">
 					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
 
@@ -1621,10 +1636,14 @@
 					this.iscartPop=!this.iscartPop
 				},
 				classifyPop:function(){  // 分类弹出框
+					// alert('here');
 					if(this.scroll){
-						this.isclassifyPop=!this.isclassifyPop
+						this.isclassifyPop=!this.isclassifyPop;
+						//alert('scroll');
 					}else{
-						return false
+						this.isclassifyPop=!this.isclassifyPop;
+						//alert('not scroll');
+						//return false;
 					}
 				},
 				classifyPopSubCategory:function() {  // 分类弹出框

@@ -160,7 +160,7 @@ class ctl_company extends cmsPage
             $this->setData($countOfRoles,'countOfRoles');
 
              $pageHtm = $this->getindexPageOfUser($this->loginUser,$pclogin,$countOfRoles,$roles_list[0]['id']);
-             //var_dump($pageHtm);exit;
+           //  var_dump($pageHtm);exit;
 			 $this->display_pc_mobile($pageHtm, $pageHtm);
 
 		}else{
@@ -180,7 +180,7 @@ class ctl_company extends cmsPage
             $this->setData($countOfRoles,'countOfRoles');
 
              $pageHtm = $this->getindexPageOfUser($this->loginUser,$pclogin,$countOfRoles,$roles_list[0]['id']);
-             //var_dump($pageHtm);exit;
+            // var_dump($pageHtm);exit;
 			 $this->display_pc_mobile($pageHtm, $pageHtm);
 		}
        

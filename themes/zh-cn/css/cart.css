@@ -392,6 +392,7 @@ input[type='checkbox']:checked::after {
 	z-index:4;
 	position: absolute;
 	top: 80px;
+	background: #F2F2F2;
 }
 
 /*有两级分类*/
@@ -399,11 +400,33 @@ input[type='checkbox']:checked::after {
 	position: fixed;
 	width: 100%;
 	box-sizing: border-box;
-	top:calc(90px + 3.5rem);
+	top:calc(90px + 3.0rem);
 	z-index:4;
 	max-width: 1024px;
+	background: #F2F2F2;
 }
 
+/*有两级分类*/
+.classifyPops{
+	position: fixed;
+	width: 100%;
+	box-sizing: border-box;
+	top:calc(90px + 5.0rem);
+	z-index:4;
+	max-width: 1024px;
+	background: #F2F2F2;
+}
+
+/*有两级分类*/
+.classifyPop0{
+	position: fixed;
+	width: 100%;
+	box-sizing: border-box;
+	top:calc(90px - 0.5rem);
+	z-index:4;
+	max-width: 1024px;
+	background: #F2F2F2;
+}
 /*只有一级分类*/
 .classifyPop2{
 	position: fixed;

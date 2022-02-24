@@ -262,8 +262,9 @@ class ctl_factorypage extends cmsPage
 
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $businessDispSchedule = DispCenter::getBusinessDispSchedule($id);
+       // var_dump($businessDispSchedule);exit;
         $businessDispScheduleFilledWithContinueDates = DispCenter::getFollowingNDaysIncludeAvailableDeliver($businessDispSchedule);
-       
+
         $businessDispScheduleFilledWithContinueDates =$this->loadModel('user_factory')->filiterUserAvaliableDeliveryDate($businessDispScheduleFilledWithContinueDates,$userId,$id);
 
        //获得订货调度的具体日期及星期几
@@ -2502,7 +2503,7 @@ class ctl_factorypage extends cmsPage
             $this->setData( 'changepwd', 'submenu' );
             $this->setData( 'Change Password'.$this->site['pageTitle'], 'pageTitle' );
 
-            $this->display_pc_mobile('member/changepwd','member1/passwordSetting');
+            $this->display_pc_mobile('member1/passwordSetting','member1/passwordSetting');
         }
     }
 

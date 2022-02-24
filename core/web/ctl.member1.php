@@ -10,7 +10,7 @@ class ctl_member1 extends cmsPage
 
 
 		$act = $GLOBALS['gbl_act'];
-		$ignore_list = array('bind_wx','about_us','terms','suppliers_set_up_account');
+		$ignore_list = array('bind_wx','about_us','terms','set_up_account','suppliers_set_up_account');
 		if ( !in_array($act, $ignore_list) && !$this->loginUser ) {
 			$this->sheader( HTTP_ROOT_WWW.'member/login?returnUrl='.urlencode( $_SERVER['REQUEST_URI'] ) );
 		}
