@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
-	<title>Homepage</title>
+	<title>CityB2B</title>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
 	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/me.css"/>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -20,11 +20,7 @@
 	<!-- 头像部分 -->
 	<div class="flexBox1 personInfoBox" @click="editPersonInfo">
 		<div class="flexBox2">
-			<{if $loginUser.avatar}>
-				<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait"/>
-			<{else}>
-				<img src="<{$SKIN_PATH}>img/default-avatar.png" class="portrait"/>
-			<{/if}>
+			<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait"/>
 			<span class="f35" v-if="isLogin"><{$loginUser.name}></span>
 
 			<span v-if="isLanguageEn">
