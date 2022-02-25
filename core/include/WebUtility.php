@@ -578,7 +578,7 @@ function send_sms($to,$content)
 	if(!$to||!$content)return false;
 
 	$url = 'https://api-mapper.clicksend.com/http/v2/send.php';
-	$data = array('method' => 'http', 'username' => 'ubonus_sms','key' => 'F07DD900-CF4A-0722-1380-58B16F69984B','to' => $to,'message' =>$content);
+	$data = array('method' => 'http', 'username' => 'jun_mxh@yahoo.com.au','key' => '3F94400B-AEF3-5BEA-886A-C396466399CB','to' => $to,'message' =>$content);
 
 	// use key 'http' even if you send the request to https://...
 	$options = array(

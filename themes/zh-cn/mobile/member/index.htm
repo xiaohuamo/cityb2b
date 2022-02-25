@@ -20,7 +20,11 @@
 	<!-- 头像部分 -->
 	<div class="flexBox1 personInfoBox" @click="editPersonInfo">
 		<div class="flexBox2">
+			<{if $loginUser.avatar}>
 			<img src="<{$UPLOAD_PATH}><{$loginUser.avatar|image:100:100}>" class="portrait"/>
+			<{else}>
+			<img src="<{$SKIN_PATH}>img/default-avatar.png" class="portrait"/>
+			<{/if}>
 			<span class="f35" v-if="isLogin"><{$loginUser.name}></span>
 
 			<span v-if="isLanguageEn">
