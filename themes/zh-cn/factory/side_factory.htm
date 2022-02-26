@@ -105,7 +105,12 @@
 				<a href="<{$http_root_www}>factory/customer_list"<{if $submenu=='customer_list'}> class="current"<{/if}>>
 					<{$lang->customer_list}>
 				</a>
-				
+
+				<a href="<{$http_root_www}>factory/group_order_setting"<{if $submenu=='group_order_setting'}> class="current"<{/if}>>
+				<{$lang->group_order_list}>
+				</a>
+
+
 				<{if in_array('3', explode(',', $user_roles.roles))
 				||  in_array('0', explode(',', $user_roles.roles))
 				|| $user_roles.role==3}>

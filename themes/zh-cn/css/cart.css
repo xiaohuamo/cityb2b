@@ -1,5 +1,10 @@
+@keyframes blink {
+  50% { color: transparent; }
+}
 
-
+.blinkact {
+  animation: 1s blink 3 steps(1); /* 或 step-end */
+}
 
 .cartTitle{
 	border-bottom:1px solid #E7E8EA;
@@ -208,7 +213,7 @@ input[type='checkbox']:checked::after {
  
  .detail_btn{
 	width: 31%;
-	height: 2.375rem;
+	height: 2.375rem; 
 	background: #F5F5F5;
 	border-radius: 5px; 
 	line-height: 2.375rem;
@@ -219,7 +224,7 @@ input[type='checkbox']:checked::after {
  }
 .detail_btn_45{
 	width: 45%;
-	height: 2.375rem;
+	/*height: 2.375rem; */
 	background: #F5F5F5;
 	border-radius: 5px; 
 	line-height: 2.375rem;

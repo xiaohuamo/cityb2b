@@ -201,9 +201,7 @@ class ctl_factorypage extends cmsPage
 
 
       if($userId) {
-
-
-      //    var_dump($menu_bought_list);exit;
+     //    var_dump($menu_bought_list);exit;
 
           if($this->loginUser['password'] == $this->loginUser['init_password']) {
               $this->setData(true, 'need_update');
@@ -212,21 +210,7 @@ class ctl_factorypage extends cmsPage
               ]), 'abnAccount');
           }
 
-
-
-
-
       }
-
-
-
-
-
-
-
-
-
-
 
 
         $where = [
@@ -2562,7 +2546,7 @@ class ctl_factorypage extends cmsPage
     public function get_good_list_action(){
 
         $id = (int) get2('id');
-       // $id=319188;
+        $id=319188;
         $userId = $this->loginUser['id'];
 
         $cart = (int) get2('cart');

@@ -2512,6 +2512,36 @@ class ctl_factory extends cmsPage
         $this->display('factory/customer_list');
     }
 
+    public function group_order_setting_action() {
+
+
+         $search = trim(get2('search'));
+
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+
+       $data =$this->loadModel('user_group')->getGroupListOfFactory($factoryId,$search);
+       if($data){
+           foreach ($data as $key=>$value){
+
+           }
+       }
+
+
+
+        $this->setData($search, 'search');
+        $this->setData($users, 'users');
+        $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
+        $this->setData('group_order_setting', 'submenu_top');
+        $this->setData('customer_list', 'submenu');
+        $this->setData('customer_management', 'menu');
+
+
+
+        $this->display('factory/group_order_setting');
+    }
+
+
     public function customer_list_recycle_action() {
         $mdl_user_factory = $this->loadModel('user_factory');
 

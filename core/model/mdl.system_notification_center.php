@@ -21,9 +21,7 @@ class mdl_system_notification_center extends mdl_base
 				$mdl_wechat_message=loadModel('wechat_message');
 				$mdl_wechat_message->send($id,WechatMessageType::CustomerOrderNotification);
 				$mdl_wechat_message->send($id,WechatMessageType::BusinessOrderNotification);
-				
-			
-               
+
      			// if order 为 团购产品 ，类型为7 ，则发送短信到手机端
 				
 				$sql ="SELECT DISTINCT o.phone,bonus_type ,c.EvoucherOrrealproduct ,order_id from cc_wj_customer_coupon a left join cc_order o on a.order_id=o.orderId left join cc_coupons c on a.bonus_id = c.id   where o.orderId  = $id and EvoucherOrrealproduct ='evoucher'";
@@ -42,12 +40,7 @@ class mdl_system_notification_center extends mdl_base
 					//var_dump($full_number);exit;
 					  $content= ' [Cityb2b] success：'.'https://cityb2b.com/member/exchange_detail?type=member&id='.$id;
 					  send_sms($full_number, $content);
-					
 				}
-				
-				
-
-					
 				break;
             case SystemNotification::CancelOrder:
                 $mail_services = loadModel('system_mail_queue');

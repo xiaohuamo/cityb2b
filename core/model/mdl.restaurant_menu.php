@@ -108,9 +108,31 @@ class mdl_restaurant_menu extends mdl_base
             if ($goodList[$key]['menu_option'] > 0) {
 
                 $guigeList = $mdl_menu_option->getList(null, array('restaurant_id' => $goodList[$key]['restaurant_id'], 'restaurant_category_id' => $goodList[$key]['menu_option'], " (length(menu_cn_name)>0 or length(menu_en_name)>0) "));
+
+              //如果该客户购买了该产品，查找最近的一次购买该产品的记录，并找出这次购买该产品那些规格。
+                if($goodList[$key]['bought']){
+                    $boughtGuigeList =$this->getBoughtGuigeList($userid,$goodList[$key]['id']);
+
+                }
+
+
                 foreach ($guigeList as $key10=>$value10) {
                     $guigeList[$key10]['old_price']=$value10['price'];
                     $guigeList[$key10]['price']=$this->calculate_current_menu_price($value,$value10['price']);
+                    if($boughtGuigeList){
+                        //如果曾经购买，拿到最后一次购买该产品
+
+                      if(strstr($boughtGuigeList,$value10['id'])){
+                          $guigeList[$key10]['islastBought'] =1;
+                      }else{
+                          $guigeList[$key10]['islastBought'] =0;
+                      }
+
+
+
+                    }else{
+                        $guigeList[$key10]['islastBought'] =0;
+                    }
                 }
 
                 $goodList[$key]['menu_option_list'] = $guigeList;
@@ -144,6 +166,40 @@ class mdl_restaurant_menu extends mdl_base
 
      //  var_dump($goodList);exit;
         return $goodList;
+
+    }
+
+    function  getBoughtGuigeList($userid,$id){
+
+        $sql ="select order_id,guige1_id  from cc_wj_customer_coupon where restaurant_menu_id=$id and userId =$userid order by id desc limit 5";
+       if($id ==387381){
+       //    var_dump($sql);exit;
+       }
+        $data = $this->getListBySql($sql);
+        if($data){
+            $old_order_id =0;
+            $guigeStr ='';
+            foreach ($data as $key=>$value){ //只能最后一个匹配该产品的order的 该产品的全部规格
+              if($old_order_id  ==0) {
+                  $old_order_id =$value['order_id'];
+                  $guigeStr =','.$value['guige1_id'].',';
+                  continue;
+              }else{
+                  if($old_order_id == $value['order_id']) {
+                      $guigeStr .= $value['guige1_id'].',';
+                      $old_order_id =$value['order_id'];
+                  }else{
+                      break;
+                  }
+              }
+
+            }
+            return  $guigeStr;
+        }else{
+            return '';
+        }
+
+
 
     }
 
