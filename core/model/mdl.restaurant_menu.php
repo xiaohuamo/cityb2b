@@ -172,9 +172,7 @@ class mdl_restaurant_menu extends mdl_base
     function  getBoughtGuigeList($userid,$id){
 
         $sql ="select order_id,guige1_id  from cc_wj_customer_coupon where restaurant_menu_id=$id and userId =$userid order by id desc limit 5";
-       if($id ==387381){
-       //    var_dump($sql);exit;
-       }
+     
         $data = $this->getListBySql($sql);
         if($data){
             $old_order_id =0;
