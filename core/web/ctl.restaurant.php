@@ -4649,14 +4649,15 @@ function category_migration_action(){
 		));
 		$countOfEmpty =$mdl_restaurant_menu_option_category->getcount(array(
 			'createUserId'=>$this->loginUser['id'],
-			'(length(category_cn_name)=0 or length(category_en_name)=0 )'
+			'(length(category_cn_name)=0 and length(category_en_name)=0 )'
 
 		));
 
 		//var_dump($countOfEmpty);exit;
-		if(!$exist){
-			$category_id =100;
-			$category_sort_id=10;
+		if(!$exist ||  $countOfEmpty<10){
+		
+			$category_id =$countOfTotal*100;
+			$category_sort_id=$countOfTotal*10;
 
 			for($i=0;$i<50;$i++) {
 				$menu_category_info=array(
