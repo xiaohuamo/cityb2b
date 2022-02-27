@@ -12,8 +12,8 @@ class mdl_system_mail extends mdl_base
 		//$this->handler->SMTPDebug = 2;
 		$this->handler->Host = 'smtp.sg.aliyun.com';                        // Specify main and backup SMTP servers
 		$this->handler->SMTPAuth = true;                               // Enable SMTP authentication
-		$this->handler->Username = 'info@cityb2b.com';                 // SMTP username
-		$this->handler->Password = '2012Tang1';                           // SMTP password
+		$this->handler->Username = 'info@cityb2b.com111';                 // SMTP username
+		$this->handler->Password = '2012Tang1111';                           // SMTP password
 		$this->handler->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 		$this->handler->Port = 465;                                    // TCP port to connect to
 		$this->handler->isHTML(true);
