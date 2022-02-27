@@ -2354,11 +2354,9 @@ class ctl_member extends cmsPage
 		$this->display('member/bind_wx_success');// only mobile will access this page
 	}
 
+    function myorders_action(){
 
-	
-	function myorders_action(){
-
-		$mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $mdl_order = $this->loadModel('order');
         $mdl_user = $this->loadModel('user');
 
@@ -2370,32 +2368,32 @@ class ctl_member extends cmsPage
          * filter
          */
         $filter= get2('filter');
-    	$filterList = ['all','unpaid','paid','waiting','send','pleaseRate','cancel'];
-    	if(!in_array($filter, $filterList))$filter=reset($filterList);
-    	$this->setData($filter,'filter');
+        $filterList = ['all','unpaid','paid','waiting','send','pleaseRate','cancel'];
+        if(!in_array($filter, $filterList))$filter=reset($filterList);
+        $this->setData($filter,'filter');
 
-    	if($filter=='all'){
+        if($filter=='all'){
 
         }elseif($filter=='unpaid'){
-        	$where['status']=0;
+            $where['status']=0;
 
         }elseif($filter=='paid'){
-        	$where['status']=1;
+            $where['status']=1;
 
         }elseif($filter=='waiting'){
-        	$where['coupon_status']='c01';
+            $where['coupon_status']='c01';
 
         }elseif($filter=='send'){
-        	$where['coupon_status']='b01';
+            $where['coupon_status']='b01';
 
         }elseif($filter=='pleaseRate'){
-			$where['rated']='0';
+            $where['rated']='0';
 
         }elseif($filter=='cancel'){
-        	$where['coupon_status']='d01';
+            $where['coupon_status']='d01';
 
         }
-      
+
 
         $pageSql=$mdl_order->getListSql(null,$where,$orderBy);
 
@@ -2416,14 +2414,102 @@ class ctl_member extends cmsPage
         /**
          * Mobile page display items
          */
-		   $hours = (time()-$data['createTime'])/(60*60);
-		 $this->setData($hours,'hours');
+        $hours = (time()-$data['createTime'])/(60*60);
+        $this->setData($hours,'hours');
 
         //var_dump($data);exit;
         $this->setData($page['pageStr'],'pager');
         $this->setData(json_encode($data),'order_data');
-       // var_dump(json_encode($data));exit;
+        // var_dump(json_encode($data));exit;
         $this->setData($data,'data');
+
+        $this->setData($this->parseUrl()->set('filter')->set('page'),'listUrl');
+
+        $this->setData( 'myorder', 'menu' );
+        $this->setData( 'exchange', 'submenu' );
+
+        $this->setData( 'My orders  - '.$this->site['pageTitle'], 'pageTitle' );
+
+        $this->display_pc_mobile('mobile/member/my_orders','mobile/member/my_orders');
+    }
+	
+	function open_account_action(){
+
+
+        if ( is_post() ) {
+
+
+
+        }else {
+
+            $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+            $mdl_order = $this->loadModel('order');
+            $mdl_user = $this->loadModel('user');
+
+            $orderBy = 'id desc';
+
+            $where['userId'] = $this->loginUser['id'];
+            $userId = $this->loginUser['id'];
+            /**
+             * filter
+             */
+            $filter = get2('filter');
+            $filterList = ['all', 'unpaid', 'paid', 'waiting', 'send', 'pleaseRate', 'cancel'];
+            if (!in_array($filter, $filterList)) $filter = reset($filterList);
+            $this->setData($filter, 'filter');
+
+            if ($filter == 'all') {
+
+            } elseif ($filter == 'unpaid') {
+                $where['status'] = 0;
+
+            } elseif ($filter == 'paid') {
+                $where['status'] = 1;
+
+            } elseif ($filter == 'waiting') {
+                $where['coupon_status'] = 'c01';
+
+            } elseif ($filter == 'send') {
+                $where['coupon_status'] = 'b01';
+
+            } elseif ($filter == 'pleaseRate') {
+                $where['rated'] = '0';
+
+            } elseif ($filter == 'cancel') {
+                $where['coupon_status'] = 'd01';
+
+            }
+
+
+            $pageSql = $mdl_order->getListSql(null, $where, $orderBy);
+
+            $pageUrl = $this->parseUrl()->set('page');
+            $pageSize = 30;
+            $maxPage = 10;
+            $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+            $data = $mdl_order->getListBySql($page['outSql']);
+            $data = $mdl_order->getlistBySql("select id,business_userId,orderId,order_name,status,coupon_status,paytime,money,money_new from cc_order where userId =$userId order by id desc");
+
+
+            /* 获取当前用户订货的供应商列表*/
+            $supplier_list = $this->loadModel('order')->getCustomerSupplierList($this->loginUser['id']);
+            $this->setData(json_encode($supplier_list), 'supplier_list');
+            //var_dump($supplier_list);exit;
+
+            /**
+             * Mobile page display items
+             */
+            $hours = (time() - $data['createTime']) / (60 * 60);
+            $this->setData($hours, 'hours');
+
+            //var_dump($data);exit;
+            $this->setData($page['pageStr'], 'pager');
+            $this->setData(json_encode($data), 'order_data');
+            // var_dump(json_encode($data));exit;
+            $this->setData($data, 'data');
+
+
 
         $this->setData($this->parseUrl()->set('filter')->set('page'),'listUrl');
 
@@ -2432,7 +2518,8 @@ class ctl_member extends cmsPage
 
 		$this->setData( 'My orders  - '.$this->site['pageTitle'], 'pageTitle' );
 
-        $this->display_pc_mobile('mobile/member/my_orders','mobile/member/my_orders');
+        $this->display_pc_mobile('mobile/member/openAccount','mobile/member/openAccount');
+        }
 	}
 
     // 获得某个客户关于某个商家的购物清单，这个数据用在订货页面

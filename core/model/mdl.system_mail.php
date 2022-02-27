@@ -10,15 +10,15 @@ class mdl_system_mail extends mdl_base
 
 		$this->handler->isSMTP();                                      // Set mailer to use SMTP
 		//$this->handler->SMTPDebug = 2;
-		$this->handler->Host = 'smtp.mxhichina.com';                        // Specify main and backup SMTP servers
+		$this->handler->Host = 'smtp.sg.aliyun.com';                        // Specify main and backup SMTP servers
 		$this->handler->SMTPAuth = true;                               // Enable SMTP authentication
-		$this->handler->Username = 'info@ubonus365.com';                 // SMTP username
-		$this->handler->Password = 'Euxuhuud8jbs';                           // SMTP password
+		$this->handler->Username = 'info@cityb2b.com';                 // SMTP username
+		$this->handler->Password = '2012Tang1';                           // SMTP password
 		$this->handler->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 		$this->handler->Port = 465;                                    // TCP port to connect to
 		$this->handler->isHTML(true);
 		$this->handler->CharSet="UTF-8";
-		$this->handler->setFrom('info@ubonus365.com', 'Ubonus365');
+		$this->handler->setFrom('info@cityb2b.com', 'Cityb2b');
 	}
 
 	function from($address,$name)

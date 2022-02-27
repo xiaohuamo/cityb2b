@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+	<title>CityB2B</title>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orders.css"/>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+</head>
+<body class="bgF2F2F2">
+<div id="me" v-cloak>
+	<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+	<div class="head bgfff mb10">
+		<img src="<{$SKIN_PATH}>img/return.png" class="return" onclick= "window.history.go(-1);"/>
+		<div >
+			<div class="f38 col333 f500 bold center">
+				<span v-if="isLanguageEn">Open Account</span><span v-else>开户</span>
+
+
+			</div>
+		</div>
+	</div><div style="height:3.5rem;"></div>
+
+	<form id="memberForm"  action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+	<!-- 主体部分 -->
+	<div class="choseBox flexBox1 f28" @click="Chose">
+		<span class="col0F0F0F" v-if="isLanguageEn">{{choseData==''? 'Choose Supplier to Open Account':choseData}}</span>
+		<span class="col0F0F0F" v-else>{{choseData==''? '请选择开户供应商':choseData}}</span>
+		<img src="<{$SKIN_PATH}>img/arrow2.png" class="arr"/>
+		<div class="mySelect" v-if="isChose">
+
+			<div v-for="item in list" @click="Chose2(item.id,item.name)">{{item.name}}</div>
+		</div>
+	</div>
+
+
+	<div class="choseBox flexBox1 f28" @click="OpenAccountTypeList">
+		<span class="col0F0F0F" v-if="isLanguageEn">{{choseDataAccountType==''? 'Select Account Type':choseDataAccountType}}</span>
+		<span class="col0F0F0F" v-else>{{choseDataAccountType==''? '选择账户类型':choseDataAccountType}}</span>
+		<img src="<{$SKIN_PATH}>img/arrow2.png" class="arr"/>
+		<div class="mySelect" v-if="isAccontListChose">
+
+			<div v-if="isLanguageEn">
+
+				<div  @click="ChoseAccountType(1,'Single User account')">Single User account</div>
+				<div  @click="ChoseAccountType(2,'Manager account for Multi Users Group')">Manager account for Multi Users Group</div>
+
+			</div>
+
+			<div v-else>
+
+				<div  @click="ChoseAccountType(1,'（单账户）只为一个店订货')">（单账户）我只为我一个店订货</div>
+				<div  @click="ChoseAccountType(2,'（多账户）为多个客户账户订货')">（多账户）为我的多个客户账户订货</div>
+
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<div>
+
+		<button  type="submit" class="bigBtnButtonNew"  >
+			<{$lang->submit_company}>
+
+		</button>
+	</div>
+
+
+	</form>
+
+
+	<!-- 未发货 -->
+	<!--	<div v-if="currentShow=='1'">
+            <div class="tab_con">
+                <div class="tabTitle">20210906-114937-918641</div>
+                <div class="tabbottom">
+                    <div class="info1">供应商 mk果蔬</div>
+                    <div class="info2">
+                        <span class="colFD5001">未发货 &nbsp;&nbsp;</span>
+                        <span class="col0B0B0B">配送 &nbsp;&nbsp;</span>
+                        <span class="col0B0B0B">$128</span>
+                    </div>
+                    <div class="detailBtn f25 flexBox1" @click="orderDetail">
+                        订单详情
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- 已发货 -->
+	<!--<div v-if="currentShow=='2'">
+		<div class="tab_con">
+			<div class="tabTitle">20210906-114937-918641</div>
+			<div class="tabbottom">
+				<div class="info1">供应商 mk果蔬</div>
+				<div class="info2">
+					<span class="col00B063">已发货 &nbsp;&nbsp;</span>
+					<span class="col0B0B0B">配送 &nbsp;&nbsp;</span>
+					<span class="col0B0B0B">$125</span>
+				</div>
+				<div class="detailBtn f25 flexBox1" @click="orderDetail">
+					订单详情
+				</div>
+			</div>
+		</div>
+	</div>-->
+<!--	<div class="col9A9A9A more flexBox4">
+		<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
+		<span>正在加载中...</span>
+	</div> -->
+
+	<{include file ="mobile/b2bbottom3.htm"}>
+</div>
+</body>
+<script>
+	new Vue({
+		el:"#me",
+		data:{
+			alllist:[
+				/*{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'订单取消',
+					amount:'156'
+				},
+				{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'未发货',
+					amount:'156'
+				},
+				{
+					orderID:'20217837218937128',
+					name:'供应商 mk果蔬',
+					status:'已发货',
+					amount:'156'
+				} */
+			],
+			list1:[],  // 未发货
+			list2:[],   // 已发货
+			isAddShow:false,      // 点击＋
+			isSC:false,           // 是否收藏
+			currentShow:"0",
+			isChose:false,
+			isAccontListChose:false,
+			isShare:false,
+			choseData:'',
+			choseDataAccountType:'',
+			list:[/*'供应商1','供应商2'*/],
+			currentMenu:3 ,  // 当前菜单
+			title_en:'My Orders',
+			title_cn:'我的订单',
+			isLanguageEn:1, //语言环境
+			langStrDisplay:'中文',
+			isReturnShow:false,
+			current_supplier_id:0,
+			current_accountType_id:0
+		},
+		mounted:function(){
+			var _self =this;
+			// 获得当前的语言环境
+			this.isLanguageEn =parseInt('<{$user_setting}>');
+
+			//根据当前语言环境改变pop menu 的关于语言的提示；
+			this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
+			// 获得当前客户可以下单的日期列表显示，
+			this.list=JSON.parse('<{$supplier_list}>');
+			console.log(this.list);
+
+			// 获得当前客户可以下单的日期列表显示，
+
+
+			this.alllist=JSON.parse('<{$order_data}>');
+			console.log(this.alllist);
+
+
+		},
+		methods:{
+			changeMenu:function(index){
+				this.currentMenu=index;
+				changeMenuBottom(index,'<{$http_root_www}>','<{$loginUser.role}>'); //调用统一的底部导航菜单定义部分。
+
+			},//设置语言提示
+			switchDisplayLanguage:function(){
+				if(this.isLanguageEn) {
+					this.langStrDisplay='En';
+					this.isLanguageEn=0;
+					this.choseData='选择供应商';
+					this.choseDataAccountType='选择账户类型';
+
+				}else{
+					this.langStrDisplay='中文';
+					this.isLanguageEn=1;
+
+					this.choseData='Choose Supplier to Open Account';
+					this.choseDataAccountType='Choose Account Type';
+				}
+				setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+				this.isAddShow=!this.isAddShow; //关闭弹框
+				//向后台写入目前的语言环境状态；
+			},clickAdd:function(){
+				this.isAddShow=!this.isAddShow
+			},
+			kh:function(){
+				window.location.href="<{$http_root_www}>index/set_up_account"
+			},
+			jm:function(){
+				window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
+			},
+			shareApp:function(){
+				this.isShare=true
+			},
+			clickSC:function(){
+				_self=this
+				this.isSC=!this.isSC
+				setTimeout(function(){
+					_self.isAddShow=false
+				},2000)
+			},
+			change:function(index){
+				this.currentShow=index
+			},
+			Chose:function(){
+				this.isChose=!this.isChose
+
+			},
+			Chose2:function(id,name){
+				this.choseData=name;
+				this.current_supplier_id =id;
+			},
+			ChoseAccountType:function(id,name){
+				this.choseDataAccountType=name;
+
+				this.current_accountType_id =id;
+			},
+			OpenAccountTypeList:function(){
+				this.isAccontListChose=!this.isAccontListChose
+
+			},
+
+			orderDetail:function(orderid){
+			 // alert(String(orderid));
+				window.location.href="<{$http_root_www}>member/exchange_detail?type=member&id=" +orderid;
+			},
+			shareApp:function(){
+				this.isShare=true
+			},
+			dismissShare:function(){
+				this.isShare=false
+			},
+			kh:function(){
+				window.location.href="<{$http_root_www}>index/set_up_account"
+			},
+			jm:function(){
+				window.location.href="<{$http_root_www}>index/suppliers_set_up_account"
+			},
+			returnPage(){
+				//this.isReturnShow=false
+				//this.isShowSearchRes=false
+				//this.isShowHistory=false
+			},
+		aboutUs(){
+			window.location.href="index/about_us"
+		}
+
+		}
+	})
+</script>
+</html>

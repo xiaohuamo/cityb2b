@@ -226,7 +226,7 @@ class ctl_company extends cmsPage
             $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
             $name ='logo.png';
             $system_mailer->attachment($path,$name);
-            $system_mailer->to('jun_mxh@yahoo.com.au');
+            $system_mailer->to('hhxx_2012@hotmail.com');
          //   $system_mailer->to($to);
 
             echo $system_mailer->send();

@@ -2520,18 +2520,21 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
 
-       $data =$this->loadModel('user_group')->getGroupListOfFactory($factoryId,$search);
-       if($data){
-           foreach ($data as $key=>$value){
+        $users =$this->loadModel('user_group')->getGroupListOfFactory($factoryId,$search);
 
+           if($users){
+               foreach ($users as $key=>$value){
+
+                   $users[$key]['groupName'] =$this->getCustomerName($value);
+
+               }
            }
-       }
 
 
-
+       // var_dump($users);exit;
         $this->setData($search, 'search');
         $this->setData($users, 'users');
-        $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
+
         $this->setData('group_order_setting', 'submenu_top');
         $this->setData('customer_list', 'submenu');
         $this->setData('customer_management', 'menu');

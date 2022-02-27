@@ -35,12 +35,12 @@ class mdl_user_group extends mdl_base
 			$where = " and (u.nickname like '%$sk%' or u.name like '%$sk%' or u.person_first_name like '%$sk%'  or u.person_last_name like '%$sk%' or u.displayName like '%$sk%' or  u.businessName like '%$sk%' )";
 		}
 
-       $sql =" SELECT g.manager_id, u.nickname,u.name,u.person_first_name,u.person_last_name,u.displayName,u.businessName
+       $sql =" SELECT g.manager_id as userId, u.nickname,u.name,u.person_first_name,u.person_last_name,u.displayName,u.businessName
 			 FROM `cc_user_group` g 
 			 left join cc_user u on g.manager_id =u.id
-			 WHERE g.factory_id =factoryId $where 
+			 WHERE g.factory_id =$factoryId $where 
 			 group by g.manager_id ";
-	   
+	  // var_dump($sql);exit;
        $data =$this->getListBySql($sql);
         return $data;
     }

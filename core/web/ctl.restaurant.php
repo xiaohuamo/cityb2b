@@ -4643,13 +4643,22 @@ function category_migration_action(){
 	function restaurant_menu_option_category_edit_action(){
 		$mdl_restaurant_menu_option_category = $this->loadModel('restaurant_menu_option_category');
 		$exist = $mdl_restaurant_menu_option_category->getByWhere(array('createUserId'=>$this->loginUser['id']));
+        $countOfTotal =$mdl_restaurant_menu_option_category->getcount(array(
+			'createUserId'=>$this->loginUser['id']
 
+		));
+		$countOfEmpty =$mdl_restaurant_menu_option_category->getcount(array(
+			'createUserId'=>$this->loginUser['id'],
+			'(length(category_cn_name)=0 or length(category_en_name)=0 )'
 
+		));
+
+		//var_dump($countOfEmpty);exit;
 		if(!$exist){
 			$category_id =100;
 			$category_sort_id=10;
 
-			for($i=0;$i<200;$i++) {
+			for($i=0;$i<50;$i++) {
 				$menu_category_info=array(
 					'category_cn_name'=>'',
 					'category_en_name'=>'',
