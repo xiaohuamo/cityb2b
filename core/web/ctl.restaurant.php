@@ -4649,7 +4649,7 @@ function category_migration_action(){
 			$category_id =100;
 			$category_sort_id=10;
 
-			for($i=0;$i<50;$i++) {
+			for($i=0;$i<200;$i++) {
 				$menu_category_info=array(
 					'category_cn_name'=>'',
 					'category_en_name'=>'',
