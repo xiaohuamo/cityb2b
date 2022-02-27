@@ -4655,7 +4655,7 @@ function category_migration_action(){
 
 		//var_dump($countOfEmpty);exit;
 		if(!$exist ||  $countOfEmpty<10){
-		
+
 			$category_id =$countOfTotal*100;
 			$category_sort_id=$countOfTotal*10;
 
