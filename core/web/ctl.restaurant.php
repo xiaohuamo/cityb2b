@@ -4828,7 +4828,7 @@ function category_migration_action(){
 			$data=array();
 
 			$price = post('price');
-			if($price)$data['price']=$price;
+			$data['price']=$price;
 
 			$menu_id = post('menu_id');
 			if($menu_id)$data['menu_id']=$menu_id;
