@@ -49,7 +49,7 @@ class mdl_restaurant_menu extends mdl_base
                         if(length(m.menu_pic_300)>0,concat('$uploadpath',m.menu_pic_300),concat('$uploadpath',m.menu_pic)) as menu_pic_300 ,
                        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title , 
                        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,
-                       m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num 
+                       m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num ,m.menu_order_id
                     from cc_restaurant_menu m
                     left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
                     left join cc_restaurant_category c02 on c02.id = m.sub_category_id 
@@ -62,7 +62,7 @@ class mdl_restaurant_menu extends mdl_base
 
         $sql_sum_final ="select main_table.*,ifnull(bought_table.id,0) as bought from (". $sql_main ." ) as main_table 
     
-                left join (select a.restaurant_menu_id as id from cc_wj_customer_coupon a where userId = $userid and business_id =$factory_id group by a.menu_id ) as bought_table on main_table.id = bought_table.id order by parent_cat_sort_id,sub_cate_sort_id
+                left join (select a.restaurant_menu_id as id from cc_wj_customer_coupon a where userId = $userid and business_id =$factory_id group by a.menu_id ) as bought_table on main_table.id = bought_table.id order by parent_cat_sort_id,sub_cate_sort_id,menu_order_id 
                    ";
 
 
