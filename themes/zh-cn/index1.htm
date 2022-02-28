@@ -1551,15 +1551,18 @@
 					let min_price =0.00;
 					let new_price =0.00;
 					for (let i = 0; i < arrlength; i++) {
+
 						let new_price =GuigeItemArr[i].price;
 						if(i==0){
 							min_price =new_price;
 						}else{
-							if(new_price<min_price){
-								min_price =new_price;
+							if(new_price < min_price){
+
+									min_price =new_price;
 							}
 
 						}
+
 					}
 					return min_price;
 

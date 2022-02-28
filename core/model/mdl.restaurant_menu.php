@@ -117,8 +117,13 @@ class mdl_restaurant_menu extends mdl_base
 
 
                 foreach ($guigeList as $key10=>$value10) {
-                    $guigeList[$key10]['old_price']=$value10['price'];
-                    $guigeList[$key10]['price']=$this->calculate_current_menu_price($value,$value10['price']);
+                    if($value10['price']<=0) {
+                        $guige_price =  $goodList[$key]['price'];
+                    }else{
+                        $guige_price = $value10['price'];
+                    }
+                    $guigeList[$key10]['old_price']=floatval($guige_price);
+                    $guigeList[$key10]['price']=floatval($this->calculate_current_menu_price($value,$guige_price));
                     if($boughtGuigeList){
                         //如果曾经购买，拿到最后一次购买该产品
 
