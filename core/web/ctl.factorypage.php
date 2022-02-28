@@ -1348,8 +1348,56 @@ class ctl_factorypage extends cmsPage
             die();
         }
     }
-	
-	
+
+    //自动登陆到首页
+    public function user_link_login_index_action()
+    {
+        $userId = get2('user_id');
+        $factoryId = get2('factory_id');
+        $token = get2('token');
+        $notAgent =get2('notAgent');
+
+        if($notAgent) {
+            $this->cookie->setCookie('agentcityb2b',null);
+
+        }
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $loginData = $mdl_user_factory->decryptUserLoginToken($userId, $factoryId, $token);
+
+        if ($loginData->expired_at > time() ) {
+            $mdl_user = $this->loadModel('user');
+            $user = $mdl_user->getUserById($userId);
+            $mdl_user->updateUserById([
+                'lastLoginIP' => ip(),
+                'lastLoginDate' => time(),
+                'loginCount' => $user['loginCount'] + 1,
+            ], $userId);
+
+            $this->session('member_user_id', $userId);
+            $this->session('member_user_shell', $this->md5($userId.$user['name'].$user['password']));
+
+            if($notAgent) {
+                $this->session('truelogin',1);
+            }else{
+                $this->session('truelogin',0);
+            }
+
+            //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
+            $this->sheader(HTTP_ROOT_WWW.'member/index');
+        } else {
+            if($loginData->expired_at <=time()) {
+                print_r('Link has expired ');
+            }
+            if(!$mdl_user_factory->isUserApproved($userId, $loginData->factory_id)){
+                print_r('user did not be approved,factoryid is :'. $factoryId . ' userid is :'.$userId);
+            }
+
+            // print_r('Link has expired or user did not be approved');
+            die();
+        }
+    }
+
 
     public function update_cart_action()
     {

@@ -126,10 +126,10 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                 客户列表
+                 群组列表
 				 
 				 <span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>restaurant/menu_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->customer_list_recycle}></a>
+						<a class='btn-yellow' href="<{$http_root_www}>company/groupmanager_new" class="link2"><i class='fa fa-plus'></i>添加群组</a>
 					</span>
 				</div>
 				<form>
@@ -142,50 +142,43 @@
 							<thead>
 							<tr>
 								<th><{$lang->customer_id}></th>
-								<th><{$lang->customer_Code}></th>
 								<th><{$lang->customer_ordering_link}></th>
 								<th><{$lang->customer_name}></th>
-								<th><{$lang->myorder}></th>
+						<!--		<th><{$lang->myorder}></th> -->
 								<th><{$lang->telephone}></th>
-								<th><{$lang->approved}></th>
+								<th><{$lang->add_member}></th>
+					<!--			<th><{$lang->approved}></th> -->
 						<!--		<th>价格显示方式</th>
 								<th>设置营业时间</th> -->
 								
-								<th><{$lang->customer_list_recycle}></th>
+						<!--		<th><{$lang->customer_list_recycle}></th> -->
 							</tr>
 							</thead>
 							<tbody>
 							<{foreach from=$users item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									<td>
-										<{$user.user_id}>
+										<{$user.userId}>
 									</td>
-									<td>
-									<input type="text" class="input-text" data-id='<{$user.idd}>' id="code-<{$user.idd}>" style="width:150px;" name="code"
-												   value="<{$user.code}>">
-											<span class='promote-ajax'></span>
-									
-										
-							<!--		<td>
-                                        <{if $user.approved}>
-											<a href="<{$http_root_www}>factorypage/order_for_customer?user_id=<{$user.id}>" target="_blank">下单</a>
-                                        <{else}>
-											尚未审核
-                                        <{/if}>
-									</td>  -->
-									
+
+
 									<td>
 										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
 									</td>
 									<td>
-                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+                                        <{$user.name}>
 									</td>
-									<td>
+						<!--			<td>
 										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
-									</td>
+									</td> -->
 									<td>
                                         <{$user.phone}>
 									</td>
+									<td>
+										<a href ="<{$http_root_www}>factory/add_new_group_member?groupId=<{$user.userId}>" ><{$lang->add_member}></a>
+									</td>
+
+								<!--
 									<td>
                                         <{if $user.approved}>
 											是 <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
@@ -193,17 +186,8 @@
 											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
 										<{/if}>
 									</td>
-								<!--	<td>
-                                        <{if $user.show_origin_price}>
-											显示原价  <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/show_origin_price?user_id=<{$user.id}>&show_origin_price=0" class="button">修改</a>)
-                                        <{else}>
-											不显示价格  <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/show_origin_price?user_id=<{$user.id}>&show_origin_price=1" class="button">修改</a>)
-                                        <{/if}>
-									</td>
-									<td>
-                                      <{if $user.trading_hours}> <i class='fa fa-fw fa-check ' style='color:green'></i> <{/if}> <a target=_blank  href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$user.id}>">设置</a>
-									</td>
--->
+
+
 
 	
 									<td>
@@ -229,7 +213,7 @@
 										
 										</td>
 
-
+-->
 
 								</tr>
 							<{/foreach}>

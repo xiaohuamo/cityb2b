@@ -1,0 +1,328 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+
+
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/groupmanager_new?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+
+							<div class="input-box clearfix">	
+
+								<span><label>群组用户名</label></span>		
+
+								<{if $data.id}> 
+								<small><{$data.name}></small>
+								<{else}>
+								<input type="text" name="username" id="username"  class="input-text" value="<{$data.name}>" />	
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>
+								<{/if}>	
+								
+
+								<{if $data.id}> 
+									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>重置密码</label>
+									<input type="checkbox" name="change_password" value="1" id="change_password1" onClick="if (this.checked) $('.pwd').show(200); else $('.pwd').hide(200);" />
+								<{/if}>	
+
+							</div>	
+
+							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
+
+								<span><label>密码</label></span>	
+
+								<input type="password" name="password" class="input-text" value="" />	
+
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>	
+
+							</div>		
+
+							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
+
+								<span><label>确认密码</label></span>		
+
+								<input type="password" name="password2" class="input-text" value="" />	
+
+								<em style="background-color:#FFFFFF; color:#FF0000">*</em>
+
+							</div>		
+
+
+
+							<!-- <div class="input-box clearfix">	
+
+								<span><label>管理员邮箱</label></span>	
+
+								<input type="text" name="email"  class="input-text" value="<{$data.email}>" />
+
+							</div>	
+
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员姓</label></span>	
+
+								<input type="text" name="person_last_name" class="input-text" value="<{$data.person_last_name}>" />
+
+							</div>	
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员名</label></span>		
+
+								<input type="text" name="person_first_name" class="input-text" value="<{$data.person_first_name}>" />
+
+								
+
+							</div>   
+
+
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员电话</label></span>	
+
+								<input type="text" name="tel" class="input-text" value="<{$data.tel}>" />						            
+
+							</div>	
+
+							<div class="input-box clearfix">	
+
+								<span><label>管理员手机</label></span>	
+
+								<input type="text" name="phone" class="input-text" value="<{$data.phone}>" />						            
+
+							</div>	 -->
+
+							<br>
+							<hr>
+							<br>
+
+
+							<div class="input-box multi-select clearfix">
+								<span><label>昵称</span>
+								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder='Eg:墨尔本总部'/>
+							</div>
+							
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人姓</label></span>
+								<input type="text" class="input-text" value="<{$data.contactPersonLastname}>" name="contactPersonLastname" />
+							</div>
+
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人名</label></span>
+								<input type="text" class="input-text" value="<{$data.contactPersonFirstname}>" name="contactPersonFirstname" />
+							</div>
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>联系人电话</label></span>
+								<input type="text" class="input-text" value="<{$data.contactMobile}>" name="contactMobile" />
+							</div>
+
+
+							<div class="input-box clearfix">
+
+								<span><label>地址</label></span>
+
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="请输入地址"    value="<{$data.googleMap}>" name="googleMap" size="80" />
+
+								<input id="find" type="hidden" value="find" />
+
+							</div>				
+
+
+							<div class="input-box clearfix " >
+
+								<div  class="map_canvas" style ='width:100%;height:400px;'></div>		
+
+							</div>
+
+							
+							<div style='display: none'>
+								<div class="input-box clearfix "  >
+
+									<span><label>坐标位置</label></span>
+
+									<input  id ="google_location" type="text" class="input-text" value="<{$data.google_location}>" name="location"  style="width:202px;" />
+
+								</div>
+
+								<div class="input-box clearfix"  >
+
+
+
+									<span><label>号码</label></span>
+
+									<input type="text" class="input-text" value="<{$data.addrNumber}>" name="street_number" style="width:110px;" />
+
+									街道<input type="text" class="input-text" value="<{$data.addrStreet}>" name="route"  style="width:202px;" />
+
+								</div>
+
+								<div class="input-box clearfix"  >
+
+									<span><label>邮编</label></span>
+
+									<input type="text" class="input-text" value="<{$data.addrPost}>" name="postal_code"  style="width:110px;" />
+
+									城市<input type="text" class="input-text" value="<{$data.addrSuburb}>" name="locality"  style="width:202px;" />
+
+								</div>
+
+								<div class="input-box clearfix" >
+
+									<span><label>州</label></span>
+
+									<input type="text" class="input-text" value="<{$data.addrState}>" name="administrative_area_level_1"  style="width:110px;" />
+
+									国家代码<input type="text" class="input-text" value="<{$data.countryCode}>" name="country_short" style="width:202px;" />
+
+								</div>
+
+								<div class="input-box clearfix"  >
+
+									<span><label>国家</label></span>
+
+									<input type="text" class="input-text" value="<{$data.country}>" name="country"  style="width:100px;" />
+
+									
+
+								</div>
+
+								
+
+								<div class="input-box clearfix" style="display:none;">
+
+									<span><label>地图链接</label></span>
+
+									<input  type="text" class="input-text" value="<{$data.googleMapUrl}>" name="url"  />
+
+									
+
+								</div>
+							</div>
+							
+
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places"></script>
+							<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+
+							
+
+							<script>
+
+							$(function(){
+
+								$("#geocomplete").geocomplete({
+
+									map: ".map_canvas",
+
+									mapOptions: {
+
+     								 zoom: 5,
+
+     								 scrollwheel: false,
+
+    								  mapTypeId: "roadmap"
+
+ 									   },
+
+									details: "form",
+
+									types: ["geocode", "establishment"],
+
+									location: "<{$data.googleMap}>"
+
+								});
+
+								
+
+								$("#find").click(function(){
+
+									$("#geocomplete").trigger("geocode");
+
+								});
+
+								var map = $("#geocomplete").geocomplete("map");
+
+								map.setZoom(3);
+
+								
+
+							});
+
+							</script>				
+
+							<div class="input-box multi-select clearfix">
+
+								<span><label></label></span>
+
+							</div>
+
+
+							<div class="input-box input-submit clearfix">		
+
+								<button type="submit" style='float:left'>保存</button>	
+
+								<a onClick='return confirm("删除员工会导致订单中自取点信息缺失，确认要删除该员工？")' href ="<{$http_root_www}>company/staff_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除该员工</a>	
+
+
+							</div>		
+
+
+							
+
+						</form>	
+
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+					</div>		
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div><{include file='footer.htm'}></body></html>

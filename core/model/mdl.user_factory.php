@@ -75,7 +75,18 @@ class mdl_user_factory extends mdl_base
         }
         return $login_user;
     }
-	
+
+  public function checkIfExistMember($factoryId,$userId,$code){
+
+        $where  =array(
+            'user_id'=>$userId,
+            'factory_id'=>$factoryId,
+            'nickname'=>$code
+
+        );
+        return $this->getCount($where);
+  }
+
 	 public function getBusinessId($salesMan,$role)
     {
 

@@ -10095,6 +10095,9 @@ function freshfood_edit_action()    {
         }
     }
 
+
+
+
     function staff_edit_new_action()
     {   
         $mdl_user = $this->loadModel('user');
@@ -10276,7 +10279,211 @@ function freshfood_edit_action()    {
     }
 
 
-  
+
+// 创建一个group manager
+    function groupmanager_new_action()
+    {
+        $mdl_user = $this->loadModel('user');
+        $mdl_group = $this->loadModel('user_group_manager');
+        $mdl_reg = $this->loadModel('reg');
+
+        $id = (int)get2('id');
+
+        $group_manager =$mdl_group->getGroupMangerInfo($id,$this->loginUser['id']);
+        $factory_id =$this->loadModel('user_factory')->getBusinessId($this->loginUser['id'],$this->loginuser['role']);
+       // var_dump($factory_id);exit;
+
+
+        if (is_post()) {
+            /**
+             * Location related data
+             */
+            $googleMap = trim(post('googleMap'));
+
+            $addrNumber = trim(post('street_number'));
+            $addrStreet = trim(post('route'));
+            $addrPost = trim(post('postal_code'));
+            $addrSuburb = trim(post('locality'));
+            $google_location = trim(post('location'));
+            $country_short = trim(post('country_short'));
+            $addrState = trim(post('administrative_area_level_1'));
+            $country = trim(post('country'));
+            $googleMapUrl = trim(post('url'));
+
+
+            /**
+             * 管理员信息
+             */
+            $name = trim(post('username'));
+            $email = trim(post('email'));
+
+            $change_password = (int)post('change_password');
+            $password = trim(post('password'));
+            $password2 = trim(post('password2'));
+
+            $person_first_name =  trim(post('contactPersonFirstname'));
+            $person_last_name = trim(post('contactPersonLastname'));
+            $tel = trim(post('tel'));
+            $phone = trim(post('phone'));
+
+
+            /**
+             * 员工信息
+             */
+            $businessName = '';
+            $contactPersonFirstname = trim(post('contactPersonFirstname'));
+            $contactPersonLastname = trim(post('contactPersonLastname'));
+            $contactPersonNickName = trim(post('contactPersonNickName'));
+            $nickname =$contactPersonNickName;
+            $contactMobile = trim(post('contactMobile'));
+
+
+            if ($group_manager) {
+                $data = array(
+                    // 'name' => $name,
+                    'email' => $email,
+                    'nickname' => $nickname,
+                    'displayName'=>$nickname,
+                    'person_first_name' => $contactPersonFirstname,
+                    'person_last_name' => $contactPersonLastname,
+                    'tel' => $tel,
+                    'phone' => $phone,
+
+                    'contactPersonFirstname'=>$contactPersonFirstname,
+                    'contactPersonLastname'=>$contactPersonLastname,
+                    'contactPersonNickName'=>$contactPersonNickName,
+                    'contactMobile'=>$contactMobile,
+
+                    'addrNumber' => $addrNumber,
+                    'addrStreet' => $addrStreet,
+                    'addrPost' => $addrPost,
+                    'addrSuburb' => $addrSuburb,
+                    'addrState' => $addrState,
+                    'countryCode' => $country_short,
+                    'country' => $country,
+                    'googleMapUrl' => $googleMapUrl,
+                    'google_location' => $google_location,
+                    'googleMap' => $googleMap
+                );
+
+                if ($change_password) {
+                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+
+                    if ($password != $password2)$this->form_response_msg('two passwords are different');
+
+                    $passwordByCustomMd5 = $this->md5($password);
+
+                    $data['password'] = $passwordByCustomMd5;
+                }
+
+
+                if ($mdl_user->updateUserById($data, $group_manager['id'])) {
+
+                    $this->form_response(200,'保存成功',HTTP_ROOT_WWW.'factory/group_order_setting');
+                } else {
+                    $this->form_response_msg('保存成功');
+                }
+
+            } else {
+                if (empty($name) ) $this->form_response_msg('请填写用户名');
+
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+
+                if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
+
+                if (empty($password)) $this->form_response_msg('请填写密码');
+
+                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+
+                if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
+
+
+
+
+                $passwordByCustomMd5 = $this->md5($password);
+
+
+                $data = array(
+                    'isApproved' => 1,
+                    'isAdmin' => 0,
+                    'person_first_name' => $person_first_name,
+                    'person_last_name' => $person_last_name,
+                    'nickname' => $nickname,
+                    'name' => $name,
+                    'email' => $email,
+                    'password' => $passwordByCustomMd5,
+                    'phone' => $phone,
+                    'tel' => $tel,
+
+                    'businessName' => $businessName,
+
+                    'contactPersonFirstname'=>$contactPersonFirstname,
+                    'contactPersonLastname'=>$contactPersonLastname,
+                    'contactPersonNickName'=>$contactPersonNickName,
+                    'contactMobile'=>$contactMobile,
+
+                    'cityId' => '',
+                    'role' => 4,
+                    'groupid' => 1,
+                    'createdDate' => time(),
+                    'lastLoginIp' => ip(),
+                    'lastLoginDate' => time(),
+                    'loginCount' => 1,
+                    'addrNumber' => $addrNumber,
+                    'addrStreet' => $addrStreet,
+                    'addrPost' => $addrPost,
+                    'addrSuburb' => $addrSuburb,
+                    'addrState' => $addrState,
+                    'countryCode' => $country_short,
+                    'country' => $country,
+                    'googleMapUrl' => $googleMapUrl,
+                    'google_location' => $google_location,
+                    'googleMap' => $googleMap
+                );
+
+                $data['isBusinessReferalExist'] = 0;
+                $data['referralId'] = 0;
+                $data['businessRefPointPercent'] = 10;
+                $data['customerRefPointPercent'] = 10;
+                $data['trustLevel'] = 0;
+                $data['visibleForBusiness'] = 0;
+                $data['languageType'] = 'zh-en';
+                $data['isSuspended'] = 0;
+                $data['needReapprovedAfterEdit'] = 1;
+                $data['isApproved'] = 1;
+                $data['displayName'] =$nickname;
+
+                $newid =$mdl_user->insert($data);
+                if ($newid)
+
+                {
+                    $data_grou_manager =array(
+                        'factory_id'=>$factory_id,
+                        'manager_id'=>$newid,
+                        'nickname'=>$nickname,
+                        'is_hide'=>0,
+                        'gendate'=>time,
+                        'isCreatedByFactory'=>1,
+                        'isApproved'=>1
+                     );
+                    $mdl_group->insert($data_grou_manager);
+                    $this->form_response(200,'保存成功',HTTP_ROOT_WWW.'factory/group_order_setting');
+                }
+
+
+            }
+
+        } else {
+            $this->setData($group_manager);
+            $this->setData('Group Management', 'pagename');
+            $this->setData('group_order_setting', 'submenu');
+            $this->setData('customer_management', 'menu');
+            $this->setData('Group Management - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('company/groupmanager_new');
+        }
+    }
+
+
 
     function profile_pic_action()
     {

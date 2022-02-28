@@ -1148,6 +1148,8 @@
     <is_paid>是否已支付</is_paid>
     <pack_up>取货方式</pack_up>
     <pickup_nickname>取货点</pickup_nickname>
+	 <add_member>成员管理</add_member>
+	
     <pickup_phone>取货点电话</pickup_phone>
     <pickup_address>取货地址</pickup_address>
     <purchase_instructions>购买及使用说明</purchase_instructions>

@@ -1127,6 +1127,7 @@
     <qrcode_explain>QR code（seller scan only)</qrcode_explain>
     <contact_ubonus>Contact CityB2B</contact_ubonus>
     <face_to_face_payment>Offline payment</face_to_face_payment>
+	 <add_member> Member Management</add_member>
     <!--Email 模板 END-->
 
     <!--become_business_user 模板-->

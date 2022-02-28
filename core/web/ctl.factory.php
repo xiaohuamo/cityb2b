@@ -1636,6 +1636,123 @@ class ctl_factory extends cmsPage
      return $isAdulted;
 }
 
+    public function delete_new_group_member_action()
+    {
+
+
+        $manager_id =get2('groupId');
+        $userId =get2('userId');
+
+
+        $mdl_user_factory =$this->loadModel('user_factory');
+        $factoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+        $groupManagerInfo  =$this->loadModel('user_group_manager')->getGroupMangerInfo($manager_id,$factoryId);
+
+        $this->setData($groupManagerInfo[0],'groupManagerInfo');
+
+
+                $where =array(
+                    'manager_id'=>$manager_id,
+                    'factory_id'=>$factoryId,
+                    'user_id'=>$userId
+                );
+               // var_dump($where);exit;
+                $mdl_user_group =$this->loadModel('user_group');
+                if($mdl_user_group->deleteByWhere($where)) {
+
+                 //   $this->form_response(200,'the member has been deleted ! ', HTTP_ROOT_WWW."factory/add_new_group_member?groupId=".$manager_id);
+                    $this->sheader(HTTP_ROOT_WWW."factory/add_new_group_member?groupId=".$manager_id);
+                }else{
+
+                    $this->form_response_msg('something wrong when delete...,please contact admin ');
+
+                }
+
+
+
+
+
+
+        //获取当前组成员列表，并且可以删除
+        $users =$this->loadModel('user_group')->getListOfGroupUser($manager_id);
+        foreach ($users as $key =>$value) {
+            $users[$key]['dispname'] =$this->getCustomerName($value);
+
+        }
+        $this->setData($users, 'users');
+        $this->setData('customer_management', 'menu');
+
+        $this->setData('group_order_setting', 'submenu');
+        $this->display('factory/add_new_group_member');
+
+        return;
+    }
+
+    public function add_new_group_member_action()
+    {
+
+
+        $manager_id =get2('groupId');
+        if(!$manager_id) {
+            $manager_id =trim(post('manager_id'));
+        }
+
+        $mdl_user_factory =$this->loadModel('user_factory');
+        $factoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+
+        $groupManagerInfo  =$this->loadModel('user_group_manager')->getGroupMangerInfo($manager_id,$factoryId);
+
+        $this->setData($groupManagerInfo[0],'groupManagerInfo');
+
+        if (is_post()) {
+            $userId = trim(post('userId'));
+            $code =trim(post('code'));
+            $manager_id =trim(post('manager_id'));
+            $isExistMember = $mdl_user_factory ->checkIfExistMember($factoryId,$userId,$code);
+            if(!$isExistMember) {
+                $this->form_response_msg('the member info was incorrect!  can not join in the group!');
+            }else{
+               $data =array(
+                   'manager_id'=>$manager_id,
+                   'factory_id'=>$factoryId,
+                   'user_id'=>$userId
+              );
+               $mdl_user_group =$this->loadModel('user_group');
+               if($mdl_user_group->getCount($data)) {
+                   $this->form_response_msg('the member exists already !');
+               }else{
+                   if($mdl_user_group->insert($data) ){
+                       $this->form_response(200,'add member successfully! ', HTTP_ROOT_WWW."factory/add_new_group_member?groupId=".$manager_id);
+
+                   }else{
+                       $this->form_response_msg('something wrong when add the member ,please contact admin ');
+
+                   }
+               }
+
+            }
+
+
+
+        }
+
+        //获取当前组成员列表，并且可以删除
+        $users =$this->loadModel('user_group')->getListOfGroupUser($manager_id);
+        foreach ($users as $key =>$value) {
+            $users[$key]['dispname'] =$this->getCustomerName($value);
+
+        }
+        $this->setData($users, 'users');
+        $this->setData('customer_management', 'menu');
+
+        $this->setData('group_order_setting', 'submenu');
+        $this->display('factory/add_new_group_member');
+
+        return;
+    }
+
+
     public function add_new_customer_action()
     {
         if (is_post()) {
@@ -2520,13 +2637,15 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
 
-        $users =$this->loadModel('user_group')->getGroupListOfFactory($factoryId,$search);
+
+        $users =$this->loadModel('user_group_manager')->getGroupListOfFactory($factoryId);
 
            if($users){
                foreach ($users as $key=>$value){
-
-                   $users[$key]['groupName'] =$this->getCustomerName($value);
-
+                  //$users[$key]['groupName'] =$this->getCustomerName($value);
+                   $expiredAt =strtotime("+36 months", time());
+                   $link = self::customer_login_link_index($value['userId'], $expiredAt,1);
+                   $users[$key]['login_link'] = $link;
                }
            }
 
@@ -2535,8 +2654,8 @@ class ctl_factory extends cmsPage
         $this->setData($search, 'search');
         $this->setData($users, 'users');
 
-        $this->setData('group_order_setting', 'submenu_top');
-        $this->setData('customer_list', 'submenu');
+
+        $this->setData('group_order_setting', 'submenu');
         $this->setData('customer_management', 'menu');
 
 
@@ -3297,6 +3416,9 @@ class ctl_factory extends cmsPage
     }
 
 
+
+
+
     public function customer_login_link_groupMember($userId, $expired) {
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId = 319188;
@@ -3313,7 +3435,13 @@ class ctl_factory extends cmsPage
         return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&notAgent=".$notAgent."&factory_id=" . $factoryId. "&token=$token";
     }
 
+    public function customer_login_link_index($userId, $expired,$notAgent) {
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $factoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+        $token = $mdl_user_factory->generateUserLoginToken($userId,$factoryId, $expired);
 
+        return HTTP_ROOT . "factorypage/user_link_login_index?user_id=$userId&notAgent=".$notAgent."&factory_id=" . $factoryId. "&token=$token";
+    }
     /**
      *  Ajax update the driver of Truck 
      */
