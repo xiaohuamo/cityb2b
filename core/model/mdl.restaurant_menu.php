@@ -49,14 +49,14 @@ class mdl_restaurant_menu extends mdl_base
                         if(length(m.menu_pic_300)>0,concat('$uploadpath',m.menu_pic_300),concat('$uploadpath',m.menu_pic)) as menu_pic_300 ,
                        m.menu_desc,m.menu_en_desc,m.menu_option,if(length(m.menu_en_name)>0,m.menu_en_name,m.menu_cn_name) as title , 
                        if(length(m.unit_en)>0,m.unit_en,m.unit)as unit_en,if(length(m.unit)>0,m.unit,m.unit_en) as unit,
-                       m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,0 as num ,m.menu_order_id
+                       m.onSpecial,0 as status,if(m.menu_option>0,1,0) as hasGG,false as isTouch,m.lowest_price,0 as num ,m.menu_order_id
                     from cc_restaurant_menu m
                     left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
                     left join cc_restaurant_category c02 on c02.id = m.sub_category_id 
                     left join cc_user_factory_category_discount_rate parent_cate_discount on ( m.restaurant_category_id =parent_cate_discount.category_id  and parent_cate_discount.userId =$userid)
                     left join cc_user_factory_category_discount_rate sub_cate_discount on ( m.sub_category_id =sub_cate_discount.category_id and sub_cate_discount.userId =$userid)
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
-                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1
+                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1 
                 ";
       //  var_dump($sql_main);exit;
 
@@ -104,6 +104,14 @@ class mdl_restaurant_menu extends mdl_base
 
             $goodList[$key]['price']=$this->calculate_current_menu_price($value,$value['old_price']);
 
+            $newprice=$this->calculate_current_menu_price($value,$value['old_price']);
+            //最低价格保护
+            if(floatval($newprice)<floatval($value['lowest_price'])){
+                $goodList[$key]['price'] =floatval($value['lowest_price']);
+            }else{
+                $goodList[$key]['price'] =$newprice;
+            }
+
 
             if ($goodList[$key]['menu_option'] > 0) {
 
@@ -118,12 +126,24 @@ class mdl_restaurant_menu extends mdl_base
 
                 foreach ($guigeList as $key10=>$value10) {
                     if($value10['price']<=0) {
-                        $guige_price =  $goodList[$key]['price'];
+                        $guige_price =  $goodList[$key]['old_price'];
                     }else{
                         $guige_price = $value10['price'];
                     }
                     $guigeList[$key10]['old_price']=floatval($guige_price);
                     $guigeList[$key10]['price']=floatval($this->calculate_current_menu_price($value,$guige_price));
+
+                    $newprice=$this->calculate_current_menu_price($value,$guige_price);
+
+                    //最低价格保护
+                    if($newprice< $goodList[$key]['lowest_price']){
+                         $guigeList[$key10]['price'] =floatval($goodList[$key]['lowest_price']);
+
+                    }else{
+                        $guigeList[$key10]['price'] =$newprice;
+                    }
+
+
                     if($boughtGuigeList){
                         //如果曾经购买，拿到最后一次购买该产品
 
