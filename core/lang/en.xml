@@ -16,7 +16,7 @@
     <account_login>Account Login</account_login>
     <mobile_login>Mobile Login</mobile_login>
 	 <login>Login</login>
-    <register>Register</register>
+    <register>Sign up</register>
     <account_register>Account Register</account_register>
     <email_register>Email Register</email_register>
     <mobile_register>Mobile Register</mobile_register>
@@ -1023,19 +1023,19 @@
     <change_password>Change Password</change_password>
     <email>Email</email>
     <!-- 注册 -->
-    <register_new_user>Registration</register_new_user>
-    <register_new_business>Registration new Business</register_new_business>
+    <register_new_user>Sign UP</register_new_user>
+    <register_new_business>Sign up new Business</register_new_business>
     <verify_code>Verify Code</verify_code>
-    <i_have_agreed_with>i have read and am agreed with</i_have_agreed_with>
-    <register_now>Register Now</register_now>
-    <register_business_now>Register Business Now</register_business_now>
+    <i_have_agreed_with>I have read and am agreed with</i_have_agreed_with>
+    <register_now>Sign up Now</register_now>
+    <register_business_now>Sign up Business Now</register_business_now>
     <change_another>Change</change_another>
     <user_name_requirement>User Name need to be 6-16 characters</user_name_requirement>
     <password_requirement>Password need to be 6-16 characters</password_requirement>
     <wx_scan_log_in>Scan this Qr Code from WeChat to Enter Directly</wx_scan_log_in>
     <next_step>Next</next_step>
-    <register_business>Business Registeration</register_business>
-    <register_user>User Registeration</register_user>
+    <register_business>Business Sign up</register_business>
+    <register_user>User Sign up</register_user>
     <choose_package>Package</choose_package>
     <send_email_again>send email</send_email_again>
     <sent>sent</sent>
@@ -1138,7 +1138,7 @@
     <application>Application</application>
     <!--account_administrator>Account Administrator</account_administrator-->
     <!--become_business_user 模板 END-->
-
+	<sent_code>verification code sent .please check email or phone. </sent_code>
 
     <promotion_verified_failure>Verified failure.promotion code invalid or expired!</promotion_verified_failure>
     <verified_successful>verify successful</verified_successful>

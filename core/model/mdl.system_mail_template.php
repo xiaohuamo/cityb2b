@@ -303,11 +303,24 @@ class mdl_system_mail_template extends mdl_base
 
     }
 
+    public function  customerRegistryNotificationNew($user,$password)
+    {
+        $user = loadModel( 'user' )->get($user['id']);
+        $user['decodepass'] =$password;
+
+        $this->setData($user,'user');
+
+
+        // return  $this->fetch( 'email/email_template_customer_registry' );
+        return  $this->fetch( 'email/wide/html/account_welcome' );
+
+    }
+
     public function emailVerificationCodeNotification($code)
     {
     	$this->setData($code,'code');
 
-    	return  $this->fetch( 'email/email_template_email_verification' );
+    	return  $this->fetch( 'email/wide/html/account_verification' );
     }
 
     public function  businessDeliveryNotification($orderId)

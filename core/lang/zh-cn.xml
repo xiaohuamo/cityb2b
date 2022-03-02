@@ -1169,6 +1169,8 @@
     <submit_company>提交</submit_company>
     <application>申请</application>
     <!--become_business_user 模板 END-->
+    
+	<sent_code>已发送验证码到注册的手机或邮件，填写验证码后重置密码。</sent_code>
 
     <email_code>发送验证码到邮箱</email_code>
     <remind_user_register_1>提示：请注意查看验证邮件是否在您的垃圾邮件中</remind_user_register_1>

@@ -80,14 +80,15 @@
 					<br>
 					<form id="register-form" action="<{$http_root_www}>member/register">
 						<div class="input-group mb-3">
-							<div class="input-group-prepend">
+							<div  class="input-group-prepend">
 								<button id="register-gateway" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
 										aria-expanded="false">
 								</button>
 								<div class="dropdown-menu" style="">
+									<a id="email-register" class="dropdown-item register-gateway text-dark" data-register-gateway="email" href="#"><{$lang->email_register}></a>
 									<a id="account-register" class="dropdown-item register-gateway text-dark" data-register-gateway="account" href="#"><{$lang->account_register}></a>
 									<a id="mobile-register" class="dropdown-item register-gateway text-dark" data-register-gateway="mobile" href="#"><{$lang->mobile_register}></a>
-									<a id="email-register" class="dropdown-item register-gateway text-dark" data-register-gateway="email" href="#"><{$lang->email_register}></a>
+									
 								</div>
 							</div>
 							<label for="mobile" class="sr-only"><{$lang->mobile_phone_number}></label>
@@ -393,7 +394,7 @@
             changeRegisterGateway(this);
         });
 
-        accountRegister.trigger('click');
+        emailRegister.trigger('click');
         isButtonLoading(false, registerButton);
     });
 </script>

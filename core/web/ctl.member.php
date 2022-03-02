@@ -1943,8 +1943,9 @@ class ctl_member extends cmsPage
 						$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
                         $this->setCustomerTrueLogin($user['role']);
 						
-						$this->loadModel('system_mail_queue')->add($user['id'],EmailType::CustomerRegistryNotification);
-						
+					//	$this->loadModel('system_mail_queue')->add($user['id'],EmailType::CustomerRegistryNotification);
+                        $this->send_welcome_letter_email($user,$password,1);
+
 						if($returnUrl){
 							$this->form_response(200,(string)$this->lang->remind_user_register_12,HTTP_ROOT.$returnUrl);
 						}else{
@@ -2135,6 +2136,25 @@ class ctl_member extends cmsPage
 			$this->display( 'welcome/register' );
 		}
 	}
+
+
+    function send_welcome_letter_email($user,$password,$mode)
+    {
+        //告知用户的 username 和 password  ,需要获取用户名
+
+        $system_mailer = $this->loadModel('system_mail');
+        $template = $this->loadModel('system_mail_template');
+        $to = $user['name'];
+
+        $title ="Welcome to  Cityb2b";
+        $body  = $template->customerRegistryNotificationNew($user,$password);
+        $system_mailer->title($title);
+        $system_mailer->body($body);
+        $system_mailer->to($to);
+
+        $system_mailer->send();
+
+    }
 
 	 function  add_referrals ($name,$email,$mobile,$userid) {
 		    $mdl_referrals = $this->loadModel( 'referrals' );

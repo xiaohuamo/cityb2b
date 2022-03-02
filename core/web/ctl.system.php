@@ -65,7 +65,7 @@ class ctl_system extends cmsPage
 		$template = $this->loadModel('system_mail_template');
 		$system_mailer = $this->loadModel('system_mail');
 
-		$title = "Email Verification cityb2b";
+		$title = "Email Verification";
 		$body  = $template->emailVerificationCodeNotification($code);
 		$to    = $userEmail;
 
@@ -249,11 +249,11 @@ class ctl_system extends cmsPage
 			$user=$mdl_user->get( $userid);
 			$this->session( 'member_user_id', $user['id'] );
 			$this->session( 'member_user_shell', $this->md5( $user['id'].$user['name'].$user['password'] ) );
-
+            $this->setCustomerTrueLogin($user['role']);
 			if($this->returnUrl){
 				$this->form_response(200,(string)$this->lang->reset_succ_login,HTTP_ROOT.$this->returnUrl);
 			}else{
-				$this->form_response(200,(string)$this->lang->reset_succ_login,HTTP_ROOT_WWW."member/profile");
+				$this->form_response(200,(string)$this->lang->reset_succ_login,HTTP_ROOT_WWW."member/index");
 			}
 
 		}
@@ -269,17 +269,24 @@ class ctl_system extends cmsPage
 
 
 	private function send_reset_password_email($to,$code)
-	{	
+	{
 		$system_mailer = $this->loadModel('system_mail');
-		$title = (string)$this->lang->find_password;
-        $body  = (string)$this->lang->your_verification_code.$code."，".(string)$this->lang->continue_after_input_verification_code;
+        $template = $this->loadModel('system_mail_template');
+
+		$title = 'Find Password';
+        $body  = $template->emailVerificationCodeNotification($code);
 
         $system_mailer->title($title);
         $system_mailer->body($body);
         $system_mailer->to($to);
 
         $status=$system_mailer->send();
+
+
+
 	}
+
+
 
 	private function send_reset_password_sms($to,$code)
 	{	

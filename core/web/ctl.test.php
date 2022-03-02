@@ -747,10 +747,10 @@ public function index3_action() {
          $template = $this->loadModel('system_mail_template');
          $system_mailer = $this->loadModel('system_mail');
 
-         $to = 'hhxx_2012@hotmail.com';
+         $to = 'ubonus100m@gmail.com';
          $customer_name ='xiao mo ';
          $title ="welcome to Cityb2b";
-         $body  = $template->customerRegistryNotification(319188,$this->getLangStr());
+         $body  = $template->customerRegistryNotificationNew($this->loginUser,'222228');
          $system_mailer->title($title);
          $system_mailer->body($body);
          $system_mailer->to($to);
