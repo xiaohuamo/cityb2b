@@ -723,9 +723,9 @@ class corecms
 
 
   			
-			
+
 		  	$ubonus_commission = ($data['voucher_deal_amount'] * $coupon['platform_commission_rate'] + $coupon['platform_commission_base']) *$customer_buy_quantities;
-		  
+
 		  	$total_ubonus_commission += $ubonus_commission;
 			
 
@@ -742,14 +742,14 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			$sub_business_total = $mdl_wj_customer_coupon->getListBySql($sql);
 			
 			// 计算平台累计surcharge ,并按比例分配刀每个商家 $arr_post['surcharge'],$arr_post['money']
-			
-			
+
+
 			// 将数据发送到结算端进行处理
 			//var_dump($sub_business_total);exit;
-			
+
 			if($sub_business_total) {
 				     $balanceProcess->setSubBusinessTranscationAmount($sub_business_total);
-				
+
 			}
 		}
 		
@@ -779,21 +779,21 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 					//设置运营商编号
 					$balanceProcess->setAgent($agentUser['id']);
 				}else{
-					
+
 					$agentCommissionRate =0;
 				}
-				
+
 			}else{
 				$agentCommissionRate =0;
 			}
-			
+
 			$agentTotalCommission =$total_ubonus_commission*$agentCommissionRate;
-			
-			
+
+
 			// 计算平台应该支付给运营商的分润结束
-		
+
 		// 设置平台要付给运营商的佣金
-		
+
 		$balanceProcess->setAgentTotalCommission($agentTotalCommission);
 			
 	    if($uni_dispaitching ){
@@ -915,12 +915,6 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 		//更新折扣码使用次数
 		$this->loadModel('wj_promotion_code')->updateAppliedCount($arr_post['promotion_id'],1);
 
-		//如果使用的折扣码是团购生成的，用户的相应团购纪录在商家端显示已下单。
-		$this->loadModel('group_buy')->realiseGroupBuyRecord($arr_post['promotion_id'],$couponBuyer['id'],$orderId);
-
-		//如果使用的折扣码是拼多多团购生成的，用户完成购买后会相应的加入团
-		$this->loadModel('group_pin')->realiseGroupPinRecord($arr_post['promotion_id'],$couponBuyer['id'],$orderId,$arr_post['specialGroupPinCheckoutUserGroupId']);
-		
 
 
 

@@ -11,36 +11,16 @@ class ctl_test extends cmsPage
 // 修改 cc_wj_customer_coupon 表种的 menu_id menu_cat_id 字段 
 
 public function index3_action() {
-	$signature = $_GET["signature"];
+	$_SERVER['DOCUMENT_ROOT']='C:/xampp/htdocs/cityb2b2';
+	$_SERVER['REQUIST_URI']='www.ozsupply.com';
+	$_SERVER['HTTP_HOST']='www.ozsupply.com';
+	require_once('C:/xampp/htdocs/cityb2b2/core/include/config.inc.php');
+	$mail_services =loadModel('system_mail_queue');
+	$mail_services->run();
 
-	$timestamp = $_GET["timestamp"];
-
-	$nonce = $_GET["nonce"];
-
-	$token = 'cityb2b005';
-
-	$tmpArr = array($token, $timestamp, $nonce);
-
-	sort($tmpArr, SORT_STRING);
-
-	$tmpStr = implode( $tmpArr );
-
-	$tmpStr = sha1( $tmpStr );
-
-	$echostr = $_GET['echostr'];
-
-
-
-	if( $tmpStr == $signature ){
-
-		return $echostr;
-
-	}else{
-
-		return false;
-
-	}
-
+	$myfile = fopen("C:/xampp/htdocs/cityb2b2/log/mailQueueLog.txt", "a") or die("Unable to open file!");
+	fwrite($myfile, "mail Queue working ".date('Y-m-d H:i:s')."\n");
+	fclose($myfile);
 }
  public function  test_write_menu_action()
    
@@ -759,6 +739,39 @@ public function index3_action() {
     }
 
     /*发送邮件通知测试*/
+
+     public function email_test_welcome_action() {
+
+		 $EMAIL_MODE =get2('mode');
+		// $EMAIL_MODE=true;
+         $template = $this->loadModel('system_mail_template');
+         $system_mailer = $this->loadModel('system_mail');
+
+         $to = 'hhxx_2012@hotmail.com';
+         $customer_name ='xiao mo ';
+         $title ="welcome to Cityb2b";
+         $body  = $template->customerRegistryNotification(319188,$this->getLangStr());
+         $system_mailer->title($title);
+         $system_mailer->body($body);
+         $system_mailer->to($to);
+
+         if(!$EMAIL_MODE){
+			 echo $body."<br/>";
+         }else{
+             $status=$system_mailer->send();
+			 echo $status;
+         }
+
+
+
+
+
+
+
+
+
+
+     }
     public function test_all_mail_action()
     {   
         /**
@@ -766,11 +779,11 @@ public function index3_action() {
          */
         $PREVIEW_MODE=true;
 
-
+        $systemId =get2('id');
         $template = $this->loadModel('system_mail_template');
         $system_mailer = $this->loadModel('system_mail');
 
-        $systemId='20180501165248206434';
+    //    $systemId='20180501165248206434';
 
         $to = 'chriswangworking@gmail.com';//test email account;
 

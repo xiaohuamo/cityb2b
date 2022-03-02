@@ -47,9 +47,9 @@ class mdl_system_notification_center extends mdl_base
                 $mail_services->add($id,EmailType::CustomerCancelOrderNotification);
                 $mail_services->add($id,EmailType::BusinessCancelOrderNotification);
 
-                $mdl_wechat_message=loadModel('wechat_message');
-                $mdl_wechat_message->send($id,WechatMessageType::CustomerCancelOrderNotification);
-                $mdl_wechat_message->send($id,WechatMessageType::BusinessCancelOrderNotification);
+             //   $mdl_wechat_message=loadModel('wechat_message');
+              //  $mdl_wechat_message->send($id,WechatMessageType::CustomerCancelOrderNotification);
+             //   $mdl_wechat_message->send($id,WechatMessageType::BusinessCancelOrderNotification);
                 break;
             case SystemNotification::CustomerRegistry:
                 $mail_services = loadModel('system_mail_queue');

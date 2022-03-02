@@ -254,34 +254,15 @@ class mdl_system_mail_template extends mdl_base
     public function  customerCancelOrderNotification($orderId,$language1)
     {
         $order = loadModel( 'order' )->getByWhere(array('orderId'=>$orderId));
-        $this->setData($order['first_name'].' '.$order['last_name'], 'customerName');
-        $this->setData(redeemQRCode($order['redeem_code']),'redeemQRCode');
+        $emailName =$this->getemailName($order);
+        $this->setData($emailName, 'customerName');
+      //  $this->setData(redeemQRCode($order['redeem_code']),'redeemQRCode');
         $this->setData($order['orderId'],'order_id');
         $this->setData(2,'type');//模板类别：2：取消订单
         $this->setData($order['status'],'status');
 
-        $pic= loadModel('coupons')->getListBySql("SELECT cus.order_id,cou.pic FROM `cc_coupons` AS cou LEFT JOIN `cc_wj_customer_coupon` AS cus ON cou.id=cus.bonus_id WHERE cus.order_id='$orderId' LIMIT 4");
-        if (count($pic)>0)
-        {
-            $this->setData($pic,'pic');
-        }
-
-        $delivery_option=($order['customer_delivery_option']);
-
-        if($delivery_option==2){
-			if($language1 =='en') {
-				$this->setData('pick up','delivery_option_desc');
-            }else{
-				$this->setData('自取','delivery_option_desc');
-			}
-        }elseif($delivery_option==1){
-            $this->setData((string)$this->lang->business_deliver,'delivery_option_desc');
-        }else{
-            $this->setData((string)$this->lang->face_to_face_payment,'delivery_option_desc');
-        }
-        $mdl_explosion = loadModel( 'explosion' );
-        $this->setData($mdl_explosion->getListBySql("SELECT e.id,c.title,e.couponid,e.sort,pt.pagename,pnt.name,c.voucher_deal_amount,voucher_original_amount,c.pic FROM cc_explosion e LEFT JOIN cc_coupons c ON c.id=e.couponid LEFT JOIN cc_user u ON u.id=c.createUserId LEFT JOIN cc_pagetype AS pt ON pt.id=e.pagetype LEFT JOIN cc_panaltype AS pnt ON pnt.id=e.panaltype WHERE pnt.id=67 ORDER BY sort"), 'explosion');
-        return  $this->fetch( 'email/email_template' );
+        echo  $this->fetch( 'email/email_template' );
+        exit;
     }
 
     public function  businessCancelOrderNotification($orderId)
@@ -317,7 +298,9 @@ class mdl_system_mail_template extends mdl_base
       
         $this->setData($user,'user');
        
-        return  $this->fetch( 'email/email_template_customer_registry' );
+      // return  $this->fetch( 'email/email_template_customer_registry' );
+        return  $this->fetch( 'email/wide/html/account_welcome' );
+
     }
 
     public function emailVerificationCodeNotification($code)

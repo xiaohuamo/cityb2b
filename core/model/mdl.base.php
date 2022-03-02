@@ -196,6 +196,16 @@ abstract class mdl_base {
 		return "(".join(' or ', $value_array).")";
 	}
 
+    public function getemailName($order) {
+
+        if ($order['displayName']) {
+            return $order['displayName'];
+        }else{
+            return $order['first_name'].' '.$order['last_name'];
+        }
+
+    }
+
 
 }
 
