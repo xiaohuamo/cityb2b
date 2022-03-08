@@ -263,7 +263,7 @@ class pdfGenerator extends PDF_Chinese
 
         $this->SetFont('Arial','b',14);
        // $this->row($this->user_code['nickname'], 0.5, 0, "L", 6);
-        $this->cell(0,0,$this->user_code['nickname'], 0, 0, "L");
+        $this->cell(0,0,$this->businessname, 0, 0, "L");
         $this->SetFont('Arial','',10);
         $this->ln();
         $this->row("", 0.5, 0, "L", 6);
