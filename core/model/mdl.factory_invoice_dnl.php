@@ -4,7 +4,7 @@ require(DOC_DIR."static/fpdf/chinese.php");
 //require('chinese.php');
 define('eol', PHP_EOL);
 
-class mdl_factory_invoice
+class mdl_factory_invoice_dnl
 {
 }
 
