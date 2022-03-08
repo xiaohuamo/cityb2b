@@ -897,6 +897,10 @@ public function AgentActiveCheck($id,$agentId){
 
         $order = $this->loadModel('order')->getByOrderId($orderId);
         $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
+        foreach ($items as $key1 =>$value){
+            $totalAmount += $value['voucher_deal_amount']* $value['customer_buying_quantity'];
+        }
+        $totalAmount='$' . sprintf("%1\$.2f", $totalAmount);
 
         $user =$mel_user->getUserById($order['userId']);
         $userWhere = [
@@ -907,7 +911,7 @@ public function AgentActiveCheck($id,$agentId){
 
         $factory = $mel_user->getUserById($order['business_userId']);
         $factoryWhere = [
-            'userId' => $this->loginUser['id'],
+            'userId' => $factory['id'],
         ];
         //  var_dump($factoryWhere);
         $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
@@ -916,7 +920,7 @@ public function AgentActiveCheck($id,$agentId){
 
         // 获得该用户的简称
         $mdl_user_factory =$this->loadModel("user_factory");
-        $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$this->loginUser['id']));
+        $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$order['business_userId']));
         //var_dump($user_code_rec);exit;
 
 
@@ -932,6 +936,13 @@ public function AgentActiveCheck($id,$agentId){
             }
 
             $user['address']=$order['address'];
+            $report->setTotalAmount($totalAmount);
+            if($user_code_rec['account_type']=='COD') {
+                $accountType ='COD';
+            }else{
+                $accountType =$user_code_rec['account_type'] *7 .'D';
+            }
+            $report->setaccountPayment_period($accountType);
             $report->setUser_Code($user_code_rec);
             $report->setUser($user, $userABN);
         // var_dump($user);exit;

@@ -98,6 +98,19 @@ class pdfGenerator extends PDF_Chinese
         $this->businessname = $businessname;
        
     }
+
+    public function setTotalAmount($amount)
+    {
+        $this->totalAmount = $amount;
+
+    }
+
+    public function setaccountPayment_period($type)
+    {
+        $this->accountPayment_period = $type;
+
+    }
+
 	
 	 public function setABN($abn)
     {
@@ -121,6 +134,20 @@ class pdfGenerator extends PDF_Chinese
     {
         $this->orderId = $orderId;
        
+    }
+
+    public function setInvoiceId($invoiceId)
+    {
+        $prestr='';
+        if(strlen($invoiceId)<=8){
+            for($i=strlen($invoiceId);$i<8;$i++) {
+                $prestr .='0';
+            }
+            $invoiceId =$prestr .$invoiceId;
+
+        }
+        $this->invoiceId = $invoiceId;
+
     }
 	
 	 public function setDate($date1)
@@ -245,9 +272,10 @@ class pdfGenerator extends PDF_Chinese
         $this->row("Invoice", 0.16, 0, "L", 6);
         $this->ln(5);
         $this->row("", 0.5, 0, "L", 6);
-        $this->row("$6,924.00", 0.17, 0, "L", 6);
+        $this->row( $this->totalAmount, 0.17, 0, "L", 6);
         $this->row($this->date1, 0.17, 0, "L", 6);
-        $this->row("INV-00002632", 0.16, 0, "L", 6);
+
+        $this->row("INV-".$this->invoiceId, 0.16, 0, "L", 6);
 
         $this->ln();
         $this->row("ACC NO:".$this->user['id'].' '.$this->user_code['nickname'], 0.5, 0, "L", 6);
@@ -257,8 +285,8 @@ class pdfGenerator extends PDF_Chinese
 
         $this->ln();
         $this->row($this->user['address'], 0.5, 0, "L", 6);
-        $this->row('$51,652.90', 0.17, 0, "L", 6);
-        $this->row("30D", 0.17, 0, "L", 6);
+        $this->row('-', 0.17, 0, "L", 6);
+        $this->row("$this->accountPayment_period", 0.17, 0, "L", 6);
         $this->row("", 0.16, 0, "L", 6);
 
         $this->ln();
@@ -369,7 +397,7 @@ class pdfGenerator extends PDF_Chinese
             //第一行
             $this->row("Invoice&Delivery To:" , 0.4, 0, "L", 6);
             $this->row("Delivered By:", 0.3, 0, "L", 6);
-            $this->row("Invoice: INV-00002633", 0.3, 0, "L", 6);
+            $this->row("Invoice: INV-".$this->invoiceId, 0.3, 0, "L", 6);
             $this->ln(7);
 
 
@@ -399,7 +427,7 @@ class pdfGenerator extends PDF_Chinese
             //第四行
 
 
-            $this->row("Amount".'   '.'$3433.00', 0.4, 0, "L", 6);
+            $this->row("Amount".'   '. $this->totalAmount, 0.4, 0, "L", 6);
 
             $this->row("CHQ", 0.3, 0, "L", 6);
             $this->row("TEMPT", 0.3, 0, "L", 6);
@@ -634,6 +662,7 @@ class OrderInvoice
 	
 	public $title;//标题
 
+
     function __construct($order, $items)
     {
         $this->pdf = new pdfGenerator();
@@ -672,13 +701,23 @@ class OrderInvoice
         $this->user_Code = $user_Code;
        
     }
+    function setTotalAmount($amount)
+    {
+        $this->totalAmount = $amount;
 
+    }
 
     function setFactory($factory, $factoryABN, $factoryAccount)
     {
         $this->factory = $factory;
         $this->factoryAccount = $factoryAccount;
         $this->factoryABN = $factoryABN;
+    }
+
+     function setaccountPayment_period($type)
+    {
+        $this->accountPayment_period = $type;
+
     }
 
     function orderTitle()
@@ -696,20 +735,25 @@ class OrderInvoice
 		$this->pdf->setPhone($this->factory['phone']);
 		$this->pdf->setBusinessId($this->factory['id']);
 		$this->pdf->setOrderId($this->order['orderId']);
+        $this->pdf->setInvoiceId($this->order['id']);
+
+
+
 		$this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
 		$this->pdf->setUserName($this->userABN['business_name']);
 		$this->pdf->setFactoryAccount($this->factoryAccount);
-		
-		$this->pdf->setUser_Code($this->user_Code);
+        $this->pdf->setTotalAmount($this->totalAmount);
+        $this->pdf->setaccountPayment_period($this->accountPayment_period);
+    	$this->pdf->setUser_Code($this->user_Code);
 		$this->pdf->setUser($this->user, $this->userABN);
-		
+
 		//var_dump($this->userABN);exit;
-		
+
         $this->pdf->SetLeftMargin(10);
         $this->pdf->AddPage();
 		 $this->pdf->ln(5);
 		//$this->pdf->row("", 1, 1, 'C', 0.1);
-       
+
 
         // Arial 12
 
@@ -720,7 +764,7 @@ class OrderInvoice
             $itemAmount = $this->calculateAmountWithGst($item['voucher_deal_amount'], $item['customer_buying_quantity'], $item['include_gst']);
 
 
-			
+
 			if ($item['menu_en_name']){
 				$item_name =$item['menu_en_name'];
 			} else{
@@ -810,11 +854,11 @@ class OrderInvoice
 			for($i=0;$i<$loop1;$i++) {
 				 $this->pdf->ln();
             $this->pdf->row('', 1, 0, "L", 6);
-				
+
 			}
-			
+
 			//var_dump(count($this->items));exit;
-			
+
 		}
 
         $this->pdf->ln(4);
@@ -829,14 +873,14 @@ class OrderInvoice
 
    //     $this->pdf->Cell(30,5,'Sub Total: ',0,0,'L');
      //   $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_no_gst']),0,0,'R');
-		
-		
+
+
       //  $this->pdf->ln();
 		//$this->pdf->Cell(131);
 		//$this->pdf->Cell(30,5,'GST Include In Total: ',0,0,'L');
       //  $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_gst']),0,0,'R');
 	//	$this->pdf->ln();
-		 
+
 		 $this->pdf->ln();
 
 
@@ -851,8 +895,8 @@ class OrderInvoice
         $this->pdf->Cell(1);
         $this->pdf->MultiCell(110,6,$reportSubtitle,0,'L',0);
         $this->pdf->Cell(50);
-      
-     
+
+
 
     }
 
@@ -866,10 +910,12 @@ class OrderInvoice
         $this->pdf->setPhone($this->factory['phone']);
         $this->pdf->setBusinessId($this->factory['id']);
         $this->pdf->setOrderId($this->order['orderId']);
+        $this->pdf->setInvoiceId($this->order['id']);
         $this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
         $this->pdf->setUserName($this->userABN['business_name']);
         $this->pdf->setFactoryAccount($this->factoryAccount);
-
+        $this->pdf->setTotalAmount($this->totalAmount);
+        $this->pdf->setaccountPayment_period($this->accountPayment_period);
         $this->pdf->setUser_Code($this->user_Code);
         $this->pdf->setUser($this->user, $this->userABN);
 
