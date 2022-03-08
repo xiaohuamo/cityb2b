@@ -739,7 +739,7 @@ class OrderInvoice
 
 
 
-		$this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
+		$this->pdf->setDate(date('d/m/Y ',$this->order['logistic_delivery_date']));
 		$this->pdf->setUserName($this->userABN['business_name']);
 		$this->pdf->setFactoryAccount($this->factoryAccount);
         $this->pdf->setTotalAmount($this->totalAmount);
