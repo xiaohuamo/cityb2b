@@ -369,7 +369,7 @@ class pdfGenerator extends PDF_Chinese
             //第一行
             $this->row("Invoice&Delivery To:" , 0.4, 0, "L", 6);
             $this->row("Delivered By:", 0.3, 0, "L", 6);
-            $this->row("Invoice: INV-00002632", 0.3, 0, "L", 6);
+            $this->row("Invoice: INV-00002633", 0.3, 0, "L", 6);
             $this->ln(7);
 
 
