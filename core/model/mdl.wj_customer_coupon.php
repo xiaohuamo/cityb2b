@@ -128,7 +128,7 @@ class mdl_wj_customer_coupon extends mdl_base
 			$where['business_id'] = $business_id;
 		}
 		
-		$sql =" select c.id,m.menu_en_name,c.bonus_title,c.bonus_type,c.bonus_type_name,c.voucher_original_amount,c.menu_id,c.customer_buying_quantity,c.guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
+		$sql =" select c.id,upper(m.menu_en_name) as menu_en_name,upper(c.bonus_title) as bonus_title,c.bonus_type,c.bonus_type_name,c.voucher_original_amount,c.menu_id,c.customer_buying_quantity,upper(if(length(m.unit_en)>0,m.unit_en,m.unit)) as unit , upper(c.guige_des) as guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
 		$sql.= " on c.restaurant_menu_id =m.id  where c.order_id =$order_id and ((c.business_id =$business_id ) or c.business_id in (select suppliers_id from cc_freshfood_disp_centre_suppliers where c.business_id =$business_id) or  c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$business_id) or  business_id in (select customer_id from cc_factory_2blist where factroy_id =$business_id) )";
 		
 		

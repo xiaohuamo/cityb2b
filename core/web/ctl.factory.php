@@ -3530,53 +3530,16 @@ class ctl_factory extends cmsPage
     }
 
 
-
     public function order_invoice_action(){
+
+
+
         $orderId = get2('order_id');
-        $mel_user = $this->loadModel('user');
-        $mdl_abn_application = $this->loadModel('wj_abn_application');
-        $mdl_user_account_info = $this->loadModel('user_account_info');
+        $type = get2('type');
 
-        $order = $this->loadModel('order')->getByOrderId($orderId);
-        $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
+        $this->order_invoice($orderId,$type);
 
-        $user =$mel_user->getUserById($order['userId']);
-        $userWhere = [
-            'userId' => $order['userId'],
-        ];
-        $userABN = $mdl_abn_application->getByWhere($userWhere);
-		//var_dump($userABN);exit;
 
-        $factory = $mel_user->getUserById($this->loginUser['id']);
-        $factoryWhere = [
-            'userId' => $this->loginUser['id'],
-        ];
-      //  var_dump($factoryWhere);
-        $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
-		
-        $factoryABN = $mdl_abn_application->getByWhere($factoryWhere);
-		
-		// 获得该用户的简称
-         $mdl_user_factory =$this->loadModel("user_factory");
-		 $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$this->loginUser['id']));
-		 //var_dump($user_code_rec);exit;
-		
-
-        $this->loadModel('factory_invoice');
-        $report = new OrderInvoice($order, $items);
-		  if($this->loginUser['logo']) {
-                $report->logoPath('data/upload/' . $this->loginUser['logo']);
-            }
-			
-		$user['address']=$order['address'];
-        $report->setUser_Code($user_code_rec);
-		$report->setUser($user, $userABN);
-		
-		// var_dump($user);exit;
-        $report->setFactory($factory, $factoryABN, $factoryAccount);
-        $report->generatePDF();
-        $report->outPutToBrowser(  'Invoice-' . $order['orderId'] . '.pdf');
-        //outPutToFile
     }
 	
 	  function truck_list_action()

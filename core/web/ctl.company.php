@@ -220,12 +220,12 @@ class ctl_company extends cmsPage
 
             $system_mailer->title($title);
             $system_mailer->body($body);
-         //8   $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
-         // 8  $name ='statement.pdf';
-         //  8 $system_mailer->attachment($path,$name);
-         // 8  $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
-         // 8  $name ='logo.png';
-          //8  $system_mailer->attachment($path,$name);
+            $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
+           $name ='statement.pdf';
+          $system_mailer->attachment($path,$name);
+           $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
+           $name ='logo.png';
+            $system_mailer->attachment($path,$name);
             $system_mailer->to('hhxx_2012@hotmail.com');
          //   $system_mailer->to($to);
 
@@ -271,7 +271,6 @@ class ctl_company extends cmsPage
             $filePath = $dataFomOtherMethod['file_path'];
             $this->loginUser['id'] = $dataFomOtherMethod['business_id'];
         }
-
 		// 统配商家 如果该商家属于某个统配商家，则获得统配商家号码
 		$this->loadModel('freshfood_disp_suppliers_schedule');
 		$dispaitch_business_id =DispCenter::getDispCenterIdOfSupplier($this->loginUser['id']);
@@ -2713,6 +2712,10 @@ class ctl_company extends cmsPage
             }
         }
     }
+
+    public function test_customer_coupon_approving_action(){
+        $this->_customer_coupon_approving('20220226022244592465');
+}
     function customer_coupon_approving_action()
     {
 		
@@ -2911,11 +2914,33 @@ class ctl_company extends cmsPage
 
             $mdl_statement->insert($data);
 
+            //生成Invocie数据
+            $fileattr = $this->order_invoice($orderId,'fileCC');
+            $filenameWithPath =$fileattr['filePath'].$fileattr['fileName'];
+            $data_invoice=array(
+                'factory_id'=>$order['business_userId'],
+                'gendate'=>time(),
+                'createUserId'=>$this->loginUser['id'],
+                 'type'=>1,
+                'customer_id'=>$order['userId'],
+                'invoiceId'=>$order['id'],
+                'amount'=>$order['money_new'],
+                'creditOrDebit'=>1,
+                'filepathname'=>$filenameWithPath,
+                'isAvaliable'=>1
+            );
+
+            $this->loadModel('invoice_list')->insert($data_invoice);
+
 
 			if ($mdl_order->errno()) {
 				$mdl_order->rollback();
 			} else {
-				$mdl_order->commit();
+                $mdl_order->rollback();
+               // $mdl_order->commit();
+                //如果成功则生成invoice 文件 ，并发送欸客户户;
+                $this->sendInvoice($fileattr,$mdl_order,$mdl_user,$orderId) ;
+
 			}
 			
 		}else {
@@ -2935,6 +2960,9 @@ class ctl_company extends cmsPage
 			
 		}
     }
+
+
+
 
 
     public function customer_order_detail_action()

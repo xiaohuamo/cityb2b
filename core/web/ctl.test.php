@@ -772,6 +772,11 @@ public function index3_action() {
 
 
      }
+
+	 public function labelprint_action(){
+
+		 $this->display('test/labelprint');
+	 }
     public function test_all_mail_action()
     {   
         /**

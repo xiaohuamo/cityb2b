@@ -603,27 +603,7 @@ class mdl_user extends mdl_base
 	public function getBusinessDisplayName($id,$language1){
 		$user=$this->getUserById($id);
 
-     if($language1=='en') {
-		if($user['displayName_en']) {
-			$displayName =$user['displayName_en'];
-
-		}else if($user['businessName']) {
-			$displayName =$user['businessName'];
-
-		}else if($user['displayName']){
-			$displayName =$user['displayName'];
-
-		}else if($user['contactPersonNickName']){
-			$displayName =$user['contactPersonNickName'];
-
-		}else if($user['contactPersonFirstname'] || $user['contactPersonLastname']){
-			$displayName = $user['contactPersonFirstname'] . ' '. $user['contactPersonLastname'];
-			
-		}else{
-			$displayName =$user['name'];
-		}
-		
-	 }else{
+ 
 		 if($user['displayName']) {
 			$displayName =$user['displayName'];
 
@@ -640,7 +620,7 @@ class mdl_user extends mdl_base
 			$displayName =$user['name'];
 		}
 		 
-	 }
+	
 
 		return $displayName;
 	}

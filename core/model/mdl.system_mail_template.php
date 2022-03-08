@@ -196,7 +196,124 @@ class mdl_system_mail_template extends mdl_base
 	  	return  $this->fetch( 'email/apply_confirmation_email' );
     }
 
-    public function  businessOrderNotification($orderId,$language1)
+   
+    public function customerOrderNotificationNew($orderId,$language1,$lang1)
+    {
+		$mdl_user = loadModel( 'user' );
+
+        $order = loadModel( 'order' )->getByWhere(array('orderId'=>$orderId));
+  		$this->setData(date('Y-m-d H:i:s', $order['createTime']), 'createTime');
+		
+	  	$this->setData($this->getemailName($order), 'customerName');
+  
+	  	$this->setData($lang->thanks_for_choose_ubonus, 'message');
+		$this->setData($order['redeem_code'], 'redeemCode');
+		$this->setData(redeemQRCode($order['redeem_code']),'redeemQRCode');
+	  	$this->setData($order['orderId'],'order_id');
+		$this->setData($order['id'],'invoiceid');
+		if ($order['logistic_delivery_date']) {
+			$this->setData(date('Y-m-d ', $order['logistic_delivery_date']),'logistic_delivery_date');
+		}else{
+			$this->setData((string)$this->lang->follow_deliver_intr,'logistic_delivery_date');
+		}
+		$this->setData($order, 'order');
+		
+	  	$this->setData($order['order_name'], 'productName');
+	  	$this->setData($this->getEmailComponent_orderDetail($order['orderId']),'itemTable');
+	  	$this->setData($order['money_new'], 'productPrice');
+	  	$this->setData($order['delivery_fees'], 'deliveryFees');
+	  	$this->setData($order['booking_fees'], 'bookingFees');
+	  	$this->setData($order['promotion_total'], 'promotionTotal');
+	  	$this->setData($order['confirmedMoneyAppliedAmount'],'useMoney');
+	  	$this->setData($order['surcharge'], 'surcharge');
+		$this->setData($lang1, 'lang');
+
+	  	$this->setData($mdl_user->getInitPasswordById($order['userId']),'initPassword');
+	    $this->setData($order['payment'],'payment');
+	    $this->setData($order['status'],'status');
+		$this->setData($order['message_to_business'],'message_to_business');
+		
+		$items = loadModel('wj_customer_coupon')->getOrderItems($order['orderId']);
+		$this->setData($items, 'items');
+
+	    $delivery_option=($order['customer_delivery_option']);
+	    $this->setData($delivery_option,'delivery_option');
+
+	    $sql ="select c.redeemProcedure,c.finePrint,c.refund_policy,c.redeemProcedure_en,c.finePrint_en,c.refund_policy_en from cc_wj_customer_coupon b, cc_coupons c  where c.id=b.bonus_id  and b.order_id ='".$order['orderId']."'";
+	    $business_deliver_pickup_payment_desc =loadModel('coupons')->getListBySql($sql);
+
+		
+		if ($language1=='en' && $business_deliver_pickup_payment_desc[0]['refund_policy_en']) {
+			$refund_policy=$business_deliver_pickup_payment_desc[0]['refund_policy_en'];				
+		}else{
+			$refund_policy=$business_deliver_pickup_payment_desc[0]['refund_policy'];	
+		}
+		
+		$businessUser=$mdl_user->get( $order['business_userId'] );
+		if($language1 =='en') {
+			if ($businessUser['pickup_des_en']) {
+				$pickup_des=$businessUser['pickup_des_en'];
+			}else{
+				$pickup_des=$businessUser['pickup_des'];
+			}
+			
+			if ($businessUser['delivery_description_en']) {
+				$delivery_description=$businessUser['delivery_description_en'];
+			}else{
+				$delivery_description=$businessUser['delivery_description'];
+			}
+			
+			if ($businessUser['offline_pay_des_en']) {
+				$offline_pay_des=$businessUser['offline_pay_des_en'];
+			}else{
+				$offline_pay_des=$businessUser['offline_pay_des'];
+			}
+		}else{
+			$pickup_des=$businessUser['pickup_des'];
+			$delivery_description=$businessUser['delivery_description'];
+			$offline_pay_des=$businessUser['offline_pay_des'];
+		}
+
+	    if($delivery_option==2){
+			if($language1 =='en') {
+				$this->setData('pick up','delivery_option_desc');
+            }else{
+				$this->setData('自取','delivery_option_desc');
+			}
+			
+	    	$this->setData($pickup_des,'delivery_description');
+    		$business_staff = $mdl_user->get($order['business_staff_id']);
+		  	if($business_staff){
+		  		$this->setData($business_staff['contactPersonNickName'],'pickupnickname');
+		  		$this->setData($business_staff['contactMobile'],'pickupphone');
+		  		$this->setData($business_staff['googleMap'],'pickupaddress');
+		  	}
+	    }elseif($delivery_option==1){
+	    	$this->setData($lang1->business_deliver,'delivery_option_desc');
+	    	$this->setData($delivery_description,'delivery_description');
+	    }else{
+	    	$this->setData((string)$lang->face_to_face_payment,'delivery_option_desc');
+	    }
+
+		$this->setData($finePrint,'finePrint');
+		$this->setData($refund_policy,'refund_policy');
+		$this->setData($redeemProcedure,'redeemProcedure');
+	    if($order['payment']=='offline'){
+	    	$this->setData($offline_pay_des,'offline_pay_des');
+	    }
+
+		$staff =( $order['business_staff_id'] > 0 )?$mdl_user->get( $order['business_staff_id'] ):$mdl_user->get( $order['business_userId'] );
+	  	$this->setData($staff['businessName'], 'businessName');
+	  	$this->setData($staff['contactMobile'],'business_phone');
+	  	$this->setData($staff['googleMap'],'business_address');
+	    $this->setData($order['message_to_business'],'customer_message');
+        
+	  	return  $this->fetch( 'email/wide/html/invoice_3');
+    }
+
+
+
+   public function  businessOrderNotification($orderId,$language1)
     {
         $mdl_user = loadModel( 'user' );
 

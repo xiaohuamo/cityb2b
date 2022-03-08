@@ -54,8 +54,8 @@ class pdfGenerator extends PDF_Chinese
         $this->chFontFamilyDefault = 'GB';
         $this->chFontSizeDefault = 9;
         $this->chFontStyleDefault = '';
-		
-		$this->businessname='';
+
+        $this->businessname='';
     }
 
     function isEnglish($string)
@@ -91,66 +91,66 @@ class pdfGenerator extends PDF_Chinese
         $this->fileTitle = $title;
         $this->headerTag = $headerTag;
     }
-	
-	
-	 public function setBusinessName($businessname)
+
+
+    public function setBusinessName($businessname)
     {
         $this->businessname = $businessname;
-       
+
     }
-	
-	 public function setABN($abn)
+
+    public function setABN($abn)
     {
         $this->abn = $abn;
-       
+
     }
-	
-	 public function setPhone($phone)
+
+    public function setPhone($phone)
     {
         $this->phone = $phone;
-       
+
     }
-	
-   public function setBusinessId($businessId)
+
+    public function setBusinessId($businessId)
     {
         $this->businessId = $businessId;
-       
+
     }
-	
-	 public function setOrderId($orderId)
+
+    public function setOrderId($orderId)
     {
         $this->orderId = $orderId;
-       
+
     }
-	
-	 public function setDate($date1)
+
+    public function setDate($date1)
     {
         $this->date1 = $date1;
-       
+
     }
-	
-	 public function setUserName($userName)
+
+    public function setUserName($userName)
     {
         $this->userName = $userName;
-       
+
     }
-	public function setFactoryAccount($factoryAccount) {
-		
-		  $this->factoryAccount = $factoryAccount;
-	}
-	
-	public function setUser_Code($user_code) {
-		
-		  $this->user_code = $user_code;
-	}
-	
-	
-	public  function setUser($user, $userABN)
+    public function setFactoryAccount($factoryAccount) {
+
+        $this->factoryAccount = $factoryAccount;
+    }
+
+    public function setUser_Code($user_code) {
+
+        $this->user_code = $user_code;
+    }
+
+
+    public  function setUser($user, $userABN)
     {
         $this->user = $user;
         $this->userABN = $userABN;
     }
-	
+
     public function setLogo($logoPath)
     {
         $this->logoPath = $logoPath;
@@ -163,91 +163,91 @@ class pdfGenerator extends PDF_Chinese
         if ($this->logoPath) {
             $this->Image($this->logoPath, 160, 6, 30);
         }
-		//$this->SetFont('','U',22);
-		$this->SetFont('Arial','B',20);
-		$this->Cell(50,6, $this->businessname);
-		$this->Ln();
-		$this->SetFont('Arial','B',10);
-		$this->Cell(60,7,'A.B.N '.$this->abn.'  ' .'Tel: '.$this->phone.'  Fax:',0,1,'L');
-		
-		$this->SetFont('Arial','',10);
-		if($this->businessId ==319188) {
-		$this->Cell(60,5,'LINCENSE NO: P00950',0,1,'L');
-		}else{
-		$this->Cell(60,5,'',0,1,'L');	
-		}
-		$this->Cell(60,5,'5/20 AJAX RD,ALTONA VIC 3018',0,1,'L');
-		if($this->businessId ==319188) {
-		$this->Cell(60,5,'H/P NO : 0451 288 666',0,1,'L');
-		}else{
-		$this->Cell(60,5,'',0,1,'L');
-		}
-		
-		
-		
-		$this->SetFont('Arial','B',20);
-		$this->Cell(190,8,'TAX INVOICE',0,1,'R');
-		$this->SetFont('Arial','B',12);
-		
-		$this->Cell(1);
-		$this->Cell(80,10,'INVOICE TO ',1,0,'C');
-		$this->Cell(95);
-		$this->SetFont('Arial','',10);
-		$this->Cell(15,5,'Invoic Number:  '.$this->orderId,0,1,'R');
-		
-		
-		$this->SetFont('Arial','B',10);
-		$this->Cell(190,5,'Date: '. $this->date1,0,1,'R');
-		 $this->ln(2);
-		 
-		 
-		$this->row("CODE: ".$this->user_code['nickname'], 0.7, 0, "L", 6);
-		$this->SetFont('Arial','B',10);
+        //$this->SetFont('','U',22);
+        $this->SetFont('Arial','B',20);
+        $this->Cell(50,6, $this->businessname);
+        $this->Ln();
+        $this->SetFont('Arial','B',10);
+        $this->Cell(60,7,'A.B.N '.$this->abn.'  ' .'Tel: '.$this->phone.'  Fax:',0,1,'L');
+
+        $this->SetFont('Arial','',10);
+        if($this->businessId ==319188) {
+            $this->Cell(60,5,'LINCENSE NO: P00950',0,1,'L');
+        }else{
+            $this->Cell(60,5,'',0,1,'L');
+        }
+        $this->Cell(60,5,'5/20 AJAX RD,ALTONA VIC 3018',0,1,'L');
+        if($this->businessId ==319188) {
+            $this->Cell(60,5,'H/P NO : 0451 288 666',0,1,'L');
+        }else{
+            $this->Cell(60,5,'',0,1,'L');
+        }
+
+
+
+        $this->SetFont('Arial','B',20);
+        $this->Cell(190,8,'TAX INVOICE',0,1,'R');
+        $this->SetFont('Arial','B',12);
+
+        $this->Cell(1);
+        $this->Cell(80,10,'INVOICE TO ',1,0,'C');
+        $this->Cell(95);
+        $this->SetFont('Arial','',10);
+        $this->Cell(15,5,'Invoic Number:  '.$this->orderId,0,1,'R');
+
+
+        $this->SetFont('Arial','B',10);
+        $this->Cell(190,5,'Date: '. $this->date1,0,1,'R');
+        $this->ln(2);
+
+
+        $this->row("CODE: ".$this->user_code['nickname'], 0.7, 0, "L", 6);
+        $this->SetFont('Arial','B',10);
         $this->row("Ship TO : ".$this->factoryABN['untity_name'], 0.3, 0, "L", 6);
-       $this->SetFont('Arial','','');
-	   
-	   $this->ln();
-       $this->row($this->userName, 0.7, 0, "L", 6);
-       $this->row("Business Name: ".$this->factoryABN['untity_name'], 0.3, 0, "L", 6);
+        $this->SetFont('Arial','','');
+
         $this->ln();
-		if($this->userABN['ABNorACN']!='00000000000'){
-			$abnn=$this->userABN['ABNorACN'];
-		}else{
-			$abnn='';
-		}
-       $this->row("ABN/ACN: ".$abnn, 0.7, 0, "L", 6);
-       $this->row("ABN/ACN: ".$this->factoryABN['ABNorACN'], 0.3, 0, "L", 6);
+        $this->row($this->userName, 0.7, 0, "L", 6);
+        $this->row("Business Name: ".$this->factoryABN['untity_name'], 0.3, 0, "L", 6);
         $this->ln();
-		
-		  
-       $this->row("Address: ".$this->user['address'], 0.7, 0, "L", 6);
-	    $this->ln();
-	   /*
-       $this->row('', 0.7, 0, "L", 6);
-       $this->row("Phone: ".$this->factory['phone'], 0.3, 0, "L", 6);
-        $this->ln(10);
-       $this->row('Ship To', 0.7, 0, "L", 6);
+        if($this->userABN['ABNorACN']!='00000000000'){
+            $abnn=$this->userABN['ABNorACN'];
+        }else{
+            $abnn='';
+        }
+        $this->row("ABN/ACN: ".$abnn, 0.7, 0, "L", 6);
+        $this->row("ABN/ACN: ".$this->factoryABN['ABNorACN'], 0.3, 0, "L", 6);
         $this->ln();
-       $this->row("First name: ".$this->order['first_name'], 0.3, 0, "L", 6);
-       $this->row("Last name: ".$this->order['last_name'], 0.4, 0, "L", 6);
-       $this->row("Mobile: ".$this->order['phone'], 0.3, 0, "L", 6);
-     
-       $this->row("Post Code: ".$this->order['postalcode'], 0.3, 0, "L", 6);
-	   */
-     
-		
-		
+
+
+        $this->row("Address: ".$this->user['address'], 0.7, 0, "L", 6);
+        $this->ln();
+        /*
+        $this->row('', 0.7, 0, "L", 6);
+        $this->row("Phone: ".$this->factory['phone'], 0.3, 0, "L", 6);
+         $this->ln(10);
+        $this->row('Ship To', 0.7, 0, "L", 6);
+         $this->ln();
+        $this->row("First name: ".$this->order['first_name'], 0.3, 0, "L", 6);
+        $this->row("Last name: ".$this->order['last_name'], 0.4, 0, "L", 6);
+        $this->row("Mobile: ".$this->order['phone'], 0.3, 0, "L", 6);
+
+        $this->row("Post Code: ".$this->order['postalcode'], 0.3, 0, "L", 6);
+        */
+
+
+
     }
 
     function Footer()
     {
-		 $this->SetY(-40);
-         $this->row("", 1, 1, 'C', 0.1);
-       
+        $this->SetY(-40);
+        $this->row("", 1, 1, 'C', 0.1);
+
         $this->row("MTV NO :0100/1404/3370/3371", 0.7, 0, "L", 6);
-       
+
         $this->row("Temperature: 1.9", 0.3, 0, "L", 6);
-      
+
         $this->ln();
         $this->row("No Claim will be recognised unless received with 24 hours date of delivery.", 0.7, 0, "L", 6);
         $this->ln(5);
@@ -259,8 +259,8 @@ class pdfGenerator extends PDF_Chinese
         $this->row("ACC: " . $this->factoryAccount['account_number'], 0.7, 0, "L", 6);
         $this->ln();
 
-	  // Position at 1.5 cm from bottom
-       
+        // Position at 1.5 cm from bottom
+
         // Arial italic 8
         $this->SetFont('Arial', 'I', 8);
         // Page number
@@ -466,8 +466,8 @@ class OrderInvoice
     public $order;
 
     public $items;
-	
-	public $title;//标题
+
+    public $title;//标题
 
     function __construct($order, $items)
     {
@@ -476,14 +476,14 @@ class OrderInvoice
         $this->items = $items;
     }
 
- function title($value = '', $headerTag = '')
+    function title($value = '', $headerTag = '')
     {
 
         if (!$headerTag) {
             $headerTag = '2020-12-11';
         }else{
-			  $headerTag = '2020-12-11';
-		}
+            $headerTag = '2020-12-11';
+        }
 
         $this->pdf->setTitle($value, $headerTag);
 
@@ -492,7 +492,7 @@ class OrderInvoice
 
 
 
- function logoPath($path)
+    function logoPath($path)
     {
         $this->logoPath = $path;
         return $this;
@@ -502,10 +502,10 @@ class OrderInvoice
         $this->user = $user;
         $this->userABN = $userABN;
     }
-   function setUser_Code($user_Code)
+    function setUser_Code($user_Code)
     {
         $this->user_Code = $user_Code;
-       
+
     }
 
 
@@ -518,34 +518,34 @@ class OrderInvoice
 
     function orderTitle()
     {
-       // return 'Invoice-'.$this->order['orderId'];
-	   return 'DNL Trading PTY LTD';
+        // return 'Invoice-'.$this->order['orderId'];
+        return 'DNL Trading PTY LTD';
     }
 
     function generatePDF()
     {
         $this->pdf->setTitle($this->orderTitle(),'2020-12-11');
         $this->pdf->setLogo(DOC_DIR.$this->logoPath);
-		$this->pdf->setBusinessName($this->factoryABN['untity_name']);
-		$this->pdf->setABN($this->factoryABN['ABNorACN']);
-		$this->pdf->setPhone($this->factory['phone']);
-		$this->pdf->setBusinessId($this->factory['id']);
-		$this->pdf->setOrderId($this->order['orderId']);
-		$this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
-		$this->pdf->setUserName($this->userABN['business_name']);
-		$this->pdf->setFactoryAccount($this->factoryAccount);
-		
-		$this->pdf->setUser_Code($this->user_Code);
-		$this->pdf->setUser($this->user, $this->userABN);
-		
-		//var_dump($this->userABN);exit;
-		
+        $this->pdf->setBusinessName($this->factoryABN['untity_name']);
+        $this->pdf->setABN($this->factoryABN['ABNorACN']);
+        $this->pdf->setPhone($this->factory['phone']);
+        $this->pdf->setBusinessId($this->factory['id']);
+        $this->pdf->setOrderId($this->order['orderId']);
+        $this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
+        $this->pdf->setUserName($this->userABN['business_name']);
+        $this->pdf->setFactoryAccount($this->factoryAccount);
+
+        $this->pdf->setUser_Code($this->user_Code);
+        $this->pdf->setUser($this->user, $this->userABN);
+
+        //var_dump($this->userABN);exit;
+
         $this->pdf->SetLeftMargin(10);
         $this->pdf->AddPage();
-		 $this->pdf->ln(5);
-		//$this->pdf->row("", 1, 1, 'C', 0.1);
-       
-		/*
+        $this->pdf->ln(5);
+        //$this->pdf->row("", 1, 1, 'C', 0.1);
+
+        /*
         $this->pdf->row('Invoice To', 0.7, 0, "L", 6);
         $this->pdf->row('Invoice From', 0.7, 0, "L", 6);
         $this->pdf->ln();
@@ -568,8 +568,8 @@ class OrderInvoice
         $this->pdf->row("Post Code: ".$this->order['postalcode'], 0.3, 0, "L", 6);
         $this->pdf->ln(10);
   */
-  
-    
+
+
         $this->pdf->ln(5);
         $this->pdf->row("Code ", 0.10, 0, "L", 6);
         $this->pdf->row('Description', 0.40, 0, "L", 6);
@@ -588,26 +588,26 @@ class OrderInvoice
             'total_gst' => 0,
             'quantity' => 0
         ];
-		//var_dump($this->item);exit;
+        //var_dump($this->item);exit;
         foreach ($this->items as $item) {
             $itemAmount = $this->calculateAmountWithGst($item['voucher_deal_amount'], $item['customer_buying_quantity'], $item['include_gst']);
             $this->pdf->ln();
 
-			
-			if ($item['menu_en_name']){
-				$item_name =$item['menu_en_name'];
-			} else{
-				$item_name =$item['bonus_title'];
-			}
-           if($item['guige_des']) {
-               $item_name .=' Spec:'.$item['guige1_id'].' '.$item['guige_des'];
 
-           }
+            if ($item['menu_en_name']){
+                $item_name =$item['menu_en_name'];
+            } else{
+                $item_name =$item['bonus_title'];
+            }
+            if($item['guige_des']) {
+                $item_name .=' Spec:'.$item['guige1_id'].' '.$item['guige_des'];
+
+            }
 
             $discount =number_format($item['voucher_original_amount']-$item['voucher_deal_amount'],2);
 
 
-         //   $this->pdf->row1($item_name, 0.40, 0, "L", 6);
+            //   $this->pdf->row1($item_name, 0.40, 0, "L", 6);
 
 
             $title1 =$item_name;
@@ -626,41 +626,41 @@ class OrderInvoice
                 $this->pdf->row($itemAmount['gst%'], 0.05, 0, "L", 6);
 
 
-             }else{
-                   for($i=0;$i<$count;$i++) {
-                       if ($count==(1+$i)) {
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row('', 0.1, 0, "L", 6);
-                               $this->pdf->row($title, 0.40, 0, 'L', 6);
+            }else{
+                for($i=0;$i<$count;$i++) {
+                    if ($count==(1+$i)) {
+                        $title = substr($title1, $i*45, 45);
+                        $this->pdf->row('', 0.1, 0, "L", 6);
+                        $this->pdf->row($title, 0.40, 0, 'L', 6);
+
+                    }else{
+                        if($i==0) {
+                            $title = substr($title1, $i*45, 45);
+                            $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+                            $this->pdf->row($title, 0.4, 0, 'L', 6);
+                            $this->pdf->row($item['customer_buying_quantity'], 0.05, 0, "L", 6);
+                            $this->pdf->row($item['voucher_original_amount'], 0.10, 0, "L", 6);
+                            $this->pdf->row($discount, 0.10, 0, "L", 6);
+                            $this->pdf->row($item['voucher_deal_amount'], 0.10, 0, "L", 6);
+                            $this->pdf->row(sprintf("%1\$.2f", $itemAmount['total_with_gst']), 0.10, 0, "L", 6);
+                            $this->pdf->row($itemAmount['gst%'], 0.05, 0, "L", 6);
+                            $this->pdf->ln(5);
 
                         }else{
-                           if($i==0) {
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
-                               $this->pdf->row($title, 0.4, 0, 'L', 6);
-                               $this->pdf->row($item['customer_buying_quantity'], 0.05, 0, "L", 6);
-                               $this->pdf->row($item['voucher_original_amount'], 0.10, 0, "L", 6);
-                               $this->pdf->row($discount, 0.10, 0, "L", 6);
-                               $this->pdf->row($item['voucher_deal_amount'], 0.10, 0, "L", 6);
-                               $this->pdf->row(sprintf("%1\$.2f", $itemAmount['total_with_gst']), 0.10, 0, "L", 6);
-                               $this->pdf->row($itemAmount['gst%'], 0.05, 0, "L", 6);
-                               $this->pdf->ln(5);
+                            $title = substr($title1, $i*45, 45);
+                            $this->pdf->row('', 0.10, 0, "L", 6);
+                            $this->pdf->row($title, 0.4, 0, 'L', 6);
+                            $this->pdf->row('', 0.50, 0, "L", 6);
 
-                           }else{
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row('', 0.10, 0, "L", 6);
-                               $this->pdf->row($title, 0.4, 0, 'L', 6);
-                               $this->pdf->row('', 0.50, 0, "L", 6);
+                            $this->pdf->ln(5);
 
-                               $this->pdf->ln(5);
-
-                           }
+                        }
 
 
-                          }
+                    }
 
 
-                     }
+                }
             }
 
 
@@ -671,50 +671,50 @@ class OrderInvoice
             $totalAmount['total_gst'] += $itemAmount['total_gst'];
             $totalAmount['quantity'] += $itemAmount['quantity'];
         }
-		$totalCountofItemPrintPerPage = 10;
-		if(count($this->items)<=$totalCountofItemPrintPerPage) {
-			$loop1= $totalCountofItemPrintPerPage-count($this->items);
-			for($i=0;$i<$loop1;$i++) {
-				 $this->pdf->ln();
-            $this->pdf->row('', 1, 0, "L", 6);
-				
-			}
-			
-			//var_dump(count($this->items));exit;
-			
-		}
+        $totalCountofItemPrintPerPage = 10;
+        if(count($this->items)<=$totalCountofItemPrintPerPage) {
+            $loop1= $totalCountofItemPrintPerPage-count($this->items);
+            for($i=0;$i<$loop1;$i++) {
+                $this->pdf->ln();
+                $this->pdf->row('', 1, 0, "L", 6);
+
+            }
+
+            //var_dump(count($this->items));exit;
+
+        }
 
         $this->pdf->ln(10);
         $this->pdf->row("", 1, 1, 'C', 0.1);
         $this->pdf->ln(5);
 
-		$this->pdf->Cell(1);
-		$this->pdf->Cell(80,16,'Signature Here: ',1,0,'L');
-		$this->pdf->Cell(50);
-		
-		
-		$this->pdf->Cell(30,5,'Sub Total: ',0,0,'L');
+        $this->pdf->Cell(1);
+        $this->pdf->Cell(80,16,'Signature Here: ',1,0,'L');
+        $this->pdf->Cell(50);
+
+
+        $this->pdf->Cell(30,5,'Sub Total: ',0,0,'L');
         $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_no_gst']),0,0,'R');
-		
-		
+
+
         $this->pdf->ln();
-		$this->pdf->Cell(131);
-		$this->pdf->Cell(30,5,'GST Include In Total: ',0,0,'L');
+        $this->pdf->Cell(131);
+        $this->pdf->Cell(30,5,'GST Include In Total: ',0,0,'L');
         $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_gst']),0,0,'R');
-		$this->pdf->ln();
-		 
-		 $this->pdf->ln();
-		$this->pdf->Cell(91);
-		$this->pdf->Cell(20,5,'Total Item(s):  ',0,0,'L');
+        $this->pdf->ln();
+
+        $this->pdf->ln();
+        $this->pdf->Cell(91);
+        $this->pdf->Cell(20,5,'Total Item(s):  ',0,0,'L');
         $this->pdf->Cell(20,5,$totalAmount['quantity'],0,0,'L');
-		
-		$this->pdf->Cell(30,5,'Total Invoice:  ',0,0,'L');
+
+        $this->pdf->Cell(30,5,'Total Invoice:  ',0,0,'L');
         $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_with_gst']),0,0,'R');
-		$this->pdf->ln();
-		 
-       
-      
-     
+        $this->pdf->ln();
+
+
+
+
 
     }
 

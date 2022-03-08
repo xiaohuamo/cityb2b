@@ -377,6 +377,48 @@ public function  setCustomerTrueLogin($userrole){
 
 }
 
+    public function sendInvoice($fileattr,$mdl_order,$mdl_user,$orderId) {
+        //写入invoice数据
+        if($fileattr) {
+
+
+            //检查文件是否存在，如果存在向客户发送email ,如果不存在，则不发送
+            $filenameWithPath =$fileattr['filePath'].$fileattr['fileName'];
+            // var_dump($filenameWithPath);exit;
+            if(file_exists($filenameWithPath)){
+
+                $template = $this->loadModel('system_mail_template');
+                $system_mailer = $this->loadModel('system_mail');
+
+                $order = $mdl_order->getByOrderId($orderId);
+                $customerEmail = $order['email'];
+                $business_name = $mdl_user->getBusinessDisplayName($order['business_userId'],'en');
+                $title = 'Invoice #'.$order['id'].' from '.$business_name;
+                // var_dump($title);exit;
+                $body  = $template->customerOrderNotificationNew($orderId,$this->getLangStr());
+                $to    = $customerEmail;
+
+                $system_mailer->title($title);
+                $system_mailer->body($body);
+                $path =$_SERVER['DOCUMENT_ROOT'].'/'.$fileattr['filePath'];
+                // var_dump($path);exit;
+                $name =(string)$fileattr['fileName'];
+                //var_dump($path.$name);exit;
+                $system_mailer->attachment($path.$name,'');
+                // 8  $path =$_SERVER['DOCUMENT_ROOT'].'/themes/zh-cn/images/logo.png';
+                // 8  $name ='logo.png';
+                //8  $system_mailer->attachment($path,$name);
+                $system_mailer->to($to);
+                $system_mailer->send();
+                echo $body;
+
+            }else{
+
+            }
+        }
+
+    }
+
 //根据订单信息获得客户名称
     public function getCustomerName($order){
 
@@ -831,8 +873,106 @@ public function AgentActiveCheck($id,$agentId){
       // 如果当前动作规定了角色，且当前登陆用户没有授权该角色，则返回状态0 ，表示，用户无权操作该功能
         return 0;
     }
-	
-	// 删除生鲜餐馆点单生成的旧的临时文件
+
+    public function  getFilePath($upload_path,$typename,$businessId,$dateym){
+
+        $filepath =  $upload_path.'/'.$typename.'/'.$businessId.'/'.$dateym.'/';
+        if(!file_exists($filepath)){
+            $file = new file;
+
+            $file->createdir( $filepath, 0777 );
+            //  mkdir($up_dir,0777);
+        }
+        return $filepath;
+
+    }
+
+    //生产发票
+    public  function order_invoice($orderId,$FileOrBrowser) {
+
+
+        $mel_user = $this->loadModel('user');
+        $mdl_abn_application = $this->loadModel('wj_abn_application');
+        $mdl_user_account_info = $this->loadModel('user_account_info');
+
+        $order = $this->loadModel('order')->getByOrderId($orderId);
+        $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
+
+        $user =$mel_user->getUserById($order['userId']);
+        $userWhere = [
+            'userId' => $order['userId'],
+        ];
+        $userABN = $mdl_abn_application->getByWhere($userWhere);
+        //var_dump($userABN);exit;
+
+        $factory = $mel_user->getUserById($order['business_userId']);
+        $factoryWhere = [
+            'userId' => $this->loginUser['id'],
+        ];
+        //  var_dump($factoryWhere);
+        $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
+
+        $factoryABN = $mdl_abn_application->getByWhere($factoryWhere);
+
+        // 获得该用户的简称
+        $mdl_user_factory =$this->loadModel("user_factory");
+        $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$this->loginUser['id']));
+        //var_dump($user_code_rec);exit;
+
+
+
+
+
+        if($order['business_userId']==319188) {
+
+            $this->loadModel('factory_invoice_dnl');
+            $report = new OrderInvoice($order, $items);
+            if($this->loginUser['logo']) {
+                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+            }
+
+            $user['address']=$order['address'];
+            $report->setUser_Code($user_code_rec);
+            $report->setUser($user, $userABN);
+        // var_dump($user);exit;
+            $factoryABN['untity_name']='DNL FOOD';
+             $report->setFactory($factory, $factoryABN, $factoryAccount);
+
+            $report->generatePDFDNL();
+        }else{
+            $this->loadModel('factory_invoice');
+            $report = new OrderInvoice($order, $items);
+            if($this->loginUser['logo']) {
+                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+            }
+
+            $user['address']=$order['address'];
+            $report->setUser_Code($user_code_rec);
+            $report->setUser($user, $userABN);
+            $report->setFactory($factory, $factoryABN, $factoryAccount);
+            $report->generatePDF();
+        }
+
+        $dateym =date('y-m');
+
+        //   $this->file->createdir('')
+        if($FileOrBrowser != 'fileCC') {
+            $report->outPutToBrowser(  'Invoice-' . $order['id'] . '.pdf');
+        }else{
+            $filePath= $this->getFilePath('data/upload','invoice',$order['business_userId'],$dateym);
+            $filename =$order['id'].'.pdf';
+            $report->outPutToFile($filePath.$filename);
+            $fileattr =array(
+                'filePath'=>$filePath,
+                'fileName'=>$filename
+            );
+            return $fileattr;
+        }
+
+    }
+
+
+    // 删除生鲜餐馆点单生成的旧的临时文件
 	public function restaurantStaticFileDeleteProcess($business_id,$refresh_code_old)	{
 		
 		// 将所有文件清除
