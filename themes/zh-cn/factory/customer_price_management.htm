@@ -177,11 +177,12 @@
 
         updateData['id'] = id;
         updateData[update_field_name] = value;
+		  updateData['update_field'] = update_field_name;
 
-		alert(id);
 		//alert(id);
-		alert(update_field_name);
-		alert(value);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
 
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({

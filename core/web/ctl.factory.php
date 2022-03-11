@@ -2003,7 +2003,7 @@ class ctl_factory extends cmsPage
         $business_discount_rate =post('business_discount_rate');
         $grade_id =post('grade_id');
 
-        if(!is_numeric($business_discount_rate) && !$grade_id){
+        if(!is_numeric($business_discount_rate) && is_null($grade_id)){
             $this->form_response(600, 'please input number! for example 5.5', 'no access');
         }
 
@@ -2013,7 +2013,7 @@ class ctl_factory extends cmsPage
             $mdl_user_factory = $this->loadModel("user_factory");
 
             $id = post('id');
-
+            $data_field  = post('update_field');
             // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
 
 
@@ -2032,9 +2032,15 @@ class ctl_factory extends cmsPage
 
             $data = array();
 
-            $data['business_discount_rate']  = post('business_discount_rate');
+            if($data_field  =='business_discount_rate') {
+                $data['business_discount_rate']  = post('business_discount_rate');
+            }
 
-            $data['grade']  =$grade_id;
+            if($data_field  =='grade_id') {
+                $data['grade']  =$grade_id;
+            }
+
+
            // if ($business_discount_rate)= $business_discount_rate;
             $account_type = post('account_type');
             if ($account_type) $data['account_type'] = $account_type;
