@@ -133,7 +133,27 @@
 					</span>
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
+					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">&nbsp;&nbsp;
+					<select name="customer_type" id='customer_type'  >
+						
+					
+
+							<option value="0"
+                                    <{if !$customer_type}> selected<{/if}>>select Customer_type
+							</option>
+
+                            <{foreach from=$customer_type_list item=item}>
+								<option value="<{$item.id}>"
+                                        <{if $item.id==$customer_type}> selected<{/if}>> <{$item.customer_type}>
+                         		</option>
+                            <{/foreach}>
+
+						</select>
+						
+						
+						
+						
+						&nbsp;&nbsp;
 					<input type="submit" value="搜索">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
@@ -143,6 +163,8 @@
 							<tr>
 								<th><{$lang->customer_id}></th>
 								<th><{$lang->customer_Code}></th>
+								<th> <{$lang->customer_type}></th>
+								
 								<th><{$lang->customer_ordering_link}></th>
 								<th><{$lang->customer_name}></th>
 								<th><{$lang->myorder}></th>
@@ -173,7 +195,20 @@
 											尚未审核
                                         <{/if}>
 									</td>  -->
+									<td>
+									<select  data-id='<{$user.idd}>'  name="customer_type1" >
+										<option value="0"<{if (!$user.customer_type)}> selected<{/if}>>Please Select</option>
+										
+										<{foreach from=$customer_type_list item=type_list}>
+										  <option value="<{$type_list.id}>"<{if ($type_list.id==$user.customer_type)}> selected<{/if}>><{$type_list.customer_type}></option>
+										
+										
+										<{/foreach}>
+										
+									</select>
+										<span class='promote-ajax'></span>
 									
+									</td>
 									<td>
 										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
 									</td>
@@ -280,6 +315,55 @@
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
             url: "<{$http_root_www}>factory/update_business_code",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+	
+	
+	    $('select[name=customer_type1]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+        
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+       //  alert(value); 
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_customer_type",
             type: "POST",
             data: updateData,
             beforeSend: function () {

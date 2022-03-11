@@ -39,6 +39,7 @@
 	<group_order_list>Group Order</group_order_list>
 	<customer_grade>grade Setting</customer_grade>
 	<add_customer_grade>add Grade</add_customer_grade>
+	 <customer_type>Customer Type</customer_type>
 	
 	<customer_list_recycle>Hide Customers</customer_list_recycle>
 	<customer_price_management>Customer disocunt </customer_price_management>

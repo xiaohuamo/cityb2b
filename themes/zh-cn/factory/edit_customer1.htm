@@ -67,6 +67,22 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
+							<label for="customer_type">客户分类</label>
+							</span>
+							<select name="customer_type" id='ifpaid'>
+							<option value="<{$loginUser.id}>"<{if (!$user_factory_info.customer_type)}> selected<{/if}>>Please Select</option>
+							
+							<{foreach from=$customer_type_list item=type_list}>
+							  <option value="<{$type_list.id}>"<{if ($type_list.id==$user_factory_info.customer_type)}> selected<{/if}>><{$type_list.customer_type}></option>
+							
+							
+							<{/foreach}>
+							
+							 </select>
+						</div>
+						
+						<div class="input-box  form-style-green">
+							<span>
 							<label for="phone">手机号</label>
 							</span>
 							<input type="text" name="phone" id="phone" class="input-text" placeholder="" value="<{$user.phone}>">

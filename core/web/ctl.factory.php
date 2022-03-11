@@ -1160,6 +1160,8 @@ class ctl_factory extends cmsPage
 				
 				$email = trim(post('email'));
 				$username = trim(post('username'));
+
+                $customer_type = trim(post('customer_type'));
 				
 				
 				$googleMap = trim(post('address'));
@@ -1203,7 +1205,9 @@ class ctl_factory extends cmsPage
 				   //''=>$,
 				   'approved'=>$approved,
 				   'factory_sales_id'=>$factory_sales_id,
-				   'nickname'=>$factory_code
+				   'nickname'=>$factory_code,
+                        'customer_type'=>$customer_type
+
 				   
 				   
 				   );
@@ -1289,9 +1293,11 @@ class ctl_factory extends cmsPage
 			//var_dump($user);
 			//var_dump($user_factory_info);
 			//var_dump($user_abn);
-			
-			
-			
+
+
+
+			$customer_type_list  = $this->loadModel('customer_type')->getList(null, array('business_id' => $FactoryId ));
+            $this->setData($customer_type_list,'customer_type_list');
 			// get sales list ...
 			//如果该用户本身为销售员，则前端不显示该信息，后端也不读取，也不处理。
 			// 如果用户为owner 则 获得 user_belong_to_user =该用户，且用户role=101
@@ -2346,7 +2352,46 @@ class ctl_factory extends cmsPage
     }
 
 
+  public function update_customer_type_action(){
 
+			if(is_post()){
+
+				$mdl_user_factory =$this->loadModel("user_factory");
+
+				$id = post('id');
+
+			   // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+				$factory_user = $mdl_user_factory->get($id);
+				$FactoryId =$mdl_user_factory->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+				if ($factory_user['factory_id'] != $FactoryId) {
+					 $this->form_response(600,'no access','no access');
+
+				}
+
+
+				$data=array();
+
+				$customer_type = post('customer_type1');
+				if($customer_type)$data['customer_type']=$customer_type;
+
+
+
+				try {
+					$mdl_user_factory->update($data,$id);
+
+
+					$this->form_response(200,'','');
+				} catch (Exception $e) {
+					$this->form_response(500, $e->getMessage(),'');
+				}
+
+			}else{
+				//wrong protocol
+			}
+		}
 
     public function update_business_code_action(){
 
@@ -2614,6 +2659,8 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
 
         $search = trim(get2('search'));
+        $customer_type = trim(get2('customer_type'));
+
 		if($this->loginUser['role']==20) {
 			 $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
 			 $salesManId = $this->loginUser['id'];
@@ -2623,7 +2670,7 @@ class ctl_factory extends cmsPage
 		}
        //var_dump($salesManId );exit;
 
-        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,0,$customer_type);
         //var_dump($users);exit;
         foreach ($users as $key => $user) {
             $expiredAt =strtotime("+36 months", time());
@@ -2631,7 +2678,14 @@ class ctl_factory extends cmsPage
             $users[$key]['login_link'] = $link;
         }
 
+
+        $customer_type_list  = $this->loadModel('customer_type')->getList(null, array('business_id' => $factoryId ));
+      // var_dump($customer_type_list);exit;
+        $this->setData($customer_type_list,'customer_type_list');
+
+
         $this->setData($search, 'search');
+        $this->setData($customer_type, 'customer_type');
         $this->setData($users, 'users');
         $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
         $this->setData('customer_list', 'submenu_top');

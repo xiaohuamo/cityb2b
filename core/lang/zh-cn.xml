@@ -1062,6 +1062,7 @@
     <new_password>新密码</new_password>
     <confirm_password>确认密码</confirm_password>
     <change_password>修改密码</change_password>
+	 <customer_type>客户类型</customer_type>
     <email>邮箱</email>
 
     <wrong_email>请填写正确的邮箱</wrong_email>

@@ -185,16 +185,17 @@ class mdl_user_factory extends mdl_base
 
     }
 
-    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0) {
+    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type) {
 
 
 
-        $sql = "SELECT f.id as idd,f.nickname as code,f.grade,g.grade_name,g.id as gradeId,g.grade_discount_rate,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
+        $sql = "SELECT f.id as idd,f.nickname as code,f.grade,f.customer_type, c.customer_type as type_name,g.grade_name,g.id as gradeId,g.grade_discount_rate,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
 		f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
 		,f.delivery_mon,f.delivery_tue,f.delivery_wed,f.delivery_thur,f.delivery_fri,f.delivery_sat,f.delivery_sun
                 FROM cc_user_factory f
                 LEFT JOIN cc_user u ON u.id = f.user_id 
-                left join cc_factory_customer_grade g on f.grade =g.id
+                left join cc_factory_customer_grade g on f.grade =g.id 
+                left join cc_customer_type c on f.customer_type =c.id 
 			    WHERE f.factory_id = $factoryId and f.isHide=$isHide";
 				//var_dump ($sql);exit;
 		if($salesmanId ){
@@ -210,6 +211,12 @@ class mdl_user_factory extends mdl_base
 			//var_dump($sql);exit;
 		}
       //  var_dump($sql);exit;
+        if($customer_type) {
+            $sql .= " and f.customer_type = $customer_type ";
+        }
+
+
+
         if($search) {
             $sql .= " AND (u.id ='%$search%'
                      OR u.phone like '%$search%'
@@ -217,6 +224,7 @@ class mdl_user_factory extends mdl_base
 					  OR f.nickname like '%$search%'
 					 )";
         }
+
 //var_dump($sql);exit;
         return $this->getListBySql($sql);
     }
