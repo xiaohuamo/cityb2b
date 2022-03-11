@@ -39,7 +39,7 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                    客户列表
+                    Customer Lists
 				</div>
 				<form>
 					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
@@ -50,8 +50,9 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>客户号</th>
+								<th>ID</th>
 								<th>客户名称</th>
+								<th>客户级别</th>
 								<th>当前折扣率</th>
 								<th>大类折扣设置</th>
 								<th>小类类折扣设置</th>
@@ -76,6 +77,23 @@
 									<td>
                                         <a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>"><{$user.name}></a>
 									</td>
+										
+									<td  >
+										
+											<select class='chooseCustomer' data-id='<{$user.idd}>' id="garde_id-<{$user.idd}>" name="grade_id">
+											
+												<option value="0" <{if !$user.gradeId}>selected<{/if}>>
+													Select Customer Grade 
+												</option>
+												<{foreach from=$grade_list item=g_list}>
+													<option value="<{$g_list.id}>" <{if $g_list.id==$user.gradeId}>selected<{/if}>>
+														<{$g_list.grade_name}>(<{$g_list.grade_discount_rate}>%)
+													</option>
+												<{/foreach}>
+											</select>
+										    <span class='promote-ajax'></span>
+									</td>
+									
 									<td>
 
 
@@ -144,7 +162,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=business_discount_rate],select[name=account_type]').on('change', function () {
+    $('input[name=business_discount_rate],select[name=grade_id],select[name=account_type]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -160,10 +178,10 @@
         updateData['id'] = id;
         updateData[update_field_name] = value;
 
+		alert(id);
 		//alert(id);
-		//alert(id);
-		//alert(update_field_name);
-		//alert(value);
+		alert(update_field_name);
+		alert(value);
 
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({

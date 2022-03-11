@@ -284,7 +284,7 @@ class cmsPage extends corecms
 
              $act = $GLOBALS['gbl_act'];
              // 如果是确认订单已兑付 或者是显示 客户订单详细 这两个动作，不需要登陆，其它的动作都需要登陆。
-             if( $act=='customer_coupon_approving' || $act=='customer_order_detail') {
+             if(  $act=='customer_order_detail') {
 
              }else{
                  if (!$this->loginUser) {
@@ -319,8 +319,9 @@ class cmsPage extends corecms
              if($this->loginUser['role']!=3) {
 
                  if(!$this->checkActCanBeExecuted($act,$user_roles['roles']) ) {
-
-                  //   $this->form_response(500, 'no access ,please contact admin');
+                     //插入一个非常使用功能提醒。
+                    $this->loadModel('alert_log')->insertAlertLog($this->loginUser,'factory_panel',$act);
+                    var_dump('no access , please contact Administrator !'); exit;
                  }else{
 
 
@@ -851,27 +852,45 @@ public function AgentActiveCheck($id,$agentId){
 	}
 
     public function checkActCanBeExecuted($act,$role){
-       // var_dump($act);exit;
+     //   var_dump($act);exit;
         // 根据当前的当作，获得可以执行该动作的角色
         $authroised_roles = $this->loadModel("action_roles")->getByWhere (array('action_name'=>$act));
         if(!$authroised_roles) {
          // 如果没有发现该动作对应的角色，则默认可以执行
+         //   var_dump('did not find this action  '); exit;
             return 1;
-        }
-        // 将该校色字符串变成数组
-        $authroised_roles_arr = explode(',', $authroised_roles['roles']);
-        // 将当前登陆用户的角色转成数组
-        $user_can_do_rules = explode(',', $role);
-       // var_dump( $authroised_roles_arr); exit;
-        // 从该动作允许的角色数组中，依次提出角色，查看当前用户配置的角色中是否存在，如果存在，表示该用户可以执行该动作。
-        foreach ($authroised_roles_arr as $key => $value) {
-             if(in_array($value,$user_can_do_rules)) {
-                 return 1;
-             }
+        }else{
+
+
+            // 如果为管理员或总经理 可以执行
+            $user_can_do_rules = explode(',', $role);
+            foreach ($user_can_do_rules as $key1 => $value1) {
+               if($value1=='0'|| $value1 =='1') {
+                //  var_dump('role match (is a administrator) '); exit;
+                   return 1;
+               }
+            }
+
+            // 将该校色字符串变成数组
+            $authroised_roles_arr = explode(',', $authroised_roles['roles']);
+            // 将当前登陆用户的角色转成数组
+
+           //  var_dump( $authroised_roles_arr); exit;
+           // var_dump( $user_can_do_rules); exit;
+            // 从该动作允许的角色数组中，依次提出角色，查看当前用户配置的角色中是否存在，如果存在，表示该用户可以执行该动作。
+            foreach ($authroised_roles_arr as $key => $value) {
+                if(in_array($value,$user_can_do_rules)) {
+                   // var_dump('role match (not a administrator) '); exit;
+                    return 1;
+                }
+
+            }
+            // 如果当前动作规定了角色，且当前登陆用户没有授权该角色，则返回状态0 ，表示，用户无权操作该功能
+          //  var_dump('role not match at all'); exit;
+            return 0;
 
         }
-      // 如果当前动作规定了角色，且当前登陆用户没有授权该角色，则返回状态0 ，表示，用户无权操作该功能
-        return 0;
+
     }
 
     public function  getFilePath($upload_path,$typename,$businessId,$dateym){

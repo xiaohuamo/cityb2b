@@ -109,11 +109,14 @@
 				<a href="<{$http_root_www}>factory/group_order_setting"<{if $submenu=='group_order_setting'}> class="current"<{/if}>>
 				<{$lang->group_order_list}>
 				</a>
-
-
+				<!-- 只有客户经理或更高级别的人才可以操作折扣 -->
 				<{if in_array('3', explode(',', $user_roles.roles))
 				||  in_array('0', explode(',', $user_roles.roles))
 				|| $user_roles.role==3}>
+				<a href="<{$http_root_www}>factory/customer_grade"<{if $submenu=='customer_grade'}> class="current"<{/if}>>
+				<{$lang->customer_grade}>
+				</a>
+				
 				<a href="<{$http_root_www}>factory/customer_price_management"<{if $submenu=='customer_price_management'}> class="current"<{/if}>>
 					<{$lang->customer_price_management}>
 				</a>
@@ -221,7 +224,8 @@
 		<a  href="<{$http_root_www}>factory_2c/single_producing_item_print_edit"<{if $submenu=='single_producing_item_print_edit'}> class="current"<{/if}>>
 				 <{$lang->producing_item_edit}>
 		</a>
-		<a target="_blank"  href="http://product.cooltechsolution.com/product/login">
+	
+		<a target="_blank"  href="http://m.cityb2b.com/product/login">
 				<{$lang->producing_platform}> 
 		</a>
 	</div>

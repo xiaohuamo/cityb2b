@@ -48,7 +48,39 @@ class mdl_user_factory extends mdl_base
 
    }
 
+    public function getCurrentUserDiscountRate($userid,$factory_id){
 
+        $discount_rates =0.00;
+
+        if($userid) {
+            $where =array(
+                'user_id'=>$userid,
+                'factory_id'=>$factory_id
+            );
+            $user_info =$this->getByWhere($where);
+            $discount =$user_info['business_discount_rate'];
+
+            if($discount>0){
+                $discount_rates=$discount;
+
+            }else{
+
+                // 如果为0 ，看看它是否定义了客户级别，并查看级别里是否有discount ,有则返回
+                if($user_info['grade']) {
+
+                    $grade_info = loadModel('factory_customer_grade')->get($user_info['grade']);
+
+                    if($grade_info && $grade_info['grade_discount_rate']){
+                        $discount_rates=$grade_info['grade_discount_rate'];
+                    }
+                }
+
+
+            }
+        }
+      // var_dump($discount_rates);exit;
+        return $discount_rates;
+    }
 
    public function isUserAuthorisedToOperate($userId, $factoryId) {
 
@@ -157,11 +189,12 @@ class mdl_user_factory extends mdl_base
 
 
 
-        $sql = "SELECT f.id as idd,f.nickname as code,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
+        $sql = "SELECT f.id as idd,f.nickname as code,f.grade,g.grade_name,g.id as gradeId,g.grade_discount_rate,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
 		f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
 		,f.delivery_mon,f.delivery_tue,f.delivery_wed,f.delivery_thur,f.delivery_fri,f.delivery_sat,f.delivery_sun
                 FROM cc_user_factory f
-                LEFT JOIN cc_user u ON u.id = f.user_id
+                LEFT JOIN cc_user u ON u.id = f.user_id 
+                left join cc_factory_customer_grade g on f.grade =g.id
 			    WHERE f.factory_id = $factoryId and f.isHide=$isHide";
 				//var_dump ($sql);exit;
 		if($salesmanId ){

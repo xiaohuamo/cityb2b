@@ -37,6 +37,8 @@
 	<add_new_customer>Add New Customer</add_new_customer>
 	<customer_list>Customer Lists</customer_list>
 	<group_order_list>Group Order</group_order_list>
+	<customer_grade>grade Setting</customer_grade>
+	<add_customer_grade>add Grade</add_customer_grade>
 	
 	<customer_list_recycle>Hide Customers</customer_list_recycle>
 	<customer_price_management>Customer disocunt </customer_price_management>
@@ -1024,6 +1026,7 @@
     <email>Email</email>
     <!-- 注册 -->
     <register_new_user>Sign UP</register_new_user>
+	<producing_plan>producing Schedule Plan</producing_plan>
     <register_new_business>Sign up new Business</register_new_business>
     <verify_code>Verify Code</verify_code>
     <i_have_agreed_with>I have read and am agreed with</i_have_agreed_with>

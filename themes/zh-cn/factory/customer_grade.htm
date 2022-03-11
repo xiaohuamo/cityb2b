@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: center;
+	}
+	</style>
+	
+	
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+     
+	</style>
+
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+					<{$lang->customer_grade}>
+				 
+				 <span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>factory/customer_grade_add" class="link2"><i class='fa fa-plus'></i> <{$lang->add_customer_grade}></a>
+					</span>
+				</div>
+				
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Grade_id</th>
+								<th>Grade_name</th>
+								<th>Discount Rate</th>
+								<th>Create User</th>
+								<th>Create Time</th>
+								<th>Edit</th>
+							
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$grade_lists item=grade_list name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td>
+										<{$grade_list.grade_id}>
+									</td>
+
+
+									<td>
+										<{$grade_list.grade_name}>
+									</td>
+									<td>
+									<{$grade_list.grade_discount_rate}> 
+									</td>
+						
+									<td>
+                                       	<{if  $grade_list.createUserId}>  <{$grade_list.createUserId}> <{else}>-<{/if}>
+									</td>
+									<td>
+								    	<{if  $grade_list.gen_date}> <{date('Y-m-d H:i', $grade_list.gen_date)}>  <{else}>-<{/if}>
+									</td>
+									
+									<td>
+								    	<a href ="<{$http_root_www}>factory/customer_grade_add?id=<{$grade_list.id}>">Edit</a>
+									</td>
+								
+
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<{include file = 'footer.htm'}>
+
+</body>
+</html>

@@ -48,7 +48,10 @@
 	<wholeseller_card>批发商卡片</wholeseller_card>
 	<add_new_customer>添加新客户</add_new_customer>
 	<customer_list>客户列表</customer_list>
-	<group_order_list>群组管理</group_order_list>
+	<group_order_list>订货群管理</group_order_list>
+	<customer_grade>客户级别设置</customer_grade>
+	<add_customer_grade>添加级别</add_customer_grade>
+	
 	<customer_list_recycle>隐藏客户</customer_list_recycle>
 	<customer_price_management>折扣管理</customer_price_management>
 	<orderLists>订货列表</orderLists>
@@ -1168,6 +1171,9 @@
     <!--company_description>Company description</company_description-->
     <submit_company>提交</submit_company>
     <application>申请</application>
+	<producing_plan>生产安排</producing_plan>
+	
+	
     <!--become_business_user 模板 END-->
     
 	<sent_code>已发送验证码到注册的手机或邮件，填写验证码后重置密码。</sent_code>

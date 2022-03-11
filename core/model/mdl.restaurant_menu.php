@@ -22,18 +22,10 @@ class mdl_restaurant_menu extends mdl_base
     public function getGoodList($factory_id,$userid=null,$uploadpath) {
 
 
-        $discount_rates =0.00;
-        if($userid) {
-            $where =array(
-                'user_id'=>$userid,
-                'factory_id'=>$factory_id
-            );
-            $user_info =loadModel('user_factory')->getByWhere($where);
-            $discount_rates =$user_info['business_discount_rate'];
-            if(!$discount_rates){
-                $discount_rates =0.00;
-            }
-        }
+        $discount_rates = loadModel('user_factory')->getCurrentUserDiscountRate($userid,$factory_id);
+
+
+    //    var_dump($discount_rates);exit;
 
 
 

@@ -2001,7 +2001,9 @@ class ctl_factory extends cmsPage
     {
 
         $business_discount_rate =post('business_discount_rate');
-        if(!is_numeric($business_discount_rate)){
+        $grade_id =post('grade_id');
+
+        if(!is_numeric($business_discount_rate) && !$grade_id){
             $this->form_response(600, 'please input number! for example 5.5', 'no access');
         }
 
@@ -2015,11 +2017,15 @@ class ctl_factory extends cmsPage
             // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
 
 
-            $factory_user = $mdl_user_factory->get($id);
+
             $FactoryId = $mdl_user_factory->getBusinessId($this->loginUser['id'], $this->loginUser['role']);
 
-            if ($factory_user['factory_id'] != $FactoryId) {
-                $this->form_response(600, 'no access', 'no access');
+            $factory_user=$mdl_user_factory->get($id);
+
+
+
+            if ( !$mdl_user_factory->isUserAuthorisedToOperate($factory_user['user_id'], $FactoryId)) {
+                $this->form_response(600, (string)$factory_user['factory_id'].'no access'.(string)$FactoryId, 'no access');
 
             }
 
@@ -2027,6 +2033,8 @@ class ctl_factory extends cmsPage
             $data = array();
 
             $data['business_discount_rate']  = post('business_discount_rate');
+
+            $data['grade']  =$grade_id;
            // if ($business_discount_rate)= $business_discount_rate;
             $account_type = post('account_type');
             if ($account_type) $data['account_type'] = $account_type;
@@ -2664,6 +2672,120 @@ class ctl_factory extends cmsPage
     }
 
 
+
+// 创建一个group manager
+    function customer_grade_add_action()
+    {
+
+
+        $id = (int)get2('id');
+
+        $mdl_grade = $this->loadModel('factory_customer_grade');
+        $grade_rec = $mdl_grade->get($id);
+        $this->setData($grade_rec,'data');
+
+        if (is_post()) {
+
+            $factory_id =$this->loadModel('user_factory')->getFactoryId($this->loginUser['id']);
+
+            $id = trim(post('id'));
+            $grade_name = trim(post('grade_name'));
+            $grade_id = trim(post('grade_id'));
+            $grade_discount_rate = trim(post('grade_discount_rate'));
+
+
+            //校验
+            if (empty($grade_name) ) $this->form_response_msg('Please fill in grade name!');
+            if (empty($grade_id) ) $this->form_response_msg('Please fill in grade id!');
+            if (empty($grade_discount_rate)) $this->form_response_msg('Please fill in grade discount rate');
+
+            if(!is_numeric($grade_discount_rate)) {
+                $this->form_response_msg('Please fill number on discount rate!');
+            }
+
+            if($grade_discount_rate<=0 || $grade_discount_rate>=80) {
+                $this->form_response_msg('Please fill the reasonable grade discount rate!');
+            }
+
+            if ($id) {
+                //进入编辑模式
+                $data = array(
+                    // 'name' => $name,
+                    'grade_id' => $grade_id,
+                    'grade_name' => $grade_name,
+                    'grade_discount_rate' => $grade_discount_rate,
+                    'createUserId' => $this->loginUser['id'],
+                    'gen_date' => time()
+                  );
+
+                 if ($mdl_grade->update($data, $id)) {
+
+                    $this->form_response(200,'Success',HTTP_ROOT_WWW.'factory/customer_grade');
+                } else {
+                    $this->form_response_msg('Error ! check if grade Id is unique!');
+                }
+
+            } else {
+                //插入新grade
+
+                $data = array(
+                    // 'name' => $name,
+                    'business_id' =>$factory_id,
+                    'grade_id' => $grade_id,
+                    'grade_name' => $grade_name,
+                    'grade_discount_rate' => $grade_discount_rate,
+                    'createUserId' => $this->loginUser['id'],
+                    'gen_date' => time()
+                );
+
+
+                if($mdl_grade->insert($data)){
+                    $this->form_response(200,'Success ',HTTP_ROOT_WWW.'factory/customer_grade');
+                }else{
+                    $this->form_response(500,'Insert error ');
+                }
+
+            }
+
+        } else {
+
+            $this->setData('Add Customer Grade', 'pagename');
+            $this->setData('customer_grade', 'submenu');
+            $this->setData('customer_management', 'menu');
+            $this->setData('Grade Management - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('factory/customer_grade_add');
+        }
+    }
+
+
+
+
+
+    public function customer_grade_action() {
+
+
+
+
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+
+       // var_dump('测试一下客户经理可以使用该功能'.$factoryId);exit;
+        $grade_lists =$this->loadModel('factory_customer_grade')->getGradeList($factoryId);
+
+
+
+
+        $this->setData($grade_lists, 'grade_lists');
+
+
+        $this->setData('customer_grade', 'submenu');
+        $this->setData('customer_management', 'menu');
+
+
+
+        $this->display('factory/customer_grade');
+    }
+
     public function customer_list_recycle_action() {
         $mdl_user_factory = $this->loadModel('user_factory');
 
@@ -2715,6 +2837,12 @@ class ctl_factory extends cmsPage
             $users[$key]['login_link'] = $link;
 
         }
+
+        // 获得客户分级列表
+
+        $grade_list = $this->loadModel('factory_customer_grade')->getGradeList($factoryId);
+       // var_dump($grade_list);exit;
+        $this->setData($grade_list,'grade_list');
 
         $this->setData($search, 'search');
         $this->setData($users, 'users');
