@@ -2670,12 +2670,24 @@ class ctl_factory extends cmsPage
 		}
        //var_dump($salesManId );exit;
 
-        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,0,$customer_type);
-        //var_dump($users);exit;
-        foreach ($users as $key => $user) {
+
+        $pageSql= $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,0,$customer_type,1);
+        //var_dump($pageSql);exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize =30;
+        $maxPage =100;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+        $data = $mdl_user_factory->getListBySql($page['outSql']);
+
+
+
+
+       // $data = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,0,$customer_type);
+        //var_dump($data);exit;
+        foreach ($data as $key => $user) {
             $expiredAt =strtotime("+36 months", time());
             $link = self::customer_login_link($user['id'], $expiredAt,1);
-            $users[$key]['login_link'] = $link;
+            $data[$key]['login_link'] = $link;
         }
 
 
@@ -2684,9 +2696,15 @@ class ctl_factory extends cmsPage
         $this->setData($customer_type_list,'customer_type_list');
 
 
+
+
+
+        $this->setData($page['pageStr'], 'pager');
+
+
         $this->setData($search, 'search');
         $this->setData($customer_type, 'customer_type');
-        $this->setData($users, 'users');
+        $this->setData($data, 'data');
         $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
         $this->setData('customer_list', 'submenu_top');
         $this->setData('customer_list', 'submenu');

@@ -177,7 +177,7 @@
 							</tr>
 							</thead>
 							<tbody>
-							<{foreach from=$users item=user name='dl'}>
+							<{foreach from=$data item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									<td>
 										<{$user.user_id}>
@@ -270,7 +270,11 @@
 							<{/foreach}>
 							</tbody>
 						</table>
+						
 					</div>
+					 <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
 				</div>
 			</div>
 		</div>
@@ -451,6 +455,7 @@
    
 
 </script>
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"> < /iframe>
 <{include file = 'footer.htm'}>
 
 </body>

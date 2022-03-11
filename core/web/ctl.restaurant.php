@@ -3315,9 +3315,9 @@ function category_migration_action(){
 				$where['restaurant_id']=$customer_id;
 				$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
 				$this->setData($restaurant_menu_option_list,'menu_option_list');
-				
-			
 
+
+	//	var_dump($pager);exit;
 		foreach ($data as $key => $menu) {
 			$categoryIds = $this->loadModel('restaurant_menu_category')->findCategoryIdsByMenuId($menu['id']);
 			$data[$key]['categoryIds'] = $categoryIds;

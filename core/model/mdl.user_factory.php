@@ -185,7 +185,7 @@ class mdl_user_factory extends mdl_base
 
     }
 
-    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type) {
+    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type,$returnSql) {
 
 
 
@@ -226,7 +226,12 @@ class mdl_user_factory extends mdl_base
         }
 
 //var_dump($sql);exit;
-        return $this->getListBySql($sql);
+        if($returnSql){
+            return $sql;
+        }else{
+            return $this->getListBySql($sql);
+        }
+
     }
 
     public  function getAccountType($userid,$business_id){
