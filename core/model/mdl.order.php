@@ -24,7 +24,15 @@ class mdl_order extends mdl_base
 		return $availableDates;
  }
 
+public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_date) {
 
+     $sql ="SELECT `postalcode`,`city`,count(*) as count 
+            FROM `cc_order` WHERE DATE_FORMAT(from_unixtime(logistic_delivery_date),'%Y-%m-%d')='$logistic_delivery_date'  and business_userId =$factory_id 
+            group by postalcode 
+            order by postalcode ";
+    // var_dump($sql);exit;
+     return $this->getListBySql($sql);
+}
 
  public function check_if_order_belong_to_login_user($loginUserId,$orderid) {
 	 

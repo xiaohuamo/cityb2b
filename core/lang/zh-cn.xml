@@ -1063,6 +1063,9 @@
     <confirm_password>确认密码</confirm_password>
     <change_password>修改密码</change_password>
 	 <customer_type>客户类型</customer_type>
+	  <choose_postcode>选择邮编地区</choose_postcode>
+	 
+	 
     <email>邮箱</email>
 
     <wrong_email>请填写正确的邮箱</wrong_email>

@@ -3579,8 +3579,9 @@ class ctl_company extends cmsPage
          * Driver List of Current Business
          */
 		 
-		$customer_delivery_date = trim(get2('customer_delivery_date')); 
-			
+		$customer_delivery_date = trim(get2('customer_delivery_date'));
+        $postcode = trim(get2('postcode'));
+
         $mdl_truck =  $this->loadModel('truck');
 	//	if($customer_delivery_date){
 	//			$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusinessWithOrderCounts($this->current_business['id'],$customer_delivery_date);
@@ -3634,6 +3635,13 @@ class ctl_company extends cmsPage
     	}, $availableDates);
     	$this->setData($availableDates, 'availableDates');
 
+        //存放当前日订单的postcode列表
+         if($customer_delivery_date){
+
+            $postcode_list = $mdl_order->getPostCodeGroupAndCountOfOrder($this->current_business['id'],$customer_delivery_date);
+             $this->setData($postcode_list,'postcode_list');
+         }
+
 
 
 				
@@ -3666,6 +3674,7 @@ class ctl_company extends cmsPage
         $this->setData($customer_delivery_option,'customer_delivery_option');
         $this->setData($staff,'staff');
 		$this->setData($customer_delivery_date,'customer_delivery_date');
+        $this->setData($postcode,'postcode');
 
         $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
@@ -3729,6 +3738,11 @@ class ctl_company extends cmsPage
 		       $whereStr.= " and  logistic_truck_No =0 ";
          // var_dump($logistic_truck_No);exit;
         }
+
+      if($postcode){
+          $whereStr.= " and  postalcode =$postcode ";
+
+      }
 
         $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
       
@@ -10305,6 +10319,8 @@ function freshfood_edit_action()    {
             $this->display('company/staff_edit_new');
         }
     }
+
+
 
 
 

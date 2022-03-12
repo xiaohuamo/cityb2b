@@ -157,7 +157,15 @@
 					</script>
 			
 						
-
+					<select class='choosePostcode' id="postcode" name="postcode" >
+						<option value="0"  ><{$lang->choose_postcode}></option>
+						<{foreach from=$postcode_list item=d}>
+							<option value="<{$d.postalcode}>" <{if $d.postalcode==$postcode}>selected<{/if}>>
+								<{$d.postalcode}>-<{$d.city}>（<{$d.count}>）
+							</option>
+						<{/foreach}>
+					</select>
+					
 				
 						<select id="customer_delivery_option" name="customer_delivery_option">
 							<option value="all" <{if $customer_delivery_option=='all'}> selected<{/if}>><{$lang->logistic_delivery_or_pickup}></option>

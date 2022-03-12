@@ -185,6 +185,8 @@ class mdl_user_factory extends mdl_base
 
     }
 
+
+
     public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type,$returnSql) {
 
 
