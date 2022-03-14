@@ -3783,7 +3783,7 @@ class ctl_factory extends cmsPage
 		$driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
 		$this->setData($driverList,'driverList');
 		//var_dump($dirverList);exit;
-		
+
         
         if (is_post()) {
 			
@@ -3792,13 +3792,28 @@ class ctl_factory extends cmsPage
 					//var_dump($id);exit;
           
             $truck_name = trim(post('truck_name'));
+            $truck_no = trim(post('truck_no'));
             $plate_number = trim(post('plate_number'));
             $current_driver = trim(post('diverId'));
             
             $made_factory = trim(post('made_factory'));
             $load_tones = trim(post('load_tones'));
+
+
+            $where =array(
+                'business_id'=>$this->current_business['id'],
+                'truck_no'=>$truck_no
+             );
+
+            $truc_rec = $mdl_truck->getByWhere($where);
+
+            if($truc_rec){
+                $this->form_response_msg('the truck number is exist,please use a different truct number');
+            }
+
 			
             $data = array(
+                'truck_no'=>$truck_no,
 				'truck_name'=>$truck_name,
 				'plate_number'=>$plate_number,
 				'made_factory'=>$made_factory,

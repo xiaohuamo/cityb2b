@@ -50,7 +50,13 @@
 
 						
 
+						<div class="input-box clearfix">	
 
+								<span><label>Truck NO</label></span>	
+
+								<input type="text" name="truck_no" class="input-text" value="<{$data.truck_no}>" />						            
+
+							</div>	
 
 
 
@@ -69,7 +75,7 @@
                                                     <{foreach from=$driverList item=sitem1}>
 														<option value='<{$sitem1.id}>'
                                                                 <{if $data.current_driver==$sitem1.id}>selected<{/if}>>
-                                                            <{$sitem1.name}>
+                                                            <{$sitem1.name}>-<{$sitem1.id}>
 
 														</option>
                                                     <{/foreach}>

@@ -227,10 +227,10 @@
 									<select id="truck-<{$item.id}>" name='truckName' data-id='<{$item.id}>'>
 													<option value='0'>Choose Truck</option>
                                                     <{foreach from=$all_avaliable_trucks item=sitem1}>
-														<option value='<{$sitem1.id}>'
-                                                                <{if $item.logistic_truck_No==$sitem1.id}>selected<{/if}>>
+														<option value='<{$sitem1.truck_no}>'
+                                                                <{if $item.logistic_truck_No==$sitem1.truck_no}>selected<{/if}>>
 																	<{if $sitem1.driverName}><{$sitem1.driverName}>-<{/if}>
-                                                            <{$sitem1.truck_name}>- <{$sitem1.plate_number}>
+                                                            <{$sitem1.truck_no}>-<{$sitem1.truck_name}>- <{$sitem1.plate_number}>
 
 														</option>
                                                     <{/foreach}>
