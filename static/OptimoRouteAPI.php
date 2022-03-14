@@ -9,7 +9,8 @@ class OptimoRouteAPI {
 	//public $maxAsyncRequests = 5;
 
 //	private $apiKey = '7ce379ec24c46957d344883356facb69I9CGMbItfm0';
-	private $apiKey = '7ce379ec24c46957d344883356facb69I9CGMbItfm0';
+	//private $apiKey = '7ce379ec24c46957d344883356facb69I9CGMbItfm0';
+	private $apiKey = 'c8f28b620a412b753759368b9690a456ZdCZFHJgtg';
 	
 	private static $apiBaseUrl = 'https://api.optimoroute.com/v1/';
 	private $curlSession;
