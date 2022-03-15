@@ -2519,7 +2519,7 @@ class ctl_company extends cmsPage
 		//检查改产品是否为改商家所有 factroy_id 21442 
 		
 		$mdl_order =$this->loadModel("order");
-		$curr_user_id =$this->loginUser['id'];
+		$curr_user_id =$this->current_business['id'];
 		
 		$sql ="select id from cc_order  where id=$id and  ( business_userId=$curr_user_id " ;  // 商家本身 
 		$sql .=" or business_userId in (select customer_id  from cc_authrise_manage_other_business_account where authorise_business_id =$curr_user_id )"; //是否为授权用户
@@ -2541,9 +2541,12 @@ class ctl_company extends cmsPage
             //json reply
             $id = post('id');
             $delivery_time = post('delivery_time');
+            $delivery_time_stamp =strtotime($delivery_time);
+            $seq_number = $mdl_order->generateLogisticSequence($this->current_business['id'],$delivery_time_stamp);
+           //  $this->form_response(500,$seq_number);
 			$data=array(
-			 'logistic_delivery_date'=>strtotime($delivery_time),
-			 'logistic_sequence_No'=>0,
+			 'logistic_delivery_date'=>$delivery_time_stamp,
+			 'logistic_sequence_No'=>$seq_number,
 			 'logistic_stop_No'=>0,
 			 'logistic_truck_No'=>0
 			);

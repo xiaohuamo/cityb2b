@@ -47,6 +47,105 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 	 
  }
 
+
+ // date('Y-m-d',$d['logistic_delivery_date']
+
+    public function generateLogisticSequence($business_id,$dateTimestamp)
+    {
+
+
+
+       // $dateStr =date('Y-m-d',$order_rec['logistic_delivery_date'];
+
+
+
+        $orders = $this->getOrderOnDeliverDate($dateTimestamp,$business_id); //all today's order
+
+        $max_logistic_number  = 0;
+
+        foreach ($orders as $order) {
+            if ($order['logistic_sequence_No'] > $max_logistic_number)
+                $max_logistic_number = $order['logistic_sequence_No'];
+        }
+        //找到当前最大的 seq_number ;
+
+
+
+
+        foreach ($orders as $order) {
+            //此处加入一个功能临时 ，修补之前没有处理的 两个新增字段
+            //$logistic_suppliers_info=$mdl_order->gen_logistic_suppliers_info( $order['orderId'],$this->lang);
+
+            $data = [
+                //'logistic_suppliers_info'=>$logistic_suppliers_info['logistic_suppliers_info'],
+                //'logistic_suppliers_count'=>$logistic_suppliers_info['logistic_suppliers_count']
+            ];
+
+            if ($order['logistic_sequence_No'] < 1) {
+                $max_logistic_number +=1;
+                $data ['logistic_sequence_No'] =$max_logistic_number;
+
+            }
+
+
+                $this->updateByWhere(
+                    $data,
+                    ['orderId' => $order['orderId']]			);
+
+
+        }
+
+        return ($max_logistic_number+1);
+
+    }
+
+
+
+
+    public function getOrderOnDeliverDate($timestamp,$business_id)
+    {
+
+
+        if ($timestamp === false) {
+            throw new Exception("dateStr is not recognized", 1);
+        }
+        $dateTime = new DateTime();
+        $dateTime->setTimestamp($timestamp);
+        $dateTime->setTime(0,0,0);
+        $timestamp = $dateTime->getTimestamp();
+
+
+        $mdl_order = loadModel('order');
+        $current_user_id =$business_id;
+
+
+
+        $sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp   ";
+
+        $sql .= " and ( business_userId =$business_id  ";
+        $sql .= " or business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id) ";
+        $sql .="  or business_userId in  (select customer_id from cc_factory2c_list where factroy_id =$business_id )  ";
+        $sql .="  or business_userId in  (select customer_id from cc_factory_2blist where factroy_id =$business_id )  ";
+        $sql .=" )";
+        //var_dump($sql);exit;
+
+
+
+
+
+        $ubonusOrderList =$mdl_order->getListBySql($sql);
+
+
+
+        foreach ($ubonusOrderList as $key => $value) {
+
+            $ubonusOrderList[$key]['data_source'] = '1'; //data from ubonus
+        }
+
+        return $ubonusOrderList;
+
+    }
+
    public function  get_first_order_sameuserId_sameday ($orderId){
 	   
  	   $curr_rec =$this->get($orderId);

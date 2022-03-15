@@ -59,6 +59,7 @@ class OptimoRoute
 			if ($order['logistic_sequence_No'] > $logistic_sequence_index)
 				$logistic_sequence_index = $order['logistic_sequence_No'];
 		}
+		//找到当前最大的 seq_number ;
 		
 		$logistic_sequence_index = $logistic_sequence_index < 1 ? 0 : $logistic_sequence_index;
 		$logistic_sequence_count = $logistic_sequence_index; 

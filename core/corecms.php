@@ -932,6 +932,8 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
        }
 		
 	//var_dump($logistic_suppliers_info);exit;
+
+
 		$data_order = array(
 			'orderId'                     => $orderId,
 			'order_name'                  => $order_names,
@@ -975,7 +977,8 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			'surcharge'                   => $arr_post['surcharge'],
 			'surcharge_new'                => $arr_post['surcharge'],
 			'multi_use'                   => $arr_post['multi_use'],
-            'accountPay'                   => $statusOfOrder,
+            'accountPay'                   => $statusOfOrder
+
 			
 		);
 
@@ -988,6 +991,10 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 				$timeType = $parts[1];
 				$data_order['logistic_delivery_date']=$dateTimestamp;
 				$data_order['logistic_delivery_time_type']=$timeType;
+
+                $seq_number = $mdl_order->generateLogisticSequence($arr_post['business_userId'],$dateTimestamp);
+                $data_order['logistic_sequence_No']=$seq_number;
+
 			}
 		}
 

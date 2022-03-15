@@ -777,6 +777,15 @@ public function index3_action() {
 
 		 $this->display('test/labelprint');
 	 }
+
+
+	 public function generate_sequence_number_action(){
+		 $mdl_order = $this->loadModel('order');
+		$new_seq_number = $mdl_order->generateLogisticSequence(319188,1647558000);
+
+       var_dump($new_seq_number);
+
+	 }
     public function test_all_mail_action()
     {   
         /**
