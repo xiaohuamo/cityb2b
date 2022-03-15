@@ -206,7 +206,7 @@ class pdfGenerator extends PDF_Chinese
     function Header()
     {
         // Logo
-        //var_dump($this->logoPath);exit;
+       //var_dump($this->logoPath);exit;
         if ($this->logoPath) {
             $this->Image($this->logoPath, 4, 0, 60);
         }

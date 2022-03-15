@@ -951,7 +951,7 @@ public function AgentActiveCheck($id,$agentId){
             $this->loadModel('factory_invoice_dnl');
             $report = new OrderInvoice($order, $items);
             if($this->loginUser['logo']) {
-                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+                $report->logoPath(UPLOAD_PATH . $this->loginUser['logo']);
             }
 
             $user['address']=$order['address'];
@@ -973,7 +973,7 @@ public function AgentActiveCheck($id,$agentId){
             $this->loadModel('factory_invoice');
             $report = new OrderInvoice($order, $items);
             if($this->loginUser['logo']) {
-                $report->logoPath('data/upload/' . $this->loginUser['logo']);
+                $report->logoPath('UPLOAD_PATH' . $this->loginUser['logo']);
             }
 
             $user['address']=$order['address'];
