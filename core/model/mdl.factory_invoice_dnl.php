@@ -208,7 +208,7 @@ class pdfGenerator extends PDF_Chinese
         // Logo
        //var_dump($this->logoPath);exit;
         if ($this->logoPath) {
-            $this->Image($this->logoPath, 4, 0, 60);
+            $this->Image($this->logoPath, 4, 0, 60,60,'PNG');
         }
         $this->SetFont('Arial','B',14);
         $this->row("", 0.7, 0, "L", 6);
