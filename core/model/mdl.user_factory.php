@@ -227,7 +227,7 @@ class mdl_user_factory extends mdl_base
 					 )";
         }
 
-var_dump($sql);exit;
+//var_dump($sql);exit;
         if($returnSql){
             return $sql;
         }else{
