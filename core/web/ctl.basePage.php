@@ -915,7 +915,7 @@ public function AgentActiveCheck($id,$agentId){
         $mdl_user_account_info = $this->loadModel('user_account_info');
 
         $order = $this->loadModel('order')->getByOrderId($orderId);
-        $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
+        $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->current_business['id']);
         foreach ($items as $key1 =>$value){
             $totalAmount += $value['voucher_deal_amount']* $value['customer_buying_quantity'];
         }
@@ -950,8 +950,8 @@ public function AgentActiveCheck($id,$agentId){
 
             $this->loadModel('factory_invoice_dnl');
             $report = new OrderInvoice($order, $items);
-            if($this->loginUser['logo']) {
-                $report->logoPath(UPLOAD_PATH . $this->loginUser['logo']);
+            if($this->current_business['logo']) {
+                $report->logoPath(UPLOAD_PATH . $this->current_business['logo']);
             }
 
             $user['address']=$order['address'];

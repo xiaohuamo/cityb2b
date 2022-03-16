@@ -118,27 +118,28 @@ class mdl_wj_customer_coupon extends mdl_base
 	
 
 
-	function getItemsInOrder_menu($order_id,$business_id){
-		
-	
-		
-		$column = ['id','bonus_title','bonus_type','bonus_type_name','customer_buying_quantity','guige_des','voucher_deal_amount'];
-		$where['order_id'] = $order_id;
-		if($business_id) {
-			$where['business_id'] = $business_id;
-		}
-		
-		$sql =" select c.id,upper(m.menu_en_name) as menu_en_name,upper(c.bonus_title) as bonus_title,c.bonus_type,c.bonus_type_name,c.voucher_original_amount,c.menu_id,c.customer_buying_quantity,upper(if(length(m.unit_en)>0,m.unit_en,m.unit)) as unit , upper(c.guige_des) as guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
-		$sql.= " on c.restaurant_menu_id =m.id  where c.order_id =$order_id and ((c.business_id =$business_id ) or c.business_id in (select suppliers_id from cc_freshfood_disp_centre_suppliers where c.business_id =$business_id) or  c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$business_id) or  business_id in (select customer_id from cc_factory_2blist where factroy_id =$business_id) )";
-		
-		
+
+    function getItemsInOrder_menu($order_id,$business_id){
+
+
+
+        $column = ['id','bonus_title','bonus_type','bonus_type_name','new_customer_buying_quantity','guige_des','voucher_deal_amount'];
+        $where['order_id'] = $order_id;
+        if($business_id) {
+            $where['business_id'] = $business_id;
+        }
+
+        $sql =" select c.id,upper(m.menu_en_name) as menu_en_name,upper(c.bonus_title) as bonus_title,c.bonus_type,c.bonus_type_name,c.voucher_original_amount,c.menu_id,c.new_customer_buying_quantity as customer_buying_quantity,upper(if(length(m.unit_en)>0,m.unit_en,m.unit)) as unit , upper(c.guige_des) as guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c left join cc_restaurant_menu  m  ";
+        $sql.= " on c.restaurant_menu_id =m.id  where c.order_id =$order_id and ((c.business_id =$business_id ) or c.business_id in (select suppliers_id from cc_freshfood_disp_centre_suppliers where c.business_id =$business_id) or  c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$business_id) or  business_id in (select customer_id from cc_factory_2blist where factroy_id =$business_id) )";
+
+
 //var_dump($sql);exit;
 
-		$data = $this->getListBySql($sql);
-		
-		return $data;
+        $data = $this->getListBySql($sql);
 
-	}
+        return $data;
+
+    }
 
 	function getItemsInOrderWithPic($order_id){
 		$sql = "select c.pic,cc.id,cc.bonus_title,cc.bonus_type,cc.bonus_type_name,cc.customer_buying_quantity,cc.guige_des,cc.voucher_deal_amount from cc_wj_customer_coupon as cc left join cc_coupons as c on cc.bonus_id = c.id where cc.order_id=".$order_id;
@@ -177,6 +178,7 @@ class mdl_wj_customer_coupon extends mdl_base
 
       return $list;
     }
+
 	
 }
 

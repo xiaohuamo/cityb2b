@@ -329,6 +329,7 @@
 								<th>原价</th>
 								<th>现价</th>
 								<th>数量</th>
+								<th>调整后数量</th>
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
 
@@ -367,12 +368,18 @@
 								
 
 									<td>
+                                        
+											
+										 <{$item.customer_buying_quantity}>
+									</td>
+									
+									<td>
                                         <{if $days>21}>
 											超21天 无法修改
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
-												   data-id='<{$item.id}>' id="customer_buying_quantity-<{$item.id}>" style="width:50px;" name="customer_buying_quantity"
-												   value="<{$item.customer_buying_quantity}>">
+												   data-id='<{$item.id}>' id="new_customer_buying_quantity-<{$item.id}>" style="width:50px;" name="new_customer_buying_quantity"
+												   value="<{$item.new_customer_buying_quantity}>">
 											<span class='promote-ajax'></span>
 										<{/if}>
 									</td>
@@ -398,7 +405,7 @@
 										<{/if}>
 									</td>
 									<td>
-                                        <{if ($item.customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}>
+                                        <{if ($item.new_customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}>
 											<select name='reason_type' id='reason_type'>
                                                 <{foreach from=$order_amend_reson_type_list item=reason_type name='dl'}>
 													<option value='<{$reason_type.id}>' <{if $reason_type.id==$item.reason_type}>selected<{/if}> >
@@ -409,7 +416,7 @@
                                         <{/if}>
 									</td>
 
-									<td><{if ($item.customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}><a target='_blank'
+									<td><{if ($item.new_customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}><a target='_blank'
 																																		  href="<{$http_root_www}>company/customer_order_amend_edit?item_buying_id=<{$item.id}>&return_link=details">
 												详细填写</a><{/if}></td>
 
@@ -609,7 +616,7 @@
     var loading = false;
 
 
-    $('input[name=customer_buying_quantity], input[name=voucher_deal_amount]').on('change', function () {
+    $('input[name=new_customer_buying_quantity], input[name=voucher_deal_amount]').on('change', function () {
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";

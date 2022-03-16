@@ -1094,6 +1094,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
   			'strip_code'=>$coupon['stripCode'],
   
   			'customer_buying_quantity'=>$qty,
+            'new_customer_buying_quantity'=>$qty,
 
   			'platform_commission_base'=>$coupon['platform_commission_base'],
   			'platform_commission_rate'=>$coupon['platform_commission_rate'],

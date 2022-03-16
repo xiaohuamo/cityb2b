@@ -926,9 +926,9 @@ class ctl_factory extends cmsPage
 
         $id = post('id');
         $data = [];
-        $quantity = post('customer_buying_quantity');
+        $quantity = post('new_customer_buying_quantity');
         if (isset($quantity)) {
-            $data['customer_buying_quantity'] = $quantity;
+            $data['new_customer_buying_quantity'] = $quantity;
         }
         $amount = post('voucher_deal_amount');
         if (isset($amount)) {
@@ -975,7 +975,7 @@ class ctl_factory extends cmsPage
         }
 
         $customerCouponData = [
-            'customer_buying_quantity' => $customerCoupon['customer_buying_quantity'],
+            'new_customer_buying_quantity' => $customerCoupon['new_customer_buying_quantity'],
             'voucher_deal_amount' => $customerCoupon['voucher_deal_amount'],
             'adjust_subtotal_amount' => $customerCoupon['adjust_subtotal_amount'],
         ];
@@ -993,16 +993,21 @@ class ctl_factory extends cmsPage
             }
 
             $customerCouponData[$key] = $value;
+           if($value['id']==$id){
+               $newCustomerCouponPrice = $quantity * $amount;
 
-            $newCustomerCouponPrice = $customerCouponData['customer_buying_quantity'] * $customerCouponData['voucher_deal_amount'];
+           }else{
+               $newCustomerCouponPrice = $customerCouponData['new_customer_buying_quantity'] * $customerCouponData['voucher_deal_amount'];
+
+           }
 
             $orderPriceChange += $newCustomerCouponPrice - $customerCouponData['adjust_subtotal_amount'];
             $customerCouponData['adjust_subtotal_amount'] = round($newCustomerCouponPrice, 2);
             $mdl_wj_customer_coupon->update($customerCouponData, $id);
 
             if ($key == 'voucher_deal_amount') {
-                $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
-                $mdl_user_factory_menu_price->insertOrUpdateUserFactoryPrice($customerCoupon['userId'], $customerCoupon['restaurant_menu_id'], $customerCouponData['voucher_deal_amount']);
+          //      $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
+            //    $mdl_user_factory_menu_price->insertOrUpdateUserFactoryPrice($customerCoupon['userId'], $customerCoupon['restaurant_menu_id'], $customerCouponData['voucher_deal_amount']);
             }
         }
 
@@ -3770,32 +3775,32 @@ class ctl_factory extends cmsPage
     }
 	
 	 function truck_edit_action()
-    {   
-      
-		$mdl_truck = $this->loadModel('truck');
-       
+    {
+
+        $mdl_truck = $this->loadModel('truck');
+
 
         $id = (int)get2('id');
 
         $truck = $mdl_truck->getByWhere(array('id' => $id, 'business_id' => $this->current_business['id']));
-		
-		$mdl_staff_roles =  $this->loadModel('staff_roles');
-		$driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
-		$this->setData($driverList,'driverList');
-		//var_dump($dirverList);exit;
 
-        
+        $mdl_staff_roles =  $this->loadModel('staff_roles');
+        $driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
+        $this->setData($driverList,'driverList');
+        //var_dump($dirverList);exit;
+
+
         if (is_post()) {
-			
-		
-				
-					//var_dump($id);exit;
-          
+
+
+
+            //var_dump($id);exit;
+
             $truck_name = trim(post('truck_name'));
             $truck_no = trim(post('truck_no'));
             $plate_number = trim(post('plate_number'));
             $current_driver = trim(post('diverId'));
-            
+
             $made_factory = trim(post('made_factory'));
             $load_tones = trim(post('load_tones'));
 
@@ -3803,7 +3808,7 @@ class ctl_factory extends cmsPage
             $where =array(
                 'business_id'=>$this->current_business['id'],
                 'truck_no'=>$truck_no
-             );
+            );
 
             $truc_rec = $mdl_truck->getByWhere($where);
 
@@ -3811,50 +3816,50 @@ class ctl_factory extends cmsPage
                 $this->form_response_msg('the truck number is exist,please use a different truct number');
             }
 
-			
+
             $data = array(
                 'truck_no'=>$truck_no,
-				'truck_name'=>$truck_name,
-				'plate_number'=>$plate_number,
-				'made_factory'=>$made_factory,
-				'load_tones'=>$load_tones,
-				'current_driver'=>$current_driver
-				);
+                'truck_name'=>$truck_name,
+                'plate_number'=>$plate_number,
+                'made_factory'=>$made_factory,
+                'load_tones'=>$load_tones,
+                'current_driver'=>$current_driver
+            );
 
-                  
-             if($truck && $id) {
-				 
-				  if ($mdl_truck->update($data, $id)) {
 
-                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/truck_list');
-                } else {
-                    $this->form_response_msg('something wrong');
-                }
-				 
-			 }else{
-				  $data['business_id'] = $this->current_business['id'];
-				  if ($mdl_truck->insert($data)) {
-					
+            if($truck && $id) {
+
+                if ($mdl_truck->update($data, $id)) {
 
                     $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/truck_list');
                 } else {
                     $this->form_response_msg('something wrong');
                 }
-			 }
-               
 
-			
-		
-            
+            }else{
+                $data['business_id'] = $this->current_business['id'];
+                if ($mdl_truck->insert($data)) {
+
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/truck_list');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+            }
+
+
+
+
+
 
         } else {
-				$this->setData($truck, 'data');
-                $this->setData('Turck Edit', 'pagename');
-				$this->setData('trucklist', 'submenu');
-				$this->setData('Logistic_centre', 'menu');
-				$this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
-			
-				$this->display('factory/truck_edit');
+            $this->setData($truck, 'data');
+            $this->setData('Turck Edit', 'pagename');
+            $this->setData('trucklist', 'submenu');
+            $this->setData('Logistic_centre', 'menu');
+            $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+
+            $this->display('factory/truck_edit');
         }
     }
 
