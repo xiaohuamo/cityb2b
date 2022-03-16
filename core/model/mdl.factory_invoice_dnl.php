@@ -771,7 +771,7 @@ class OrderInvoice
 				$item_name =$item['bonus_title'];
 			}
            if($item['guige_des']) {
-               $item_name .=$item['guige_des'];
+               $item_name .=' '.$item['guige_des'];
 
            }
 
