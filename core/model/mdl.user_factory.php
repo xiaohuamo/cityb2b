@@ -220,14 +220,14 @@ class mdl_user_factory extends mdl_base
 
 
         if($search) {
-            $sql .= " AND (u.id ='%$search%'
+            $sql .= " AND (u.id =$search 
                      OR u.phone like '%$search%'
                      OR u.name like '%$search%'
 					  OR f.nickname like '%$search%'
 					 )";
         }
 
-//var_dump($sql);exit;
+var_dump($sql);exit;
         if($returnSql){
             return $sql;
         }else{

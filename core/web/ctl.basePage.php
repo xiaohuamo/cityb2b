@@ -940,7 +940,7 @@ public function AgentActiveCheck($id,$agentId){
         // 获得该用户的简称
         $mdl_user_factory =$this->loadModel("user_factory");
         $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$order['business_userId']));
-        //var_dump($user_code_rec);exit;
+       // var_dump($user);exit;
 
 
 
