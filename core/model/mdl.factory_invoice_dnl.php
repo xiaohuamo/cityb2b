@@ -260,18 +260,18 @@ class pdfGenerator extends PDF_Chinese
 		$this->Cell(95);
 		$this->SetFont('Arial','',10);
         $this->ln(6);
-        if(strlen($this->userABN['business_name'])>35) {
+        if(strlen($this->userABN['business_name'])>30) {
             $this->SetFont('Arial','b',12);
         }else{
             $this->SetFont('Arial','b',14);
         }
 
        // $this->row($this->user_code['nickname'], 0.5, 0, "L", 6);
-        $this->cell(0,0,substr($this->userABN['business_name'],0,35), 0, 0, "L");
-        if(strlen($this->userABN['business_name'])>35) {
+        $this->cell(0,0,substr($this->userABN['business_name'],0,30), 0, 0, "L");
+        if(strlen($this->userABN['business_name'])>30) {
 
             $this->ln(6);
-            $this->cell(0,0,substr($this->userABN['business_name'],36,35), 0, 0, "L");
+            $this->cell(0,0,substr($this->userABN['business_name'],31,35), 0, 0, "L");
 
         }
 
@@ -312,7 +312,7 @@ class pdfGenerator extends PDF_Chinese
         $this->ln(3);
         $this->SetFont('Arial','B',12);
         $this->Cell(19,8," Item", 0, 0, 'L',true);
-        $this->Cell(95,8,"Description", 0, 0, 'C',true);
+        $this->Cell(95,8,"Description", 0, 0, 'L',true);
         $this->Cell(19,8,"Qty ", 0, 0, 'R',true);
         $this->Cell(19,8,"Unit", 0, 0, 'R',true);
         $this->Cell(19,8,"Price ", 0, 0, 'R',true);
