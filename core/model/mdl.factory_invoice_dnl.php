@@ -260,8 +260,12 @@ class pdfGenerator extends PDF_Chinese
 		$this->Cell(95);
 		$this->SetFont('Arial','',10);
         $this->ln(6);
+        if(strlen($this->userABN['business_name'])>40) {
+            $this->SetFont('Arial','b',12);
+        }else{
+            $this->SetFont('Arial','b',14);
+        }
 
-        $this->SetFont('Arial','b',14);
        // $this->row($this->user_code['nickname'], 0.5, 0, "L", 6);
         $this->cell(0,0,$this->userABN['business_name'], 0, 0, "L");
         $this->SetFont('Arial','',10);
