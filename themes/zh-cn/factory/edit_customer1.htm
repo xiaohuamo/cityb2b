@@ -69,8 +69,8 @@
 							<span>
 							<label for="customer_type">客户分类</label>
 							</span>
-							<select name="customer_type" id='ifpaid'>
-							<option value="<{$loginUser.id}>"<{if (!$user_factory_info.customer_type)}> selected<{/if}>>Please Select</option>
+							<select name="customer_type" 0>
+							<option value="0"<{if (!$user_factory_info.customer_type)}> selected<{/if}>>Please Select</option>
 							
 							<{foreach from=$customer_type_list item=type_list}>
 							  <option value="<{$type_list.id}>"<{if ($type_list.id==$user_factory_info.customer_type)}> selected<{/if}>><{$type_list.customer_type}></option>
@@ -99,7 +99,7 @@
 							<span>
 							<label for="mobile">联系人</label>
 							</span>
-							<input type="text" name="contactPersonFirstname" id="contactPersonFirstname" class="input-text" placeholder="First Name" value="<{$user.contactPersonFirstname}>">&nbsp;<input type="text" name="contactPersonLastname" id="contactPersonLastname" class="input-text" placeholder=" Last Name" value="<{$user.contactPersonLastname}>">
+							<input type="text" name="person_first_name" id="person_first_name" class="input-text" placeholder="First Name" value="<{$user.person_first_name}>">&nbsp;<input type="text" name="person_last_name" id="person_last_name" class="input-text" placeholder=" Last Name" value="<{$user.person_last_name}>">
 						</div>
 						
 						<div class="input-box  form-style-green">

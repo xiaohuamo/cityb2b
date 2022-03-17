@@ -278,7 +278,7 @@ class pdfGenerator extends PDF_Chinese
         $this->row("INV-".$this->invoiceId, 0.16, 0, "L", 6);
 
         $this->ln();
-        $this->row("ACC NO:".$this->user['id'].' '.$this->user_code['nickname'], 0.5, 0, "L", 6);
+        $this->row("ACC NO: ".$this->user_code['nickname'].'  '.$this->user['id'], 0.5, 0, "L", 6);
         $this->row("Total Outstanding", 0.17, 0, "L", 6);
         $this->row("Payment Term", 0.17, 0, "L", 6);
         $this->row("Reference", 0.16, 0, "L", 6);

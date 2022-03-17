@@ -922,6 +922,7 @@ public function AgentActiveCheck($id,$agentId){
         $totalAmount='$' . sprintf("%1\$.2f", $totalAmount);
 
         $user =$mel_user->getUserById($order['userId']);
+      //  var_dump($order['userId']);exit;
         $userWhere = [
             'userId' => $order['userId'],
         ];

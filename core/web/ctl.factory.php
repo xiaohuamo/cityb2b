@@ -1159,9 +1159,9 @@ class ctl_factory extends cmsPage
 				
 				$tel = trim(post('tel'));
 				
-				$contactPersonFirstname = trim(post('contactPersonFirstname'));
+				$contactPersonFirstname = trim(post('person_first_name'));
 				
-				$contactPersonLastname = trim(post('contactPersonLastname'));
+				$contactPersonLastname = trim(post('person_last_name'));
 				
 				$email = trim(post('email'));
 				$username = trim(post('username'));
