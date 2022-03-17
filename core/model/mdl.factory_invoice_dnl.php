@@ -208,7 +208,7 @@ class pdfGenerator extends PDF_Chinese
         // Logo
        //var_dump($this->logoPath);exit;
         if ($this->logoPath) {
-            $this->Image($this->logoPath, 4, 0, 60,60,'PNG');
+            $this->Image($this->logoPath, 4, 0, 50,50,'PNG');
         }
         $this->SetFont('Arial','B',14);
         $this->row("", 0.7, 0, "L", 6);
@@ -289,7 +289,8 @@ class pdfGenerator extends PDF_Chinese
         $this->row("INV-".$this->invoiceId, 0.16, 0, "L", 6);
 
         $this->ln();
-        $this->row("ACC NO: ".$this->user_code['nickname'].'  '.$this->user['id'], 0.5, 0, "L", 6);
+      //  $this->row("ACC NO: ".$this->user_code['nickname'].'  '.$this->user['id'], 0.5, 0, "L", 6);
+        $this->row("ACC NO: ".$this->user['id'], 0.5, 0, "L", 6);
         $this->row("Total Outstanding", 0.17, 0, "L", 6);
         $this->row("Payment Term", 0.17, 0, "L", 6);
         $this->row("Reference", 0.16, 0, "L", 6);
@@ -1141,7 +1142,7 @@ class OrderInvoice
 
     function displayAmount($amount)
     {
-        return sprintf("%1\$.2f", $amount);
+        return '$'.sprintf("%1\$.2f", $amount);
     }
 }
 
