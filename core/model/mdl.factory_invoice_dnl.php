@@ -260,14 +260,21 @@ class pdfGenerator extends PDF_Chinese
 		$this->Cell(95);
 		$this->SetFont('Arial','',10);
         $this->ln(6);
-        if(strlen($this->userABN['business_name'])>40) {
+        if(strlen($this->userABN['business_name'])>35) {
             $this->SetFont('Arial','b',12);
         }else{
             $this->SetFont('Arial','b',14);
         }
 
        // $this->row($this->user_code['nickname'], 0.5, 0, "L", 6);
-        $this->cell(0,0,$this->userABN['business_name'], 0, 0, "L");
+        $this->cell(0,0,substr($this->userABN['business_name'],0,35), 0, 0, "L");
+        if(strlen($this->userABN['business_name'])>35) {
+
+            $this->ln(6);
+            $this->cell(0,0,substr($this->userABN['business_name'],36,35), 0, 0, "L");
+
+        }
+
         $this->SetFont('Arial','',10);
         $this->ln();
         $this->row("", 0.5, 0, "L", 6);
@@ -857,7 +864,7 @@ class OrderInvoice
 			$loop1= $totalCountofItemPrintPerPage-count($this->items);
 			for($i=0;$i<$loop1;$i++) {
 				 $this->pdf->ln();
-            $this->pdf->row('', 1, 0, "L", 6);
+       //     $this->pdf->row('', 1, 0, "L", 6);
 
 			}
 
@@ -871,21 +878,11 @@ class OrderInvoice
         $this->pdf->row('',0.4, 1, 'C', 0.1);
         $this->pdf->ln(1);
 
-      //
-      //  $this->pdf->Cell( 80, 6, $reportSubtitle, 1,'L',0);
-      //  $this->pdf->Cell(50);
 
-   //     $this->pdf->Cell(30,5,'Sub Total: ',0,0,'L');
-     //   $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_no_gst']),0,0,'R');
-
-
-      //  $this->pdf->ln();
-		//$this->pdf->Cell(131);
-		//$this->pdf->Cell(30,5,'GST Include In Total: ',0,0,'L');
-      //  $this->pdf->Cell(20,5,$this->displayAmount( $totalAmount['total_gst']),0,0,'R');
-	//	$this->pdf->ln();
 
 		 $this->pdf->ln();
+
+
 
 
 
@@ -1144,7 +1141,7 @@ class OrderInvoice
 
     function displayAmount($amount)
     {
-        return '$' . sprintf("%1\$.2f", $amount);
+        return sprintf("%1\$.2f", $amount);
     }
 }
 
