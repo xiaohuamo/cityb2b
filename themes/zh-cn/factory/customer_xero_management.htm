@@ -126,7 +126,19 @@
                     Customer List 
 				</div>
 				<form>
-					<input style ="width: 300px;" value="<{$search}>" name="search" placeholder="Please input user id or phone number ">
+					<input style ="width: 300px;" value="<{$search}>" name="search" placeholder="Please input user id or phone number ">&nbsp;&nbsp;
+					<select name="to_xero" id='to_xero'>
+
+							<option value="0"
+                                    <{if $to_xero=='0'}> selected<{/if}>>ALL
+							</option>
+							<option value="1"
+                                     <{if $to_xero==1}>  selected<{/if}>>send to xero
+							</option>
+							<option value="2"
+                                    <{if $to_xero==2}> selected<{/if}>>not send 
+							</option>
+						</select> &nbsp;&nbsp;
 					<input type="submit" value="Search">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
@@ -154,7 +166,7 @@
 							<{foreach from=$users item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 
-<td>
+									<td>
 										<div class="onoffswitch">
 												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$user.idd}>"
 													   data-id='<{$user.idd}>' <{if $user.to_xero==1}> checked <{/if}>>
@@ -166,11 +178,11 @@
 										
                                             <{if $user.to_xero==1}>
 												<span class='publish_icon' data-id='<{$user.idd}>'>
-                                                        <span style="color:#58964E;">发送到Xero</span>
+                                                        <span style="color:#58964E;">send to xero</span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$user.idd}>'>
-                                                        <span style="color:#F30;">不发送</span>
+                                                        <span style="color:#F30;">not send</span>
                                                     </span>
                                             <{/if}>
 											
@@ -227,6 +239,10 @@
 	
 	
 	  $('input[name=xero_contact_id]').on('change', function () {
+	  
+	  
+	  var result1 = confirm("would you like to change xero contact Id ? you must keep xero account Number is same with this , otherwise the invocie will not go to the right account on xero!");
+	  if(result1) {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -279,7 +295,7 @@
         }).fail(function () {
             iconupdate.iconUpdateFail();
         });
-
+		}
 
     });
 	
@@ -376,9 +392,9 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.to_xero == '0') {
-                    context.html("<span style='color:#F30;'>不发送</span>");
+                    context.html("<span style='color:#F30;'>not send</span>");
                 } else if (result.to_xero == '1') {
-                    context.html("<span style='color:#58964E;'>发送到xero</span>");
+                    context.html("<span style='color:#58964E;'>send to xero</span>");
                 }
             }
         }).fail(function () {

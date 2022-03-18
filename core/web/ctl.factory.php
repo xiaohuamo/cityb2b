@@ -3055,6 +3055,12 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
 
         $search = trim(get2('search'));
+        $to_xero = trim(get2('to_xero'));
+        if(strlen($to_xero)==0){
+            $to_xero =0;
+        }
+     //  var_dump(($to_xero));exit;
+
         if($this->loginUser['role']==20) {
             $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
             $salesManId = $this->loginUser['id'];
@@ -3064,8 +3070,9 @@ class ctl_factory extends cmsPage
         }
         //var_dump($salesManId );exit;
 
-        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        $users = $mdl_user_factory->getUserFactoryList_xero($factoryId, $search,$to_xero);
 
+        $this->setData($to_xero, 'to_xero');
         $this->setData($search, 'search');
         $this->setData($users, 'users');
         $this->setData('customer_xero_management', 'submenu');
