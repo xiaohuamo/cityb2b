@@ -3052,26 +3052,29 @@ class ctl_factory extends cmsPage
 
 
     public function customer_xero_management_action() {
-        $mdl_user_factory = $this->loadModel('user_factory');
+
 
         $search = trim(get2('search'));
         $to_xero = trim(get2('to_xero'));
         if(strlen($to_xero)==0){
             $to_xero =0;
         }
-     //  var_dump(($to_xero));exit;
 
-        if($this->loginUser['role']==20) {
-            $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
-            $salesManId = $this->loginUser['id'];
-        }else{
-            $factoryId =  $this->loginUser['id'];
-            $salesManId = 0;
-        }
-        //var_dump($salesManId );exit;
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $pageSql = $mdl_user_factory->getUserFactoryList_xero($this->current_business['id'], $search,$to_xero,1);
 
-        $users = $mdl_user_factory->getUserFactoryList_xero($factoryId, $search,$to_xero);
 
+
+        //var_dump($pageSql);exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize =30;
+        $maxPage =100;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+        $users = $mdl_user_factory->getListBySql($page['outSql']);
+
+
+
+        $this->setData($page['pageStr'], 'pager');
         $this->setData($to_xero, 'to_xero');
         $this->setData($search, 'search');
         $this->setData($users, 'users');

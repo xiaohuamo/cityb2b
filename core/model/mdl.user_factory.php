@@ -236,7 +236,7 @@ class mdl_user_factory extends mdl_base
 
     }
 
-    public function getUserFactoryList_xero($factoryId, $search = null,$to_xero) {
+    public function getUserFactoryList_xero($factoryId, $search = null,$to_xero,$returnSql) {
 
 
 
@@ -273,7 +273,11 @@ class mdl_user_factory extends mdl_base
 
 
 
+        if($returnSql){
+            return $sql;
+        }else{
             return $this->getListBySql($sql);
+        }
 
 
     }
