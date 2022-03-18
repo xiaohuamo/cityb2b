@@ -66,7 +66,7 @@ class mdl_restaurant_menu extends mdl_base
 
        // var_dump($userFactoryMenuPrices);exit;
      //   var_dump('show_orginal_price:' . $show_origin_price);exit;
-        //var_dump($sql_sum_final);exit;
+       // var_dump($sql_sum_final);exit;
         // $sql_sum = "select ($sql_main_table) as a union select ($sql_sub_cate_good_list) as b union select ($sql_parent_cate_good_list) as c ";
         $goodList =$this->getListBySql($sql_sum_final);
 

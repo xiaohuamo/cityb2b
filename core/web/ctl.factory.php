@@ -2114,6 +2114,60 @@ class ctl_factory extends cmsPage
         }
     }
 
+    public function update_xero_account_id_action()
+    {
+
+
+        if (is_post()) {
+
+
+            $mdl_user_factory = $this->loadModel("user_factory");
+
+            $id = post('id');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+
+            $factory_user = $mdl_user_factory->get($id);
+
+
+            if ($factory_user['factory_id'] != $this->current_business['id']) {
+                $this->form_response(600, 'no access', 'no access');
+
+            }
+
+
+            $data = array();
+            $filedName = post('update_field_name');
+            $value =trim(post('value'));
+            $data[$filedName]  = $value;
+         //   $this->form_response(600, $filedName.' '.$value);
+            /*   $data['delivery_tue']  = post('delivery_Tue');
+               $data['delivery_wed']  = post('delivery_Wed');
+               $data['delivery_thur']  = post('delivery_Thur');
+               $data['delivery_fri']  = post('delivery_Fri');
+               $data['delivery_sat']  = post('delivery_Sat');
+               $data['delivery_sun']  = post('delivery_Sun');
+           */
+
+            // if ($business_discount_rate)= $business_discount_rate;
+
+
+            try {
+                $mdl_user_factory->update($data, $id);
+
+
+                $this->form_response(200, '', '');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(), '');
+            }
+
+        } else {
+            //wrong protocol
+        }
+    }
+
+
     public function update_deliver_avaliable_date_action()
     {
 
@@ -2966,7 +3020,58 @@ class ctl_factory extends cmsPage
         $this->display('factory/approve_customer_payments_and_discount');
     }
 
+    function to_xero_edit_ajax_action()
+    {
+        $id = (int)get2('id');
 
+
+
+       $mdl= $this->loadModel('user_factory');
+
+        $user_info = $mdl->get($id);
+
+        if ($id < 0 || $user_info['factory_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+
+
+        $data = array();
+        $data['to_xero'] = ($user_info['to_xero'] == '0') ? '1' : '0';
+
+        if ($mdl->update($data, $user_info['id'])) {
+            echo json_encode(array('to_xero' => $data['to_xero']));
+        } else {
+            $this->form_response_msg('Please try again later');
+        }
+
+
+    }
+
+
+
+
+    public function customer_xero_management_action() {
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        $search = trim(get2('search'));
+        if($this->loginUser['role']==20) {
+            $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
+            $salesManId = $this->loginUser['id'];
+        }else{
+            $factoryId =  $this->loginUser['id'];
+            $salesManId = 0;
+        }
+        //var_dump($salesManId );exit;
+
+        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+
+        $this->setData($search, 'search');
+        $this->setData($users, 'users');
+        $this->setData('customer_xero_management', 'submenu');
+        $this->setData('account_management', 'menu');
+        $this->display('factory/customer_xero_management');
+    }
 	/**
 	 *  Ajax update parent category discount Rate 
 	 */

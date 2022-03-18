@@ -191,7 +191,7 @@ class mdl_user_factory extends mdl_base
 
 
 
-        $sql = "SELECT f.id as idd,f.nickname as code,f.grade,f.customer_type, c.customer_type as type_name,g.grade_name,g.id as gradeId,g.grade_discount_rate,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
+        $sql = "SELECT f.id as idd,f.nickname as code,f.to_xero,f.xero_contact_id,f.grade,f.customer_type, c.customer_type as type_name,g.grade_name,g.id as gradeId,g.grade_discount_rate,f.account_type ,u.googleMap as address,u.addrPost,u.addrSuburb,f.isHide,
 		f.user_id,f.factory_id,f.approved,f.show_origin_price,f.factory_sales_id,f.business_discount_rate ,u.id,u.name,u.phone
 		,f.delivery_mon,f.delivery_tue,f.delivery_wed,f.delivery_thur,f.delivery_fri,f.delivery_sat,f.delivery_sun
                 FROM cc_user_factory f
@@ -220,7 +220,7 @@ class mdl_user_factory extends mdl_base
 
 
         if($search) {
-            $sql .= " AND (u.id =$search 
+            $sql .= " AND (u.id like '%$search%'  
                      OR u.phone like '%$search%'
                      OR u.name like '%$search%'
 					  OR f.nickname like '%$search%'
