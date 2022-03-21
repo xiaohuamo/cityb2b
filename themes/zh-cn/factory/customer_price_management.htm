@@ -42,7 +42,18 @@
                     Customer Lists
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
+					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">&nbsp;
+					<select class='chooseCustomer' name="grade">
+											
+												<option value="0" <{if !$gradeId}>selected<{/if}>>
+													Select Customer Grade 
+												</option>
+												<{foreach from=$grade_list item=g_list}>
+													<option value="<{$g_list.id}>" <{if $g_list.id==$gradeId}>selected<{/if}>>
+														<{$g_list.grade_name}>(<{$g_list.grade_discount_rate}>%)
+													</option>
+												<{/foreach}>
+											</select>&nbsp;
 					<input type="submit" value="搜索">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
@@ -137,6 +148,9 @@
 							</tbody>
 						</table>
 					</div>
+					 <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
 				</div>
 			</div>
 		</div>

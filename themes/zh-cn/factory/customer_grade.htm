@@ -61,59 +61,61 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>Grade_id</th>
-								<th>Grade_name</th>
-								<th>Discount Rate</th>
+								<th>&nbsp;&nbsp;ID</th>
+								<th>Name</th>
+							
+								<th>Customers </th>
+								<th>Grade Discount</th>
+								
+								<th>Category Discount</th>
+								<th>Sub Cate Discount</th>
+								<th>item Discount</th>
 								<th>Create User</th>
 								<th>Create Time</th>
-								<th>Edit</th>
-								<th>大类折扣设置</th>
-								<th>小类类折扣设置</th>
-								<th>定制产品折扣设置</th>
-							
 							</tr>
 							</thead>
 							<tbody>
 							<{foreach from=$grade_lists item=grade_list name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									<td>
-										<{$grade_list.grade_id}>
+										&nbsp;&nbsp;<{$grade_list.grade_id}>
 									</td>
 
 
 									<td>
 										<{$grade_list.grade_name}>
 									</td>
-									<td>
-									<{$grade_list.grade_discount_rate}> 
-									</td>
+									
 						
+									
 									<td>
-                                       	<{if  $grade_list.createUserId}>  <{$grade_list.createUserId}> <{else}>-<{/if}>
+								    	<a href="<{$http_root_www}>factory/customer_price_management?&grade=<{$grade_list.id}>">List</a>
 									</td>
 									<td>
-								    	<{if  $grade_list.gen_date}> <{date('Y-m-d H:i', $grade_list.gen_date)}>  <{else}>-<{/if}>
+									<{$grade_list.grade_discount_rate}>% &nbsp; &nbsp;<a href ="<{$http_root_www}>factory/customer_grade_add?id=<{$grade_list.id}>">Edit</a>
 									</td>
 									
 									<td>
-								    	<a href ="<{$http_root_www}>factory/customer_grade_add?id=<{$grade_list.id}>">Edit</a>
-									</td>
-									<td>
 										<a href="<{$http_root_www}>restaurant/discount_edit_parant_category_grade?id=<{$grade_list.id}>">
-										大类
+										Edit
 										</a>
 
 										
 									</td>
 									
 									<td>
-										<a href="<{$http_root_www}>restaurant/discount_edit_sub_category_grade?id=<{$grade_list.id}>">&nbsp;&nbsp;小类</a>
+										<a href="<{$http_root_www}>restaurant/discount_edit_sub_category_grade?id=<{$grade_list.id}>">&nbsp;&nbsp;Edit</a>
 									</td>
 									
 									<td>
-										<a href="<{$http_root_www}>restaurant/grade_product_discount_edit?id=<{$grade_list.id}>">&nbsp;&nbsp;产品及规格</a>
+										<a href="<{$http_root_www}>restaurant/grade_product_discount_edit?id=<{$grade_list.id}>">&nbsp;&nbsp;Edit</a>
 									</td>
-
+									<td>
+                                       	<{if  $grade_list.createUserId}>  <{$grade_list.createUserId}> <{else}>-<{/if}>
+									</td>
+									<td>
+								    	<{if  $grade_list.gen_date}> <{date('Y-m-d H:i', $grade_list.gen_date)}>  <{else}>-<{/if}>
+									</td>
 								</tr>
 							<{/foreach}>
 							</tbody>

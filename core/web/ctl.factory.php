@@ -2834,13 +2834,13 @@ class ctl_factory extends cmsPage
             //校验
             if (empty($grade_name) ) $this->form_response_msg('Please fill in grade name!');
             if (empty($grade_id) ) $this->form_response_msg('Please fill in grade id!');
-            if (empty($grade_discount_rate)) $this->form_response_msg('Please fill in grade discount rate');
+            if (empty($grade_discount_rate)  ) $grade_discount_rate=0.0;
 
             if(!is_numeric($grade_discount_rate)) {
                 $this->form_response_msg('Please fill number on discount rate!');
             }
 
-            if($grade_discount_rate<=0 || $grade_discount_rate>=80) {
+            if($grade_discount_rate<0 || $grade_discount_rate>=80) {
                 $this->form_response_msg('Please fill the reasonable grade discount rate!');
             }
 
@@ -2958,6 +2958,7 @@ class ctl_factory extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
 
         $search = trim(get2('search'));
+        $gradeId = trim(get2('grade'));
         if($this->loginUser['role']==20) {
             $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
             $salesManId = $this->loginUser['id'];
@@ -2967,7 +2968,18 @@ class ctl_factory extends cmsPage
         }
         //var_dump($salesManId );exit;
 
-        $users = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId);
+        $pageSql = $mdl_user_factory->getUserFactoryList($factoryId, $search,$salesManId,0,0,1,$gradeId);
+
+        //var_dump($pageSql);exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize =30;
+        $maxPage =100;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+        $users = $mdl_user_factory->getListBySql($page['outSql']);
+
+
+
+
         foreach ($users as $key => $user) {
             $expiredAt =strtotime("+3 months", time());
             $link = self::customer_login_link($user['id'], $expiredAt);
@@ -2980,8 +2992,9 @@ class ctl_factory extends cmsPage
         $grade_list = $this->loadModel('factory_customer_grade')->getGradeList($factoryId);
        // var_dump($grade_list);exit;
         $this->setData($grade_list,'grade_list');
-
+        $this->setData($page['pageStr'], 'pager');
         $this->setData($search, 'search');
+        $this->setData($gradeId, 'gradeId');
         $this->setData($users, 'users');
         $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
         $this->setData('customer_price_management', 'submenu');

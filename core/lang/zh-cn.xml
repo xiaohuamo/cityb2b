@@ -1065,6 +1065,7 @@
 	 <customer_type>客户类型</customer_type>
 	  <choose_postcode>选择邮编地区</choose_postcode>
 	   <group_discount>组折扣管理</group_discount>
+	  <accountTypeandDelivery>客户账期及配送日程</accountTypeandDelivery>
 	 
     <email>邮箱</email>
 

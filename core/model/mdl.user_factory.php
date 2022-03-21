@@ -204,7 +204,7 @@ class mdl_user_factory extends mdl_base
 
 
 
-    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type,$returnSql) {
+    public function getUserFactoryList($factoryId, $search = null,$salesmanId,$isHide=0,$customer_type,$returnSql,$gradeId=0) {
 
 
 
@@ -232,6 +232,9 @@ class mdl_user_factory extends mdl_base
       //  var_dump($sql);exit;
         if($customer_type) {
             $sql .= " and f.customer_type = $customer_type ";
+        }
+        if($gradeId) {
+            $sql .= " and f.grade = $gradeId ";
         }
 
 

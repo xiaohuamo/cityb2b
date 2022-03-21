@@ -34,7 +34,13 @@ class mdl_restaurant_menu extends mdl_base
 
        // get the good list of business .
        //get the main table good list
-        $sql_main =" select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(grade_menu_price.price,0) as grade_menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
+        $sql_main =" select  m.sub_category_id as sub_category_id,
+                        ifnull(menu_price.price,0) as menu_discount_price ,
+                        ifnull(grade_menu_price.price,0) as grade_menu_discount_price , 
+                        ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
+        
+                        ifnull(grade_menu_price.menu_discount_rate,0) as grade_menu_discount_rate ,
+                       
                        ifnull(sub_cate_discount.discount_rate,0) as sub_cate_discount_rate ,
                      ifnull(sub_cate_grade_discount.discount_rate,0) as sub_cate_grade_discount_rate ,
         
@@ -58,7 +64,7 @@ class mdl_restaurant_menu extends mdl_base
                 
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
                      left join cc_user_factory_grade_menu_price grade_menu_price on ( m.id =grade_menu_price.restaurant_menu_id and grade_menu_price.grade_id =$gradeId )
-                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1 
+                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1    
                 ";
       //  var_dump($sql_main);exit;
 
@@ -234,18 +240,33 @@ class mdl_restaurant_menu extends mdl_base
             //第一优先级 单品折扣率
             $newPrice = $old_price*(100-$value['menu_discount_rate'])/100;
             return round($newPrice,2);
+        }elseif($value['grade_menu_discount_rate']>0) {
+            //第一优先级 单品折扣率
+            $newPrice = $old_price*(100-$value['grade_menu_discount_rate'])/100;
+            return round($newPrice,2);
         }elseif($value['menu_discount_price']>0){
             //第二优先级产品价格
             return round($value['menu_discount_price'],2);
+        }elseif($value['grade_menu_discount_price']>0){
+            //第二优先级产品价格
+            return round($value['grade_menu_discount_price'],2);
         }elseif($value['sub_cate_discount_rate']>0){
             //第三优先级小类
             $newPrice = $old_price*(100-$value['sub_cate_discount_rate'])/100;
+            return round($newPrice,2);
+        }elseif($value['sub_cate_grade_discount_rate']>0){
+            //第三优先级小类
+            $newPrice = $old_price*(100-$value['sub_cate_grade_discount_rate'])/100;
             return round($newPrice,2);
         }elseif($value['parent_cate_discount_rate']>0){
             //第四优先级大类
             $newPrice =$old_price*(100-$value['parent_cate_discount_rate'])/100;
             return round($newPrice,2);
-         }elseif($value['customer_dicount_rate']>0){
+         }elseif($value['parent_cate_grade_discount_rate']>0){
+            //第四优先级大类
+            $newPrice =$old_price*(100-$value['parent_cate_grade_discount_rate'])/100;
+            return round($newPrice,2);
+        }elseif($value['customer_dicount_rate']>0){
             //第五优先级客户
             $newPrice = $old_price*(100-$value['customer_dicount_rate'])/100;
             return round($newPrice,2);
