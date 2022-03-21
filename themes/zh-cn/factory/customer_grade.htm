@@ -67,6 +67,9 @@
 								<th>Create User</th>
 								<th>Create Time</th>
 								<th>Edit</th>
+								<th>大类折扣设置</th>
+								<th>小类类折扣设置</th>
+								<th>定制产品折扣设置</th>
 							
 							</tr>
 							</thead>
@@ -95,7 +98,21 @@
 									<td>
 								    	<a href ="<{$http_root_www}>factory/customer_grade_add?id=<{$grade_list.id}>">Edit</a>
 									</td>
-								
+									<td>
+										<a href="<{$http_root_www}>restaurant/discount_edit_parant_category_grade?id=<{$grade_list.id}>">
+										大类
+										</a>
+
+										
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/discount_edit_sub_category_grade?id=<{$grade_list.id}>">&nbsp;&nbsp;小类</a>
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/grade_product_discount_edit?id=<{$grade_list.id}>">&nbsp;&nbsp;产品及规格</a>
+									</td>
 
 								</tr>
 							<{/foreach}>

@@ -21,19 +21,25 @@ class mdl_restaurant_menu extends mdl_base
 
     public function getGoodList($factory_id,$userid=null,$uploadpath) {
 
+        $mdl = loadModel('user_factory');
+        $discount_rates = $mdl->getCurrentUserDiscountRate($userid,$factory_id);
+        $gradeId = $mdl->getUserGradeId($userid, $factory_id);
+        //$gradeId =0;
 
-        $discount_rates = loadModel('user_factory')->getCurrentUserDiscountRate($userid,$factory_id);
 
-
-    //    var_dump($discount_rates);exit;
+      // var_dump($gradeId);exit;
 
 
 
 
        // get the good list of business .
        //get the main table good list
-        $sql_main =" select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
-                       ifnull(sub_cate_discount.discount_rate,0) as sub_cate_discount_rate ,ifnull(parent_cate_discount.discount_rate,0) as parent_cate_discount_rate ,
+        $sql_main =" select  m.sub_category_id as sub_category_id,ifnull(menu_price.price,0) as menu_discount_price ,ifnull(grade_menu_price.price,0) as grade_menu_discount_price ,ifnull(menu_price.menu_discount_rate,0) as menu_discount_rate ,
+                       ifnull(sub_cate_discount.discount_rate,0) as sub_cate_discount_rate ,
+                     ifnull(sub_cate_grade_discount.discount_rate,0) as sub_cate_grade_discount_rate ,
+        
+                        ifnull(parent_cate_discount.discount_rate,0) as parent_cate_discount_rate ,
+                        ifnull(parent_cate_grade_discount.discount_rate,0) as parent_cate_grade_discount_rate ,
                        $discount_rates as customer_dicount_rate, m.id,m.restaurant_id,m.restaurant_category_id as parent_category_id,c01.category_sort_id as parent_cat_sort_id ,
                        c01.category_cn_name as parent_cat_cn_name,c01.category_en_name as parent_cate_en_name,c02.category_sort_id as sub_cate_sort_id ,
                        c02.category_cn_name as sub_cat_cn_name,c02.category_en_name as sub_cat_en_name,m.menu_id,m.menu_cn_name as title_cn, 
@@ -46,8 +52,12 @@ class mdl_restaurant_menu extends mdl_base
                     left join cc_restaurant_category c01 on c01.id=m.restaurant_category_id
                     left join cc_restaurant_category c02 on c02.id = m.sub_category_id 
                     left join cc_user_factory_category_discount_rate parent_cate_discount on ( m.restaurant_category_id =parent_cate_discount.category_id  and parent_cate_discount.userId =$userid)
+                    left join cc_user_factory_grade_category_discount_rate parent_cate_grade_discount on ( m.restaurant_category_id =parent_cate_grade_discount.category_id  and parent_cate_grade_discount.grade_id =$gradeId)
                     left join cc_user_factory_category_discount_rate sub_cate_discount on ( m.sub_category_id =sub_cate_discount.category_id and sub_cate_discount.userId =$userid)
+                    left join cc_user_factory_grade_category_discount_rate sub_cate_grade_discount on ( m.sub_category_id =sub_cate_grade_discount.category_id and sub_cate_grade_discount.grade_id =$gradeId)
+                
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
+                     left join cc_user_factory_grade_menu_price grade_menu_price on ( m.id =grade_menu_price.restaurant_menu_id and grade_menu_price.grade_id =$gradeId )
                     where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1 
                 ";
       //  var_dump($sql_main);exit;

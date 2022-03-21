@@ -25,6 +25,23 @@ class mdl_user_factory extends mdl_base
 
     }
 
+    public function getUserGradeId($userId, $factoryId) {
+
+       $sql = "select g.grade_id  from cc_factory_customer_grade g 
+             left join cc_user_factory f  on f.grade =g.id 
+            where f.factory_id  =$factoryId and f.user_id =$userId 
+
+            ";
+
+        $rec = $this->getListBySql($sql);
+        if (!$rec)  return 0;
+        return (string)$rec[0]['grade_id'];
+
+
+    }
+
+
+
    public function addCustomerInfo($userId, $factoryId,$data_order) {
      $data=array(
           'user_id'=>$data_order['userId'],

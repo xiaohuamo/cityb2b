@@ -2322,6 +2322,33 @@ public function delete_sub_category_discount_action(){
 
 	}
 
+	public function delete_grade_parent_category_discount_action(){
+
+		//输入参数合法性验证
+		$id =get2('id');
+
+		if(!$id) {
+			if (!$id) $this->form_response_msg(' id invalid');
+
+		}
+		$mdl = $this->loadModel('user_factory_grade_category_discount_rate');
+		$curr_cat_discount_rec = $mdl->get($id);
+
+		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
+
+
+		if(!$curr_cat_discount_rec || $curr_cat_discount_rec['business_id']!=$this->current_business['id'])
+		{
+			$this->form_response_msg(' no access !');
+
+		}
+
+
+		$mdl->delete($id);
+		echo json_encode(array('deleted' =>1,'id'=>$curr_cat_discount_rec['category_id']));
+
+	}
+
 
 	public function delete_parent_category_discount_action(){
 
@@ -2408,9 +2435,143 @@ function discount_edit_parant_category_action(){
 
 	}
 
+	function discount_edit_parant_category_grade_action(){
+
+		//输入参数合法性验证
+		$id =get2('id');
+
+		if(!$id) {
+			var_dump('please choose the grade !'); exit;
+
+		}
+		$grade_rec = $this->loadModel('factory_customer_grade')->get($id);
+
+		if(!$grade_rec || $grade_rec['business_id']!= $this->current_business['id']) {
+			var_dump('no access !'); exit;
+		}
+
+		$this->setData($id,'id');
+		$this->setData($grade_rec,'grade_info');
+		$gardeId= $grade_rec['grade_id'];
+
+  		// var_dump($grade_rec); exit;
+
+		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
 
 
 
+
+		//获取当前供应商大类及改客户关于各个大类的折扣率
+
+		$mdl = $this->loadModel('user_factory_grade_category_discount_rate');
+		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business['id'],$gardeId);
+
+		// var_dump($parent_cate_discount_rate_data);exit;
+		//session传递值供前端操作 。
+
+		//getcustomer discount rate
+	//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+		//$this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
+		//var_dump(number_format($customer_discount_rates,2));exit;
+
+
+		$this->setData($parent_cate_discount_rate_data, 'data');
+		//var_dump($parent_cate_discount_rate_data);exit;
+
+
+
+
+		$this->setData('discount_edit_parant_category_grade', 'submenu_top');
+		$this->setData('customer_grade', 'submenu');
+		$this->setData('customer_management', 'menu');
+
+		$pagename = "Discount Management";
+		$pageTitle=  $pagename." - Business_centre - ". $this->site['pageTitle'];
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
+
+
+		$this->display( 'restaurant/discount_edit_parant_category_grade');
+
+	}
+
+	function discount_edit_sub_category_grade_action(){
+
+
+		//输入参数合法性验证
+		$id =get2('id');
+
+		if(!$id) {
+			var_dump('please choose the grade !'); exit;
+
+		}
+		$grade_rec = $this->loadModel('factory_customer_grade')->get($id);
+
+		if(!$grade_rec || $grade_rec['business_id']!= $this->current_business['id']) {
+			var_dump('no access !'); exit;
+		}
+
+		$this->setData($id,'id');
+		$this->setData($grade_rec,'grade_info');
+
+		$gardeId= $grade_rec['grade_id'];
+
+
+		$parent_category_id =get2('parent_category_id');
+
+		$this->setData($parent_category_id,'parent_category_id');
+
+
+
+
+
+
+		//获取当前供应商大类及改客户关于各个大类的折扣率
+
+		$mdl = $this->loadModel('user_factory_grade_category_discount_rate');
+		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business['id'],$gardeId);
+		$this->setData($parent_cate_discount_rate_data, 'data1');
+		// var_dump(json_encode($parent_cate_discount_rate_data));exit;
+		//getcustomer discount rate
+		foreach ($parent_cate_discount_rate_data as $key =>$val){
+
+			if($val['cate_id'] ==$parent_category_id) {
+				$grade_discount_rates = $val['discount_rate'];
+			}
+		}
+
+		//	$grade_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+
+
+		$this->setData(number_format($grade_discount_rates,1),'grade_discount_rates');
+
+
+		//获取当前供应商大类及改客户关于各个大类的折扣率
+		if($parent_category_id) {
+
+			$sub_cate_discount_rate_data = $mdl->get_sub_discount_data($this->current_business['id'],$gardeId,$parent_category_id);
+
+			$this->setData($sub_cate_discount_rate_data, 'data');
+			//  var_dump($sub_cate_discount_rate_data);exit;
+
+		}
+
+		//session传递值供前端操作 。
+
+		$this->setData('discount_edit_sub_category_grade', 'submenu_top');
+		$this->setData('customer_grade', 'submenu');
+		$this->setData('customer_management', 'menu');
+
+		$pagename = "Discount Management";
+		$pageTitle=  $pagename." - Business_centre - ". $this->site['pageTitle'];
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
+
+
+
+		$this->display( 'restaurant/discount_edit_sub_category_grade');
+
+	}
 	/* 一级分类折扣编辑*/
 
 	function discount_edit_sub_category_action(){
@@ -3341,8 +3502,6 @@ function category_migration_action(){
     }
 
 
-
-
 	function customer_product_discount_edit_action(){
 		// 获得该用户餐厅的菜单分类信息
 
@@ -3360,28 +3519,196 @@ function category_migration_action(){
 
 
 
+		$customer_id =$this->current_business['id'];
+
+
+
+
+		$mdl_restaurant_category = $this->loadModel('restaurant_category');
+		$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+		$data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+		if(!$data) {
+			//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+		}
+		$this->setData($data,'restaurant_category');
+
+
+
+		$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+		$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+		//var_dump($sql_Parent_cate_list);exit;
+
+		$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+
+
+		$sk = trim(get2('sk'));
+
+		$allOrspecial = trim(get2('allOrspecial'));
+
+		$onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
+		$this->setData($onoffguigecatinfo,'onoffguigecatinfo');
+
+		$onoffcninfo = trim(get2('onoffcninfo'));
+		$this->setData($onoffcninfo,'onoffcninfo');
+		//	var_dump($onoffcninfo);exit;
+
+		$sub_category =trim(get2('sub_category'));
+		$this->setData($sub_category,'sub_category');
+		$category = trim(get2('category'));
+
+		if(!$category) {$category='all';}
+		//		var_dump($sub_category);exit;
+		$this->setData($sk,'sk');
+		$this->setData($category,'category1');
+
+
+		$sql = "select   cust.menu_discount_rate as discount_rate ,cust.price as customer_price ,m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  
+						from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
+							left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id
+							left join cc_user_factory_menu_price cust on o.id=cust.restaurant_menu_id and cust.user_id =$user_id
+							
+							";
+
+		$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0 and ( length(o.menu_cn_name ) > 0 or length( o.menu_en_name ) >0 )  ";
+
+		if($category =='all' or empty($category)) {
+			//	$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+		}else{
+
+			if($sub_category) {
+				$whereStr.= " and ( m.category_id= $sub_category) ";
+			}else{
+				$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
+			}
+
+		}
+
+		if($allOrspecial!='all'){
+
+			$whereStr.= " and cust.price is not null ";
+		}
+
+
+		if (!empty($sk)) {
+			$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
+			$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
+			$whereStr.=" or o.Menu_desc  like  '%" . $sk .  "%'";
+			$whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
+			$whereStr.=" or o.barcode_number  like  '%" . $sk .  "%'";
+			$whereStr.=" or o.id  like  '%" . $sk . "%')";
+		}
+
+
+
+		// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+		// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+		$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
+		//var_dump($pageSql);exit;
+		$pageUrl = $this->parseUrl()->set('page');
+		$pageSize =30;
+		$maxPage =200;
+		$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+		$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+
+
+		$key = 'id';
+
+		$data=$this->assoc_unique($data, $key);
+
+
+		// 获得该用户的gst type
+
+		$mdl_user =$this->loadModel("user");
+		$customerInfo = $mdl_user->get($customer_id);
+
+
+
+		//  获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+		$this->setData($restaurant_menu_option_list,'menu_option_list');
+
+		$this->setData($page['pageStr'], 'pager');
+		$this->setData($this->parseUrl()->setPath('restaurant/customer_product_discount_edit'), 'editUrl');
+
+
+
+		$this->setData($data, 'data');
+
+		$this->setData('customer_product_discount_edit', 'submenu_top');
+
+		$this->setData('customer_price_management', 'submenu');
+		$this->setData('customer_management', 'menu');
+
+		$pagename = "Item Discount Edit";
+		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+
+		$this->setData($pagename, 'pagename');
+
+		$this->setData($pageTitle, 'pageTitle');
+
+
+		$this->display('restaurant/customer_product_discount_edit');
+	}
+
+
+	function grade_product_discount_edit_action(){
+		// 获得该用户餐厅的菜单分类信息
+
+		$id =get2('id');
+		$allOrspecial =get2('allOrspecial');
+
+		if(!$allOrspecial) $allOrspecial ='all';
+
+		$this->setData($id,'id');
+
+		if(!$id) {
+
+			var_dump('no access!'); exit;
+		}
+
+
+		$grade_rec = $this->loadModel('factory_customer_grade')->get($id);
+		$gardeId =$grade_rec['grade_id'];
+
+		if(!$grade_rec || $grade_rec['business_id']!= $this->current_business['id']) {
+			var_dump('no access!'); exit;
+		}
+
+
     			 $customer_id =$this->current_business['id'];
 
 
 
 
 				$mdl_restaurant_category = $this->loadModel('restaurant_category');
-				$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
 				$data = $mdl_restaurant_category->getListBySql($pageSql);
 
+			//	var_dump($pageSql);exit;
+				$this->setData($data,'restaurant_category');
 
 				if(!$data) {
 					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
 				}
-				$this->setData($data,'restaurant_category');
+				$this->setData($gardeId,'gardeId');
+
 
 
 
 				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
 
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
-				//var_dump($sql_Parent_cate_list);exit;
 
+               // var_dump($data_parent_cate_list);exit;
 				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
 
 
@@ -3409,7 +3736,7 @@ function category_migration_action(){
 				$sql = "select   cust.menu_discount_rate as discount_rate ,cust.price as customer_price ,m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  
 						from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
 							left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id
-							left join cc_user_factory_menu_price cust on o.id=cust.restaurant_menu_id and cust.user_id =$user_id
+							left join cc_user_factory_grade_menu_price cust on o.id=cust.restaurant_menu_id and cust.grade_id =$gardeId
 							
 							";
 
@@ -3462,11 +3789,9 @@ function category_migration_action(){
 				$data=$this->assoc_unique($data, $key);
 
 
-				// 获得该用户的gst type
 
-				$mdl_user =$this->loadModel("user");
-				$customerInfo = $mdl_user->get($customer_id);
 
+		$this->setData($grade_rec,'grade_info');
 
 
 		//  获得配菜分类列表
@@ -3478,15 +3803,15 @@ function category_migration_action(){
 		$this->setData($restaurant_menu_option_list,'menu_option_list');
 
 		$this->setData($page['pageStr'], 'pager');
-		$this->setData($this->parseUrl()->setPath('restaurant/customer_product_discount_edit'), 'editUrl');
+		$this->setData($this->parseUrl()->setPath('restaurant/grade_product_discount_edit'), 'editUrl');
 
 
 
 		$this->setData($data, 'data');
 
-		$this->setData('customer_product_discount_edit', 'submenu_top');
+		$this->setData('grade_product_discount_edit', 'submenu_top');
 
-		$this->setData('customer_price_management', 'submenu');
+		$this->setData('customer_grade', 'submenu');
 		$this->setData('customer_management', 'menu');
 
 		$pagename = "单品折扣管理";
@@ -3497,7 +3822,7 @@ function category_migration_action(){
 		$this->setData($pageTitle, 'pageTitle');
 
 
-		$this->display('restaurant/customer_product_discount_edit');
+		$this->display('restaurant/grade_product_discount_edit');
 	}
 
 

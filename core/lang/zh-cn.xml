@@ -1064,7 +1064,7 @@
     <change_password>修改密码</change_password>
 	 <customer_type>客户类型</customer_type>
 	  <choose_postcode>选择邮编地区</choose_postcode>
-	 
+	   <group_discount>组折扣管理</group_discount>
 	 
     <email>邮箱</email>
 

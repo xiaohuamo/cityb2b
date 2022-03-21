@@ -3346,5 +3346,64 @@ public function phpinfo(){
 
 }
 
+
+public function xero_test_action() {
+
+	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi.php';
+
+
+	if (is_post()) {
+
+		$api = new MyApi($db);
+
+		if(isset($_GET['btnGetContacts'])) {
+			$response = $api->getContacts($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnCreateContacts'])) {
+			$response = $api->createContacts($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnUpdateContact'])) {
+			$response = $api->updateContact($credentials);
+			echo $response;
+		}
+
+		if(isset($_POST['btnGetItems'])) {
+			$response = $api->getItems($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnCreateItems'])) {
+			$response = $api->createItems($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnUpdateItem'])) {
+			$response = $api->updateItem($credentials);
+			echo $response;
+		}
+
+		if(isset($_GET['btnGetInvoices'])) {
+			$response = $api->getInvoices($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnCreateInvoices'])) {
+			$response = $api->createInvoices($credentials);
+			echo $response;
+		}
+		if(isset($_POST['btnUpdateInvoice'])) {
+			$response = $api->updateInvoice($credentials);
+			echo $response;
+		}
+
+	}
+
+
+	$this->display('factory/xero_test');
+
+}
+
+
 	}
  ?>
