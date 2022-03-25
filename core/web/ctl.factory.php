@@ -3409,20 +3409,30 @@ class ctl_factory extends cmsPage
 
             $id = post('id');
             $gardeId = post('gardeId');
+         //   $this->form_response(500,'id is '.$id. ' and  grade id is'.$gardeId,'');
 
             $discount_rate = post('discount_rate');
 
-            //	$id=0;
-            // $userId=319227;
+            	//$id=385486;
+              //   $discount_rate=6.6;
+               //  $gardeId=6;
             //  $cate_id =40692;
             //  $discount_rate=2;
 
             //操作权限： 检查当前用户对当前的客户是否拥有操作权限
+            $where1 =array(
+                'grade_id'=>$gardeId ,
+                'business_id'=>$this->current_business['id']
 
-            $grade_rec = $this->loadModel('factory_customer_grade')->get($gardeId);
+            );
+            $grade_rec = $this->loadModel('factory_customer_grade')->getByWhere($where1);
 
-            if(!$grade_rec || $grade_rec['business_id']!= $this->current_business['id']) {
-                $this->form_response(500,'no access','');
+            if(!$grade_rec ) {
+                $this->form_response(500,'no access no reccord grade id is'.$gardeId,'');
+            }
+
+            if( $grade_rec['business_id']!= $this->current_business['id']) {
+                $this->form_response(500,'no access ,no match','');
             }
 
             // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
@@ -3447,7 +3457,7 @@ class ctl_factory extends cmsPage
             $mdl_menu =$this->loadModel('restaurant_menu');
             $menu_rec = $mdl_menu->get($id);
             $discount_price = number_format($menu_rec['price']*(100-$discount_rate)/100,2);
-            //var_dump($rec);
+          //  var_dump($rec);
             if($rec) { // 如果找到该记录
                 // $this->form_response(200,'find record','');
 

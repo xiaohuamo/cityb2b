@@ -3357,53 +3357,85 @@ public function xero_test_action() {
 	if (is_post()) {
 
 		$api = new MyApi($db);
+		$mdl_xero =$this->loadModel('xero') ;
+		$mdl_tokens =$this->loadModel('tokens') ;
+	//	$credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+//var_dump($credentials);exit;
 
-		if(isset($_GET['btnGetContacts'])) {
+		if(isset($_POST['btnGetContacts'])) {
 			$response = $api->getContacts($credentials);
-			echo $response;
+			echo '<p>GET CONTACTS</p>';
 		}
 		if(isset($_POST['btnCreateContacts'])) {
-			$response = $api->createContacts($credentials);
-			echo $response;
+			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,500);
+			//var_dump($contactList);exit;
+			$response_arr = $api->createContacts($credentials,$contactList);
+			$custom_response= $mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
+			$response=json_encode($response_arr);
+			echo '<p>CREATE CONTACTS</p>';
 		}
 		if(isset($_POST['btnUpdateContact'])) {
-			$response = $api->updateContact($credentials);
-			echo $response;
-		}
 
+			$response = $api->updateContact($credentials);
+			echo '<p>UPDATE CONTACT</p>';
+		}
 		if(isset($_POST['btnGetItems'])) {
 			$response = $api->getItems($credentials);
-			echo $response;
+			echo '<p>GET ITEMS</p>';
 		}
 		if(isset($_POST['btnCreateItems'])) {
-			$response = $api->createItems($credentials);
-			echo $response;
+			$itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,1,2000);
+			//var_dump($itemList);exit;
+			$response_arr = $api->createItems($credentials,$itemList);
+			$custom_response= $mdl_xero->updateXeroItemCode($response_arr);
+			$response=json_encode($response_arr);
+			echo '<p>CREATE ITEMS</p>';
 		}
 		if(isset($_POST['btnUpdateItem'])) {
 			$response = $api->updateItem($credentials);
-			echo $response;
+			echo '<p>UPDATE ITEM</p>';
 		}
-
-		if(isset($_GET['btnGetInvoices'])) {
+		if(isset($_POST['btnGetInvoices'])) {
 			$response = $api->getInvoices($credentials);
-			echo $response;
+			echo '<p>GET INVOICES</p>';
 		}
 		if(isset($_POST['btnCreateInvoices'])) {
 			$response = $api->createInvoices($credentials);
-			echo $response;
+			echo '<p>CREATE INVOICES</p>';
 		}
 		if(isset($_POST['btnUpdateInvoice'])) {
 			$response = $api->updateInvoice($credentials);
-			echo $response;
+			echo '<p>UPDATE INVOICE</p>';
 		}
 
+		echo $custom_response.'<br>';
+		if(!empty($response)) {
+			$parsed = json_decode($response, true);
+			if(is_array($parsed) && count($parsed) > 0) {
+				$json = json_encode(json_decode($response), JSON_PRETTY_PRINT);
+				echo '<pre>' . $json . '</pre>';
+
+			} else {
+				echo $response;
+			}
+		}
 	}
 
 
 	$this->display('factory/xero_test');
 
 }
-
-
+		public  function  func_test_action()
+		{
+			$code='318987';
+			$guigepos =strpos($code,'-');
+			if($guigepos) {
+				$itemid=  substr($code,0,$guigepos-1);
+				$guigeId =substr($code,$guigepos+1);
+			}else{
+				$itemid =$code;
+			}
+          var_dump('itemid is '.$itemid .'and guige is '.$guigeId);exit;
+		}
 	}
  ?>
