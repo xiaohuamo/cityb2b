@@ -27,7 +27,7 @@ class mdl_restaurant_menu extends mdl_base
         //$gradeId =0;
 
 
-      // var_dump($gradeId);exit;
+      // var_dump($discount_rates);exit;
 
 
 
@@ -64,7 +64,7 @@ class mdl_restaurant_menu extends mdl_base
                 
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
                      left join cc_user_factory_grade_menu_price grade_menu_price on ( m.id =grade_menu_price.restaurant_menu_id and grade_menu_price.grade_id =$gradeId )
-                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1    
+                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1  
                 ";
       //  var_dump($sql_main);exit;
 
@@ -111,7 +111,7 @@ class mdl_restaurant_menu extends mdl_base
             } */
 
             $goodList[$key]['price']=$this->calculate_current_menu_price($value,$value['old_price']);
-
+       //  var_dump( $goodList[$key]['price']);exit;
             $newprice=$this->calculate_current_menu_price($value,$value['old_price']);
             //最低价格保护
             if(floatval($newprice)<floatval($value['lowest_price'])){
@@ -270,6 +270,10 @@ class mdl_restaurant_menu extends mdl_base
             //第五优先级客户
             $newPrice = $old_price*(100-$value['customer_dicount_rate'])/100;
             return round($newPrice,2);
+        }elseif($value['customer_dicount_rate']<0){
+            //第五优先级客户
+            $newPrice = $old_price*(100-$value['customer_dicount_rate'])/100;
+            return round($newPrice,1);
         }else{
             return $old_price;
         }

@@ -77,7 +77,7 @@ class mdl_user_factory extends mdl_base
             $user_info =$this->getByWhere($where);
             $discount =$user_info['business_discount_rate'];
 
-            if($discount>0){
+            if($discount !=0 ){
                 $discount_rates=$discount;
 
             }else{
