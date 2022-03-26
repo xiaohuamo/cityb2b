@@ -3437,5 +3437,7 @@ public function xero_test_action() {
 			}
           var_dump('itemid is '.$itemid .'and guige is '.$guigeId);exit;
 		}
+
+		
 	}
  ?>
