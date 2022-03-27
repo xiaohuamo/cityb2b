@@ -1108,7 +1108,7 @@ class MyApi
     /********************************** CREATE INVOICES *************************************************/
     public function createInvoices($credentials, $json = "") // array of Invoice in json
     {
-        var_dump($json);exit;
+        //var_dump($json);exit;
         /* ITEMS STRUCTURE
         $json= ' [
             {
@@ -1247,7 +1247,7 @@ class MyApi
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
 
         // DISPLAY THE RESPONSE
-        return $response;
+        return $response_parsed;
     }
     /********************************** UPDATE INVOICE *************************************************/
     public function updateInvoice($credentials, $json = "") // Invoice in json

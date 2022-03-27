@@ -116,7 +116,7 @@ class mdl_xero extends mdl_base
             o.xero_invoice_id as invoice_id ,  
             o.userId as reference_user_id , 
             f.xero_account_number  as account_number  , 
-            f.xero_contact_id  as xero_id  , 
+            f.xero_contact_id  , 
             o.first_name as contact_first_name,
             o.last_name as contact_last_name,
             o.house_number ,
@@ -145,9 +145,9 @@ class mdl_xero extends mdl_base
             left join cc_wj_abn_application abn on u.id =abn.userId
             where o.orderId =$orderId";
 
-            $order_data =loadModel('order')->getByWhere(array('orderId'=>$orderId));
+            $order_data =loadModel('order')->getListBySql($sql);
            // var_dump($sql);exit;
-            return $order_data;
+            return $order_data[0];
 
     }
 
@@ -188,7 +188,7 @@ class mdl_xero extends mdl_base
          // get order details data
           $details_data =$this->getDetailsData($orderId);
 
-
+    // var_dump($order_data);exit;
          $new_data=[];
 
 
@@ -208,8 +208,8 @@ class mdl_xero extends mdl_base
                 $detail[$key]['ItemCode']=$value['item_id'];
                 $detail[$key]['AccountCode']="200";
                 $detail[$key]['LineItemID']=$value['xero_item_id'];
-                $detail[$key]['TaxType']="OUTPUT";
-                $detail[$key]['TaxAmount']=$value['amount']*$value['gst'];
+                $detail[$key]['TaxType']="BASEXCLUDED";
+                $detail[$key]['TaxAmount']=0;
                 $detail[$key]['LineAmount']=$value['amount'];
                 $detail[$key]['DiscountRate']="";
                 $detail[$key]['DiscountAmount']="";
@@ -226,7 +226,7 @@ class mdl_xero extends mdl_base
             $new_data['Reference'] ='';
             $new_data['BrandingThemeID'] ='';
             $new_data['CurrencyCode'] ='AUD';
-            $new_data['Status'] ='';
+            $new_data['Status'] ='AUTHORISED';
             $new_data['SentToContact'] ='';
             $new_data['ExpectedPaymentDate'] ='';
             $new_data['PlannedPaymentDate'] ='';
@@ -283,7 +283,7 @@ class mdl_xero extends mdl_base
              * */
 
 
-      return (json_encode($new_data));
+      return ('['.json_encode($new_data).']');
 
 
 

@@ -3403,7 +3403,9 @@ public function xero_test_action() {
 		if(isset($_POST['btnCreateInvoices'])) {
 			$orderId ='20220318223142600210';
 			$order_data = $mdl_xero->getOrderInvoiceData($orderId);
-			$response = $api->createInvoices($credentials,$order_data);
+			$response_arr = $api->createInvoices($credentials,$order_data);
+			$custom_response= $mdl_xero->updateXeroInvoiceInfo($response_arr,$orderId);
+			$response=json_encode($response_arr);
 			echo '<p>CREATE INVOICES</p>';
 		}
 		if(isset($_POST['btnUpdateInvoice'])) {
