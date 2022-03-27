@@ -150,11 +150,11 @@
 								<th>Xero Account Id</th>
 								<th>Customer ID </th>
 								<th>客户名</th>
-								
+								<th>Xero 客户名</th>
 								<th>手机号</th>
 								
 								<th>城区邮编</th>
-								
+								<th>Xero hash</th>
 								
 								
 								
@@ -189,8 +189,8 @@
 										
 										</td>
 									<td>
-									<input type="text" class="input-text" data-id='<{$user.idd}>' id="price-<{$user.idd}>" style="width:100px;" name="xero_contact_id"
-												   value=" <{$user.xero_contact_id}>">
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="price-<{$user.idd}>" style="width:100px;" name="xero_account_number"
+												   value=" <{$user.xero_account_number}>">
 											<span class='promote-ajax'></span>
 									
                                        
@@ -205,6 +205,10 @@
 									</td>
 									
 									<td>
+                                        <{$user.xero_name}>
+									</td>
+									
+									<td>
                                         <{$user.phone}>
 									</td>
 									
@@ -212,7 +216,11 @@
                                         <{$user.addrSuburb}>&nbsp;  <{$user.addrPost}>
 									</td>
 									
-								
+								<td>
+									 <{substr($user.xero_contact_id,0,6)}>
+									
+                                       
+									</td>	
 									
 									
 
@@ -242,7 +250,7 @@
     var loading = false;
 	
 	
-	  $('input[name=xero_contact_id]').on('change', function () {
+	  $('input[name=xero_account_number]').on('change', function () {
 	  
 	  
 	  var result1 = confirm("would you like to change xero contact Id ? you must keep xero account Number is same with this , otherwise the invocie will not go to the right account on xero!");

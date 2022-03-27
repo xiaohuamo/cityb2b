@@ -130,6 +130,17 @@
 
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
+						
+						
+						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
+						<option value="all"  ><{$lang->choose_delivery_date}></option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+					</select>
+					&nbsp;&nbsp;
 						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="订单号/兑换码/姓名/电话/产品名/快递号" style="width:250px; margin-right:5px;" />
 						当前系统时区： <{$currentTimeZone}>
 						当前系统时间： <{$currentTime}>
@@ -218,7 +229,9 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>
-									<th>预计配送时间</th>		
+									<th>Invoice</th>
+									<th>send to xero</th>
+									<th>配送时间</th>		
 									<th><{$lang->order_id}></th>		
 									<th>合并</th>		
 									<th><{$lang->product_total}></th>		
@@ -231,13 +244,45 @@
 									<th><{$lang->payment}></th>
 									<th><{$lang->delivery}></th>				
 									<th><{$lang->submission_time}></th>
-									<th>Invoice</th>
+									
 								</tr>			
 							</thead>		
 							<tbody>		
 								<{foreach from=$data item=item name='dl'}>		
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									
+									<td>
+										<{if !$item.merge_to_another_order}>
+									<a class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')">打印</a>
+									 <{else}>
+									   不可用
+									 <{/if}>
+									
+									</td>
+									
+									<td>
+										<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_xero<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										
+                                            <{if $item.sent_to_xero==1}>
+												<span class='publish_icon_xero' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">sent </span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon_xero' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">not yet</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+
 
 									<td>
 									
@@ -356,14 +401,7 @@
 									</td>	
 
 									<td><{date('Y-m-d H:i', $item.createTime)}></td>
-									<td>
-										<{if !$item.merge_to_another_order}>
-									<a class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')">打印</a>
-									 <{else}>
-									   不可用
-									 <{/if}>
 									
-									</td>
 								</tr>			
 								<{/foreach}>			
 							</tbody>		
@@ -431,7 +469,38 @@
     })
 
 	 
-	 
+	     $('input[name=onoffswitch_xero]').on('click', function () {
+        var orderId = $(this).data('id')
+        var context = $('.publish_icon_xero[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/xero_send_invoice",
+            data: {"id": orderId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+                if (result.sent_to_xero == '0') {
+                    context.html("<span style='color:#F30;'>not yet</span>");
+                } else if (result.sent_to_xero == '1') {
+                    context.html("<span style='color:#58964E;'>sent</span>");
+					$("#myonoffswitch_xero"+orderId).attr("disabled","true");
+					
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
 
     function  update_deliveryTime(obj) {
     if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;

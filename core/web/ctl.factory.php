@@ -83,7 +83,35 @@ class ctl_factory extends cmsPage
 		
 		//get loginuser's factory userid 
 		$FactoryId= $this->loadModel('user_factory')->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
-		
+
+        $customer_delivery_date = trim(get2('customer_delivery_date'));
+
+        $this->setData($customer_delivery_date,'customer_delivery_date');
+
+        $three_days_times = time()-259200*2;
+
+        $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
+            $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+        // var_dump($sql_avaliable_date);exit;
+
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+        // $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
+        $availableDates = array_map(function($d){
+            return date('Y-m-d',$d['logistic_delivery_date']);
+        }, $availableDates);
+        $this->setData($availableDates, 'availableDates');
+
+
+
+
+
+
+
+
+
+
+
 
         /**
          * staff List
@@ -203,6 +231,20 @@ class ctl_factory extends cmsPage
             if ($staff != 'all') {
                 $whereStr .= " and o.business_staff_id = '$staff' ";
             }
+        }
+
+        if (!empty($customer_delivery_date)) {
+            if ($customer_delivery_date != 'all') {
+                $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
+            }else{
+                $three_days_times = time()-259200*2;
+                $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
+
+
+            }
+        }else {
+            $three_days_times = time()-259200*2;
+            $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
         }
 
         /**
@@ -363,6 +405,55 @@ class ctl_factory extends cmsPage
         return true;
     }
 
+// send the order to xero
+    public function xero_send_invoice_action(){
+
+
+
+
+
+        $id = (int)get2('id');
+
+
+
+        $mdl= $this->loadModel('order');
+
+        $order_info = $mdl->get($id);
+
+        if ($id < 0 || $order_info['business_userId']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+
+        $orderId =$order_info['orderId'];
+        $order_data = $mdl_xero->getOrderInvoiceData($orderId);
+        $response_arr = $api->createInvoices($credentials,$order_data);
+        $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
+
+        if($custom_response) {
+            $this->form_response_msg($custom_response);
+        }else{
+            $data = array();
+            $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
+
+            if ($mdl->update($data, $order_info['id'])) {
+                echo json_encode(array('sent_to_xero' => $data['sent_to_xero']));
+            } else {
+                $this->form_response_msg('Please try again later');
+            }
+
+        }
+
+
+
+
+    }
 
     public function set_trading_hours_action(){
         //判断是否可以设置该用户的营业时间,该段程序稍后写。

@@ -1658,7 +1658,7 @@ class MyApi
         ]);
     }
 
-    private function processUpdateIinvoice($response)
+    private function processUpdateInvoice($response)
     {
         // RESPONSE FROm XERO
         /*

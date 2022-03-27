@@ -1152,7 +1152,7 @@ class MyApi
             }
         ]';
      /*   */
-
+//var_dump($json);exit;
         // valid data ?
         if(empty($json))
         {

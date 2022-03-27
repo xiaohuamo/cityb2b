@@ -146,7 +146,7 @@ class mdl_xero extends mdl_base
             where o.orderId =$orderId";
 
             $order_data =loadModel('order')->getListBySql($sql);
-           // var_dump($sql);exit;
+           // var_dump($order_data[0]);exit;
             return $order_data[0];
 
     }
@@ -217,12 +217,16 @@ class mdl_xero extends mdl_base
 
 
             $new_data['LineItems'] =$detail;
+
+            $new_data['InvoiceID'] =$order_data['xero_id'];
+            $new_data['InvoiceNumber'] =$order_data['invoice_id'];
+
             $new_data['Date'] =date('m/d/Y',time());
             $dueDays =$value['payment_period']+1;
 
             $new_data['DueDate'] =date('m/d/Y',strtotime("+$dueDays day"));
             $new_data['LineAmountTypes'] ="Exclusive";
-            $new_data['InvoiceNumber'] ='';
+
             $new_data['Reference'] ='';
             $new_data['BrandingThemeID'] ='';
             $new_data['CurrencyCode'] ='AUD';
@@ -412,8 +416,49 @@ class mdl_xero extends mdl_base
          return json_encode($new_data);
 
      }
+    //更新发票信息
+    public function createXeroInvoiceInfo($response,$orderId){
+
+        if(is_array($response) && count($response) > 0)
+        {
+            foreach($response as $v)
+            {
+                if( !empty($v['InvoiceID']) && !empty($v['InvoiceNumber']) && empty($v['ValidationErrors']) )
+                {
+                    // update the ItemID to your DB
+                    $updateArr =array(
+                        'xero_invoice_id'=>$v['InvoiceNumber'],
+                        'xero_id'=>$v['InvoiceID']
+                    );
+
+                    $where =array(
+                        'orderId'=>$orderId
+                    );
+
+                        if(loadModel('order')->updateByWhere($updateArr,$where)){
+                            $str='';
+                        }else{
+                            $str.=' <br> order update  Failed : '.$v['AccountNumber'].' '. 'order Id '.$orderId.' '.$v['ValidationErrors'];
+                        }
+                        // loadModel('restaurant_menu')->update($updateArr1,$itemid);
 
 
+
+
+                } else {
+                    // log somehere else
+
+                    $str=' <br> Error happen: '.$v['AccountNumber'].' '. 'order Id '.$orderId.' '.json_encode($v['ValidationErrors']);
+                }
+            }
+        }
+        //   var_dump($guigeId.' '.$itemid);exit;
+        return $str;
+
+
+
+
+    }
 //$custom_response= $mdl_xero->updateXeroItemCode($response_arr);
      public function  updateXeroItemCode($response){
          if(is_array($response) && count($response) > 0)
@@ -465,7 +510,7 @@ class mdl_xero extends mdl_base
          return $str;
      }
 
-    public function  updateXeroContactId($response,$factoryId){
+    public function  createXeroContactId($response,$factoryId){
 
 
                  if(is_array($response) && count($response) > 0)
@@ -495,7 +540,7 @@ class mdl_xero extends mdl_base
 
                         } else {
 
-                             $str.=' <br> Error happen when create contact: '.$v['AccountNumber'].' '. $v['ValidationErrors'];
+                             $str.=' <br> Error happen when create contact: '.$v['AccountNumber'].' '. json_encode($v['ValidationErrors']);
                             // log somehere else
                         }
                      }
@@ -510,6 +555,49 @@ class mdl_xero extends mdl_base
 
         //   var_dump($guigeId.' '.$itemid);exit;
         return $str;
+    }
+
+    public function updateXeroContactId($response,$factoryId){
+
+       //  var_dump($response_arr);exit;
+   // return 1;
+        if(is_array($response) && count($response) > 0)
+        {
+            foreach($response as $v)
+            {
+                if( !empty($v['ContactID']) && !empty($v['AccountNumber'])  && empty($v['HasValidationErrors']) )
+                {
+                    // update the ContactID to your DB
+                    // update the ItemID to your DB
+                    $updateArr =array(
+                        'xero_contact_id'=>$v['ContactID'],
+                        'xero_name'=>$v['Name']
+                    );
+                    $where =array(
+                        'xero_account_number'=>$v['AccountNumber'],
+                        'factory_id'=>$factoryId
+                    );
+                    if(loadModel('user_factory')->updateByWhere($updateArr,$where)){
+
+                        $str.=' <br> Contact  update success : '.$v['AccountNumber'];
+                    }else{
+                        $str.=' <br> Contact  update  Failed : '.$v['AccountNumber'];
+                    }
+
+
+                } else {
+
+                    $str.=' <br> Error happen when create contact: '.$v['AccountNumber'].' '. json_encode($v['ValidationErrors']);
+                    // log somehere else
+                }
+            }
+        }
+
+
+
+        //   var_dump($guigeId.' '.$itemid);exit;
+        return $str;
+
     }
 
     }

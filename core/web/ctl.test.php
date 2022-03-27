@@ -3352,7 +3352,7 @@ public function xero_test_action() {
 
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
-	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi.php';
+	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
 
 
 	if (is_post()) {
@@ -3364,14 +3364,17 @@ public function xero_test_action() {
 //var_dump($credentials);exit;
 
 		if(isset($_POST['btnGetContacts'])) {
-			$response = $api->getContacts($credentials);
+			$response_arr = $api->getContacts($credentials);
+
+			$custom_response=$mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
+			$response=json_encode($response_arr);
 			echo '<p>GET CONTACTS</p>';
 		}
 		if(isset($_POST['btnCreateContacts'])) {
 			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,400);
 			//var_dump($contactList);exit;
 			$response_arr = $api->createContacts($credentials,$contactList);
-			$custom_response= $mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
+			$custom_response= $mdl_xero->createXeroContactId($response_arr,$this->current_business['id']);
 			$response=json_encode($response_arr);
 			echo '<p>CREATE CONTACTS</p>';
 		}
@@ -3401,10 +3404,10 @@ public function xero_test_action() {
 			echo '<p>GET INVOICES</p>';
 		}
 		if(isset($_POST['btnCreateInvoices'])) {
-			$orderId ='20220318223142600210';
+			$orderId ='20220318224038197079';
 			$order_data = $mdl_xero->getOrderInvoiceData($orderId);
 			$response_arr = $api->createInvoices($credentials,$order_data);
-			$custom_response= $mdl_xero->updateXeroInvoiceInfo($response_arr,$orderId);
+			$custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
 			$response=json_encode($response_arr);
 			echo '<p>CREATE INVOICES</p>';
 		}
