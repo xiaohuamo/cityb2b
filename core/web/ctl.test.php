@@ -3344,6 +3344,7 @@ public function phpinfo(){
 	phpinfo();
 
 
+
 }
 
 
@@ -3367,7 +3368,7 @@ public function xero_test_action() {
 			echo '<p>GET CONTACTS</p>';
 		}
 		if(isset($_POST['btnCreateContacts'])) {
-			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,500);
+			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,400);
 			//var_dump($contactList);exit;
 			$response_arr = $api->createContacts($credentials,$contactList);
 			$custom_response= $mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
@@ -3384,7 +3385,7 @@ public function xero_test_action() {
 			echo '<p>GET ITEMS</p>';
 		}
 		if(isset($_POST['btnCreateItems'])) {
-			$itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,1,2000);
+			$itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,1,450);
 			//var_dump($itemList);exit;
 			$response_arr = $api->createItems($credentials,$itemList);
 			$custom_response= $mdl_xero->updateXeroItemCode($response_arr);
@@ -3400,7 +3401,9 @@ public function xero_test_action() {
 			echo '<p>GET INVOICES</p>';
 		}
 		if(isset($_POST['btnCreateInvoices'])) {
-			$response = $api->createInvoices($credentials);
+			$orderId ='20220318223142600210';
+			$order_data = $mdl_xero->getOrderInvoiceData($orderId);
+			$response = $api->createInvoices($credentials,$order_data);
 			echo '<p>CREATE INVOICES</p>';
 		}
 		if(isset($_POST['btnUpdateInvoice'])) {

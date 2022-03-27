@@ -209,7 +209,6 @@ class MyApi
         }
     }
 
-
     /********************************** CREATE CONTACTS *************************************************/
     public function createContacts($credentials, $json = "") // array of Contact in json
     {
@@ -291,8 +290,8 @@ class MyApi
                 ]
             ]
         ];
-        //  $json = json_encode($arr);
-       //  var_dump($json);exit;
+      //  $json = json_encode($arr);
+      // var_dump($json);exit;
 
         if(empty($json)) {
             return json_encode([
@@ -478,7 +477,6 @@ class MyApi
         // DISPLAY THE RESPONSE
         return $response_parsed;
     }
-
     /********************************** UPDATE CONTACT *************************************************/
     public function updateContact($credentials, $json = "") // Contact in json
     {
@@ -526,9 +524,13 @@ class MyApi
         }
         */
 
-        if(empty($json)) {
-            // QUERY DB TO GENERATE JSON
-        }
+        // SAMPLE CODE
+        $arr = [
+            "ContactID" => "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b", // from previous response when created successfully
+            "Name" => "Customer THree",
+            "BankAccountDetails" => "Commonwealth Bank ACC No. 319254" // update this field
+        ];
+        $json = json_encode($arr);
 
         // valid data ?
         if(empty($json)) {
@@ -609,6 +611,82 @@ class MyApi
 
     private function processUpdateContact($response)
     {
+        /* Response from Xero, BankAccountDetails updated
+        [
+            {
+                "ContactID": "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b",
+                "ContactNumber": "12345",
+                "ContactStatus": "ACTIVE",
+                "Name": "Customer THree",
+                "FirstName": "First",
+                "EmailAddress": "customer_one@whls.wisenetware.com",
+                "ContactPersons": [
+                    {
+                        "FirstName": "First",
+                        "EmailAddress": "customer_one@whls.wisenetware.com",
+                        "IncludeInEmails": false
+                    }
+                ],
+                "BankAccountDetails": "Commonwealth Bank ACC No. 319254",
+                "Addresses": [
+                    {
+                        "AddressType": "STREET",
+                        "AddressLine1": "266-274 Derrimut Rd",
+                        "AddressLine2": "Hoppers Crossing",
+                        "City": "City of Wyndham",
+                        "Region": "VIC",
+                        "PostalCode": "AU",
+                        "Country": ""
+                    },
+                    {
+                        "AddressType": "POBOX",
+                        "City": "",
+                        "Region": "",
+                        "PostalCode": "",
+                        "Country": ""
+                    }
+                ],
+                "Phones": [
+                    {
+                        "PhoneType": "DEFAULT",
+                        "PhoneNumber": "123456789",
+                        "PhoneAreaCode": "",
+                        "PhoneCountryCode": ""
+                    },
+                    {
+                        "PhoneType": "DDI",
+                        "PhoneNumber": "",
+                        "PhoneAreaCode": "",
+                        "PhoneCountryCode": ""
+                    },
+                    {
+                        "PhoneType": "FAX",
+                        "PhoneNumber": "",
+                        "PhoneAreaCode": "",
+                        "PhoneCountryCode": ""
+                    },
+                    {
+                        "PhoneType": "MOBILE",
+                        "PhoneNumber": "",
+                        "PhoneAreaCode": "",
+                        "PhoneCountryCode": ""
+                    }
+                ],
+                "IsSupplier": false,
+                "IsCustomer": false,
+                "SalesTrackingCategories": [],
+                "PurchasesTrackingCategories": [],
+                "UpdatedDateUTC": "\/Date(1648000246657+0000)\/",
+                "ContactGroups": [],
+                "BatchPayments": {
+                    "BankAccountNumber": "Commonwealth Bank ACC No. 319254"
+                },
+                "HasAttachments": false,
+                "HasValidationErrors": false
+            }
+        ]
+        */
+
         /************* SUCCESFUL XERO API RESPONSE IN JSON  ******************/
         $response_parsed = json_decode($response, true);
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
@@ -669,7 +747,6 @@ class MyApi
         return $response;
     }
 
-
     /********************************** CREATE ITEMS *************************************************/
     public function createItems($credentials, $json = "") // array of Item in json
     {
@@ -726,77 +803,77 @@ class MyApi
 
         // SAMPLE CODE
 
-        /*   $arr = [
-               [
-                   "Code" => "P-1004",
-                   "Name" => "Product 105",
-                   "IsSold" => "true",
-                   "IsPurchased" => "true",
-                   "Description" => "Product 101 description",
-                   "PurchaseDetails" => [
-                       "UnitPrice" => "20.000"
-                   ],
-                   "SalesDetails" => [
-                       "UnitPrice" => "10.000",
-                       "AccountCode" => "200"
-                   ]
-               ],
-               [
-                   "Code" => "P-1005",
-                   "Name" => "Product 104",
-                   "IsSold" => "true",
-                   "IsPurchased" => "true",
-                   "Description" => "Product 101 description",
-                   "PurchaseDetails" => [
-                       "UnitPrice" => "20.000"
-                   ],
-                   "SalesDetails" => [
-                       "UnitPrice" => "10.000",
-                       "AccountCode" => "200"
-                   ]
-               ]
-           ];
+     /*   $arr = [
+            [
+                "Code" => "P-1004",
+                "Name" => "Product 105",
+                "IsSold" => "true",
+                "IsPurchased" => "true",
+                "Description" => "Product 101 description",
+                "PurchaseDetails" => [
+                    "UnitPrice" => "20.000"
+                ],
+                "SalesDetails" => [
+                    "UnitPrice" => "10.000",
+                    "AccountCode" => "200"
+                ]
+            ],
+            [
+                "Code" => "P-1005",
+                "Name" => "Product 104",
+                "IsSold" => "true",
+                "IsPurchased" => "true",
+                "Description" => "Product 101 description",
+                "PurchaseDetails" => [
+                    "UnitPrice" => "20.000"
+                ],
+                "SalesDetails" => [
+                    "UnitPrice" => "10.000",
+                    "AccountCode" => "200"
+                ]
+            ]
+        ];
 
 
-           $json = json_encode($arr); */
-        /*    $json ='
-
-                [
-                        {
-                            "Code":"P-1006",
-                            "Name":"Product 106",
-                            "IsSold":"true",
-                            "IsPurchased":"true",
-                            "Description":"Product 101 description",
-                            "PurchaseDetails":
-                                {
-                                "UnitPrice":"20.000"
-                                },
-                            "SalesDetails":
-                                {
-                                "UnitPrice":"10.000",
-                                "AccountCode":"200"
-                                }
-                        },
-                        {
-                            "Code":"P-1007",
-                            "Name":"Product 107",
-                            "IsSold":"true",
-                            "IsPurchased":"true",
-                            "Description":"Product 101 description",
-                            "PurchaseDetails":
-                                {
-                                "UnitPrice":"20.000"
-                                },
-                            "SalesDetails":
-                                {
-                                "UnitPrice":"10.000",
-                                "AccountCode":"200"
-                                }
-                        }
-                    ]
-
-            ';  */
+        $json = json_encode($arr); */
+    /*    $json ='
+        
+        	[
+                    {
+                        "Code":"P-1006",
+                        "Name":"Product 106",
+                        "IsSold":"true",
+                        "IsPurchased":"true",
+                        "Description":"Product 101 description",
+                        "PurchaseDetails":
+                            {
+                            "UnitPrice":"20.000"
+                            },
+                        "SalesDetails":
+                            {
+                            "UnitPrice":"10.000",
+                            "AccountCode":"200"
+                            }
+                    },
+                    {
+                        "Code":"P-1007",
+                        "Name":"Product 107",
+                        "IsSold":"true",
+                        "IsPurchased":"true",
+                        "Description":"Product 101 description",
+                        "PurchaseDetails":
+                            {
+                            "UnitPrice":"20.000"
+                            },
+                        "SalesDetails":
+                            {
+                            "UnitPrice":"10.000",
+                            "AccountCode":"200"
+                            }
+                    }
+                ]
+        
+        ';  */
         //var_dump($json);exit;
         // valid data ?
         if(empty($json)) {
@@ -911,26 +988,24 @@ class MyApi
         $response_parsed = json_decode($response, true);
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
 
-        /*  if(is_array($response_parsed) && count($response_parsed) > 0)
-          {
-              foreach($response_parsed as $v)
-             {
-                 if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
-                 {
-                      // update the ItemID to your DB
-                     $str .=($v['ItemID'].' '.$v['Code'].' ');
+       /*  if(is_array($response_parsed) && count($response_parsed) > 0)
+         {
+             foreach($response_parsed as $v)
+            {
+                if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                {
+                     // update the ItemID to your DB
+                    $str .=($v['ItemID'].' '.$v['Code'].' ');
 
-                  } else {
-                     // log somehere else
-                  }
-             }
-         } */
+                 } else {
+                    // log somehere else
+                 }
+            }
+        } */
 
         // DISPLAY THE RESPONSE
         return $response_parsed;
     }
-
-
     /********************************** UPDATE ITEM *************************************************/
     public function updateItem($credentials, $json = "") // Item in json
     {
@@ -961,9 +1036,16 @@ class MyApi
         }
         */
 
-        if(empty($json)) {
-            // QUERY DB TO GENERATE JSON
-        }
+        // SAMPLE CODE
+        /*
+        $arr = [
+            "ItemID" => "5560efb7-bfda-412e-b8a4-a5a34e972201", // from previous create items
+            "Code" => "P-1003", // required
+            "Name" => "Product 103-a"
+        ];
+
+        $json = json_encode($arr);
+        */
 
         // valid data ?
         if(empty($json)) {
@@ -978,11 +1060,11 @@ class MyApi
             $data_arr = json_decode($json, true);
             if(is_array($data_arr) && count($data_arr) > 0) {
                 // check mandatory
-                if(empty($data_arr['Code'])) {
+                if(empty($data_arr['ItemID']) && empty($data_arr['Code'])) {
                     return json_encode([
                         'error' => true,
                         'origin' => 'local',
-                        'response' => 'Code required'
+                        'response' => 'ItemID & Code required'
                     ]);
                 }
             } else {
@@ -1045,9 +1127,50 @@ class MyApi
 
     private function processUpdateItem($response)
     {
+        // RESPONSE FROM XERO
+        /*
+        [
+            {
+                "Code": "P-1003",
+                "Name": "Product 103-a",
+                "IsSold": true,
+                "IsPurchased": true,
+                "Description": "Product 101 description",
+                "PurchaseDetails": {
+                    "UnitPrice": 20,
+                    "TaxType": ""
+                },
+                "SalesDetails": {
+                    "UnitPrice": 10,
+                    "AccountCode": "200",
+                    "TaxType": "TAX001"
+                },
+                "IsTrackedAsInventory": false,
+                "UpdatedDateUTC": "\/Date(1648005999704)\/",
+                "ItemID": "5560efb7-bfda-412e-b8a4-a5a34e972201",
+                "ValidationErrors": []
+            }
+        ]
+        */
+
+
+
         /************* SUCCESFUL XERO API RESPONSE IN JSON  ******************/
         $response_parsed = json_decode($response, true);
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
+
+        // if(is_array($response_parsed) && count($response_parsed) > 0)
+        // {
+        //     foreach($response_parsed as $v)
+        //     {
+        //         if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+        //         {
+        //             // do something here
+        //         } else {
+        //             // log somehere else
+        //         }
+        //     }
+        // }
 
         // DISPLAY THE RESPONSE
         return $response;
@@ -1108,20 +1231,19 @@ class MyApi
     /********************************** CREATE INVOICES *************************************************/
     public function createInvoices($credentials, $json = "") // array of Invoice in json
     {
-        var_dump($json);exit;
         /* ITEMS STRUCTURE
-        $json= ' [
+        [
             {
                 "Type": "ACCREC",
                 "Contact": {
-                    "ContactID":"1a288e15-a08e-45e8-ac9d-4f4e81be97fe"
+                    "ContactID":"a517984c-559f-4ff0-98ad-4fb0cbe3b5bc"
                 },
                 "LineItems": [
                     {
                         "Description": "CK MARYLAND FILLET STRIPS MEAT STRIPS SHREDDE D MEAT 5MM",
                         "Quantity": "8.000",
                         "UnitAmount": "16.80",
-                        "ItemCode": "385484-1801",
+                        "ItemCode": "10007",
                         "AccountCode":"200",
                         "LineItemID":"",
                         "TaxType": "OUTPUT",
@@ -1150,15 +1272,31 @@ class MyApi
                 "ExpectedPaymentDate":"",
                 "PlannedPaymentDate":""
             }
-        ]';
-     /*   */
+        ]
+        */
+
+        // SAMPLE CODE
+        /*
+        $arr = [
+            [
+                "Type" => "ACCREC",
+                "Contact" => [
+                    "ContactID" => "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b" // from previous create contacts
+                ],
+                "LineItems" => [
+                    [
+                        "Code" =>  "P-1003",
+                        "Quantity" => "3",
+                        "UnitAmount" => "25" // override existing price
+                    ]
+                ]
+            ]
+        ];
+
+        $json = json_encode($arr);
+        */
 
         // valid data ?
-        if(empty($json))
-        {
-            // QUERY DB TO GENERATE JSON
-        }
-
         if(empty($json))
         {
             return json_encode([
@@ -1242,9 +1380,134 @@ class MyApi
 
     private function processCreateInvoices($response)
     {
+        // RESPONSE FROM ZERO
+        /*
+        [
+            {
+                "Type": "ACCREC",
+                "Contact": {
+                    "ContactID": "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b",
+                    "ContactNumber": "12345",
+                    "ContactStatus": "ACTIVE",
+                    "Name": "Customer THree",
+                    "FirstName": "First",
+                    "EmailAddress": "customer_one@whls.wisenetware.com",
+                    "ContactPersons": [
+                        {
+                            "FirstName": "First",
+                            "EmailAddress": "customer_one@whls.wisenetware.com",
+                            "IncludeInEmails": false
+                        }
+                    ],
+                    "BankAccountDetails": "Commonwealth Bank ACC No. 319254",
+                    "Addresses": [
+                        {
+                            "AddressType": "STREET",
+                            "AddressLine1": "266-274 Derrimut Rd",
+                            "AddressLine2": "Hoppers Crossing",
+                            "City": "City of Wyndham",
+                            "Region": "VIC",
+                            "PostalCode": "AU",
+                            "Country": ""
+                        },
+                        {
+                            "AddressType": "POBOX",
+                            "City": "",
+                            "Region": "",
+                            "PostalCode": "",
+                            "Country": ""
+                        }
+                    ],
+                    "Phones": [
+                        {
+                            "PhoneType": "DEFAULT",
+                            "PhoneNumber": "123456789",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "DDI",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "FAX",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "MOBILE",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        }
+                    ],
+                    "IsSupplier": false,
+                    "IsCustomer": true,
+                    "SalesTrackingCategories": [],
+                    "PurchasesTrackingCategories": [],
+                    "UpdatedDateUTC": "\/Date(1648000246657+0000)\/",
+                    "ContactGroups": [],
+                    "BatchPayments": {
+                        "BankAccountNumber": "Commonwealth Bank ACC No. 319254"
+                    },
+                    "HasAttachments": false,
+                    "HasValidationErrors": false
+                },
+                "LineItems": [
+                    {
+                        "LineItemID": "98820860-bb94-4bec-a7d7-560d0abaf835",
+                        "Quantity": 3,
+                        "UnitAmount": 25,
+                        "LineAmount": 75,
+                        "Tracking": []
+                    }
+                ],
+                "Date": "\/Date(1647993600000+0000)\/",
+                "LineAmountTypes": "Exclusive",
+                "InvoiceNumber": "INV-0004",
+                "Reference": "",
+                "BrandingThemeID": "f9f82b37-b18f-411c-81d6-b0836d006a3a",
+                "CurrencyCode": "IDR",
+                "CurrencyRate": 1,
+                "Status": "DRAFT",
+                "SentToContact": false,
+                "SubTotal": 75,
+                "TotalTax": 0,
+                "Total": 75,
+                "InvoiceID": "0fac3661-18b5-4656-b6b0-eb4eef0bf7b5",
+                "HasAttachments": false,
+                "IsDiscounted": false,
+                "Prepayments": [],
+                "Overpayments": [],
+                "AmountDue": 75,
+                "AmountPaid": 0,
+                "UpdatedDateUTC": "\/Date(1648007043660+0000)\/",
+                "HasErrors": false,
+                "StatusAttributeString": "OK"
+            }
+        ]
+        */
+
         /************* SUCCESFUL XERO API RESPONSE IN JSON  ******************/
         $response_parsed = json_decode($response, true);
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
+
+        // if(is_array($response_parsed) && count($response_parsed) > 0)
+        // {
+        //     foreach($response_parsed as $v)
+        //     {
+        //         if( !empty($v['InvoiceID']) && !empty($v['InvoiceNumber']) && empty($v['HasErrors']) )
+        //         {
+        //             // update InvoiceID & InvoicenUmber
+        //             // loop the LIneItems and get the LineItemID, which can be use for print invoice later
+        //         } else {
+        //             // log somehere else
+        //         }
+        //     }
+        // }
 
         // DISPLAY THE RESPONSE
         return $response;
@@ -1295,10 +1558,26 @@ class MyApi
         }
         */
 
-        if (empty($json)) {
+        // SAMPLE CODE
+        /*
+        $arr = [
+            "InvoiceID" => "0fac3661-18b5-4656-b6b0-eb4eef0bf7b5",
+            "Type" => "ACCREC",
+            "Contact" => [
+                "ContactID" => "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b" // from previous create contacts
+            ],
+            "LineItems" => [
+                [
+                    "LineItemID" => "98820860-bb94-4bec-a7d7-560d0abaf835",
+                    "Quantity" => "5", // update qty
+                    "Code" =>  "P-1003",
+                    "UnitAmount" => "30" // update price
+                ]
+            ]
+        ];
+        */
 
-            // QUERY DB TO CREATE JSON
-        }
+        $json = json_encode($arr);
 
         // valid data ?
         if(empty($json)) {
@@ -1381,9 +1660,133 @@ class MyApi
 
     private function processUpdateIinvoice($response)
     {
+        // RESPONSE FROm XERO
+        /*
+        [
+            {
+                "Type": "ACCREC",
+                "Contact": {
+                    "ContactID": "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b",
+                    "ContactNumber": "12345",
+                    "ContactStatus": "ACTIVE",
+                    "Name": "Customer THree",
+                    "FirstName": "First",
+                    "EmailAddress": "customer_one@whls.wisenetware.com",
+                    "ContactPersons": [
+                        {
+                            "FirstName": "First",
+                            "EmailAddress": "customer_one@whls.wisenetware.com",
+                            "IncludeInEmails": false
+                        }
+                    ],
+                    "BankAccountDetails": "Commonwealth Bank ACC No. 319254",
+                    "Addresses": [
+                        {
+                            "AddressType": "STREET",
+                            "AddressLine1": "266-274 Derrimut Rd",
+                            "AddressLine2": "Hoppers Crossing",
+                            "City": "City of Wyndham",
+                            "Region": "VIC",
+                            "PostalCode": "AU",
+                            "Country": ""
+                        },
+                        {
+                            "AddressType": "POBOX",
+                            "City": "",
+                            "Region": "",
+                            "PostalCode": "",
+                            "Country": ""
+                        }
+                    ],
+                    "Phones": [
+                        {
+                            "PhoneType": "DEFAULT",
+                            "PhoneNumber": "123456789",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "DDI",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "FAX",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        },
+                        {
+                            "PhoneType": "MOBILE",
+                            "PhoneNumber": "",
+                            "PhoneAreaCode": "",
+                            "PhoneCountryCode": ""
+                        }
+                    ],
+                    "IsSupplier": false,
+                    "IsCustomer": true,
+                    "SalesTrackingCategories": [],
+                    "PurchasesTrackingCategories": [],
+                    "UpdatedDateUTC": "\/Date(1648000246657+0000)\/",
+                    "ContactGroups": [],
+                    "BatchPayments": {
+                        "BankAccountNumber": "Commonwealth Bank ACC No. 319254"
+                    },
+                    "HasAttachments": false,
+                    "HasValidationErrors": false
+                },
+                "LineItems": [
+                    {
+                        "LineItemID": "98820860-bb94-4bec-a7d7-560d0abaf835",
+                        "Quantity": 5,
+                        "UnitAmount": 30,
+                        "LineAmount": 150,
+                        "Tracking": []
+                    }
+                ],
+                "Date": "\/Date(1647993600000+0000)\/",
+                "LineAmountTypes": "Exclusive",
+                "InvoiceNumber": "INV-0004",
+                "Reference": "",
+                "BrandingThemeID": "f9f82b37-b18f-411c-81d6-b0836d006a3a",
+                "CurrencyCode": "IDR",
+                "CurrencyRate": 1,
+                "Status": "DRAFT",
+                "SentToContact": false,
+                "SubTotal": 150,
+                "TotalTax": 0,
+                "Total": 150,
+                "InvoiceID": "0fac3661-18b5-4656-b6b0-eb4eef0bf7b5",
+                "HasAttachments": false,
+                "IsDiscounted": false,
+                "Prepayments": [],
+                "Overpayments": [],
+                "AmountDue": 150,
+                "AmountPaid": 0,
+                "UpdatedDateUTC": "\/Date(1648008476330+0000)\/",
+                "HasErrors": false
+            }
+        ]
+        */
+
         /************* SUCCESFUL XERO API RESPONSE IN JSON  ******************/
         $response_parsed = json_decode($response, true);
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
+
+
+        // if(is_array($response_parsed) && count($response_parsed) > 0)
+        // {
+        //     foreach($response_parsed as $v)
+        //     {
+        //         if( !empty($v['InvoiceID']) && !empty($v['InvoiceNumber']) && empty($v['HasErrors']) )
+        //         {
+        //             // do something here
+        //         } else {
+        //             // log somehere else
+        //         }
+        //     }
+        // }
 
         // DISPLAY THE RESPONSE
         return $response;

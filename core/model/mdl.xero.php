@@ -34,7 +34,9 @@ class mdl_xero extends mdl_base
                         from cc_user u 
                         left join cc_user_factory f on u.id =f.user_id
                         left join cc_wj_abn_application abn on u.id =abn.userId
-                        where f.factory_id =$business_id   limit $offset ,$lengthOflists  ";
+                        where f.factory_id =$business_id  and (length(f.xero_contact_id)=0 or (f.xero_contact_id is null))  limit $offset ,$lengthOflists  ";
+
+      // var_dump($sql);exit;
         $rows = $this->getListBySql($sql);
         $new_data = [];
         foreach ($rows as $key=> $row) {
@@ -59,15 +61,16 @@ class mdl_xero extends mdl_base
             $new_data[$key]['IsSupplier'] = 'false';
             $new_data[$key]['IsCustomer'] = 'true';
             $new_data[$key]['DefaultCurrency'] = "AUD";
-            if ($row['email']) {
-
+            if (strlen(trim($row['email']))==0) {
+                $new_data[$key]['EmailAddress'] ='hhxx_2012@hotmail.com';
+                }
             $new_data[$key]['ContactPersons'] = [[
                 'FirstName' => $row['person_first_name'],
                 'LastName' => $row['person_last_name'],
                 'EmailAddress' => $row['email'],
                 'IncludeInEmails' => false
             ]];
-        }
+
 
             $new_data[$key]['Addresses']=[
                 [
@@ -101,12 +104,192 @@ class mdl_xero extends mdl_base
 
         }
 
-    //var_dump($new_data);exit;
+
        return json_encode($new_data);
 
     }
 
+    function  getorderdata($orderId) {
 
+        $sql ="select o.id,
+            o.xero_id,
+            o.xero_invoice_id as invoice_id ,  
+            o.userId as reference_user_id , 
+            f.xero_account_number  as account_number  , 
+            f.xero_contact_id  as xero_id  , 
+            o.first_name as contact_first_name,
+            o.last_name as contact_last_name,
+            o.house_number ,
+            o.street,
+            f.nickname as customer_code ,
+            o.city,
+            o.state,
+            o.postalcode as postcode,
+            o.country,
+            o.address,
+            o.displayName as trading_name,
+            o.id as reference_id, 
+            o.email,
+            abn.untity_name, 
+            f.nickname as customer_code, 
+            if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
+            if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,
+            o.message_to_business as message ,
+            FROM_UNIXTIME(o.logistic_delivery_date,'%m/%d/%Y') as delivery_date ,
+            abn.ABNorACN,
+            concat (u.tel,' ',u.phone) as phone,
+            o.delivery_fees 
+            from cc_order o
+            left join cc_user_factory f on o.userId =f.user_id and o.business_userId =f.factory_id 
+            left join cc_user u on o.userId =u.id 
+            left join cc_wj_abn_application abn on u.id =abn.userId
+            where o.orderId =$orderId";
+
+            $order_data =loadModel('order')->getByWhere(array('orderId'=>$orderId));
+           // var_dump($sql);exit;
+            return $order_data;
+
+    }
+
+  function getDetailsData ($orderId) {
+
+      $sqlDetails ="select c.id ,
+            m.id as product_id,
+            ifnull(spec.id ,'') as spec_id,
+            if(length(spec.id)>0 or (spec.id is not null),concat(m.id,'-',spec.id),m.id) as item_id,
+            if(length(spec.id)>0 or (spec.id is not null),spec.xero_itemcode,m.xero_itemcode) as xero_item_id,
+            concat(upper(c.menu_id) ,' ',upper(concat(
+                if(length(m.menu_en_name)>0 ,m.menu_en_name,m.menu_cn_name), if(length(spec.menu_en_name)>0,spec.menu_en_name,''))),' ',upper(if(length( m.unit_en)>0,   m.unit_en,m.unit)))as xero_item_name,
+            upper(c.menu_id) as item_code,
+            upper(concat(
+                if(length(m.menu_en_name)>0 ,m.menu_en_name,m.menu_cn_name), if(length(spec.menu_en_name)>0,spec.menu_en_name,''))) as item_name ,
+            c.new_customer_buying_quantity as quantity ,
+            upper(if(length( m.unit_en)>0,   m.unit_en,m.unit)) as unit ,
+            c.voucher_deal_amount as price,
+            if(m.include_gst,10,0) as gst,
+            round((c.voucher_deal_amount * c.new_customer_buying_quantity),2)  as amount 
+               
+            from cc_wj_customer_coupon c 
+            left join cc_restaurant_menu m on c.restaurant_menu_id =m.id 
+            left join cc_restaurant_menu_option spec on c.guige1_id =spec.id
+            
+            where order_id = $orderId";
+
+          $order_item_details =loadModel('wj_customer_coupon')->getListBySql($sqlDetails);
+          return $order_item_details;
+
+
+  }
+
+    public function getOrderInvoiceData($orderId){
+
+          //get order data
+          $order_data = $this->getorderdata($orderId);
+         // get order details data
+          $details_data =$this->getDetailsData($orderId);
+
+
+         $new_data=[];
+
+
+            $new_data['Type'] ="ACCREC";
+
+            $new_data['Contact'] =array(
+                'ContactID'=>$order_data['xero_contact_id']
+            );
+
+
+            $detail=[];
+
+            foreach($details_data as $key=>$value) {
+                $detail[$key]['Description']=$value['xero_item_name'];
+                $detail[$key]['Quantity']=$value['quantity'];
+                $detail[$key]['UnitAmount']=$value['price'];
+                $detail[$key]['ItemCode']=$value['item_id'];
+                $detail[$key]['AccountCode']="200";
+                $detail[$key]['LineItemID']=$value['xero_item_id'];
+                $detail[$key]['TaxType']="OUTPUT";
+                $detail[$key]['TaxAmount']=$value['amount']*$value['gst'];
+                $detail[$key]['LineAmount']=$value['amount'];
+                $detail[$key]['DiscountRate']="";
+                $detail[$key]['DiscountAmount']="";
+              }
+
+
+            $new_data['LineItems'] =$detail;
+            $new_data['Date'] =date('m/d/Y',time());
+            $dueDays =$value['payment_period']+1;
+
+            $new_data['DueDate'] =date('m/d/Y',strtotime("+$dueDays day"));
+            $new_data['LineAmountTypes'] ="Exclusive";
+            $new_data['InvoiceNumber'] ='';
+            $new_data['Reference'] ='';
+            $new_data['BrandingThemeID'] ='';
+            $new_data['CurrencyCode'] ='AUD';
+            $new_data['Status'] ='';
+            $new_data['SentToContact'] ='';
+            $new_data['ExpectedPaymentDate'] ='';
+            $new_data['PlannedPaymentDate'] ='';
+
+            /***
+             *
+             * 这个比较重要， 就是如果返回的时候需要天聪 hashcode ,invoicenumber , 再次创建的时候就不行了。 测试后要把那个是 hash 那个是invocie搞清除填进去
+             */
+
+
+            /*
+              [
+            {
+                "Type": "ACCREC",
+                "Contact": {
+                    "ContactID":"1a288e15-a08e-45e8-ac9d-4f4e81be97fe"
+                },
+                "LineItems": [
+                    {
+                        "Description": "CK MARYLAND FILLET STRIPS MEAT STRIPS SHREDDE D MEAT 5MM",
+                        "Quantity": "8.000",
+                        "UnitAmount": "16.80",
+                        "ItemCode": "385484-1801",
+                        "AccountCode":"200",
+                        "LineItemID":"",
+                        "TaxType": "OUTPUT",
+                        "TaxAmount": "13.44",
+                        "LineAmount": "134.40",
+                        "DiscountRate":"",
+                        "DiscountAmount":"",
+                        "Tracking":[
+                            {
+                                "Name":"",
+                                "Option":""
+                            }
+                        ]
+                    }
+                ],
+                "Date": "2022-03-15",
+                "DueDate": "2022-03-22",
+                "LineAmountTypes": "Exclusive",
+                "InvoiceNumber":"",
+                "Reference":"",
+                "BrandingThemeID":"",
+                "CurrencyCode":"AUD",
+                "CurrencyRate":"",
+                "Status":"",
+                "SentToContact":"",
+                "ExpectedPaymentDate":"",
+                "PlannedPaymentDate":""
+            }
+        ]
+             *
+             * */
+
+
+      return (json_encode($new_data));
+
+
+
+
+
+    }
    /*
      * 获取产品列表并在xero创建产品。
      *  isedit表示这个产品被编辑过，也就是需要更新， 如果为1，则过滤所有修改过的产品，如果为0表示不需要
@@ -193,10 +376,10 @@ class mdl_xero extends mdl_base
             WHERE
                 m.restaurant_id = $business_id AND(
                     LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and (spec.xero_itemcode is null and length(m.xero_itemcode)=0)  limit $offset ,$lengthOflists  ";
+                ) and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)=0) and (length(m.xero_itemcode)=0 or (m.xero_itemcode is null)))  limit $offset ,$lengthOflists  ";
 
          $rows = $this->getlistbysql($sql);
-      //  var_dump($sql);exit;
+       // var_dump($sql);exit;
          $new_data =[];
         foreach ($rows as $key =>$value) {
             $new_data[$key]['Code'] =$value['Code'];
@@ -225,7 +408,7 @@ class mdl_xero extends mdl_base
         }
 
 
-
+//var_dump(json_encode($new_data));exit;
          return json_encode($new_data);
 
      }
@@ -283,10 +466,7 @@ class mdl_xero extends mdl_base
      }
 
     public function  updateXeroContactId($response,$factoryId){
-        if(is_array($response) && count($response) > 0)
-        {
-            foreach($response as $v)
-            {
+
 
                  if(is_array($response) && count($response) > 0)
                  {
@@ -327,8 +507,7 @@ class mdl_xero extends mdl_base
 
 
 
-            }
-        }
+
         //   var_dump($guigeId.' '.$itemid);exit;
         return $str;
     }
