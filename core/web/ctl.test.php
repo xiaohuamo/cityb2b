@@ -3371,7 +3371,7 @@ public function xero_test_action() {
 			echo '<p>GET CONTACTS</p>';
 		}
 		if(isset($_POST['btnCreateContacts'])) {
-			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,400);
+			$contactList =$mdl_xero->getContactListForCreateContactOnXero($this->current_business['id'],0,0,2);
 			//var_dump($contactList);exit;
 			$response_arr = $api->createContacts($credentials,$contactList);
 			$custom_response= $mdl_xero->createXeroContactId($response_arr,$this->current_business['id']);
@@ -3388,7 +3388,7 @@ public function xero_test_action() {
 			echo '<p>GET ITEMS</p>';
 		}
 		if(isset($_POST['btnCreateItems'])) {
-			$itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,0,450);
+			$itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,0,2);
 			//var_dump($itemList);exit;
 			$response_arr = $api->createItems($credentials,$itemList);
 			$custom_response= $mdl_xero->updateXeroItemCode($response_arr);
