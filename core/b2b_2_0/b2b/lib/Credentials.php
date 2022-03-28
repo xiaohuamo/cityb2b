@@ -1,11 +1,11 @@
 <?php
     $credentials = [
-        'username' => "onebyone",
+        'username' => "dnltest",
         'password' => "2012Tang1",
-    //    'client_id' => "6d5a0aee0aa9e3919874a77ddf2a446e",
-        'client_id' => "5512683cc807d17f9ae51325ccfd30d9",
-        'client_secret' => "2a56f142264106e9314334f7ea39dcd9",
-   //     'client_secret' => "e41b2143e144452b561578ec202e3957",
+        'client_id' => "349281fc91c03b9d16064122370e8426",
+    //    'client_id' => "a2cad6859bf2af59a45db28874e49988",
+    //    'client_secret' => "25513f504dfd8a00ec47a355bc3a7987",
+        'client_secret' => "f7263751f1131f976e3700d408d97dc1",
         'endpoint_uri' => "https://api.whls.wisenetware.com"
     ];
 ?>
