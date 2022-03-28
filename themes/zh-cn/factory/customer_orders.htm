@@ -253,33 +253,52 @@
 									
 									<td>
 										<{if !$item.merge_to_another_order}>
-									<a class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')">打印</a>
-									 <{else}>
-									   不可用
-									 <{/if}>
+										
+										
+											<{if ($item.to_xero==1 && $item.sent_to_xero==1) || $item.to_xero==0}>
+												<a id='print_<{$item.id}>'  class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')"><{$lang->print}></a>
+												<a id='forceprint_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="force_print('<{$item.orderId}>')" <span ><{$lang->force_print}></span></a>
+						
+											<{else}>
+												<a id='print_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')"><{$lang->print}></a>
+												<a id='forceprint_<{$item.id}>'  style =""  class="link" target="_blank"  onclick="force_print('<{$item.orderId}>')" <span ><{$lang->force_print}></span></a>
+										 
+											<{/if}>
+
+										<{else}>
+
+										   <span id='no_print_<{$item.id}>'>不可用</span>
+										 <{/if}>
 									
 									</td>
 									
 									<td>
-										<div class="onoffswitch">
-												<input type="checkbox" name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch_xero<{$item.id}>">
-													<span class="onoffswitch-inner"></span>
-													<span class="onoffswitch-switch"></span>
-												</label>
-											</div>
-										
-                                            <{if $item.sent_to_xero==1}>
-												<span class='publish_icon_xero' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">sent </span>
-                                                    </span>
-                                            <{else}>
-												<span class='publish_icon_xero' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">not yet</span>
-                                                    </span>
-                                            <{/if}>
+									<{if $item.to_xero==1}>
+									
+										<{if  $item.merge_to_another_order!=1}>
+											<div id="combine_<{$item.id}>" class="onoffswitch">
+													<input type="checkbox"   <{if $item.sent_to_xero==1}> disabled <{/if}>  name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
+														   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
+													<label class="onoffswitch-label" for="myonoffswitch_xero<{$item.id}>">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
 											
+												<{if $item.sent_to_xero==1}>
+													<span id="publish_<{$item.id}>" class='publish_icon_xero' data-id='<{$item.id}>'>
+															<span style="color:#58964E;">sent </span>
+														</span>
+												<{else}>
+													<span id="publish_<{$item.id}>" class='publish_icon_xero' data-id='<{$item.id}>'>
+															<span style="color:#F30;">not yet</span>
+														</span>
+												<{/if}>
+											<{else}>
+											<div id="combine1_<{$item.id}>">-</div>
+											
+											<{/if}>
+										<{else}>-<{/if}>
 										
 										</td>
 
@@ -315,8 +334,8 @@
 									
 									<{elseif $item.merge ==1}> <!--发现记录，且非第一笔记录，可以进行合并-->
 										
-										<div class="onoffswitch">
-													<input type="checkbox"  <{if $item.merge_to_another_order==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+										<div id="hebin_<{$item.id}>" class="onoffswitch">
+													<input type="checkbox"  <{if $item.merge_to_another_order==1 ||$item.sent_to_xero==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
 														   data-id='<{$item.id}>' <{if $item.merge_to_another_order==1}> checked <{/if}>>
 													<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
 														<span class="onoffswitch-inner"></span>
@@ -439,6 +458,12 @@
 	    $('input[name=onoffswitch]').on('click', function () {
         var orderId = $(this).data('id')
         var context = $('.publish_icon[data-id=' + orderId + ']');
+		
+		
+		
+		
+		// if the main order has been sent to xero ,then alert could not combine .
+		
        // alert(orderId); return;
         if (loading) return false;
         $.ajax({
@@ -458,7 +483,16 @@
                 } else if (result.merge_to_another_order == '1') {
                     context.html("<span style='color:#58964E;'>已合并</span>");
 					$("#myonoffswitch"+orderId).attr("disabled","true");
-					
+					$("#combine1_"+orderId).css("display","");
+					$("#combine_"+orderId).css("display","none");
+					$("#publish_"+orderId).css("display","none");
+					$("#no_print_"+orderId).css("display","");
+					$("#print_"+orderId).css("display","none");
+					$("#forceprint_"+orderId).css("display","none");
+                }else if (result.merge_to_another_order == '2') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+					alert('main order has been sent to xero ');
+					$('#myonoffswitch'+orderId).attr("checked",false);
                 }
             }
         }).fail(function () {
@@ -486,11 +520,25 @@
             success: function (result) {
                 result = jQuery.parseJSON(result);
               //  alert(result.merge_to_another_order);
+			   if (result.error) {
+			   alert(result.error);
+			   
+			 //  alert($('#myonoffswitch_xero'+orderId).attr("checked"));
+			   $('#myonoffswitch_xero'+orderId).attr("checked",false);
+			   context.html("<span style='color:#F30;'>not yet</span>");
+			   return 0;
+			   }
                 if (result.sent_to_xero == '0') {
                     context.html("<span style='color:#F30;'>not yet</span>");
                 } else if (result.sent_to_xero == '1') {
                     context.html("<span style='color:#58964E;'>sent</span>");
+					
 					$("#myonoffswitch_xero"+orderId).attr("disabled","true");
+					
+					$("#print_"+orderId).css("display","");
+					$("#forceprint_"+orderId).css("display","none");
+					$("#hebin_"+orderId).css("display","none");
+					
 					
                 }
             }
@@ -501,6 +549,12 @@
         })
     })
 
+
+	function force_print(orderID){
+		if(confirm('<{$lang->forceprintalert}>')==false)return;
+		window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>');
+
+	}
 
     function  update_deliveryTime(obj) {
     if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;

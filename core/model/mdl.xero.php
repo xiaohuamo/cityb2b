@@ -163,19 +163,20 @@ class mdl_xero extends mdl_base
             upper(c.menu_id) as item_code,
             upper(concat(
                 if(length(m.menu_en_name)>0 ,m.menu_en_name,m.menu_cn_name), if(length(spec.menu_en_name)>0,spec.menu_en_name,''))) as item_name ,
-            c.new_customer_buying_quantity as quantity ,
+            sum(c.new_customer_buying_quantity) as quantity ,
             upper(if(length( m.unit_en)>0,   m.unit_en,m.unit)) as unit ,
             c.voucher_deal_amount as price,
             if(m.include_gst,10,0) as gst,
-            round((c.voucher_deal_amount * c.new_customer_buying_quantity),2)  as amount 
+            sum(round((c.voucher_deal_amount * c.new_customer_buying_quantity),2))  as amount 
                
             from cc_wj_customer_coupon c 
             left join cc_restaurant_menu m on c.restaurant_menu_id =m.id 
             left join cc_restaurant_menu_option spec on c.guige1_id =spec.id
             
-            where order_id = $orderId";
+            where order_id = $orderId group by item_id";
 
           $order_item_details =loadModel('wj_customer_coupon')->getListBySql($sqlDetails);
+         // var_dump($sqlDetails);exit;
           return $order_item_details;
 
 
@@ -302,7 +303,7 @@ class mdl_xero extends mdl_base
      public function  getItemListForCreateItemOnXero($business_id,$isEdit,$offset,$lengthOflists)
      {
          $sql = "SELECT
-                m.menu_option ,if (length(m.menu_option)>0,spec.xero_itemcode,m.xero_itemcode) as xero_itemcode,
+                m.menu_option ,if (length(m.menu_option)>1,spec.xero_itemcode,m.xero_itemcode) as xero_itemcode,
                 m.xero_itemcode as product_xerocode,
                 spec.xero_itemcode as guige_xerocode,
                        CONCAT(
@@ -358,7 +359,7 @@ class mdl_xero extends mdl_base
                 IF(m.include_gst, 10, 0) AS gst
             FROM
                 cc_restaurant_menu m
-            LEFT JOIN(
+            LEFT JOIN (
                 SELECT m.id,
                     g.id AS spec_id,
                     g.menu_en_name AS spec_name,
@@ -377,14 +378,14 @@ class mdl_xero extends mdl_base
                 m.id = spec.id AND(
                     LENGTH(spec.spec_name_cn) > 0 OR LENGTH(spec.spec_name) > 0
                 )
-            WHERE
+            WHERE   
                 m.restaurant_id = $business_id AND(
                     LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)=0) and (length(m.xero_itemcode)=0 or (m.xero_itemcode is null)))  limit $offset ,$lengthOflists  ";
+                ) and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  limit $offset,$lengthOflists  ";
 
          $rows = $this->getlistbysql($sql);
-       // var_dump($sql);exit;
-         $new_data =[];
+       // var_dump($rows);exit;
+        $new_data =[];
         foreach ($rows as $key =>$value) {
             $new_data[$key]['Code'] =$value['Code'];
 

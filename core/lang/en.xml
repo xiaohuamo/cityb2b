@@ -40,11 +40,14 @@
 	<customer_grade>grade Setting</customer_grade>
 	<add_customer_grade>add Grade</add_customer_grade>
 	 <customer_type>Customer Type</customer_type>
-	 <choose_postcode>Choose Postcode</choose_postcode>
-	  <group_discount>group discount edit</group_discount>
-	    <accountTypeandDelivery>account and Delivery</accountTypeandDelivery>
+	<choose_postcode>Choose Postcode</choose_postcode>
+	<group_discount>group discount edit</group_discount>
+	<accountTypeandDelivery>account and Delivery</accountTypeandDelivery>
 	<customer_list_recycle>Hide Customers</customer_list_recycle>
 	<customer_price_management>Customer disocunt </customer_price_management>
+	  <force_print>Force Print </force_print>
+	   <print>Print </print>
+	     <forceprintalert>The Invocie hasnot send to xero yet , the invoice No will not be xero Invocie ID ,still print?</forceprintalert>
 	
 	<orderLists>Order Lists</orderLists>
 	

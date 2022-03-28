@@ -8,8 +8,7 @@ class mdl_tokens extends mdl_base
 
   public function getCredentials($business_id,$type) {
       $where =array(
-          'business_id'=>$business_id,
-          'type'=>$type
+          'business_id'=>$business_id
       );
       $rec =$this->getByWhere($where) ;
       if($rec){

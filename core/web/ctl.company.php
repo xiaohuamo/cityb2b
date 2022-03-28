@@ -2605,7 +2605,10 @@ class ctl_company extends cmsPage
 			$this->form_response(600,'Did not find original order !','Did not find original order !!');
 			return;
 		}
-		
+		if($first_rec['sent_to_xero']==1) {
+            echo json_encode(array('merge_to_another_order' => 2)); //main order has been sent to xero
+            return;
+        }
 		
 		$error =$mdl_order->merge_order($id,$first_rec);
 		

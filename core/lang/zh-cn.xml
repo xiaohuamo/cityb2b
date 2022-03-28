@@ -1066,6 +1066,10 @@
 	  <choose_postcode>选择邮编地区</choose_postcode>
 	   <group_discount>组折扣管理</group_discount>
 	  <accountTypeandDelivery>客户账期及配送日程</accountTypeandDelivery>
+	  <force_print>强制打印 </force_print>
+	   <forceprintalert>当前发票还未上传xero,打印输出发票号为本地生成，是否打印？</forceprintalert>
+	  
+	    <print>打印</print>
 	 
     <email>邮箱</email>
 

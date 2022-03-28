@@ -155,7 +155,7 @@ class pdfGenerator extends PDF_Chinese
         $this->date1 = $date1;
        
     }
-	
+
 	 public function setUserName($userName)
     {
         $this->userName = $userName;
@@ -286,7 +286,7 @@ class pdfGenerator extends PDF_Chinese
         $this->row( $this->totalAmount, 0.17, 0, "L", 6);
         $this->row($this->date1, 0.17, 0, "L", 6);
 
-        $this->row("INV-".$this->invoiceId, 0.16, 0, "L", 6);
+        $this->row($this->invoiceId, 0.16, 0, "L", 6);
 
         $this->ln();
       //  $this->row("ACC NO: ".$this->user_code['nickname'].'  '.$this->user['id'], 0.5, 0, "L", 6);
@@ -409,7 +409,7 @@ class pdfGenerator extends PDF_Chinese
             //第一行
             $this->row("Invoice&Delivery To:" , 0.4, 0, "L", 6);
             $this->row("Delivered By:", 0.3, 0, "L", 6);
-            $this->row("Invoice: INV-".$this->invoiceId, 0.3, 0, "L", 6);
+            $this->row("Invoice:". $this->invoiceId, 0.3, 0, "L", 6);
             $this->ln(7);
 
 
@@ -747,7 +747,12 @@ class OrderInvoice
 		$this->pdf->setPhone($this->factory['phone']);
 		$this->pdf->setBusinessId($this->factory['id']);
 		$this->pdf->setOrderId($this->order['orderId']);
-        $this->pdf->setInvoiceId($this->order['id']);
+        if($this->order['xero_invoice_id']){
+            $this->pdf->setInvoiceId($this->order['xero_invoice_id']);
+        }else{
+            $this->pdf->setInvoiceId('INV-C'.$this->order['id']);
+        }
+
 
 
 
@@ -912,7 +917,16 @@ class OrderInvoice
         $this->pdf->setPhone($this->factory['phone']);
         $this->pdf->setBusinessId($this->factory['id']);
         $this->pdf->setOrderId($this->order['orderId']);
-        $this->pdf->setInvoiceId($this->order['id']);
+
+
+        if($this->order['xero_invoice_id']){
+            $this->pdf->setInvoiceId($this->order['xero_invoice_id']);
+        }else{
+            $this->pdf->setInvoiceId('INV-C'.$this->order['id']);
+        }
+
+
+
         $this->pdf->setDate(date('Y-m-d ',$this->order['logistic_delivery_date']));
         $this->pdf->setUserName($this->userABN['business_name']);
         $this->pdf->setFactoryAccount($this->factoryAccount);

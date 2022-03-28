@@ -189,10 +189,13 @@
 										
 										</td>
 									<td>
+									<{if strlen($user.xero_contact_id)<2}>
 									<input type="text" class="input-text" data-id='<{$user.idd}>' id="price-<{$user.idd}>" style="width:100px;" name="xero_account_number"
 												   value=" <{$user.xero_account_number}>">
 											<span class='promote-ajax'></span>
-									
+									<{else}>
+									<{$user.xero_account_number}>
+									<{/if}>
                                        
 									</td>	
 										

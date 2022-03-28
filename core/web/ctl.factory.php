@@ -161,28 +161,36 @@ class ctl_factory extends cmsPage
             $this->setData(1, 'dispatching_user');
         }
         if ($currentBusinessId && $currentBusinessId != 'all') {
-            $sql = "SELECT cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+            $sql = "SELECT f.to_xero,cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum
+                    from cc_order as o 
+                    left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust 
+                        on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." 
+                    left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id 
+                     left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         } else {
-            $sql = "SELECT  cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum from cc_order as o left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id     group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$FactoryId." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+            $sql = "SELECT  f.to_xero,cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum 
+            from cc_order as o 
+                left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id     group by order_id,business_id) cust 
+                    on o.orderId=cust.order_id and cust.business_id =".$FactoryId." 
+                    left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id  
+                    left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         }
         $whereStr = " ( business_userId= ".$FactoryId;
         $whereStr .= "  or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$FactoryId.")";
         //plus 如果该用户是统配中心用户，其下所有商家的订单
-        $whereStr .= " or  business_userId in (select business_id from  cc_dispatching_centre_customer_list where dispatching_centre_id =".$FactoryId.")";
+  /*      $whereStr .= " or  business_userId in (select business_id from  cc_dispatching_centre_customer_list where dispatching_centre_id =".$FactoryId.")";
         //如果该商家是集合店铺所有人，则所有其下店铺的订单
         $whereStr .= " or  business_userId in (select suppliers_id from  cc_freshfood_disp_centre_suppliers where business_id =".$FactoryId.")";
         // 如果该用户为授权用户，则其下所有订单均可以看到。
         $whereStr .= " or  business_userId in (select customer_id from  cc_authrise_manage_other_business_account where authorise_business_id =".$FactoryId.")";
-
+*/
         $whereStr .= ")";
 
         if (! empty($sk)) {
-            $whereStr .= " and (o.redeem_code like  '%".$sk."%'";
-            $whereStr .= " or o.last_name like  '%".$sk."%'";
+            $whereStr .= " and  o.last_name like  '%".$sk."%'";
             $whereStr .= " or o.phone like  '%".$sk."%'";
             $whereStr .= " or o.orderId like  '%".$sk."%'";
             $whereStr .= " or o.order_name like  '%".$sk."%'";
-            $whereStr .= " or o.tracking_id like  '%".$sk."%'";
             $whereStr .= " or o.first_name like  '%".$sk."%'";
             $whereStr .= " or o.userId like  '%".$sk."%')";
             $where[] = $whereStr;
@@ -237,14 +245,12 @@ class ctl_factory extends cmsPage
             if ($customer_delivery_date != 'all') {
                 $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
             }else{
-                $three_days_times = time()-259200*2;
-                $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
+
 
 
             }
         }else {
-            $three_days_times = time()-259200*2;
-            $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
+
         }
 
         /**
@@ -430,6 +436,8 @@ class ctl_factory extends cmsPage
 
         $api = new MyApi($db);
         $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
 
         $orderId =$order_info['orderId'];
         $order_data = $mdl_xero->getOrderInvoiceData($orderId);
@@ -437,7 +445,7 @@ class ctl_factory extends cmsPage
         $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
 
         if($custom_response) {
-            $this->form_response_msg($custom_response);
+            echo json_encode(array('error' => (string)$custom_response));
         }else{
             $data = array();
             $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
@@ -2224,6 +2232,11 @@ class ctl_factory extends cmsPage
 
             if ($factory_user['factory_id'] != $this->current_business['id']) {
                 $this->form_response(600, 'no access', 'no access');
+
+            }
+
+            if (strlen($factory_user['xero_contact_id'])>2 ) {
+                $this->form_response(600, 'xero synced ,could not be changed ');
 
             }
 
