@@ -535,7 +535,8 @@ class mdl_xero extends mdl_base
 
                                 $str.=' <br> Contact  update success : '.$v['AccountNumber'];
                             }else{
-                                $str.=' <br> Contact  update  Failed : '.$v['AccountNumber'];
+                                $str.=' <br> Contact  update  Failed-- : '.$v['AccountNumber'];
+                                $str.=  'xero_contact_id'.' '.$v['ContactID'].' '.'user_id'.' '. $v['ContactNumber'].' '.$v['AccountNumber'].' '.$factoryId ;
                             }
 
 
@@ -570,9 +571,10 @@ class mdl_xero extends mdl_base
                 {
                     // update the ContactID to your DB
                     // update the ItemID to your DB
+                    $Name =str_replace("'"," ",$v['Name']);
                     $updateArr =array(
                         'xero_contact_id'=>$v['ContactID'],
-                        'xero_name'=>$v['Name']
+                        'xero_name'=>$Name
                     );
                     $where =array(
                         'xero_account_number'=>$v['AccountNumber'],
@@ -582,7 +584,9 @@ class mdl_xero extends mdl_base
 
                         $str.=' <br> Contact  update success : '.$v['AccountNumber'];
                     }else{
-                        $str.=' <br> Contact  update  Failed : '.$v['AccountNumber'];
+                        $str.=' <br> Contact  update  Failed-- : '.$v['AccountNumber'];
+                        $str.=  'xero_contact_id'.' '.$v['ContactID'].' '.'user_id'.' '. $v['ContactNumber'].' '.$v['AccountNumber'].' '.$factoryId ;
+
                     }
 
 
