@@ -3365,7 +3365,7 @@ public function xero_test_action() {
 
 		if(isset($_POST['btnGetContacts'])) {
 			$response_arr = $api->getContacts($credentials);
-
+//
 			$custom_response=$mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
 			$response=json_encode($response_arr);
 			echo '<p>GET CONTACTS</p>';
