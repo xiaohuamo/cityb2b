@@ -62,7 +62,7 @@ class mdl_xero extends mdl_base
             $new_data[$key]['IsCustomer'] = 'true';
             $new_data[$key]['DefaultCurrency'] = "AUD";
             if (strlen(trim($row['email']))==0) {
-                $new_data[$key]['EmailAddress'] ='noemail@hotmail.com';
+                $new_data[$key]['EmailAddress'] ='no-email@hotmail.com';
                 }
             $new_data[$key]['ContactPersons'] = [[
                 'FirstName' => $row['person_first_name'],
@@ -231,7 +231,7 @@ class mdl_xero extends mdl_base
             $new_data['Reference'] ='';
             $new_data['BrandingThemeID'] ='';
             $new_data['CurrencyCode'] ='AUD';
-            $new_data['Status'] ='AUTHORISED';
+            $new_data['Status'] ='DRAFT';
             $new_data['SentToContact'] ='';
             $new_data['ExpectedPaymentDate'] ='';
             $new_data['PlannedPaymentDate'] ='';
