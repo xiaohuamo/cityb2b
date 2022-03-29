@@ -436,8 +436,8 @@ class ctl_factory extends cmsPage
 
         $api = new MyApi($db);
         $mdl_xero =$this->loadModel('xero') ;
-        $mdl_tokens =$this->loadModel('tokens') ;
-        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+      //  $mdl_tokens =$this->loadModel('tokens') ;
+      //  $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
 
         $orderId =$order_info['orderId'];
         $order_data = $mdl_xero->getOrderInvoiceData($orderId);
