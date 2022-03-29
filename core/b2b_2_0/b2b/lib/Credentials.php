@@ -6,6 +6,6 @@
     //    'client_id' => "a2cad6859bf2af59a45db28874e49988",
     //    'client_secret' => "25513f504dfd8a00ec47a355bc3a7987",
         'client_secret' => "6d9f0533bb1984c32aa08cd7acd577d1",
-        'endpoint_uri' => "https://api.cityb2b.wisenetware.com"
+        'endpoint_uri' => "https://api.whls.cityb2b.com"
     ];
 ?>
