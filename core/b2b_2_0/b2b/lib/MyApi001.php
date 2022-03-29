@@ -93,7 +93,7 @@ class MyApi
             return [
                 'error' => true,
                 'origin' => 'local',
-                'response' => url_error($ch)
+                'response' => curl_error($ch)
             ];
         } else {
             try {
