@@ -3404,7 +3404,7 @@ public function xero_test_action() {
 			echo '<p>GET INVOICES</p>';
 		}
 		if(isset($_POST['btnCreateInvoices'])) {
-			$orderId ='20220317171609149465';
+			$orderId ='20220310142411167655';
 			$order_data = $mdl_xero->getOrderInvoiceData($orderId);
 			$response_arr = $api->createInvoices($credentials,$order_data);
 			$custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);

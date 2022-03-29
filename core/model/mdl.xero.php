@@ -146,7 +146,7 @@ class mdl_xero extends mdl_base
             where o.orderId =$orderId";
 
             $order_data =loadModel('order')->getListBySql($sql);
-           // var_dump($order_data[0]);exit;
+           // var_dump($order_data);exit;
             return $order_data[0];
 
     }

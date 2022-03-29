@@ -244,6 +244,8 @@
 									<th><{$lang->payment}></th>
 									<th><{$lang->delivery}></th>				
 									<th><{$lang->submission_time}></th>
+									<th>AccountType</th>
+									<th>AccountPeriod</th>
 									
 								</tr>			
 							</thead>		
@@ -420,6 +422,8 @@
 									</td>	
 
 									<td><{date('Y-m-d H:i', $item.createTime)}></td>
+									<td><{$item.payment_period}></td>
+									<td><{$item.disp_accountType}></td>
 									
 								</tr>			
 								<{/foreach}>			
