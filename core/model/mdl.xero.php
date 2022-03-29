@@ -231,7 +231,7 @@ class mdl_xero extends mdl_base
             $new_data['Reference'] ='';
             $new_data['BrandingThemeID'] ='';
             $new_data['CurrencyCode'] ='AUD';
-            $new_data['Status'] ='DRAFT';
+            $new_data['Status'] ='AUTHORISED';
             $new_data['SentToContact'] ='';
             $new_data['ExpectedPaymentDate'] ='';
             $new_data['PlannedPaymentDate'] ='';
