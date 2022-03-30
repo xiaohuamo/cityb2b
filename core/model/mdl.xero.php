@@ -397,11 +397,11 @@ class mdl_xero extends mdl_base
             $new_data[$key]['IsPurchase'] ='true';
             $new_data[$key]['PurchaseDescription'] ='';
             $new_data[$key]['PurchaseDetails'] =array(
-                'UnitPrice'=>$value['price']
+                'UnitPrice'=>1.00
 
             );
             $new_data[$key]['SalesDetails'] =array(
-                'UnitPrice'=>'1.00',
+                'UnitPrice'=>$value['price'],
                 'AccountCode'=>'',
                 'COGSAccountCode'=>'',
                 'TaxType'=>''
