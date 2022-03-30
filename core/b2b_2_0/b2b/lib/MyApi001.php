@@ -1234,7 +1234,7 @@ class MyApi
 
         $arr = [
             "modified_since" => "2022-01-01", // last modified
-            "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
+      //      "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
             "where" => '(Code=="387593" or Code=="387594")', // works
             //"where" => "IsSold==true",
           //  "order_by" => "Code ASC", // order by
