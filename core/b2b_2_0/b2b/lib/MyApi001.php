@@ -69,6 +69,8 @@ class MyApi
 
     private function doAuth($credentials) // return array of tokens or errors
     {
+
+       // var_dump($credentials);exit;
         $params=[
             'username' => $credentials['username'], 
             'password' => $credentials['password'], 
@@ -84,10 +86,15 @@ class MyApi
             CURLOPT_RETURNTRANSFER => true
         );   
 
+
         $ch = curl_init();
         curl_setopt_array($ch, $defaults);
         $response = curl_exec($ch);
         curl_close($ch);
+
+
+    //    echo ('responseis '.$response);exit;
+
 
         if($response === false) {
             return [
@@ -139,12 +146,14 @@ class MyApi
                 $stmt = $this->db->prepare("UPDATE cc_tokens SET cc_tokens=? WHERE username=? AND client_id=? AND client_secret=?");            $stmt->bind_param('ss', $new_tokens_json, $credentials['username']);
                 $save = $stmt->execute();   
             } else { // insert
+
                 $stmt = $this->db->prepare("INSERT INTO cc_tokens (username, client_id, client_secret, cc_tokens) VALUES (?, ?, ?, ?)");
                 $stmt->bind_param('ssss', $credentials['username'], $credentials['client_id'], $credentials['client_secret'], $new_tokens_json);    
                 $save = $stmt->execute();   
             }
         } catch(\Exception $e) {
             // do nothing
+            var_dump('error');
         }
     }
 
@@ -694,8 +703,16 @@ class MyApi
     /********************************** GET CONTACTS *************************************************/
     public function getContacts($credentials)
     {
+
+
+
+
+
         // valid tokens ?
+       // var_dump($credentials);exit;
         $tokens = $this->getTokens($credentials);
+      //  return 'tokens from get tokens' . print_r($tokens, true);
+
         if(empty($tokens['access_token'])) 
         {
             return json_encode([
