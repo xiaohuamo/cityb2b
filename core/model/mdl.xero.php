@@ -384,7 +384,7 @@ class mdl_xero extends mdl_base
                 ) and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  limit $offset,$lengthOflists  ";
 
          $rows = $this->getlistbysql($sql);
-       // var_dump($sql);exit;
+        var_dump($sql);exit;
         $new_data =[];
         foreach ($rows as $key =>$value) {
             $new_data[$key]['Code'] =$value['Code'];
