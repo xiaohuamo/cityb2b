@@ -2,8 +2,8 @@
 $credentials = [
     'username' => "dnlreal",
     'password' => "2012Tang1",
-    'client_id' => "0caa6d77feed1ad4c09abe55000581d0",
-    'client_secret' => "588ec84d258bec0273cb8795c96de1a9",
-    'endpoint_uri' => "https://api.whls.wisenetware.com"
+    'client_id' => "3294bbf451f0c8aef74761efa74e31d8",
+    'client_secret' => "3a160fa89347a99b7cd1e54575ec015d",
+    'endpoint_uri' => "https://api.whls.cityb2b.com"
 ];
 ?>
