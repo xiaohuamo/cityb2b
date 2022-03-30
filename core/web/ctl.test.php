@@ -3351,6 +3351,7 @@ public function phpinfo(){
 public function xero_test_action() {
 
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+	//require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
 
@@ -3404,8 +3405,9 @@ public function xero_test_action() {
 			echo '<p>GET INVOICES</p>';
 		}
 		if(isset($_POST['btnCreateInvoices'])) {
-			$orderId ='20220310142411167655';
+			$orderId ='20220315092259254651';
 			$order_data = $mdl_xero->getOrderInvoiceData($orderId);
+			//var_dump($order_data);exit;
 			$response_arr = $api->createInvoices($credentials,$order_data);
 			$custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
 			$response=json_encode($response_arr);
