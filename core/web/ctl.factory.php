@@ -439,12 +439,23 @@ class ctl_factory extends cmsPage
 
         $api = new MyApi($db);
         $mdl_xero =$this->loadModel('xero') ;
-      //  $mdl_tokens =$this->loadModel('tokens') ;
-      //  $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+
+        if(!$credentials) {
+            echo json_encode(array('error' => 'please refresh the page or login in again!'));
+        }
 
         $orderId =$order_info['orderId'];
         $order_data = $mdl_xero->getOrderInvoiceData($orderId);
+        if(!$order_data) {
+            echo json_encode(array('error' => 'could not find the order Info!'));
+        }
+
         $response_arr = $api->createInvoices($credentials,$order_data);
+        if(!$response_arr) {
+            echo json_encode(array('error' => 'no result return when create invoice! '));
+        }
         $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
 
         if($custom_response) {

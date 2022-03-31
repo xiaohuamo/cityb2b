@@ -23,19 +23,23 @@ class MyApi
         }
 
         try {
-            $stmt = $this->db->prepare("SELECT cc_tokens FROM cc_tokens WHERE username=? AND client_id=? AND client_secret=?");
-            $stmt->bind_param('sss', $credentials['username'], $credentials['client_id'], $credentials['client_secret']);    
-            $stmt->execute();   
+            $stmt = $this->db->prepare("SELECT tokens FROM cc_tokens WHERE username=? AND business_id=? AND client_id=? AND client_secret=?");
+            $stmt->bind_param('ssss', $credentials['username'],$credentials['business_id'], $credentials['client_id'], $credentials['client_secret']);
+            $stmt->execute();
+
             $stmt->bind_result($tokens_json);
-            $stmt->fetch();  
+          //  var_dump($tokens_json);exit;
+            $stmt->fetch();
+            $stmt->close();
+
         } catch (\Exception $e) {
             return [
                 'error' => true,
                 'origin' => 'local',
-                'response' => $e->getMessage()
+                'response' => 'error '.$e->getMessage()
             ];
         }
-
+     //   var_dump('tokens_json is '.$tokens_json);exit;
         if(!empty($tokens_json)) {
             try {
                 $tokens_arr = json_decode($tokens_json, true);
@@ -137,23 +141,28 @@ class MyApi
     private function doSaveTokens($credentials, $new_tokens_json)
     {
         try {
-            $stmt = $this->db->prepare("SELECT cc_tokens FROM cc_tokens WHERE username=? AND client_id=? AND client_secret=?");
-            $stmt->bind_param('sss', $credentials['username'], $credentials['client_id'], $credentials['client_secret']);      
-            $stmt->execute();   
+          //  var_dump($new_tokens_json);exit;
+            $stmt = $this->db->prepare("SELECT tokens FROM cc_tokens WHERE username=? AND client_id=? AND client_secret=?");
+           $stmt->bind_param('sss', $credentials['username'], $credentials['client_id'], $credentials['client_secret']);
+
+
+            $stmt->execute();
             $stmt->bind_result($tokens_json);
             $stmt->fetch();        
             if(!empty($tokens_json)) { // update
-                $stmt = $this->db->prepare("UPDATE cc_tokens SET cc_tokens=? WHERE username=? AND client_id=? AND client_secret=?");            $stmt->bind_param('ss', $new_tokens_json, $credentials['username']);
+                $stmt = $this->db->prepare("UPDATE cc_tokens SET tokens=? WHERE username=? AND client_id=? AND client_secret=?");
+                $stmt->bind_param('ss', $new_tokens_json, $credentials['username']);
                 $save = $stmt->execute();   
             } else { // insert
-
-                $stmt = $this->db->prepare("INSERT INTO cc_tokens (username, client_id, client_secret, cc_tokens) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param('ssss', $credentials['username'], $credentials['client_id'], $credentials['client_secret'], $new_tokens_json);    
+              // var_dump($credentials);exit;
+                $stmt = $this->db->prepare("INSERT INTO cc_tokens (business_id,username,client_id, client_secret, tokens,apitype,password,endpoint_uri) VALUES (?, ?, ?, ? ,? ,? ,? ,?)");
+               $apitype ='xero';
+                $stmt->bind_param('ssssssss',$credentials['business_id'],$credentials['username'], $credentials['client_id'], $credentials['client_secret'], $new_tokens_json,$apitype,$credentials['password'],$credentials['endpoint_uri']);
                 $save = $stmt->execute();   
             }
         } catch(\Exception $e) {
             // do nothing
-            var_dump('error');
+            var_dump('some thing error when try to save tokens'.$e);
         }
     }
 
@@ -1191,6 +1200,7 @@ class MyApi
     {
         // valid tokens ?
         $tokens = $this->getTokens($credentials);
+       // var_dump('token is :'.$tokens);exit;
         if(empty($tokens['access_token'])) 
         {
             return json_encode([
@@ -1235,7 +1245,7 @@ class MyApi
         $arr = [
             "modified_since" => "2022-01-01", // last modified
       //      "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
-            "where" => '(Code=="387593" or Code=="387594")', // works
+            "where" => '(Code=="bb" or Code=="bch")', // works
             //"where" => "IsSold==true",
           //  "order_by" => "Code ASC", // order by
         ];
