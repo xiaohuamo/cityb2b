@@ -433,7 +433,7 @@ class ctl_factory extends cmsPage
         //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
-        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+       // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
         require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
         require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
 
