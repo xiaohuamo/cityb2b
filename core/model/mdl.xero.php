@@ -381,10 +381,10 @@ class mdl_xero extends mdl_base
             WHERE   
                 m.restaurant_id = $business_id AND(
                     LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  limit $offset,$lengthOflists  ";
+                ) and m.isDeleted =0 and visible =1 and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  limit $offset,$lengthOflists  ";
 
          $rows = $this->getlistbysql($sql);
-       // var_dump($sql);exit;
+        var_dump($sql);exit;
         $new_data =[];
         foreach ($rows as $key =>$value) {
             $new_data[$key]['Code'] =$value['Code'];
