@@ -179,7 +179,9 @@
 						
 								var menus = [];
 								<{foreach from=$menuList item=item}>
-								menus.push(['<{$item.id}>', '<{$item.restaurant_category_id}>', '<{$item.sub_category_id}>','<{$item.menu_en_name}>']);
+								var str = '<{$item.menu_en_name}>';
+								var str1 = str.replace(/(\s*$)/g,"");
+								menus.push(['<{$item.id}>', '<{$item.restaurant_category_id}>', '<{$item.sub_category_id}>',str1]);
 								<{/foreach}>
 
 								
