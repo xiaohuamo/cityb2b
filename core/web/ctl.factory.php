@@ -4637,7 +4637,7 @@ class ctl_factory extends cmsPage
                 // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
 
                 $mdl_xero_items_match = $this->loadModel('xero_items_match');
-                $pageSql=$mdl_xero_items_match->getXeroMatchList($this->current_business['id']) ;
+                $pageSql=$mdl_xero_items_match->getXeroMatchList($this->current_business['id'],$sk) ;
 
 
                 $pageUrl = $this->parseUrl()->set('page');
