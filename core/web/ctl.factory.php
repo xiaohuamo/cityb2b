@@ -413,7 +413,202 @@ class ctl_factory extends cmsPage
         return true;
     }
 
+
+
+    public function update_xero_server_code_action(){
+
+      //  $this->form_response_msg('no access')
+        $id = (int)post('id');
+
+        $returnArr =[];
+
+        $mdl= $this->loadModel('xero_items_match');
+
+        $xero_update_info = $mdl->get($id);
+
+        if ($id < 0 || $xero_update_info['business_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+
+        if(!$credentials) {
+            echo json_encode(array('error' => 'please refresh the page or login in again!'));
+        }
+
+
+
+          //    $arr = [
+      //      "ItemID" => "40e4b881-cc7e-45bb-8c58-dd19ff4f5488", // from previous create items
+      //      "Code" => "387593", // required
+      //      "Name" => "Product 103-a"
+     //   ];
+          if($xero_update_info['guige_id']){
+              $code =$xero_update_info['product_id'].'-'.$xero_update_info['guige_id'];
+          }else{
+              $code =$xero_update_info['product_id'];
+          }
+            $arr = [
+              "ItemID" => $xero_update_info['xero_ItemID'], // from previous create items
+              "Code" => $code
+          ];
+            $arr_json =json_encode($arr);
+
+       //    var_dump($arr_json);exit;
+        $response_arr = $api->updateItem($credentials,$arr_json);
+
+     //  var_dump($response_arr);exit;
+        if(!$response_arr) {
+            echo json_encode(array('error' => 'no result return when update  item code ! '));
+        }
+
+        $custom_response= $mdl_xero->updateXeroItemCode1($response_arr);
+
+        //有表示有错误
+        if($custom_response){
+
+            if(is_array($response_arr) && count($response_arr) > 0)
+            {
+                $updateArr =array(
+                    'new_xero_ItemCode'=>$response_arr[0]['ItemID'],
+                    'return_xero_code'=>$response_arr[0]['Code'],
+                );
+
+                if($mdl->update($updateArr,$id)){
+                    //var_dump('success');exit;
+                    $returnArr['return_xero_code'] = $response_arr[0]['Code'];
+                    $returnArr['new_xero_ItemCode'] = $response_arr[0]['ItemID'];
+
+                }
+            }
+
+
+
+
+        }
+
+
+        if($custom_response) {
+            $returnArr['updated'] = 1;
+        }else{
+            $returnArr['updated'] =0;
+       }
+
+
+        echo json_encode($returnArr);
+
+    }
+
 // send the order to xero
+
+
+    public function cancel_xero_server_code_action(){
+
+        //  $this->form_response_msg('no access')
+        $id = (int)post('id');
+
+        $returnArr =[];
+
+        $mdl= $this->loadModel('xero_items_match');
+
+        $xero_update_info = $mdl->get($id);
+
+        if ($id < 0 || $xero_update_info['business_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+
+        if(!$credentials) {
+            echo json_encode(array('error' => 'please refresh the page or login in again!'));
+        }
+
+
+
+        //    $arr = [
+        //      "ItemID" => "40e4b881-cc7e-45bb-8c58-dd19ff4f5488", // from previous create items
+        //      "Code" => "387593", // required
+        //      "Name" => "Product 103-a"
+        //   ];
+
+        $arr = [
+            "ItemID" => $xero_update_info['xero_ItemID'], // from previous create items
+            "Code" => $xero_update_info['xero_code']
+        ];
+        $arr_json =json_encode($arr);
+
+        //    var_dump($arr_json);exit;
+        $response_arr = $api->updateItem($credentials,$arr_json);
+
+        //  var_dump($response_arr);exit;
+        if(!$response_arr) {
+            echo json_encode(array('error' => 'no result return when update  item code ! '));
+        }
+
+
+            if(is_array($response_arr) && count($response_arr) > 0)
+            {
+
+                if( !empty($response_arr[0]['ItemID']) && !empty($response_arr[0]['Code']) && empty($response_arr[0]['ValidationErrors']) ) {
+
+                    $updateArr =array(
+                        'new_xero_ItemCode'=>'',
+                        'return_xero_code'=>'',
+                        'product_id'=>0,
+                        'guige_id'=>0
+             );
+
+                    if($mdl->update($updateArr,$id)){
+                        //var_dump('success');exit;
+                        $returnArr['return_xero_code'] = '-';
+                        $returnArr['new_xero_ItemCode'] = '-';
+                        $returnArr['product_id'] = '-';
+                        $returnArr['guige_id'] = '-';
+
+                    }
+
+                    $updateArr =array(
+                        'xero_itemcode'=>''
+                    );
+                    if($xero_update_info['guige_id']) {
+                         $this->loadModel('restaurant_menu_option')->update($updateArr,$xero_update_info['guige_id']);
+                    }else{
+                        $this->loadModel('restaurant_menu')->update($updateArr,$xero_update_info['product_id']);
+                    }
+
+                }
+
+
+                $returnArr['updated'] = 1;
+
+            }else{
+                $returnArr['updated'] =0;
+            }
+
+
+
+        echo json_encode($returnArr);
+
+    }
+
+// send the order to xero
+
     public function xero_send_invoice_action(){
 
 
@@ -4333,5 +4528,279 @@ class ctl_factory extends cmsPage
 
 
 
+    function item_xero_download_sync_setting_action(){
+        // 获得该用户餐厅的菜单分类信息
 
+        if(!$customer_id) {
+            $customer_id =$this->current_business['id'];
+
+        }
+        $this->setData($customer_id,'customer_id');
+
+        $mdl = $this->loadModel('authrise_manage_other_business_account');
+        $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+
+        $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+
+        $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+        if($authoriseBusinessList) { //如果该商家可以托管账户
+            // 检查接收的托管的商家是否合法
+
+
+
+            $isAuthoriseCustomer =0 ;
+            foreach ($authoriseBusinessList as $key => $value) {
+                if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+                    $isAuthoriseCustomer =1;
+                }
+
+            }
+
+            if($isAuthoriseCustomer) { //如果是授权的customer
+
+
+                $mdl_restaurant_category = $this->loadModel('restaurant_category');
+                $pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+                $data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+                if(!$data) {
+                    //$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+                }
+                $this->setData($data,'restaurant_category');
+
+
+
+                $sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+                $data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+                //var_dump($sql_Parent_cate_list);exit;
+
+
+
+                //$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
+                $catList = $mdl_restaurant_category->getCateList($customer_id);
+                $this->setData($catList, 'catList');
+                //var_dump($subCategoryList);exit;
+
+                $this->setData($data_parent_cate_list, 'data_parent_cate_list');
+                $sk = trim(get2('sk'));
+
+                $allOrspecial = trim(get2('allOrspecial'));
+
+                $onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
+                $this->setData($onoffguigecatinfo,'onoffguigecatinfo');
+
+                $onoffcninfo = trim(get2('onoffcninfo'));
+                $this->setData($onoffcninfo,'onoffcninfo');
+                //	var_dump($onoffcninfo);exit;
+
+                $sub_category =trim(get2('sub_category'));
+                $this->setData($sub_category,'sub_category');
+                $category = trim(get2('category'));
+
+                if(!$category) {$category='all';}
+                //		var_dump($sub_category);exit;
+                $this->setData($sk,'sk');
+                $this->setData($category,'category1');
+
+
+                $sqlMenu ="SELECT m.id, m.`restaurant_category_id`,m.`sub_category_id`,trim(concat(m.id,'-',m.menu_id,'-',m.`menu_en_name`)) as menu_en_name  FROM `cc_restaurant_menu` m WHERE m.`restaurant_id` =319188 and m.visible=1 and m.isDeleted=0 and (length(m.menu_cn_name) >0 or length(m.menu_en_name) >0)";
+                $menuList =$mdl_restaurant_menu->getListBySql($sqlMenu);
+                $this->setData($menuList,'menuList');
+
+
+
+
+
+                $sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
+
+                $whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0  ";
+
+                if($category =='all' or empty($category)) {
+                    $whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+                }else{
+
+                    if($sub_category) {
+                        $whereStr.= " and ( m.category_id= $sub_category) ";
+                    }else{
+                        $whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
+                    }
+
+                }
+
+
+
+
+                // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+                // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+                $mdl_xero_items_match = $this->loadModel('xero_items_match');
+                $pageSql=$mdl_xero_items_match->getXeroMatchList($this->current_business['id']) ;
+
+
+                $pageUrl = $this->parseUrl()->set('page');
+                $pageSize =30;
+                $maxPage =200;
+                $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+                $data = $mdl_xero_items_match->getListBySql($page['outSql']);
+
+
+                $key = 'id';
+
+                $data=$this->assoc_unique($data, $key);
+//var_dump($data);exit;
+
+                // 获得该用户的gst type
+
+                $mdl_user =$this->loadModel("user");
+                $customerInfo = $mdl_user->get($customer_id);
+
+                //var_dump($customerInfo);exit;
+
+
+
+
+
+            }else{  //如果可以管理更多店铺
+
+
+
+
+            }
+
+
+        }//结束主处理
+
+
+        //获取该商家是否有多个供应商，是否为集合店
+
+        $this->loadModel('freshfood_disp_suppliers_schedule');
+        $suppliersList = DispCenter::getSupplierListWithName($customer_id);
+        //var_dump($suppliersList);exit;
+        if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
+
+
+        }
+
+        $this->setData($suppliersList, 'suppliersList');
+        $this->setData($page['pageStr'], 'pager');
+        $this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+
+
+
+        // 获得配菜分类列表
+
+        $where=array();
+        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+        $where['restaurant_id']=$customer_id;
+        $restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
+        $this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
+
+        //  获得配菜分类列表
+
+        $where=array();
+        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+        $where['restaurant_id']=$customer_id;
+        $restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+        $this->setData($restaurant_menu_option_list,'menu_option_list');
+
+
+        //	var_dump($pager);exit;
+        foreach ($data as $key => $menu) {
+            $categoryIds = $this->loadModel('restaurant_menu_category')->findCategoryIdsByMenuId($menu['id']);
+            $data[$key]['categoryIds'] = $categoryIds;
+        }
+        $this->setData($data, 'data');
+
+        $this->setData('restaurant_menu', 'submenu_top');
+
+        $this->setData('item_xero_download_sync_setting', 'submenu');
+        $this->setData('account_management', 'menu');
+
+        $pagename = "xero item match";
+        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+        $this->setData($pagename, 'pagename');
+
+        $this->setData($pageTitle, 'pageTitle');
+
+        $this->setData($this->loginUser['gst_type'], 'gstType');
+        $this->display_pc_mobile('factory/item_xero_download_sync_setting', 'factory/item_xero_download_sync_setting');
+    }
+
+
+
+    function update_xero_match_spec_id_action(){
+
+
+
+        $id = (int)post('id');
+        $spec_id = (int)post('spec_id');
+        //   $id=385785;
+        $updateArr =array(
+            'guige_id'=>$spec_id
+        );
+        $mdl_match =$this->loadModel('xero_items_match');
+        if($mdl_match->update($updateArr,$id)){
+             echo(json_encode(array('error'=>0)));
+        }else{
+            echo(json_encode(array('error'=>1)));
+        }
+
+
+
+
+
+
+
+    }
+
+    function get_guige_of_menu_action(){
+
+
+
+          $id = (int)get2('id');
+            $menu_id = (int)get2('menu_id');
+         //   $id=385785;
+            $updateArr =array(
+                'product_id'=>$menu_id,
+                'guige_id'=>''
+            );
+            $mdl_match =$this->loadModel('xero_items_match');
+            $mdl_match->update($updateArr,$id);
+
+
+
+             $mdl=$this->loadModel('restaurant_menu_option');
+
+            $result =$mdl->getGuigeDetails($menu_id);
+
+            echo json_encode($result);
+
+
+
+
+    }
+    function assoc_unique($arr, $key) {
+
+        $tmp_arr = array();
+
+        foreach ($arr as $k => $v) {
+
+            if (in_array($v[$key], $tmp_arr)) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+
+                unset($arr[$k]);
+
+            } else {
+
+                $tmp_arr[] = $v[$key];
+
+            }
+
+        }
+        return $arr;
+    }
 }

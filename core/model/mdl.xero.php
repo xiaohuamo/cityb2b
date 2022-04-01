@@ -462,8 +462,12 @@ class mdl_xero extends mdl_base
     }
 //$custom_response= $mdl_xero->updateXeroItemCode($response_arr);
      public function  updateXeroItemCode($response){
+        //var_dump($response);
+         //var_dump('is array '. is_array($response));
+        // var_dump('count > 0  '.  count($response));exit;
          if(is_array($response) && count($response) > 0)
          {
+
              foreach($response as $v)
              {
                  if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
@@ -483,6 +487,7 @@ class mdl_xero extends mdl_base
                      if($guigepos) {
                          $itemid=  substr($code,0,$guigepos-1);
                          $guigeId =substr($code,$guigepos+1);
+
                          if(loadModel('restaurant_menu_option')->update($updateArr,$guigeId)){
                              $str.=' <br> Specification xero_id update success : '.$v['Code'];
                          }else{
@@ -507,9 +512,66 @@ class mdl_xero extends mdl_base
                  }
              }
          }
-      //   var_dump($guigeId.' '.$itemid);exit;
+        // var_dump($str);exit;
          return $str;
      }
+
+//yongzai factory tongbu xero match record
+    public function  updateXeroItemCode1($response){
+        //var_dump($response);
+        //var_dump('is array '. is_array($response));
+        // var_dump('count > 0  '.  count($response));exit;
+        if(is_array($response) && count($response) > 0)
+        {
+
+            foreach($response as $v)
+            {
+                if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                {
+                    // update the ItemID to your DB
+                    $updateArr =array(
+                        'xero_itemcode'=>$v['ItemID']
+                    );
+                    $updateArr1 =array(
+                        'xero_itemcode'=>'SPEC'
+                    );
+
+                    $code =$v['Code'];
+                    $guigepos =strpos($code,'-');
+
+                    // 如果有分割符号，表明为规格
+                    if($guigepos) {
+                        $itemid=  substr($code,0,$guigepos-1);
+                        $guigeId =substr($code,$guigepos+1);
+
+                        if(loadModel('restaurant_menu_option')->update($updateArr,$guigeId)){
+                           return 1;
+                        }else{
+                            return 0;
+                        }
+                        // loadModel('restaurant_menu')->update($updateArr1,$itemid);
+
+                    }else{
+                        if( loadModel('restaurant_menu')->update($updateArr,$code)){
+                          return 1;
+                        }else{
+                           return 0 ;
+                        }
+
+
+                    }
+
+
+                } else {
+                    // log somehere else
+                   return 0;
+                }
+            }
+        }
+        // var_dump($str);exit;
+        return 0;
+    }
+
 
     public function  createXeroContactId($response,$factoryId){
 
@@ -604,6 +666,48 @@ class mdl_xero extends mdl_base
         return $str;
 
     }
+
+
+//download xero items and save to sync match table
+
+    public function  createXeroSyncItems($response,$business_id){
+        if(is_array($response) && count($response) > 0)
+        {
+            foreach($response as $v)
+            {
+                if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                {
+                    // update the ItemID to your DB
+                    $addData =array(
+                        'xero_ItemID'=>$v['ItemID'],
+                        'xero_code'=>$v['Code'],
+                        'xero_name'=>$v['Name'],
+                        'business_id'=>$business_id
+                );
+
+
+                    // 如果有分割符号，表明为规格
+
+                        if( loadModel('xero_items_match')->insert($addData)){
+                            $str.=' <br> Product  xero_id add  success : '.$v['Code'];
+                        }else{
+                            $str.=' <br> Product  xero_id add  Failed : '.$v['Code'];
+                        }
+
+
+
+
+
+                } else {
+                    // log somehere else
+                    $str.=' <br> Error happen: '.$v['Code'].' '. json_encode($v['ValidationErrors']);
+                }
+            }
+        }
+        //   var_dump($guigeId.' '.$itemid);exit;
+        return $str;
+    }
+
 
     }
 

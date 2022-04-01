@@ -1057,13 +1057,13 @@ class MyApi
 
         // SAMPLE CODE 
 
-        $arr = [
-            "ItemID" => "40e4b881-cc7e-45bb-8c58-dd19ff4f5488", // from previous create items
-            "Code" => "387593", // required
-            "Name" => "Product 103-a"
-        ];
+    //    $arr = [
+      //      "ItemID" => "40e4b881-cc7e-45bb-8c58-dd19ff4f5488", // from previous create items
+      //      "Code" => "387593", // required
+      //      "Name" => "Product 103-a"
+     //   ];
 
-        $json = json_encode($arr);
+     //   $json = json_encode($arr);
 
 
         // valid data ?
@@ -1192,7 +1192,7 @@ class MyApi
         // }
 
         // DISPLAY THE RESPONSE
-        return $response;
+        return $response_parsed;
     }
 
     /********************************** GET ITEMS *************************************************/
@@ -1292,7 +1292,7 @@ class MyApi
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
 
         // DISPLAY THE RESPONSE
-        return $response;
+        return $response_parsed;
     }
 
 

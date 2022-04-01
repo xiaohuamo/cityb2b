@@ -3392,7 +3392,9 @@ public function xero_test_action() {
 			echo '<p>UPDATE CONTACT</p>';
 		}
 		if(isset($_POST['btnGetItems'])) {
-			$response = $api->getItems($credentials);
+			$response_arr = $api->getItems($credentials);
+			$custom_response= $mdl_xero->createXeroSyncItems($response_arr,$this->current_business['id']);
+			$response=json_encode($response_arr);
 			echo '<p>GET ITEMS</p>';
 		}
 		if(isset($_POST['btnCreateItems'])) {
