@@ -224,7 +224,7 @@ class mdl_xero extends mdl_base
             $new_data['InvoiceNumber'] =$order_data['invoice_id'];
             $todaydays =1;
             $new_data['Date'] =date('m/d/Y',strtotime("+$todaydays day"));
-            $dueDays =$order_data['payment_period']+1;
+            $dueDays =$order_data['payment_period']+2;
 
             $new_data['DueDate'] =date('m/d/Y',strtotime("+$dueDays day"));
             $new_data['LineAmountTypes'] ="Exclusive";
