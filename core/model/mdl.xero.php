@@ -183,7 +183,10 @@ class mdl_xero extends mdl_base
 
   }
 
-    public function getOrderInvoiceData($orderId){
+//获取修改订单的数据
+
+
+    public function getOrderInvoiceData($orderId,$createOrUpdate){
 
           //get order data
           $order_data = $this->getorderdata($orderId);
@@ -193,7 +196,9 @@ class mdl_xero extends mdl_base
     // var_dump($order_data);exit;
          $new_data=[];
 
-
+            if($createOrUpdate=='update'){
+                $new_data['InvoiceID'] =$order_data['xero_id'];
+            }
             $new_data['Type'] ="ACCREC";
 
             $new_data['Contact'] =array(

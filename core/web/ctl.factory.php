@@ -414,7 +414,7 @@ class ctl_factory extends cmsPage
     }
 
 
-
+// 同步 xero的产品数据，将本地的产品编号同步到xero系统中
     public function update_xero_server_code_action(){
 
       //  $this->form_response_msg('no access')
@@ -616,6 +616,7 @@ class ctl_factory extends cmsPage
 
 
         $id = (int)get2('id');
+        $createOrUpdate =trim(get2('createOrUpdate'));
 
 
 
@@ -642,28 +643,39 @@ class ctl_factory extends cmsPage
         }
 
         $orderId =$order_info['orderId'];
-        $order_data = $mdl_xero->getOrderInvoiceData($orderId);
+        $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
         if(!$order_data) {
             echo json_encode(array('error' => 'could not find the order Info!'));
         }
 
-        $response_arr = $api->createInvoices($credentials,$order_data);
+        if($createOrUpdate=='update'){
+            $response_arr = $api->updateInvoice($credentials,$order_data);
+        }else{
+            $response_arr = $api->createInvoices($credentials,$order_data);
+        }
+
         if(!$response_arr) {
             echo json_encode(array('error' => 'no result return when create invoice! '));
         }
-        $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
-
+        if($createOrUpdate !='update') {
+            $custom_response = $mdl_xero->createXeroInvoiceInfo($response_arr, $orderId);
+        }
         if($custom_response) {
             echo json_encode(array('error' => (string)$custom_response));
         }else{
             $data = array();
-            $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
+            if($createOrUpdate!='update'){
+                $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
 
-            if ($mdl->update($data, $order_info['id'])) {
-                echo json_encode(array('sent_to_xero' => $data['sent_to_xero']));
-            } else {
-                $this->form_response_msg('Please try again later');
+                if ($mdl->update($data, $order_info['id'])) {
+                    echo json_encode(array('sent_to_xero' => $data['sent_to_xero']));
+                } else {
+                    $this->form_response_msg('Please try again later');
+                }
+            }else{
+                echo json_encode(array('sent_to_xero' => 1));
             }
+
 
         }
 
