@@ -3348,6 +3348,59 @@ public function phpinfo(){
 }
 
 
+	 public function xero_test_send_invoice_action() {
+
+		 //require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+		 //require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
+		 require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+		 require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+
+
+
+			 if(!$this->current_business['id']) {
+				 var_dump('please login in again and do it again.');
+			 }
+
+			 $api = new MyApi($db);
+			 $mdl_xero =$this->loadModel('xero') ;
+			 $mdl_tokens =$this->loadModel('tokens') ;
+
+			 $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+			 if(!$credentials){
+				 var_dump('Could not get the xero tokens ,please contact admin.');exit;
+			 }
+
+
+				 $orderId =get2('id');
+				 $order_data = $mdl_xero->getOrderInvoiceData($orderId);
+				// var_dump($order_data);exit;
+				 $response_arr = $api->createInvoices($credentials,$order_data);
+				 $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
+				 $response=json_encode($response_arr);
+				 echo '<p>CREATE INVOICES</p>';
+
+
+			 echo $custom_response.'<br>';
+			 if(!empty($response)) {
+				 $parsed = json_decode($response, true);
+				 if(is_array($parsed) && count($parsed) > 0) {
+					 $json = json_encode(json_decode($response), JSON_PRETTY_PRINT);
+					 echo '<pre>' . $json . '</pre>';
+
+				 } else {
+					 echo $response;
+				 }
+			 }
+
+
+
+		// $this->display('factory/xero_test_blank');
+
+	 }
+
+
+
 public function xero_test_action() {
 
 	//require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
@@ -3444,6 +3497,8 @@ public function xero_test_action() {
 	$this->display('factory/xero_test');
 
 }
+
+
 		public  function  func_test_action()
 		{
 			$code='318987';
