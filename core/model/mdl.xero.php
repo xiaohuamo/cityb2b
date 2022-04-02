@@ -127,6 +127,7 @@ class mdl_xero extends mdl_base
             o.postalcode as postcode,
             o.country,
             o.address,
+            o.orderId,
             o.displayName as trading_name,
             o.id as reference_id, 
             o.email,
