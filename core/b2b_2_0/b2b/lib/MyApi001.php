@@ -768,7 +768,7 @@ class MyApi
         /*    "ids" => [ // array or ContactID
                 "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b",
             ], */
-            "page" => 1, // 1 page max 100, so 200 contacts is sent twice, so have to set the page
+            "page" => 2, // 1 page max 100, so 200 contacts is sent twice, so have to set the page
            "include_archived" => "false", // include archieved contacts
             "summary_only" => "false", // not the full format
          /*   "search_term" => 'searchTerm="Customer"' // contact name that has Customer word in its name  */
