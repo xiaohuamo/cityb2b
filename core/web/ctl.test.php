@@ -3379,6 +3379,8 @@ public function phpinfo(){
 				 $custom_response= $mdl_xero->createXeroInvoiceInfo($response_arr,$orderId);
 				 $response=json_encode($response_arr);
 				 echo '<p>CREATE INVOICES</p>';
+				 echo $order_data .'<br>';
+				 
 
 
 			 echo $custom_response.'<br>';
