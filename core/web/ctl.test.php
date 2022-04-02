@@ -3405,7 +3405,7 @@ public function phpinfo(){
 
 public function xero_test_action() {
 
-	//require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
 	//require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
@@ -3421,7 +3421,7 @@ public function xero_test_action() {
 		$mdl_xero =$this->loadModel('xero') ;
 		$mdl_tokens =$this->loadModel('tokens') ;
 
-		$credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+		//$credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
         if(!$credentials){
 			var_dump('Could not get the xero tokens ,please contact admin.');exit;
 		}
