@@ -222,7 +222,7 @@ class mdl_xero extends mdl_base
 
             $new_data['InvoiceID'] =$order_data['xero_id'];
             $new_data['InvoiceNumber'] =$order_data['invoice_id'];
-            $todaydays =0;
+            $todaydays =1;
             $new_data['Date'] =date('m/d/Y',strtotime("+$todaydays day"));
             $dueDays =$order_data['payment_period']+1;
 
