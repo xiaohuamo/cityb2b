@@ -3380,7 +3380,7 @@ public function phpinfo(){
 				 $response=json_encode($response_arr);
 				 echo '<p>CREATE INVOICES</p>';
 				 echo $order_data .'<br>';
-				 
+
 
 
 			 echo $custom_response.'<br>';
