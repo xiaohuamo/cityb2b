@@ -292,9 +292,15 @@ class mdl_xero extends mdl_base
         ]
              *
              * */
+        if($createOrUpdate =='update'){
+            return (json_encode($new_data));
+        }else{
+            return ('['.json_encode($new_data).']');
+        }
 
 
-      return ('['.json_encode($new_data).']');
+
+
 
 
 

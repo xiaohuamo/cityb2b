@@ -279,8 +279,8 @@
 									
 										<{if  $item.merge_to_another_order!=1}>
 											<div id="combine_<{$item.id}>" class="onoffswitch">
-													<input type="checkbox"   <{if $item.sent_to_xero==1}> disabled <{/if}>  name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
-														   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
+													<input type="checkbox"   <{if $item.sent_to_xero==1}>  <{/if}>  name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
+												<{if $item.sent_to_xero==1}> data-sent=1<{else}> data-sent=0 <{/if}> 		   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
 													<label class="onoffswitch-label" for="myonoffswitch_xero<{$item.id}>">
 														<span class="onoffswitch-inner"></span>
 														<span class="onoffswitch-switch"></span>
@@ -507,15 +507,27 @@
     })
 
 	 
-	     $('input[name=onoffswitch_xero]').on('click', function () {
-        var orderId = $(this).data('id')
+	  $('input[name=onoffswitch_xero]').on('click', function () {
+		 
+		 var orderId = $(this).data('id');
+		
+		var ischecked = ( $(this).prop('checked'));
+	
+		var createOrUpdate='create';
+		if(ischecked == false) {
+		 createOrUpdate='update';
+		}
+		
+		//alert(createOrUpdate);
+       
         var context = $('.publish_icon_xero[data-id=' + orderId + ']');
        // alert(orderId); return;
         if (loading) return false;
         $.ajax({
             type: "GET",
             url: "<{$http_root_www}>factory/xero_send_invoice",
-            data: {"id": orderId},
+            data: {"id": orderId,'createOrUpdate':createOrUpdate},
+			
             beforeSend: function (xhr) {
                 loading = true;
 

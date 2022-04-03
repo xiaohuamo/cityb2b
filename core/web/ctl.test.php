@@ -3410,7 +3410,7 @@ public function xero_test_action() {
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
 	require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
 
-   
+
 	if (is_post()) {
 
 		if(!$this->current_business['id']) {

@@ -644,6 +644,7 @@ class ctl_factory extends cmsPage
 
         $orderId =$order_info['orderId'];
         $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
+        //var_dump($order_data);exit;
         if(!$order_data) {
             echo json_encode(array('error' => 'could not find the order Info!'));
         }

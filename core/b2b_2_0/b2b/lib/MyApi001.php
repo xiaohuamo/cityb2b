@@ -1627,17 +1627,17 @@ class MyApi
         */
 
         // SAMPLE CODE
-
-        $arr = [
-            "InvoiceID" => "3803539e-d7b6-49a2-9760-cf587ca5cba3",
+//var_dump($json);exit;
+ /*      $arr = [
+            "InvoiceID" => "67796a5e-b6ec-4bec-8e25-2942c3025737",
             "Type" => "ACCREC",
             "Contact" => [
-                "ContactID" => "1a288e15-a08e-45e8-ac9d-4f4e81be97fe" // from previous create contacts
+                "ContactID" => "b3d75a4c-67b6-47b6-9950-e56364d94d57" // from previous create contacts
             ],
             "LineItems" => [
                 [
 
-                    "ItemID" => "6ff37cb1-3bf0-4bc8-ac56-d6288881f772",
+                    "ItemID" => "b1b021cd-c6cb-4be5-b34b-c926d83a32a7",
                     "Quantity" => "5", // update qty
                     "Code" =>  "385484-1801",
                     "UnitAmount" => "30", // update price
@@ -1647,9 +1647,11 @@ class MyApi
         ];
 
 
-        $json = json_encode($arr);
-
+      $json = json_encode($arr);
+       // var_dump($json);exit;
         // valid data ?
+
+*/
         if(empty($json)) {
             return json_encode([
                 'error' => true,
@@ -1659,10 +1661,17 @@ class MyApi
         }
 
         try {
+         //   var_dump($json);exit;
             $data_arr = json_decode($json, true);
+
             if(is_array($data_arr) && count($data_arr) > 0) {
+
+
+
                 // check mandatory
+//var_dump($data_arr);exit;
                 if(empty($data_arr['InvoiceID'])) {
+
                     return json_encode([
                         'error' => true,
                         'origin' => 'local',
@@ -1687,6 +1696,7 @@ class MyApi
 
         // valid tokens ?
         $tokens = $this->getTokens($credentials);
+
         if(empty($tokens['access_token'])) 
         {
             return json_encode([
@@ -1697,6 +1707,7 @@ class MyApi
         }
 
         // tokens & data validated
+      //  var_dump($json);exit;
         $params = [
             'data' => $json, 
         ];
@@ -1709,8 +1720,8 @@ class MyApi
         $ch = curl_init();
         curl_setopt_array($ch, $defaults);
         $response = curl_exec($ch);
+     //   var_dump($response);exit;
         curl_close($ch);
-
         if($response === false) {
             return json_encode([
                 'error' => true,
@@ -1730,6 +1741,7 @@ class MyApi
 
     private function processUpdateInvoice($response)
     {
+       // var_dump($response);exit;
         // RESPONSE FROm XERO
         /*
         [
@@ -1859,7 +1871,8 @@ class MyApi
         // }
 
         // DISPLAY THE RESPONSE
-        return $response;
+
+        return $response_parsed;
     }
 
     /********************************** GET INVOICES *************************************************/
