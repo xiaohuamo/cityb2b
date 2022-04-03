@@ -517,7 +517,10 @@
 		if(ischecked == false) {
 		 createOrUpdate='update';
 		}
+		if(createOrUpdate=='update'){
 		
+				$('#myonoffswitch_xero'+orderId).prop("checked",true)
+		}
 		//alert(createOrUpdate);
        
         var context = $('.publish_icon_xero[data-id=' + orderId + ']');
@@ -549,8 +552,8 @@
                 } else if (result.sent_to_xero == '1') {
                     context.html("<span style='color:#58964E;'>sent</span>");
 					
-					$("#myonoffswitch_xero"+orderId).attr("disabled","true");
-					
+				//	$("#myonoffswitch_xero"+orderId).attr("disabled","true");
+						$('#myonoffswitch_xero'+orderId).prop("checked",true);
 					$("#print_"+orderId).css("display","");
 					$("#forceprint_"+orderId).css("display","none");
 					$("#hebin_"+orderId).css("display","none");

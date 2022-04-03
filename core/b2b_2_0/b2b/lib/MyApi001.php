@@ -1628,7 +1628,7 @@ class MyApi
 
         // SAMPLE CODE
 //var_dump($json);exit;
- /*      $arr = [
+  /*    $arr = [
             "InvoiceID" => "67796a5e-b6ec-4bec-8e25-2942c3025737",
             "Type" => "ACCREC",
             "Contact" => [
@@ -1646,12 +1646,12 @@ class MyApi
             ]
         ];
 
-
+var_dump($arr);exit;
       $json = json_encode($arr);
        // var_dump($json);exit;
         // valid data ?
-
 */
+
         if(empty($json)) {
             return json_encode([
                 'error' => true,
@@ -1669,7 +1669,7 @@ class MyApi
 
 
                 // check mandatory
-//var_dump($data_arr);exit;
+//var_dump($data_arr['InvoiceID']);exit;
                 if(empty($data_arr['InvoiceID'])) {
 
                     return json_encode([
@@ -1720,7 +1720,7 @@ class MyApi
         $ch = curl_init();
         curl_setopt_array($ch, $defaults);
         $response = curl_exec($ch);
-     //   var_dump($response);exit;
+       // var_dump($response);exit;
         curl_close($ch);
         if($response === false) {
             return json_encode([

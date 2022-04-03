@@ -214,8 +214,13 @@ class mdl_xero extends mdl_base
                 $detail[$key]['UnitAmount']=$value['price'];
                 $detail[$key]['ItemCode']=$value['item_id'];
                 $detail[$key]['AccountCode']="200";
-                $detail[$key]['LineItemID']=$value['xero_item_id'];
-                $detail[$key]['TaxType']="BASEXCLUDED";
+                if($createOrUpdate !=update) {
+                    $detail[$key]['LineItemID']=$value['xero_item_id'];
+                }else{
+                    $detail[$key]['ItemID']=$value['xero_item_id'];
+                }
+
+               $detail[$key]['TaxType']="BASEXCLUDED";
                 $detail[$key]['TaxAmount']=0;
                 $detail[$key]['LineAmount']=$value['amount'];
                 $detail[$key]['DiscountRate']="";
@@ -293,7 +298,9 @@ class mdl_xero extends mdl_base
              *
              * */
         if($createOrUpdate =='update'){
+           // var_dump($new_data);exit;
             return (json_encode($new_data));
+
         }else{
             return ('['.json_encode($new_data).']');
         }
