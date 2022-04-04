@@ -14578,7 +14578,7 @@ public function custom_delivery_fee_add_action()
             
 			$parsed['orderId'] = $order['orderId'];
 
-            $name= substr($this->getCustomerName($order),0,30);
+            $name= substr($this->getCustomerName($order),0,25);
 
 
                 $name=str_replace("'","",$name);
@@ -14604,6 +14604,9 @@ public function custom_delivery_fee_add_action()
 			$parsed['message_to_business'] = $order['message_to_business'];
 			
 			$parsed['logistic_truck_No'] = $order['logistic_truck_No'];
+            $truckName =$this->loadModel('truck')->getByWhere(array('business_id'=>$order['business_userId'],'truck_no'=>$order['logistic_truck_No']));
+            $parsed['truck_name'] = substr($truckName['truck_name'],0,8).'-'.$truckName['plate_number'];
+
 			if($ref_seq_num ==1) { //试用ubonus标准 物流号
 				
 				$parsed['logistic_sequence_No'] = $order['logistic_sequence_No'];
@@ -14631,7 +14634,8 @@ public function custom_delivery_fee_add_action()
 	            $customer_delivery_option='No Delivery';
 	        }
 			//$parsed['subtitle'] = $payment."|".$status."|".$customer_delivery_option;
-			$parsed['subtitle'] = $payment."|".$customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 100%;font-size:25px;font-weight:bolder\" >'. $name."</strong>" ;
+			//$parsed['subtitle'] = $payment."|".$customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 100%;font-size:25px;font-weight:bolder\" >'. $name."</strong>" ;
+            $parsed['subtitle'] = $customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 80%;font-size:18px;font-weight:bolder\" >'. $name."</strong>" ;
 
 
 			$parsedOrders[$order['orderId']] = $parsed;

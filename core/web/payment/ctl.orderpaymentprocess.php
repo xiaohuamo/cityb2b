@@ -1009,6 +1009,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 			$this->loadModel('wj_temp_orderID_carts')->delete_temp_data($orderId);
 
+          //  $this->xero_send_invoice($order['id']);
 			//买一赠多
 			if(isset($arr_post['giftedCouponOrderId'])){
 				$giftedCouponOrderIds = explode(',' , $arr_post['giftedCouponOrderId']);

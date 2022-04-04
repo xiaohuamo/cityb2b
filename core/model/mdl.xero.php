@@ -152,6 +152,7 @@ class mdl_xero extends mdl_base
 
     }
 
+
   function getDetailsData ($orderId) {
 
       $sqlDetails ="select c.id ,
