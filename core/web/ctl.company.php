@@ -3002,7 +3002,7 @@ class ctl_company extends cmsPage
 
         $this->setData($data,'data');
 
-        $moneyDetail=$mdl_order->getMoneyDetail($orderId);
+        $moneyDetail=$mdl_order->getMoneyDetail1($orderId,$this->current_business['id']);
         $this->setData($moneyDetail,'moneyDetail');
 		
 		

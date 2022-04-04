@@ -362,7 +362,9 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
         }
     }
 
-    public function getMoneyDetail($orderId)
+
+
+    public function getMoneyDetail1($orderId,$business_id)
     {
         $order = $this->getByOrderId($orderId);
 
@@ -372,6 +374,41 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
         $data['transactionBalance'] = $order['money'];
         $data['transactionBalance_new'] = $order['money_new'];
         $data['deliveryFee'] = $order['delivery_fees'];
+        $data['platformFee'] = $order['booking_fees'];
+        $data['promotionTotal'] = $order['promotion_total'];
+        $data['transactionSurcharge'] = $order['surcharge'];
+
+        $data['goodsTotal_new'] = $order['money_new'] + $order['confirmedMoneyAppliedAmount'] - ($order['delivery_fees'] + $order['booking_fees'] + $order['surcharge_new'] - $order['promotion_total']);
+        $data['goodsTotal'] = $order['money'] + $order['confirmedMoneyAppliedAmount'] - ($order['delivery_fees'] + $order['booking_fees'] + $order['surcharge'] - $order['promotion_total']);
+
+
+        $itemDetails =loadModel('wj_customer_coupon')->getItemsInOrder($orderId,$business_id);
+
+        if($itemDetails) {
+            $goodsTotal_new =0;
+            foreach ($itemDetails as $key =>$value) {
+                $goodsTotal_new +=$value['voucher_deal_amount'] *$value['customer_buying_quantity'];
+
+            }
+            $data['goodsTotal_new'] =$goodsTotal_new;
+
+        }
+
+
+        return $data;
+    }
+
+
+    public function getMoneyDetail($orderId)
+    {
+        $order = $this->getByOrderId($orderId);
+
+        $data = [];
+
+        $data['useMoney'] = $order['confirmedMoneyAppliedAmount'];
+        $data['transactionBalance'] = $order['money'];
+        $data['transactionBalance_new'] = $order['money_new'];
+       $data['deliveryFee'] = $order['delivery_fees'];
         $data['platformFee'] = $order['booking_fees'];
         $data['promotionTotal'] = $order['promotion_total'];
         $data['transactionSurcharge'] = $order['surcharge'];
