@@ -145,7 +145,7 @@ class mdl_wj_user_temp_carts extends mdl_base
 from #@_wj_user_temp_carts a LEFT JOIN #@_coupons as b  on  b.id =a.main_coupon_id
     LEFT JOIN #@_wholesale AS w ON w.couponid=a.main_coupon_id 
     left join cc_restaurant_menu c on c.id =a.menu_id 
-where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order by a.main_coupon_id ,a.sub_coupon_id  ";
+where businessUserId ='". $businessUserId ."' and  userId =".$userId . " order by a.id  ";
 
         $data=$this->getListBySql($sql);
         $mdl_menu = loadModel('restaurant_menu');

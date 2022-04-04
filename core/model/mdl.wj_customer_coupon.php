@@ -172,7 +172,7 @@ class mdl_wj_customer_coupon extends mdl_base
 
         $sql ="select a.*,m.menu_en_name,m.menu_cn_name, if(length(m.unit_en)>0,m.unit_en,m.unit) as unit  from cc_wj_customer_coupon a 
                 left join cc_restaurant_menu m on a.restaurant_menu_id = m.id 
-                where a.order_id =$orderId";
+                where a.order_id =$orderId order by a.id";
         $list = $this->getListBySql($sql);
     //   var_dump($list);exit;
 

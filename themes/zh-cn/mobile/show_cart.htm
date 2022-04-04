@@ -502,14 +502,15 @@
                                 <label  class="list-group-item ">
 
                                     <h5 class="list-group-item-heading f28">
-                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" >货到付款
+                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->CashOnDelivery}> 
                                     </h5>
                                 </label>
                             <{else}>
                                 <label  class="list-group-item ">
 
                                     <h5 class="list-group-item-heading f28">
-                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" >货到<{$accountType}>周内付款
+                                        <input type="radio" name="payment" value="offline" data-text="<{$lang->pay_offline}>" ><{$lang->paymentPeriod1}><{$accountType}><{$lang->paymentPeriod2}>
+	
                                     </h5>
                                 </label>
                             <{/if}>

@@ -1068,8 +1068,11 @@
 	  <accountTypeandDelivery>客户账期及配送日程</accountTypeandDelivery>
 	  <force_print>强制打印 </force_print>
 	   <forceprintalert>当前发票还未上传xero,打印输出发票号为本地生成，是否打印？</forceprintalert>
-	  
+	   
+	<paymentPeriod1>货到</paymentPeriod1>
+	<paymentPeriod2>周内付款</paymentPeriod2>
 	    <print>打印</print>
+		 <CashOnDelivery>货到付款</CashOnDelivery>
 	 
     <email>邮箱</email>
 

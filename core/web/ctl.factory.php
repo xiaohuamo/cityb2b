@@ -65,7 +65,7 @@ class ctl_factory extends cmsPage
         $this->setData('工厂首页', 'pagename');
         $this->setData('index', 'menu');
         $this->setData('工厂中心 - '.$this->site['pageTitle'], 'pageTitle');
-        $this->display_pc_mobile('factory/index', 'mobile/factory/index');
+        $this->display_pc_mobile('factory/index', 'factory/index');
     }
 
 
