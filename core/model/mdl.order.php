@@ -378,7 +378,7 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
         $data['promotionTotal'] = $order['promotion_total'];
         $data['transactionSurcharge'] = $order['surcharge'];
 
-        $data['goodsTotal_new'] = $order['money_new'] + $order['confirmedMoneyAppliedAmount'] - ($order['delivery_fees'] + $order['booking_fees'] + $order['surcharge_new'] - $order['promotion_total']);
+      //  $data['goodsTotal_new'] = $order['money_new'] + $order['confirmedMoneyAppliedAmount'] - ($order['delivery_fees'] + $order['booking_fees'] + $order['surcharge_new'] - $order['promotion_total']);
         $data['goodsTotal'] = $order['money'] + $order['confirmedMoneyAppliedAmount'] - ($order['delivery_fees'] + $order['booking_fees'] + $order['surcharge'] - $order['promotion_total']);
 
 
@@ -391,8 +391,9 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 
             }
             $data['goodsTotal_new'] =$goodsTotal_new;
-
+            $data['goodsTotal'] =$goodsTotal_new;
         }
+
 
 
         return $data;

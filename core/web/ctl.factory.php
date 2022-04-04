@@ -1162,113 +1162,225 @@ class ctl_factory extends cmsPage
         }
     }
 
-    public function update_customer_coupon_detail_action()
+    public function update_customer_coupon_detail_quantity_action()
     {
         if (! is_post()) {
             return;
         }
 
-        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
-        $mdl_order = $this->loadModel('order');
 
         $id = post('id');
-        $data = [];
-        $quantity = post('new_customer_buying_quantity');
-        if (isset($quantity)) {
-            $data['new_customer_buying_quantity'] = $quantity;
-        }
-        $amount = post('voucher_deal_amount');
-        if (isset($amount)) {
-            $data['voucher_deal_amount'] = $amount;
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $customerCoupon = $mdl_wj_customer_coupon->get($id);
+
+        //if item exist.
+        if (! $customerCoupon) {
+            $this->form_response(600, 'item could not find', '');
+       }
+
+
+        // if is the owner of item
+        $uni_business_id = $customerCoupon['business_id'];
+
+        if($uni_business_id !=$this->current_business['id']) {
+            $this->form_response_msg(600, 'no access' );
         }
 
-        $customerCoupon = $mdl_wj_customer_coupon->get($id);
-        if (! $customerCoupon) {
-            $this->form_response(600, '未发现产品', '未发现产品');
+
+
+
+
+
+     // check quantity is vaild
+        $quantity = post('new_customer_buying_quantity');
+
+
+
+
+        if (! is_numeric($quantity) || ($quantity < 0)) {
+            $this->form_response(600, 'please input number and must not lower than 0。');
 
             return;
         }
 
-        //检查权限
-		
-		
-        $uni_business_id = $customerCoupon['business_id'];
-        $sql1 = "select business_id  from cc_freshfood_disp_centre_suppliers  where suppliers_id =".$uni_business_id;
-        $tongpei_busi_rec = $mdl_wj_customer_coupon->getListBySql($sql1);
-        if ($tongpei_busi_rec) {
 
-            if (($tongpei_busi_rec[0]['business_id'] != $this->loginUser['id']) && ($uni_business_id != $this->loginUser['id'])) {
-				
-				// 销售员的用户role 为101
 
-				  if($this->loginUser['role']==20) {
-					  
-					  $business_userid = $this->loginUser['user_belong_to_user'];
-					  if (($tongpei_busi_rec[0]['business_id'] !=   $business_userid) && ($uni_business_id !=   $business_userid)) {
-						  
-						  $this->form_response(600, 'no access', 'no access');
-						  
-					  }
-					 
-				  }else{
-					  
-					   $this->form_response(600, 'no access', 'no access');
-				  }
-				  
-				  
-				  
-               
-            }
+
+        //check amount is valid
+/*
+        $amount = post('voucher_deal_amount');
+
+        if (! is_numeric($amount)) {
+            $this->form_response(600, '(amount)please input number。');
+
+            return;
         }
+        if ($amount < 0) {
+            $this->form_response(600, '(amount)could not less than zero');
 
-        $customerCouponData = [
-            'new_customer_buying_quantity' => $customerCoupon['new_customer_buying_quantity'],
-            'voucher_deal_amount' => $customerCoupon['voucher_deal_amount'],
-            'adjust_subtotal_amount' => $customerCoupon['adjust_subtotal_amount'],
-        ];
-        $orderPriceChange = 0;
-        foreach ($data as $key => $value) {
-            if (! is_numeric($value)) {
-                $this->form_response(600, '请输入数字。');
+            return;
+        }
+*/
+       // get different amount between new quantity price and old quantity price
 
-                return;
-            }
-            if ($value < 0) {
-                $this->form_response(600, '数字不能小于0');
+        $old_sub_total = $customerCoupon['new_customer_buying_quantity'] * $customerCoupon['voucher_deal_amount'];
 
-                return;
-            }
+        $new_sub_total = $quantity * $customerCoupon['voucher_deal_amount'];
 
-            $customerCouponData[$key] = $value;
-           if($value['id']==$id){
-               $newCustomerCouponPrice = $quantity * $amount;
+        $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
 
-           }else{
-               $newCustomerCouponPrice = $customerCouponData['new_customer_buying_quantity'] * $customerCouponData['voucher_deal_amount'];
+       if($orderPriceChange) {
 
+          $itemDetails =array(
+            'new_customer_buying_quantity'  =>$quantity,
+         //   'voucher_deal_amount' =>$amount,
+            'adjust_subtotal_amount'=>round(floatval($new_sub_total),2)
+          );
+
+          $mdl_wj_customer_coupon->update($itemDetails, $id);
+
+
+
+           //检查权限
+
+           if ($orderPriceChange != 0) {
+
+               $mdl_order = $this->loadModel('order');
+               $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
+               $orderUpdateData = [
+                   'money' => round($order['money'] + $orderPriceChange, 2),
+                   'money_new' => round($order['money_new'] + $orderPriceChange, 2),
+               ];
+
+             //  $this->form_response(600, $order['money']);
+               $mdl_order->update($orderUpdateData, $order['id']);
            }
 
-            $orderPriceChange += $newCustomerCouponPrice - $customerCouponData['adjust_subtotal_amount'];
-            $customerCouponData['adjust_subtotal_amount'] = round($newCustomerCouponPrice, 2);
-            $mdl_wj_customer_coupon->update($customerCouponData, $id);
+           $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
 
-            if ($key == 'voucher_deal_amount') {
-          //      $mdl_user_factory_menu_price = $this->loadModel('user_factory_menu_price');
-            //    $mdl_user_factory_menu_price->insertOrUpdateUserFactoryPrice($customerCoupon['userId'], $customerCoupon['restaurant_menu_id'], $customerCouponData['voucher_deal_amount']);
+           $returnData =array(
+               'adjust_subtotal_amount'=>$itemDetails['adjust_subtotal_amount'],
+               'goods_total'=>$money_details['goodsTotal_new'],
+               'money_new'=>$money_details['transactionBalance_new']
+        );
+           $this->form_response(200, json_encode($returnData));
+       } else {
+           $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);
+       }
+
+
+    }
+
+
+    public function update_customer_coupon_detail_amount_action()
+    {
+        if (! is_post()) {
+            return;
+        }
+
+
+        $id = post('id');
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $customerCoupon = $mdl_wj_customer_coupon->get($id);
+
+        //if item exist.
+        if (! $customerCoupon) {
+            $this->form_response(600, 'item could not find', '');
+        }
+
+
+        // if is the owner of item
+        $uni_business_id = $customerCoupon['business_id'];
+
+        if($uni_business_id !=$this->current_business['id']) {
+            $this->form_response_msg(600, 'no access' );
+        }
+
+
+
+
+
+
+        // check quantity is vaild
+        $amount = post('voucher_deal_amount');
+
+
+
+
+        if (! is_numeric($amount) || ($amount < 0)) {
+            $this->form_response(600, 'please input number and must not lower than 0。');
+
+            return;
+        }
+
+
+
+
+        //check amount is valid
+        /*
+                $amount = post('voucher_deal_amount');
+
+                if (! is_numeric($amount)) {
+                    $this->form_response(600, '(amount)please input number。');
+
+                    return;
+                }
+                if ($amount < 0) {
+                    $this->form_response(600, '(amount)could not less than zero');
+
+                    return;
+                }
+        */
+        // get different amount between new quantity price and old quantity price
+
+        $old_sub_total = $customerCoupon['new_customer_buying_quantity'] * $customerCoupon['voucher_deal_amount'];
+
+        $new_sub_total =  $customerCoupon['new_customer_buying_quantity'] * $amount;
+
+        $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
+
+        if($orderPriceChange) {
+
+            $itemDetails =array(
+               // 'new_customer_buying_quantity'  =>$quantity,
+                   'voucher_deal_amount' =>$amount,
+                'adjust_subtotal_amount'=>round(floatval($new_sub_total),2)
+            );
+
+            $mdl_wj_customer_coupon->update($itemDetails, $id);
+
+
+
+            //检查权限
+
+            if ($orderPriceChange != 0) {
+
+                $mdl_order = $this->loadModel('order');
+                $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
+                $orderUpdateData = [
+                    'money' => round($order['money'] + $orderPriceChange, 2),
+                    'money_new' => round($order['money_new'] + $orderPriceChange, 2),
+                ];
+
+                //  $this->form_response(600, $order['money']);
+                $mdl_order->update($orderUpdateData, $order['id']);
             }
+
+            $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
+
+            $returnData =array(
+                'adjust_subtotal_amount'=>$itemDetails['adjust_subtotal_amount'],
+                'goods_total'=>$money_details['goodsTotal_new'],
+                'money_new'=>$money_details['transactionBalance_new']
+            );
+            $this->form_response(200, json_encode($returnData));
+        } else {
+            $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);
         }
 
-        if ($orderPriceChange != 0) {
-            $order = $mdl_order->get($customerCoupon['order_id']);
 
-            $orderUpdateData = [
-                'money' => round($order['money'] + $orderPriceChange, 2),
-                'money_new' => round($order['money_new'] + $orderPriceChange, 2),
-            ];
-            $mdl_order->update($orderUpdateData, $order['id']);
-        }
-
-        $this->form_response(200, $customerCouponData['adjust_subtotal_amount']);
     }
 
     public function find_customer_abn_action()

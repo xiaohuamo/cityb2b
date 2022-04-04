@@ -333,8 +333,6 @@
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
 
-								<th>报损分类</th>
-								<th>详细填写</th>
 							</tr>
 
 							</thead>
@@ -399,26 +397,12 @@
 											超21天 无法修改
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
-												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:50px;" name="adjust_subtotal_amount"
+												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:100px;" name="adjust_subtotal_amount"
 												   value="<{$item.adjust_subtotal_amount}>" disabled>
 											<span class='promote-ajax'></span>
 										<{/if}>
 									</td>
-									<td>
-                                        <{if ($item.new_customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}>
-											<select name='reason_type' id='reason_type'>
-                                                <{foreach from=$order_amend_reson_type_list item=reason_type name='dl'}>
-													<option value='<{$reason_type.id}>' <{if $reason_type.id==$item.reason_type}>selected<{/if}> >
-
-                                                        <{$reason_type.reason_type_desc}></option>
-                                                <{/foreach}>
-											</select>
-                                        <{/if}>
-									</td>
-
-									<td><{if ($item.new_customer_buying_quantity*$item.voucher_deal_amount)!=$item.adjust_subtotal_amount}><a target='_blank'
-																																		  href="<{$http_root_www}>company/customer_order_amend_edit?item_buying_id=<{$item.id}>&return_link=details">
-												详细填写</a><{/if}></td>
+								
 
 								</tr>
                             <{/foreach}>
@@ -430,7 +414,7 @@
                        
 					   <{if $moneyDetail.goodsTotal}>
 							<div style="color: #f00;font-weight: bolder;">
-								<span>商品总价</span><span>:</span><span><{$moneyDetail.goodsTotal}>&nbsp;<{if ($moneyDetail.goodsTotal>$moneyDetail.goodsTotal_new)}>[调整后总价：<{$moneyDetail.goodsTotal_new}>]<{/if}></span>
+								<span>商品总价</span><span>:</span><span id="totalGoodsAmount"><{$moneyDetail.goodsTotal_new}></span>
 							</div>
                         <{/if}>
 						
@@ -465,7 +449,7 @@
 
                         <{if $moneyDetail.transactionBalance}>
 							<div style="color: #f00;font-weight: bolder;">
-								<span>交易总额</span><span>:</span><span><{$moneyDetail.transactionBalance}>&nbsp;<{if ($moneyDetail.transactionBalance>$moneyDetail.transactionBalance_new)}>[调整后总额：<{$moneyDetail.transactionBalance_new}>]<{/if}></span>
+								<span>交易总额</span><span>:</span><span id="totalAmount"><{$moneyDetail.transactionBalance_new}></span>
 							</div>
                         <{/if}> 
 						
@@ -619,7 +603,7 @@
     var loading = false;
 
 
-    $('input[name=new_customer_buying_quantity], input[name=voucher_deal_amount]').on('change', function () {
+ $('input[name=new_customer_buying_quantity]').on('change', function () {
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
@@ -633,7 +617,7 @@
         updateData[update_field_name] = value;
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_customer_coupon_detail",
+            url: "<{$http_root_www}>factory/update_customer_coupon_detail_quantity",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -647,8 +631,74 @@
             }
 
             if (data.status == 200) {
-				$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+			
+			data =JSON.parse(data.msg);
+			//alert(data.adjust_subtotal_amount);
+			//	 alert(data.goods_total);
+			//	  alert(data.money_new);
+				//    alert(data.msg);
+				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
+				$('#totalAmount').html('$'+data.money_new);
+				$('#totalGoodsAmount').html('$'+ data.goods_total);
                 $(ajax_result).html(successIcon);
+			
+				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+              //  $(ajax_result).html(successIcon);
+            } else if (data.status == 500 || data.status == 600) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+    $('input[name=voucher_deal_amount]').on('change', function () {
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var value = $(this).val();
+        var update_field_name = $(this).attr('name');
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_customer_coupon_detail_amount",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+			data =JSON.parse(data.msg);
+			//alert(data.adjust_subtotal_amount);
+			//	 alert(data.goods_total);
+			//	  alert(data.money_new);
+				//    alert(data.msg);
+				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
+				$('#totalAmount').html('$'+data.money_new);
+				$('#totalGoodsAmount').html('$'+ data.goods_total);
+                $(ajax_result).html(successIcon);
+			
+				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+              //  $(ajax_result).html(successIcon);
             } else if (data.status == 500 || data.status == 600) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
