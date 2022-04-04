@@ -100,7 +100,7 @@ class mdl_wj_customer_coupon extends mdl_base
 			$where['business_id'] = $business_id;
 		}
 		
-		$sql =" select c.id,if(length(m.menu_en_name)>0,m.menu_en_name,c.bonus_title) as bonus_title,c.bonus_type,c.bonus_type_name,c.menu_id,c.customer_buying_quantity,
+		$sql =" select c.id,if(length(m.menu_en_name)>0,m.menu_en_name,c.bonus_title) as bonus_title,c.bonus_type,c.bonus_type_name,c.menu_id,c.new_customer_buying_quantity as customer_buying_quantity,
         c.guige_des,c.voucher_deal_amount from cc_wj_customer_coupon c
         left join cc_restaurant_menu m on c.restaurant_menu_id =m.id
 
