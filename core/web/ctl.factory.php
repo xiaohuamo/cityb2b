@@ -68,6 +68,30 @@ class ctl_factory extends cmsPage
         $this->display_pc_mobile('factory/index', 'factory/index');
     }
 
+        public function delete_xero_info_of_order_action() {
+                $id =get2('id');
+                if(!$id) {
+                    $this->form_response(500,'no access');
+                }
+                $mdl_order = $this->loadModel('order');
+                $orderInfo = $mdl_order->get($id);
+                if($orderInfo['business_userId']!=$this->current_business['id']) {
+                    $this->form_response(500,'no access');
+                }
+                $arr=array(
+                    'xero_invoice_id'=>'',
+                    'xero_id'=>'',
+                    'sent_to_xero'=>0
+                );
+                if($mdl_order->update($arr,$id)){
+                    $this->form_response(200,'successed');
+                }else{
+                    $this->form_response(500,'failed');
+                }
+
+
+
+        }
 
     public function customer_orders_action($dataFomOtherMethod = [])
     {

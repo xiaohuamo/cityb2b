@@ -73,19 +73,24 @@
 						<a class='link' href="<{$http_root_www}>factory/customer_orders">返回列表</a>
 						<a class='link' target='_blank'
 						   onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$data.orderId}>')">Invoice</a>
+                    
+					 <{if $data.sent_to_xero==1}>
 
-						<script type="text/javascript">
-                            $('.resend_btn').on('click', function () {
+						<button class='clearXeroInfo' >Clear Xero Info</button>
+					
+
+					<script type="text/javascript">
+                            $('.clearXeroInfo').on('click', function () {
                                 var context = $(this);
 
-                                if (confirm('订单通知邮件将重新发送至<{$data.email}>')) {
+                                if (confirm('will delete all xero info of this order?(after delete ,you can create new invoice on xero)')) {
                                     $.ajax({
-                                        url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>",
+                                        url: "<{$http_root_www}>factory/delete_xero_info_of_order?id=<{$data.id}>",
                                         beforeSend: function () {
                                             context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
                                         },
                                         success: function () {
-                                            context.html("已发送");
+                                            context.html("Delete xero info already!");
                                             context.css('background-color', '#FD5001 ');
                                         }
                                     })
@@ -93,6 +98,8 @@
                             })
 
 						</script>
+						
+						<{/if}>
 
 					</div>
 

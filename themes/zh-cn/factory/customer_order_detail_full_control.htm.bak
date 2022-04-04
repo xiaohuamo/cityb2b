@@ -73,19 +73,24 @@
 						<a class='link' href="<{$http_root_www}>factory/customer_orders">返回列表</a>
 						<a class='link' target='_blank'
 						   onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$data.orderId}>')">Invoice</a>
+                    
+					 <{if $data.send_to_xero==1}>
 
-						<script type="text/javascript">
-                            $('.resend_btn').on('click', function () {
+						<button class='clearXeroInfo' >Clear Xero Info</button>
+					
+
+					<script type="text/javascript">
+                            $('.clearXeroInfo').on('click', function () {
                                 var context = $(this);
 
-                                if (confirm('订单通知邮件将重新发送至<{$data.email}>')) {
+                                if (confirm('will delete all xero info of this order?(after delete ,you can create new invoice on xero)')) {
                                     $.ajax({
-                                        url: "<{$http_root_www}>company/resend_order_confirmation?id=<{$data.orderId}>",
+                                        url: "<{$http_root_www}>factory/delete_xero_info_of_order?id=<{$data.id}>",
                                         beforeSend: function () {
                                             context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
                                         },
                                         success: function () {
-                                            context.html("已发送");
+                                            context.html("Delete xero info already!");
                                             context.css('background-color', '#FD5001 ');
                                         }
                                     })
@@ -93,6 +98,8 @@
                             })
 
 						</script>
+						
+						<{/if}>
 
 					</div>
 
@@ -687,12 +694,18 @@
             }
 
             if (data.status == 200) {
-			    alert(data.adjust_subtotal_amount);
-				 alert(data.goods_total);
-				  alert(data.money_new);
-				    alert(data.msg);
-				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+			data =JSON.parse(data.msg);
+			//alert(data.adjust_subtotal_amount);
+			//	 alert(data.goods_total);
+			//	  alert(data.money_new);
+				//    alert(data.msg);
+				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
+				$('#totalAmount').html('$'+data.money_new);
+				$('#totalGoodsAmount').html('$'+ data.goods_total);
                 $(ajax_result).html(successIcon);
+			
+				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+              //  $(ajax_result).html(successIcon);
             } else if (data.status == 500 || data.status == 600) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);

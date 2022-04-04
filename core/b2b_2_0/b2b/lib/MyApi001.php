@@ -1920,15 +1920,15 @@ var_dump($arr);exit;
         $arr = [
             "modified_since" => "2022-01-01", // last modified
        /*     "where" => 'Status == "DRAFT"', // DRAFT, SUBMITTED, AUTHORISED, DELETED, VOIDED
-            "order_by" => "Name ASC", // order by
-        /*    "ids" => [ // array or InvoiceID
-                "3803539e-d7b6-49a2-9760-cf587ca5cba3",
-                "8babf5a1-7c52-4faf-b147-eadd344d58b8",
-            ],
-            'invoice_numbers' => [
+            "order_by" => "Name ASC", // order by */
+         /*   "ids" => [ // array or InvoiceID
+                "5eef8d14-0174-46c2-bf19-fdcb64a12a2b"
 
+            ], */
+            'invoice_numbers' => [
+                "INV-0010"
             ],
-            'contact_ids' => [
+          /*  'contact_ids' => [
                 "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b"
             ],
             'statuses' => [
