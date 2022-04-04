@@ -14635,7 +14635,7 @@ public function custom_delivery_fee_add_action()
 	        }
 			//$parsed['subtitle'] = $payment."|".$status."|".$customer_delivery_option;
 			//$parsed['subtitle'] = $payment."|".$customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 100%;font-size:25px;font-weight:bolder\" >'. $name."</strong>" ;
-            $parsed['subtitle'] = $customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 80%;font-size:18px;font-weight:bolder\" >'. $name."</strong>" ;
+            $parsed['subtitle'] = $customer_delivery_option."  CustId:".$order['userId']." <br>" .'CustName:<strong  style=\"width: 80%;font-size:16px;font-weight:bolder\" >'. $name."</strong>" ;
 
 
 			$parsedOrders[$order['orderId']] = $parsed;
