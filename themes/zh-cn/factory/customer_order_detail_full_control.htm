@@ -427,11 +427,13 @@
 					</div>
 
 					<div class='moneyDetail' style="text-align: right;padding: 10px">
-                        <{if $moneyDetail.goodsTotal}>
+                       
+					   <{if $moneyDetail.goodsTotal}>
 							<div style="color: #f00;font-weight: bolder;">
 								<span>商品总价</span><span>:</span><span><{$moneyDetail.goodsTotal}>&nbsp;<{if ($moneyDetail.goodsTotal>$moneyDetail.goodsTotal_new)}>[调整后总价：<{$moneyDetail.goodsTotal_new}>]<{/if}></span>
 							</div>
                         <{/if}>
+						
 
                         <{if $moneyDetail.deliveryFee>0}>
 							<div>
@@ -465,7 +467,8 @@
 							<div style="color: #f00;font-weight: bolder;">
 								<span>交易总额</span><span>:</span><span><{$moneyDetail.transactionBalance}>&nbsp;<{if ($moneyDetail.transactionBalance>$moneyDetail.transactionBalance_new)}>[调整后总额：<{$moneyDetail.transactionBalance_new}>]<{/if}></span>
 							</div>
-                        <{/if}>
+                        <{/if}> 
+						
 					</div>
 
 

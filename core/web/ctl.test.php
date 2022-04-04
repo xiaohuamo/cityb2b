@@ -3401,7 +3401,12 @@ public function phpinfo(){
 
 	 }
 
+public function getmoney_action() {
+		   $orderId = get2('orderId');
+		   $result = $this->loadModel('order')->getMoneyDetail($orderId);
+		   var_dump($result); exit;
 
+}
 
 public function xero_test_action() {
 
