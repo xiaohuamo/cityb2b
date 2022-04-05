@@ -63,7 +63,9 @@
 						</select>
 
 						<button type="submit"><{$lang->search}></button>
-						
+						<p>
+							[1]点击<strong>[菜单分类选项]</strong>选区类别,[2]再点击<strong>[搜索]按钮</strong>将<strong style="color="blue">自动生成</strong>新的菜品表格,填写即可.				
+						</p>
 						
 					</form>
 				</div>

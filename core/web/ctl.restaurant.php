@@ -5123,7 +5123,7 @@ function category_migration_action(){
 		$this->setData('restaurant_set', 'submenu');
 		$this->setData('index_publish', 'menu');
 
-		$pagename = "菜品规格管理";
+		$pagename = "specification setting";
 		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
