@@ -3409,7 +3409,7 @@ public function getmoney_action() {
 }
 
 
-public function xero_getContacts_action(){
+public function xero_get_contacts_action(){
 
 	$page = get2('page');
 	if(!$page) $page=1;
