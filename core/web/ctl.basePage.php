@@ -1992,16 +1992,21 @@ public function xero_invoice_manage($action,$id){
            echo json_encode(array('error' => (string)$custom_response));
        }else{
            $data = array();
+           $order_info=$mdl->get($order_info['id']);
+           $data['xero_invoice_id']=$order_info['xero_invoice_id'];
+
            if($createOrUpdate!='update'){
                $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
 
                if ($mdl->update($data, $order_info['id'])) {
-                   echo json_encode(array('sent_to_xero' => $data['sent_to_xero']));
+
+                   echo json_encode($data);
                } else {
                    $this->form_response_msg('Please try again later');
                }
            }else{
-               echo json_encode(array('sent_to_xero' => 1));
+               $data['sent_to_xero'] =1;
+               echo json_encode($data);
            }
 
        }

@@ -214,12 +214,20 @@
                      
 						<button type="button" onclick="showPdf('pdf');"><{$lang->order_pdf}></button>
 						<button type="button" onclick="showPdf('shippingLabel');">Shipping Label PDF</button>
-						<input type="checkbox" name="fitInPage" id='fitInPage' value='true'>Fit in page
+						<input type="checkbox" name="fitInPage" id='fitInPage' value='true'>&nbsp;Fit in page
                          <{if $loginUser.business_type_restaurant ==1 || $loginUser.business_type_freshfood ==1}>
 							  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_csv_fresh_and_restaurant">&nbsp;&nbsp;导出订单（购买但并未处理）</a></span>
 						  &nbsp;&nbsp; 	  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_freshfood_summery">&nbsp;&nbsp;导出库存总单</a></span>
 						
 						<{/if}>
+						
+						&nbsp;&nbsp;
+						
+						<input type="checkbox" name="onoffLocalInvoiceInfo"  id="onoffLocalInvoiceInfo"  value='false' >
+						
+						<span >Local Invoice ID</span>
+						
+						
 					</form>
 				</div>
 				
@@ -229,8 +237,11 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>
-									<th>Invoice</th>
+									<th>Print</th>
 									<th>send to xero</th>
+									<th>InvoiceNo</th>
+									
+									<th name="localInvoiceCol">Local Invocie ID</th>
 									<th>配送时间</th>		
 									<th><{$lang->order_id}></th>		
 									<th>合并</th>		
@@ -243,8 +254,8 @@
 										<th><{$lang->status}></th>	
 									<th><{$lang->payment}></th>
 									<th><{$lang->delivery}></th>				
-									<th><{$lang->submission_time}></th>
-									<th>AccountType</th>
+							<!--		<th><{$lang->submission_time}></th> -->
+									
 									<th>AccountPeriod</th>
 									
 								</tr>			
@@ -304,11 +315,42 @@
 										
 										</td>
 
+                                    <td id="invoice_no<{$item.id}>"><{if $item.xero_invoice_id}><{$item.xero_invoice_id}><{else}>-<{/if}></td>
+
+
+
+									<td  name="localInvoiceCol">
+									   <{if $item.sent_to_xero==1 || $item.merge_to_another_order==1}>
+									    -
+									   <{else}>
+										<div id="LocalInvoice_<{$item.id}>" class="onoffswitch">
+													<input type="checkbox"   name="onoffswitch_localInvoice" class="onoffswitch-checkbox" id="myonoffswitch_localInvoice<{$item.id}>"
+												<{if $item.isIdAsInvoiceNo==1}> data-localinvoice=1<{else}> data-localinvoice=0 <{/if}> 		   data-id='<{$item.id}>' <{if $item.isIdAsInvoiceNo==1}> checked <{/if}>>
+													<label class="onoffswitch-label" for="myonoffswitch_localInvoice<{$item.id}>">
+														<span class="onoffswitch-inner"></span>
+														<span class="onoffswitch-switch"></span>
+													</label>
+												</div>
+											
+												<{if $item.isIdAsInvoiceNo==1}>
+													<span id="publish_<{$item.id}>" class='publish_icon_localInvoice' data-id='<{$item.id}>'>
+															<span style="color:#58964E;">set Local InvNo </span>
+														</span>
+												<{else}>
+													<span id="publish_<{$item.id}>" class='publish_icon_localInvoice' data-id='<{$item.id}>'>
+															<span style="color:#F30;"></span>
+														</span>
+												<{/if}>
+									
+									
+										<{/if}> 
+									
+									</td>		
 
 									<td>
 									
 									<{if !$item.merge_to_another_order}>
-									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>------<{/if}><br>
+									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}><br>
 								<!--<input data-id='<{$item.id}>'  type="text" class="input-text" ;style="width:100px;" id="delivery_date-<{$item.id}>" name="deliveryTime" value="<{date('Y-m-d', $item.logistic_delivery_date)}>" onclick="WdatePicker();" onfocus="WdatePicker();">
 								--> 
 								 <input type="text" class="input-text" data-id='<{$item.id}>' id="deliveryTime-<{$item.id}>" style="width:100px;" name="deliveryTime" onchange="update_deliveryTime(this);" onclick="WdatePicker();" onfocus="WdatePicker();"
@@ -421,8 +463,8 @@
 										<{/if}>	
 									</td>	
 
-									<td><{date('Y-m-d H:i', $item.createTime)}></td>
-									<td><{$item.payment_period}></td>
+								<!--	<td><{date('Y-m-d H:i', $item.createTime)}></td> -->
+								
 									<td><{$item.disp_accountType}></td>
 									
 								</tr>			
@@ -557,8 +599,9 @@
 					$("#print_"+orderId).css("display","");
 					$("#forceprint_"+orderId).css("display","none");
 					$("#hebin_"+orderId).css("display","none");
+					$("#LocalInvoice_"+orderId).html("-");
 					
-					
+					$("#invoice_no"+orderId).html(result.xero_invoice_id);
                 }
             }
         }).fail(function () {
@@ -568,6 +611,85 @@
         })
     })
 
+	$('input[name=onoffswitch_localInvoice]').on('click', function () {
+		 
+		 var orderId = $(this).data('id');
+		 var ischecked = ( $(this).prop('checked'));
+		if(ischecked == false) {
+			if(confirm('If you already printed invoice base local invoice id , you can not cancel this ,otherwise ,the invoice sent to xero will return new invoice id, do you still want to do that?')==false)return;
+	      }
+
+		
+	   //  alert(ischecked);
+        var context = $('.publish_icon_localInvoice[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/set_localinvoice",
+            data: {"id": orderId},
+			
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+			   if (result.error) {
+			   alert(result.error);
+			   
+			 //  alert($('#myonoffswitch_localInvoice'+orderId).attr("checked"));
+			   $('#myonoffswitch_localInvoice'+orderId).attr("checked",false);
+			   context.html("<span style='color:#F30;'>not yet</span>");
+			   return 0;
+			   }
+                if (result.isIdAsInvoiceNo== '0') {
+                    context.html("<span style='color:#F30;'></span>");
+					$("#invoice_no"+orderId).html('-');
+					$("#print_"+orderId).css("display","none");
+					$("#forceprint_"+orderId).css("display","");
+                } else if (result.isIdAsInvoiceNo == '1') {
+                    context.html("<span style='color:#58964E;'>Local InvId</span>");
+					
+					
+						$('#myonoffswitch_localInvoice'+orderId).prop("checked",true);
+					$("#print_"+orderId).css("display","");
+					$("#forceprint_"+orderId).css("display","none");
+				$("#forceprint_"+orderId).css("display","none");
+				
+					$("#invoice_no"+orderId).html(result.xero_invoice_id);
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
+	
+	
+	 $('input[name=onoffLocalInvoiceInfo]').on('click', function () {
+       
+		 if (!$('#onoffLocalInvoiceInfo').prop('checked')) {  
+			//alert('checked');
+			$("#onoffLocalInvoiceInfo").prop("checked",false);
+			
+			 $('[name="localInvoiceCol"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffLocalInvoiceInfo").prop("checked",true);
+			
+			 $('[name="localInvoiceCol"]').show();
+			}
+
+	 
+		
+       
+
+    })
 
 	function force_print(orderID){
 		if(confirm('<{$lang->forceprintalert}>')==false)return;
@@ -629,6 +751,8 @@
 								</script>
 <script type="text/javascript">
 	$(function(){
+	
+	
 		$('.fast-approving-btn').on('click',function(){
 			var id =$(this).data('id');
 			var iconupdate= new IconUpdate(this);
@@ -663,6 +787,10 @@
 
 
 		});
+		
+	 <{if $onoffLocalInvoiceInfo =='on'}> $('[name="localInvoiceCol"]').show();<{else}>$('[name="localInvoiceCol"]').hide();<{/if}>
+		
+		
 	})
 
 	function IconUpdate (obj) {

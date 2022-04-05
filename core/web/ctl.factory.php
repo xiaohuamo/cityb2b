@@ -438,6 +438,47 @@ class ctl_factory extends cmsPage
     }
 
 
+
+
+    public function set_localinvoice_action() {
+
+        $id = (int)get2('id');
+        $mdl= $this->loadModel('order');
+
+        $order_info = $mdl->get($id);
+
+        if ($id < 0 || $order_info['business_userId']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+          $data = array();
+          $data['isIdAsInvoiceNo'] = ($order_info['isIdAsInvoiceNo'] == '0') ? '1' : '0';
+
+          if($order_info['isIdAsInvoiceNo'] == '0') {
+              $data['xero_invoice_id'] ='C'.$order_info['id'];
+          }else{
+              $data['xero_invoice_id'] ='';
+          }
+
+                if ($mdl->update($data, $order_info['id'])) {
+                    echo json_encode($data);
+                } else {
+                    $this->form_response_msg('Please try again later');
+                }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 // 同步 xero的产品数据，将本地的产品编号同步到xero系统中
     public function update_xero_server_code_action(){
 
