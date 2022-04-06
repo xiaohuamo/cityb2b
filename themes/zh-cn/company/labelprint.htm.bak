@@ -729,7 +729,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		LODOP.NewPage();
 		//QR CODE
 		var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=' + order.redeem_code;
-		LODOP.ADD_PRINT_BARCODE(5,300,60,60,"QRCode",qrvalue);
+		LODOP.ADD_PRINT_BARCODE(5,310,60,60,"QRCode",qrvalue);
 		// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
 		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
 		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body style='font-size:12px' leftmargin=0 topmargin=0>"+labelTemplate(order)+"</body>");
@@ -791,7 +791,10 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		html+='<label>Suppliers Name:</label>';
 		html+='<div style="border: 1px solid black; padding: 5px">';
 		//html+='	<span >'+order.logistic_suppliers_info+'</span>';
-		html+='	<span >DNL FOOD </span>';
+		html+='	<span >DNL FOOD   license  NO:P01417</span></div>';
+		html+='<div style="border: 1px solid black; padding: 5px">	<span >TEL:93988222  0450599336 </span></div>';
+		html+='<div style="border: 1px solid black; padding: 5px">	<span >ADD:30 Blaxland Ave, Thomastown VIC 3074</span></div>';
+		
 		html+='</div>';
 
 		return html;
