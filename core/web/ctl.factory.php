@@ -343,11 +343,11 @@ class ctl_factory extends cmsPage
         if($sortBy==1){
             $sortByStr = 'createTime desc';
         }elseif($sortBy==2){
-            $sortByStr = ' logistic_delivery_date desc,cust.name ';
+            $sortByStr = ' nickname ';
         }elseif($sortBy==3){
-            $sortByStr = ' logistic_delivery_date desc,cust.name ';
+            $sortByStr = ' userId ';
         }elseif($sortBy==4){
-            $sortByStr = ' logistic_delivery_date desc,userId ';
+            $sortByStr = ' xero_invoice_id ';
         }
 
 
