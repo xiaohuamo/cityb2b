@@ -53,6 +53,13 @@
 	<paymentPeriod1>Pay in</paymentPeriod1>
 	<paymentPeriod2>weeks</paymentPeriod2>
 	
+	<edit_note>Eidt Notes</edit_note>
+	<add_note>Add Notes</add_note>
+	<Save_notes>Save Notes</Save_notes>
+	<always_keep_note>Always keep the notes for this product</always_keep_note>
+	<keep_note_only_once>only use the notes this time</keep_note_only_once>
+	<add_note_promot>Supplier will see the note for this product.</add_note_promot>
+	
 	
 	 <tradinghours_setting>Trading Hours Setting </tradinghours_setting>
 	 <tradinghours_setting_notes>Description</tradinghours_setting_notes>
@@ -1357,6 +1364,8 @@
 	<logistic_selected>(Selected)</logistic_selected>
     <logistic_selectable>Optional</logistic_selectable>
 	<unified_delivery>Delivery</unified_delivery>
+		<merge_order>Merge Orders</merge_order>
+	 <delivery_date>Delivery date</delivery_date>
 	<logistic_choosetruck>choose Truck</logistic_choosetruck>
 	<logistic_checkarea>Check Post Code</logistic_checkarea>
 	<logisitic_customer_buy>customer buy</logisitic_customer_buy>

@@ -129,7 +129,7 @@
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">
-						<label><{$lang->search}>:</label>
+						<label><{$lang->choose_delivery_date}>:</label>
 						
 						
 						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
@@ -140,24 +140,129 @@
 							</option>
 						<{/foreach}>
 					</select>
-					&nbsp;&nbsp;
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="订单号/兑换码/姓名/电话/产品名/快递号" style="width:250px; margin-right:5px;" />
-						当前系统时区： <{$currentTimeZone}>
-						当前系统时间： <{$currentTime}>
-						<br><br>
+					&nbsp;
+					    <select class='chooselogistic_truck_No' id="logistic_truck_No" name="logistic_truck_No" >
+						<option value="all"  ><{$lang->logistic_choosetruck}></option>
+						<{foreach from=$TuckListOfTheDay item=d}>
+							<{if $d.logistic_truck_No==0}>
+							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$lang->no_truck_yet}>
+							</option>
+							
+							<{else}>
+								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+									<{$d.truck_name}>-<{$d.plate_number}>
+								</option>
+							<{/if}>
+						<{/foreach}>
+						</select>
+                  &nbsp;
+				  <select name="sortBy" id='sortBy'>
+
+							<option value="1" <{if $sortBy=='1'}> selected<{/if}>>Create Time</option>
+
+							<option value="2"<{if $sortBy=='2'}> selected<{/if}>>Customer Name</option>
+
+							<option value="3"<{if $sortBy=='3'}> selected<{/if}>>Account Number</option>
+							<option value="4"<{if $sortBy=='4'}> selected<{/if}>>Invoice Number</option>
+
+						</select>
+
+					<script type="text/javascript">
+						$(function(){
+							$('.chooseDate').on('change',function(){
+							   $('#printer').css({ "display": "none" });
+								var datestr = $(this).val();
+								$.ajax({
+									url:"/company/get_truck_list_of_deliver_date_ajax",
+									data: {datestr : datestr},
+									contentType: "application/json",
+        							dataType: "json",
+									success:function(data){
+									
+										var html = '';
+										var trukNo = 0;
+										var isselect=0;
+										var truckanddriver ='';
+										
+										var selectTruck ='<{$logistic_truck_No}>';
+																				
+										if(selectTruck=='all' || selectTruck.length ==0 || !selectTruck) {
+										  html ='<option value="all" selected ><{$lang->logistic_choosetruck}></option>';
+										
+										}else{
+										  html ='<option value="all"><{$lang->logistic_choosetruck}></option>';
+										}
+										
+										for (var i = 0; i< data.length ; i++) {
+										
+											
+										truckNo = data[i]['logistic_truck_No'];
+										
+										if(truckNo ==0) {
+										    if (trukNo ===selectTruck){
+											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}></option>";
+											  
+											}else{
+											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}></option>";
+											}
+										}else{
+										
+										    if(data[i]['driverName']){
+											
+											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'];
+											}else{
+												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number'];
+											}
+										
+										   if (trukNo ===selectTruck){
+											 
+											   html += "<option value="+data[i]['logistic_truck_No']+" selected>"+truckanddriver+"</option>";
+											}else{
+												html += "<option value="+data[i]['logistic_truck_No']+" >"+truckanddriver+"</option>";
+											}
+										
+										
+										}
+							
+
+
+									}
+										$('.chooselogistic_truck_No').html(html);
+									},
+									error:function(data){
+										console.log(data);
+									}
+								})
+							})
+							
+							$('.chooselogistic_truck_No').on('change',function(){
+							   $('#printer').css({ "display": "none" });
+								
+							})
+
+						})
+					</script>
+			
+					<br><br>
+					
+					<{$lang->search}>: <input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;" />
+					
+						
 
 						<label><{$lang->filter}>:</label>
 						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$st}>" onclick="WdatePicker();" onfocus="WdatePicker();">
 						<label>to</label>
 						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$et}>" onclick="WdatePicker();" onfocus="WdatePicker();">
 						
-							<select id="currentBusinessId" name="currentBusinessId">
+						<!--	<select id="currentBusinessId" name="currentBusinessId">
 							<option value="all" <{if $currentBusinessId=='all'}> selected<{/if}>>选择商家</option>
 							<{foreach from=$authrise_manage_other_business_account item=item}>
 								<option value="<{$item.customer_id}>" <{if $currentBusinessId==$item.customer_id}> selected<{/if}>><{$item.displayName}></option>
 							<{/foreach}>
 							
-						</select>
+						</select> -->
 						
 						<select name="ifpaid" id='ifpaid'>
 
@@ -190,16 +295,18 @@
 							<option value="2"<{if $customer_delivery_option=='2'}> selected<{/if}>>客户自取</option>
 						</select>
 
+						<!--
 						<select id="payment" name="payment">
 							<option value="all" <{if $payment=='all'}> selected<{/if}>><{$lang->order_payment_method}></option>
 							<option value="paypal" <{if $payment=='paypal'}> selected<{/if}>>paypal</option>
 							<option value="offline" <{if $payment=='offline'}> selected<{/if}>>offline</option>
 							<option value="royalpay" <{if $payment=='royalpay'}> selected<{/if}>>royalpay</option>
 							<option value="alipay" <{if $payment=='alipay'}> selected<{/if}>>alipay</option>
-							<option value="hcash" <{if $payment=='hcash'}> selected<{/if}>>hcash</option>
+						
 							<option value="creditcard" <{if $payment=='creditcard'}> selected<{/if}>>creditcard</option>
 						</select> 
 
+                      
 						<select id="staff" name="staff">
 							<option value="all" <{if $staff=='all'}> selected<{/if}>><{$lang->business_department}></option>
 							<{foreach from=$staff_list item=item}>
@@ -208,6 +315,7 @@
 							
 						</select>
 
+-->
 						<button type="submit"><{$lang->search}></button>
 						
 						<br><br>
@@ -226,7 +334,11 @@
 						<input type="checkbox" name="onoffLocalInvoiceInfo"  id="onoffLocalInvoiceInfo"  value='false' >
 						
 						<span >Local Invoice ID</span>
+						&nbsp;&nbsp;
+							
+						<input type="checkbox" name="onoffmorecontent"  id="onoffmorecontent"  value='false' >
 						
+						<span >Advance +</span>
 						
 					</form>
 				</div>
@@ -242,21 +354,21 @@
 									<th>InvoiceNo</th>
 									
 									<th name="localInvoiceCol">Local Invocie ID</th>
-									<th>配送时间</th>		
+									<th><{$lang->delivery_date}></th>		
 									<th><{$lang->order_id}></th>		
-									<th>合并</th>		
+									<th><{$lang->merge_order}></th>		
 									<th><{$lang->product_total}></th>		
-									<th><{$lang->user}></th>	
-									<th>ID</th>	
+									<th><{$lang->customer_name}></th>	
+									<th>Account Num</th>	
 								
 									
-									<th>phone</th>	
-										<th><{$lang->status}></th>	
-									<th><{$lang->payment}></th>
-									<th><{$lang->delivery}></th>				
+									<th name="morecontent" >phone</th>	
+									<th ><{$lang->status}></th>	
+									<th name="morecontent"><{$lang->payment}></th>
+									<th name="morecontent"><{$lang->delivery}></th>				
 							<!--		<th><{$lang->submission_time}></th> -->
 									
-									<th>AccountPeriod</th>
+									<th name="morecontent">AccountPeriod</th>
 									
 								</tr>			
 							</thead>		
@@ -265,7 +377,7 @@
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									
 									<td>
-										<{if !$item.merge_to_another_order}>
+										<{if !$item.merge_to_another_order && $item.coupon_status!='d01'}>
 										
 										
 											<{if ($item.to_xero==1 && $item.sent_to_xero==1) || $item.to_xero==0}>
@@ -280,13 +392,13 @@
 
 										<{else}>
 
-										   <span id='no_print_<{$item.id}>'>不可用</span>
+										   <span id='no_print_<{$item.id}>'>-</span>
 										 <{/if}>
 									
 									</td>
 									
 									<td>
-									<{if $item.to_xero==1}>
+									<{if $item.to_xero==1 && $item.coupon_status!='d01'}>
 									
 										<{if  $item.merge_to_another_order!=1}>
 											<div id="combine_<{$item.id}>" class="onoffswitch">
@@ -320,7 +432,7 @@
 
 
 									<td  name="localInvoiceCol">
-									   <{if $item.sent_to_xero==1 || $item.merge_to_another_order==1}>
+									   <{if $item.sent_to_xero==1 || $item.merge_to_another_order==1 || $item.coupon_status=='d01'}>
 									    -
 									   <{else}>
 										<div id="LocalInvoice_<{$item.id}>" class="onoffswitch">
@@ -338,7 +450,7 @@
 														</span>
 												<{else}>
 													<span id="publish_<{$item.id}>" class='publish_icon_localInvoice' data-id='<{$item.id}>'>
-															<span style="color:#F30;">not yet</span>
+															<span style="color:#F30;"></span>
 														</span>
 												<{/if}>
 									
@@ -350,23 +462,25 @@
 									<td>
 									
 									<{if !$item.merge_to_another_order}>
-									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}><br>
-								<!--<input data-id='<{$item.id}>'  type="text" class="input-text" ;style="width:100px;" id="delivery_date-<{$item.id}>" name="deliveryTime" value="<{date('Y-m-d', $item.logistic_delivery_date)}>" onclick="WdatePicker();" onfocus="WdatePicker();">
-								--> 
+									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}>
+									
+									<{if $item.coupon_status!='d01'}>
+									<br>
+								
 								 <input type="text" class="input-text" data-id='<{$item.id}>' id="deliveryTime-<{$item.id}>" style="width:100px;" name="deliveryTime" onchange="update_deliveryTime(this);" onclick="WdatePicker();" onfocus="WdatePicker();"
 								 
 												   value="<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}><{/if}>"   >
 											<span class='promote-ajax'></span>
 								 
-								 
+								    <{/if}>
 								  <{else}>
-								      不可用
+								      -
 								  <{/if}>
 								
 								</td>
 								
 								<td>
-										<{$item.order_name}>
+										
 										<br>
 										<a target='_blank' href="<{$http_root_www}>factory/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
@@ -422,7 +536,7 @@
 									<td style="text-align:left;"><{$item.name}> </td>
 									<td><{$item.userId}></td>
 									
-									<td><{$item.phone}></td>
+									<td name="morecontent"  ><{$item.phone}></td>
 									
 									
 									<td>
@@ -440,7 +554,7 @@
 										<{/if}>	
 
 
-									<td>
+									<td name="morecontent" >
 										<{if $item.status==1}>
 										<span style="color:#58964E;"><{$lang->submit}></span>
 										<{elseif $item.status==0}>
@@ -452,7 +566,7 @@
 										<small><{$item.payment}> </small>
 									</td>
 
-									<td>	
+									<td name="morecontent" >	
 										<{if $item.customer_delivery_option==1}>
 											<{$lang->delivery}>
 											<{if $item.tracking_id}>  <i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> <{/if}>
@@ -465,7 +579,7 @@
 
 								<!--	<td><{date('Y-m-d H:i', $item.createTime)}></td> -->
 								
-									<td><{$item.disp_accountType}></td>
+									<td name="morecontent" ><{$item.disp_accountType}></td>
 									
 								</tr>			
 								<{/foreach}>			
@@ -535,6 +649,11 @@
 					$("#no_print_"+orderId).css("display","");
 					$("#print_"+orderId).css("display","none");
 					$("#forceprint_"+orderId).css("display","none");
+					$("#LocalInvoice_"+orderId).html("-");
+					$("#deliveryTime-"+orderId).css("display","none");
+					
+					$("#invoice_no"+orderId).html('-');
+					
                 }else if (result.merge_to_another_order == '2') {
                     context.html("<span style='color:#F30;'>未合并</span>");
 					alert('main order has been sent to xero ');
@@ -646,7 +765,7 @@
 			   return 0;
 			   }
                 if (result.isIdAsInvoiceNo== '0') {
-                    context.html("<span style='color:#F30;'>not yet</span>");
+                    context.html("<span style='color:#F30;'></span>");
 					$("#invoice_no"+orderId).html('-');
 					$("#print_"+orderId).css("display","none");
 					$("#forceprint_"+orderId).css("display","");
@@ -690,6 +809,31 @@
        
 
     })
+	
+	
+	 $('input[name=onoffmorecontent]').on('click', function () {
+       
+		 if (!$('#onoffmorecontent').prop('checked')) {  
+			//alert('checked');
+			$("#onoffmorecontent").prop("checked",false);
+			
+			 $('[name="morecontent"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffmorecontent").prop("checked",true);
+			
+			 $('[name="morecontent"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+	
+	
+
 
 	function force_print(orderID){
 		if(confirm('<{$lang->forceprintalert}>')==false)return;
@@ -789,6 +933,7 @@
 		});
 		
 	 <{if $onoffLocalInvoiceInfo =='on'}> $('[name="localInvoiceCol"]').show();<{else}>$('[name="localInvoiceCol"]').hide();<{/if}>
+	  <{if $onoffmorecontent =='on'}> $('[name="morecontent"]').show();<{else}>$('[name="morecontent"]').hide();<{/if}>
 		
 		
 	})

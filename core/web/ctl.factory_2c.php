@@ -3170,7 +3170,7 @@
 		$orderStr =" order by r.source_menu_id ,c.guige1_id ";
 		$sql.=$whereStr.$orderStr;
 	   
-	// var_dump($sql);exit;
+	//var_dump($sql);exit;
 	 // var_dump(get2('output'));exit;
 	 if(trim(get2('output'))) {
 	  $fileNameofOutput =$this->getOutputFileName($business_tradingName,$customer_delivery_date,trim(get2('output')),$business_id,0);

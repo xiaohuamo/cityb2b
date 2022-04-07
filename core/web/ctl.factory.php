@@ -128,6 +128,23 @@ class ctl_factory extends cmsPage
 
 
 
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+
+
+        $this->setData($logistic_truck_No,'logistic_truck_No');
+
+        $mdl_truck=$this->loadModel('truck');
+
+        $TuckListOfTheDay =$mdl_truck->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
+
+        if($customer_delivery_date){
+            $truckList = $mdl_truck->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        }else{
+            $truckList = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+        }
+
+        $this->setData($truckList,'truckList');
 
 
 
@@ -316,12 +333,27 @@ class ctl_factory extends cmsPage
             }
 
 		}
-		
-		
-		
 
-        $pageSql = $sql." where ".$whereStr." order by createTime desc";
-        //var_dump($pageSql);exit;
+        $sortBy = get2('sortBy');
+        if(!$sortBy){
+            $sortBy=1; //create time
+        }
+        $this->setData($sortBy,'sortBy');
+
+        if($sortBy==1){
+            $sortByStr = 'createTime desc';
+        }elseif($sortBy==2){
+            $sortByStr = ' logistic_delivery_date desc,cust.name ';
+        }elseif($sortBy==3){
+            $sortByStr = ' logistic_delivery_date desc,cust.name ';
+        }elseif($sortBy==4){
+            $sortByStr = ' logistic_delivery_date desc,userId ';
+        }
+
+
+
+        $pageSql = $sql." where ".$whereStr." order by $sortByStr ";
+       // var_dump($pageSql);exit;
         if (trim(get2('output')) == 'pdf') {
 
             $where12 = [
@@ -438,7 +470,80 @@ class ctl_factory extends cmsPage
     }
 
 
+    public function save_customer_order_item_notes_action(){
+        $id = (int)get2('id');
+        $message = get2('message');
+        $saveType =(int)get2('saveType');
 
+        $mdl =$this->loadModel('wj_user_temp_carts');
+        $temp_rec = $mdl->get($id);
+        if($temp_rec['userId']!=$this->loginUser['id']) {
+            $data['status'] = false;
+            $data['msg'] = 'failed';
+            echo json_encode($data);
+        }
+        $datamessage =array(
+            'item_message'=>$message
+        );
+
+        if($mdl->update($datamessage,$id)){
+
+            $mdl_temp_message =$this->loadModel('item_message');
+            $whereMessage =array(
+                'user_id'=>$temp_rec['userId'],
+                'item_id'=>$temp_rec['menu_id'],
+                'spec_id'=>$temp_rec['guige_ids']
+            );
+            if($saveType==1){
+             //发现记录修改
+                $message_rec= $mdl_temp_message->getByWhere($whereMessage);
+                         if($message_rec) {
+                             if($message) {
+                                 $itemDataMessage =array(
+                                     'message'=>substr($message,0,95),
+                                     'createTime'=>time()
+                                 );
+                                 $mdl_temp_message->updateByWhere($itemDataMessage,$whereMessage);
+                             }else{
+
+                                 $mdl_temp_message->delete($message_rec['id']);
+                             }
+
+                        }else{
+                             if($message) {
+                                 $itemDataMessage = array(
+                                     'user_id' => $temp_rec['userId'],
+                                     'item_id' => $temp_rec['menu_id'],
+                                     'spec_id' => $temp_rec['guige_ids'],
+                                     'message' => substr($message, 0, 95),
+                                     'createTime' => time()
+                                 );
+                                 $mdl_temp_message->insert($itemDataMessage);
+                             }
+                        }
+
+            }elseif($saveType==2){
+                $message_rec= $mdl_temp_message->getByWhere($whereMessage);
+                if($message_rec) {
+                    $mdl_temp_message->delete($message_rec['id']);
+                }
+            }
+
+            $data['status'] = true;
+            $data['msg'] = 'success';
+            $data['message'] = $message;
+            echo json_encode($data);
+
+        }else{
+            $data['status'] = false;
+            $data['msg'] = 'failed';
+            $data['message'] = '';
+            echo json_encode($data);
+        }
+
+
+
+    }
 
     public function set_localinvoice_action() {
 
@@ -754,6 +859,11 @@ class ctl_factory extends cmsPage
 		
 		
 	}
+
+
+
+
+
 
 
 

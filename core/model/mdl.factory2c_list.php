@@ -273,14 +273,14 @@ class mdl_factory2c_list extends mdl_base
 
               //var_dump('businessid is '.$businessId .' factoryid is '.$factroy_id);exit;
               if($businessId) {
-                  $sql =" SELECT r.source_menu_id,c.restaurant_menu_id ,r.menu_id,c.guige1_id,c.guige_des,r.menu_cn_name,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,c.order_id,u.googleMap,u.displayName,o.city as address,f.nickname as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity  from ";
+                  $sql =" SELECT r.source_menu_id,c.restaurant_menu_id ,r.menu_id,c.message,c.guige1_id,c.guige_des,r.menu_cn_name,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,c.order_id,u.googleMap,u.displayName,o.city as address,f.nickname as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity  from ";
                   $sql .=" cc_wj_customer_coupon c left join  cc_order o on c.order_id=o.orderId left join cc_user u on c.business_id=u.id  left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join cc_user_factory f on c.userId =f.user_id and c.business_id =f.factory_id ";
                   $sql .= " where (c.business_id=$businessId or c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$businessId) or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$businessId) ) and ".$whereProductRange."  and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) ";
 
 
               }else{
 
-                  $sql =" SELECT  r.source_menu_id,c.restaurant_menu_id ,r.menu_id,c.guige1_id,c.guige_des,r.menu_cn_name,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,c.order_id,u.googleMap,u.displayName,o.city as address,f.nickname as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity from ";
+                  $sql =" SELECT  r.source_menu_id,c.restaurant_menu_id ,r.menu_id,c.message,c.guige1_id,c.guige_des,r.menu_cn_name,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,c.order_id,u.googleMap,u.displayName,o.city as address,f.nickname as customerName ,o.logistic_sequence_No,o.logistic_truck_No,c.bonus_title,c.customer_buying_quantity from ";
                   $sql .=" cc_wj_customer_coupon c left join  cc_order o on c.order_id=o.orderId left join cc_user u on c.business_id=u.id  left join cc_restaurant_menu r on c.restaurant_menu_id =r.id  left join cc_user_factory f on c.userId =f.user_id and c.business_id =f.factory_id ";
                   $sql .= " where (c.business_id =$factroy_id or c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$factroy_id) or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$factroy_id)) and o.coupon_status='c01' and (o.status =1 or o.accountPay=1) and  ".$whereProductRange ." ";
 

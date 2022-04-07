@@ -16,7 +16,7 @@
 
 <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
 
-<script language="javascript" src="<{$STATIC_PATH}>lodop/LodopFuncs.js"></script>
+<script language="javascript" src="<{$STATIC_PATH}>lodop/LodopFuncs1.js"></script>
 
 <style type="text/css">
 	body {
@@ -699,6 +699,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 	function init() {
 		LODOP = getLodop();  
+		LODOP.SET_LICENSES("","EE0887D00FCC7D29375A695F728489A6","C94CEE276DB2187AE6B65D56B3FC2848","");
 		LODOP.PRINT_INIT("CityB2B-打印机预览");
 		LODOP.SET_PRINT_PAGESIZE(1, '100mm', '100mm', "");
 
@@ -789,11 +790,11 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		html+='<hr>';
 		
 		html+='<label>Suppliers Name:</label>';
-		html+='<div style="border: 1px solid black; padding: 5px">';
+		html+='<div style="border: 0px solid black; padding: 5px">';
 		//html+='	<span >'+order.logistic_suppliers_info+'</span>';
 		html+='	<span >DNL FOOD   license  NO:P01417</span></div>';
-		html+='<div style="border: 1px solid black; padding: 5px">	<span >TEL:93988222  0450599336 </span></div>';
-		html+='<div style="border: 1px solid black; padding: 5px">	<span >ADD:30 Blaxland Ave, Thomastown VIC 3074</span></div>';
+		html+='<div style="border: 0px solid black; padding: 5px">	<span >TEL:93988222  0450599336 </span></div>';
+		html+='<div style="border: 0px solid black; padding: 5px">	<span >ADD:30 Blaxland Ave, Thomastown VIC 3074</span></div>';
 		
 		html+='</div>';
 

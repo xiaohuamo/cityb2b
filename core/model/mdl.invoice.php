@@ -1046,7 +1046,7 @@ class shippingLabel
 
         foreach ($this->OrderData as $key => $order) {
 
-           $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
+       //    $this->pdf->Image($order['redeemQRCode'], 181, 22, 20);
 			$this->pdf->ln();
             $orderID = "ORDER ID: ".$order['orderId'];
             $this->pdf->row($orderID, 0.4, 0, "L", 6);
@@ -1226,7 +1226,13 @@ class shippingLabel
 					
 					
 				}
-				
+                if($item['message']) {
+
+                    $this->pdf->row('Customer Notes:' .$item['message'], 1, 0, 'C');
+                    $this->pdf->row("", 1, 1, 'C', 0.1);
+                    $this->pdf->ln();
+
+                }
 				 $this->pdf->setFontSize();
                
             }

@@ -346,6 +346,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 		$arr_post=array(
 			'ids'=>	 post( 'main_ids' ),
+            'temp_id'=>	 post( 'temp_id' ),
 			'sub_ids'=> post( 'sub_ids' ),
 			'quantities'=>post( 'quantity' ),
 			'sub_money'	=>post( 'single_amount' ),

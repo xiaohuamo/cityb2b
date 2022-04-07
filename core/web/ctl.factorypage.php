@@ -2699,6 +2699,24 @@ class ctl_factorypage extends cmsPage
                 //update
             }else{
 
+                //这块插入一段代码，获取该用户是否为该产品留有一个备注选项。
+                $mdl_temp_message =$this->loadModel('item_message');
+                if($value['guige_ids']){
+                    $spec_id=$value['guige_ids'];
+                }else{
+                    $spec_id=0;
+                }
+                $whereMessage =array(
+                    'user_id'=>$user_id,
+                    'item_id'=>$value['id'],
+                    'spec_id'=>$spec_id
+                );
+                $message_rec= $mdl_temp_message->getByWhere($whereMessage);
+                  if($message_rec) {
+                      $value['message'] =$message_rec['message'];
+                  }
+
+
                 if(!$mdl_wj_user_temp_carts->addItemsToCart($value,$user_id,$currentCoupon,$businessId)){
 
                     echo json_encode('0');

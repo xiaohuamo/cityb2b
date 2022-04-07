@@ -2573,7 +2573,7 @@ class ctl_company extends cmsPage
 	 public function merge_order_update_action()
     {
 		 $id = get2('id');
-		 
+        //echo json_encode(array('merge_to_another_order' => 1));
 		//检查改产品是否为改商家所有
 		
 		$mdl_order =$this->loadModel("order");
@@ -4060,7 +4060,7 @@ class ctl_company extends cmsPage
 					
 				}
 
-
+//var_dump($data[$key]['items']);exit;
 
                 $data[$key]['redeemQRCode']=redeemQRCode($value['redeem_code']);
 

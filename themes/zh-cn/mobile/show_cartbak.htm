@@ -20,7 +20,7 @@
         #geocode-result ul{
             padding: 0;
             margin: 0;
-            font-size: 12px;
+            font-size: 10px;
             list-style: none;
         }
          #geocode-result li{
@@ -34,50 +34,7 @@
         }
 
         .ajaxFormResponse{max-width:990px;width: 90%;/*line-height: 20px;*/position: fixed;top: 40%;margin: auto;left: 0;right: 0;z-index: 99999;background-color:#f29230;color: #fff;padding: 25px 0px;border-radius: 15px;text-align: center;cursor: pointer;}
-   
-			.myclass{
-					letter-spacing:5px;/*字间距*/
-					color: #000;
-					font-weight:bold;
-					
-				}
-				 
-			/* 定义keyframe动画，命名为blink */
-			@keyframes blink{
-			  0%{opacity: 1;}
-				  
-			  100%{opacity: 0;} 
-			}
-			/* 添加兼容性前缀 */
-			@-webkit-keyframes blink {
-				0% { opacity: 1; }
-				100% { opacity: 0; }
-			}
-			@-moz-keyframes blink {
-				0% { opacity: 1; }
-				100% { opacity: 0; }
-			}
-			@-ms-keyframes blink {
-				0% {opacity: 1; } 
-				100% { opacity: 0;}
-			}
-			@-o-keyframes blink {
-				0% { opacity: 1; }
-				100% { opacity: 0; }
-			}
-			/* 定义blink类*/
-			.blink{
-				color: #000;
-			
-				animation: blink 1s linear infinite;  
-				/* 其它浏览器兼容性前缀 */
-				-webkit-animation: blink 1s linear infinite;
-				-moz-animation: blink 1s linear infinite;
-				-ms-animation: blink 1s linear infinite;
-				-o-animation: blink 1s linear infinite;
-			}
-			<style>
-
+    </style>
 
     <style type="text/css">
       .well{
@@ -93,22 +50,6 @@
         padding: 4px;
         border-radius: 5px;
       }
-	  
-	  .spec-message-close {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.5rem;
-    width: 0.84rem;
-    height: 0.84rem;
-    border: 1px solid #d1d1d1;
-    border-radius: 50%;
-    background: url(../images/ico-close.png) no-repeat center center;
-    -o-background-size: .31rem auto;
-    -ms-background-size: .31rem auto;
-    -moz-background-size: .31rem auto;
-    -webkit-background-size: 0.31rem auto;
-    background-size: 0.31rem auto;
-}
 
 	  
     </style>
@@ -153,11 +94,11 @@
 
         <div class="pHead f28 col0F0F0F">
             <div class="pmb5 bold" v-if="isLanguageEn">Delivery Date </div> <div class="pmb5 bold" v-else>配送日期</div>
-            <div class="  flexBox1">
-                <span class="blink" v-if="isLanguageEn"> {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</span>
+            <div class="flexBox1">
+                <span v-if="isLanguageEn"> {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days}}</span>
                <!--  <{$dispCenterUserSelectedDeliveryDate_display}> -->
 
-                <span class="blink" v-else>  {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</span>
+                <span v-else>  {{businessDispSchedule[selectDateIndex].disPlayDate}}&nbsp;&nbsp;{{businessDispSchedule[selectDateIndex].days_cn}}</span>
 
 
                 <div class="pbtn f25 colfff" @click="datePop" v-if="isLanguageEn">Edit</div><div class="pbtn f25 colfff" @click="datePop" v-else>修改</div>
@@ -356,7 +297,7 @@
 
 
          <div class="bgfff borR7 ma15 f28 col282828 ">
-            <div class='personal-info-form  personal-info-sec well' style="background-color: #fff;" >
+            <div class='personal-info-form  personal-info-sec well'>
                  <select class="form-control delivery_info_list_select" >
                     <option class='new' >
                         <{$lang->new_manage_address}>
@@ -370,34 +311,34 @@
                 </select>
                 <br>
                     <div class="form-group row">
-                        <label for="displayName"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->displayName}></label>
+                        <label for="displayName"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->displayName}><em><{$lang->optional1}></em></label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control new_input" id="displayName" placeholder="Customer Name"  name="delivery_displayName">
                         </div>
                     </div>
                   <div class="form-group row">
-                    <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}></label>
+                    <label for="lastname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->last_name}><em><{$lang->optional1}></label>
                     <div class="col-xs-9">
                       <input type="text" class="form-control new_input" id="lastname" placeholder="Last Name"  name="delivery_last_name">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="firstname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}></label>
+                    <label for="firstname"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->first_name}><em><{$lang->optional1}></label>
                     <div class="col-xs-9">
                       <input type="text" class="form-control new_input" id="firstname" placeholder="First Name"  name="delivery_first_name" >
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="phone"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->telephone}>(*)</label>
+                    <label for="phone"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label"><{$lang->telephone}></label>
                     <div class="col-xs-9">
                       <input type="number" class="form-control new_input" id="phone" placeholder="Phone"   name="delivery_phone">
                     </div>
                   </div>
 
                   <div class="form-group row">
-                    <label for="email"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label">Email</label>
+                    <label for="email"  style ="    font-weight: normal;margin-top: 5px;" class="col-xs-3 control-label">Email<em><{$lang->optional1}></em></label>
                     <div class="col-xs-9">
                       <input type="email" class="form-control new_input" id="email" placeholder="Email"  name="delivery_email">
                     </div>
@@ -453,7 +394,7 @@
             </div>
 
              <div class="deliver-option" >
-                     <div class='spec-option deliver-option-sec well' style="border:0;background-color: #fff;">
+                     <div class='spec-option deliver-option-sec well' style="border:0;">
                         <div class="list-group">
                             <{if $business_delivery_info.pickup_enable}>
                                <label class="list-group-item ">
@@ -544,9 +485,9 @@
         </div>
 
              <div class=" payment-option" >
-                   <div class='spec-option  payment-option-sec well' style ="background-color: #fff;">
+                   <div class='spec-option  payment-option-sec well'>
                     <div class="list-group">
- 
+
 
                       <{if $business_delivery_info.supportofflinepayment=='supportofflinepayment'}>
 
@@ -821,10 +762,7 @@
 		   </li>
 
              <{foreach from=$row.items item=item}>
-                <li style="padding-bottom: 1.5rem;
-    border-bottom: 0px solid #e2e2e2;
-    border-top: 1px solid #e2e2e2;
-    margin-top: 1rem;">
+                <li style="padding-bottom:2.5rem;">
                     <div class="pic">
                     <img src="<{$UPLOAD_PATH}><{$item.pic}>" alt="">
                         <{if $item.bonusType=="10"}>
@@ -885,14 +823,7 @@
 						<{/if}>
 					)</em>
                 </li>
-		
-               
-                          <p data-id=<{$item.id}> class="pbtn f25 colfff colFD590E againBtn  add-item_notes-btn " >
-						  <{if $item.item_message}><{$lang->edit_note}><{else}> <{$lang->add_note}><{/if}>
-                            <a ><span class=' pbtn f25 colfff' style="    margin-top: -2.2rem;  background: lightgrey;" ></span></a>
-
-                          </p>
-                         <div  class="blink" id="item_message_<{$item.id}>" style="padding-top: 1rem;font-size: 18px;"><{$item.item_message}></DIV>
+		<div class="add-item_notes-btn pbtn f25 colfff" style="    margin-top: -2.2rem;  background: lightgrey;" onclick="" >加备注</div>
                 <input type="hidden" name="ids[]" value="<{$item.id}>" />
                 <input type="hidden" name="main_ids[]" value="<{$item.main_coupon_id}>" />
                 <input type="hidden" name="sub_ids[]" value="<{$item.sub_coupon_id}>" />
@@ -900,10 +831,7 @@
                 <input type="hidden" name="coupon_names[]" value="<{$item.coupon_name}>" />
                 <input type="hidden" name="single_amount[]"  value="<{$item.single_amount}>"/>
                 <input type="hidden" name="original_amount[]"  value="<{$item.original_amount}>"/>
-				 <input type="hidden" name="temp_id[]"  value="<{$item.id}>"/>
 				
-				
-				 
 				
                 <input type="hidden" name="commission_free[]"  value="<{$item.commission_free && $item.onSpecial}>"/>
 
@@ -977,16 +905,10 @@
 
 
     <div class="pop-spec add-item_notes" style="padding-bottom: 50px;">
-        <span class="spec-message-close"></span>
+        <span class="spec-close"></span>
 
         <div class='coupon-check pop-content'>
-            <h4><{$lang->Save_notes}><br><h4>
-			<h5>
-			 <input checked type="radio" id="sav_temp_message1" name="sav_temp_message" value="1" style="margin-top:10px;" ><{$lang->always_keep_note}><br>
-			 <input type="radio" id="sav_temp_message2" name="sav_temp_message" value="2" style="margin-top:10px;" ><{$lang->keep_note_only_once}>
-			 
-			
-			</h5>
+            <h4><{$lang->apply}><{$lang->promotion_code}></h4>
 
             <div  id="verified_image" style="    text-align: center;   display: none;   padding-bottom: 35px;">
                 <img  src="<{$SKIN_PATH}>img/success2.png" style="      width: 50px; ">
@@ -1000,12 +922,12 @@
 
 
 
-                <input type="text" class="H80" id ="item_note" name="item_note" placeholder="<{$lang->please_input}>" style="   width:100%;">
+                <input type="text" class="H80" id ="promotion_code" name="promotion_code" placeholder="<{$lang->promotion_code}>" style="    width: calc(100% - 1rem);">
 
 
 
                 <span class="input-group-btn">
-                <div class=" pbtn f25 colfff " type="button" onClick="save_product_notes();", style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->save}></div>
+                <div class=" pbtn f25 colfff " type="button" onClick="check_promotion_code();", style="background-color: #FD5001 ; color: #fff; margin-left: 10px;"><{$lang->apply}></div>
 
               </span>
 
@@ -1014,7 +936,7 @@
 
             </div>
             <hr>
-            <h5><{$lang->add_note_promot}></h5>
+            <p><{$lang->promotion_code_desc}></p>
         </div>
 
         <!--    <a  class="spec-btn"><{$lang->confirm}></a> -->
@@ -1118,9 +1040,6 @@
 
      <script type="text/javascript">
          $(function(){
-		 
-		 
-		 
             try {
                 initGeocomplete();
             }
@@ -1250,8 +1169,6 @@
         var currentPaymentMethod;
         var surchargevalue;
         var surchargeRate={};
-		
-		var current_menu_id=0;
 
 
         <{if $business_delivery_info.transactionFeeChargeFrom_paypal!='user'}>
@@ -1910,12 +1827,8 @@
             });
 			
 			$('.add-item_notes-btn').on('click',function(event) {
-			    current_menu_id = $(this).data('id');
-				var str1 = $('#item_message_'+current_menu_id).html();
-				$('#item_note').val(str1);
                 $('.add-item_notes').addClass('open');
                 $('.pop-bg').show();
-				
             });
 
             $('.use-money-btn').on('click',function(event) {
@@ -1933,16 +1846,6 @@
                 $(this).parent('.pop-spec').removeClass('open');
                 $('.pop-bg').hide();
                 refresh();
-            });
-			
-			 $('.spec-message-close').on('click',function(event) {
-                $(this).parent('.pop-spec').removeClass('open');
-				$('.promotion-loading').html('');
-				$('#item_note').val('');
-				 
-                    $('#verified_image').css('display','none');
-                $('.pop-bg').hide();
-               
             });
 
             $('.personal-info-confirm-btn').on('click',function(event) {
@@ -2164,50 +2067,6 @@
 
                     $('.promotion-loading').html(data.msg);
                     $('#verified_image').css('display','none');
-                }
-
-              })
-              .always(function(){
-                refresh();
-              })
-        }
-		
-		
-		 function save_product_notes() {
-            var item_message = $('#item_note').val();
-			var  sav_temp_message =$("input[name='sav_temp_message']:checked").val();
-			//$('.sav_temp_message').val();
-			//alert(sav_temp_message);
-          // alert(current_menu_id);
-		  // alert(item_message);
-		  //  alert(sav_temp_message);
-
-          //  if(!item_message)return;
-
-            $.ajax({
-              method:"GET",
-              url: "<{$http_root_www}>factory/save_customer_order_item_notes",
-              data:{"id":current_menu_id,"message":item_message,"saveType":sav_temp_message},
-              beforeSend: function( xhr ) {
-                    $('.promotion-loading').html("<i class='fa fa-cog fa-spin fa-lg' style='color:#39BF21'></i> Processing...");
-              }
-            })
-              .done(function( data ) {
-                data = jQuery.parseJSON(data);
-                if(data.status){
-                    //code match
-                   
-
-                    $('.promotion-loading').html(data.msg);
-                    $('#verified_image').css('display','');
-					
-					$('#item_message_'+current_menu_id).html(data.message);
-					//$('#sav_temp_message1').attr('checked', 'true');
-                }else{
-                   
-                    $('.promotion-loading').html(data.msg);
-                    $('#verified_image').css('display','none');
-					//$('#sav_temp_message1').attr('checked', 'true');
                 }
 
               })

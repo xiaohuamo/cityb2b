@@ -74,7 +74,7 @@
 						<a class='link' target='_blank'
 						   onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$data.orderId}>')">Invoice</a>
                     
-					 <{if $data.send_to_xero==1}>
+					 <{if $data.sent_to_xero==1}>
 
 						<button class='clearXeroInfo' >Clear Xero Info</button>
 					
@@ -339,6 +339,7 @@
 								<th>调整后数量</th>
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
+								<th>单品留言</th>
 
 							</tr>
 
@@ -410,7 +411,11 @@
 										<{/if}>
 									</td>
 								
-
+									<td>
+                                        
+											
+										 <{$item.message}>
+									</td>
 								</tr>
                             <{/foreach}>
 							</tbody>

@@ -631,8 +631,7 @@ class OrderInfoReport
                 $this->pdf->setFontSize();
                 $this->pdf->row("", 1, 1, 'C', 0.1);
 
-
-                $this->pdf->ln();
+              $this->pdf->ln();
 
 
 
@@ -659,6 +658,13 @@ class OrderInfoReport
                 $this->pdf->ln();
             }
 
+            if($order['message']) {
+
+                $this->pdf->row('Customer Notes:' .$order['message'], 1, 0, 'C');
+                $this->pdf->row("", 1, 1, 'C', 0.1);
+                $this->pdf->ln();
+
+            }
             $old_menu_id = $order['source_menu_id'];
             $old_guige_id = $order['guige1_id'];
 

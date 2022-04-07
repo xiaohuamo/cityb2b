@@ -332,6 +332,7 @@
 								<th>编号</th>
 								<th>产品</th>
 								<th>规格</th>
+								<th>单品留言</th>
 								<th>单位</th>
 								<th>原价</th>
 								<th>现价</th>
@@ -339,6 +340,7 @@
 								<th>调整后数量</th>
 								<th>单价</th>
 								<th>调整后累计（单价*数量）</th>
+								
 
 							</tr>
 
@@ -361,7 +363,11 @@
 									</a></td>
 
 									<td><{if $item.guige_des}><{$item.guige1_id}>:&nbsp;<{$item.guige_des}><{/if}></td>
-
+									<td>
+                                        
+											
+										 <{$item.message}>
+									</td>
 									<td><{$item.unit}></td>
 									<td>
                                         <{$item.voucher_original_amount}>
@@ -410,7 +416,7 @@
 										<{/if}>
 									</td>
 								
-
+									
 								</tr>
                             <{/foreach}>
 							</tbody>

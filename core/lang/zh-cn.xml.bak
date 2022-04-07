@@ -454,6 +454,14 @@
     <apply>使用</apply>
     <not_applied>开始使用</not_applied>
     <messages_to_business>您还有什么要嘱咐的?</messages_to_business>
+	
+	<edit_note>编辑备注</edit_note>
+	<add_note>加备注</add_note>
+	<Save_notes>保存备注</Save_notes>
+	<always_keep_note>一直保留该备注</always_keep_note>
+	<keep_note_only_once>一直保留该备注</keep_note_only_once>
+	<add_note_promot>商家生产或配货时，会获得该信息</add_note_promot>
+	
 
     <available_fund>可用</available_fund>
     <spend_fund>使用零钱</spend_fund>
@@ -1069,7 +1077,8 @@
 	  <force_print>强制打印 </force_print>
 	   <forceprintalert>当前发票还未上传xero,打印输出发票号为本地生成，是否打印？</forceprintalert>
 	   
-	
+	<paymentPeriod1>货到</paymentPeriod1>
+	<paymentPeriod2>周内付款</paymentPeriod2>
 	    <print>打印</print>
 		 <CashOnDelivery>货到付款</CashOnDelivery>
 	 
@@ -1396,6 +1405,7 @@
     <morning>上午</morning>
     <afternoon>下午</afternoon>
     <unified_delivery>配送日期</unified_delivery>
+	 <delivery_date>配送日期</delivery_date>
     <logistic_selected>已选</logistic_selected>
     <logistic_selectable>可选</logistic_selectable>
     <logistic_more_shop>更多</logistic_more_shop>

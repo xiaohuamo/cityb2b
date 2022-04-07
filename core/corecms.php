@@ -582,6 +582,9 @@ class corecms
 	$mdl_referral_relation=$this->loadModel('referral_relation');
 
 	$mdl_referrals = $this->loadModel('referrals');
+
+    $mdl_temp_carts =$this->loadModel('wj_user_temp_carts');
+
 	
     $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
 
@@ -622,6 +625,9 @@ class corecms
 			
 			$data = $this->get_customer_coupon_data($coupon,$customer_buy_quantities,$couponBuyer,$arr_post['menu_id'][$key]);
 
+            $temp_message = $mdl_temp_carts->get($arr_post['temp_id'][$key]);
+            $data['message'] =substr($temp_message['item_message'],0,95) ;
+           // $this->form_response_msg('something wrong! '.$data['message']);
 			//把之前生成的redeemcode置入
 			$data['redeem_code'] =$redeem_code ;
 			$data['order_id']=$orderId;
