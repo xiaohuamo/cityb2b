@@ -210,23 +210,18 @@ class ctl_factory extends cmsPage
                     left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id 
                      left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         } else {
+           // var_dump('here');exit;
             $sql = "SELECT  f.to_xero, if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
-            if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum 
+            if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,
+       f.nickname,concat(o.first_name,' ',o.last_name) as name,o.*  
             from cc_order as o 
-                left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id     group by order_id,business_id) cust 
-                    on o.orderId=cust.order_id and cust.business_id =".$FactoryId." 
+               
                     left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id  
                     left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         }
         $whereStr = " ( business_userId= ".$FactoryId;
         $whereStr .= "  or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$FactoryId.")";
-        //plus 如果该用户是统配中心用户，其下所有商家的订单
-  /*      $whereStr .= " or  business_userId in (select business_id from  cc_dispatching_centre_customer_list where dispatching_centre_id =".$FactoryId.")";
-        //如果该商家是集合店铺所有人，则所有其下店铺的订单
-        $whereStr .= " or  business_userId in (select suppliers_id from  cc_freshfood_disp_centre_suppliers where business_id =".$FactoryId.")";
-        // 如果该用户为授权用户，则其下所有订单均可以看到。
-        $whereStr .= " or  business_userId in (select customer_id from  cc_authrise_manage_other_business_account where authorise_business_id =".$FactoryId.")";
-*/
+
         $whereStr .= ")";
 
         if (! empty($sk)) {
@@ -281,6 +276,12 @@ class ctl_factory extends cmsPage
         if (! empty($staff)) {
             if ($staff != 'all') {
                 $whereStr .= " and o.business_staff_id = '$staff' ";
+            }
+        }
+
+        if (! empty($logistic_truck_No)) {
+            if ($logistic_truck_No != 'all') {
+                $whereStr .= " and o.logistic_truck_No = '$logistic_truck_No' ";
             }
         }
 

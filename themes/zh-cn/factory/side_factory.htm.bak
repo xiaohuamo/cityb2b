@@ -280,7 +280,7 @@
 				Xero items match sync
 				</a>
 				
-				<a href="<{$http_root_www}>factory/save_customer_order_item_notes?id=36&message=eewwewewewe&saveType=1">dd</a>
+			<!--	<a href="<{$http_root_www}>factory/save_customer_order_item_notes?id=36&message=eewwewewewe&saveType=1">dd</a> -->
 			</div>
 		</li>
 

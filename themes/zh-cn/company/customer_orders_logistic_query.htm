@@ -74,7 +74,7 @@
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
 									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>
+									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -85,7 +85,9 @@
 							$('.chooseDate').on('change',function(){
 							   $('#printer').css({ "display": "none" });
 								var datestr = $(this).val();
+								//alert(datestr);
 								$.ajax({
+								
 									url:"/company/get_truck_list_of_deliver_date_ajax",
 									data: {datestr : datestr},
 									contentType: "application/json",
@@ -122,9 +124,9 @@
 										
 										    if(data[i]['driverName']){
 											
-											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'];
+											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
 											}else{
-												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number'];
+												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
 											}
 										
 										   if (trukNo ===selectTruck){

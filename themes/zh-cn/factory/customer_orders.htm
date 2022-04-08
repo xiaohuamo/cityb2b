@@ -151,8 +151,7 @@
 							
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -211,9 +210,9 @@
 										
 										    if(data[i]['driverName']){
 											
-											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'];
+											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
 											}else{
-												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number'];
+												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
 											}
 										
 										   if (trukNo ===selectTruck){
@@ -527,13 +526,13 @@
 								
 									<{else}>
 								
-									<{$item.ori_sum}>
+									<{$item.money_new}>
 									
 									<{/if}>
 									
 									
 									</td>
-									<td style="text-align:left;"><{$item.name}> </td>
+									<td style="text-align:left;"><{$item.nickname}><br>(<{$item.displayName}>) </td>
 									<td><{$item.userId}></td>
 									
 									<td name="morecontent"  ><{$item.phone}></td>
