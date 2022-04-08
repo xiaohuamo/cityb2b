@@ -211,7 +211,7 @@ class ctl_factory extends cmsPage
                      left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         } else {
            // var_dump('here');exit;
-            $sql = "SELECT  f.to_xero, if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
+            $sql = "SELECT  f.xero_account_number,f.xero_contact_id,f.to_xero, if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
             if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,
        f.nickname,concat(o.first_name,' ',o.last_name) as name,o.*  
             from cc_order as o 
@@ -579,6 +579,84 @@ class ctl_factory extends cmsPage
     }
 
 
+    public function xero_sync_contact_action(){
+
+
+        $id = (int)get2('id');
+
+        $returnArr =[];
+
+        $mdl= $this->loadModel('user_factory');
+
+        $xero_user = $mdl->get($id);
+
+        if ($id < 0 || $xero_user['factory_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        if(!$credentials){
+            $this->form_response_msg('xero connection error ,please contact admin ');
+        }
+
+
+        $response_arr = $api->getSingleContact($credentials,$xero_user['xero_account_number']);
+
+    //    $custom_response=$mdl_xero->updateXeroSingleContactId($response_arr,$this->current_business['id']);
+
+        if(is_array($response_arr) && count($response_arr) > 0)
+        {
+            foreach($response_arr as $v)
+            {
+                if( !empty($v['ContactID']) && !empty($v['AccountNumber'])  && empty($v['HasValidationErrors']) )
+                {
+
+
+
+                    $Name =str_replace("'"," ",$v['Name']);
+                    $updateArr =array(
+                        'xero_contact_id'=>$v['ContactID'],
+                        'xero_name'=>$Name
+                    );
+                    $where =array(
+                        'xero_account_number'=>$v['AccountNumber'],
+                        'factory_id'=>$this->current_business['id']
+                    );
+                    if(loadModel('user_factory')->updateByWhere($updateArr,$where)){
+
+                        $returnArr['message']='sync successful!';
+                        $returnArr['syn_to_xero']=1;
+                    }else{
+                        $returnArr['message']='error happened when update contactID,please contact admin';
+                        $returnArr['syn_to_xero']=0;
+                    }
+
+                }
+                else{
+                    $returnArr['message']=$v['HasValidationErrors'];
+                    $returnArr['syn_to_xero']=0;
+                }
+            }
+        }else{
+            $returnArr['message']='Could not find the xero account Number you entered on xero platfrom,if you want to create new contact on xero press ok ,if you want to check the number again ,press cancel! ';
+            $returnArr['syn_to_xero']=0;
+        }
+
+
+
+     echo json_encode($returnArr);
+     //  echo json_encode($response_arr);
+     //  exit;
+
+    }
+
+
 
 
 
@@ -677,6 +755,84 @@ class ctl_factory extends cmsPage
         echo json_encode($returnArr);
 
     }
+
+
+    public function create_single_contact_onxero_action(){
+
+        $id = (int)get2('id');
+
+        $returnArr =[];
+
+        $mdl= $this->loadModel('user_factory');
+
+        $xero_user = $mdl->get($id);
+
+        if ($id < 0 || $xero_user['factory_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        if(!$credentials){
+            $this->form_response_msg('xero connection error ,please contact admin ');
+        }
+
+
+
+
+        $contactList =$mdl_xero->getSingleContactForCreateContactOnXero($this->current_business['id'],$xero_user['user_id']);
+        //var_dump($contactList);exit;
+        $response_arr = $api->createContacts($credentials,$contactList);
+
+      //  var_dump($response_arr);exit;
+
+        if(is_array($response_arr) && count($response_arr) > 0)
+        {
+            foreach($response_arr as $v)
+            {
+                if( !empty($v['ContactID']) && !empty($v['AccountNumber'])  && empty($v['HasValidationErrors']) )
+                {
+
+                    $updateArr =array(
+                        'xero_contact_id'=>$v['ContactID'],
+                        'xero_name'=>$v['Name'],
+                    );
+                    $where =array(
+                        'user_id'=>$v['ContactNumber'],
+                        'xero_account_number'=>$v['AccountNumber'],
+                        'factory_id'=>$this->current_business['id']
+                    );
+                    if(loadModel('user_factory')->updateByWhere($updateArr,$where)){
+
+                        $returnArr['message']='create contact successful';
+                        $returnArr['syn_to_xero']=1;
+                    }else{
+                        $returnArr['message']='create contact error ,please contact admin';
+                        $returnArr['syn_to_xero']=0;
+                    }
+
+
+                }
+                else{
+                    $returnArr['message']=json_encode($v['ValidationErrors']);
+                    $returnArr['syn_to_xero']=0;
+                }
+            }
+        }else{
+            $returnArr['message']='no account find ';
+            $returnArr['syn_to_xero']=0;
+        }
+
+       // $custom_response= $mdl_xero->createXeroContactId($response_arr,$this->current_business['id']);
+       // $response=json_encode($response_arr);
+        echo json_encode($returnArr);
+    }
+
 
 // send the order to xero
 

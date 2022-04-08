@@ -30,7 +30,7 @@
 <style type="text/css">
 	.main-list table th, .main-list table td {
     padding: 5px 2px;
-    text-align: left;
+    text-align: center;
 }
         .onoffswitch {
             position: relative;
@@ -146,8 +146,11 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>To Xero </th>
+							
+							    <th>xero Sync Status</th>
+								
 								<th>Xero Account Id</th>
+								<th>Invocie To Xero </th>
 								<th>Customer ID </th>
 								<th>客户名</th>
 								<th>Xero 客户名</th>
@@ -166,7 +169,44 @@
 							<{foreach from=$users item=user name='dl'}>
 								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 
+									 <td>
+										<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch_sync_xero" class="onoffswitch-checkbox" id="myonoffswitch_sync_xero<{$user.idd}>"
+													   data-id='<{$user.idd}>' <{if $user.xero_account_number && strlen($user.xero_contact_id)>2}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_sync_xero<{$user.idd}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										
+                                             <{if $user.xero_account_number && strlen($user.xero_contact_id)>2}>
+												<span class='publish_icon_sync_xero' data-id='<{$user.idd}>'>
+                                                        <span style="color:#58964E;"> xero synced</span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon_sync_xero' data-id='<{$user.idd}>'>
+                                                        <span style="color:#F30;">not sync yet</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+									
 									<td>
+									<{if strlen($user.xero_contact_id)<2}>
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="xero_account_number-<{$user.idd}>" style="width:100px;" name="xero_account_number"
+												   value=" <{$user.xero_account_number}>">
+											<span class='promote-ajax'></span>
+									<{else}>
+									<{$user.xero_account_number}>
+									<{/if}>
+                                       
+								
+									 
+									</td>	
+									
+									<td>
+									<div  id="send_invoice_to_xero_<{$user.idd}>"  style="<{if strlen($user.xero_contact_id)<2 || !$user.xero_account_number}> display:none;  <{/if}>">
 										<div class="onoffswitch">
 												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$user.idd}>"
 													   data-id='<{$user.idd}>' <{if $user.to_xero==1}> checked <{/if}>>
@@ -178,26 +218,20 @@
 										
                                             <{if $user.to_xero==1}>
 												<span class='publish_icon' data-id='<{$user.idd}>'>
-                                                        <span style="color:#58964E;">send to xero</span>
+                                                        <span style="color:#58964E;">send invoice to xero</span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$user.idd}>'>
                                                         <span style="color:#F30;">not send</span>
                                                     </span>
                                             <{/if}>
-											
+											</div>
+										<{if strlen($user.xero_contact_id)<2 || !$user.xero_account_number}>
+										-
+										<{/if}>
 										
-										</td>
-									<td>
-									<{if strlen($user.xero_contact_id)<2}>
-									<input type="text" class="input-text" data-id='<{$user.idd}>' id="price-<{$user.idd}>" style="width:100px;" name="xero_account_number"
-												   value=" <{$user.xero_account_number}>">
-											<span class='promote-ajax'></span>
-									<{else}>
-									<{$user.xero_account_number}>
-									<{/if}>
-                                       
-									</td>	
+									</td>
+									
 										
 									<td>
                                         <{$user.id}>
@@ -387,6 +421,93 @@
         this.target.html('');
     };
 
+
+
+
+ $('input[name=onoffswitch_sync_xero]').on('click', function () {
+	
+        var couponId = $(this).data('id')
+        var context = $('.publish_icon_sync_xero[data-id=' + couponId + ']');
+    
+	    var xero_account_number =$('#xero_account_number-'+couponId).val().trim();
+	   alert(xero_account_number);
+	   alert(couponId);
+		
+		if(xero_account_number.length<2){
+		  alert('please input xero account number , the number must same with the account Number on xero contact.');
+		   $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+		  return 1;
+		}
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/xero_sync_contact",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.syn_to_xero == '0') {
+                    context.html("<span style='color:#F30;'>not send</span>");
+					
+					var confirmcreateNew =confirm(result.message);
+					if(confirmcreateNew) {
+					
+					//alert('here');return;
+					
+						$.ajax({
+							type: "GET",
+							url: "<{$http_root_www}>factory/create_single_contact_onxero",
+							data: {"id": couponId},
+							beforeSend: function (xhr) {
+								loading = true;
+
+								context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+							},
+							success: function (result) {
+								result = jQuery.parseJSON(result);
+								//alert(result.visible);
+								if (result.syn_to_xero == '0') {
+									context.html("<span style='color:#F30;'>not send</span>");
+									  $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+									alert(result.message);
+								} else if (result.syn_to_xero == '1') {
+									context.html("<span style='color:#58964E;'>send to xero</span>");
+									$("#send_invoice_to_xero_"+couponId).css("display","");
+									alert(result.message);
+									
+									
+								}
+							}
+						}).fail(function () {
+							alert('efef	');
+						}).always(function () {
+							loading = false;
+						})
+					
+					
+					
+					}else{
+					  $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+					}
+                } else if (result.syn_to_xero == '1') {
+                    context.html("<span style='color:#58964E;'>send to xero</span>");
+					$("#send_invoice_to_xero_"+couponId).css("display","");
+					alert(result.contact);
+					
+					
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
 
     $('input[name=onoffswitch]').on('click', function () {
 	

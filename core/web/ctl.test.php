@@ -3439,6 +3439,38 @@ public function xero_get_contacts_action(){
 
 }
 
+	 public function xero_get_single_contact_action(){
+
+		 $accountNumber = get2('accountNumber');
+		 if(!$page) $page=1;
+		 require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+		 require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+		 if(!$this->current_business['id']) {
+			 var_dump('please login in again and do it again.');
+		 }
+		 $api = new MyApi($db);
+		 $mdl_xero =$this->loadModel('xero') ;
+		 $mdl_tokens =$this->loadModel('tokens') ;
+
+		 $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+		 if(!$credentials){
+			 var_dump('Could not get the xero tokens ,please contact admin.');exit;
+		 }
+
+
+		 $response_arr = $api->getSingleContact($credentials,'319243');
+//
+		 $custom_response=$mdl_xero->updateXeroContactId($response_arr,$this->current_business['id']);
+		 $response=json_encode($response_arr);
+		 echo '<p>GET CONTACTS</p>';
+		 echo $response;
+		 echo $custom_response;
+
+
+	 }
+
+
+
 public function xero_test_action() {
 
 	//require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';

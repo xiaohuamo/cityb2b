@@ -151,8 +151,7 @@
 							
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
+									<{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -401,7 +400,11 @@
 									<{if $item.to_xero==1 && $item.coupon_status!='d01'}>
 									
 										<{if  $item.merge_to_another_order!=1}>
-											<div id="combine_<{$item.id}>" class="onoffswitch">
+										
+										  <{if !$item.xero_account_number || !$item.xero_contact_id}>
+										     <span><a href="="<{$http_root_www}>factory/customer_xero_management?search=<{$item.userId}>">Need Sync to Xero</a></span>
+										  <{else}>
+										     <div id="combine_<{$item.id}>" class="onoffswitch">
 													<input type="checkbox"   <{if $item.sent_to_xero==1}>  <{/if}>  name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
 												<{if $item.sent_to_xero==1}> data-sent=1<{else}> data-sent=0 <{/if}> 		   data-id='<{$item.id}>' <{if $item.sent_to_xero==1}> checked <{/if}>>
 													<label class="onoffswitch-label" for="myonoffswitch_xero<{$item.id}>">
@@ -419,6 +422,11 @@
 															<span style="color:#F30;">not yet</span>
 														</span>
 												<{/if}>
+										  
+										  <{/if}>
+											 
+												
+												
 											<{else}>
 											<div id="combine1_<{$item.id}>">-</div>
 											

@@ -710,6 +710,108 @@ class MyApi
     }
 
     /********************************** GET CONTACTS *************************************************/
+    public function getSingleContact($credentials,$accountNumber)
+    {
+
+
+
+
+
+        // valid tokens ?
+        // var_dump($credentials);exit;
+        $tokens = $this->getTokens($credentials);
+        //  return 'tokens from get tokens' . print_r($tokens, true);
+
+        if(empty($tokens['access_token']))
+        {
+            return json_encode([
+                'error' => true,
+                'origin' => 'local',
+                'response' => 'Not authorized'
+            ]);
+        }
+
+        /*********************************** GET SINGLE CONTACT ***************************************/
+        /*
+                $contactID = "1a288e15-a08e-45e8-ac9d-4f4e81be97fe";
+
+                $defaults = array(
+                    CURLOPT_URL => $credentials['endpoint_uri'] . '/v1/xero/get-contact?accessToken=' . $tokens['access_token'] . '&ContactID=' . $contactID,
+                    CURLOPT_POST => false,
+                    CURLOPT_RETURNTRANSFER => true
+                );
+                $ch = curl_init();
+                curl_setopt_array($ch, $defaults);
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                if($response === false) {
+                    return json_encode([
+                        'error' => true,
+                        'origin' => 'local',
+                        'response' => curl_error($ch)
+                    ]);
+                } else {
+                    $response_parsed = json_decode($response, true);
+                    return $response_parsed; // results
+                }
+        */
+        /*********************************** END OF GET SINGLE CONTACT ********************************/
+
+
+
+
+        $arr = [
+           // "modified_since" => "2020-01-01", // last modified
+            "where" => 'AccountNumber = "'.$accountNumber.'"', // ACTIVE, ARCHIVED, GDPRREQUEST
+           // "order_by" => "Name ASC", // order by
+          //      "ids" => [ // array or ContactID
+             //       "58905daa-1641-4dfc-bd78-6fb7ff4d0e9b",
+           //     ],
+           // "page" => $page, // 1 page max 100, so 200 contacts is sent twice, so have to set the page
+           // "include_archived" => "false", // include archieved contacts
+          //  "summary_only" => "false", // not the full format
+            /*   "search_term" => 'searchTerm="Customer"' // contact name that has Customer word in its name  */
+
+        ];
+        $json = json_encode($arr);
+
+        $params = [
+            'data' => $json
+        ];
+
+        $defaults = array(
+            CURLOPT_URL => $credentials['endpoint_uri'] . '/v1/xero/get-contacts?accessToken=' . $tokens['access_token'],
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $params,
+            CURLOPT_RETURNTRANSFER => true
+        );
+        $ch = curl_init();
+        curl_setopt_array($ch, $defaults);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if($response === false) {
+            return json_encode([
+                'error' => true,
+                'origin' => 'local',
+                'response' => curl_error($ch)
+            ]);
+        } else {
+            return $this->processGetContacts($response);
+        }
+
+
+
+        return json_encode([
+            'error' => true,
+            'origin' => 'local',
+            'message' => 'No action or unhandled errors'
+        ]);
+    }
+
+
+    /********************************** GET CONTACTS *************************************************/
     public function getContacts($credentials,$page)
     {
 

@@ -109,6 +109,110 @@ class mdl_xero extends mdl_base
 
     }
 
+
+    public function getSingleContactForCreateContactOnXero($business_id,$user_id) {
+
+        $sql = "
+
+                   select  /*u.id ,   */
+                        f.xero_account_number as AccountNumber,
+                        f.xero_contact_id as ContactID , 
+                          f.user_id as ContactNumber,
+                         if(length(f.nickname)>0,f.nickname,u.displayName) as Name,
+                        abn.untity_name, 
+                        f.nickname as customer_code, 
+                        u.person_first_name,
+                        u.person_last_name, 
+                        u.address ,
+                        u.addrNumber,
+                        u.addrStreet,
+                        u.addrSuburb,
+                        u.addrState,
+                        u.addrPost,
+                        u.email,
+                        abn.ABNorACN,
+                        concat (u.tel,' ',u.phone) as phone,
+                        if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType , 
+                        if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period  
+                        from cc_user u 
+                        left join cc_user_factory f on u.id =f.user_id
+                        left join cc_wj_abn_application abn on u.id =abn.userId
+                        where f.factory_id =$business_id  and f.user_id=$user_id and (length(f.xero_contact_id)=0 or (f.xero_contact_id is null))    ";
+
+        // var_dump($sql);exit;
+        $rows = $this->getListBySql($sql);
+        $new_data = [];
+        foreach ($rows as $key=> $row) {
+
+
+
+
+            $new_data[$key]['ContactNumber']=$row['ContactNumber'];
+            $new_data[$key]['AccountNumber'] = $row['AccountNumber'];
+            $new_data[$key]['Name'] = str_replace('&', ' ', $row['Name']);
+            if(! $new_data[$key]['Name'] ) {
+                $new_data[$key]['Name']='no name';
+            }
+            $new_data[$key]['FirstName'] = $row['person_first_name'];
+            $new_data[$key]['LastName'] = $row['person_last_name'];
+            $new_data[$key]['EmailAddress'] = $row['email'];
+            $new_data[$key]['BankAccountDetails'] = '';
+            $new_data[$key]['CompanyNumber'] = '';
+            $new_data[$key]['TaxNumber'] = $row['ABNorACN'];
+            $new_data[$key]['AccountsReceivableTaxType'] = 'EXEMPTOUTPUT';
+            $new_data[$key]['AccountsPayableTaxType'] = 'EXEMPTOUTPUT';
+            $new_data[$key]['IsSupplier'] = 'false';
+            $new_data[$key]['IsCustomer'] = 'true';
+            $new_data[$key]['DefaultCurrency'] = "AUD";
+            if (strlen(trim($row['email']))==0) {
+                $new_data[$key]['EmailAddress'] ='no-email@hotmail.com';
+            }
+            $new_data[$key]['ContactPersons'] = [[
+                'FirstName' => $row['person_first_name'],
+                'LastName' => $row['person_last_name'],
+                'EmailAddress' => $row['email'],
+                'IncludeInEmails' => false
+            ]];
+
+
+            $new_data[$key]['Addresses']=[
+                [
+
+
+                    "AddressType" => "STREET",
+                    "AddressLine1" => $row['addrNumber'].' '.$row['addrStreet'],
+                    "AddressLine2" => "",
+                    "AddressLine3" => "",
+                    "AddressLine4" => "",
+                    "City" => $row['addrSuburb'],
+                    "Region" => $row['addrState'],
+                    "PostalCode" => $row['addrPost'],
+                    "Country" => "AU",
+                    "AttentionTo" => ""
+                ]
+            ];
+
+
+
+
+            $new_data[$key]['Phones']=[[
+                "PhoneType" =>'DEFAULT',
+                "PhoneNumber"=>$row['phone'],
+                "PhoneAreaCode"=>'',
+                "PhoneCountryCode"=>'+61'
+            ]];
+
+
+
+
+        }
+
+
+        return json_encode($new_data);
+
+    }
+
+
     function  getorderdata($orderId) {
 
         $sql ="select o.id,
