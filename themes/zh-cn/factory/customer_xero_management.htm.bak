@@ -1,0 +1,549 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: left;
+	}
+	</style>
+<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+                    Customer List 
+				</div>
+				<form>
+					<input style ="width: 300px;" value="<{$search}>" name="search" placeholder="Please input user id or phone number ">&nbsp;&nbsp;
+					<select name="to_xero" id='to_xero'>
+
+							<option value="0"
+                                    <{if $to_xero=='0'}> selected<{/if}>>ALL
+							</option>
+							<option value="1"
+                                     <{if $to_xero==1}>  selected<{/if}>>send to xero
+							</option>
+							<option value="2"
+                                    <{if $to_xero==2}> selected<{/if}>>not send 
+							</option>
+						</select> &nbsp;&nbsp;
+					<input type="submit" value="Search">
+				</form>
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+							
+							    <th>xero Sync Status</th>
+								
+								<th>Xero Account Id</th>
+								<th>Invocie To Xero </th>
+								<th>Customer ID </th>
+								<th>客户名</th>
+								<th>Xero 客户名</th>
+								<th>手机号</th>
+								
+								<th>城区邮编</th>
+								<th>Xero hash</th>
+								
+								
+								
+								
+								
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$users item=user name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+									 <td>
+										<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch_sync_xero" class="onoffswitch-checkbox" id="myonoffswitch_sync_xero<{$user.idd}>"
+													   data-id='<{$user.idd}>' <{if $user.xero_account_number && strlen($user.xero_contact_id)>2}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_sync_xero<{$user.idd}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										
+                                             <{if $user.xero_account_number && strlen($user.xero_contact_id)>2}>
+												<span class='publish_icon_sync_xero' data-id='<{$user.idd}>'>
+                                                        <span style="color:#58964E;"> xero synced</span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon_sync_xero' data-id='<{$user.idd}>'>
+                                                        <span style="color:#F30;">not sync yet</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+									
+									<td>
+									<{if strlen($user.xero_contact_id)<2}>
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="xero_account_number-<{$user.idd}>" style="width:100px;" name="xero_account_number"
+												   value=" <{$user.xero_account_number}>">
+											<span class='promote-ajax'></span>
+									<{else}>
+									<{$user.xero_account_number}>
+									<{/if}>
+                                       
+								
+									 
+									</td>	
+									
+									<td>
+									<div  id="send_invoice_to_xero_<{$user.idd}>"  style="<{if strlen($user.xero_contact_id)<2 || !$user.xero_account_number}> display:none;  <{/if}>">
+										<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$user.idd}>"
+													   data-id='<{$user.idd}>' <{if $user.to_xero==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch<{$user.idd}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										
+                                            <{if $user.to_xero==1}>
+												<span class='publish_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#58964E;">send invoice to xero</span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#F30;">not send</span>
+                                                    </span>
+                                            <{/if}>
+											</div>
+										<{if strlen($user.xero_contact_id)<2 || !$user.xero_account_number}>
+										-
+										<{/if}>
+										
+									</td>
+									
+										
+									<td>
+                                        <{$user.id}>
+									</td>
+
+									<td>
+                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+									</td>
+									
+									<td>
+                                        <{$user.xero_name}>
+									</td>
+									
+									<td>
+                                        <{$user.phone}>
+									</td>
+									
+									<td>
+                                        <{$user.addrSuburb}>&nbsp;  <{$user.addrPost}>
+									</td>
+									
+								<td>
+									 <{substr($user.xero_contact_id,0,6)}>
+									
+                                       
+									</td>	
+									
+									
+
+									
+									
+
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+						
+					</div>
+					 <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+
+<script type="text/javascript">
+    var loading = false;
+	
+	
+	  $('input[name=xero_account_number]').on('change', function () {
+	  
+	  
+	  var result1 = confirm("would you like to change xero contact Id ? you must keep xero account Number is same with this , otherwise the invocie will not go to the right account on xero!");
+	  if(result1) {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+         var value =$(this).val();
+ 
+       
+        var updateData = {};
+		
+		//alert(update_field_name);
+		//alert(value);
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		 updateData['value'] = value;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+//update_xero_account_id
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_xero_account_id",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+		}
+
+    });
+	
+
+    $('select[name=account_type]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_business_payment_terms",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+
+
+ $('input[name=onoffswitch_sync_xero]').on('click', function () {
+	
+        var couponId = $(this).data('id')
+        var context = $('.publish_icon_sync_xero[data-id=' + couponId + ']');
+    
+	    var xero_account_number =$('#xero_account_number-'+couponId).val().trim();
+	   alert(xero_account_number);
+	   alert(couponId);
+		
+		if(xero_account_number.length<2){
+		  alert('please input xero account number , the number must same with the account Number on xero contact.');
+		   $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+		  return 1;
+		}
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/xero_sync_contact",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.syn_to_xero == '0') {
+                    context.html("<span style='color:#F30;'>not send</span>");
+					
+					var confirmcreateNew =confirm(result.message);
+					if(confirmcreateNew) {
+					
+					//alert('here');return;
+					
+						$.ajax({
+							type: "GET",
+							url: "<{$http_root_www}>factory/create_single_contact_onxero",
+							data: {"id": couponId},
+							beforeSend: function (xhr) {
+								loading = true;
+
+								context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+							},
+							success: function (result) {
+								result = jQuery.parseJSON(result);
+								//alert(result.visible);
+								if (result.syn_to_xero == '0') {
+									context.html("<span style='color:#F30;'>not send</span>");
+									  $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+									alert(result.message);
+								} else if (result.syn_to_xero == '1') {
+									context.html("<span style='color:#58964E;'>send to xero</span>");
+									$("#send_invoice_to_xero_"+couponId).css("display","");
+									alert(result.contact);
+									
+									
+								}
+							}
+						}).fail(function () {
+							alert('efef	');
+						}).always(function () {
+							loading = false;
+						})
+					
+					
+					
+					}else{
+					  $('#myonoffswitch_sync_xero'+couponId).prop("checked",false);
+					}
+                } else if (result.syn_to_xero == '1') {
+                    context.html("<span style='color:#58964E;'>send to xero</span>");
+					$("#send_invoice_to_xero_"+couponId).css("display","");
+					alert(result.contact);
+					
+					
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+    $('input[name=onoffswitch]').on('click', function () {
+	
+        var couponId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + couponId + ']');
+
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/to_xero_edit_ajax",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.to_xero == '0') {
+                    context.html("<span style='color:#F30;'>not send</span>");
+                } else if (result.to_xero == '1') {
+                    context.html("<span style='color:#58964E;'>send to xero</span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+
+
+</script>
+<{include file = 'footer.htm'}>
+
+</body>
+</html>

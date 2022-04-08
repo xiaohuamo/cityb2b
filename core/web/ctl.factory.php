@@ -644,7 +644,7 @@ class ctl_factory extends cmsPage
                 }
             }
         }else{
-            $returnArr['message']='Could not find the xero account Number you entered on xero platfrom,if you want to create new contact on xero press ok ,if you want to check the number again ,press cancel! ';
+            $returnArr['message']='Could not find account Number on xero platfrom,if you want to create new contact on xero please press ok ,if you want to check the number or others please press cancel! ';
             $returnArr['syn_to_xero']=0;
         }
 
