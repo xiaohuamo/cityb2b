@@ -290,7 +290,7 @@
 	  $('input[name=xero_account_number]').on('change', function () {
 	  var userid = $(this).data('userid');
 	  
-	  var result1 = confirm("if you want to connect  Xero contact to this customer, you must fill in xero contacts Account Number to here . if you want to create a new contact on xero , you need to fill in a unique Account Number such as "+userid+" customerId of this customer.");
+	  var result1 = confirm("if you want to connect  Xero contact to this customer, you must fill in xero contacts Account Number to here . if you want to create a new contact on xero , you need to fill in a unique Account Number such as the customer Id ("+userid+") of this customer.");
 	  if(result1) {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
