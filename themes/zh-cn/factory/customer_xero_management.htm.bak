@@ -478,7 +478,7 @@
 								} else if (result.syn_to_xero == '1') {
 									context.html("<span style='color:#58964E;'>send to xero</span>");
 									$("#send_invoice_to_xero_"+couponId).css("display","");
-									alert(result.contact);
+									alert(result.message);
 									
 									
 								}
