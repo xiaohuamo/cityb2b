@@ -402,7 +402,7 @@
 										<{if  $item.merge_to_another_order!=1}>
 										
 										  <{if !$item.xero_account_number || !$item.xero_contact_id}>
-										     <span><a href="<{$http_root_www}>factory/customer_xero_management?search=<{$item.userId}>">Need Sync to Xero</a></span>
+										     <span><a href="<{$http_root_www}>factory/customer_xero_management?search=<{$item.userId}>">setting xero contact</a></span>
 										  <{else}>
 										     <div id="combine_<{$item.id}>" class="onoffswitch">
 													<input type="checkbox"   <{if $item.sent_to_xero==1}>  <{/if}>  name="onoffswitch_xero" class="onoffswitch-checkbox" id="myonoffswitch_xero<{$item.id}>"
