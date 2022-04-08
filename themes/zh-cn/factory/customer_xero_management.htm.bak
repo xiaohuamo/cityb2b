@@ -194,7 +194,7 @@
 									
 									<td>
 									<{if strlen($user.xero_contact_id)<2}>
-									<input type="text" class="input-text" data-id='<{$user.idd}>' id="xero_account_number-<{$user.idd}>" style="width:100px;" name="xero_account_number"
+									<input type="text" class="input-text" data-id='<{$user.idd}>' data-userid='<{$user.id}>' id="xero_account_number-<{$user.idd}>" style="width:100px;" name="xero_account_number"
 												   value=" <{$user.xero_account_number}>">
 											<span class='promote-ajax'></span>
 									<{else}>
@@ -288,9 +288,9 @@
 	
 	
 	  $('input[name=xero_account_number]').on('change', function () {
+	  var userid = $(this).data('userid');
 	  
-	  
-	  var result1 = confirm("would you like to change xero contact Id ? you must keep xero account Number is same with this , otherwise the invocie will not go to the right account on xero!");
+	  var result1 = confirm("if you want to connect  Xero contact to this customer, you must fill in xero contacts Account Number to here . if you want to create a new contact on xero , you need to fill in a unique Account Number such as "+userid+" customerId of this customer.");
 	  if(result1) {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
@@ -298,6 +298,7 @@
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
+		
         var update_field_name = $(this).attr('name');
          var value =$(this).val();
  
