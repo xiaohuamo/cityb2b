@@ -399,10 +399,10 @@
         var context = $('.publish_icon[data-id=' + couponId + ']');
 		var buttonstatus = $(this).is(":checked");
 		var spec_id = $(this).data('spec_id')
-		alert('id is '+couponId  +' specid is ' +spec_id);
+		/alert('id is '+couponId  +' specid is ' +spec_id);
 		var x=couponId.indexOf('-');
 		var id = couponId.substr(0,x);
-		alert(id);
+		//alert(id);return 0;
       
 				   if (loading) return false;
 					$.ajax({
