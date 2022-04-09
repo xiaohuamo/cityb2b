@@ -322,20 +322,20 @@
 										
 										<td >
 											<div class="onoffswitch">
-												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>-<{$item.spec_id}>"
 													  data-spec_id='<{$item.spec_id}>' data-id='<{$item.id}>-<{$item.spec_id}>' <{if $item.updated==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>-<{$item.spec_id}>">
 													<span class="onoffswitch-inner"></span>
 													<span class="onoffswitch-switch"></span>
 												</label>
 											</div>
 										
                                             <{if $item.updated==1}>
-												<span class='publish_icon' data-id='<{$item.id}>'>
+												<span class='publish_icon' data-id='<{$item.id}>-<{$item.spec_id}>'>
                                                         <span style="color:#58964E;">已同步</span>
                                                     </span>
                                             <{else}>
-												<span class='publish_icon' data-id='<{$item.id}>'>
+												<span class='publish_icon' data-id='<{$item.id}>-<{$item.spec_id}>'>
                                                         <span style="color:#F30;">开始同步</span>
                                                     </span>
                                             <{/if}>	
@@ -399,10 +399,10 @@
         var context = $('.publish_icon[data-id=' + couponId + ']');
 		var buttonstatus = $(this).is(":checked");
 		var spec_id = $(this).data('spec_id')
-		alert('id is '+couponId  +' specid is ' +spec_id);
+		//alert('id is '+couponId  +' specid is ' +spec_id);
 		var x=couponId.indexOf('-');
 		var id = couponId.substr(0,x);
-		alert(id);
+		//alert(id);
       
 				   if (loading) return false;
 					$.ajax({
