@@ -420,6 +420,135 @@ class mdl_xero extends mdl_base
 
 
     }
+
+
+    public function  getSingleItemForCreateItemOnXero($business_id,$id,$spec_id)
+    {
+        $sql = "SELECT
+                m.menu_option ,if (length(m.menu_option)>1,spec.xero_itemcode,m.xero_itemcode) as xero_itemcode,
+                m.xero_itemcode as product_xerocode,
+                spec.xero_itemcode as guige_xerocode,
+                       CONCAT(
+                    m.id,
+                    IFNULL(CONCAT('-', spec.spec_id),
+                    '')
+                ) AS Code,
+                /* xero code unique */
+                CONCAT(
+                    UPPER(m.menu_id),
+                    ' ',
+                    UPPER(
+                        CONCAT(
+                            IF(
+                                LENGTH(m.menu_en_name) > 0,
+                                m.menu_en_name,
+                                m.menu_cn_name
+                            ),
+                            ' ',
+                            IF(
+                                LENGTH(spec.spec_name) > 0,
+                                spec.spec_name,
+                                ''
+                            )
+                        )
+                    ),
+                    UPPER(
+                        IF(
+                            LENGTH(m.unit_en) > 0,
+                            m.unit_en,
+                            m.unit
+                        )
+                    )
+                ) AS Name,
+                UPPER(m.menu_id) AS item_code,
+                m.id AS product_id,
+                UPPER(
+                    CONCAT(
+                        IF(
+                            LENGTH(m.menu_en_name) > 0,
+                            m.menu_en_name,
+                            m.menu_cn_name
+                        ),
+                        IF(
+                            LENGTH(spec.spec_name) > 0,
+                            spec.spec_name,
+                            ''
+                        )
+                    )
+                ) AS item_name,
+                UPPER(m.menu_desc) AS Description,
+                m.price,
+                IF(m.include_gst, 10, 0) AS gst
+            FROM
+                cc_restaurant_menu m
+            LEFT JOIN (
+                SELECT m.id,
+                    g.id AS spec_id,
+                    g.menu_en_name AS spec_name,
+                    g.menu_cn_name AS spec_name_cn,
+                    g.xero_itemcode ,
+                       
+                    c.category_en_name AS spec_desc
+                FROM
+                    `cc_restaurant_menu` m
+                LEFT JOIN cc_restaurant_menu_option g ON
+                    m.menu_option = g.restaurant_category_id
+                LEFT JOIN cc_restaurant_menu_option_category c ON
+                    m.menu_option = c.id
+            ) AS spec
+            ON
+                m.id = spec.id AND(
+                    LENGTH(spec.spec_name_cn) > 0 OR LENGTH(spec.spec_name) > 0
+                )
+            WHERE   
+                m.restaurant_id = $business_id AND(
+                    LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
+                ) and m.isDeleted =0 and m.id=$id and visible =1 and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  ";
+
+        if($spec_id){
+
+            $sql .=" and spec.spec_id =$spec_id ";
+
+        }
+
+
+
+        $rows = $this->getlistbysql($sql);
+        // var_dump($sql);exit;
+        $new_data =[];
+        foreach ($rows as $key =>$value) {
+            $new_data[$key]['Code'] =$value['Code'];
+
+            //  $name= str_replace ('&','\&', $value['Name']);
+            //   $name= htmlspecialchars_decode($value['Name'], ENT_NOQUOTES);
+            //   $new_data[$key]['Name'] =$name;
+            $new_data[$key]['Name'] =str_replace('&',' ',substr($value['Name'],0,45));
+            $new_data[$key]['IsSold'] ='true';
+            $new_data[$key]['IsPurchase'] ='true';
+            $new_data[$key]['PurchaseDescription'] ='';
+            $new_data[$key]['PurchaseDetails'] =array(
+                'UnitPrice'=>1.00
+
+            );
+            $new_data[$key]['SalesDetails'] =array(
+                'UnitPrice'=>$value['price'],
+                'AccountCode'=>'',
+                'COGSAccountCode'=>'',
+                'TaxType'=>''
+            );
+            $new_data[$key]['IsTrackedAsInventory'] ='false';
+            $new_data[$key]['InventoryAssetAccountCode'] ='';
+
+
+        }
+
+
+//var_dump(json_encode($new_data));exit;
+        return json_encode($new_data);
+
+    }
+    //更新发票信息
+
    /*
      * 获取产品列表并在xero创建产品。
      *  isedit表示这个产品被编辑过，也就是需要更新， 如果为1，则过滤所有修改过的产品，如果为0表示不需要
@@ -745,6 +874,62 @@ class mdl_xero extends mdl_base
         //   var_dump($guigeId.' '.$itemid);exit;
         return $str;
     }
+
+
+    public function getItemsSpecList($business_id,$search,$category,$sub_category,$syncStatus) {
+
+         $sql ="select m.id,if(isnull(spec.id),'',spec.id)  as spec_id ,m.menu_id,m.menu_en_name as item_name,
+            if(isnull(c.category_en_name),'',c.category_en_name) as spec_name,if(isnull(spec.menu_en_name),''
+           ,spec.menu_en_name) as spec_details,if((length(m.menu_option)>0 && m.menu_option !=0),
+               spec.xero_itemcode, m.xero_itemcode) as xero_itemcode   from cc_restaurant_menu  m 
+            left join cc_restaurant_menu_option_category c on m.menu_option = c.id
+            left join cc_restaurant_menu_option spec on c.id =spec.restaurant_category_id and  (length(spec.menu_en_name)>0 or length(spec.menu_cn_name)>0)
+            where m.restaurant_id=$business_id and (length(m.menu_en_name)>0 or length(m.menu_cn_name)>0)  and m.visible=1 and m.isDeleted=0 ";
+
+        // $ItemListwithSpec =loadModel('restaurant_menu')->getListBySql($sql);
+        if($search) {
+            $sql .= " AND (m.id like '%$search%'  
+                     OR spec.id  like '%$search%'
+                     OR m.menu_en_name like '%$search%'
+                      OR m.menu_id like '%$search%'
+					  OR spec.menu_en_name like '%$search%' 
+					    OR c.category_en_name like '%$search%'
+					 )";
+        }
+
+        if($category){
+            if($category !='all') {
+                $sql .= " and m.restaurant_category_id = $category ";
+            }
+        }
+
+        if($sub_category){
+            if($sub_category !='all') {
+                $sql .= " and m.sub_category_id = $sub_category ";
+            }
+        }
+
+
+
+        $sql .= " order by m.restaurant_category_id,m.sub_category_id,m.menu_id";
+
+
+            if($syncStatus){
+                if($syncStatus !='all') {
+
+                     if($syncStatus ==1) {
+                         $sql = "select * from ( $sql ) a  where length(a.xero_itemcode)>0 ";
+                     }elseif($syncStatus ==2) {
+                         $sql = "select * from ( $sql ) a  where length(a.xero_itemcode)=0 or  a.xero_itemcode is null ";
+                     }
+
+                }
+            }
+
+         return $sql;
+
+    }
+
 
     public function updateXeroContactId($response,$factoryId){
 

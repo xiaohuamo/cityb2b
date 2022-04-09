@@ -4913,14 +4913,12 @@ class ctl_factory extends cmsPage
     }
 
 
-
     function item_xero_download_sync_setting_action(){
         // 获得该用户餐厅的菜单分类信息
 
-        if(!$customer_id) {
-            $customer_id =$this->current_business['id'];
+        $customer_id =$this->current_business['id'];
 
-        }
+
         $this->setData($customer_id,'customer_id');
 
         $mdl = $this->loadModel('authrise_manage_other_business_account');
@@ -5115,6 +5113,240 @@ class ctl_factory extends cmsPage
 
         $this->setData($this->loginUser['gst_type'], 'gstType');
         $this->display_pc_mobile('factory/item_xero_download_sync_setting', 'factory/item_xero_download_sync_setting');
+    }
+
+    function xero_create_items_on_xero_action(){
+
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        if(!$credentials){
+            $this->form_response_msg('xero connection error ,please contact admin ');
+        }
+        $itemList =$mdl_xero->getItemListForCreateItemOnXero($this->current_business['id'],0,0,400);
+        //var_dump($itemList);exit;
+        $response_arr = $api->createItems($credentials,$itemList);
+        $custom_response= $mdl_xero->updateXeroItemCode($response_arr);
+       // $response=json_encode($response_arr);
+
+        $this->sheader(HTTP_ROOT_WWW.'factory/upload_items_to_xero');
+      //  $this->sheader(HTTP_ROOT_WWW.'member/login?returnUrl='.urlencode($_SERVER['REQUEST_URI']));
+    }
+
+    //将本地未同步到xero的产品全部同步到xero
+    function xero_single_create_items_on_xero_action (){
+
+        $id = (int)get2('id');
+        $spec_id =(int)get2('spec_id');
+      //  $id =385686;
+      //  $spec_id =701;
+      //  $this->form_response_msg($id. ' '.$spec_id );
+        $returnArr =[];
+
+        $mdl= $this->loadModel('restaurant_menu');
+
+        $xero_item = $mdl->get($id);
+
+        if ($id < 0 || $xero_item['restaurant_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
+
+
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        if(!$credentials){
+            $this->form_response_msg('xero connection error ,please contact admin ');
+        }
+
+
+
+        $itemList =$mdl_xero->getSingleItemForCreateItemOnXero($this->current_business['id'],$id,$spec_id);
+        //var_dump($itemList);exit;
+        $response_arr = $api->createItems($credentials,$itemList);
+
+
+      //  $custom_response= $mdl_xero->updateXeroItemCode1($response_arr);
+      //  $response=json_encode($response_arr);
+      //  echo '<p>CREATE ITEMS</p>';
+
+
+
+
+
+
+     //   $contactList =$mdl_xero->getSingleContactForCreateContactOnXero($this->current_business['id'],$xero_user['user_id']);
+        //var_dump($contactList);exit;
+      //  $response_arr = $api->createContacts($credentials,$contactList);
+
+        //  var_dump($response_arr);exit;
+
+        if(is_array($response_arr) && count($response_arr) > 0)
+        {
+            foreach($response_arr as $v)
+            {
+                if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                {
+             // update the ItemID to your DB
+                    $updateArr =array(
+                        'xero_itemcode'=>$v['ItemID']
+                    );
+
+                    $code =$v['Code'];
+                    $guigepos =strpos($code,'-');
+
+                    // 如果有分割符号，表明为规格
+                    if($guigepos) {
+                        $itemid=  substr($code,0,$guigepos-1);
+                        $guigeId =substr($code,$guigepos+1);
+
+                        if(loadModel('restaurant_menu_option')->update($updateArr,$guigeId)){
+                            $returnArr['message']='create item successful';
+                            $returnArr['syn_to_xero']=1;
+                        }else{
+                            $returnArr['message']='create item specifition error ,please contact admin';
+                            $returnArr['syn_to_xero']=0;
+                        }
+                        // loadModel('restaurant_menu')->update($updateArr1,$itemid);
+
+                    }else{
+                        if( loadModel('restaurant_menu')->update($updateArr,$code)){
+                            $returnArr['message']='create item successful';
+                            $returnArr['syn_to_xero']=1;
+                        }else{
+                            $returnArr['message']='create item error ,please contact admin';
+                            $returnArr['syn_to_xero']=0;
+                        }
+
+
+                    }
+
+
+
+                }
+                else{
+                    $returnArr['message']=json_encode($v['ValidationErrors']);
+                    $returnArr['syn_to_xero']=0;
+                }
+            }
+        }else{
+            $returnArr['message']='no item find ';
+            $returnArr['syn_to_xero']=0;
+        }
+
+        // $custom_response= $mdl_xero->createXeroContactId($response_arr,$this->current_business['id']);
+        // $response=json_encode($response_arr);
+        echo json_encode($returnArr);
+
+
+    }
+
+    function upload_items_to_xero_action(){
+        // 获得该用户餐厅的菜单分类信息
+
+            $customer_id =$this->current_business['id'];
+
+                    $this->setData($customer_id,'customer_id');
+
+               $mdl_restaurant_category = $this->loadModel('restaurant_category');
+                $pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+                $data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+                if(!$data) {
+                    //$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+                }
+                $this->setData($data,'restaurant_category');
+
+
+
+                $sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+                $data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+                //var_dump($sql_Parent_cate_list);exit;
+
+
+
+                //$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
+                $catList = $mdl_restaurant_category->getCateList($customer_id);
+                $this->setData($catList, 'catList');
+                //var_dump($subCategoryList);exit;
+
+                $this->setData($data_parent_cate_list, 'data_parent_cate_list');
+                $sk = trim(get2('sk'));
+
+
+
+                $sub_category =trim(get2('sub_category'));
+                $this->setData($sub_category,'sub_category');
+                $category = trim(get2('category'));
+
+                if(!$category) {$category='all';}
+                //		var_dump($sub_category);exit;
+                $this->setData($sk,'sk');
+                $this->setData($category,'category1');
+
+
+
+                $syncStatus =trim(get2('syncStatus'));
+                $this->setData($syncStatus,'syncStatus');
+
+
+                // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+                // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+                $mdl_xero = $this->loadModel('xero');
+                $pageSql=$mdl_xero->getItemsSpecList($this->current_business['id'],$sk,$category,$sub_category,$syncStatus) ;
+
+              // var_dump($pageSql);exit;
+                $pageUrl = $this->parseUrl()->set('page');
+                $pageSize =30;
+                $maxPage =200;
+                $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+                $data = $mdl_xero->getListBySql($page['outSql']);
+
+
+                $key = 'id';
+
+
+                // 获得该用户的gst type
+
+                $mdl_user =$this->loadModel("user");
+                $customerInfo = $mdl_user->get($customer_id);
+
+                //var_dump($customerInfo);exit;
+
+
+
+
+        $this->setData($page['pageStr'], 'pager');
+
+
+
+        $this->setData($data, 'data');
+
+
+
+        $this->setData('upload_items_to_xero', 'submenu');
+        $this->setData('account_management', 'menu');
+
+        $pagename = "Upload Items to Xero";
+        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+        $this->setData($pagename, 'pagename');
+
+        $this->setData($pageTitle, 'pageTitle');
+
+
+        $this->display_pc_mobile('factory/upload_items_to_xero', 'factory/upload_items_to_xero');
     }
 
 
