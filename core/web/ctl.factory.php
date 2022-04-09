@@ -5143,8 +5143,8 @@ class ctl_factory extends cmsPage
 
         $id = (int)get2('id');
         $spec_id =(int)get2('spec_id');
-      //  $id =385686;
-      //  $spec_id =701;
+      //  $id =385494;
+      //  $spec_id =2901;
       //  $this->form_response_msg($id. ' '.$spec_id );
         $returnArr =[];
 

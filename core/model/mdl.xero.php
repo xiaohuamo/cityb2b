@@ -503,7 +503,7 @@ class mdl_xero extends mdl_base
             WHERE   
                 m.restaurant_id = $business_id AND(
                     LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and m.isDeleted =0 and m.id=$id and visible =1 and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  ";
+                ) and m.isDeleted =0 and m.id=$id and visible =1  ";
 
         if($spec_id){
 
@@ -511,7 +511,7 @@ class mdl_xero extends mdl_base
 
         }
 
-
+     $sql = " select * from ($sql) a where a.xero_itemcode is null or length(a.xero_itemcode)<2  ";
 
         $rows = $this->getlistbysql($sql);
         // var_dump($sql);exit;
@@ -635,7 +635,10 @@ class mdl_xero extends mdl_base
             WHERE   
                 m.restaurant_id = $business_id AND(
                     LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and m.isDeleted =0 and visible =1 and (((spec.xero_itemcode is null) or length(spec.xero_itemcode)<=2) and (length(m.xero_itemcode)<=2 or (m.xero_itemcode is null)))  limit $offset,$lengthOflists  ";
+                ) and m.isDeleted =0 and visible =1  limit $offset,$lengthOflists  ";
+
+
+      $sql ="select * from ($sql) a where a.xero_itemcode is null or length(a.xero_itemcode)<2 ";
 
          $rows = $this->getlistbysql($sql);
        // var_dump($sql);exit;
