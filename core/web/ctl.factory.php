@@ -228,7 +228,10 @@ class ctl_factory extends cmsPage
             $whereStr .= " and ( o.last_name like  '%".$sk."%'";
             $whereStr .= " or o.phone like  '%".$sk."%'";
             $whereStr .= " or o.orderId like  '%".$sk."%'";
+            $whereStr .= " or o.displayName like  '%".$sk."%'";
             $whereStr .= " or o.order_name like  '%".$sk."%'";
+            $whereStr .= " or o.xero_invoice_id like  '%".$sk."%'";
+            $whereStr .= " or f.nickname like  '%".$sk."%'";
             $whereStr .= " or o.first_name like  '%".$sk."%'";
             $whereStr .= " or o.userId like  '%".$sk."%')";
             $where[] = $whereStr;
