@@ -1,0 +1,679 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+	<script>
+        function generateCategoryHtml(categoryId, menuId) {
+            var categories = {
+				<{foreach from=$data_parent_cate_list item=category}>
+				<{$category.id}>:"<{if $category.category_cn_name}><{$category.category_cn_name}><{/if}><{if $category.category_cn_name && $category.category_en_name}>|<{/if}><{if $category.category_en_name}><{$category.category_en_name}><{/if}>",
+				<{/foreach}>
+			};
+            return `<span style="height:16px;background-color: grey;color: white" id="menu-category-${menuId}-${categoryId}">${categories[categoryId + '']} <a style="color:red" onclick="deleteMenuCategory(${menuId}, ${categoryId})">X&nbsp;</a></span>`;
+        }
+		</script>
+	<script>	
+		function generateCategoryHtml1(categoryId, menuId,categoryName) {
+           
+            return `<span style="height:16px;background-color: grey;color: white" id="menu-category-${menuId}-${categoryId}">ddccdd <a style="color:red" onclick="deleteMenuCategory(${menuId}, ${categoryId})">X&nbsp;</a></span>`;
+        }
+	</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='company/side.htm'}> 
+		<div class="main">
+			<div class="box2">
+             
+				<div class="colCurTit">
+                    <{$pagename}>
+					 
+				</div>
+
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+
+                      
+					
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
+
+						<br>
+
+
+					
+
+						<select name="category" id='category'  onChange="catChg(this);">
+						
+					
+
+							<option value="all"
+                                    <{if $category=='all'}> selected<{/if}>>选择分类
+							</option>
+
+                            <{foreach from=$restaurant_category item=item}>
+								<option value="<{$item.id}>"
+                                        <{if $item.id==$category1}> selected<{/if}>>
+                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+								</option>
+                            <{/foreach}>
+
+						</select>
+						
+						<script> 
+						
+								var menus = [];
+								<{foreach from=$menuList item=item}>
+								var str = '<{$item.menu_en_name}>';
+								var str1 = str.replace(/(\s*$)/g,""); 
+								var str2 = 　str1.replace(/[\\r\\n]/g, "");
+								menus.push(['<{$item.id}>', '<{$item.restaurant_category_id}>', '<{$item.sub_category_id}>',str2]);
+								<{/foreach}>
+
+								
+									
+
+								var cats = [];
+								<{foreach from=$data_parent_cate_list item=item}>
+								cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
+								<{/foreach}>
+
+
+
+								$(function(){
+									var cate='<{$category1}>';
+									var sub_cate ='<{$sub_category}>';
+									//alert('init');
+									if(cate) {
+									  catChg($('#category'));
+									}
+								})
+			
+							
+							function catChg(obj) {
+									var vv = $(obj).val(); 
+									if(vv ) {
+										
+										
+										//alert('here');
+										if ($('#sub_category').length > 0) { 
+										
+											$('#sub_category').remove();
+										}
+									
+										var c = $('<select id ="sub_category" name="sub_category" >');
+										c.append('<option value="">选择子分类</option>');
+										for (var i = 0; i < cats.length; i++) {
+											if ( cats[i][2] == vv ) {
+											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											if('<{$sub_category}>' == cats[i][0]){
+											c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+											}else{
+											c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											}
+												
+												
+											}
+										}
+										$(obj).next().after(c);
+										//setDroplist(c);
+									
+									}else{
+									
+									}
+										
+									
+								}
+								
+								function findguige(obj,menu_idd){
+								
+								var value = $(obj).val();
+								
+								//alert(value);
+				
+								 $.ajax({
+										type: "GET",
+										url: "<{$http_root_www}>factory/get_guige_of_menu",
+										data: {"id":menu_idd,"menu_id": value},
+										beforeSend: function (xhr) {
+											loading = true;
+
+											
+										},
+										success: function (result) {
+											 data = JSON.parse(result);
+											console.log(data);
+											if(data.length>0){
+											//alert('got result');
+											
+												
+											$('#guige_id'+menu_idd).remove();
+														
+													
+														var c = $('<select id ="guige_id'+menu_idd +'" name="guige_id"  onChange="chooseguige(this,'+menu_idd +');" >');
+														c.append('<option value="">选择规格</option>');
+														for (var i = 0; i < data.length; i++) {
+															
+															//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+														//	if('<{$sub_category}>' == cats[i][0]){
+														//	c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+														//	}else{
+															c.append('<option value="'+ data[i][0]  +'">'+ data[i][1] +'</option>');
+														//	}
+																
+														
+														}
+														//$(obj).next().after(c);
+														//setDroplist(c);
+														$('#guige'+menu_idd).html(c);
+														$('#new_product_id'+menu_idd).html(value);
+											
+											}else{
+													$('#guige'+menu_idd).html('');
+													$('#new_product_id'+menu_idd).html(value);
+													$('#new_guige_id'+menu_idd).html('');
+											}
+							
+											
+										}
+									}).fail(function () {
+										alert('efef	');
+									}).always(function () {
+										loading = false;
+									})
+								}
+								
+								
+
+								function chooseguige(obj,id){
+								
+								
+								
+								
+								
+								var specId = $(obj).val();
+								
+								
+								//alert(specId);
+				
+								 $.ajax({
+										type: "Post",
+										url: "<{$http_root_www}>factory/update_xero_match_spec_id",
+										data: {"id":id,"spec_id": specId},
+										beforeSend: function (xhr) {
+											loading = true;
+
+											
+										},
+										success: function (result) {
+											 data = JSON.parse(result);
+											console.log(data.error);
+											if(!data.error){
+											   $('#new_guige_id'+id).html(specId);
+											
+											}else{
+											 alert('some problem please contact admin');
+											}
+											
+							
+											
+										}
+									}).fail(function () {
+										alert('efef	');
+									}).always(function () {
+										loading = false;
+									})
+								}
+								
+								
+						
+								function catChg00(obj,menu_idd) {
+									var vv = $(obj).val(); 
+									if(vv ) {
+										
+									
+										
+										
+											$('#menu_id'+menu_idd).remove();
+										
+									
+										var c = $('<select id ="menu_id'+menu_idd +'" name="menu_id"  onChange="findguige(this,'+menu_idd +');" >');
+										c.append('<option value="">选择产品</option>');
+										for (var i = 0; i < menus.length; i++) {
+											if ( menus[i][2] == vv  || menus[i][1] == vv ) {
+											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+										//	if('<{$sub_category}>' == cats[i][0]){
+										//	c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+										//	}else{
+											c.append('<option value="'+ menus[i][0]  +'">'+ menus[i][3] +'</option>');
+										//	}
+												
+												
+											}
+										}
+										//$(obj).next().after(c);
+										//setDroplist(c);
+									$('#product'+menu_idd).html(c);
+									}else{
+									
+									}
+										
+									
+								}
+
+								</script>
+
+						<button type="submit"><{$lang->search}></button>
+
+						<br> <br>
+							
+
+
+					</form>
+				</div>
+
+				<div class="main-list" style="padding: 3px 2px;">
+                    <{if $data}>
+						<div style="overflow-x: auto;overflow-y: auto; word-break:break-all;">
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+								<tr>
+									<th>xero Code</th>
+									<th>Xero Name</th>
+									
+								
+									<th >Choose Category</th>
+									<th >Choose Name</th>
+									
+								
+									<th >Choose Speci</th>
+								
+									
+									<th >Product Id</th>
+									<th >SpecId</th>
+									
+									<th>Sync</th>
+									
+									<th >Ret Xero Code</th>
+									
+									<th >Ret B2b Hash</th>
+									<th>Xero-Hash</th>
+									
+								</tr>
+								</thead>
+								<tbody>
+                                <{foreach from=$data item=item name='dl'}>
+									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										<td >
+												<{$item.xero_code}>
+										</td>
+										
+										<td >
+												<{$item.xero_name}>
+										</td>
+										
+										
+										<td>
+											<select <{if $item.updated==1}> disabled <{/if}> data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>"  onChange="catChg00(this,'<{$item.id}>');" name="restaurant_category_id">
+                                              <option value="0"  selected>选择分类</option>
+											  <{foreach from=$catList item=category}>
+													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
+													value="<{$category.id}>" 
+													
+													<{if $category.id == $item.sub_category_id}>
+														selected 
+													  
+													<{else}>
+													  <{if $category.id == $item.restaurant_category_id and $item.sub_category_id==0}>
+													  	selected 
+													  <{/if}>
+													
+													
+													<{/if}>
+													
+													 >
+													
+													<{if $langStr == 'zh-cn'}>
+															<{$category.title_cn}>
+															
+														<{else}>
+															<{$category.title_en}>
+														<{/if}>
+													</option>
+                                                <{/foreach}>
+											</select>
+										
+											<br>
+										</td>
+										
+
+										<td id='product<{$item.id}>'>
+												<{$item.menu_en_name}>
+										</td>
+
+										 <td id='guige<{$item.id}>'>
+												<{$item.spec_name}>
+										</td>
+											
+                                       
+										
+										<td id="new_product_id<{$item.id}>">
+												<{$item.product_id}>
+										</td>
+										
+										<td id="new_guige_id<{$item.id}>">
+													<{$item.guige_id}>
+										</td>
+										
+										
+										<td>
+										<div class="onoffswitch">
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.updated==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										
+                                            <{if $item.updated==1}>
+												<span class='publish_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">已同步</span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">未同步</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+										
+										
+										<td id="return_xero_code<{$item.id}>">
+											<{substr($item.return_xero_code,0,50)}>				
+										</td>
+															
+			
+										<td id="new_xero_ItemCode<{$item.id}>">
+												<{substr($item.new_xero_ItemCode,0,10)}>
+										</td>
+										
+										<td >
+													<{substr($item.xero_ItemID,0,10)}>
+										</td>
+								
+									
+									</tr>
+                                <{/foreach}>
+								</tbody>
+							</table>
+						</div>
+                        <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
+                    <{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    var loading = false;
+
+
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+    $('input[name=onoffswitch]').on('click', function () {
+	
+        var couponId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + couponId + ']');
+		var buttonstatus = $(this).is(":checked");
+		
+		
+        if(buttonstatus) {
+		
+				   if (loading) return false;
+					$.ajax({
+						type: "POST",
+						url: "<{$http_root_www}>factory/update_xero_server_code",
+						data: {"id": couponId},
+						beforeSend: function (xhr) {
+							loading = true;
+
+							context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+						},
+						success: function (result) {
+							result = jQuery.parseJSON(result);
+							//alert(result.visible);
+							if (result.updated == '0') {
+							
+								context.html("<span style='color:#F30;'>同步不成功</span>");
+								  $('#myonoffswitch'+couponId).attr("checked",false);
+							} else if (result.updated == '1') {
+								context.html("<span style='color:#58964E;'>同步成功</span>");
+								$('#return_xero_code'+couponId).html(result.return_xero_code);
+								$('#new_xero_ItemCode'+couponId).html(result.new_xero_ItemCode);
+								
+							}
+						}
+					}).fail(function () {
+						alert('efef	');
+					}).always(function () {
+						loading = false;
+					})
+		
+		
+		}else{
+		  if(confirm('do you want cancel the sync?')){
+		  
+		       if (loading) return false;
+					$.ajax({
+						type: "POST",
+						url: "<{$http_root_www}>factory/cancel_xero_server_code",
+						data: {"id": couponId},
+						beforeSend: function (xhr) {
+							loading = true;
+
+							context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+						},
+						success: function (result) {
+							result = jQuery.parseJSON(result);
+							//alert(result.visible);
+							if (result.updated == '0') {
+							
+								context.html("<span style='color:#F30;'>取消不成功</span>");
+								  $('#myonoffswitch'+couponId).attr("checked",true);
+							} else if (result.updated == '1') {
+								context.html("<span style='color:#58964E;'>取消成功</span>");
+								$('#return_xero_code'+couponId).html('');
+								$('#new_xero_ItemCode'+couponId).html('');
+								$('#new_product_id'+couponId).html('');
+								$('#new_guige_id'+couponId).html('');
+								$('#product'+couponId).html('');
+								$('#guige'+couponId).html('');
+								$("#restaurant_category_id-"+couponId).removeAttr("disabled");
+								
+								
+								
+											
+								
+								
+								
+								
+							}
+						}
+					}).fail(function () {
+						alert('efef	');
+					}).always(function () {
+						loading = false;
+					})
+		
+		  
+		  }else{
+		       //alert('here');
+				$('#myonoffswitch'+couponId).prop("checked",true)
+		  }
+		
+		}
+     
+    })
+	
+	
+	
+
+
+</script>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+      
+		
+	
+		
+		
+    })
+</script>
+
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"> < /iframe>
+    <{include file = 'footer.htm'}>
+
+	< /body>
+	< /html>
