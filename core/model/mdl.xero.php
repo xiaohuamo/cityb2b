@@ -501,9 +501,7 @@ class mdl_xero extends mdl_base
                     LENGTH(spec.spec_name_cn) > 0 OR LENGTH(spec.spec_name) > 0
                 )
             WHERE   
-                m.restaurant_id = $business_id AND(
-                    LENGTH(m.menu_cn_name) > 0 OR LENGTH(m.menu_en_name) > 0
-                ) and m.isDeleted =0 and m.id=$id and visible =1  ";
+                m.restaurant_id = $business_id and  m.id=$id and visible =1  ";
 
         if($spec_id){
 
@@ -511,10 +509,10 @@ class mdl_xero extends mdl_base
 
         }
 
-     $sql = " select * from ($sql) a where a.xero_itemcode is null or length(a.xero_itemcode)<2  ";
+
 
         $rows = $this->getlistbysql($sql);
-        // var_dump($sql);exit;
+       //  var_dump($sql);exit;
         $new_data =[];
         foreach ($rows as $key =>$value) {
             $new_data[$key]['Code'] =$value['Code'];

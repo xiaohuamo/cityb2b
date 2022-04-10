@@ -1297,6 +1297,57 @@ class MyApi
         return $response_parsed;
     }
 
+    public function getSingleItem($credentials,$itemCode)
+    {
+        // valid tokens ?
+        $tokens = $this->getTokens($credentials);
+        // var_dump('token is :'.$tokens);exit;
+        if(empty($tokens['access_token']))
+        {
+            return json_encode([
+                'error' => true,
+                'origin' => 'local',
+                'response' => 'Not authorized'
+            ]);
+        }
+
+        $arr = [
+            "modified_since" => "2022-01-01", // last modified
+           // "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
+               "where" => '(Code=="'.$itemCode.'" )', // works
+            //"where" => "IsSold==true",
+            //  "order_by" => "Code ASC", // order by
+        ];
+        $json = json_encode($arr);
+
+        $params = [
+            'data' => $json
+        ];
+
+        $defaults = array(
+            CURLOPT_URL => $credentials['endpoint_uri'] . '/v1/xero/get-items?accessToken=' . $tokens['access_token'],
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $params,
+            CURLOPT_RETURNTRANSFER => true
+        );
+        $ch = curl_init();
+        curl_setopt_array($ch, $defaults);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if($response === false) {
+            return json_encode([
+                'error' => true,
+                'origin' => 'local',
+                'response' => curl_error($ch)
+            ]);
+        } else {
+            return $this->processGetItems($response);
+        }
+
+
+    }
+
     /********************************** GET ITEMS *************************************************/
     public function getItems($credentials)
     {
@@ -1314,8 +1365,8 @@ class MyApi
 
 
         /*********************************** GET SINGLE ITEM ***************************************/
-
-     /*   $itemID = "40e4b881-cc7e-45bb-8c58-dd19ff4f5488";
+/*
+        $itemID = "40e4b881-cc7e-45bb-8c58-dd19ff4f5488";
 
         $defaults = array(
             CURLOPT_URL => $credentials['endpoint_uri'] . '/v1/xero/get-item?accessToken=' . $tokens['access_token'] . '&ItemID=' . $itemID,
@@ -1336,8 +1387,8 @@ class MyApi
         } else {
             return $response; // results
         }
-     */
 
+*/
         /*********************************** END OF GET SINGLE ITEM ********************************/
 
 
@@ -1346,7 +1397,7 @@ class MyApi
 
         $arr = [
             "modified_since" => "2022-01-01", // last modified
-      //      "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
+            "where" => 'ItemID=="40e4b881-cc7e-45bb-8c58-dd19ff4f5488"', // forbidden
          //   "where" => '(Code=="bb" or Code=="bch")', // works
             //"where" => "IsSold==true",
           //  "order_by" => "Code ASC", // order by

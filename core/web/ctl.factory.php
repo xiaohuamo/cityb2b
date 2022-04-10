@@ -5143,8 +5143,8 @@ class ctl_factory extends cmsPage
 
         $id = (int)get2('id');
         $spec_id =(int)get2('spec_id');
-      //  $id =385494;
-      //  $spec_id =2901;
+      //  $id =385686;
+     //   $spec_id =701;
       //  $this->form_response_msg($id. ' '.$spec_id );
         $returnArr =[];
 
@@ -5154,6 +5154,10 @@ class ctl_factory extends cmsPage
 
         if ($id < 0 || $xero_item['restaurant_id']!=$this->current_business['id'] ) $this->form_response_msg('no access');
 
+
+        if(!$this->current_business['id']) {
+            var_dump('please login in again and do it again.');
+        }
 
         require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
         require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
@@ -5168,7 +5172,45 @@ class ctl_factory extends cmsPage
         }
 
 
+        if ($spec_id){
+            $itemCode = $id.'-'.$spec_id;
+        }else{
+            $itemCode = $id;
+        }
 
+        $response_arr = $api->getSingleItem($credentials,$itemCode);
+
+        if(is_array($response_arr) && count($response_arr) > 0)
+        {
+            foreach($response_arr as $v)
+            {
+                if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                {
+                    $updatedata=array(
+                        'xero_itemcode'=>$v['ItemID']
+                    );
+
+                    if(!$specId){
+                        $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+                        $mdl_restaurant_menu->update($updatedata,$itemId);
+                        //  var_dump('item'.$v['ItemID']);;
+                    }else{
+                        $mdl_restaurant_menu_option = $this->loadModel('restaurant_menu_option');
+                        $mdl_restaurant_menu_option->update($updatedata,$specId);
+                        //var_dump('item'.$v['ItemID']);
+                    }
+
+                    $returnArr['message']='this item is exist on xero,can not change!';
+                    $returnArr['syn_to_xero']=0;
+                    echo json_encode($returnArr);
+                    exit;
+
+                }
+            }
+        }
+
+
+      //如果未发现记录
         $itemList =$mdl_xero->getSingleItemForCreateItemOnXero($this->current_business['id'],$id,$spec_id);
         //var_dump($itemList);exit;
         $response_arr = $api->createItems($credentials,$itemList);
@@ -5245,6 +5287,74 @@ class ctl_factory extends cmsPage
         // $custom_response= $mdl_xero->createXeroContactId($response_arr,$this->current_business['id']);
         // $response=json_encode($response_arr);
         echo json_encode($returnArr);
+
+
+    }
+
+    function get_xero_item($itemId,$specId){
+
+      //  $itemId =get2('itemId');
+      //  $specId =get2('specId');
+
+        if ($specId){
+            $itemCOde = $itemId.'-'.$specId;
+        }else{
+            $itemCOde = $itemId;
+        }
+
+
+          require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+          require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+          if(!$this->current_business['id']) {
+              var_dump('please login in again and do it again.');
+          }
+
+          $api = new MyApi($db);
+          $mdl_xero =$this->loadModel('xero') ;
+          $mdl_tokens =$this->loadModel('tokens') ;
+
+          $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+          if(!$credentials){
+              var_dump('Could not get the xero tokens ,please contact admin.');exit;
+          }
+
+          $response_arr = $api->getSingleItem($credentials,$itemCOde);
+
+          if(is_array($response_arr) && count($response_arr) > 0)
+          {
+              foreach($response_arr as $v)
+              {
+                  if( !empty($v['ItemID']) && !empty($v['Code']) && empty($v['ValidationErrors']) )
+                  {
+                      $updatedata=array(
+                          'xero_itemcode'=>$v['ItemID']
+                      );
+
+                      if(!$specId){
+                          $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+                         $mdl_restaurant_menu->update($updatedata,$itemId);
+                       //  var_dump('item'.$v['ItemID']);;
+                      }else{
+                          $mdl_restaurant_menu_option = $this->loadModel('restaurant_menu_option');
+                          $mdl_restaurant_menu_option->update($updatedata,$specId);
+                          //var_dump('item'.$v['ItemID']);
+                      }
+
+
+
+                   return 1;
+                  }
+              }
+          }else{
+            //  var_dump('here');exit;
+              return 0;
+          }
+
+
+
+
+
+
 
 
     }
