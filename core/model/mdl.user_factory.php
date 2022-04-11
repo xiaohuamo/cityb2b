@@ -154,8 +154,25 @@ class mdl_user_factory extends mdl_base
 		
         
     }
-	
 
+    public function updateApprove1($userId, $factoryId, $approved,$salesManId)
+    {
+
+        $where = [
+            'user_id' => $userId,
+            'factory_id' => $factoryId
+
+        ];
+        $userFactory = $this->getByWhere($where);
+        if($userFactory) {
+            return $this->updateByWhere([
+                'approved' => $approved,
+            ],[
+                'user_id' => $userId,
+                'factory_id' => $factoryId
+            ]);
+        }
+    }
 
     public function updateApprove($userId, $factoryId, $approved,$salesManId)
     {

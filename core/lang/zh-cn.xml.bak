@@ -593,6 +593,7 @@
 
     <please_choose>请选择</please_choose>
     <create_specification_link>合并创建规格链接</create_specification_link>
+	<merge_order>合并订单</merge_order>
 
     <!-- 6  -->
 

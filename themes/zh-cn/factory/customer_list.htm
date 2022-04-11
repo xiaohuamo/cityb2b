@@ -223,9 +223,9 @@
 									</td>
 									<td>
                                         <{if $user.approved}>
-											是 <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
+											是 <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
 										<{else}>
-											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
+											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
 										<{/if}>
 									</td>
 								<!--	<td>

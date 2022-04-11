@@ -459,7 +459,7 @@
 	<add_note>加备注</add_note>
 	<Save_notes>保存备注</Save_notes>
 	<always_keep_note>一直保留该备注</always_keep_note>
-	<keep_note_only_once>一直保留该备注</keep_note_only_once>
+	<keep_note_only_once>仅这次做备注</keep_note_only_once>
 	<add_note_promot>商家生产或配货时，会获得该信息</add_note_promot>
 	
 

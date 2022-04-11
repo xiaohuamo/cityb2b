@@ -2681,6 +2681,31 @@ class ctl_factory extends cmsPage
         return;
     }
 
+
+    public function approve_user1_action($userId, $factoryId = null, $approve = 0) {
+        $mdl_user_factory = $this->loadModel('user_factory');
+
+        if(!$approve) {
+            $approve = trim(get2('approve'));
+        }
+
+
+        if(!$userId) {
+            $userId = trim(get2('user_id'));
+        }
+
+        $factoryId =$this->current_business['id'];
+        //  var_dump($userId.' '.$factoryId);exit;
+
+        if(!$mdl_user_factory->isUserAuthorisedToOperate($userId,$factoryId)){
+            var_dump('no access'); exit;
+        }
+
+            $mdl_user_factory->updateApprove1($userId, $factoryId, $approve,0);
+            header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+
+    }
+
     public function show_origin_price_action($userId, $showOriginPrice) {
         if(!$showOriginPrice) {
             $showOriginPrice = trim(get2('show_origin_price'));
