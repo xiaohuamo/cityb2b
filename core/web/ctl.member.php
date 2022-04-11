@@ -13,6 +13,7 @@ class ctl_member extends cmsPage
 
 		$act = $GLOBALS['gbl_act'];
 		$ignore_list = array('register','register_business','login','mobileonly_login','multiple_wx_login','logout','wx_redirect','wx_register','bind_wx');
+
 		if ( !in_array($act, $ignore_list) && !$this->loginUser ) {
 			$this->sheader( HTTP_ROOT_WWW.'member/login?returnUrl='.urlencode( $_SERVER['REQUEST_URI'] ) );
 		}

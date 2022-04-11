@@ -1366,6 +1366,7 @@ class ctl_factorypage extends cmsPage
         $loginData = $mdl_user_factory->decryptUserLoginToken($userId, $factoryId, $token);
 
         if ($loginData->expired_at > time() ) {
+
             $mdl_user = $this->loadModel('user');
             $user = $mdl_user->getUserById($userId);
             $mdl_user->updateUserById([
@@ -1382,8 +1383,7 @@ class ctl_factorypage extends cmsPage
             }else{
                 $this->session('truelogin',0);
             }
-
-            //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
+     //   var_dump($this->loginUser);exit;            //  print_r('user  be approved,factoryid is :'. $factoryId . ' userid is :'.$userId); exit;
             $this->sheader(HTTP_ROOT_WWW.'member/index');
         } else {
             if($loginData->expired_at <=time()) {

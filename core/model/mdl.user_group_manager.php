@@ -30,7 +30,7 @@ class mdl_user_group_manager extends mdl_base
     }
 
     public function getGroupListOfFactory($factory_id){
-        $sql ="select g.id,g.manager_id as userId,user.nickname as name,user.phone  from cc_user_group_manager g left join cc_user user on g.manager_id =user.id  where factory_id =$factory_id";
+        $sql ="select g.id,g.manager_id as userId,g.nickname as name,user.phone  from cc_user_group_manager g left join cc_user user on g.manager_id =user.id  where factory_id =$factory_id";
         $data =$this->getListBySql($sql);
        // var_dump($sql);exit;
         return $data;
