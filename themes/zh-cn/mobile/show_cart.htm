@@ -67,7 +67,7 @@
 			}
 			/* 定义blink类*/
 			.blink{
-				color: #000;
+				color: #f30303;
 			
 				animation: blink 1s linear infinite;  
 				/* 其它浏览器兼容性前缀 */
@@ -75,6 +75,7 @@
 				-moz-animation: blink 1s linear infinite;
 				-ms-animation: blink 1s linear infinite;
 				-o-animation: blink 1s linear infinite;
+				font-weight:600;
 			}
 			<style>
 
@@ -2231,7 +2232,9 @@
 			 if (!addr_house_number) {
 			   addr_house_number = $('input#addr_house_number').val();
 			 }
+			 
              var displayName=$('input#displayName').val();
+			 displayName=  displayName.replace("'","");
              var lastname=$('input#lastname').val();
              var phone=$('input#phone').val();
              var email=$('input#email').val();

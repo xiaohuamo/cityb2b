@@ -49,20 +49,20 @@
 							<span>
 							<label for="">实体名（ASIC）</label>
 							</span>
-							<input type="text" name="untity_name" id="untity_name" class="input-text" placeholder="" value="<{$user_abn.untity_name}>">
+							<input type="text" name="untity_name" onchange ="checkinput(this,'utlity name (asic)');" id="untity_name" class="input-text" placeholder="" value="<{$user_abn.untity_name}>">
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
 							<label for="username">Trading Name</label>
 							</span>
-							<input type="text" name="username" id="username" class="input-text" placeholder="" required value="<{$user.name}>">
+							<input type="text" name="username" onchange ="checkinput(this,'name');" id="username" class="input-text" placeholder="" required value="<{$user.name}>">
 						</div>
 						
 						<div class="input-box  form-style-green">
 							<span>
 							<label for="factory_code">Code/简写</label>
 							</span>
-							<input type="text" name="factory_code" id="factory_code" class="input-text" placeholder="" required value="<{$user_factory_info.nickname}>">
+							<input type="text" name="factory_code" id="factory_code" onchange ="checkinput(this,'customer code');" class="input-text" placeholder="" required value="<{$user_factory_info.nickname}>">
 						</div>
 						
 						<div class="input-box  form-style-green">
@@ -195,6 +195,21 @@
         }
     });
 
+	function checkinput(obj,filedName){
+	//alert('here');
+      var value;
+        
+            value = $(obj).val();//常规改动直接抓取改动值
+			//alert(value);
+			 if (value.indexOf("'") >= 0) {
+			  alert(filedName + " cannot include ' in the field value!");
+			  $(obj).val(value.replace("'",""));
+			  return 0;
+			}
+
+
+
+	}
     function initGeocomplete(){
         $("#address").geocomplete()
             .bind("geocode:result", function(event, result){

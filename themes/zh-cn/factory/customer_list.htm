@@ -301,7 +301,7 @@
     var loading = false;
 
     $('input[name=code]').on('change', function () {
-
+//alert('here');
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
@@ -311,6 +311,10 @@
         var value;
         
             value = $(this).val();//常规改动直接抓取改动值
+			 if (value.indexOf("'") >= 0) {
+			  alert('字符串不能包含单引号或双引号,无法保存');
+			  return 0;
+			}
         var updateData = {};
 
         updateData['id'] = id;

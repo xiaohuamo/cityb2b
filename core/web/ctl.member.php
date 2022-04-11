@@ -987,6 +987,16 @@ class ctl_member extends cmsPage
 				'userId'=>$this->loginUser['id'],
 		);
 		$wj_user_delivery_info_list = $mdl_wj_user_delivery_info->getList(null,$where);
+
+     //   foreach ($wj_user_delivery_info_list as $key => $value) {
+
+        //  $wj_user_delivery_info_list[$key]['displayName'] =str_replace("'","\'",$wj_user_delivery_info_list[$key]["displayName"] );
+        ///  $wj_user_delivery_info_list[$key]['address'] =str_replace("'","\'",$wj_user_delivery_info_list[$key]["address"] );
+
+
+
+       // }
+
        // var_dump($wj_user_delivery_info_list);exit;
 		$this->setData( $wj_user_delivery_info_list,'delivery_info_list');
 		
