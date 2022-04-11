@@ -1956,6 +1956,7 @@
 
             if($('.delivery_info_list_select option').length<=1){
                 //没有地址
+				
                 $target = $('.delivery_info_list_select option').first();
                 $target.attr('selected','selected');
                 populateAddress($target);
@@ -1977,6 +1978,7 @@
             }
 
             function populateAddress(target) {
+			console.log('new address and set default address of user is : ' +'<{$loginUser.address}>');
                if($(target).hasClass('new')){
                     $('input#displayName').val('<{$loginUser.displayName}>');
                     $('input#firstname').val('<{$loginUser.person_first_name}>');
@@ -1996,6 +1998,7 @@
 					$(".Street_number").css('display','none');
 
                 }else{
+				console.log('get exist address: ' +$(target).data('address') );
                    $('input#displayName').val($(target).data('displayname'));
                     $('input#firstname').val($(target).data('first-name'));
                     $('input#lastname').val($(target).data('last-name'));
