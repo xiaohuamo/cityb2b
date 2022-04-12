@@ -205,7 +205,7 @@ class ctl_factory extends cmsPage
             $sql = "SELECT f.to_xero, if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
             if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,cust.displayName,cust.displayName as nickname,cust.name,o.* ,cust.ori_sum
                     from cc_order as o 
-                    left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust 
+                    left join (select order_id,business_id,sum(round(voucher_deal_amount*new_customer_buying_quantity,2)) as ori_sum ,uu.nickname as displayName ,user.name  from cc_wj_customer_coupon tt left join  cc_user_factory uu  on tt.userId =uu.user_id  left join cc_user user on  tt.userId = user.id    group by order_id,business_id) cust 
                         on o.orderId=cust.order_id and cust.business_id =".$currentBusinessId." 
                     left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id 
                      left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";

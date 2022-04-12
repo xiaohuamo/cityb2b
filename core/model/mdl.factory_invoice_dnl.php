@@ -1145,8 +1145,8 @@ class OrderInvoice
         } else {
             $result['single_amount'] = $unitPrice;
             $result['single_gst'] = 0;
-            $result['total_with_gst'] = $unitPrice * $quantity;
-            $result['total_no_gst'] = $unitPrice * $quantity;
+            $result['total_with_gst'] = round($unitPrice * $quantity,2);
+            $result['total_no_gst'] = round($unitPrice * $quantity,2);
             $result['total_gst'] =  0;
             $result['gst%'] = '';
         }
