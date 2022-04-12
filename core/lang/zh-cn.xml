@@ -41,7 +41,7 @@
 	
 	<unapproved>未审核</unapproved>
 	
-	
+	<dispatching_platform>分拣系统</dispatching_platform>
 	<!-- menu operation-->
 	
 	<switch_to_main_pannel>切换到总控台</switch_to_main_pannel>

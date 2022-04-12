@@ -183,6 +183,10 @@
 		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
 			   <{$lang->print_item_packing_slips}>
 		</a>
+		
+		<a target=_blank  href="https://d.cityb2b.com/product/picking" class="current"<{/if}>>
+			   <{$lang->dispatching_platform}>
+		</a>
 	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
 				导入外部订单
 		</a>  -->
@@ -282,9 +286,9 @@
 				<a href="<{$http_root_www}>factory/upload_items_to_xero" <{if $submenu=='upload_items_to_xero'}> class="current"<{/if}>>
 				 items upload to Xero
 				</a>
-				<a href="<{$http_root_www}>factory/xero_single_create_items_on_xero" <{if $submenu=='upload_items_to_xero'}> class="current"<{/if}>>
+				<!--<a href="<{$http_root_www}>factory/xero_single_create_items_on_xero" <{if $submenu=='upload_items_to_xero'}> class="current"<{/if}>>
 				 test
-				</a>
+				</a> -->
 				
 				
 			</div>

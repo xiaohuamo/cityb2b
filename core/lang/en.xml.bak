@@ -1364,6 +1364,7 @@
 	<logistic_selected>(Selected)</logistic_selected>
     <logistic_selectable>Optional</logistic_selectable>
 	<unified_delivery>Delivery</unified_delivery>
+		<merge_order>Merge Orders</merge_order>
 	 <delivery_date>Delivery date</delivery_date>
 	<logistic_choosetruck>choose Truck</logistic_choosetruck>
 	<logistic_checkarea>Check Post Code</logistic_checkarea>
