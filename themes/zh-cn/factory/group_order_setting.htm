@@ -146,6 +146,7 @@
 								<th><{$lang->customer_name}></th>
 						<!--		<th><{$lang->myorder}></th> -->
 								<th><{$lang->telephone}></th>
+								<th><{$lang->approved}></th>
 								<th><{$lang->add_member}></th>
 					<!--			<th><{$lang->approved}></th> -->
 						<!--		<th>价格显示方式</th>
@@ -166,13 +167,16 @@
 										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
 									</td>
 									<td>
-                                        <{$user.name}>
+                                       <a href ="<{$http_root_www}>company/groupmanager_new?id=<{$user.userId}>" > <{$user.name}></a>
 									</td>
 						<!--			<td>
 										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
 									</td> -->
 									<td>
                                         <{$user.phone}>
+									</td>
+									<td>
+                                        <{if $user.g_approved}>yes <{else}>no<{/if}>
 									</td>
 									<td>
 										<a href ="<{$http_root_www}>factory/add_new_group_member?groupId=<{$user.userId}>" ><{$lang->add_member}></a>

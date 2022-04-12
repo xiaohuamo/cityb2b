@@ -1798,6 +1798,7 @@ class ctl_company extends cmsPage
 			$offline_pay_des_en = trim(post('offline_pay_des_en'));
             
             $supportofflinepayment = post('supportofflinepayment');
+
 			/*
             $supportpaypalpayment = post('supportpaypalpayment'); */
             $supportroyalpaypayment = post('supportroyalpaypayment');
@@ -9962,6 +9963,32 @@ function freshfood_edit_action()    {
         $this->sheader(HTTP_ROOT_WWW."company/staff");
 
     }
+    function group_manager_delete_action()
+    {
+        $mdl_group_manager = $this->loadModel('user_group_manager');
+        $mdl_group_user = $this->loadModel('user_group');
+
+        $id = (int)get2('id');
+
+        if(!$id)$this->sheader(null, "no find group manager info");
+
+        $where =array(
+            'factory_id'=>$this->current_business['id'],
+            'manager_id'=>$id
+        );
+        $groupUser = $mdl_group_manager->getByWhere($where);
+
+        if(!$groupUser)$this->sheader(null, "did not find group manager info");
+
+
+        if ($mdl_group_manager->deleteByWhere($where)) {
+
+            $mdl_group_user->deleteByWhere($where);
+        }
+
+        $this->sheader(HTTP_ROOT_WWW."factory/group_order_setting");
+
+    }
 
     function staff_edit_action()
     {
@@ -10327,7 +10354,20 @@ function freshfood_edit_action()    {
     }
 
 
+    function  groupmanager_edit_action(){
 
+        $mdl_user = $this->loadModel('user');
+        $mdl_group = $this->loadModel('user_group_manager');
+
+
+        $this->setData($group_manager);
+        $this->setData('Group Management', 'pagename');
+        $this->setData('group_order_setting', 'submenu');
+        $this->setData('customer_management', 'menu');
+        $this->setData('Group Management - Business Center' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('company/groupmanager_new');
+
+    }
 
 
 // 创建一个group manager
@@ -10339,7 +10379,8 @@ function freshfood_edit_action()    {
 
         $id = (int)get2('id');
 
-        $group_manager =$mdl_group->getGroupMangerInfo($id,$this->loginUser['id']);
+        $group_manager =$mdl_group->getGroupMangerInfo($id,$this->current_business['id']);
+       // var_dump($group_manager);exit;
         $factory_id =$this->loadModel('user_factory')->getBusinessId($this->loginUser['id'],$this->loginuser['role']);
        // var_dump($factory_id);exit;
 
@@ -10348,6 +10389,11 @@ function freshfood_edit_action()    {
             /**
              * Location related data
              */
+            $g_approved = trim(post('g_approved'));
+            if(!$g_approved) {
+                $g_approved=0;
+            }
+            //var_dump($g_approved);exit;
             $googleMap = trim(post('googleMap'));
 
             $addrNumber = trim(post('street_number'));
@@ -10374,7 +10420,7 @@ function freshfood_edit_action()    {
             $person_first_name =  trim(post('contactPersonFirstname'));
             $person_last_name = trim(post('contactPersonLastname'));
             $tel = trim(post('tel'));
-            $phone = trim(post('phone'));
+
 
 
             /**
@@ -10385,7 +10431,7 @@ function freshfood_edit_action()    {
             $contactPersonLastname = trim(post('contactPersonLastname'));
             $contactPersonNickName = trim(post('contactPersonNickName'));
             $nickname =$contactPersonNickName;
-            $contactMobile = trim(post('contactMobile'));
+            $phone = trim(post('phone'));
 
 
             if ($group_manager) {
@@ -10397,12 +10443,12 @@ function freshfood_edit_action()    {
                     'person_first_name' => $contactPersonFirstname,
                     'person_last_name' => $contactPersonLastname,
                     'tel' => $tel,
-                    'phone' => $phone,
+
 
                     'contactPersonFirstname'=>$contactPersonFirstname,
                     'contactPersonLastname'=>$contactPersonLastname,
                     'contactPersonNickName'=>$contactPersonNickName,
-                    'contactMobile'=>$contactMobile,
+                    'phone'=>$phone,
 
                     'addrNumber' => $addrNumber,
                     'addrStreet' => $addrStreet,
@@ -10425,6 +10471,17 @@ function freshfood_edit_action()    {
 
                     $data['password'] = $passwordByCustomMd5;
                 }
+
+                $data_group=array(
+                    'nickname'=>$nickname,
+                    'isApproved'=>$g_approved
+                );
+                $where =array(
+                    'factory_id'=>$this->current_business['id'],
+                    'manager_id'=>$id
+                );
+               // var_dump($id);exit;
+                $mdl_group->updateByWhere($data_group,$where);
 
 
                 if ($mdl_user->updateUserById($data, $group_manager['id'])) {
@@ -10524,7 +10581,8 @@ function freshfood_edit_action()    {
             }
 
         } else {
-            $this->setData($group_manager);
+          //  var_dump($group_manager);exit;
+            $this->setData($group_manager,'data');
             $this->setData('Group Management', 'pagename');
             $this->setData('group_order_setting', 'submenu');
             $this->setData('customer_management', 'menu');

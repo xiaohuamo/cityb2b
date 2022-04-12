@@ -40,7 +40,11 @@
 
 				<div class="box2">	
 
-
+			<div class="colCurTit">
+                Group Manager Info
+				 
+				 
+				</div>
 
 					<div class="main-form">			
 
@@ -48,7 +52,7 @@
 
 							<div class="input-box clearfix">	
 
-								<span><label>群组用户名</label></span>		
+								<span><label>群组用户名<{$data.name}></label></span>		
 
 								<{if $data.id}> 
 								<small><{$data.name}></small>
@@ -139,7 +143,7 @@
 
 							<div class="input-box multi-select clearfix">
 								<span><label>昵称</span>
-								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder='Eg:墨尔本总部'/>
+								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder=''/>
 							</div>
 							
 							
@@ -155,7 +159,7 @@
 							
 							<div class="input-box multi-select clearfix">
 								<span><label>联系人电话</label></span>
-								<input type="text" class="input-text" value="<{$data.contactMobile}>" name="contactMobile" />
+								<input type="text" class="input-text" value="<{$data.phone}>" name="phone" />
 							</div>
 
 
@@ -292,21 +296,22 @@
 							</script>				
 
 							<div class="input-box multi-select clearfix">
-
-								<span><label></label></span>
+								<span><label>审核状态</label></span>
+						    <input type="checkbox" name="g_approved"  <{if $data.g_approved || !$data.id}>checked <{/if}> value="<{if !$data.id}>1<{else}><{$data.g_approved}><{/if}>" id="g_approved"  />
 
 							</div>
+							
 
 
 							<div class="input-box input-submit clearfix">		
 
 								<button type="submit" style='float:left'>保存</button>	
+							
+<{if $data.id}>							<a onClick='return confirm("删除群组管理员后，管理员无法再恢复，是否继续删除？")' href ="<{$http_root_www}>company/group_manager_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除群管理员</a>	
 
-								<a onClick='return confirm("删除员工会导致订单中自取点信息缺失，确认要删除该员工？")' href ="<{$http_root_www}>company/staff_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除该员工</a>	
-
+	<{/if}>						
 
 							</div>		
-
 
 							
 

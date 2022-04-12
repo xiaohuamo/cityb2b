@@ -2408,7 +2408,7 @@ class ctl_factory extends cmsPage
 
         $groupManagerInfo  =$this->loadModel('user_group_manager')->getGroupMangerInfo($manager_id,$factoryId);
 
-        $this->setData($groupManagerInfo[0],'groupManagerInfo');
+        $this->setData($groupManagerInfo,'groupManagerInfo');
 
         if (is_post()) {
             $userId = trim(post('userId'));
