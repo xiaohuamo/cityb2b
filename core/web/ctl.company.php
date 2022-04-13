@@ -15029,17 +15029,17 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(15);
                 $obj->getActiveSheet()->getColumnDimension("A")->setWidth(10);
                 $obj->getActiveSheet()->getColumnDimension("B")->setWidth(15);
-                $obj->getActiveSheet()->getColumnDimension("C")->setWidth(35);
+                $obj->getActiveSheet()->getColumnDimension("C")->setWidth(40);
                 $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
-                $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
+           //     $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
                 $obj->getActiveSheet()->getColumnDimension("E")->setWidth(10);
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
                 $obj->getActiveSheet()->getColumnDimension("F")->setWidth(10);
-                $obj->getActiveSheet()->getColumnDimension("G")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("G")->setWidth(5);
                 $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
                 $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
-                $obj->getActiveSheet()->getColumnDimension("I")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("I")->setWidth(5);
 
               //  $obj->getActiveSheet()->getDefaultColumnDimension('C')->setWidth(30);
                 $obj->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
