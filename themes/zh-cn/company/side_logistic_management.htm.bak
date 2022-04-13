@@ -1,0 +1,36 @@
+<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='Logistic_centre'}> class="current"<{/if}>><{$lang->logistic_center}></a>
+	</div>
+	<div class='second-level'>
+	
+	<a  href="<{$http_root_www}>company/oproute"<{if $submenu=='customer_oproute'}> class="current"<{/if}>>
+			物流中心管理 
+	</a>
+
+	<a  target=_blank  href="https://my.optimoroute.com/">
+			路程管理
+	</a>
+	
+	<a  href="<{$http_root_www}>company/export_driver_route"<{if $submenu=='export_driver_route'}> class="current"<{/if}>>
+			导出司机表格
+	</a>
+	
+	<a  href="<{$http_root_www}>company/customer_orders_logistic_query"<{if $submenu=='customer_orders_logistic_query'}> class="current"<{/if}>>
+			<{$lang->logistic_schedule_time1}>
+	</a>
+	<a  href="<{$http_root_www}>factory/truck_list"<{if $submenu=='trucklist'}> class="current"<{/if}>>
+			<{$lang->Truck_list}> 
+	</a>
+	
+	<a  href=""<{if $submenu==''}> class="current"<{/if}>>
+			<{$lang->Truck_schedue_histroy}>  
+	</a>
+	
+	
+	    
+	
+	
+	</div>
+</li>

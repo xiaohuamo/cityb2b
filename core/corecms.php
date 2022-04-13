@@ -1131,7 +1131,8 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
 
 	  $fp = fopen($exportUrl, 'a');
-	  fwrite($file, chr(0xEF).chr(0xBB).chr(0xBF)); // 添加 BOM
+        ob_clean();
+	  fwrite($fp, chr(0xEF).chr(0xBB).chr(0xBF)); // 添加 BOM
 		//fwrite($fp,chr(0xEF).chr(0xBB).chr(0xBF));
         //输出Excel列名信息
         foreach ($headList as $key => $value) {

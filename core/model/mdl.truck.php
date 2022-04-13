@@ -64,6 +64,31 @@ class mdl_truck extends mdl_base
       return $driverAndTruckInfo;
 
     }
+
+    public function  getTruckAndDriverInfo1($logistic_truck_No,$factoryId) {
+
+        $where =array(
+
+            'truck_no'=>$logistic_truck_No,
+            'business_id'=>$factoryId
+        );
+
+        $rec = $this->getByWhere($where);
+        if($rec){
+            if($rec['current_driver']) {
+                $driver = loadModel('user')->get($rec['current_driver']);
+                $driverAndTruckInfo = $driver['contactPersonFirstname'].'-'.$rec['truck_name'].'-'.$rec['plate_number'];
+            }else{
+                $driverAndTruckInfo =$rec['truck_name'].'-'.$rec['plate_number'];
+            }
+
+        }else{
+
+            $driverAndTruckInfo ='All';
+        }
+        return $driverAndTruckInfo;
+
+    }
 }
 
 ?>

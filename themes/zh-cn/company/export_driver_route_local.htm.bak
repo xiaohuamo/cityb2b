@@ -1,0 +1,297 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+					
+
+						<label><{$lang->filter}>:</label>
+						
+						<select class='chooseDate' id="date" name="customer_delivery_date" >
+						<option value="all"  ><{$lang->choose_delivery_date}></option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+					</select>
+					
+	               <select class='chooselogistic_truck_No' id="driver-serial" name="logistic_truck_No" >
+						<option value="all"  ><{$lang->logistic_choosetruck}></option>
+						<{foreach from=$TuckListOfTheDay item=d}>
+							<{if $d.logistic_truck_No==0}>
+							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$lang->no_truck_yet}>
+							</option>
+							
+							<{else}>
+								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
+								</option>
+							<{/if}>
+						<{/foreach}>
+						</select>
+
+					<script type="text/javascript">
+						$(function(){
+							$('.chooseDate').on('change',function(){
+							   $('#printer').css({ "display": "none" });
+								var datestr = $(this).val();
+								//alert(datestr);
+								$.ajax({
+								
+									url:"/company/get_truck_list_of_deliver_date_ajax",
+									data: {datestr : datestr},
+									contentType: "application/json",
+        							dataType: "json",
+									success:function(data){
+									
+										var html = '';
+										var trukNo = 0;
+										var isselect=0;
+										var truckanddriver ='';
+										
+										var selectTruck ='<{$logistic_truck_No}>';
+																				
+										if(selectTruck=='all' || selectTruck.length ==0 || !selectTruck) {
+										  html ='<option value="all" selected ><{$lang->logistic_choosetruck}></option>';
+										
+										}else{
+										  html ='<option value="all"><{$lang->logistic_choosetruck}></option>';
+										}
+										
+										for (var i = 0; i< data.length ; i++) {
+										
+											
+										truckNo = data[i]['logistic_truck_No'];
+										
+										if(truckNo ==0) {
+										    if (trukNo ===selectTruck){
+											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}></option>";
+											  
+											}else{
+											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}></option>";
+											}
+										}else{
+										
+										    if(data[i]['driverName']){
+											
+											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
+											}else{
+												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
+											}
+										
+										   if (trukNo ===selectTruck){
+											 
+											   html += "<option value="+data[i]['logistic_truck_No']+" selected>"+truckanddriver+"</option>";
+											}else{
+												html += "<option value="+data[i]['logistic_truck_No']+" >"+truckanddriver+"</option>";
+											}
+										
+										
+										}
+							
+
+
+									}
+										$('.chooselogistic_truck_No').html(html);
+									},
+									error:function(data){
+										console.log(data);
+									}
+								})
+							})
+							
+							$('.chooselogistic_truck_No').on('change',function(){
+							   $('#printer').css({ "display": "none" });
+								
+							})
+
+						})
+					</script>
+			
+						
+					
+					
+				
+						
+			
+						<button type="submit"><{$lang->search}></button>
+						  <{if $customer_delivery_date}>
+						<br><br>
+                       <div id="printer">
+							<button id="export-xls"  style="padding: 10px 5px;background: #43d1af">
+							下载调度表格
+						</button>
+						
+                        </div>
+						
+						<{/if}>
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>			
+									<th><{$lang->logistic_delivery_date}></th>
+									<th><{$lang->logistic_schedule_time}></th>
+									<th><{$lang->logistic_arrive_time}></th>
+									
+									<th>stopNum</th>
+									<th><{$lang->logistic_sequenceNo}></th>
+									<th><{$lang->order_id}></th>		
+									
+									<th><{$lang->user}></th>	
+									<th>phone</th>	
+									
+									<th><{$lang->delivery}></th>				
+									<th><{$lang->submission_time}></th>
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+								    <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
+								    <td><{date('Y-m-d H:i', $item.logisitic_schedule_time)}></td>
+									 <td><{date('Y-m-d H:i', $item.logistic_arrived_time)}></td>
+									
+									
+									
+
+
+
+									<td><{$item.logistic_stop_No}></td>
+									    <td><{$item.logistic_sequence_No}></td>
+									  
+									<td>
+										<{$item.order_name}>
+										<br>
+										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+									</td>
+									
+								
+									<td><{$item.name}></td>
+									
+									
+									<td><{$item.phone}></td>
+									
+								
+
+									<td>	
+										<{if $item.customer_delivery_option==1}>
+											<{$lang->delivery}>
+											<{if $item.tracking_id}>  <i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> <{/if}>
+										<{elseif $item.customer_delivery_option==2}>
+											<{$lang->pick_up}>
+										<{elseif $item.customer_delivery_option==0}>
+											<!-- 未注明 -->
+										<{/if}>	
+									</td>	
+
+									<td><{date('Y-m-d H:i', $item.createTime)}></td>
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+						
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+
+
+  <script type="text/javascript">
+            var date = $('#date');
+            var driverSerial = $('#driver-serial');
+
+            function generateUrl(isExport = false) {
+                return "<{$http_root_www}>company/export_driver_route_excel?date="
+                    + (date.val() || '')
+                    + "&driver-serial="
+                    + (driverSerial.val() || '')
+                    + "&is-export=" + isExport;
+            }
+
+            function filterOrders() {
+                window.location.href = generateUrl();
+            }
+
+           // date.on('change', filterOrders);
+           // driverSerial.on('change', filterOrders);
+             //alert( generateUrl(true));
+            $('#export-xls').on('click', function(){
+			   var hreff =generateUrl(true);
+			   alert(hreff);
+                window.location.href = hreff;
+            });
+        </script>
+
+</body>
+
+</html>

@@ -252,7 +252,19 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 		
 	}
 
+public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
 
+     $sql ="SELECT o.xero_invoice_id,f.nickname,o.address,o.logistic_stop_No,o.logistic_sequence_No ,o.logistic_delivery_date	,
+       o.phone,'' as boxes,o.message_to_business,' ' as signed  from cc_order as o
+                   left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id 
+        where  o.business_userId =$factoryId and  (o.coupon_status='c01' or o.coupon_status='b01' )
+          and (o.status =1 or o.accountPay=1) 
+          and DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$dateOfDelivery' 
+          and logistic_truck_No = '$driverId' 
+        order by logistic_stop_No,f.nickname  ";
+     $list = $this->getListBySql($sql);
+     return $list;
+}
 
    public function getByOrderId($orderid)
     {

@@ -13001,8 +13001,8 @@ function get_data($url, $ch) {
 			*/
 		}
 		//var_dump($lists_new);exit;
-		//$objPHPExcel->getActiveSheet()->getColumnDimension('Phone')->setAutoSize(false);
-		//$objPHPExcel->getActiveSheet()->getColumnDimension('Phone')->setWidth("400");
+		//$obj->getActiveSheet()->getColumnDimension('Phone')->setAutoSize(false);
+		//$obj->getActiveSheet()->getColumnDimension('Phone')->setWidth("400");
 		$file_name =date('Y-m-d',time());
 		$this->toExcel($lists_new,array('Group Name','OrderID','Product code','logistic_delivery_date','logistic_sequence_No','logistic_suppliers_info','logistic_suppliers_count','ProductName','Quantity','Price','Customer Name','ContactNumber','Street Address','Suburb','PostCode','Total','logistic_truck_No','logistic_stop_No','address','Message'),$this->loginUser['name'].'-'.$file_name,'php://output');
 		
@@ -14828,12 +14828,350 @@ public function custom_delivery_fee_add_action()
         $this->display('company/print_label_log');
     }
 
-	public function export_driver_route_action() {
+//get_truck_list_of_deliver_date_ajax_action
+
+    public function export_driver_route_local_action()
+    {
+
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $mdl_order = $this->loadModel('order');
+        $mdl_user= $this->loadModel('user');
+        $mdl_truck =  $this->loadModel('truck');
+
+        /**
+         * Driver List of Current Business
+         */
+
+        $customer_delivery_date = trim(get2('customer_delivery_date'));
+
+
+
+        $three_days_times = time()-259200;
+
+        $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
+            $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+        // var_dump($sql_avaliable_date);exit;
+
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+        // $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
+        $availableDates = array_map(function($d){
+            return date('Y-m-d',$d['logistic_delivery_date']);
+        }, $availableDates);
+        $this->setData($availableDates, 'availableDates');
+
+
+
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+
+
+        $this->setData($logistic_truck_No,'logistic_truck_No');
+
+
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
+
+
+        $this->setData($customer_delivery_date,'customer_delivery_date');
+        $this->setData($postcode,'postcode');
+
+        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+
+        $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
+        //var_dump($sql);exit;
+
+
+
+        $whereStr.= " and (o.coupon_status='c01' or o.coupon_status='b01' )";
+
+
+
+        $whereStr.= " and (o.status =1 or o.accountPay=1) ";
+
+
+
+
+
+        //deleivery date
+        if (!empty($customer_delivery_date)) {
+            if ($customer_delivery_date != 'all') {
+                $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
+            }else{
+                $three_days_times = time()-259200;
+                $whereStr.= " and  logistic_delivery_date > $three_days_times";
+
+
+            }
+        }else {
+            $three_days_times = time()-259200;
+            $whereStr.= " and  logistic_delivery_date > $three_days_times";
+        }
+
+        if (!empty($logistic_truck_No)) {
+
+            if ($logistic_truck_No != 'all') {
+                $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
+
+            }
+        }
+
+        if ($logistic_truck_No =='0' ) {
+            $whereStr.= " and  logistic_truck_No =0 ";
+            // var_dump($logistic_truck_No);exit;
+        }
+
+
+
+        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
+
+        // var_dump($pageSql); exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 10;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+        $data = $mdl_order->getListBySql($page['outSql']);
+
+        foreach ($data as $key => $value) {
+            $data[$key]['name'] =$this->getCustomerName($value);
+
+        }
+
+        $this->setData($page['pageStr'],'pager');
+
+        $this->setData($data,'data');
+
+        $this->setData('Logistic_centre', 'menu');
+        $this->setData('export_driver_route_local', 'submenu');
+
+        $this->setData(HTTP_ROOT_WWW.'company/export_driver_route_local', 'searchUrl');
+
+        $this->setData($this->parseUrl(), 'currentUrl');
+
+        $this->setData('Order Logisitic Schedule - ' . $this->site['pageTitle'], 'pageTitle');
+
+        $this->display_pc_mobile('company/export_driver_route_local','company/export_driver_route_local');
+    }
+
+
+    public function export_driver_route_excel_action() {
+
+        $mdl_user_account_info	= $this->loadModel('user_account_info');
+        $mdl_order	= $this->loadModel('order');
+        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
+
+        $date = get2('date');
+        $this->setData($date,'date');
+
+        $driverSerial = (string)get2('driver-serial');
+        $this->setData($driverSerial,'driverSerial');
+
+      //  var_dump('data is: '.$date .' and driver id is '.$driverSerial);exit;
+
+        $truckName =$this->loadModel('truck')->getTruckAndDriverInfo1($driverSerial,$this->current_business['id']);
+//var_dump($truckName);exit;
+        if(strtotime($date)) {
+            $orders =$mdl_order->getdriversheetList($this->current_business['id'],$date,$driverSerial);
+            $this->setData($orders,'orders');
+
+
+
+            $lists_new = array();
+
+            foreach ($orders as $key => $value) {
+
+                $lists_new[$key]['InvoiceNumber']=$value['xero_invoice_id'];
+                $lists_new[$key]['CustomerName']=$value['nickname'];
+                 $lists_new[$key]['Address']=$value['address'];
+
+                $lists_new[$key]['StopNumber']=$value['logistic_stop_No'];
+                $lists_new[$key]['logistic_sequence_No']=$value['logistic_sequence_No'];
+                $lists_new[$key]['Phone']=$value['phone'];
+                $lists_new[$key]['BoxesQuantity']=$value['boxes'];
+                $lists_new[$key]['Notes']=$value['Notes'];
+                $lists_new[$key]['signed']=' ';
+                $logistic_delivery_time = $value['logistic_delivery_date'];
+           }
+
+           //var_dump($orders);exit;
+            if(get2('is-export') == 'true') {
+                $labels = ['Inv No', 'Customer Name','Address','Stop No','Seq No','Phone','Boxes Qty','Notes','signed'];
+                $fileName =$date.'_'.substr($accountInfo['account_name'],0,5).(empty($driverSerial) ? '' : '_Driver'.$driverSerial );
+
+
+
+
+                error_reporting(E_ALL);
+                ini_set('display_errors', TRUE);
+                ini_set('display_startup_errors', TRUE);
+                date_default_timezone_set('Europe/London');
+
+                if (PHP_SAPI == 'cli')
+                    die('This example should only be run from a Web Browser');
+
+                /** Include PHPExcel */
+                require_once('C:/xampp/htdocs/cityb2b2/core/phpexcel180/Classes/PHPExcel.php');
+
+
+
+                $count = count($lists_new);
+                $head="Dirver delivery sheet ";
+                $start_time=date('Y-m-d',$logistic_delivery_time);
+                $end_time=date('Y-m-d',$logistic_delivery_time);
+
+// Create new PHPExcel object
+
+
+                $obj = new PHPExcel();
+
+                $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(18);
+                $obj->getActiveSheet()->getDefaultColumnDimension()->setCollapsed(true);
+                $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(15);
+                $obj->getActiveSheet()->getColumnDimension("A")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("B")->setWidth(15);
+                $obj->getActiveSheet()->getColumnDimension("C")->setWidth(35);
+                $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
+                $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
+                $obj->getActiveSheet()->getColumnDimension("E")->setWidth(10);
+                $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
+                $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
+                $obj->getActiveSheet()->getColumnDimension("F")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("G")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
+                $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
+                $obj->getActiveSheet()->getColumnDimension("I")->setWidth(10);
+
+              //  $obj->getActiveSheet()->getDefaultColumnDimension('C')->setWidth(30);
+                $obj->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+                $obj->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+                $obj->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+                $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+// Add some data
+                $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
+                $obj->getActiveSheet(0)->setTitle(substr($truckName,0,29));
+
+                $_row = 2;   //设置纵向单元格标识
+                if ($labels) {
+                    $_cnt = count($labels);
+                    $obj->getActiveSheet()->getRowDimension('2')->setRowHeight(18);
+                    $obj->getActiveSheet()->getStyle("A2:I2")->getFont()->setBold(true);
+                    $obj->getActiveSheet()->getStyle('A2:I2')->getFont()->setSize(12);
+                    $obj->getActiveSheet(0)->mergeCells('A1' . ':' . $cellName[$_cnt - 1] . '1');   //合并单元格
+                    $obj->setActiveSheetIndex(0)->setCellValue('A1', $truckName);  //设置合并后的单元格内容
+                    $obj->getActiveSheet()->mergeCells('A2:C2');//合并起始日期单元格
+                    $obj->setActiveSheetIndex(0)->setCellValue('A2', 'Delivery Date [' . $start_time . ']');//设置值
+                   // $obj->getActiveSheet()->mergeCells('C2:D2');//合并终止日期单元格
+                  //  $obj->setActiveSheetIndex(0)->setCellValue('C2', '终止日期[' . $end_time . ']');//设置值
+                    $_row++;
+                    $i = 0;
+                    $obj->getActiveSheet()->getRowDimension('3')->setRowHeight(18);
+                    $obj->getActiveSheet()->getStyle("A3:I3")->getFont()->setBold(true);
+                    $obj->getActiveSheet()->getStyle('A3:I3')->getFont()->setSize(12);
+                   // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+                   // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->()->setARGB("#FFC7CE");
+                    foreach ($labels as $v) {   //设置列标题
+                        $obj->setActiveSheetIndex(0)->setCellValue($cellName[$i] . $_row, $v);
+                        $i++;
+                    }
+                    $_row++;
+                }
+
+
+                //填写数据
+                if ($lists_new) {
+                    $i = 0;
+                    foreach ($lists_new as $_v) {
+                        $j = 0;
+                        foreach ($_v as $_cell) {
+                            $obj->getActiveSheet(0)->setCellValue($cellName[$j] . ($i + $_row), ' ' . $_cell);
+                            $j++;
+                        }
+                        $i++;
+                    }
+                }
+
+
+
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+                $obj->setActiveSheetIndex(0);
+
+                //设置共几条数据行
+            //    $obj->setActiveSheetIndex(0)->setCellValue('A' . (4 + $count + 1), '共' . $count . '条数据');//A10 = A（4+x+1）
+                //导出时间行
+            //    $obj->setActiveSheetIndex(0)->setCellValue('A' . (5 + $count + 1), '导出时间');
+            //    $datetime = date('Y-m-d H:i:s', time());
+            //    $obj->setActiveSheetIndex(0)->setCellValue('B' . (5 + $count + 1), "$datetime");
+                $objWriter = PHPExcel_IOFactory::createWriter($obj, 'Excel2007');
+                ob_end_clean();
+// Redirect output to a client’s web browser (Excel2007)
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'.$fileName.'.xlsx"');
+                header('Cache-Control: max-age=0');
+
+
+
+
+                $objWriter->save('php://output');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                $this->toExcel($lists_new,$labels,$fileName,'php://output');
+                return;
+            }
+        }
+
+        // $dateOptions = $this->loadModel('order')->getListBySql('select DISTINCT  logistic_delivery_date from  ( (SELECT DISTINCT logistic_delivery_date  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->current_business['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->current_business['id'].'))) as a union (SELECT DISTINCT logistic_delivery_date  from cc_order_import where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$this->current_business['id']. ' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$this->current_business['id'].'))) as b) ');
+
+        $dateOptions = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+        $dateOptions = array_map(function($dateOption){
+            return date('Y-m-d',$dateOption['logistic_delivery_date']);
+        }, $dateOptions);
+
+
+        //$driversOptions = $this->loadModel('order')->getListBySql('SELECT DISTINCT logistic_driver_code  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and business_userId = '.$this->current_business['id']);
+
+        $driversOptions = $this->loadModel('freshfood_logistic_customers')->getDriversOfAvaliableDateOfThisLogisiticCompany($this->current_business['id'],$date);
+        $driversOptions = array_map(function($dateOption){
+            return str_pad($dateOption['logistic_truck_No'],3,'0',STR_PAD_LEFT);
+        }, $driversOptions);
+
+        $this->setData($dateOptions, 'dateOptions');
+        $this->setData($driversOptions, 'driversOptions');
+
+        $this->setData('Logistic_centre', 'menu');
+        $this->setData('export_driver_route', 'submenu');
+        $this->setData('导出路程单 - ' . $this->site['pageTitle'], 'pageTitle');
+
+
+        $this->display('company/export_driver_route');
+    }
+
+
+    public function export_driver_route_action() {
         $this->loadModel('freshfood_disp_suppliers_schedule');
         $mdl_user_account_info	= $this->loadModel('user_account_info');
         $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
         if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
-            $this->sheader(null,'您无权限访问该页面');
+            $this->sheader(null,'no access');
         }
 
         require_once( DOC_DIR.'static/OptimoRoute.php');
