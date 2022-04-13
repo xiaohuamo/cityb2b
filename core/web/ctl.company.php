@@ -14989,13 +14989,13 @@ public function custom_delivery_fee_add_action()
                 $lists_new[$key]['Phone']=$value['phone'];
                 $lists_new[$key]['BoxesQuantity']=$value['boxes'];
                 $lists_new[$key]['Notes']=$value['Notes'];
-                $lists_new[$key]['signed']=' ';
+            //    $lists_new[$key]['signed']=' ';
                 $logistic_delivery_time = $value['logistic_delivery_date'];
            }
 
            //var_dump($orders);exit;
             if(get2('is-export') == 'true') {
-                $labels = ['Inv No', 'Customer Name','Address','Stop No','Seq No','Phone','Boxes Qty','Notes','signed'];
+                $labels = ['Inv No', 'Customer Name','Address','Stop No','Seq No','Phone','Boxes Qty','Notes'];
                 $fileName =$date.'_'.substr($accountInfo['account_name'],0,5).(empty($driverSerial) ? '' : '_Driver'.$driverSerial );
 
 
@@ -15039,7 +15039,7 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getColumnDimension("G")->setWidth(5);
                 $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
                 $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
-                $obj->getActiveSheet()->getColumnDimension("I")->setWidth(5);
+           //     $obj->getActiveSheet()->getColumnDimension("I")->setWidth(5);
 
               //  $obj->getActiveSheet()->getDefaultColumnDimension('C')->setWidth(30);
                 $obj->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
@@ -15054,8 +15054,8 @@ public function custom_delivery_fee_add_action()
                 if ($labels) {
                     $_cnt = count($labels);
                     $obj->getActiveSheet()->getRowDimension('2')->setRowHeight(18);
-                    $obj->getActiveSheet()->getStyle("A2:I2")->getFont()->setBold(true);
-                    $obj->getActiveSheet()->getStyle('A2:I2')->getFont()->setSize(12);
+                    $obj->getActiveSheet()->getStyle("A2:H2")->getFont()->setBold(true);
+                    $obj->getActiveSheet()->getStyle('A2:H2')->getFont()->setSize(12);
                     $obj->getActiveSheet(0)->mergeCells('A1' . ':' . $cellName[$_cnt - 1] . '1');   //合并单元格
                     $obj->setActiveSheetIndex(0)->setCellValue('A1', $truckName);  //设置合并后的单元格内容
                     $obj->getActiveSheet()->mergeCells('A2:C2');//合并起始日期单元格
@@ -15065,8 +15065,8 @@ public function custom_delivery_fee_add_action()
                     $_row++;
                     $i = 0;
                     $obj->getActiveSheet()->getRowDimension('3')->setRowHeight(18);
-                    $obj->getActiveSheet()->getStyle("A3:I3")->getFont()->setBold(true);
-                    $obj->getActiveSheet()->getStyle('A3:I3')->getFont()->setSize(12);
+                    $obj->getActiveSheet()->getStyle("A3:H3")->getFont()->setBold(true);
+                    $obj->getActiveSheet()->getStyle('A3:H3')->getFont()->setSize(12);
                    // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
                    // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->()->setARGB("#FFC7CE");
                     foreach ($labels as $v) {   //设置列标题
