@@ -15031,7 +15031,7 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getColumnDimension("B")->setWidth(15);
                 $obj->getActiveSheet()->getColumnDimension("C")->setWidth(45);
                 $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
-           //     $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
+                $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
                 $obj->getActiveSheet()->getColumnDimension("E")->setWidth(10);
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
@@ -15114,6 +15114,7 @@ public function custom_delivery_fee_add_action()
 
 
                 $objWriter->save('php://output');
+                exit;
 
 
 
@@ -15133,9 +15134,8 @@ public function custom_delivery_fee_add_action()
 
 
 
-
-                $this->toExcel($lists_new,$labels,$fileName,'php://output');
-                return;
+               // $this->toExcel($lists_new,$labels,$fileName,'php://output');
+               // return;
             }
         }
 
