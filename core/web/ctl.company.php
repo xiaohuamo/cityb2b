@@ -15102,9 +15102,10 @@ public function custom_delivery_fee_add_action()
             //    $obj->setActiveSheetIndex(0)->setCellValue('A' . (5 + $count + 1), '导出时间');
             //    $datetime = date('Y-m-d H:i:s', time());
             //    $obj->setActiveSheetIndex(0)->setCellValue('B' . (5 + $count + 1), "$datetime");
-                $objWriter = PHPExcel_IOFactory::createWriter($obj, 'Excel2007');
+
                 ob_end_clean();
 // Redirect output to a client’s web browser (Excel2007)
+                $objWriter = PHPExcel_IOFactory::createWriter($obj, 'Excel2007');
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment;filename="'.$fileName.'.xlsx"');
                 header('Cache-Control: max-age=0');
