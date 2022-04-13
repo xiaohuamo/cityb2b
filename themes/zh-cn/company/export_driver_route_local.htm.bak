@@ -164,17 +164,18 @@
 						<button type="submit"><{$lang->search}></button>
 						  <{if $customer_delivery_date}>
 						<br><br>
-                       <div id="printer">
+                       <span id="printer">
 							<button id="export-xls"  style="padding: 10px 5px;background: #43d1af">
-							下载调度表格
-						</button>
+							
+							<a href ="company/export_driver_route_excel?date=&driver-serial=&is-export=true">下载调度表格</a>
+						</span>
 						
                         </div>
 						
 						<{/if}>
 					</form>
 				</div>
-				
+				<{}>
 
 				<div class="main-list">		
 					<{if $data}>				

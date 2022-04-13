@@ -164,10 +164,11 @@
 						<button type="submit"><{$lang->search}></button>
 						  <{if $customer_delivery_date}>
 						<br><br>
-                       <div id="printer">
+                       <span id="printer">
 							<button id="export-xls"  style="padding: 10px 5px;background: #43d1af">
-							下载调度表格
-						</button>
+							
+							<a href ="<{$http_root_www}>company/export_driver_route_excel?date=<{$customer_delivery_date}>&driver-serial=<{$logistic_truck_No}>&is-export=true">下载调度表格</a>
+						</span>
 						
                         </div>
 						
@@ -287,7 +288,7 @@
              //alert( generateUrl(true));
             $('#export-xls').on('click', function(){
 			   var hreff =generateUrl(true);
-			  // alert(hreff);
+			   alert(hreff);
                 window.location.href = hreff;
             });
         </script>
