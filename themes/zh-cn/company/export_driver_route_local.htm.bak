@@ -167,7 +167,7 @@
                        <span id="printer">
 							<button id="export-xls"  style="padding: 10px 5px;background: #43d1af">
 							
-							<a href ="company/export_driver_route_excel?date=&driver-serial=&is-export=true">下载调度表格</a>
+							<a href ="<{$http_root_www}>company/export_driver_route_excel?date=<{$customer_delivery_date}>&driver-serial=<{$logistic_truck_No}>&is-export=true">下载调度表格</a>
 						</span>
 						
                         </div>
@@ -175,7 +175,7 @@
 						<{/if}>
 					</form>
 				</div>
-				<{}>
+				
 
 				<div class="main-list">		
 					<{if $data}>				
