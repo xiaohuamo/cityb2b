@@ -15010,7 +15010,7 @@ public function custom_delivery_fee_add_action()
                     die('This example should only be run from a Web Browser');
 
                 /** Include PHPExcel */
-                require_once('C:/xampp/htdocs/cityb2b2/core/phpexcel180/Classes/PHPExcel.php');
+                require_once(CORE_DIR.'phpexcel180/Classes/PHPExcel.php');
 
 
 
@@ -15022,7 +15022,7 @@ public function custom_delivery_fee_add_action()
 // Create new PHPExcel object
 
 
-                $obj = new PHPExcel(); 
+                $obj = new PHPExcel();
 
                 $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(18);
                 $obj->getActiveSheet()->getDefaultColumnDimension()->setCollapsed(true);
