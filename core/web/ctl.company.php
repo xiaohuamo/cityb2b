@@ -15027,9 +15027,9 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(18);
                 $obj->getActiveSheet()->getDefaultColumnDimension()->setCollapsed(true);
                 $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(15);
-                $obj->getActiveSheet()->getColumnDimension("A")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("A")->setWidth(15);
                 $obj->getActiveSheet()->getColumnDimension("B")->setWidth(15);
-                $obj->getActiveSheet()->getColumnDimension("C")->setWidth(40);
+                $obj->getActiveSheet()->getColumnDimension("C")->setWidth(45);
                 $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
            //     $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
                 $obj->getActiveSheet()->getColumnDimension("E")->setWidth(10);
