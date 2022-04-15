@@ -3216,6 +3216,47 @@ class ctl_factory extends cmsPage
 				//wrong protocol
 			}
 		}
+
+    public function update_menu_code_action(){
+
+        if(is_post()){
+
+            $mdl =$this->loadModel("restaurant_menu");
+
+            $id = post('id');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+            $menu_rec =$mdl->get($id);
+            if($menu_rec['restaurant_id']!=$this->current_business['id']) {
+                $this->form_response(600,'no access','no access');
+
+            }
+
+
+            $menu_code = post('menu_code');
+
+            $data=array(
+                'menu_code'=>$menu_code
+            );
+
+
+
+
+
+
+            try {
+                $mdl->update($data,$id);
+
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
 	public	 function staff_sales_action()
     {
         $id = (int)get2('id');
@@ -4814,6 +4855,318 @@ class ctl_factory extends cmsPage
         }
     }
 
+    public function create_manunal_dispatching_report_action(){
+        $dateOfSearch =get2('dateOfSearch');
+        $mdl_order =$this->loadModel('order');
+        $dispatching_data =$mdl_order->get_manual_producing_data($dateOfSearch,$this->current_business['id']);
+        $mdl_user_account_info	= $this->loadModel('user_account_info');
+         $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
+//var_dump($dispatching_data);exit;
+        $lists_new = array();
+
+        foreach ($dispatching_data as $key => $value) {
+
+            $lists_new[$key]['DriverName']=$value['DriverName'];
+            $lists_new[$key]['truckName']=$value['truckName'];
+            $lists_new[$key]['accountNumber']=$value['accountNumber'];
+
+            $lists_new[$key]['CustomerCode']=$value['CustomerCode'];
+            $lists_new[$key]['ContactName']=$value['ContactName'];
+            $lists_new[$key]['SeqNo']=$value['SeqNo'];
+            $lists_new[$key]['StopNo']=$value['StopNo'];
+            $lists_new[$key]['Message']=$value['Message'];
+
+            $lists_new[$key]['city']=$value['city'];
+            $lists_new[$key]['ItemName']=$value['ItemName'];
+            $lists_new[$key]['specName']=$value['specName'];
+            $lists_new[$key]['Quantity']=$value['Quantity'];
+            $lists_new[$key]['Unit']=$value['Unit'];
+
+            $lists_new[$key]['ItemMessage']=$value['ItemMessage'];
+
+        }
+
+
+
+
+        $labels = ['Customer', 'Product','Quan','Unit','Size','Tot','Sor'];
+        $fileName =$dateOfSearch.'_'.substr($accountInfo['account_name'],0,5).'Dispatching';
+
+
+
+        error_reporting(E_ALL);
+        ini_set('display_errors', TRUE);
+        ini_set('display_startup_errors', TRUE);
+        date_default_timezone_set('Australia/Sydney');
+
+        if (PHP_SAPI == 'cli')
+            die('This example should only be run from a Web Browser');
+
+        /** Include PHPExcel */
+
+        require_once DOC_DIR.'core/phpexcel180/Classes/PHPExcel.php';
+        //  require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+
+        $count = count($dispatching_data);
+        $head="Dispatching Sheet ";
+        $start_time=$dateOfSearch;
+      //  $end_time=date('Y-m-d',$logistic_delivery_time);
+
+// Create new PHPExcel object
+
+
+        $obj = new PHPExcel();
+
+
+
+     //   $phpFont = new PHPExcel_Style_Font();
+
+    //    $phpFont->setName('Arial Narrow');
+     //   $phpFont->setSize(20);
+
+     //   $phpColor = new PHPExcel_Style_Color();
+    //    $phpColor->setRGB('FF0000');
+
+    $countOfRows =count($dispatching_data)+500;
+
+        $obj->getActiveSheet()->getStyle("A0:G".$countOfRows)->getFont()
+            ->setName('Arial Narrow')
+            ->setSize(20)
+            ->setBold(false)
+            ->getColor()
+
+            ->setRGB('FF0000');
+
+        $styleThinBlackBorderOutline = array(
+            'borders' => array(
+                'allborders' => array( //设置全部边框
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN //粗的是thick
+                ),
+
+            ),
+        );
+        $obj->getActiveSheet()->getStyle( "A0:G".$countOfRows)->applyFromArray($styleThinBlackBorderOutline);
+
+
+        $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
+        $obj->getActiveSheet()->getDefaultColumnDimension()->setCollapsed(true);
+        $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+        $obj->getActiveSheet()->getColumnDimension("A")->setWidth(20);
+        $obj->getActiveSheet()->getColumnDimension("B")->setWidth(20);
+        $obj->getActiveSheet()->getColumnDimension("C")->setWidth(10);
+        $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
+       // $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
+        $obj->getActiveSheet()->getColumnDimension("E")->setWidth(15);
+      //  $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
+      //  $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
+        $obj->getActiveSheet()->getColumnDimension("F")->setWidth(8);
+        $obj->getActiveSheet()->getColumnDimension("G")->setWidth(7);
+       // $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
+      //  $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
+
+
+        $obj->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+        $obj->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+      //  $obj->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+// Add some data
+        $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
+        $obj->getActiveSheet(0)->setTitle(substr('Dispatching Sheet ',0,29));
+
+        $_row = 1;   //设置纵向单元格标识
+        $_cnt = count($labels);
+        if ($labels) {
+/*
+            $obj->getActiveSheet()->getRowDimension('2')->setRowHeight(18);
+            $obj->getActiveSheet()->getStyle("A2:G2")->getFont()->setBold(true);
+            $obj->getActiveSheet()->getStyle('A2:G2')->getFont()->setSize(12);
+            $obj->getActiveSheet()->mergeCells('A1' . ':' . $cellName[$_cnt - 1] . '1');   //合并单元格
+            $obj->setActiveSheetIndex(0)->setCellValue('A1', '此处稍后加入循环，显示司机');  //设置合并后的单元格内容
+            $obj->getActiveSheet()->mergeCells('A2:C2');//合并起始日期单元格
+            $obj->setActiveSheetIndex(0)->setCellValue('A2', 'Delivery Date [' . $start_time . ']');//设置值
+            // $obj->getActiveSheet()->mergeCells('C2:D2');//合并终止日期单元格
+            //  $obj->setActiveSheetIndex(0)->setCellValue('C2', '终止日期[' . $end_time . ']');//设置值
+            $_row++;
+            $i = 0;
+            $obj->getActiveSheet()->getRowDimension('3')->setRowHeight(18);
+            $obj->getActiveSheet()->getStyle("A3:G3")->getFont()->setBold(true);
+            $obj->getActiveSheet()->getStyle('A3:G3')->getFont()->setSize(12);
+            // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+            // $obj->getActiveSheet()->getStyle('A3:I3')->getFill()->()->setARGB("#FFC7CE");
+*/
+        }
+
+        //填写数据
+        if ($lists_new) {
+            $i = 0;
+            $ItemMessagestatus=0;
+            $old_customerCode=0;
+            $olddriverAndTruckName ='';
+            foreach ($lists_new as $_v) {
+                $j = 0;
+                $newdriverandtruckname =$_v['DriverName'].'-'.$_v['truckName'];
+                if(strlen(trim($_v['DriverName'].$_v['truckName']))>0){
+                    $showDriverTruckInfo =$_v['DriverName'].'-'.$_v['truckName'];
+                  //  var_dump('1'.strlen(trim($_v['truckName']))); exit;
+                }else{
+                    $showDriverTruckInfo ='No assigned Driver';
+                 //   var_dump('2'. strlen(trim($_v['truckName']))); exit;
+                }
+
+               //如果有新的driver ,则加入新的driver
+                if(!$olddriverAndTruckName || $newdriverandtruckname!= $olddriverAndTruckName) {
+
+                    if($olddriverAndTruckName) {
+                        $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' );
+                        $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' );
+                        $obj->getActiveSheet(0)->setCellValue($cellName[2] . ($i + $_row), ' ');
+                        $obj->getActiveSheet(0)->setCellValue($cellName[3] . ($i + $_row), ' ' );
+                        $obj->getActiveSheet(0)->setCellValue($cellName[4] . ($i + $_row), ' ' );
+                        $obj->getActiveSheet(0)->setCellValue($cellName[5] . ($i + $_row), ' ' );
+                        $obj->getActiveSheet(0)->setCellValue($cellName[6] . ($i + $_row), ' ' );
+
+                        $i++;
+                    }
+
+                    //加入driver 列
+                    $obj->getActiveSheet()->getRowDimension($i + $_row)->setRowHeight(25);
+                  //  $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setBold(true);
+                    $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setSize(20);
+
+                    $obj->getActiveSheet()->mergeCells($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
+                    $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row))->getFont()->getColor()->setRGB('000000');
+                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), $showDriverTruckInfo.'  '.'Delivery Date [' . $start_time . ']');
+
+
+
+                    $i++;
+                    $k=0;
+                    foreach ($labels as $v1) {   //设置列标题
+                        $obj->getActiveSheet()->getStyle($cellName[$k] . ($i + $_row) ,$v1)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                        $obj->getActiveSheet()->getStyle($cellName[$k] . ($i + $_row) ,$v1)->getFont()->getColor()->setRGB('000000');
+
+                        $obj->setActiveSheetIndex(0)->getStyle($cellName[$k] .  ($i + $_row), $v1)->getFont()->setSize(14);
+                        $obj->setActiveSheetIndex(0)->setCellValue($cellName[$k] .  ($i + $_row), $v1);
+                        $k++;
+                    }
+                    $i++;
+
+                }
+
+                //如果当前是最初或者是新客户
+               if(!$old_customerCode || $old_customerCode != $_v['CustomerCode']) {
+                    //如果是新客户，则墙面留一个空行
+                   if($old_customerCode) {
+                       $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' );
+                       $obj->getActiveSheet(0)->setCellValue($cellName[2] . ($i + $_row), ' ');
+                       $obj->getActiveSheet(0)->setCellValue($cellName[3] . ($i + $_row), ' ' );
+                       $obj->getActiveSheet(0)->setCellValue($cellName[4] . ($i + $_row), ' ' );
+                       $obj->getActiveSheet(0)->setCellValue($cellName[5] . ($i + $_row), ' ' );
+                       $obj->getActiveSheet(0)->setCellValue($cellName[6] . ($i + $_row), ' ' );
+
+                       $i++;
+                   }
+                     $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' . $_v['CustomerCode']);
+               }else{
+                   $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' );
+                   if($ItemMessagestatus ==1){
+                       $i--;
+                   }
+               }
+
+              //  $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->setFont( $phpFont );
+               // $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setColor( $phpColor );
+
+                //写入行数据
+                $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getAlignment()->setWrapText(true);//自动换行
+                $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' . strtoupper($_v['ItemName']));
+                $obj->getActiveSheet(0)->getStyle($cellName[2] . ($i + $_row))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00) ;
+                $obj->getActiveSheet(0)->setCellValue($cellName[2] . ($i + $_row), ' ' . $_v['Quantity']);
+                $obj->getActiveSheet(0)->setCellValue($cellName[3] . ($i + $_row), ' ' . $_v['Unit']);
+                $obj->getActiveSheet(0)->getStyle($cellName[4] . ($i + $_row))->getAlignment()->setWrapText(true);//自动换行
+                $obj->getActiveSheet(0)->setCellValue($cellName[4] . ($i + $_row), ' ' . $_v['specName']);
+                $obj->getActiveSheet(0)->setCellValue($cellName[5] . ($i + $_row), ' ' . '');
+                $obj->getActiveSheet(0)->setCellValue($cellName[6] . ($i + $_row), ' ' .'');
+
+                $i++;
+
+                //如果当前为新客户，则在次行写入 seq number
+                if(!$old_customerCode || $old_customerCode != $_v['CustomerCode']) {
+                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), 'SEQ: ' . $_v['SeqNo']);
+                    if(strlen($_v['ItemMessage'])>0) {
+
+                        $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+
+                        $obj->getActiveSheet()->mergeCells($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
+                        $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getFont()->setSize(14)->getColor()->setRGB('000000');
+                        $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), $_v['ItemMessage']);
+                        //合并单元格
+                        $ItemMessagestatus =2;
+                    }else{
+                        $ItemMessagestatus =1;
+                    }
+                    $i++;
+                  }else{
+
+                    if(strlen($_v['ItemMessage'])>0) {
+                        $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), '');
+                        $obj->getActiveSheet()->mergeCells($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
+                        $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getFont()->setSize(14)->getColor()->setRGB('000000');
+
+                        $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), $_v['ItemMessage']);
+                        //合并单元格
+                        $i++;
+                        $ItemMessagestatus =2;
+                    }else{
+                        $ItemMessagestatus =2;
+                    }
+                // 关于上面 $itemmessagestatus 的设置逻辑是： 如果 是 第一行item有留言，则，在第二行 seq 的后面列中写入 产品信息，以避免空行。
+                    // 如果不是第二行数据，便不存在这个问题。
+                 }
+          //   $i++;
+                $old_customerCode = $_v['CustomerCode'];
+                $olddriverAndTruckName =$_v['DriverName'].'-'.$_v['truckName'];
+
+
+            }
+
+
+
+        }
+
+
+
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $obj->setActiveSheetIndex(0);
+
+        //设置共几条数据行
+        //    $obj->setActiveSheetIndex(0)->setCellValue('A' . (4 + $count + 1), '共' . $count . '条数据');//A10 = A（4+x+1）
+        //导出时间行
+        //    $obj->setActiveSheetIndex(0)->setCellValue('A' . (5 + $count + 1), '导出时间');
+        //    $datetime = date('Y-m-d H:i:s', time());
+        //    $obj->setActiveSheetIndex(0)->setCellValue('B' . (5 + $count + 1), "$datetime");
+
+        ob_end_clean();
+// Redirect output to a client’s web browser (Excel2007)
+        $objWriter = PHPExcel_IOFactory::createWriter($obj, 'Excel2007');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$fileName.'.xlsx"');
+        header('Cache-Control: max-age=0');
+
+
+
+
+        $objWriter->save('php://output');
+        exit;
+
+
+
+
+
+    }
 
     public function order_invoice_action(){
 

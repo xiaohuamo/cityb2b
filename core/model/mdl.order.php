@@ -266,6 +266,53 @@ public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
      return $list;
 }
 
+public function get_manual_producing_data($dateSearcch,$factoryId){
+     $sql ="SELECT o.orderId,if(length(u.contactPersonFirstname)>0,if(length(u.contactPersonLastname)>0,
+    concat(u.contactPersonFirstname,'-',u.contactPersonLastname),u.contactPersonFirstname) ,u.name) as DriverName ,
+       concat(t.plate_number,'-',t.truck_name) as truckName, if(length(f.xero_account_number)>0,
+           f.xero_account_number,f.user_id) as accountNumber, if(length(f.nickname)>0,f.nickname,o.displayName) as CustomerCode,
+       concat(o.first_name,' ',o.last_name) as ContactName,o.logistic_truck_No as TruckNo,
+       o.logistic_sequence_No as SeqNo,o.logistic_stop_No as StopNo,o.message_to_business as Message ,
+       o.city,o.postalcode ,details.* 
+    from cc_order as o  left join cc_user_factory f on o.userId =f.user_id and o.business_userId =f.factory_id 
+        left join cc_truck t on t.business_id =o.business_userId and t.truck_no =o.logistic_truck_No
+        left join cc_user u on t.current_driver =u.id 
+        left join ( select c.order_id ,m.menu_id as ItemCode,upper(if(length(spec.menu_en_name)>0,spec.menu_en_name,'')) as specName ,if(length(m.menu_code)>0,m.menu_code,if(length(m.menu_en_name)>0,m.menu_en_name,c.bonus_title ))  as ItemName ,
+                    c.customer_buying_quantity as Quantity, upper(if(length(m.unit_en)>0,m.unit_en,m.unit)) as Unit,
+                    c.message as ItemMessage
+                    
+                    from cc_wj_customer_coupon c
+                    left join cc_restaurant_menu m  on c.restaurant_menu_id =m.id 
+                    left join cc_restaurant_menu_option spec on c.guige1_id =spec.id) details on o.orderId =details.order_id 
+    where  business_userId= $factoryId  and DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$dateSearcch' 
+      and (o.coupon_status='c01' or o.coupon_status ='b01') 
+      and (o.status =1 or o.accountPay=1)  order by o.logistic_truck_No,o.city";
+     $data =$this->getListBySql($sql);
+//var_dump($sql);exit;
+   /* if($data){
+
+        foreach ($data as $key=>$value){
+
+        $orderid=$value['orderId'];
+            $sql1 ="select m.menu_id as ItemCode,upper(if(length(spec.menu_en_name)>0,spec.menu_en_name,'')) as specName ,if(length(m.menu_en_name)>0,m.menu_en_name,c.bonus_title ) as ItemName ,
+                    c.customer_buying_quantity as Quantity, upper(if(length(m.unit_en)>0,m.unit_en,m.unit)) as Unit,
+                    c.message as ItemMessage
+                    
+                    from cc_wj_customer_coupon c
+                    left join cc_restaurant_menu m  on c.restaurant_menu_id =m.id 
+                    left join cc_restaurant_menu_option spec on c.guige1_id =spec.id
+                    
+                    where order_id =$orderid";
+          }
+
+    }else{
+
+    }
+   */
+     return $data;
+
+}
+
    public function getByOrderId($orderid)
     {
         $where = "orderId='$orderid'";
