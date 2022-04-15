@@ -184,7 +184,7 @@
 			   <{$lang->print_item_packing_slips}>
 		</a>
 		
-		<a target=_blank  href="https://d.cityb2b.com/product/picking" class="current"<{/if}>>
+		<a target=_blank  href="https://d.cityb2b.com/product/picking" class="current">
 			   <{$lang->dispatching_platform}>
 		</a>
 	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
@@ -228,6 +228,11 @@
 		<a  href="<{$http_root_www}>factory_2c/single_producing_item_print_edit"<{if $submenu=='single_producing_item_print_edit'}> class="current"<{/if}>>
 				 <{$lang->producing_item_edit}>
 		</a>
+		<a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu=='export_manual_dispatching_form'}> class="current"<{/if}>>
+				 <{$lang->producing_item_edit}>
+		</a>
+	
+	
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
 				<{$lang->producing_platform}> 

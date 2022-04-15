@@ -60,6 +60,7 @@
 	<print_picking_list>非加工总备货单</print_picking_list>
 	<Single_Picking_item_edit>备货单品管理</Single_Picking_item_edit> 
 	<producing_item_edit>加工产品设置</producing_item_edit> 
+	<export_manual_dispatching_form>导出手工生产单</export_manual_dispatching_form> 
 	<print_packing_slips>客户装箱单</print_packing_slips> 
 	<print_item_packing_slips>单品备货单</print_item_packing_slips> 
 	<single_item_buying_list>单品加工单</single_item_buying_list> 

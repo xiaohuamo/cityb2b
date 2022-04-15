@@ -4814,6 +4814,132 @@ class ctl_factory extends cmsPage
     }
 
 
+    public function export_manual_dispatching_form_action()
+    {
+
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $mdl_order = $this->loadModel('order');
+        $mdl_user= $this->loadModel('user');
+        $mdl_truck =  $this->loadModel('truck');
+
+        /**
+         * Driver List of Current Business
+         */
+
+        $customer_delivery_date = trim(get2('customer_delivery_date'));
+
+
+
+        $three_days_times = time()-259200;
+
+        $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
+            $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+        // var_dump($sql_avaliable_date);exit;
+
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+        // $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
+        $availableDates = array_map(function($d){
+            return date('Y-m-d',$d['logistic_delivery_date']);
+        }, $availableDates);
+        $this->setData($availableDates, 'availableDates');
+
+
+
+        $logistic_truck_No = trim(get2('logistic_truck_No'));
+
+
+        $this->setData($logistic_truck_No,'logistic_truck_No');
+
+
+        $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+        $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
+
+
+        $this->setData($customer_delivery_date,'customer_delivery_date');
+        $this->setData($postcode,'postcode');
+
+        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+
+        $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
+        //var_dump($sql);exit;
+
+
+
+        $whereStr.= " and (o.coupon_status='c01' or o.coupon_status='b01' )";
+
+
+
+        $whereStr.= " and (o.status =1 or o.accountPay=1) ";
+
+
+
+
+
+        //deleivery date
+        if (!empty($customer_delivery_date)) {
+            if ($customer_delivery_date != 'all') {
+                $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
+            }else{
+                $three_days_times = time()-259200;
+                $whereStr.= " and  logistic_delivery_date > $three_days_times";
+
+
+            }
+        }else {
+            $three_days_times = time()-259200;
+            $whereStr.= " and  logistic_delivery_date > $three_days_times";
+        }
+
+        if (!empty($logistic_truck_No)) {
+
+            if ($logistic_truck_No != 'all') {
+                $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
+
+            }
+        }
+
+        if ($logistic_truck_No =='0' ) {
+            $whereStr.= " and  logistic_truck_No =0 ";
+            // var_dump($logistic_truck_No);exit;
+        }
+
+
+
+        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
+
+        // var_dump($pageSql); exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 10;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+        $data = $mdl_order->getListBySql($page['outSql']);
+
+        foreach ($data as $key => $value) {
+            $data[$key]['name'] =$this->getCustomerName($value);
+
+        }
+
+        $this->setData($page['pageStr'],'pager');
+
+        $this->setData($data,'data');
+
+        $this->setData('Producing_Centre', 'menu');
+        $this->setData('export_manual_dispatching_form', 'submenu');
+
+        $this->setData(HTTP_ROOT_WWW.'factory/export_manual_dispatching_form', 'searchUrl');
+
+        $this->setData($this->parseUrl(), 'currentUrl');
+
+        $this->setData('Order Logisitic Schedule - ' . $this->site['pageTitle'], 'pageTitle');
+
+        $this->display_pc_mobile('factory/export_manual_dispatching_form','factory/export_manual_dispatching_form');
+    }
+
+
+
+
   /**
      *  Ajax update the truck of the order 
      */
@@ -4856,9 +4982,13 @@ class ctl_factory extends cmsPage
     }
 
     public function create_manunal_dispatching_report_action(){
-        $dateOfSearch =get2('dateOfSearch');
+        $dateOfSearch =get2('date');
+        $driver =get2('driver-serial');
+
+        $driverName =$this->loadModel('truck')->getTruckAndDriverInfo1($driver,$this->current_business['id']);
+      //  var_dump($driver);exit;
         $mdl_order =$this->loadModel('order');
-        $dispatching_data =$mdl_order->get_manual_producing_data($dateOfSearch,$this->current_business['id']);
+        $dispatching_data =$mdl_order->get_manual_producing_data($dateOfSearch,$this->current_business['id'],$driver);
         $mdl_user_account_info	= $this->loadModel('user_account_info');
          $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
 //var_dump($dispatching_data);exit;
@@ -4890,7 +5020,7 @@ class ctl_factory extends cmsPage
 
 
         $labels = ['Customer', 'Product','Quan','Unit','Size','Tot','Sor'];
-        $fileName =$dateOfSearch.'_'.substr($accountInfo['account_name'],0,5).'Dispatching';
+        $fileName =$dateOfSearch.'_'.substr($accountInfo['account_name'],0,5).$driverName.'-Dispatching';
 
 
 

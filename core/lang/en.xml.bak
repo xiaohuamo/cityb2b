@@ -59,7 +59,7 @@
 	<always_keep_note>Always keep the notes for this product</always_keep_note>
 	<keep_note_only_once>only use the notes this time</keep_note_only_once>
 	<add_note_promot>Supplier will see the note for this product.</add_note_promot>
-	
+	<dispatching_platform>dispatching platform</dispatching_platform>
 	
 	 <tradinghours_setting>Trading Hours Setting </tradinghours_setting>
 	 <tradinghours_setting_notes>Description</tradinghours_setting_notes>
