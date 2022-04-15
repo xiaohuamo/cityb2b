@@ -4886,7 +4886,7 @@ class ctl_factory extends cmsPage
 
         }
 
-
+//var_dump(json_encode($lists_new));exit;
 
 
         $labels = ['Customer', 'Product','Quan','Unit','Size','Tot','Sor'];
@@ -4948,7 +4948,7 @@ class ctl_factory extends cmsPage
         $obj->getActiveSheet()->getStyle( "A0:G".$countOfRows)->applyFromArray($styleThinBlackBorderOutline);
 
 
-        $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
+        $obj->getActiveSheet()->getDefaultRowDimension()->setRowHeight(18);
         $obj->getActiveSheet()->getDefaultColumnDimension()->setCollapsed(true);
         $obj->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
         $obj->getActiveSheet()->getColumnDimension("A")->setWidth(20);
@@ -4956,11 +4956,11 @@ class ctl_factory extends cmsPage
         $obj->getActiveSheet()->getColumnDimension("C")->setWidth(10);
         $obj->getActiveSheet()->getColumnDimension("D")->setWidth(10);
        // $obj->getActiveSheet()->getStyle('C')->getAlignment()->setWrapText(true);//自动换行
-        $obj->getActiveSheet()->getColumnDimension("E")->setWidth(15);
+        $obj->getActiveSheet()->getColumnDimension("E")->setWidth(20);
       //  $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
       //  $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
-        $obj->getActiveSheet()->getColumnDimension("F")->setWidth(8);
-        $obj->getActiveSheet()->getColumnDimension("G")->setWidth(7);
+        $obj->getActiveSheet()->getColumnDimension("F")->setWidth(5);
+        $obj->getActiveSheet()->getColumnDimension("G")->setWidth(5);
        // $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
       //  $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
 
@@ -4971,7 +4971,7 @@ class ctl_factory extends cmsPage
         $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 // Add some data
         $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
-        $obj->getActiveSheet(0)->setTitle(substr('Dispatching Sheet ',0,29));
+        $obj->getActiveSheet(0)->setTitle(substr($fileName,0,29));
 
         $_row = 1;   //设置纵向单元格标识
         $_cnt = count($labels);
@@ -5015,8 +5015,9 @@ class ctl_factory extends cmsPage
 
                //如果有新的driver ,则加入新的driver
                 if(!$olddriverAndTruckName || $newdriverandtruckname!= $olddriverAndTruckName) {
-
+                    $old_customerCode =0;
                     if($olddriverAndTruckName) {
+                     //   $obj->createSheet();
                         $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' );
                         $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' );
                         $obj->getActiveSheet(0)->setCellValue($cellName[2] . ($i + $_row), ' ');
@@ -5036,7 +5037,7 @@ class ctl_factory extends cmsPage
                     $obj->getActiveSheet()->mergeCells($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
                     $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row))->getFont()->getColor()->setRGB('000000');
-                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), $showDriverTruckInfo.'  '.'Delivery Date [' . $start_time . ']');
+                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), $showDriverTruckInfo);
 
 
 
@@ -5056,6 +5057,28 @@ class ctl_factory extends cmsPage
 
                 //如果当前是最初或者是新客户
                if(!$old_customerCode || $old_customerCode != $_v['CustomerCode']) {
+
+
+                   if(strlen($_v['Message'])>0) {
+
+
+                       //  exit;
+                       $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+                       $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) )->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+
+                       $obj->getActiveSheet()->mergeCells($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
+                       $obj->getActiveSheet(0)->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[1] . ($i + $_row))->getFont()->setSize(12)->getColor()->setRGB('000000');
+                       $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row),'From '.$_v['CustomerCode']);
+                       $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getAlignment()->setWrapText(true);
+                       $rowhei =ceil(strlen($_v['Message'])/80)*18;
+                       $obj->getActiveSheet(0)->getRowDimension($i + $_row)->setRowHeight($rowhei);
+                       $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row),$_v['Message']);
+// $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' . $_v['CustomerCode']);
+
+
+                       $i++;
+                   }
                     //如果是新客户，则墙面留一个空行
                    if($old_customerCode) {
                        $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' );
@@ -5066,6 +5089,7 @@ class ctl_factory extends cmsPage
                        $obj->getActiveSheet(0)->setCellValue($cellName[6] . ($i + $_row), ' ' );
 
                        $i++;
+
                    }
                      $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ' . $_v['CustomerCode']);
                }else{
@@ -5075,9 +5099,10 @@ class ctl_factory extends cmsPage
                    }
                }
 
+                $obj->getActiveSheet(0)->getRowDimension($i + $_row)->setRowHeight(23);
               //  $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->setFont( $phpFont );
                // $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setColor( $phpColor );
-
+               $specName =substr(str_replace(' ','',$_v['specName']),0,9 );
                 //写入行数据
                 $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getAlignment()->setWrapText(true);//自动换行
                 $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' . strtoupper($_v['ItemName']));
@@ -5085,7 +5110,8 @@ class ctl_factory extends cmsPage
                 $obj->getActiveSheet(0)->setCellValue($cellName[2] . ($i + $_row), ' ' . $_v['Quantity']);
                 $obj->getActiveSheet(0)->setCellValue($cellName[3] . ($i + $_row), ' ' . $_v['Unit']);
                 $obj->getActiveSheet(0)->getStyle($cellName[4] . ($i + $_row))->getAlignment()->setWrapText(true);//自动换行
-                $obj->getActiveSheet(0)->setCellValue($cellName[4] . ($i + $_row), ' ' . $_v['specName']);
+              //  $obj->getActiveSheet(0)->getStyle($cellName[4] . ($i + $_row))->getAlignment()->setShrinkToFit(true);
+                $obj->getActiveSheet(0)->setCellValue($cellName[4] . ($i + $_row), ' ' . $specName);
                 $obj->getActiveSheet(0)->setCellValue($cellName[5] . ($i + $_row), ' ' . '');
                 $obj->getActiveSheet(0)->setCellValue($cellName[6] . ($i + $_row), ' ' .'');
 
