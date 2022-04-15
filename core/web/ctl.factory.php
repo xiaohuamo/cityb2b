@@ -4927,7 +4927,7 @@ class ctl_factory extends cmsPage
      //   $phpColor = new PHPExcel_Style_Color();
     //    $phpColor->setRGB('FF0000');
 
-    $countOfRows =count($dispatching_data)+500;
+    $countOfRows =count($dispatching_data)+150;
 
         $obj->getActiveSheet()->getStyle("A0:G".$countOfRows)->getFont()
             ->setName('Arial Narrow')
