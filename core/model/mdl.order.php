@@ -286,7 +286,12 @@ public function get_manual_producing_data($dateSearcch,$factoryId,$driver){
                     left join cc_restaurant_menu_option spec on c.guige1_id =spec.id) details on o.orderId =details.order_id 
     where  business_userId= $factoryId  and DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$dateSearcch' 
       and (o.coupon_status='c01' or o.coupon_status ='b01') 
-      and (o.status =1 or o.accountPay=1) and o.logistic_truck_No=$driver order by o.logistic_truck_No,o.city";
+      and (o.status =1 or o.accountPay=1) " ;
+      
+      if ($driver !='all') {
+        $sql .=  " and o.logistic_truck_No=$driver ";
+      }
+      $sql .= "  order by o.logistic_truck_No,o.city";
      $data =$this->getListBySql($sql);
 //var_dump($sql);exit;
    /* if($data){
