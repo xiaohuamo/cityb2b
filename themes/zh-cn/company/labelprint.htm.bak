@@ -31,7 +31,7 @@
 		display: inline-block;
 		position: relative;
 		float: left;
-		width: 70%;
+		width: 75%;
 		height: 98vh;
 		background: #eee;
 	}
@@ -39,7 +39,7 @@
 	.panel-right{
 		display: inline-block;
 		position: relative;
-		width: 29%;
+		width: 24%;
 		height: 98vh;
 		background: #2bcade;
 	}

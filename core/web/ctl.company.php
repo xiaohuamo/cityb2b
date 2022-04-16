@@ -14706,11 +14706,11 @@ public function custom_delivery_fee_add_action()
  
 		//operators
 		$mdl_user =  $this->loadModel('user');
-		$operators = $mdl_user->getAllStaff1($this->current_business['id'], ture);
+		$operators = $mdl_user->getAllStaffListUponRoles($this->current_business['id'], 0);
 		$operators = array_map(function($o) use ($mdl_user){
 			return [
 				'id' => $o['id'],
-				'displayName' => $mdl_user->getUserDisplayName($o['id'])
+				'displayName' => $o['displayName']
 			];
 		}, $operators);
 

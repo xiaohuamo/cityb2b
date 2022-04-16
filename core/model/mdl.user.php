@@ -436,6 +436,16 @@ class mdl_user extends mdl_base
 		return $this->getAllStaffFromString($this->findCommonStaffStr($str_array));
 	}
 
+    // 9 10 11 12 0 1
+    public  function  getAllStaffListUponRoles($factory_id,$roles){
+      $sql ="select id , name,if(length(contactPersonNickName)>0,contactPersonNickName,if(length(contactPersonFirstname)>0,concat(contactPersonFirstname,' ',contactPersonLastname),name)) as displayName 
+        from cc_user where  ( (user_belong_to_user = $factory_id and role =20) or id =$factory_id) 
+                       and (id in (SELECT roles.staff_id  FROM `cc_staff_roles`roles  WHERE roles like '%,0,%' or roles like '%,1,%' or  roles like '%,9,%' or roles like  '%,10,%' or roles like  '%,11,%' or roles like '%,12,%'  ) or id=$factory_id) 
+      ";
+      $data = $this->getListBySql($sql);
+      return $data;
+
+    }
 
 	public function getMainPics($id){
 		$user =$this->getUserById($id);
