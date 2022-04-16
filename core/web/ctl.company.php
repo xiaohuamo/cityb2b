@@ -14676,7 +14676,12 @@ public function custom_delivery_fee_add_action()
 			$parsed['logistic_stop_No'] = $order['logistic_stop_No'];
 			$parsed['logistic_delivery_date'] = $order['logistic_delivery_date'];
 			$parsed['logistic_suppliers_info'] = $order['logistic_suppliers_info'];
-			$parsed['logistic_suppliers_count'] = $order['logistic_suppliers_count'];
+            if(!$order['displayName']) {
+                $order['displayName'] =$name;
+            }
+			$parsed['displayName'] = substr($order['displayName'],0,11);
+            $parsed['boxesNumber'] = $order['boxesNumber'];
+
 			$parsed['redeem_code'] = $order['redeem_code'];
 
 			$payment=$order['payment'];
@@ -14792,7 +14797,15 @@ public function custom_delivery_fee_add_action()
 
 	public function record_label_print_action() {
         if(is_post()){
-            $this->loadModel('order_print_log')->addRecord(post('orderId'), $this->loginUser['id']);
+
+            $orderId = post('orderId');
+            $boxesNumber =  post('totalCopay');
+            $this->loadModel('order_print_log')->addRecord($orderId, $this->loginUser['id']);
+
+            //修改order表 box数量
+            $data =array('boxesNumber'=>$boxesNumber);
+            $where =array('orderId'=>$orderId);
+            $this->loadModel('order')->updateByWhere($data,$where);
         }
     }
 

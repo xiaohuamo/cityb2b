@@ -13,6 +13,7 @@
 <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
 
 <{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/labelprint.css" />
 
 <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
 
@@ -44,18 +45,18 @@
 	}
 
 	.btnbox {
-		display: inline-block;
+		 display: inline-block;
 		border: 1px solid #eee;
-		height: 4rem;
+	//	height: 4rem;
 		line-height: 4rem;
 		text-align: center;
 		margin: 0.5%;
 
-		background: lightgreen;
+		background: #FFF7F3;
 	}
 
 	.btnbox.selected {
-		background: #FD5001  !important;
+		background: #FD6921  !important;
 		color: white;
 	}
 
@@ -77,7 +78,7 @@
 	}
 
 	.order-panel .btnbox{
-		width: 8%;
+	//	width: 8%;
 	}
 
 	.detail-panel {
@@ -197,7 +198,7 @@
 	}
 
 	.nav .select{
-		background: #FD5001 ;
+		background: #FD6921 ;
 		color: white;
 		padding: 15px 15px;
 	}
@@ -281,7 +282,7 @@
 		<div class="operator-panel" style="    background: #ddd;">
 			<!-- 操作员选择 -->
 			<{foreach from=$operators item=item}>
-				<span class='btnbox' data-user-id='<{$item.id}>'><{$item.displayName}></span>
+				<span class='btnbox' style ="height:4rem;" data-user-id='<{$item.id}>'><{$item.displayName}></span>
 			<{/foreach}>
 		</div>
 
@@ -296,12 +297,15 @@
 			<span class='btnbox'>More</span>
 		</div>
 
-		<div class='order-panel'>
+		
+			<div class="order-panel flexbox2 rsection1 rsection1Box F18 J_product_cate">
 			<!-- 订单统配号 列表 -->
-			<{for $var=1 to 50}>
-			<span class='btnbox printed'><{$var}></span>
-			<{/for}>
-		</div>
+				<{for $var=1 to 50}>
+			<!--	<span class='btnbox printed'><{$var}></span> -->
+				<{/for}>
+				</div>
+				</div>
+		
 	</div>
 
 
@@ -470,7 +474,19 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			})
 
             var orderId = $('.order-panel .btnbox.selected').data('order-id');
-            recordLabelPrint(orderId);
+           
+			
+			
+			
+			var totalCopy = $('input.printCopy').val();
+		
+			//修改数组的值
+			parsedOrders[orderId]['boxesNumber']=totalCopy;
+			
+			$('.order-panel .btnbox.selected').css('background',"lightgreen");
+			$('#order_num_'+orderId).html(totalCopy +' boxes');
+			
+			 recordLabelPrint(orderId,totalCopy);
 		})
 
 		$('body').on("click", ".preview button", function(){
@@ -552,9 +568,16 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 		for (var i = startIndex; i <= endIndex; i++) {
 			var order = parsedOrders[keys[i]];
+			var backcolor ="#FFF7F3;";
+			if(order.boxesNumber>0) {
+			 backcolor ="lightgreen; ";
+			
+			}
 
 			pageContext.append(
-				$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
+				//$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
+					'<div  data-indexid ='+ i +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+order.boxesNumber+' boxes</span></div> <div class="F18" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
+		 
 			);
 		}
 	}
@@ -687,7 +710,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
             url:"/company/record_label_print",
             type:"POST",
             data: {
-                orderId:orderId,
+                orderId:orderId,totalCopay:totalCopy
             }
         })
 	}
@@ -700,15 +723,22 @@ var parsedOrders = JSON.parse(parsedOrders1);
 	function init() {
 		LODOP = getLodop();  
 		//LODOP.SET_LICENSES("","EE0887D00FCC7D29375A695F728489A6","C94CEE276DB2187AE6B65D56B3FC2848","");
-		LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","","");
+		LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","",""); 
 		LODOP.PRINT_INIT("CityB2B-打印机预览");
-		LODOP.SET_PRINT_PAGESIZE(1, '100mm', '100mm', "");
+		LODOP.SET_PRINT_PAGESIZE(1, '100mm', '100mm', ""); 
 
 		$('.order-panel .btnbox.selected').each(function(k,v){
 			var orderId = $(v).data('order-id');
+		
+			
+			
+			
 			var order = parsedOrders[orderId];
 
 			var totalCopy = $('input.printCopy').val();
+			
+			//修改数组的值
+			parsedOrders[orderId]['boxesNumber']=totalCopy;
 
 			if (DEFAULT_PRINT_MODE === PRINT_MODE_SINGLE_LABEL_PER_PAGE) {
 				generateOrderPrint(order, totalCopy);
