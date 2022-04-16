@@ -458,7 +458,7 @@ a{
 }
 
 .rbtn6{
-	width: 12%;
+	width: 10%;
 	height: 70px;
 	border-radius: 3px;
 	padding: 10px;
@@ -481,7 +481,7 @@ a{
 	margin-bottom: 20px;
 }
 .rsection1Box{
-	max-height: 348px;
+	//max-height: 348px;
 	overflow: auto;
 }
 .maT5{
