@@ -4418,6 +4418,9 @@ function category_migration_action(){
 
 			$speical_price = post('speical_price');
 			if($speical_price)$data['speical_price']=$speical_price;
+
+			$unitQtyPerBox = post('unitQtyPerBox');
+			if($unitQtyPerBox)$data['unitQtyPerBox']=$unitQtyPerBox;
 			
 			
 			$barcode_number = post('barcode_number');

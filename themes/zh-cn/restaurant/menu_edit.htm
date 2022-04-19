@@ -403,6 +403,7 @@
 									<th name="en_name1">产品名-英文</th>
 								
 									<th name="en_name1">英文单位</th>
+									<th >每箱单位数</th>
 									<th name="en_name1">描述-英文</th>
 									<th >主分类</th>
 							
@@ -586,6 +587,12 @@
 												   value="<{$item.unit_en}>">
 											<span class='promote-ajax'></span>
 										</td>
+										
+										<td >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
+												   value="<{$item.unitQtyPerBox}>">
+											<span class='promote-ajax'></span>
+										</td>
 										<td name="en_name1">
 											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
 											<span class='promote-ajax'></span>
@@ -740,7 +747,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
+    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price],input[name=unitQtyPerBox],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
