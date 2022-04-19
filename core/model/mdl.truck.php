@@ -41,7 +41,7 @@ class mdl_truck extends mdl_base
 		//var_dump($sql);exit;
 		$sql="select o.logistic_truck_No ,t.*,ifnull(count(DISTINCT o.orderId),0) as count,concat(u.contactPersonFirstname,' ',u.contactPersonLastname) as driverName,
 
- ceil(sum(c.customer_buying_quantity/ m.unitQtyPerBox)) as boxes
+ if(o.boxesNumber>0,o.boxesNumber,ceil(sum(c.customer_buying_quantity/ m.unitQtyPerBox))) as boxes
 
 from cc_order o left join cc_truck t on o.logistic_truck_No = t.truck_no and o.business_userId=t.business_id left join cc_user u on t.current_driver =u.id 
 left join cc_wj_customer_coupon c on o.orderId =c.order_id left join cc_restaurant_menu m on c.restaurant_menu_id =m.id 

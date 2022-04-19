@@ -68,13 +68,13 @@
 						<{foreach from=$TuckListOfTheDay item=d}>
 							<{if $d.logistic_truck_No==0}>
 							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-								<{$lang->no_truck_yet}>-(<{$d.boxes}>boxes)
+								<{$lang->no_truck_yet}>-(<{$d.count}>orders)-(<{$d.boxes}>boxes)
 							</option>
 							
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
 									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)-(<{$d.boxes}>boxes)
+									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>orders)-(<{$d.boxes}>boxes)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -249,7 +249,7 @@
 									
 
 
-							<td><{$item.boxes}></td>
+							<td><{if $item.boxesNumber>0}><{$item.boxesNumber}><{else}><{$item.boxes}><{/if}></td>
 									<td><{$item.logistic_stop_No}></td>
 									    <td><{$item.logistic_sequence_No}></td>
 									  

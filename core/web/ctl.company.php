@@ -14804,7 +14804,9 @@ public function custom_delivery_fee_add_action()
             $this->loadModel('order_print_log')->addRecord($orderId, $this->loginUser['id']);
 
             //修改order表 box数量
-            $data =array('boxesNumber'=>$boxesNumber);
+            $data =array(
+                'boxesNumber'=>$boxesNumber
+            );
             $where =array('orderId'=>$orderId);
             $this->loadModel('order')->updateByWhere($data,$where);
         }
