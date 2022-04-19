@@ -2861,7 +2861,7 @@ class ctl_company extends cmsPage
 		
 		// 如果该voucher 为多次使用voucher ,如果非多次使用和已经使用完成的，走else ,否则走
 		if(($order['multi_use']>1 && ($order['multi_use']==$order['multi_used']+1)) || $order['multi_use']<=1) {
-			
+		//	var_dump('yes');exit;
 			if($order['multi_use']>1 && ($order['multi_use']==$order['multi_used']+1)){
 				// 如果多次订单，已经使用满，则将 multi_used+1 ,然后按照正常流程处理。
 				$order_update_data=array(
@@ -2876,7 +2876,7 @@ class ctl_company extends cmsPage
 			 * 结算账款
 			 */
 			$mdl_recharge = $this->loadModel('recharge');
-			$mdl_recharge->updataTransactionStatus($orderId, BalanceProcess::SETTLE);
+		//	$mdl_recharge->updataTransactionStatus($orderId, BalanceProcess::SETTLE);
             $mdl_statement=$this->loadModel('statement');
 
 			 /**
@@ -2943,14 +2943,15 @@ class ctl_company extends cmsPage
 			if ($mdl_order->errno()) {
 				$mdl_order->rollback();
 			} else {
-                $mdl_order->rollback();
-               // $mdl_order->commit();
+                //$mdl_order->rollback();
+                $mdl_order->commit();
                 //如果成功则生成invoice 文件 ，并发送欸客户户;
                 $this->sendInvoice($fileattr,$mdl_order,$mdl_user,$orderId) ;
 
 			}
 			
 		}else {
+          //  var_dump('no');exit;
 			$data_update_order = array(
 				'cn_coupon_status_name' => '部分使用',
 				'en_coupon_status_name' => 'parts of used',
@@ -14600,7 +14601,7 @@ public function custom_delivery_fee_add_action()
 		if ($date && $bid) {
 			$orders = $opRoute->getBusinessOrderOnDeliverDate($date,$bid,$data_resource,$ref_seq_num);
 		}
-		
+	//	var_dump($orders);exit;
 		if($ref_seq_num ==1) {  //表示来自Ubonus标准数据源
 			usort($orders, function($a, $b){
 				return $a['logistic_sequence_No'] - $b['logistic_sequence_No'];
@@ -14660,7 +14661,7 @@ public function custom_delivery_fee_add_action()
 			$parsed['phone'] = $order['phone'];
 			$order['message_to_business']=str_replace("'","",$order['message_to_business']);
 			$parsed['message_to_business'] = $order['message_to_business'];
-			
+			$parsed['boxes'] =$order['boxes'];
 			$parsed['logistic_truck_No'] = $order['logistic_truck_No'];
             $truckName =$this->loadModel('truck')->getByWhere(array('business_id'=>$order['business_userId'],'truck_no'=>$order['logistic_truck_No']));
             $parsed['truck_name'] = substr($truckName['truck_name'],0,8).'-'.$truckName['plate_number'];

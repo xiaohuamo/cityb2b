@@ -215,7 +215,9 @@ class OptimoRoute
 		if(!$data_resource) $data_resource =1;
 		
 		if ($data_resource ==1 ) {
-			$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id  where logistic_delivery_date =$timestamp and coupon_status='c01'  and ( status=1 or accountPay =1) ";
+			$sql ="select  (SELECT  sum( c.`new_customer_buying_quantity`/m.unitQtyPerBox )    FROM `cc_wj_customer_coupon` c  left join cc_restaurant_menu m  on  c.`restaurant_menu_id` =m.id  WHERE order_id = cc_order.orderId ) as boxes,
+
+          f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id  where logistic_delivery_date =$timestamp and coupon_status='c01'  and ( status=1 or accountPay =1) ";
 			$sql .=" and ( business_userId =$bid ";
 			$sql .=" or  orderId in (select DISTINCT order_id from cc_wj_customer_coupon c where business_id = $bid)";
 			$sql .=" or  business_userId in (select customer_id from cc_factory2c_list c where factroy_id = $bid)";

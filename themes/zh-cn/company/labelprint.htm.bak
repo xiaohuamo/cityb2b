@@ -70,7 +70,7 @@
 	}
 
 	.operator-panel .btnbox{
-		width: 10%;
+		width: 7%;
 	}
 
 	.order-index-panel .btnbox{
@@ -327,7 +327,7 @@
 			<div class='copy-adjust-input'>
 				<!-- 份数输入 -->
 				<span onClick='reducePrintCopy(1)'>-</span>
-				<input name="printCopy" class='printCopy' value='1'>
+				<input id="printCopy" name="printCopy" class='printCopy' value='1'>
 				<span onClick='increasePrintCopy(1)'>+</span>
 			</div>
 
@@ -415,6 +415,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 			$(this).siblings('.btnbox').removeClass('selected');
 			$(this).addClass('selected');
+			
 
 			renderPageContent($(this).data('page'), DEFAULE_PAGE_SIZE);
 
@@ -428,6 +429,8 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			$(this).toggleClass('selected');
 
 			var orderId = $(this).data('order-id');
+			var boxes = $(this).data('boxes');
+			alert(boxes);
 			renderDetailPanel(orderId);
 
 			var order = parsedOrders[orderId];
@@ -572,11 +575,13 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			if(order.boxesNumber>0) {
 			 backcolor ="lightgreen; ";
 			
+			}else{
+				order.boxesNumber=Math.ceil(order.boxes);
 			}
 
 			pageContext.append(
 				//$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
-					'<div  data-indexid ='+ i +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+order.boxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
+					'<div  data-boxes='+ order.boxesNumber +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+order.boxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
 		 
 			);
 		}
