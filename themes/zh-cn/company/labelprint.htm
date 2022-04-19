@@ -143,7 +143,30 @@
 		height: 74px;
 		line-height: 74px;
 	}
+	.number-checkbox-input {
+		text-align: center;
+		height: 74px;
+		line-height: 74px;
+	}
+	
+	.number-checkbox-input span{
+		display: inline-block;
+		border: 0px solid #eee;
+		width: 200px;
+		height: 30px;
+		line-height: 40px;
+		text-align: center;
+		font-size: 20px;
+	}
 
+	.number-checkbox-input input{
+		height: 30px;
+		width: 30px;
+		text-align: center;
+		font-size: 1.6rem;
+	}
+	
+	
 	.copy-adjust-input span{
 		display: inline-block;
 		border: 1px solid #eee;
@@ -323,6 +346,10 @@
 				<span class='btnbox'>5</span>
 				<span class='btnbox'>6</span>
 			</div>
+<div class='number-checkbox-input'>
+	
+	<input type='checkbox' id="noboxNumberOnLabel"  name="noboxNumberOnLabel"   value='0'><span>no print Box Numbers </span>
+</div>
 
 			<div class='copy-adjust-input'>
 				<!-- 份数输入 -->
@@ -755,10 +782,21 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 	//single label per page
 	function generateOrderPrint(order, copy) {
+	  var ifnotPrintBoxnumber = $('#noboxNumberOnLabel').is(":checked");
+	 // alert(ifPrintBoxnumber);
 		for (var i = 0; i < copy; i++) {
-			order.boxLabel = i + 1 + " of " + copy;
+		if(ifnotPrintBoxnumber){
+		
+		order.boxLabel = '__' + " of " + '__';
 			//order.boxLabel = i + 88 + " of " + 88;
 			addOnePage(order);
+		}else{
+		
+		order.boxLabel = i + 1 + " of " + copy;
+			//order.boxLabel = i + 88 + " of " + 88;
+			addOnePage(order);
+		}
+			
 		}
 	}
 
