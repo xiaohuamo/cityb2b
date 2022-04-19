@@ -603,12 +603,23 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			 backcolor ="lightgreen; ";
 			
 			}else{
-				order.boxesNumber=Math.ceil(order.boxes);
+				
 			}
-
+			order.boxes=Math.ceil(order.boxes);
+			var displayBoxesNumber =0;
+			if(order.boxesNumber>0) {
+			 displayBoxesNumber =order.boxesNumber;
+			 order.boxes =displayBoxesNumber;
+			}else{
+			  if(order.boxes>0) {
+			      displayBoxesNumber =order.boxes;
+			  }else{
+			  displayBoxesNumber=0;
+			  }
+			}
 			pageContext.append(
 				//$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
-					'<div  data-boxes='+ order.boxesNumber +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+order.boxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
+					'<div  data-boxes='+ order.boxes +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+displayBoxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
 		 
 			);
 		}

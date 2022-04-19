@@ -62,7 +62,7 @@ class mdl_statement extends mdl_base
                 where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date<$current_time";
         $overdue_sum_rec  = $this->getListBySql($sql);
         $total_overdue_amount =   $overdue_sum_rec[0]['sum_debit']-$overdue_sum_rec[0]['sum_credit'];
-
+      //  var_dump($sql);exit;
         $factoryrec =loadModel('user')->get($factoryId);
         $factoryabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$factoryId));
         $customerrec=loadModel('user')->get($customer_id);

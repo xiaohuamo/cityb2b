@@ -139,9 +139,12 @@
                     <{$lang->order_management}>
 				</a>
 
-				<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
-                    <{$lang->order_management_amend}>
+				<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='customer_orders_return'}> class="current"<{/if}>>
+                    <{$lang->order_return}>
 				</a>
+		<!--		<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+                    <{$lang->order_management_amend}>
+				</a> -->
 
 
 			</div>
@@ -229,7 +232,7 @@
 				 <{$lang->producing_item_edit}>
 		</a>
 		<a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu=='export_manual_dispatching_form'}> class="current"<{/if}>>
-				 <{$lang->producing_item_edit}>
+				 <{$lang->export_manual_dispatching_form}>
 		</a>
 	
 	
@@ -260,7 +263,7 @@
 			</div>
 			<div class='second-level'>
 
-			<!--	<a href="<{$http_root_www}>factory/customer_aduit" <{if $submenu=='customer_aduit'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/customer_aduit" <{if $submenu=='customer_aduit'}> class="current"<{/if}>>
 				客户审核
 				</a>
 				<a href="<{$http_root_www}>factory/invoice_index" <{if $submenu=='invoice_list'}> class="current"<{/if}>>
@@ -280,7 +283,7 @@
 				</a>
 				<a href="<{$http_root_www}>factory/overdue_payment" <{if $submenu=='overdue_payment'}> class="current"<{/if}>>
 				预期未付款管理
-				</a> -->
+				</a>
  
 			<a href="<{$http_root_www}>factory/customer_xero_management" <{if $submenu=='customer_xero_management'}> class="current"<{/if}>>
 				Xero contact sync

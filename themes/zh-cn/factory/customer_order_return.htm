@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<script type="text/javascript">
+        function myfun() {
+
+            var target = $('#products_detail').offset().top;
+
+            $('body').animate({scrollTop: target}, 3000);
+
+        }
+
+        window.onload = myfun;
+	</script>
+	<style>
+        .main-form .input-box span label {
+            width: 125px;
+        }
+
+        .moneyDetail span:nth-child(3) {
+            display: inline-block;
+            width: 180px;
+        }
+
+        .address-validation {
+            position: fixed;
+            width: 350px;
+            margin: auto;
+            top: 10%;
+            background: #fff;
+            z-index: 99;
+            border: 2px solid;
+            padding: 20px;
+            display: none;
+        }
+
+        .col-6 {
+            width: 47%;
+			display: inline-block;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+
+				<div class="main-form form-style-green">
+
+					<div class="input-box input-submit clearfix">
+
+						<a class='link' href="<{$http_root_www}>factory/customer_orders">返回列表</a>
+						
+                    
+					 <{if $data.sent_to_xero==1}>
+
+						<button class='clearXeroInfo' >Clear Xero Info</button>
+					
+
+					<script type="text/javascript">
+                            $('.clearXeroInfo').on('click', function () {
+                                var context = $(this);
+
+                                if (confirm('will delete all xero info of this order?(after delete ,you can create new invoice on xero)')) {
+                                    $.ajax({
+                                        url: "<{$http_root_www}>factory/delete_xero_info_of_order?id=<{$data.id}>",
+                                        beforeSend: function () {
+                                            context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+                                        },
+                                        success: function () {
+                                            context.html("Delete xero info already!");
+                                            context.css('background-color', '#FD5001 ');
+                                        }
+                                    })
+                                }
+                            })
+
+						</script>
+						
+						<{/if}>
+
+					</div>
+
+					<div class="input-box clearfix  col-6">
+						<span><label>订单编号</label></span>
+                        <{$data.orderId}>
+					</div>
+					
+					<div class="input-box clearfix  col-6">
+						<span><label>销售员</label></span>
+                        <{$data.salesmanName}>
+					</div>
+
+                   <div class="input-box clearfix  col-6">
+						<span><label>订单状态</label></span>
+
+						<{if $data.coupon_status=='c01'}>
+							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='b01'}>
+							<span style="color:green"><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='d01'}>
+							<span style="color:red"><{$data.cn_coupon_status_name}></span>
+						<{/if}>
+
+						<{if $data.coupon_status=='c01' && $editAble == true}>
+						
+							<!-- cancel id is the id of the first item in an order -->
+								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
+						<{/if}>
+					</div>
+
+					<div class="input-box clearfix  col-6">
+						<span><label>下单时间</label></span>
+						<{date('Y-m-d H:i:s', $data.createTime)}>
+					</div>
+
+					<div class="input-box clearfix col-6">
+						<span><label>客户ID</label></span>
+                        <{$data.userId}>
+					</div>
+
+                  	<div class="input-box clearfix col-6">
+						<span><label>客户名称</label></span>
+                        <{$data.cust_name}>
+					</div>
+						
+					
+					
+					<div class="main-list" name="products_detail" id="products_detail">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Code</th>
+								<th>Item</th>
+								<th>Spec</th>
+								<th>Unit</th>
+								<th>price</th>
+								<th>Qty</th>
+								<th>Subtotal</th>
+								<th>Adjust to Qty</th>
+								<th>Adjust to price</th>
+								<th>Adjust subtotal</th>
+								<th>Credit</th>
+								
+
+							</tr>
+
+							</thead>
+							<tbody>
+                            <{foreach from=$items item=item name='dl'}>
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td><{$item.menu_id}></td>
+									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>">
+									
+									<{if $item.menu_en_name}><{$item.menu_en_name}><{else}><{$item.bonus_title}> <{/if}>
+									
+									</a></td>
+
+									<td><{if $item.guige_des}><{$item.guige1_id}>:&nbsp;<{$item.guige_des}><{/if}></td>
+									
+									<td><{$item.unit}></td>
+									<td>
+                                        <{$item.voucher_deal_amount}>
+									</td>
+		
+									<td>
+           							  <{$item.new_customer_buying_quantity}>
+									</td>
+									
+									<td>
+           							  <{$item.new_customer_buying_quantity*voucher_deal_amount}>
+									</td>
+									
+									<td>
+                                  		<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
+												   data-id='<{$item.id}>' id="new_customer_buying_quantity-<{$item.id}>" style="width:50px;" name="new_customer_buying_quantity"
+												   value="<{$item.new_customer_buying_quantity}>">
+											<span class='promote-ajax'></span>
+										
+									</td>
+									<td>
+                                       
+											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
+												   data-id='<{$item.id}>' id="voucher_deal_amount-<{$item.id}>" style="width:50px;" name="voucher_deal_amount"
+												   value="<{$item.voucher_deal_amount}>">
+											<span class='promote-ajax'></span>
+                                        
+									</td>
+
+									<td>
+										
+											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
+												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:100px;" name="adjust_subtotal_amount"
+												   value="<{$item.adjust_subtotal_amount}>" disabled>
+											<span class='promote-ajax'></span>
+										
+									</td>
+								<td>
+										
+											
+											<span >$2.87</span>
+										
+									</td>
+								
+									
+								</tr>
+                            <{/foreach}>
+							</tbody>
+						</table>
+					</div>
+
+					<div class='moneyDetail' style="text-align: right;padding: 10px">
+                       
+					  
+
+                      
+							<div style="color: #f00;font-weight: bolder;">
+								<span>Total Credit</span><span>:</span><span id="totalCredit">$3.8883</span>
+							</div>
+                      
+						
+					</div>
+
+
+
+
+
+				
+				
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+    var loading = false;
+
+
+ $('input[name=new_customer_buying_quantity]').on('change', function () {
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var value = $(this).val();
+        var update_field_name = $(this).attr('name');
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_customer_coupon_detail_quantity",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+			
+			data =JSON.parse(data.msg);
+			//alert(data.adjust_subtotal_amount);
+			//	 alert(data.goods_total);
+			//	  alert(data.money_new);
+				//    alert(data.msg);
+				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
+				$('#totalAmount').html('$'+data.money_new);
+				$('#totalGoodsAmount').html('$'+ data.goods_total);
+                $(ajax_result).html(successIcon);
+			
+				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+              //  $(ajax_result).html(successIcon);
+            } else if (data.status == 500 || data.status == 600) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+    $('input[name=voucher_deal_amount]').on('change', function () {
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var value = $(this).val();
+        var update_field_name = $(this).attr('name');
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_customer_coupon_detail_amount",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+			data =JSON.parse(data.msg);
+			//alert(data.adjust_subtotal_amount);
+			//	 alert(data.goods_total);
+			//	  alert(data.money_new);
+				//    alert(data.msg);
+				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
+				$('#totalAmount').html('$'+data.money_new);
+				$('#totalGoodsAmount').html('$'+ data.goods_total);
+                $(ajax_result).html(successIcon);
+			
+				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
+              //  $(ajax_result).html(successIcon);
+            } else if (data.status == 500 || data.status == 600) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+</script>
+
+
+</body>
+</html>

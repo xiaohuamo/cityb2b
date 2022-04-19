@@ -1,0 +1,23 @@
+Lodop(6.192及之后版本)按域名的顶级注册号和使用方式(域名为:cityb2b.com):
+在页面装载之后，调用Lodop普通函数之前执行一次如下语句：
+LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","","");
+假如您采用了LodopFuncs.js文件(6.0之后)，简单办法是把该语句放到此文件内那个注明“空白位置”的地方。
+
+本注册号语句成功生效之后会有如下表现：
+1：打印维护界面不再有“关于”按钮；
+2：直接打印时输出结果的左下角不再有试用版字样；
+3：导出的Excel文件里也不再有试用版字样；
+5：打印设计界面也不再有“关于”按钮；
+（更多注册功效参考价格表相关说明）
+
+如果注册号测试无效，可用以下简单步骤排查：
+一、在SET_LICENSES语句前后加alert提示语句，例如：
+LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","","");
+alert("SET_LICENSES执行了");
+二、执行时若无以上提示，说明未调用到这里，此时重点排查是否调用了getlodop过程;
+三、不想使用getlodop时可以把SET_LICENSES放到每个具体打印过程中，例如PRINT_INIT前面;
+四、更简单的测试办法是把注册语句放在Lodop样例2里试试;
+五、注册后有资格加入QQ的VIP群:649261400或755632966 入群时说明域名或Email，也可咨询QQ:932131686
+最新版本及其技术手册可从如下地址下载：
+http://www.c-lodop.com/download.html
+http://www.mtsoftware.cn/download.html

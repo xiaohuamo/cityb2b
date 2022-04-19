@@ -60,7 +60,7 @@
 	<keep_note_only_once>only use the notes this time</keep_note_only_once>
 	<add_note_promot>Supplier will see the note for this product.</add_note_promot>
 	<dispatching_platform>dispatching platform</dispatching_platform>
-	
+	<export_manual_dispatching_form>export manual producing item</export_manual_dispatching_form> 
 	 <tradinghours_setting>Trading Hours Setting </tradinghours_setting>
 	 <tradinghours_setting_notes>Description</tradinghours_setting_notes>
 	

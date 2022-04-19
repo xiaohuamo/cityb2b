@@ -38,7 +38,7 @@ class mdl_statement_list extends mdl_base
    public function getNeedToProcessStatementCustomerList($factory_id){
        $sql ="select s.customer_id from  cc_statement s  where s.factory_id = $factory_id and is_settled =0  group by customer_id order by customer_id" ;
        $list = $this->getListBySql($sql);
-      // var_dump($sql); exit;
+      // var_dump($list); exit;
        return $list;
    }
 
@@ -51,9 +51,19 @@ class mdl_statement_list extends mdl_base
            'yearweek'=>$yearWeek
           );
        $rec = $this->getByWhere($where);
-       if($rec) {return 1;}
+       if($rec) {return $rec['id'];}
        return 0;
 
+   }
+
+   public function deleteCurrentYearWeekIsProcessForCustomer($factoryId,$customer_id,$yearWeek) {
+       $where =array (
+           'factory_id'=>$factoryId,
+           'customer_id'=>$customer_id,
+           'yearweek'=>$yearWeek
+       );
+       $this->deleteByWhere($where);
+       return 1;
    }
 
 

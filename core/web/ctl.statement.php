@@ -55,16 +55,22 @@ class ctl_statement extends cmsPage
 
         //依次生成statement
 
-        //var_dump($needToProcessCustomerList);exit;
+     //   var_dump($needToProcessCustomerList);exit;
 
         foreach ($needToProcessCustomerList as $key => $value) {
             // 是否存在statement
-           if(!$mdl_statement_list->getIfcurrentYearWeekIsProcessForCustomer($factoryId,$value['customer_id'],$yearWeek)){
+            $id =$mdl_statement_list->getIfcurrentYearWeekIsProcessForCustomer($factoryId,$value['customer_id'],$yearWeek);
+           if(!$id){
              //如果不存在，生成新的statement
                $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$yearWeek,$this->loginUser['id']);
 
                $mdl_statement_list->insert($statementData);
               // var_dump($statementData);exit;
+           }else{
+            //   $mdl_statement_list->deleteCurrentYearWeekIsProcessForCustomer($factoryId,$value['customer_id'],$yearWeek);
+               $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$yearWeek,$this->loginUser['id']);
+
+               $mdl_statement_list->update($statementData,$id);
            }
 
         }

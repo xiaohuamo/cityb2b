@@ -1026,9 +1026,171 @@ class ctl_factory extends cmsPage
 
 
 
-
-
     public function customer_order_detail_action()
+    {
+        require_once(DOC_DIR.'static/4pxAPI.php');
+
+        //商家查看的订单详情以及操作
+        $orderId = trim(get2('id'));
+
+        $mdl_order = $this->loadModel('order');
+        $mdl_coupons = $this->loadModel('coupons');
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+
+        //订单信息
+        $data = $mdl_order->getByOrderId($orderId);
+
+        // 获得该商家的精确订单汇总 （可能上面的是含多个商家的汇总）
+
+        // 销售员的用户role 为101
+
+        if($this->loginUser['role']==20) {
+
+            $busi_id = $this->loginUser['user_belong_to_user'];
+
+        }else{
+            $busi_id = $this->loginUser['id'];
+        }
+
+
+        $sql1 = "select sum(voucher_deal_amount*customer_buying_quantity) as ori_sum ,sum(adjust_subtotal_amount) as ajust_sum from cc_wj_customer_coupon  where order_id=$orderId and  business_id=$busi_id";
+        $data1 = $mdl_wj_customer_coupon->getListBySql($sql1);
+
+        // 获得订单商家名称
+
+        $sql2 ="select concat(factory_user.nickname,'(',user.name ,')') as cust_name  from cc_user user ,cc_user_factory factory_user where user.id=factory_user.user_id and user.id=".$data['userId'];
+        $data2 = $mdl_wj_customer_coupon->getListBySql($sql2);
+        $data['money'] = $data1[0]['ori_sum'];
+        $data['ajust_sum'] = $data1[0]['ajust_sum'];
+        $data['cust_name'] = $data2[0]['cust_name'];
+
+
+        // 获得该订单的销售员名称 如果有的话
+
+        $sqlsalesman = "select b.name,b.contactPersonNickName  from cc_user_factory a left join cc_user b on a.factory_sales_id =b.id  where a.user_id =".$data['userId'];
+        $salesmanList = $mdl_order->getListBySql($sqlsalesman);
+        if($salesmanList) {
+            $salesmanName =$salesmanList[0]['contactPersonNickName'];
+            if(!$salesmanName){
+
+                $salesmanName =$salesmanList[0]['name'];
+            }
+
+        }
+        $data['salesmanName'] =$salesmanName;
+        //var_dump($data);exit;
+        //coding end
+        $this->setData($data, 'data');
+
+        $moneyDetail = $mdl_order->getMoneyDetail($orderId);
+        $this->setData($moneyDetail, 'moneyDetail');
+
+        //订单详情
+        $items = $mdl_wj_customer_coupon->getOrderItems($orderId);
+
+        // 获取当前订单和当前客户的关系
+        // 返回结果：
+        // status 1 : 当前用户为普通查看者，不是订单的商家
+        // status 2 : 当前用户为当前订单唯一商家。
+        // status 3 : 当前用户为当前订单的某一个商家（该情况存在于如果该订单为统配中心订单的情况） 。
+        // status 4 : 当前用户为配货中心管理用户，拥有完整权限管理权和数据管理权
+        // 每种状态对应相应的显示页面。
+
+        // 如果当前用户就是订单中的商家，代表，其是通配中心商家。
+        if ($data['business_userId'] ==$busi_id) {
+            $display_status = 4;
+        } else {
+            $order_details_and_related = $this->get_order_details_and_related($items,$busi_id);
+            $items = $order_details_and_related['data'];
+            $display_status = $order_details_and_related['status'];
+        }
+
+        $this->setData($this->get_order_amend_reson_type_list(), 'order_amend_reson_type_list');
+
+        // 获取该订单变更信息
+        $mdl_order_amend = $this->loadModel('order_amend');
+        $item_order_amend = $mdl_order_amend->getList(null, ['order_id' => $orderId]);
+        foreach ($items as $key => $val) {
+
+            $items[$key]['reason_type'] = '0';
+            foreach ($item_order_amend as $key1 => $value) {
+
+                if ($value['item_buying_id'] == $val['id']) {
+                    $items[$key]['reason_type'] = $value['reason_type'];
+                    $items[$key]['reason_type_desc'] = $this->get_order_amend_reason_type_desc($value['reason_type']);
+                }
+            }
+        }
+        $this->setData($items, 'items');
+        //allow 4px
+        $allowFourpx = true;
+        foreach ($items as $item) {
+            $coupon = $mdl_coupons->get($item['bonus_id']);
+            if (! $coupon['fourpx_sku']) {
+                $allowFourpx = false;//订单中有非云仓产品，无法一起云仓发货。
+                break;
+            }
+        }
+        $this->setData($allowFourpx, 'allowFourpx');
+
+        //desc info
+        $firstItemId = $items[0]['bonus_id'];
+
+        $info = $mdl_coupons->get($firstItemId);
+        $info['delivery_description'];
+        $info['pickup_des'];
+        $info['offline_pay_des'];
+
+        //special info
+        $info['visibleForBusiness'];//
+        $info['bonusType'];//
+
+        $this->setData($info, 'info');
+
+        //pickup Loaction
+        $puckupLocation = $this->loadModel('user')->getUserById($data['business_staff_id']);
+        $pickupInfo['pickupname'] = $puckupLocation['contactPersonNickName'];
+        $pickupInfo['pickupaddress'] = $puckupLocation['googleMap'];
+        $pickupInfo['pickupphone'] = $puckupLocation['contactMobile'];
+
+        $this->setData($pickupInfo, 'pickupInfo');
+
+        //group pin
+        $mdl_group_pin = $this->loadModel('group_pin');
+        $user_group_id = $mdl_group_pin->hasUserGroup($orderId);
+        if ($user_group_id) {
+            $userGroup = $this->loadModel('group_pin_user_group')->get($user_group_id);
+            $this->setData($userGroup, 'userGroup');
+        }
+
+        //log
+        $activity_log = $this->loadModel('wj_user_coupon_activity_log')->getList(null, ['orderId' => $orderId]);
+        foreach ($activity_log as $k => $l) {
+            $activity_log[$k]['cn_description'] = $mdl_coupons->actionlist_info($l['action_id']);
+        }
+        $this->setData($activity_log, 'log');
+
+        //system log
+        $this->loadModel('order_operation_log')->order($orderId)->log();
+
+        $days = (time() - $data['createTime']) / (24 * 60 * 60);
+
+        $this->setData($mdl_order->isOrderEditable($orderId), 'editAble');
+        $this->setData($days, 'days');
+
+        $this->setData('online_center', 'menu');
+        $this->setData('customer_coupon_process', 'submenu');
+
+        $this->setData('订单详情 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle');
+
+
+        $this->display('factory/customer_order_detail_full_control');
+
+    }
+
+
+
+    public function customer_order_return_action()
     {
         require_once(DOC_DIR.'static/4pxAPI.php');
 
@@ -1157,13 +1319,6 @@ class ctl_factory extends cmsPage
 
         $this->setData($pickupInfo, 'pickupInfo');
 
-        //group pin
-        $mdl_group_pin = $this->loadModel('group_pin');
-        $user_group_id = $mdl_group_pin->hasUserGroup($orderId);
-        if ($user_group_id) {
-            $userGroup = $this->loadModel('group_pin_user_group')->get($user_group_id);
-            $this->setData($userGroup, 'userGroup');
-        }
 
         //log
         $activity_log = $this->loadModel('wj_user_coupon_activity_log')->getList(null, ['orderId' => $orderId]);
@@ -1183,10 +1338,10 @@ class ctl_factory extends cmsPage
         $this->setData('online_center', 'menu');
         $this->setData('customer_coupon_process', 'submenu');
 
-        $this->setData('订单详情 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle');
+        $this->setData('order claim and return - Business_centre - '.$this->site['pageTitle'], 'pageTitle');
 
 
-            $this->display('factory/customer_order_detail_full_control');
+            $this->display('factory/customer_order_return');
 
     }
 
