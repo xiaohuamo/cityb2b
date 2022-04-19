@@ -68,13 +68,13 @@
 						<{foreach from=$TuckListOfTheDay item=d}>
 							<{if $d.logistic_truck_No==0}>
 							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-								<{$lang->no_truck_yet}>
+								<{$lang->no_truck_yet}>-(<{$d.boxes}>boxes)
 							</option>
 							
 							<{else}>
 								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
 									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>
+									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)-(<{$d.boxes}>boxes)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -115,18 +115,18 @@
 										
 										if(truckNo ==0) {
 										    if (trukNo ===selectTruck){
-											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}></option>";
+											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}>-"+"("+data[i]['count']+"orders-"+data[i]['boxes'] +"boxes)</option>";
 											  
 											}else{
-											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}></option>";
+											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}>-"+"("+data[i]['count']+"orders-"+data[i]['boxes'] +"boxes)</option>";
 											}
 										}else{
 										
 										    if(data[i]['driverName']){
 											
-											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
+											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+"orders-"+data[i]['boxes'] +"boxes)";
 											}else{
-												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
+												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+"orders-"+data[i]['boxes'] +"boxes)";
 											}
 										
 										   if (trukNo ===selectTruck){
@@ -206,6 +206,7 @@
 									<th><{$lang->logistic_schedule_time}></th>
 									<th><{$lang->logistic_arrive_time}></th>
 									<th><{$lang->logistic_truck_no}></th>
+									<th>Est boxes</th>
 									<th>stopNum</th>
 									<th><{$lang->logistic_sequenceNo}></th>
 									<th><{$lang->order_id}></th>		
@@ -248,7 +249,7 @@
 									
 
 
-
+							<td><{$item.boxes}></td>
 									<td><{$item.logistic_stop_No}></td>
 									    <td><{$item.logistic_sequence_No}></td>
 									  

@@ -3684,7 +3684,7 @@ class ctl_company extends cmsPage
 		$this->setData($customer_delivery_date,'customer_delivery_date');
         $this->setData($postcode,'postcode');
 
-        $sql = "SELECT f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+        $sql = "SELECT (SELECT  CEIL(sum( c.`new_customer_buying_quantity`/m.unitQtyPerBox ))     FROM `cc_wj_customer_coupon` c  left join cc_restaurant_menu m  on  c.`restaurant_menu_id` =m.id  WHERE order_id = o.orderId ) as boxes,f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
         $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
         //var_dump($sql);exit;
