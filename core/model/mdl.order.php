@@ -254,7 +254,7 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 
 public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
 
-     $sql ="SELECT o.xero_invoice_id,f.nickname,o.address,o.logistic_stop_No,o.logistic_sequence_No ,o.logistic_delivery_date	,
+     $sql ="SELECT o.xero_invoice_id,f.nickname,o.boxesNumber,o.address,o.logistic_stop_No,o.logistic_sequence_No ,o.logistic_delivery_date	,
        o.phone,'' as boxes,o.message_to_business,' ' as signed  from cc_order as o
                    left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id 
         where  o.business_userId =$factoryId and  (o.coupon_status='c01' or o.coupon_status='b01' )

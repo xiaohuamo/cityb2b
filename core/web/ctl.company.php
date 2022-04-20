@@ -14993,7 +14993,7 @@ public function custom_delivery_fee_add_action()
 
 
             $lists_new = array();
-
+//var_dump($orders);exit;
             foreach ($orders as $key => $value) {
 
                 $lists_new[$key]['InvoiceNumber']=$value['xero_invoice_id'];
@@ -15052,8 +15052,10 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setSize(16);
                 $obj->getActiveSheet()->getStyle('E1:E50')->getFont()->setBold(true);
                 $obj->getActiveSheet()->getColumnDimension("F")->setWidth(10);
-                $obj->getActiveSheet()->getColumnDimension("G")->setWidth(5);
-                $obj->getActiveSheet()->getColumnDimension("H")->setWidth(15);
+                $obj->getActiveSheet()->getStyle('G1:G50')->getFont()->setSize(16);
+                $obj->getActiveSheet()->getStyle('G1:G50')->getFont()->setBold(true);
+                $obj->getActiveSheet()->getColumnDimension("G")->setWidth(10);
+                $obj->getActiveSheet()->getColumnDimension("H")->setWidth(10);
                 $obj->getActiveSheet()->getStyle('H')->getAlignment()->setWrapText(true);//自动换行
            //     $obj->getActiveSheet()->getColumnDimension("I")->setWidth(5);
 
