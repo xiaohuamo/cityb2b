@@ -504,7 +504,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			$('#boxesNumberSortId').val(boxessort);
 		    $('#printCopy').val(boxes);
 			renderDetailPanel(orderId);
-
+			$('#printall').prop("checked",false);
 		
 			setSelectedDropNum(order.logistic_stop_No);
 
@@ -554,19 +554,41 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			
 			
 			var totalCopy = $('input.printCopy').val();
-		
+	    	var copysort = $('#boxesNumberSortId').val();
 			//修改数组的值
 			parsedOrders[orderId]['boxesNumber']=totalCopy;
 			
-			$('.order-panel .btnbox.selected').css('background',"lightgreen");
+			if(totalCopy ==copysort){
+			
+				$('.order-panel .btnbox.selected').css('background',"lightgreen");
+				parsedOrders[orderId]['allprinted']=1;
+			}else{
+				$('.order-panel .btnbox.selected').css('background',"lightgrey");
+				
+			
+			}
+			
+			
+		
+			
 			$('#order_num_'+orderId).html(totalCopy +' boxes');
 			
-			var copysort = $('#boxesNumberSortId').val();
+			
 			var newcopysortid = parseInt(copysort)+1;
 			if(newcopysortid>totalCopy){
 			newcopysortid=totalCopy;
 			}
 			$('#boxesNumberSortId').val(newcopysortid);
+			
+			var printall =$('#printall').is(":checked");
+			 if(printall){
+			 
+			 
+				$('.order-panel .btnbox.selected').css('background',"lightgreen");
+				parsedOrders[orderId]['allprinted']=1;
+				$('#boxesNumberSortId').val(totalCopy)
+			 }
+			
 			 recordLabelPrint(orderId,totalCopy,1,copysort);
 		})
 
@@ -574,26 +596,51 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			dropNumberPopUp(function(){
 				preview();
 			})
-			var orderId = $('.order-panel .btnbox.selected').data('order-id');
+		 var orderId = $('.order-panel .btnbox.selected').data('order-id');
            
 			
 			
 			
 			var totalCopy = $('input.printCopy').val();
-		
+	    	var copysort = $('#boxesNumberSortId').val();
 			//修改数组的值
 			parsedOrders[orderId]['boxesNumber']=totalCopy;
 			
-			$('.order-panel .btnbox.selected').css('background',"lightgreen");
+			if(totalCopy ==copysort){
+			
+				$('.order-panel .btnbox.selected').css('background',"lightgreen");
+				parsedOrders[orderId]['allprinted']=1;
+			}else{
+				$('.order-panel .btnbox.selected').css('background',"lightgrey");
+				
+			
+			}
+			
+			
+		
+			
 			$('#order_num_'+orderId).html(totalCopy +' boxes');
 			
-			var copysort = $('#boxesNumberSortId').val();
+			
 			var newcopysortid = parseInt(copysort)+1;
 			if(newcopysortid>totalCopy){
 			newcopysortid=totalCopy;
 			}
 			$('#boxesNumberSortId').val(newcopysortid);
-			 recordLabelPrint(orderId,totalCopy,1,copysort);
+			
+			var printall =$('#printall').is(":checked");
+			 if(printall){
+			 
+			 
+				$('.order-panel .btnbox.selected').css('background',"lightgreen");
+				parsedOrders[orderId]['allprinted']=1;
+				$('#boxesNumberSortId').val(totalCopy)
+				 recordLabelPrint(orderId,totalCopy,1,totalCopy);
+			 }else{
+			   recordLabelPrint(orderId,totalCopy,1,copysort);
+			 }
+			
+			 
 		})
 
 		$('body').on("click", ".nav .print-mode-select", function(){
@@ -670,11 +717,11 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		for (var i = startIndex; i <= endIndex; i++) {
 			var order = parsedOrders[keys[i]];
 			var backcolor ="#FFF7F3;";
-			if(order.boxesNumber>0) {
+			if(order.boxesNumber>0 && order.allprinted==1) {
 			 backcolor ="lightgreen; ";
 			
-			}else{
-				
+			}else if (order.boxesNumber>0 && order.allprinted==0){
+				 backcolor ="lightgrey; ";
 			}
 			order.boxes=Math.ceil(order.boxes);
 			var displayBoxesNumber =0;
@@ -751,7 +798,12 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		
 		
 		$('input.boxesNumberSortId').val(parseInt(copy) + parseInt(copyNum));
+		
+		var totalcopy = parseInt($('input.printCopy').val());
+		
+		if(totalcopy < (parseInt(copy) + parseInt(copyNum))){
 		$('input.printCopy').val(parseInt(copy) + parseInt(copyNum));
+		}
 		
 	}
 	

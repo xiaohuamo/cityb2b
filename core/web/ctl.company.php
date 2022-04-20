@@ -14682,7 +14682,15 @@ public function custom_delivery_fee_add_action()
             }
 			$parsed['displayName'] = substr($order['displayName'],0,11);
             $parsed['boxesNumber'] = $order['boxesNumber'];
-            $parsed['boxesNumberSortId'] = $order['boxesNumberSortId'];
+
+               if( $order['boxesNumber'] >0 &&  $order['boxesNumber'] < $order['boxesNumberSortId']) {
+                   $parsed['allprinted'] =1;
+                   $parsed['boxesNumberSortId'] = $order['boxesNumber'];
+               }else{
+                   $parsed['allprinted'] =0;
+                   $parsed['boxesNumberSortId'] = $order['boxesNumberSortId'];
+               }
+
 
 			$parsed['redeem_code'] = $order['redeem_code'];
 
@@ -14804,9 +14812,9 @@ public function custom_delivery_fee_add_action()
             $boxesNumber =  post('totalCopay');
             $singleOrAll = post('singleOrAll');
             $copysortId =  post('copysortId');
-          
+
             if($singleOrAll==1) {
-                if($copysortId<$boxesNumber){
+                if($copysortId<=$boxesNumber){
                     $copysortId ++;
                 }
             }else{
