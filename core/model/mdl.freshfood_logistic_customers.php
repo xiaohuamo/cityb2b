@@ -10,8 +10,8 @@ class mdl_freshfood_logistic_customers extends mdl_base
    public function getAvaliableDateOfThisLogisiticCompany($businessId) {
 		
        //获取cc_order可以配送的日期
-	   $sql_cc_order_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$businessId.' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$businessId.'))';
-       $sql_cc_order_import_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order_import where logistic_delivery_date >'.(time()-3600*24*7). ' and ( business_userId = '.$businessId.' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$businessId.'))';
+	   $sql_cc_order_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order where logistic_delivery_date >'.(time()-3600*24*30). ' and ( business_userId = '.$businessId.' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$businessId.'))';
+       $sql_cc_order_import_avaliabe_date ='SELECT DISTINCT logistic_delivery_date  from cc_order_import where logistic_delivery_date >'.(time()-3600*24*30). ' and ( business_userId = '.$businessId.' or business_userId in (select cc_logistic_customers_id  from cc_freshfood_logistic_customers where cc_logistic_business_id ='.$businessId.'))';
      
 	   $sql_union = 'select DISTINCT  logistic_delivery_date from (select * from( ('. $sql_cc_order_avaliabe_date.') union ('.$sql_cc_order_import_avaliabe_date.')) as d ) as c';
 	   // var_dump($sql_union);exit;
