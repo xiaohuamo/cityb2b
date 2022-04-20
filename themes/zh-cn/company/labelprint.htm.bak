@@ -587,9 +587,11 @@ var parsedOrders = JSON.parse(parsedOrders1);
 				$('.order-panel .btnbox.selected').css('background',"lightgreen");
 				parsedOrders[orderId]['allprinted']=1;
 				$('#boxesNumberSortId').val(totalCopy)
+				 recordLabelPrint(orderId,totalCopy,1,totalCopy);
+			 }else{
+			   recordLabelPrint(orderId,totalCopy,1,copysort);
 			 }
 			
-			 recordLabelPrint(orderId,totalCopy,1,copysort);
 		})
 
 		$('body').on("click", ".preview button", function(){

@@ -563,7 +563,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 				$('.order-panel .btnbox.selected').css('background',"lightgreen");
 				parsedOrders[orderId]['allprinted']=1;
 			}else{
-				$('.order-panel .btnbox.selected').css('background',"lightgrey");
+				$('.order-panel .btnbox.selected').css('background',"lightblue");
 				
 			
 			}
@@ -613,7 +613,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 				$('.order-panel .btnbox.selected').css('background',"lightgreen");
 				parsedOrders[orderId]['allprinted']=1;
 			}else{
-				$('.order-panel .btnbox.selected').css('background',"lightgrey");
+				$('.order-panel .btnbox.selected').css('background',"lightblue");
 				
 			
 			}
@@ -723,7 +723,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			 backcolor ="lightgreen; ";
 			
 			}else if (order.boxesNumber>0 && order.allprinted==0){
-				 backcolor ="lightgrey; ";
+				 backcolor ="lightblue; ";
 			}
 			order.boxes=Math.ceil(order.boxes);
 			var displayBoxesNumber =0;
