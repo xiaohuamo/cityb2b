@@ -112,7 +112,7 @@ class ctl_factory extends cmsPage
 
         $this->setData($customer_delivery_date,'customer_delivery_date');
 
-        $three_days_times = time()-259200*5;
+        $three_days_times = time()-259200*50;
 
         $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
             $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
