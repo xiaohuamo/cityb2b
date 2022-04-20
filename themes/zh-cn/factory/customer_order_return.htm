@@ -154,10 +154,12 @@
 								<th>price</th>
 								<th>Qty</th>
 								<th>Subtotal</th>
-								<th>Adjust to Qty</th>
-								<th>Adjust to price</th>
-								<th>Adjust subtotal</th>
+								<th>Adjust Qty</th>
+								<th>Adjust price</th>
+								<th>Adjust total</th>
 								<th>Credit</th>
+								<th>Reason</th>
+								<th>note</th>
 								
 
 							</tr>
@@ -199,18 +201,39 @@
                                        
 											<input type="text" class="input-text 	"
 												   data-id='<{$item.id}>' id="adjust_price-<{$item.id}>" style="width:50px;" name="adjust_price"
-												   value="<{$item.v}>">
+												   value="<{$item.voucher_deal_amount}>">
 											<span class='promote-ajax'></span>
                                         
 									</td>
 
 									<td>
-										<span  id="ajustSubTotal">-</span>
+										<span >$</span><span  id="ajustSubTotal_<{$item.id}>"><{$item.ajustSubTotal}></span>
 											
 										
 									</td>
-							
-								
+									<td>
+										<span >$</span><span  id="credit_<{$item.id}>"><{$item.credit}></span>
+											
+										
+									</td>
+									<td>
+										<select name='reason_type_<{$item.id}>' id='reason_type_<{$item.id}>'>
+									   	<{foreach from=$order_amend_reson_type_list item=reason_type name='dl'}>		
+										<option value='<{$reason_type.id}>' <{if $reason_type.id==$item.reason_type}>selected<{/if}> >
+										
+										<{$reason_type.reason_type_desc}></option>
+										<{/foreach}>		
+									</select>
+											
+										
+									</td>
+									<td>
+										<input type="text" class="input-text 	"
+												   data-id='<{$item.id}>' id="note_<{$item.id}>" style="width:120px;" name="note"
+												   value="<{$item.note}>">
+											<span class='promote-ajax'></span>
+											
+									</td>
 									
 								</tr>
                             <{/foreach}>
@@ -224,7 +247,7 @@
 
                       
 							<div style="color: #f00;font-weight: bolder;">
-								<span>Total CreditOrDebit</span><span>:</span><span id="totalCreditOrDebit">$3.8883</span>
+								<span>Total CreditOrDebit</span><span>:$</span><span id="totalCreditOrDebit"><{$totalCredit}></span>
 							</div>
                       
 						
@@ -249,21 +272,22 @@
     var loading = false;
 
 
- $('input[name=new_customer_buying_quantity]').on('change', function () {
+ $('input[name=adjust_quantity],input[name=adjust_price]').on('change', function () {
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
-        var value = $(this).val();
-        var update_field_name = $(this).attr('name');
         var updateData = {};
 
         updateData['id'] = id;
-        updateData[update_field_name] = value;
+        updateData['adjust_quantity'] = $('#adjust_quantity-'+id).val();
+		updateData['adjust_price'] = $('#adjust_price-'+id).val();
+		alert(updateData['adjust_quantity']);
+		alert(updateData['adjust_price']);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_customer_coupon_detail_quantity",
+            url: "<{$http_root_www}>factory/update_return_item_details",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -279,18 +303,17 @@
             if (data.status == 200) {
 			
 			data =JSON.parse(data.msg);
-			//alert(data.adjust_subtotal_amount);
-			//	 alert(data.goods_total);
-			//	  alert(data.money_new);
-				//    alert(data.msg);
-				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
-				$('#totalAmount').html('$'+data.money_new);
-				$('#totalGoodsAmount').html('$'+ data.goods_total);
-                $(ajax_result).html(successIcon);
 			
-				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
-              //  $(ajax_result).html(successIcon);
-            } else if (data.status == 500 || data.status == 600) {
+				$('#ajustSubTotal_'+id).html(data.adjust_subtotal_amount.toFixed(2));
+				$('#credit_'+id).html(data.credit.toFixed(2));
+				
+				//获得当前的credit数字 ，并转成2位浮点数；
+				
+				
+				
+				$('#totalCreditOrDebit').html(data.totalCredit);
+			     $(ajax_result).html(successIcon);
+		    } else if (data.status == 500 || data.status == 600) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
             } else {
@@ -305,60 +328,7 @@
 
     });
 
-    $('input[name=voucher_deal_amount]').on('change', function () {
-        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
-        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
-        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
-        var id = $(this).data('id');
-        var value = $(this).val();
-        var update_field_name = $(this).attr('name');
-        var updateData = {};
-
-        updateData['id'] = id;
-        updateData[update_field_name] = value;
-        var ajax_result = $(this).next('.promote-ajax');
-        $.ajax({
-            url: "<{$http_root_www}>factory/update_customer_coupon_detail_amount",
-            type: "POST",
-            data: updateData,
-            beforeSend: function () {
-                $(ajax_result).html(iconLoading);
-            }
-        }).done(function (data) {
-            try {
-                data = JSON.parse(data);
-            } catch (err) {
-                data['msg'] = data;
-            }
-
-            if (data.status == 200) {
-			data =JSON.parse(data.msg);
-			//alert(data.adjust_subtotal_amount);
-			//	 alert(data.goods_total);
-			//	  alert(data.money_new);
-				//    alert(data.msg);
-				$(`#adjust_subtotal_amount-${id}`).val(data.adjust_subtotal_amount);
-				$('#totalAmount').html('$'+data.money_new);
-				$('#totalGoodsAmount').html('$'+ data.goods_total);
-                $(ajax_result).html(successIcon);
-			
-				//$(`#adjust_subtotal_amount-${id}`).val(data.msg);
-              //  $(ajax_result).html(successIcon);
-            } else if (data.status == 500 || data.status == 600) {
-                alert(data.msg);
-                $(ajax_result).html(errorIcon);
-            } else {
-                alert(data.msg);
-                $(ajax_result).html(errorIcon);
-
-            }
-        }).fail(function () {
-            iconupdate.iconUpdateFail();
-        });
-
-
-    });
     function IconUpdate(obj) {
         this.target = $(obj).find('.status_updating');
     }

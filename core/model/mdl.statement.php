@@ -115,6 +115,34 @@ class mdl_statement extends mdl_base
         return $data;
 
     }
+   // 更新客户credit或退货的statment记录
+    public function insertOrUpdateCreditItem($data){
+        //检查当前数据是否为新数据
+
+       $where =array(
+           'factory_id'=>$data['factory_id'],
+           'customer_id'=>$data['customer_id'],
+           'type_code'=>$data['type_code'],
+           'customer_ref_id'=>$data['customer_ref_id']
+       );
+
+    $rec =$this->getByWhere($where);
+
+    if($rec){
+        $dataUpdate =array(
+            'create_user'=>$data['create_user'],
+            'gen_date'=>time(),
+            'credit_amount'=>$data['credit_amount']
+         );
+        $this->update($dataUpdate,$rec['id']);
+
+    }else{
+
+        $this->insert($data);
+
+    }
+
+    }
 
     //生成客户付款插入的数据
 public function  getCustomerPaymentData($login_user,$factory_user,$payment_amount){

@@ -1223,8 +1223,8 @@ class ctl_factory extends cmsPage
 		// 获得订单商家名称
 		
 		$sql2 ="select concat(factory_user.nickname,'(',user.name ,')') as cust_name  from cc_user user ,cc_user_factory factory_user where user.id=factory_user.user_id and user.id=".$data['userId'];
-         $data2 = $mdl_wj_customer_coupon->getListBySql($sql2);    
-	      $data['money'] = $data1[0]['ori_sum'];
+        $data2 = $mdl_wj_customer_coupon->getListBySql($sql2);
+	    $data['money'] = $data1[0]['ori_sum'];
         $data['ajust_sum'] = $data1[0]['ajust_sum'];
 		 $data['cust_name'] = $data2[0]['cust_name'];
 		 
@@ -1250,7 +1250,7 @@ class ctl_factory extends cmsPage
         $this->setData($moneyDetail, 'moneyDetail');
 
         //订单详情
-        $items = $mdl_wj_customer_coupon->getOrderItems($orderId);
+        $items = $mdl_wj_customer_coupon->getOrderItemsWithReturnInfo($orderId);
 
         // 获取当前订单和当前客户的关系
         // 返回结果：
@@ -1261,6 +1261,11 @@ class ctl_factory extends cmsPage
         // 每种状态对应相应的显示页面。
 
         // 如果当前用户就是订单中的商家，代表，其是通配中心商家。
+
+
+         $totalCredit = $mdl_wj_customer_coupon->getOrderTotalCredit($orderId);
+         $this->setData($totalCredit, 'totalCredit');
+
         if ($data['business_userId'] ==$busi_id) {
             $display_status = 4;
         } else {
@@ -1766,14 +1771,25 @@ class ctl_factory extends cmsPage
 
     public function update_return_item_details_action()
     {
-        if (! is_post()) {
+
+        if (!is_post()) {
             return;
         }
 
 
         $id = post('id');
+        // check quantity is vaild
+        $quantity = post('adjust_quantity');
+        $price = post('adjust_price');
+
+
+        //$id =89623;
+       // $quantity =50;
+       // $price=10;
+
         $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $customerCoupon = $mdl_wj_customer_coupon->get($id);
+        $order =$this->loadModel('order')->getByWhere(array('orderId'=>$customerCoupon['order_id']));
 
         //if item exist.
         if (! $customerCoupon) {
@@ -1790,9 +1806,6 @@ class ctl_factory extends cmsPage
 
 
 
-        // check quantity is vaild
-        $quantity = post('adjust_quantity');
-        $price = post('adjust_price');
 
 
         if (! is_numeric($quantity) || ($quantity < 0)) {
@@ -1815,9 +1828,9 @@ class ctl_factory extends cmsPage
 
         $new_sub_total = $quantity * $price;
 
-        $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
+        $orderPriceChange =round(floatval($old_sub_total-$new_sub_total),2);
 
-        if($orderPriceChange) {
+
             
             //查找claim return table 是否有该id存在，如果有则更改，前提是settle =0 ,如果没有则增加
             
@@ -1830,73 +1843,109 @@ class ctl_factory extends cmsPage
                     $updateData =array(
                         'adjust_quantity'=>$quantity,
                         'adjust_price'=>$price,
-                        'returnType'=>1,
                         'createUser'=>$this->loginUser['id'],
                         'createTime'=>time(),
                         'approveTime'=>time(),
                         'approveUserId'=>$this->loginUser['id'],
-                        'isApprovedToProcess'=>1,
-                        'is_settled'=>0,
-                        'ref_statement_id'=>0
                     );
                    if($mdl_return_details->update($updateData,$id)) {
+
+                       $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
+                        //var_dump($totalCreitAmount);exit;
+                       //向 statement 插入数
+                       $data=array();
+                       $data['create_user'] = $this->loginUser['id'];
+                       $data['gen_date']=time();
+                       $data['invoice_number']='ret'.$order['id'];
+                       $data['type_code']=2002;
+                       $data['factory_id']=$customerCoupon['business_id'];
+                       $data['customer_id']=$customerCoupon['userId'];
+                       $data['customer_ref_id']=$order['id'];
+                       $data['debit_amount']=0;
+                       $data['credit_amount']=$totalCreitAmount;
+                       $data['is_settled']=0;
+                       $data['overdue_date']=0;
+
+                       $this->loadModel('statement')->insertOrUpdateCreditItem($data);
+
+
+
+                       $data_invoice=array(
+                           'factory_id'=>$order['business_userId'],
+                           'gendate'=>time(),
+                           'createUserId'=>$this->loginUser['id'],
+                           'type'=>2,
+                           'customer_id'=>$order['userId'],
+                           'invoiceId'=>$order['id'],
+                           'amount'=>$totalCreitAmount,
+                           'creditOrDebit'=>2,
+                           'filepathname'=>'',
+                           'isAvaliable'=>1
+                       );
+
+                       $this->loadModel('invoice_list')->insertOrUpdate($data_invoice);
+
+
 
                        $issuccessupdate =1;
                    }
                 }
             }else{
                 // insert a new record for claim or return ;
-                $updateData =array(
+                $insertData =array(
+                    'id'=>$id,
                     'adjust_quantity'=>$quantity,
                     'adjust_price'=>$price,
                     'returnType'=>1,
                     'createUser'=>$this->loginUser['id'],
                     'createTime'=>time(),
+                    'reasonType'=>0,
+                    'note'=>'',
                     'approveTime'=>time(),
                     'approveUserId'=>$this->loginUser['id'],
                     'isApprovedToProcess'=>1,
                     'is_settled'=>0,
                     'ref_statement_id'=>0
                 );
+                if($mdl_return_details->insert($insertData)) {
+
+                    $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
+
+                    //向 statement 插入数
+                    $data=array();
+                    $data['create_user'] = $this->loginUser['id'];
+                    $data['gen_date']=time();
+                    $data['invoice_number']='ret'.$order['id'];
+                    $data['type_code']=2002;
+                    $data['factory_id']=$customerCoupon['business_id'];
+                    $data['customer_id']=$customerCoupon['userId'];
+                    $data['customer_ref_id']=$order['id'];
+                    $data['debit_amount']=0;
+                    $data['credit_amount']=$totalCreitAmount;
+                    $data['is_settled']=0;
+                    $data['overdue_date']=0;
+
+                    $this->loadModel('statement')->insertOrUpdateCreditItem($data);
+
+                    $issuccessupdate =1;
+                }
             }
 
-            $itemDetails =array(
-                'new_customer_buying_quantity'  =>$quantity,
-                //   'voucher_deal_amount' =>$amount,
-                'adjust_subtotal_amount'=>round(floatval($new_sub_total),2)
-            );
-
-            $mdl_wj_customer_coupon->update($itemDetails, $id);
 
 
-
-            //检查权限
-
-            if ($orderPriceChange != 0) {
-
-                $mdl_order = $this->loadModel('order');
-                $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
-
-                $orderUpdateData = [
-                    'money' => round($order['money'] + $orderPriceChange, 2),
-                    'money_new' => round($order['money_new'] + $orderPriceChange, 2),
-                ];
-
-                //  $this->form_response(600, $order['money']);
-                $mdl_order->update($orderUpdateData, $order['id']);
-            }
-
-            $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
 
             $returnData =array(
-                'adjust_subtotal_amount'=>$itemDetails['adjust_subtotal_amount'],
-                'goods_total'=>$money_details['goodsTotal_new'],
-                'money_new'=>$money_details['transactionBalance_new']
-            );
+                'adjust_subtotal_amount'=>round(floatval($quantity * $price),2),
+                'credit'=>$orderPriceChange,
+                'totalCredit'=>$totalCreitAmount
+             );
+
+
+
+
+
             $this->form_response(200, json_encode($returnData));
-        } else {
-            $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);
-        }
+
 
 
     }
