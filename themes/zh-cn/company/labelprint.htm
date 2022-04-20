@@ -84,13 +84,13 @@
 	.detail-panel {
 		padding: 3%;
 		border: 1px solid #eee;
-		height: 30vh;
+		height: 20vh;
 		background: #2bcade;
 
 	}
 
 	.detail-panel .info{
-		height: 35px;
+		height: 50px;
 		line-height: 35px;
 	}
 
@@ -114,7 +114,7 @@
 	.detail-panel .address {
 		height: 50px;
 		margin: 20px 0 40px 0;
-		font-size: 1.5rem
+		font-size: 1.3rem
 	}
 
 	.detail-panel .adjust-order-btn {
@@ -140,19 +140,28 @@
 
 	.copy-adjust-input {
 		text-align: center;
-		height: 74px;
-		line-height: 74px;
+		height: 50px;
+		line-height: 60px;
 	}
+	
+	.sortOfCopy {
+		text-align: center;
+		height: 50px;
+		line-height: 60px;
+	}
+	
+	
+
 	.number-checkbox-input {
 		text-align: center;
-		height: 74px;
-		line-height: 74px;
+		height: 50px;
+		line-height: 60px;
 	}
 	
 	.number-checkbox-input span{
 		display: inline-block;
 		border: 0px solid #eee;
-		width: 200px;
+		//width: 200px;
 		height: 30px;
 		line-height: 40px;
 		text-align: center;
@@ -182,6 +191,24 @@
 		text-align: center;
 		font-size: 1.6rem;
 	}
+	
+	.sortOfCopy span{
+		display: inline-block;
+		border: 1px solid #eee;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+	}
+
+	.sortOfCopy input{
+		height: 40px;
+		width: 80px;
+		text-align: center;
+		font-size: 1.6rem;
+	}
+	
+	
 
 	.print-btn {
 		text-align: center;
@@ -346,11 +373,23 @@
 				<span class='btnbox'>5</span>
 				<span class='btnbox'>6</span>
 			</div>
-<div class='number-checkbox-input'>
-	
-	<input type='checkbox' id="noboxNumberOnLabel"  name="noboxNumberOnLabel"   value='0'><span>no print Box Numbers </span>
-</div>
+			
+			
+			
+			<div class='number-checkbox-input'>
+				<input type='checkbox' id="printall"  name="printall"   value='0'><span> Print All</span>
+				<input type='checkbox' id="noboxNumberOnLabel"  name="noboxNumberOnLabel"   value='0'><span> no Num</span>
+			</div>
 
+			<div class='sortOfCopy'>
+				<!-- 份数输入 -->
+				<span onClick='reducePrintCopy1(1)'>-</span>
+				<input id="boxesNumberSortId" name="boxesNumberSortId" class='boxesNumberSortId' value='1'>
+				<span onClick='increasePrintCopy1(1)'>+</span>
+			</div>
+			<div class='sortOfCopy'><span>of </span></div>
+			
+			
 			<div class='copy-adjust-input'>
 				<!-- 份数输入 -->
 				<span onClick='reducePrintCopy(1)'>-</span>
@@ -456,11 +495,17 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			$(this).toggleClass('selected');
 
 			var orderId = $(this).data('order-id');
+			
+			var order = parsedOrders[orderId];
 			var boxes = $(this).data('boxes');
+		//	var boxessort = $(this).data('boxessort');
+			var boxessort = order.boxesNumberSortId;
+			//alert(boxessort);
+			$('#boxesNumberSortId').val(boxessort);
 		    $('#printCopy').val(boxes);
 			renderDetailPanel(orderId);
 
-			var order = parsedOrders[orderId];
+		
 			setSelectedDropNum(order.logistic_stop_No);
 
 			updatePrintBtnStatus();
@@ -516,13 +561,39 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			$('.order-panel .btnbox.selected').css('background',"lightgreen");
 			$('#order_num_'+orderId).html(totalCopy +' boxes');
 			
-			 recordLabelPrint(orderId,totalCopy);
+			var copysort = $('#boxesNumberSortId').val();
+			var newcopysortid = parseInt(copysort)+1;
+			if(newcopysortid>totalCopy){
+			newcopysortid=totalCopy;
+			}
+			$('#boxesNumberSortId').val(newcopysortid);
+			 recordLabelPrint(orderId,totalCopy,1,copysort);
 		})
 
 		$('body').on("click", ".preview button", function(){
 			dropNumberPopUp(function(){
 				preview();
 			})
+			var orderId = $('.order-panel .btnbox.selected').data('order-id');
+           
+			
+			
+			
+			var totalCopy = $('input.printCopy').val();
+		
+			//修改数组的值
+			parsedOrders[orderId]['boxesNumber']=totalCopy;
+			
+			$('.order-panel .btnbox.selected').css('background',"lightgreen");
+			$('#order_num_'+orderId).html(totalCopy +' boxes');
+			
+			var copysort = $('#boxesNumberSortId').val();
+			var newcopysortid = parseInt(copysort)+1;
+			if(newcopysortid>totalCopy){
+			newcopysortid=totalCopy;
+			}
+			$('#boxesNumberSortId').val(newcopysortid);
+			 recordLabelPrint(orderId,totalCopy,1,copysort);
 		})
 
 		$('body').on("click", ".nav .print-mode-select", function(){
@@ -619,7 +690,7 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			}
 			pageContext.append(
 				//$('<span>').addClass('btnbox').html(order.logistic_sequence_No).attr('data-order-id',order.orderId)
-					'<div  data-boxes='+ order.boxes +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+displayBoxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
+					'<div  data-boxessort=' + order.boxesNumberSortId +' data-boxes='+ order.boxes +' data-order-id=' + order.orderId +' style="background: '+backcolor+'" class=" rbtn6 btnbox colfff  relative mb10 bgFFF7F3 col5e5656"><div class=""><div style="text-align: left;line-height: 3rem;"><span class="num">'+order.logistic_sequence_No+'</span><span id="order_num_' + order.orderId +'">'+displayBoxesNumber+' boxes</span></div> <div class="F14" style="line-height: 0rem;">' +order.displayName + '</div> <!----> <img src="/static/product/img/menusj.png" class="menusjbottom" style="display: none;"></div></div>'
 		 
 			);
 		}
@@ -650,11 +721,11 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			$('<div>').addClass('address').html(order.address)
 		)
 
-		if (data_source1==1) {
+		/*if (data_source1==1) {
 			context.append(
 				$('<span>').addClass('adjust-order-btn').attr('data-order-id', order.orderId).html('Adjust Order')
 			)
-		}
+		}*/
 		
 	}
 
@@ -670,6 +741,26 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 		updatePrintBtnStatus();
 	}
+	
+	function increasePrintCopy1(copyNum) {
+		if (isOperatorSelected() === false) return false;
+
+		var copy = $('input.boxesNumberSortId').val();
+		
+		
+		
+		
+		$('input.boxesNumberSortId').val(parseInt(copy) + parseInt(copyNum));
+		
+		var totalcopy = parseInt($('input.printCopy').val());
+		
+		if(totalcopy < (parseInt(copy) + parseInt(copyNum))){
+		$('input.printCopy').val(parseInt(copy) + parseInt(copyNum));
+		}
+		
+	}
+	
+	
 	function reducePrintCopy(copyNum) {
 		if (isOperatorSelected() === false) return false;
 
@@ -680,6 +771,19 @@ var parsedOrders = JSON.parse(parsedOrders1);
 
 		updatePrintBtnStatus();
 	}
+	
+	function reducePrintCopy1(copyNum) {
+		if (isOperatorSelected() === false) return false;
+
+		var copy = $('input.boxesNumberSortId').val();
+		if (copy - copyNum < 0) return;
+		$('input.boxesNumberSortId').val(copy - copyNum);
+	
+
+		
+	}
+	
+	
 
 	function isOperatorSelected() {
 		return $('.operator-panel .btnbox.selected').length === 1;
@@ -748,12 +852,14 @@ var parsedOrders = JSON.parse(parsedOrders1);
 		}
 	}
 
-	function recordLabelPrint(orderId,totalCopy) {
+	function recordLabelPrint(orderId,totalCopy,singleOrAll,copysortId) {
+	
+	  
         $.ajax({
             url:"/company/record_label_print",
             type:"POST",
             data: {
-                orderId:orderId,totalCopay:totalCopy
+                orderId:orderId,totalCopay:totalCopy,singleOrAll:singleOrAll,copysortId:copysortId
             }
         })
 	}
@@ -779,9 +885,16 @@ var parsedOrders = JSON.parse(parsedOrders1);
 			var order = parsedOrders[orderId];
 
 			var totalCopy = $('input.printCopy').val();
+			var copysort = $('#boxesNumberSortId').val();
 			
 			//修改数组的值
 			parsedOrders[orderId]['boxesNumber']=totalCopy;
+			var newcopsort = parseInt(copysort)+1;
+			
+			if(newcopsort>totalCopy){
+			newcopsort=totalCopy;
+			}
+			parsedOrders[orderId]['boxesNumberSortId']=newcopsort;
 
 			if (DEFAULT_PRINT_MODE === PRINT_MODE_SINGLE_LABEL_PER_PAGE) {
 				generateOrderPrint(order, totalCopy);
@@ -794,21 +907,65 @@ var parsedOrders = JSON.parse(parsedOrders1);
 	//single label per page
 	function generateOrderPrint(order, copy) {
 	  var ifnotPrintBoxnumber = $('#noboxNumberOnLabel').is(":checked");
-	 // alert(ifPrintBoxnumber);
-		for (var i = 0; i < copy; i++) {
-		if(ifnotPrintBoxnumber){
+	  var printall =$('#printall').is(":checked");
+	  
+	  if(ifnotPrintBoxnumber){
+	  
+	  if(printall){
+	 
+			for (var i = 0; i < copy; i++) {
+			
+			order.boxLabel = '__' + " of " + '__';
+				//order.boxLabel = i + 88 + " of " + 88;
+				addOnePage(order);
+				
+			
+			}
+			return;
+			
+			}else{
+			
+			order.boxLabel = '__' + " of " + '__';
+				//order.boxLabel = i + 88 + " of " + 88;
+				addOnePage(order);
+				return;
+				
+				
+			}
+		}
 		
-		order.boxLabel = '__' + " of " + '__';
-			//order.boxLabel = i + 88 + " of " + 88;
-			addOnePage(order);
-		}else{
+	
+	  
+	  
+	 if(printall){
+	 
+		for (var i = 0; i < copy; i++) {
+		
 		
 		order.boxLabel = i + 1 + " of " + copy;
 			//order.boxLabel = i + 88 + " of " + 88;
 			addOnePage(order);
-		}
+		
 			
 		}
+	 
+	 }else{
+	 
+	    var copysortid = $('#boxesNumberSortId').val();
+			var newcopysortid = parseInt(copysortid);
+		
+		
+		
+		order.boxLabel = newcopysortid + " of " + copy;
+			//order.boxLabel = i + 88 + " of " + 88;
+			addOnePage(order);
+		
+			
+		
+	 
+	 
+	 }
+		
 	}
 
 	function addOnePage(order) {

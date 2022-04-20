@@ -14682,6 +14682,7 @@ public function custom_delivery_fee_add_action()
             }
 			$parsed['displayName'] = substr($order['displayName'],0,11);
             $parsed['boxesNumber'] = $order['boxesNumber'];
+            $parsed['boxesNumberSortId'] = $order['boxesNumberSortId'];
 
 			$parsed['redeem_code'] = $order['redeem_code'];
 
@@ -14801,11 +14802,24 @@ public function custom_delivery_fee_add_action()
 
             $orderId = post('orderId');
             $boxesNumber =  post('totalCopay');
+            $singleOrAll = post('singleOrAll');
+            $copysortId =  post('copysortId');
+          
+            if($singleOrAll==1) {
+                if($copysortId<$boxesNumber){
+                    $copysortId ++;
+                }
+            }else{
+                $copysortId=$boxesNumber;
+            }
+
+
             $this->loadModel('order_print_log')->addRecord($orderId, $this->loginUser['id']);
 
             //修改order表 box数量
             $data =array(
-                'boxesNumber'=>$boxesNumber
+                'boxesNumber'=>$boxesNumber,
+                'boxesNumberSortId'=>$copysortId
             );
             $where =array('orderId'=>$orderId);
             $this->loadModel('order')->updateByWhere($data,$where);
