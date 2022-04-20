@@ -103,17 +103,17 @@
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>订单编号</label></span>
+						<span><label>Order ID</label></span>
                         <{$data.orderId}>
 					</div>
 					
 					<div class="input-box clearfix  col-6">
-						<span><label>销售员</label></span>
-                        <{$data.salesmanName}>
+						<span><label>Invoice Number</label></span>
+                        <{if $data.xero_invoice_id}>  <{$data.xero_invoice_id}><{else}>-<{/if}>
 					</div>
 
                    <div class="input-box clearfix  col-6">
-						<span><label>订单状态</label></span>
+						<span><label>Order Status</label></span>
 
 						<{if $data.coupon_status=='c01'}>
 							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
@@ -123,25 +123,21 @@
 							<span style="color:red"><{$data.cn_coupon_status_name}></span>
 						<{/if}>
 
-						<{if $data.coupon_status=='c01' && $editAble == true}>
-						
-							<!-- cancel id is the id of the first item in an order -->
-								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
-						<{/if}>
+					
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>下单时间</label></span>
+						<span><label>Order TIme</label></span>
 						<{date('Y-m-d H:i:s', $data.createTime)}>
 					</div>
 
 					<div class="input-box clearfix col-6">
-						<span><label>客户ID</label></span>
+						<span><label>Customer Id</label></span>
                         <{$data.userId}>
 					</div>
 
                   	<div class="input-box clearfix col-6">
-						<span><label>客户名称</label></span>
+						<span><label>Customer Name</label></span>
                         <{$data.cust_name}>
 					</div>
 						
@@ -189,7 +185,7 @@
 									</td>
 									
 									<td>
-           							  <{$item.new_customer_buying_quantity*voucher_deal_amount}>
+           							  <{$item.new_customer_buying_quantity*$item.voucher_deal_amount}>
 									</td>
 									
 									<td>
@@ -232,46 +228,13 @@
 
 					<div class='moneyDetail' style="text-align: right;padding: 10px">
                        
-					   <{if $moneyDetail.goodsTotal}>
+					  
+
+                      
 							<div style="color: #f00;font-weight: bolder;">
-								<span>商品总价</span><span>:</span><span id="totalGoodsAmount"><{$moneyDetail.goodsTotal_new}></span>
+								<span>Total Credit</span><span>:</span><span id="totalCredit">$3.8883</span>
 							</div>
-                        <{/if}>
-						
-
-                        <{if $moneyDetail.deliveryFee>0}>
-							<div>
-								<span>运费</span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
-							</div>
-                        <{/if}>
-                        <{if $moneyDetail.platformFee>0}>
-							<div>
-								<span>预订费</span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
-							</div>
-                        <{/if}>
-                        <{if $moneyDetail.transactionSurcharge>0}>
-							<div>
-								<span>第三方交易手续费</span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
-							</div>
-                        <{/if}>
-
-                        <{if $moneyDetail.promotionTotal>0}>
-							<div>
-								<span>使用折扣码</span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
-							</div>
-                        <{/if}>
-
-                        <{if $moneyDetail.useMoney>0}>
-							<div>
-								<span>钱包支付</span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
-							</div>
-                        <{/if}>
-
-                        <{if $moneyDetail.transactionBalance}>
-							<div style="color: #f00;font-weight: bolder;">
-								<span>交易总额</span><span>:</span><span id="totalAmount"><{$moneyDetail.transactionBalance_new}></span>
-							</div>
-                        <{/if}> 
+                      
 						
 					</div>
 

@@ -112,7 +112,7 @@ class ctl_factory extends cmsPage
 
         $this->setData($customer_delivery_date,'customer_delivery_date');
 
-        $three_days_times = time()-259200*2;
+        $three_days_times = time()-259200*5;
 
         $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
             $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
@@ -1761,6 +1761,146 @@ class ctl_factory extends cmsPage
 
 
     }
+
+
+
+    public function update_return_item_details_action()
+    {
+        if (! is_post()) {
+            return;
+        }
+
+
+        $id = post('id');
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $customerCoupon = $mdl_wj_customer_coupon->get($id);
+
+        //if item exist.
+        if (! $customerCoupon) {
+            $this->form_response(600, 'item could not find', '');
+        }
+
+
+        // if is the owner of item
+        $uni_business_id = $customerCoupon['business_id'];
+
+        if($uni_business_id !=$this->current_business['id']) {
+            $this->form_response_msg(600, 'no access' );
+        }
+
+
+
+        // check quantity is vaild
+        $quantity = post('adjust_quantity');
+        $price = post('adjust_price');
+
+
+        if (! is_numeric($quantity) || ($quantity < 0)) {
+            $this->form_response(600, 'please input number and must not lower than 0。');
+
+            return;
+        }
+
+        if (! is_numeric($price) || ($price < 0)) {
+            $this->form_response(600, 'please input number and must not lower than 0。');
+
+            return;
+        }
+
+
+
+
+
+        $old_sub_total = $customerCoupon['new_customer_buying_quantity'] * $customerCoupon['voucher_deal_amount'];
+
+        $new_sub_total = $quantity * $price;
+
+        $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
+
+        if($orderPriceChange) {
+            
+            //查找claim return table 是否有该id存在，如果有则更改，前提是settle =0 ,如果没有则增加
+            
+            $mdl_return_details =$this->loadModel('order_return_details');
+            $return_rec =$mdl_return_details->get($id);
+            if($return_rec) {
+                if($return_rec['is_settled']) {
+                    $this->form_response(600, 'items settled , can not change!');
+                }else{
+                    $updateData =array(
+                        'adjust_quantity'=>$quantity,
+                        'adjust_price'=>$price,
+                        'returnType'=>1,
+                        'createUser'=>$this->loginUser['id'],
+                        'createTime'=>time(),
+                        'approveTime'=>time(),
+                        'approveUserId'=>$this->loginUser['id'],
+                        'isApprovedToProcess'=>1,
+                        'is_settled'=>0,
+                        'ref_statement_id'=>0
+                    );
+                   if($mdl_return_details->update($updateData,$id)) {
+
+                       $issuccessupdate =1;
+                   }
+                }
+            }else{
+                // insert a new record for claim or return ;
+                $updateData =array(
+                    'adjust_quantity'=>$quantity,
+                    'adjust_price'=>$price,
+                    'returnType'=>1,
+                    'createUser'=>$this->loginUser['id'],
+                    'createTime'=>time(),
+                    'approveTime'=>time(),
+                    'approveUserId'=>$this->loginUser['id'],
+                    'isApprovedToProcess'=>1,
+                    'is_settled'=>0,
+                    'ref_statement_id'=>0
+                );
+            }
+
+            $itemDetails =array(
+                'new_customer_buying_quantity'  =>$quantity,
+                //   'voucher_deal_amount' =>$amount,
+                'adjust_subtotal_amount'=>round(floatval($new_sub_total),2)
+            );
+
+            $mdl_wj_customer_coupon->update($itemDetails, $id);
+
+
+
+            //检查权限
+
+            if ($orderPriceChange != 0) {
+
+                $mdl_order = $this->loadModel('order');
+                $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
+                $orderUpdateData = [
+                    'money' => round($order['money'] + $orderPriceChange, 2),
+                    'money_new' => round($order['money_new'] + $orderPriceChange, 2),
+                ];
+
+                //  $this->form_response(600, $order['money']);
+                $mdl_order->update($orderUpdateData, $order['id']);
+            }
+
+            $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
+
+            $returnData =array(
+                'adjust_subtotal_amount'=>$itemDetails['adjust_subtotal_amount'],
+                'goods_total'=>$money_details['goodsTotal_new'],
+                'money_new'=>$money_details['transactionBalance_new']
+            );
+            $this->form_response(200, json_encode($returnData));
+        } else {
+            $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);
+        }
+
+
+    }
+
 
 
     public function update_customer_coupon_detail_amount_action()

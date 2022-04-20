@@ -103,17 +103,17 @@
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>订单编号</label></span>
+						<span><label>Order ID</label></span>
                         <{$data.orderId}>
 					</div>
 					
 					<div class="input-box clearfix  col-6">
-						<span><label>销售员</label></span>
-                        <{$data.salesmanName}>
+						<span><label>Invoice Number</label></span>
+                        <{if $data.xero_invoice_id}>  <{$data.xero_invoice_id}><{else}>-<{/if}>
 					</div>
 
                    <div class="input-box clearfix  col-6">
-						<span><label>订单状态</label></span>
+						<span><label>Order Status</label></span>
 
 						<{if $data.coupon_status=='c01'}>
 							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
@@ -123,25 +123,21 @@
 							<span style="color:red"><{$data.cn_coupon_status_name}></span>
 						<{/if}>
 
-						<{if $data.coupon_status=='c01' && $editAble == true}>
-						
-							<!-- cancel id is the id of the first item in an order -->
-								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
-						<{/if}>
+					
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>下单时间</label></span>
+						<span><label>Order TIme</label></span>
 						<{date('Y-m-d H:i:s', $data.createTime)}>
 					</div>
 
 					<div class="input-box clearfix col-6">
-						<span><label>客户ID</label></span>
+						<span><label>Customer Id</label></span>
                         <{$data.userId}>
 					</div>
 
                   	<div class="input-box clearfix col-6">
-						<span><label>客户名称</label></span>
+						<span><label>Customer Name</label></span>
                         <{$data.cust_name}>
 					</div>
 						
@@ -189,39 +185,31 @@
 									</td>
 									
 									<td>
-           							  <{$item.new_customer_buying_quantity*voucher_deal_amount}>
+           							  $<{$item.new_customer_buying_quantity*$item.voucher_deal_amount}>
 									</td>
 									
 									<td>
-                                  		<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
-												   data-id='<{$item.id}>' id="new_customer_buying_quantity-<{$item.id}>" style="width:50px;" name="new_customer_buying_quantity"
-												   value="<{$item.new_customer_buying_quantity}>">
+                                  		<input type="text"  class="input-text 	"
+												   data-id='<{$item.id}>' id="adjust_quantity-<{$item.id}>" style="width:50px;" name="adjust_quantity"
+												   value="<{$item.adjust_quantity}>">
 											<span class='promote-ajax'></span>
 										
 									</td>
 									<td>
                                        
-											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
-												   data-id='<{$item.id}>' id="voucher_deal_amount-<{$item.id}>" style="width:50px;" name="voucher_deal_amount"
-												   value="<{$item.voucher_deal_amount}>">
+											<input type="text" class="input-text 	"
+												   data-id='<{$item.id}>' id="adjust_price-<{$item.id}>" style="width:50px;" name="adjust_price"
+												   value="<{$item.v}>">
 											<span class='promote-ajax'></span>
                                         
 									</td>
 
 									<td>
-										
-											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
-												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:100px;" name="adjust_subtotal_amount"
-												   value="<{$item.adjust_subtotal_amount}>" disabled>
-											<span class='promote-ajax'></span>
-										
-									</td>
-								<td>
-										
+										<span  id="ajustSubTotal">-</span>
 											
-											<span >$2.87</span>
 										
 									</td>
+							
 								
 									
 								</tr>
@@ -236,7 +224,7 @@
 
                       
 							<div style="color: #f00;font-weight: bolder;">
-								<span>Total Credit</span><span>:</span><span id="totalCredit">$3.8883</span>
+								<span>Total CreditOrDebit</span><span>:</span><span id="totalCreditOrDebit">$3.8883</span>
 							</div>
                       
 						
