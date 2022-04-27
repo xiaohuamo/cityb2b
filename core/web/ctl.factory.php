@@ -147,13 +147,6 @@ class ctl_factory extends cmsPage
         $this->setData($truckList,'truckList');
 
 
-
-
-
-
-
-
-
         /**
          * staff List
          */
@@ -1251,16 +1244,7 @@ class ctl_factory extends cmsPage
 
         //订单详情
         $items = $mdl_wj_customer_coupon->getOrderItemsWithReturnInfo($orderId);
-
-        // 获取当前订单和当前客户的关系
-        // 返回结果：
-        // status 1 : 当前用户为普通查看者，不是订单的商家
-        // status 2 : 当前用户为当前订单唯一商家。
-        // status 3 : 当前用户为当前订单的某一个商家（该情况存在于如果该订单为统配中心订单的情况） 。
-        // status 4 : 当前用户为配货中心管理用户，拥有完整权限管理权和数据管理权
-        // 每种状态对应相应的显示页面。
-
-        // 如果当前用户就是订单中的商家，代表，其是通配中心商家。
+//var_dump($items);exit;
 
 
          $totalCredit = $mdl_wj_customer_coupon->getOrderTotalCredit($orderId);
@@ -1783,9 +1767,9 @@ class ctl_factory extends cmsPage
         $price = post('adjust_price');
 
 
-        //$id =89623;
-       // $quantity =50;
-       // $price=10;
+       // $id =89623;
+     // $quantity =50;
+     //  $price=10;
 
         $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $customerCoupon = $mdl_wj_customer_coupon->get($id);
@@ -1835,7 +1819,8 @@ class ctl_factory extends cmsPage
             //查找claim return table 是否有该id存在，如果有则更改，前提是settle =0 ,如果没有则增加
             
             $mdl_return_details =$this->loadModel('order_return_details');
-            $return_rec =$mdl_return_details->get($id);
+            $return_rec =$mdl_return_details->getByWhere(array('item_id'=>$id));
+
             if($return_rec) {
                 if($return_rec['is_settled']) {
                     $this->form_response(600, 'items settled , can not change!');
@@ -1848,7 +1833,7 @@ class ctl_factory extends cmsPage
                         'approveTime'=>time(),
                         'approveUserId'=>$this->loginUser['id'],
                     );
-                   if($mdl_return_details->update($updateData,$id)) {
+                   if($mdl_return_details->update($updateData,$return_rec['id'])) {
 
                        $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
                         //var_dump($totalCreitAmount);exit;
@@ -1893,7 +1878,7 @@ class ctl_factory extends cmsPage
             }else{
                 // insert a new record for claim or return ;
                 $insertData =array(
-                    'id'=>$id,
+                    'item_id'=>$id,
                     'adjust_quantity'=>$quantity,
                     'adjust_price'=>$price,
                     'returnType'=>1,
@@ -1907,10 +1892,11 @@ class ctl_factory extends cmsPage
                     'is_settled'=>0,
                     'ref_statement_id'=>0
                 );
+             //   var_dump($insertData);exit;
                 if($mdl_return_details->insert($insertData)) {
-
+                  //  var_dump($customerCoupon['order_id']);exit;
                     $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
-
+                   //
                     //向 statement 插入数
                     $data=array();
                     $data['create_user'] = $this->loginUser['id'];
@@ -1927,7 +1913,28 @@ class ctl_factory extends cmsPage
 
                     $this->loadModel('statement')->insertOrUpdateCreditItem($data);
 
+
+
+                    $data_invoice=array(
+                        'factory_id'=>$order['business_userId'],
+                        'gendate'=>time(),
+                        'createUserId'=>$this->loginUser['id'],
+                        'type'=>2,
+                        'customer_id'=>$order['userId'],
+                        'invoiceId'=>$order['id'],
+                        'amount'=>$totalCreitAmount,
+                        'creditOrDebit'=>2,
+                        'filepathname'=>'',
+                        'isAvaliable'=>1
+                    );
+
+                    $this->loadModel('invoice_list')->insertOrUpdate($data_invoice);
+
+
                     $issuccessupdate =1;
+                }else{
+                    $issuccessupdate =0;
+                    var_dump('error'); exit;
                 }
             }
 

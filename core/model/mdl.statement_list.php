@@ -36,11 +36,27 @@ class mdl_statement_list extends mdl_base
    /*获得需要处理statement的客户列表*/
 
    public function getNeedToProcessStatementCustomerList($factory_id){
-       $sql ="select s.customer_id from  cc_statement s  where s.factory_id = $factory_id and is_settled =0  group by customer_id order by customer_id" ;
+       $sql ="select s.customer_id from  cc_statement s  where s.factory_id = $factory_id and (process_status =0 or process_status=-1)  group by customer_id order by customer_id" ;
        $list = $this->getListBySql($sql);
       // var_dump($list); exit;
        return $list;
    }
+
+   public function  getCustomerOpeningBalance($factoryId,$customerId){
+     //必须为正式的statement ，临时的statement 不包括。
+       $sql ="SELECT * FROM `cc_statement_list` WHERE  factory_id=$factoryId and customer_id=$customerId and statementType =1 order by id desc ";
+       $list =$this->getListBySql($sql);
+       if($list){
+           $openBalance = $list[0]['close_balance_amount'];
+       }else{
+           $openBalance = 0.00;
+       }
+       return $openBalance;
+
+  }
+
+
+
 
 
    /* 获得当前供应商，当前客户的当前 年度星期 是否已经生成你了statement  */

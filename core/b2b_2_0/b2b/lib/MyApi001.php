@@ -556,9 +556,12 @@ class MyApi
         }
 
         try {
+
             $data_arr = json_decode($json, true);
+           // var_dump($data_arr);exit;
             if(is_array($data_arr) && count($data_arr) > 0) {
-                if(empty($data_arr['ContactID'])) {
+                if(empty($data_arr[0]['ContactID'])) {
+
                     return json_encode([
                         'error' => true,
                         'origin' => 'local',
@@ -706,7 +709,7 @@ class MyApi
         // YOU CAN CHECK THE RESPONSE, UPDATE DB IF NEEDED
 
         // DISPLAY THE RESPONSE
-        return $response;
+        return $response_parsed;
     }
 
     /********************************** GET CONTACTS *************************************************/

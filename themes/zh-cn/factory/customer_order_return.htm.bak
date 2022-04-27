@@ -207,12 +207,12 @@
 									</td>
 
 									<td>
-										<span >$</span><span  id="ajustSubTotal_<{$item.id}>"><{item.ajustSubTotal}></span>
+										<span >$</span><span  id="ajustSubTotal_<{$item.id}>"><{$item.ajustSubTotal}></span>
 											
 										
 									</td>
 									<td>
-										<span >$</span><span  id="credit_<{$item.id}>"><{item.credit}></span>
+										<span >$</span><span  id="credit_<{$item.id}>"><{$item.credit}></span>
 											
 										
 									</td>
@@ -283,8 +283,8 @@
         updateData['id'] = id;
         updateData['adjust_quantity'] = $('#adjust_quantity-'+id).val();
 		updateData['adjust_price'] = $('#adjust_price-'+id).val();
-		alert(updateData['adjust_quantity']);
-		alert(updateData['adjust_price']);
+		//alert(updateData['adjust_quantity']);
+		//alert(updateData['adjust_price']);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
             url: "<{$http_root_www}>factory/update_return_item_details",

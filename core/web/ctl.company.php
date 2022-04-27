@@ -2721,7 +2721,7 @@ class ctl_company extends cmsPage
     }
 
     public function test_customer_coupon_approving_action(){
-        $this->_customer_coupon_approving('20220226022244592465');
+        $this->_customer_coupon_approving('20220415010709228262');
 }
     function customer_coupon_approving_action()
     {

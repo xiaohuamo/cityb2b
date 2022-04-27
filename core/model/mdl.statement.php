@@ -43,7 +43,7 @@ class mdl_statement extends mdl_base
     }
 
     //生成statement所需数据
-    public function getStatementData($factoryId,$customer_id,$yearWeek,$login_user) {
+    public function getStatementData($factoryId,$customer_id,$login_user,$openBalance,$closeBalance) {
        // 获得notoverdue date 的汇总
         $current_time =time();
 
@@ -69,16 +69,7 @@ class mdl_statement extends mdl_base
         $customerabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$customer_id));
 
 
-        $sql ="select id from cc_statement  where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 ";
-        $statementIdsRec =$this->getListBySql($sql);
-        foreach ($statementIdsRec as $key =>$value) {
-            if($key==0) {
-                $statementIds =$value['id'];
-            }else{
-                $statementIds .=','.$value['id'];
-            }
 
-        }
        // var_dump($statementIds);exit;
        if ($factoryrec['tel'] ) {
            $phone =$factoryrec['tel'];
@@ -107,14 +98,52 @@ class mdl_statement extends mdl_base
         $data['customer_contact_name']=$customerrec['nickname'];
         $data['customer_address']=$customerrec['googleMap'];
         $data['customer_legal_name']=$customerabnRec['untity_name'];
-        $data['yearweek']=$yearWeek;
-        $data['statement_ids']=$statementIds;
+        $data['open_balance_amount']=$openBalance;
+        $data['close_balance_amount']=$closeBalance;
+
+
 
 
 //var_dump($data);exit;
         return $data;
 
     }
+
+    public function  getCustomerCloseingBalanceAndData($factoryId,$customerId){
+        //必须为正式的statement ，临时的statement 不包括。
+
+        // lock the data
+
+        $where =array(
+            'factory_id'=>$factoryId,
+            'customer_id'=>$customerId,
+            'statement_id'=>0
+        );
+        $data =array(
+            'process_status'=>-1
+        );
+
+        $this->updateByWhere($data,$where);
+
+
+        $sql ="select * from cc_statement where factory_id =$factoryId and customer_id =$customerId and statement_id =0 and process_status =-1 order by id ";
+
+        $list = $this->getListBySql($sql);
+
+        $transcationAmount =0.00;
+        foreach ($list as $key => $value) {
+            if($value['type_code']!=5001) {
+                $transcationAmount += $value['debit_amount']-$value['credit_amount'];
+            }
+
+
+        }
+
+        return $transcationAmount;
+
+    }
+
+
    // 更新客户credit或退货的statment记录
     public function insertOrUpdateCreditItem($data){
         //检查当前数据是否为新数据
@@ -129,11 +158,13 @@ class mdl_statement extends mdl_base
     $rec =$this->getByWhere($where);
 
     if($rec){
+      // var_dump($rec);exit;
         $dataUpdate =array(
             'create_user'=>$data['create_user'],
             'gen_date'=>time(),
             'credit_amount'=>$data['credit_amount']
          );
+       // var_dump($dataUpdate);exit;
         $this->update($dataUpdate,$rec['id']);
 
     }else{

@@ -550,13 +550,13 @@
 									<td>
 										<{if $item.coupon_status=='c01'}>
 												<span style="color:#FD5001 ;"><{$item.cn_coupon_status_name}></span>
-												<{if  $item.status==1}>
+												<!-- <{if  $item.status==1 }> -->
 													<span class='fast-approving-btn' data-id='<{$item.orderId}>'><span class='status_updating'>
 														<i class='fa fa-sign-out ' style='color:#58964E'></i>
 													</span></span>
-												<{/if}>
+												<!--<{/if}> -->
 											<{elseif $item.coupon_status=='b01'}>
-												<span style="color:#58964E;"><{$item.cn_coupon_status_name}><br> <a href =""><{$lang->order_return}></a></span>
+												<span style="color:#58964E;"><{$item.cn_coupon_status_name}><br> <a href ="<{$http_root_www}>factory/customer_order_return?id=<{$item.orderId}>"><{$lang->order_return}></a></span>
 											<{elseif $item.coupon_status=='d01'}>
 												<span style="color:#F30;"><{$item.cn_coupon_status_name}></span>
 										<{/if}>	

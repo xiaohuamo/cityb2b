@@ -411,7 +411,7 @@ public function  setCustomerTrueLogin($userrole){
                 //8  $system_mailer->attachment($path,$name);
                 $system_mailer->to($to);
                 $system_mailer->send();
-                echo $body;
+             //   echo $body;
 
             }else{
 

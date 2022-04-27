@@ -3510,8 +3510,10 @@ public function xero_test_action() {
 			echo '<p>CREATE CONTACTS</p>';
 		}
 		if(isset($_POST['btnUpdateContact'])) {
-
-			$response = $api->updateContact($credentials);
+			$contactList =$mdl_xero->getContactNameListForUpdateContactNameOnXero($this->current_business['id'],0,0,400);
+			//var_dump($contactList);exit;
+			$response_arr = $api->updateContact($credentials,$contactList);
+			$response=json_encode($response_arr);
 			echo '<p>UPDATE CONTACT</p>';
 		}
 		if(isset($_POST['btnGetItems'])) {

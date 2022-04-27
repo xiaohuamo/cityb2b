@@ -7,6 +7,61 @@ class mdl_xero extends mdl_base
 
 
 
+    public function getContactNameListForUpdateContactNameOnXero($business_id,$isEdit,$offset,$lengthOflists) {
+
+        $sql = "
+
+                   select  /*u.id ,   */
+                        f.xero_account_number as AccountNumber,
+                        f.xero_contact_id as ContactID , 
+                          f.user_id as ContactNumber,
+                         if(length(u.displayName)>0,u.displayName, if(length(abn.business_name)>0,abn.business_name,f.nickname)) as Name,
+                        abn.untity_name, 
+                        f.nickname as customer_code, 
+                        u.person_first_name,
+                        u.person_last_name, 
+                        u.address ,
+                        u.addrNumber,
+                        u.addrStreet,
+                        u.addrSuburb,
+                        u.addrState,
+                        u.addrPost,
+                        u.email,
+                        abn.ABNorACN,
+                        concat (u.tel,' ',u.phone) as phone,
+                        if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType , 
+                        if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period  
+                        from cc_user u 
+                        left join cc_user_factory f on u.id =f.user_id
+                        left join cc_wj_abn_application abn on u.id =abn.userId
+                        where f.factory_id =$business_id and (f.user_id =321249 ) and (length(f.xero_contact_id)>0 or (f.xero_contact_id is not null))  limit $offset ,800  ";
+
+       //  var_dump($sql);exit;
+        $rows = $this->getListBySql($sql);
+        $new_data = [];
+        foreach ($rows as $key=> $row) {
+
+
+
+
+            $new_data[$key]['ContactID']=$row['ContactID'];
+
+            $new_data[$key]['Name'] = str_replace('&', ' ', $row['Name']);
+            if(! $new_data[$key]['Name'] ) {
+                $new_data[$key]['Name']='no name';
+            }
+
+
+
+
+
+        }
+
+
+        return json_encode($new_data);
+
+    }
+
     public function getContactListForCreateContactOnXero($business_id,$isEdit,$offset,$lengthOflists) {
 
         $sql = "
@@ -15,7 +70,7 @@ class mdl_xero extends mdl_base
                         f.xero_account_number as AccountNumber,
                         f.xero_contact_id as ContactID , 
                           f.user_id as ContactNumber,
-                         if(length(f.nickname)>0,f.nickname,u.displayName) as Name,
+                         if(length(u.displayName)>0,u.displayName, if(length(abn.business_name)>0,abn.business_name,f.nickname)) as Name,
                         abn.untity_name, 
                         f.nickname as customer_code, 
                         u.person_first_name,

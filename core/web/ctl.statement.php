@@ -46,9 +46,9 @@ class ctl_statement extends cmsPage
         3) 将statement 的 生成信息写入数据库。
         */
 
-        // 获得当前的年度星期值
 
-        $yearWeek = $this->getYearWeekofDate();
+
+
 
         // 获得当前供应商需要生成statement 的客户列表
         $needToProcessCustomerList = $mdl_statement_list->getNeedToProcessStatementCustomerList($factoryId);
@@ -58,20 +58,25 @@ class ctl_statement extends cmsPage
      //   var_dump($needToProcessCustomerList);exit;
 
         foreach ($needToProcessCustomerList as $key => $value) {
-            // 是否存在statement
-            $id =$mdl_statement_list->getIfcurrentYearWeekIsProcessForCustomer($factoryId,$value['customer_id'],$yearWeek);
-           if(!$id){
-             //如果不存在，生成新的statement
-               $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$yearWeek,$this->loginUser['id']);
 
-               $mdl_statement_list->insert($statementData);
-              // var_dump($statementData);exit;
-           }else{
-            //   $mdl_statement_list->deleteCurrentYearWeekIsProcessForCustomer($factoryId,$value['customer_id'],$yearWeek);
-               $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$yearWeek,$this->loginUser['id']);
 
-               $mdl_statement_list->update($statementData,$id);
-           }
+            // lock record this customer data
+
+            // get opening balance
+           $openBalance = $mdl_statement_list->getCustomerOpeningBalance($factoryId,$value['customer_id']);
+
+        //  var_dump($openBalance);exit;
+            // get closeing balance
+
+            $closeBalance = $mdl_statement->getCustomerCloseingBalanceAndData($factoryId,$value['customer_id']);
+            //  label all statment detail is process
+
+          //  var_dump($closeBalance);exit;
+
+            $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],$openBalance,$closeBalance);
+var_dump($statementData);exit;
+            $mdl_statement_list->insert($statementData);
+
 
         }
         $this->setData('statement_list', 'submenu');

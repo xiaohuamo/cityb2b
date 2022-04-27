@@ -188,13 +188,13 @@ class mdl_wj_customer_coupon extends mdl_base
         if(r.reasonType is null ,0,r.reasonType) as reasonType ,
          if(r.note is null ,0,r.note) as note 
     ,m.menu_en_name,m.menu_cn_name, if(length(m.unit_en)>0,m.unit_en,m.unit) as unit  from cc_wj_customer_coupon a 
-                left join cc_restaurant_menu m on a.restaurant_menu_id = m.id left join cc_order_return_details r on a.id =r.id
+                left join cc_restaurant_menu m on a.restaurant_menu_id = m.id left join cc_order_return_details r on a.id =r.item_id 
 
 
 
                 where a.order_id =$orderId order by a.id";
         $list = $this->getListBySql($sql);
-        //   var_dump($list);exit;
+        //  var_dump($sql);exit;
 
         foreach ($list as $key=>$value){
             $list[$key]['ajustSubTotal'] =number_format($value['new_customer_buying_quantity']*$value['voucher_deal_amount'],2);
@@ -206,7 +206,7 @@ class mdl_wj_customer_coupon extends mdl_base
 
     function getOrderTotalCredit($order_id) {
 
-        $sql ="select a.*,if(r.adjust_quantity is null ,a.new_customer_buying_quantity,r.adjust_quantity) as adjust_quantity,if(r.adjust_price is null ,a.voucher_deal_amount,r.adjust_price) as adjust_price  from cc_wj_customer_coupon a  left join  cc_order_return_details r on a.id =r.id where a.order_id =$order_id";
+        $sql ="select a.*,if(r.adjust_quantity is null ,a.new_customer_buying_quantity,r.adjust_quantity) as adjust_quantity,if(r.adjust_price is null ,a.voucher_deal_amount,r.adjust_price) as adjust_price  from cc_wj_customer_coupon a  left join  cc_order_return_details r on a.id =r.item_id where a.order_id =$order_id";
 
          $list =$this->getListBySql($sql);
 
@@ -215,7 +215,7 @@ class mdl_wj_customer_coupon extends mdl_base
                 $credit += $value['new_customer_buying_quantity']*$value['voucher_deal_amount']-$value['adjust_quantity']*$value['adjust_price'];
 
             }
-            $credit =number_format($credit,2);
+           
             return $credit;
         }else{
             return 0;
