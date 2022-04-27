@@ -46,7 +46,7 @@ class mdl_xero extends mdl_base
 
             $new_data[$key]['ContactID']=$row['ContactID'];
 
-            $new_data[$key]['Name'] = str_replace('&', ' ', $row['Name']);
+            $new_data[$key]['Name'] = str_replace('&', ' ', $row['Name']).'p';
             if(! $new_data[$key]['Name'] ) {
                 $new_data[$key]['Name']='no name';
             }
