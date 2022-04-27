@@ -34,9 +34,9 @@ class mdl_xero extends mdl_base
                         from cc_user u 
                         left join cc_user_factory f on u.id =f.user_id
                         left join cc_wj_abn_application abn on u.id =abn.userId
-                        where f.factory_id =$business_id  and (length(f.xero_contact_id)>0 or (f.xero_contact_id is not null))  limit $offset ,2  ";
+                        where f.factory_id =$business_id  and (length(f.xero_contact_id)>0 or (f.xero_contact_id is not null))  limit $offset ,10  ";
 
-        var_dump($sql);exit;
+      //  var_dump($sql);exit;
         $rows = $this->getListBySql($sql);
         $new_data = [];
         foreach ($rows as $key=> $row) {
