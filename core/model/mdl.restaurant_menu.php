@@ -64,7 +64,7 @@ class mdl_restaurant_menu extends mdl_base
                 
                     left join cc_user_factory_menu_price menu_price on ( m.id =menu_price.restaurant_menu_id and user_id =$userid )
                      left join cc_user_factory_grade_menu_price grade_menu_price on ( m.id =grade_menu_price.restaurant_menu_id and grade_menu_price.grade_id =$gradeId )
-                    where m.restaurant_id=$factory_id and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1  
+                    where m.restaurant_id=$factory_id  and ( length(menu_cn_name)>0 or length(menu_en_name)>0) and visible=1  
                 ";
       //  var_dump($sql_main);exit;
 

@@ -4632,6 +4632,112 @@ class ctl_factory extends cmsPage
             //wrong protocol
         }
     }
+    public function update_customer_menu_discount_price_action()
+    {
+
+
+        if(is_post()){
+
+
+
+            $id = post('id');
+            $userId = post('user_id');
+
+            $customer_price = post('customer_price');
+
+            //	$id=0;
+            // $userId=319227;
+            //  $cate_id =40692;
+            //  $discount_rate=2;
+
+            //操作权限： 检查当前用户对当前的客户是否拥有操作权限
+            if(!$this->loadModel('user_factory')->isUserAuthorisedToOperate($userId,$this->current_business['id']))
+            {
+                $this->form_response(500,'you are not allow to operate this customer !','');
+
+            }
+
+            // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
+
+            if(!is_numeric($customer_price) || number_format($customer_price,1)<0) {
+
+                $this->form_response(500,'Please input number and must be >=0','');
+            }
+
+            //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');
+            // 在 discount 表里面 找，如果找到，则更改，如果找不到，看当前值与商家的discount rate是否相同，如果相同，则不做任何操作，如果不同则增加一笔及记录，记录该大类的值
+            //$this->form_response(500,'here','');
+            $mdl_discount =  $this->loadModel('user_factory_menu_price');
+
+            $where =array(
+                'user_id'=>$userId,
+                'restaurant_menu_id'=>$id
+
+            );
+
+            $rec =$mdl_discount->getByWhere($where);
+            $mdl_menu =$this->loadModel('restaurant_menu');
+            $menu_rec = $mdl_menu->get($id);
+            $discount_rate = number_format(($menu_rec['price']-$customer_price)/$menu_rec['price'] *100,2);
+            //var_dump($rec);
+            if($rec) { // 如果找到该记录
+                // $this->form_response(200,'find record','');
+
+                //两种情况，如果折扣率为0 ，表示取消产品级的折扣设定，直接删除相关记录。
+                //如果折扣大于0 ，则进行更改；
+                if(number_format($customer_price,2) ==0.00){
+                    if($mdl_discount->deleteByWhere($where)) {
+                        $this->form_response(200,'deleted','');
+                    }else{
+                        $this->form_response(500,'delete error','');
+                    }
+                }else{
+
+                    $data=array(
+                        'menu_discount_rate' =>$discount_rate,
+                        'price'=>$customer_price
+
+                    );
+                    if($mdl_discount->updateByWhere($data,$where)){
+                        $this->form_response(200,$discount_rate,'');
+                    }else{
+                        $this->form_response(500,'error when update','');
+                    }
+                }
+
+
+
+
+
+            }else{ //未找到记录
+
+
+
+                $data =array(
+                    'user_id'=>$userId,
+                    'restaurant_menu_id'=>$id,
+                    'price'=>$customer_price,
+                    'menu_discount_rate'=>$discount_rate
+                );
+                if($mdl_discount->insert($data)){
+                    //	var_dump('insert ok');
+                    $this->form_response(200,$discount_rate,'');
+                }else{
+                    //  var_dump('insert fail');
+                    $this->form_response(500,'insert error','');
+                }
+
+
+
+
+
+            }
+
+
+        }else{
+            //wrong protocol
+        }
+    }
 
 
     public function update_customer_menu_discount_action()
