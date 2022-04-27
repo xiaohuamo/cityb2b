@@ -3516,7 +3516,7 @@ public function xero_test_action() {
 			foreach($contactList as $key=>$value){
 				$json_arr =json_encode($value);
 				$response_arr = $api->updateContact($credentials,$json_arr);
-				//sleep(1);
+				sleep(1);
 			}
 
 
