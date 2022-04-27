@@ -74,7 +74,7 @@ class ctl_statement extends cmsPage
           //  var_dump($closeBalance);exit;
 
             $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],$openBalance,$closeBalance);
-var_dump($statementData);exit;
+//var_dump($statementData);exit;
             $mdl_statement_list->insert($statementData);
 
 

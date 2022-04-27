@@ -58,7 +58,7 @@ class mdl_xero extends mdl_base
         }
 
 
-        return json_encode($new_data);
+        return $new_data;
 
     }
 

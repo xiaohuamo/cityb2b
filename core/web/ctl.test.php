@@ -3512,7 +3512,14 @@ public function xero_test_action() {
 		if(isset($_POST['btnUpdateContact'])) {
 			$contactList =$mdl_xero->getContactNameListForUpdateContactNameOnXero($this->current_business['id'],0,0,400);
 			//var_dump($contactList);exit;
-			$response_arr = $api->updateContact($credentials,$contactList);
+
+			foreach($contactList as $key=>$value){
+				$json_arr =json_encode($value);
+				$response_arr = $api->updateContact($credentials,$json_arr);
+			}
+
+
+
 			$response=json_encode($response_arr);
 			echo '<p>UPDATE CONTACT</p>';
 		}

@@ -560,7 +560,7 @@ class MyApi
             $data_arr = json_decode($json, true);
            // var_dump($data_arr);exit;
             if(is_array($data_arr) && count($data_arr) > 0) {
-                if(empty($data_arr[0]['ContactID'])) {
+                if(empty($data_arr['ContactID'])) {
 
                     return json_encode([
                         'error' => true,
