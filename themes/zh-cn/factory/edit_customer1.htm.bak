@@ -49,7 +49,7 @@
 							<span>
 							<label for="">实体名（ASIC）</label>
 							</span>
-							<input type="text" name="untity_name" id="untity_name" class="input-text" placeholder="" value="<{$user_abn.untity_name}>">
+							<input type="text" name="untity_name" onchange ="checkinput(this,'utlity name (asic)');" id="untity_name" class="input-text" placeholder="" value="<{$user_abn.untity_name}>">
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
@@ -62,7 +62,7 @@
 							<span>
 							<label for="factory_code">Code/简写</label>
 							</span>
-							<input type="text" name="factory_code" id="factory_code" class="input-text" placeholder="" required value="<{$user_factory_info.nickname}>">
+							<input type="text" name="factory_code" id="factory_code" onchange ="checkinput(this,'customer code');" class="input-text" placeholder="" required value="<{$user_factory_info.nickname}>">
 						</div>
 						
 						<div class="input-box  form-style-green">

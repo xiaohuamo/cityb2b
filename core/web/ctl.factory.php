@@ -2242,8 +2242,7 @@ class ctl_factory extends cmsPage
                    'person_last_name'=>$contactPersonLastname,
 				   'tel'=>$tel,
 				   'phone'=>$phone,
-				   'name'=>$username,
-                   'displayName'=>$username,
+				   'displayName'=>$username,
                    'businessName'=>$untity_name
 				   
 				   );
@@ -3567,6 +3566,62 @@ class ctl_factory extends cmsPage
 				//wrong protocol
 			}
 		}
+    public function update_item_stock_action(){
+
+        if(is_post()){
+
+            $mdl =$this->loadModel("producing_item_stock");
+            $mdl_restaurant_menu =$this->loadModel("restaurant_menu");
+
+            $id = post('id');
+            $spec_id = post('spec_id');
+            $stock_qty = post('stock_adjust');
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+             $menu_rec =$mdl_restaurant_menu->get($id);
+            if($menu_rec['restaurant_id']!=$this->current_business['id']) {
+                $this->form_response(600,'no access','no access');
+
+            }
+              $where =array(
+                  'item_id'=>$id,
+                  'spec_id'=>$spec_id
+              );
+            $stock_rec = $mdl->getByWhere($where);
+            if($stock_rec){
+                $updatedata=array(
+                    'stock_qty'=>$stock_qty
+                );
+
+                try {
+                    $mdl->updateByWhere($updatedata,$where);
+                    $this->form_response(200,'','');
+                } catch (Exception $e) {
+                    $this->form_response(500, $e->getMessage(),'');
+                }
+
+            }else{
+                $insertData=array(
+                    'item_id'=>$id,
+                  'spec_id'=>$spec_id,
+                  'factory_id'=>$this->current_business['id'],
+                    'stock_qty'=>$stock_qty
+                );
+
+                try {
+                    $mdl->insert($insertData);
+                    $this->form_response(200,'','');
+                } catch (Exception $e) {
+                    $this->form_response(500, $e->getMessage(),'');
+                }
+
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
 
     public function update_menu_code_action(){
 

@@ -139,12 +139,12 @@
                     <{$lang->order_management}>
 				</a>
 
-				<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='customer_orders_return'}> class="current"<{/if}>>
+				<!--	<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='customer_orders_return'}> class="current"<{/if}>>
                     <{$lang->order_return}>
-				</a>
-		<!--		<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
-                    <{$lang->order_management_amend}>
 				</a> -->
+			<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+                    <{$lang->order_management_amend}>
+				</a> 
 
 
 			</div>

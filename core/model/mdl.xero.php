@@ -15,7 +15,7 @@ class mdl_xero extends mdl_base
                         f.xero_account_number as AccountNumber,
                         f.xero_contact_id as ContactID , 
                           f.user_id as ContactNumber,
-                         if(length(u.displayName)>0,u.displayName, if(length(abn.business_name)>0,abn.business_name,f.nickname)) as Name,
+                         UPPER(if(length(u.displayName)>0,u.displayName, if(length(abn.business_name)>0,abn.business_name,f.nickname))) as Name,
                         abn.untity_name, 
                         f.nickname as customer_code, 
                         u.person_first_name,
@@ -36,7 +36,7 @@ class mdl_xero extends mdl_base
                         left join cc_wj_abn_application abn on u.id =abn.userId
                         where f.factory_id =$business_id  and (length(f.xero_contact_id)>0 or (f.xero_contact_id is not null))  limit 301 ,500  ";
 
-      //  var_dump($sql);exit;
+        var_dump($sql);exit;
         $rows = $this->getListBySql($sql);
         $new_data = [];
         foreach ($rows as $key=> $row) {
