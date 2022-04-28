@@ -306,8 +306,13 @@
 										
 										
 										<td >
-											<span id="customer_price_<{$item.id}>" ><{if $item.customer_price}><{$item.customer_price}><{else}>-<{/if}></span>
+											
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="customer_price-<{$item.id}>" style="padding-right: 4px;width:50px;text-align:right;" name="customer_price"
+												   value="<{if $item.customer_price}><{$item.customer_price}><{else}><{$item.price}><{/if}>" >
+											<span class='promote-ajax'></span>
+										
 										</td>
+										
 										<td >
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="discount_rate-<{$item.id}>" style="padding-right: 4px;width:50px;text-align:right;" name="discount_rate"
 												   value="<{if $item.discount_rate >0}><{$item.discount_rate}><{else}>0.00<{/if}>" >%
@@ -390,17 +395,17 @@
                 $(ajax_result).html(successIcon);
 				
 				if(parseInt(value)==0){
-					$('#customer_price_'+id).html('-');
+					$('#customer_price-'+id).val('0');
 					$(this).val('0.00');
 				}else{
-					$('#customer_price_'+id).html(data.msg)
+					$('#customer_price-'+id).val(data.msg)
 				}
 				
                
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
-				$('#customer_price_'+id).html('-');
+				$('#customer_price-'+id).val('0');
 				
             } else {
                 alert(data.msg);
@@ -413,6 +418,73 @@
 
 
     });
+	
+	
+	 $('input[name=customer_price] ').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+		
+        var update_field_name = $(this).attr('name');
+        var value;
+       
+        value = $(this).val();//常规改动直接抓取改动值
+      
+        var updateData = {};
+       // alert(id);
+		//alert('<{$gardeId}>');
+        updateData['id'] = id;
+		updateData['gardeId'] = '<{$gardeId}>';
+		
+        updateData[update_field_name] = value;
+        //alert(updateData['gardeId']);
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_grade_menu_discount_price",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+				
+				if(parseInt(value)==0){
+					$('#discount_rate-'+id).val('0');
+					$(this).val('0.00');
+				}else{
+					$('#discount_rate-'+id).val(data.msg)
+				}
+				
+               
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+				$('#discount_rate-'+id).val('0');
+				
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+
+
+    });
+	
+	
 
 
     function IconUpdate(obj) {

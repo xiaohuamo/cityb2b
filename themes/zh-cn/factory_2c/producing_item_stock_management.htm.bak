@@ -112,7 +112,7 @@
         <{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-              
+                
 				<div class="colCurTit">
                     <{$pagename}>
 				</div>
@@ -342,8 +342,8 @@
         var update_field_name = $(this).attr('name');
         var value;
 		
-		alert(id);
-		alert(spec_id);
+		//alert(id);
+		//alert(spec_id);
 		
         
             value = $(this).val();//常规改动直接抓取改动值
@@ -352,7 +352,7 @@
 			  return 0;
 			}
 			
-			alert(value);
+		//	alert(value);
         var updateData = {};
 
         updateData['id'] = id;
@@ -376,7 +376,8 @@
 
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
-                alert('yes');
+				$('#stock_qty_'+id+'_'+spec_id).html(value);
+               // alert('yes');
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);

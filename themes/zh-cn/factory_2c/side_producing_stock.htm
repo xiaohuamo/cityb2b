@@ -1,24 +1,9 @@
- <{if (!$freshfood)}>
+
  <div class="colCurTit clearfix">
  	<ul class="clearfix">
 
-	    <li><span><a href="<{$http_root_www}>company/restaurant_edit?coupon_type=7&restaurant=1"<{if $submenu_top=='restaurant_set'}> class="current"<{/if}>>堂食设置</a></span></li>
+	    <li><span><a href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu_top=='producing_item_stock_management'}> class="current"<{/if}>>加工类库存管理</a></span></li>
 
-	   <li><span><a href="<{$http_root_www}>restaurant/restaurant_edit"<{if $submenu_top=='restaurant_edit'}> class="current"<{/if}>>菜单分类</a></span></li>
-
- 		<li><span><a href="<{$http_root_www}>restaurant/restaurant_menu_edit"<{if $submenu_top=='restaurant_menu'}> class="current"<{/if}>>菜单项</a></span></li>
-
-		<li><span><a href="<{$http_root_www}>restaurant/restaurant_menu_option_category_edit"<{if $submenu_top=='restaurant_menu_option_category'}> class="current"<{/if}>>规格分类</a></span></li>
-
- 		 <li><span><a href="<{$http_root_www}>restaurant/restaurant_menu_option_edit"<{if $submenu_top=='restaurant_menu_option'}> class="current"<{/if}>>规格明细</a></span></li>
-
- 		  <li><span><a href="<{$http_root_www}>restaurant/restaurant_sidedish_edit"<{if $submenu_top=='restaurant_sidedish'}> class="current"<{/if}>>配菜分类</a></span></li>
-
- 
- 		
- 		<li><span><a href="<{$http_root_www}>restaurant/restaurant_sidedish_menu_edit"<{if $submenu_top=='restaurant_sidedish_menu'}> class="current"<{/if}>>配菜菜单</a></span></li>
-         <li><span><a  target="_blank" href="<{$http_root_www}>restaurant/<{$loginUser.id}>"<{if $submenu=='restaurant_preview'}> class="current"<{/if}>>预览</a></span></li>
- <li><span><a  target="_blank" href="<{$http_root_www}>restaurant/refresh_menu?business_id=<{$loginUser.id}>"<{if $submenu=='menu_refresh'}> class="current"<{/if}>>刷新</a></span></li>
- 	</ul>
+	   <li><span><a href="<{$http_root_www}>factory_2c/producing_stock_to_dispatching"<{if $submenu_top=='producing_stock_to_dispatching'}> class="current"<{/if}>>加工类库存配置订单</a></span></li>
+  	</ul>
  </div>
-<{/if}>

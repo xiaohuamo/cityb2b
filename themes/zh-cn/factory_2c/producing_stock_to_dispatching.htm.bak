@@ -1,0 +1,446 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<body>
+
+	<script type="text/javascript">
+	<{if $customer_delivery_date}>
+		$('#printer').css({ "display": "" });
+		 $('#searchbutton').css({ "display": "" });
+	 <{else}>
+		$('#printer').css({ "display": "none" });
+		 $('#searchbutton').css({ "display": "none" });
+	 <{/if}>
+</script>
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+			  <{include file='factory_2c/side_producing_stock.htm'}>
+				
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
+						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
+						<br><br>
+
+						<label>选择渠道：</label>
+						<select  class='choosebusiness' id="business_id" name="business_id" >
+						<option value="0"  >全部商家</option>
+						<{foreach from=$SalesChannelCustomerList item=d}>
+							<option value="<{$d.customer_id}>"<{if $d.customer_id==$business_id}>selected<{/if}>  >
+								<{$d.displayName}>
+							</option>
+						<{/foreach}>
+						</select>
+						&nbsp;
+						<label>选择配送日期：</label>
+						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
+						<option value="all"  ><{$lang->logistic_choosedate1}> </option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+						</select>
+						
+						&nbsp;<label id="chooseCateLable" style='display:none;'>选择大类：</label>
+						<select class='chooseCate' id="cate_id" name="cate_id" style='display:none;'>
+						<option value="all"  >Choose Category </option>
+						<{foreach from=$cateData item=d}>
+							<option value="<{$d.parent_cate_id}>" <{if $d.parent_cate_id==$cate_id}>selected<{/if}>>
+								<{$d.parent_cate_en_name}>
+							</option>
+						<{/foreach}>
+						</select>
+						
+						&nbsp;<label id="chooseTruckLable" style='display:none;'>Choose Driver&Truck：</label>
+						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
+						<option value="all"  >All Drivers&Truck</option>
+						<{foreach from=$TuckListOfTheDay item=d}>
+							<{if $d.logistic_truck_No==0}>
+							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+								<{$lang->no_truck_yet}>
+							</option>
+							
+							<{else}>
+								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+									<{$d.truck_name}>-<{$d.plate_number}>
+								</option>
+							<{/if}>
+						<{/foreach}>
+						</select>
+					 
+						<script type="text/javascript">
+						$(function(){
+							$('.chooseDate').on('change',function(){
+							$('#printer').css({ "display": "none" });
+							 var sk ='<{$sk}>';
+							var customer_delivery_date =$(this).val();
+							var business_id ='<{$business_id}>';
+							var producing ='<{$producing}>';
+							var vUrl='<{$http_root_www}>factory_2c/producing_stock_to_dispatching?producing=1&sk='+sk+'&business_id='+business_id+'&customer_delivery_date='+customer_delivery_date;
+							// alert(vUrl);
+							window.location.href =vUrl;
+								
+							})
+							 
+							
+							
+							$('.chooseCate').on('change',function(){
+							$('#printer').css({ "display": "none" });
+							 
+								$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
+							
+								var catestr = $(this).val();
+								if(catestr !='all'){
+								//    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								 //  $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							$('.choosebusiness').on('change',function(){
+								$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
+							
+							 
+								var datestr1 = $('#customer_delivery_date').val();
+								if(datestr1 !='all'){
+								    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								   $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							$('.chooseTruck').on('change',function(){
+							
+							 	$('#printer').css({ "display": "none" });
+								  $('#main_table').css({ "display": "none" });
+								
+								var catestr = $(this).val();
+								if(catestr !='all'){
+								//    $('#searchbutton').css({ "display": "" });
+								
+								}else{
+								 //  $('#searchbutton').css({ "display": "none" });
+								}
+								
+							})
+							
+							//if there are  date pointed , then show the category list and truck list 
+							var customer_delivery_date='<{$customer_delivery_date}>';
+							
+							if(customer_delivery_date && customer_delivery_date !='all') {
+							  $('#chooseCateLable').css('display','');
+							  $('#cate_id').css('display','');
+							  $('#chooseTruckLable').css('display','');
+							  $('#logistic_truck_No').css('display','');
+							  $('#searchbutton').css({ "display": "" });
+							  $('#main_table').css({ "display": "" });
+							
+							}
+
+						})
+					</script>
+	              
+			
+						<button id="searchbutton" style="display:none; margin-left:0.5rem;" type="submit"><{$lang->search}></button>
+					  <{if $customer_delivery_date}>
+						<br><br>
+						 <div id="printer">
+							<button  id="printtotal" type="button"  onclick="showPdf('allDefinedItem','');">全部预定义单品</button>
+						&nbsp;&nbsp;
+							 <button  id="exportdata" type="button"   onclick="showPdf('selectedItem','');">当前勾选单品</button>
+								&nbsp;&nbsp; <input  type="checkbox" <{if $sepratePage}>checked<{/if}> name="sepratePage" id='sepratePage' value='true'>分页
+							
+							</div>
+						<{/if}>
+					</form>
+				</div>
+				
+
+				<div class="main-list" id="main_table" style="display:none;" >		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%" >
+							<thead>				
+								<tr>	
+								<{if $customer_delivery_date}>
+                            	<th>选择</th>		
+								<th>打印</th>	
+								<{/if}>
+							<{if $business_id}>								
+								<th>Business ID</th>								
+							<{/if}>
+									<th>Delivery Date</th>
+									<!--<th>Type</th> -->
+									
+									<th>Category Id</th>
+									<th>Product Code</th>
+								<!--	<th>prduct Name (cn)</th>  -->
+									
+									
+									<th>Product Name</th>	
+									<th>Spec Id</th>		
+									<th>Spec Desc</th>									
+									<th>Quantity</th>	
+									<th>Unit</th>	
+									
+												
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
+								 <{if $customer_delivery_date}>
+								 <td><input  type="checkbox"  name="printItemLists"    value='<{$item.main_code_id}>'>
+								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
+								 
+								 </td>
+								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>,<{$item.guige1_id}>);">打&nbsp;印</button></td>
+                                 <{/if}>
+								<{if $business_id}>		
+								<td><{$item.business_id}></td> <{/if}>
+								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
+								<!--	<td><{$item.category_cn_name}></td>  -->
+								  
+										<td><{$item.category_en_name}></td>
+									  <td><{$item.menu_id}></td>
+									
+									  
+								<!--	<td>
+										<{$item.bonus_title}>
+									</td> -->
+									<td><{$item.menu_en_name}></td>
+									<td>
+										<{$item.guige1_id}>
+									</td>
+									<td>
+										<{$item.guige_des}>
+									</td>
+									
+								
+									
+									
+										<td><{$item.total_quantity}></td>
+									<td><{$item.unit}></td>
+									
+								
+									
+									
+
+								
+								</tr>			
+								<{/foreach}>			
+								<tr>
+									<td><input  type="checkbox"  onclick ="selectAllCheckBox(this);" name="selectAllCheckbox" ></td>
+								    <td>全部选定</td>
+                               
+								</tr>
+							</tbody>		
+						</table>	
+
+						
+
+						<{if $pager}>
+						<div   class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+		
+		
+		
+		
+	});
+	
+	
+	function selectAllCheckBox(obj) {
+	
+	 if($(obj).attr('checked')){
+	  
+		  $("input[name='printItemLists']").attr("checked",true);
+		
+	 }else{
+		  $("input[name='printItemLists']").attr("checked",false);
+	 };
+	
+	}
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+	
+	
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+
+function showPdf(type,item_id,guige_id)
+{	
+	
+	
+	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
+	if(!vcustomer_delivery_date) {
+	
+	 alert('请选择日期！');
+	}
+	
+	var vbusiness_id= $('#business_id option:selected').val();
+	
+	
+	var vSk=$('#id_sk').val();
+
+
+	var sepratePage=$('#sepratePage').prop('checked');
+	
+	var vcate_id ='<{$cate_id}>';
+	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+	 
+	if(type=='selectedItem') {
+	 
+	  var vItemLists = [];
+	    var vGuigeId = [];
+		var guige_value =0;
+        $("input[name='printItemLists']:checked").each(function(i){//把所有被选中的复选框的值存入数组
+            vItemLists[i] =$(this).val();
+			guige_value =$(this).next().val();
+			if(!guige_value) guige_value =0;
+			vGuigeId[i] =guige_value;
+		
+			//alert(vItemLists[i] + ' ' + vGuigeId[i] );
+        }); 
+	  // console.log(vItemLists);
+
+    //alert( vItemLists);
+    
+
+	
+	}
+	
+   if(type=='singItemPrint') {
+	   var vItemLists = item_id;
+	    var vGuigeId = guige_id;
+	  // alert( vItemLists);
+	}
+	
+  
+	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	window.open(vUrl);
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

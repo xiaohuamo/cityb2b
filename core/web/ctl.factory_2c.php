@@ -373,13 +373,13 @@
 				//该代码删除
 				
 			}
-			
-			
-			
-			
-			
 
-			
+
+
+
+
+
+
 
 
 			$this->setData('single_producing_item_print_edit', 'submenu');
@@ -566,7 +566,7 @@
 
 
 
-
+                $this->setData('producing_item_stock_management', 'submenu_top');
                 $this->setData('producing_item_stock_management', 'submenu');
                 $this->setData('dispatching_center', 'menu');
 
@@ -591,180 +591,219 @@
 
 
 
-                $customer_id =get2('customer_id');
 
-                if(!$customer_id) {
-                    $customer_id =$this->current_business['id'];
 
+
+                $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+                $mdl_order = $this->loadModel('order');
+                $mdl_user= $this->loadModel('user');
+
+                /**
+                 * status List
+                 */
+
+                /**
+                 * payment Type List
+                 */
+
+                /**
+                 * customer_delivery_option Type List
+                 */
+                $three_days_times = time()-60*60*24*7;
+                $mdl = $this->loadModel('factory2c_list');
+                $availableDates = Factory2c_centre::getAvaliableDateOfAllSalesChannelOfThisFactory($this->current_business['id']);
+                $availableDates = array_map(function($d){
+                    return date('Y-m-d',$d['logistic_delivery_date']);
+                }, $availableDates);
+                $this->setData($availableDates, 'availableDates');
+//var_dump($availableDates);exit;
+
+
+                $sepratePage =get2('sepratePage');
+                $this->setData($sepratePage,'sepratePage');
+                //	var_dump($sepratePage);exit;
+
+                //** 获取该商家管辖工厂渠道商家
+
+                $mdl = $this->loadModel('factory2c_list');
+                $SalesChannelCustomerList= Factory2c_centre::getCustmerListsIncludeFactoryWithBusinessName($this->current_business['id'],$this->current_business['displayName']);
+                $this->setData($SalesChannelCustomerList, 'SalesChannelCustomerList');
+
+
+
+
+                //交易状态购买
+                //if(!status) {
+                $status ='c01';
+                //}
+                //支付状态
+                $ifpaid=1;
+
+                $business_id = trim(get2('business_id'));
+                if($business_id) {
+                    $business_user = $mdl_user->get($business_id) ;
+                    $business_tradingName=$business_user ['displayName'];
+                } else{
+                    $business_tradingName=$this->loginUser['displayName'];
                 }
-                $this->setData($customer_id,'customer_id');
-                $dataType ='OnlySelected';
 
+                // 做到这里，如果 是suppliersID 且数据源!=1 则要使用cc_order_import 做为引导。
 
+                if($this->loadModel('dispatching_centre_customer_list')->getIfBusinessIsExportDataSource($business_id)) {
+                    $export_data_source =1;
+                    $query_table_name='cc_order_import';
+                }else{
+                    $export_data_source =0;
+                    $query_table_name='cc_order';
+                }
 
-                $mdl = $this->loadModel('authrise_manage_other_business_account');
-                $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
-
-                $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
-
-                if($authoriseBusinessList) { //如果该商家可以托管账户
-                    // 检查接收的托管的商家是否合法
-
-
-
-                    $isAuthoriseCustomer =0 ;
-                    foreach ($authoriseBusinessList as $key => $value) {
-                        if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id'] || $customer_id =$this->current_business['id']) {
-                            $isAuthoriseCustomer =1;
-                        }
-
-                    }
-
-                    if($isAuthoriseCustomer) { //如果是授权的customer
-
-                        $mdl_restaurant_category = $this->loadModel('restaurant_category');
-                        $pageSql = "select  * ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0)  and isdeleted =0  order by isHide, parent_id,category_sort_id ";
-                        $data = $mdl_restaurant_category->getListBySql($pageSql);
-
-
-                        if(!$data) {
-                            //$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
-                        }
-                        $this->setData($data,'restaurant_category');
-
-                        $sk = trim(get2('sk'));
+                //var_dump($export_data_source);exit;
+                $this->setData($business_id,'business_id');
 
 
 
 
-
-                        $category = trim(get2('category'));
-
-                        $this->setData($sk,'sk');
-                        $this->setData($category,'category');
-
-
-                        $sql = "select  spec.id as spec_type_id ,spec.category_en_name  as spec_type_name , if(spec_details.id is null,0,spec_details.id) as  spec_id, stock.stock_qty,spec_details.menu_en_name as spec_name, o.* ,b.category_cn_name,b.category_en_name
-
-
-                        from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
-                            left join cc_restaurant_menu_option_category spec on o.menu_option = spec.id 
-                            left join cc_restaurant_menu_option spec_details on spec.id=spec_details.restaurant_category_id  and (length(spec_details.menu_en_name)>0 or length(spec_details.menu_cn_name)>0 )
-                            left join cc_producing_item_stock stock on o.id =stock.item_id and if(spec_details.id is null ,0,spec_details.id)=stock.spec_id 
-                        
-                        ";
-
-                        if($category =='all' or empty($category)) {
-                            $whereStr.=" o.isDeleted=0 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and o.restaurant_id=$customer_id  ";
-                        }else{
-                            $whereStr.=" o.isDeleted=0 and  (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and o.restaurant_id=$customer_id   and (o.restaurant_category_id =$category or o.sub_category_id =$category) ";
-                        }
-
-
-                        if (!empty($sk)) {
-                            $whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
-                            $whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
-                            $whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
-                            $whereStr.=" or o.Menu_desc  like  '%" . $sk . "%')";
-                        }
-
-                        if($dataType =='OnlySelected') {
-                            $whereStr.=" and proucing_item =1";
-
-                        }else{
-
-                        }
-
-                        // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
-                        // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
-
-                        $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
-                        $pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(o.menu_id),o.menu_id ";
-                        // var_dump($pageSql);exit;
-                        $pageUrl = $this->parseUrl()->set('page');
-                        $pageSize =200;
-                        $maxPage = 10;
-                        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-                        $data = $mdl_restaurant_menu->getListBySql($page['outSql']);
-
-
-                        // 获得该用户的gst type
-
-                        $mdl_user =$this->loadModel("user");
-                        $customerInfo = $mdl_user->get($customer_id);
-
-                        //var_dump($customerInfo);exit;
-
-
-
-                        //获取该商家是否有多个供应商，是否为集合店
-
-                        $this->loadModel('freshfood_disp_suppliers_schedule');
-                        $suppliersList = DispCenter::getSupplierListWithName($customer_id);
-                        //var_dump($suppliersList);exit;
-                        if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
-
-
-                        }
-
-
-                        $this->setData($suppliersList, 'suppliersList');
-                        $this->setData($data, 'data');
-                        $this->setData($page['pageStr'], 'pager');
-                        $this->setData($this->parseUrl()->setPath('ctl.factory_2c/restaurant_edit'), 'editUrl');
-
-                        /**
-                         * 获得配菜分类列表
-                         */
-                        $where=array();
-                        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-                        $where['restaurant_id']=$customer_id;
-                        $restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
-                        $this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
-                        /**
-                         * 获得配菜分类列表
-                         */
-                        $where=array();
-                        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-                        $where['restaurant_id']=$customer_id;
-                        $restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
-                        $this->setData($restaurant_menu_option_list,'menu_option_list');
-
-                    }else{  //如果可以管理更多店铺
+                $sk = trim(get2('sk'));
 
 
 
 
+                $customer_delivery_date = trim(get2('customer_delivery_date'));
+
+
+                $this->setData($sk,'sk');
+                $this->setData($customer_delivery_date,'customer_delivery_date');
+
+                //获取当前用户点击的大类
+                $cate_id = trim(get2('cate_id'));
+                $this->setData($cate_id,'cate_id');
+
+
+                //获取是否为生产类
+                $producing = trim(get2('producing'));
+                if(!$producing) $producing =0;
+                $this->setData($producing,'producing');
+
+
+
+                //获取当前用户点击的大类
+                $logistic_truck_No = trim(get2('logistic_truck_No'));
+                $this->setData($logistic_truck_No,'logistic_truck_No');
+
+                $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
+                $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
+
+
+
+
+                // 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
+                //获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
+                //var_dump($business_id);exit;
+                $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id']);
+
+
+
+
+                if (!empty($sk)) {
+                    $whereStr.=" and ( c.bonus_title like  '%" . $sk . "%'";
+                    $whereStr.=" or cate.category_cn_name like  '%" . $sk . "%'";
+                    $whereStr.=" or cate.category_cn_name like  '%" . $sk . "%'";
+                    $whereStr.=" or r.menu_id like  '%" . $sk . "%'";
+                    $whereStr.=" or r.menu_en_name like  '%" . $sk . "%'";
+                    $whereStr.=" or r.menu_cn_name like  '%" . $sk . "%'";
+                    $whereStr.=" or c.business_id like  '%" . $sk . "%')";
+                    $where[]=$whereStr;
+                }
+
+                if (!empty($cate_id)) {
+                    if($cate_id !='all') {
+                        $whereStr.=" and r.restaurant_category_id =$cate_id ";
                     }
 
 
-                }else{ //如果只管理自己的店铺
-
-                    //该代码删除
 
                 }
 
 
+                // 如果为生产类，加入条件
+                if ($producing) {
+                    $whereStr.=" and r.proucing_item =1 ";
+                }else{
+                    $whereStr.=" and r.proucing_item =0 ";
+                }
+
+                if (!empty($logistic_truck_No)) {
+                    if($logistic_truck_No !='all') {
+                        $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+                    }
+                }
+
+                //deleivery date
+                if (!empty($customer_delivery_date)) {
+                    if ($customer_delivery_date != 'all') {
+                        $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
+                    }else{
+                        $three_days_times = time()-259200;
+                        $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
+
+
+                    }
+                }else {
+                    $three_days_times = time()-259200;
+                    $whereStr.= " and  o.logistic_delivery_date > $three_days_times";
+                }
 
 
 
+                if($business_id) {
+                    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id ,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
 
 
+                }else{ //打印总单
+
+                    $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
+
+                }
+                //var_dump($pageSql);exit;
+                $data = $mdl_order->getListBySql($pageSql);
+
+                // var_dump($data);exit;
+
+                // 获得当前订单得大类汇总
+
+                $cateData =$this->loadModel('restaurant_category')->getParentCateList($this->current_business['id']);
 
 
+                // var_dump($cateData);exit;
+                $this->setData($cateData,'cateData');
+
+                $this->setData($page['pageStr'],'pager');
+
+                $this->setData($data,'data');
+
+
+                $this->setData('producing_stock_to_dispatching', 'submenu_top');
                 $this->setData('producing_item_stock_management', 'submenu');
                 $this->setData('dispatching_center', 'menu');
+                $this->setData('dispatching center - ' . $this->site['pageTitle'], 'pageTitle');
 
-                $pagename = "Producing Item stock Management";
-                $pageTitle=  $pagename." - Business Center - ". $this->site['pageTitle'];
 
-                $this->setData($pagename, 'pagename');
 
-                $this->setData($pageTitle, 'pageTitle');
 
-                $this->setData($this->loginUser['gst_type'], 'gstType');
-                $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching', 'factory_2c/producing_stock_to_dispatching');
-            }
+                $this->setData(HTTP_ROOT_WWW.'factory_2c/print_single_item_buying_list', 'searchUrl');
+                $this->setData($this->parseUrl(), 'currentUrl');
+
+                $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching','factory_2c/producing_stock_to_dispatching');
+
+
+
+
+
+
+
+
+
+                           }
             /**
              * 菜单编辑页面
              */

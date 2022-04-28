@@ -303,7 +303,7 @@
 										<td >
 											
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="customer_price-<{$item.id}>" style="padding-right: 4px;width:50px;text-align:right;" name="customer_price"
-												   value="<{if $item.customer_price}><{$item.customer_price}><{else}>0<{/if}>" >
+												   value="<{if $item.customer_price}><{$item.customer_price}><{else}><{$item.price}><{/if}>" >
 											<span class='promote-ajax'></span>
 										
 										</td>

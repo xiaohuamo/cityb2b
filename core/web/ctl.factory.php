@@ -4570,6 +4570,127 @@ class ctl_factory extends cmsPage
         }
     }
 
+
+    public function update_grade_menu_discount_price_action()
+    {
+
+
+        if(is_post()){
+
+
+
+            $id = post('id');
+            $gardeId = post('gardeId');
+            //   $this->form_response(500,'id is '.$id. ' and  grade id is'.$gardeId,'');
+
+            $customer_price = post('customer_price');
+
+            //$id=385486;
+            //   $discount_rate=6.6;
+            //  $gardeId=6;
+            //  $cate_id =40692;
+            //  $discount_rate=2;
+
+            //操作权限： 检查当前用户对当前的客户是否拥有操作权限
+            $where1 =array(
+                'grade_id'=>$gardeId ,
+                'business_id'=>$this->current_business['id']
+
+            );
+            $grade_rec = $this->loadModel('factory_customer_grade')->getByWhere($where1);
+
+            if(!$grade_rec ) {
+                $this->form_response(500,'no access no reccord grade id is'.$gardeId,'');
+            }
+
+            if( $grade_rec['business_id']!= $this->current_business['id']) {
+                $this->form_response(500,'no access ,no match','');
+            }
+
+            // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
+
+            if(!is_numeric($customer_price) || $customer_price<0) {
+
+                $this->form_response(500,'Please input number and must be >=0','');
+            }
+
+            //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');
+            // 在 discount 表里面 找，如果找到，则更改，如果找不到，看当前值与商家的discount rate是否相同，如果相同，则不做任何操作，如果不同则增加一笔及记录，记录该大类的值
+            //$this->form_response(500,'here','');
+            $mdl_discount =  $this->loadModel('user_factory_grade_menu_price');
+
+            $where =array(
+                'grade_id'=>$gardeId,
+                'restaurant_menu_id'=>$id
+
+            );
+
+            $rec =$mdl_discount->getByWhere($where);
+            $mdl_menu =$this->loadModel('restaurant_menu');
+            $menu_rec = $mdl_menu->get($id);
+
+            $discount_rate = number_format(($menu_rec['price']-$customer_price)/$menu_rec['price'] *100,2);
+            //  var_dump($rec);
+            if($rec) { // 如果找到该记录
+                // $this->form_response(200,'find record','');
+
+                //两种情况，如果折扣率为0 ，表示取消产品级的折扣设定，直接删除相关记录。
+                //如果折扣大于0 ，则进行更改；
+                if(number_format($customer_price,2) ==0.00){
+                    if($mdl_discount->deleteByWhere($where)) {
+                        $this->form_response(200,'deleted','');
+                    }else{
+                        $this->form_response(500,'delete error','');
+                    }
+                }else{
+
+                    $data=array(
+                        'menu_discount_rate' =>$discount_rate,
+                        'price'=>$customer_price
+
+                    );
+                    if($mdl_discount->updateByWhere($data,$where)){
+                        $this->form_response(200,$discount_rate,'');
+                    }else{
+                        $this->form_response(500,'error when update','');
+                    }
+                }
+
+
+
+
+
+            }else{ //未找到记录
+
+
+
+                $data =array(
+                    'grade_id'=>$gardeId,
+                    'restaurant_menu_id'=>$id,
+                    'price'=>$customer_price,
+                    'menu_discount_rate'=>$discount_rate
+                );
+                if($mdl_discount->insert($data)){
+                    //	var_dump('insert ok');
+                    $this->form_response(200,$discount_rate,'');
+                }else{
+                    //  var_dump('insert fail');
+                    $this->form_response(500,'insert error','');
+                }
+
+
+
+
+
+            }
+
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
     public function update_grade_menu_discount_action()
     {
 
