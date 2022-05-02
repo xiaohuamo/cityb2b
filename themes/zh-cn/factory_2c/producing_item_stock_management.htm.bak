@@ -112,7 +112,7 @@
         <{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-                
+                 <{include file='factory_2c/side_producing_stock.htm'}>
 				<div class="colCurTit">
                     <{$pagename}>
 				</div>
@@ -179,16 +179,18 @@
 								<tr>
 									<th style="width:"10%;">加工产品</th>
 									<th>设置</th>
+									<th>Item Id</th>
+									<th>Item Code</th>
+									<th>Item Name</th>
 								
-									<th>产品编号</th>
-									<th>简码</th>
-									<th>产品名-英文</th>
+								
+								
                                  	
 									<th>库存</th>
 									<th>调整后库存</th>
 									<th>单位</th>
 									<th  style="width:"10%;">产品名称-中文</th> 
-									<th>ID</th>
+									
 								</tr>
 								</thead>
 								<tbody>
@@ -217,30 +219,35 @@
 											</div>
 										</td>
                                        
-									
+										<td>
+											<span><{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}></span>
+										</td>
 										
 									
 									   <td>
-											<span><{$item.menu_id}></span>
+											<span><{$item.menu_id}>  <{if $item.menu_code}>- <{$item.menu_code}><{/if}></span>
 										</td>
 										
+									 
 									  <td>
-									  <span><{$item.menu_code}></span>
+										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}></span>
+									  </td>
+									  
+								<!--  <td>
+									
 										
 										
-										<!--<input type="text" class="input-text" data-id='<{$item.id}>' id="code-<{$item.id}>" style="width:150px;" name="menu_code"
+										<input type="text" class="input-text" data-id='<{$item.id}>' id="code-<{$item.id}>" style="width:150px;" name="menu_code"
 													   value="<{$item.menu_code}>">
-												<span class='promote-ajax'></span> -->
+												<span class='promote-ajax'></span> 
 										
 											
 								
-									 </td>
+									 </td> -->
 									 
 									
 									
-										<td>
-											<span><{$item.menu_en_name}></span>
-										</td>
+										
 											 
 									  <td id="stock_qty_<{$item.id}>_<{$item.spec_id}>">
 									   <{if $item.stock_qty}> <{$item.stock_qty}><{else}>0<{/if}>
@@ -256,9 +263,7 @@
 										  <td>
 											<span><{$item.menu_cn_name}></span>
 										</td>
-										<td>
-											<span><{$item.id}></span>
-										</td>
+										
                                        
 										
 									</tr>

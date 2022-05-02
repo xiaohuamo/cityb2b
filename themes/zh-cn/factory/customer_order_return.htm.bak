@@ -191,19 +191,26 @@
 									</td>
 									
 									<td>
+									<{if !$isOrderReturnIsSettled}>
                                   		<input type="text"  class="input-text 	"
 												   data-id='<{$item.id}>' id="adjust_quantity-<{$item.id}>" style="width:50px;" name="adjust_quantity"
 												   value="<{$item.adjust_quantity}>">
 											<span class='promote-ajax'></span>
+									<{else}>
+									<span><{$item.adjust_quantity}></span>
+									<{/if}>
 										
 									</td>
 									<td>
+									<{if !$isOrderReturnIsSettled}>
                                        
 											<input type="text" class="input-text 	"
 												   data-id='<{$item.id}>' id="adjust_price-<{$item.id}>" style="width:50px;" name="adjust_price"
-												   value="<{$item.voucher_deal_amount}>">
+												   value="<{$item.adjust_price}>">
 											<span class='promote-ajax'></span>
-                                        
+                                        <{else}>
+									<span><{$item.adjust_price}></span>
+									<{/if}>
 									</td>
 
 									<td>
@@ -247,16 +254,19 @@
 
                       
 							<div style="color: #f00;font-weight: bolder;">
-								<span>Total CreditOrDebit</span><span>:$</span><span id="totalCreditOrDebit"><{$totalCredit}></span>
+								
+								<{if $isOrderReturnIsSettled}>	<span>(this order has been settled ,can not do return anymore!)</span><br><{/if}>
+							<span>Total CreditOrDebit</span><span>:$</span><span id="totalCreditOrDebit"><{$totalCredit}></span>
 							</div>
                       
+					  
 						
 					</div>
 
+					<div style="text-align:right;"  class="input-box input-submit clearfix">
+						<a class='link' href="<{$http_root_www}>factory/return_items_submit_to_statment?order_id=<{$data.orderId}>">提交退货</a>
 
-
-
-
+					</div>
 				
 				
 

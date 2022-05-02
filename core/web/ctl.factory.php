@@ -1197,6 +1197,11 @@ class ctl_factory extends cmsPage
         //订单信息
         $data = $mdl_order->getByOrderId($orderId);
 
+
+        $isExistOfReturnRecOnStatement =$this->loadModel('statement')->isExistOfReturnRecOnStatement($data['id']);
+
+        $this->setData($isExistOfReturnRecOnStatement,'isExistOfReturnRecOnStatement');
+
         // 获得该商家的精确订单汇总 （可能上面的是含多个商家的汇总）
 		
 		// 销售员的用户role 为101
@@ -1751,7 +1756,71 @@ class ctl_factory extends cmsPage
 
     }
 
+public function return_items_submit_to_statment_action() {
 
+
+        $orderId =get2('order_id');
+//        8955
+        if($orderId) {
+
+            $mdl_order = $this->loadModel('order');
+            $order =$mdl_order->getByWhere(array('orderId'=>$orderId));
+            if($order['business_userId']!=$this->current_business['id']){
+                var_dump('no access');exit;
+            }else{
+                //检查 在statement 表里面是否存在该订单的退货记录，如果有，则提示，无法再执行。
+                $mdl_statement =$this->loadModel('statement');
+
+                $isExistOfReturnRecOnStatement =$mdl_statement->isExistOfReturnRecOnStatement($order['id']);
+                if($isExistOfReturnRecOnStatement){
+                   $this->form_response('This order had done the return ,and can not do  return again.');
+                }else{
+
+                    $factory_user=$this->loadModel('user_factory')->getByWhere(array('factory_id'=>$order['business_userId'],'user_id'=>$order['userId']));
+
+
+                    //向 statement 表中插入一条退货记录。 然后进行settle计算 ；
+                    $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+
+                    $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($order['orderId']);
+                    $mdl_statement =$this->loadModel('statement');
+                    $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
+                    $balance_due =$balance-$totalCreitAmount;
+                    //    var_dump($totalCreitAmount);exit;
+                    //向 statement 插入数
+                    $data=array();
+                    $data['create_user'] = $this->loginUser['id'];
+                    $data['gen_date']=time();
+                    $data['invoice_number']='ret'.$order['id'];
+                    $data['type_code']=2002;
+                    $data['factory_id']=$order['business_userId'];
+                    $data['customer_id']=$order['userId'];
+                    $data['customer_ref_id']=$order['id'];
+                    $data['debit_amount']=0;
+                    $data['credit_amount']=$totalCreitAmount;
+                    $data['balance_due']=$balance_due;
+                    $data['is_settled']=0;
+                    $data['overdue_date']=0;
+
+                    $mdl_statement->insertOrUpdateCreditItem($data);
+
+                //  settled 这笔settle 退货
+
+                    $mdl_statement->updatePaymentsDetails(0,$totalCreitAmount,$factory_user,$this->loginUser['id']);
+
+
+                    $this->sheader(HTTP_ROOT_WWW.'factory/customer_order_return?id='.$order['orderId']);
+
+                }
+
+            }
+
+        }else{
+
+            var_dump($orderId);exit;
+        }
+
+}
 
     public function update_return_item_details_action()
     {
@@ -1767,9 +1836,9 @@ class ctl_factory extends cmsPage
         $price = post('adjust_price');
 
 
-       // $id =89623;
-     // $quantity =50;
-     //  $price=10;
+     //   $id =89674;
+     // $quantity =2;
+    //   $price=2;
 
         $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $customerCoupon = $mdl_wj_customer_coupon->get($id);
@@ -1805,9 +1874,6 @@ class ctl_factory extends cmsPage
         }
 
 
-
-
-
         $old_sub_total = $customerCoupon['new_customer_buying_quantity'] * $customerCoupon['voucher_deal_amount'];
 
         $new_sub_total = $quantity * $price;
@@ -1836,24 +1902,6 @@ class ctl_factory extends cmsPage
                    if($mdl_return_details->update($updateData,$return_rec['id'])) {
 
                        $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
-                        //var_dump($totalCreitAmount);exit;
-                       //向 statement 插入数
-                       $data=array();
-                       $data['create_user'] = $this->loginUser['id'];
-                       $data['gen_date']=time();
-                       $data['invoice_number']='ret'.$order['id'];
-                       $data['type_code']=2002;
-                       $data['factory_id']=$customerCoupon['business_id'];
-                       $data['customer_id']=$customerCoupon['userId'];
-                       $data['customer_ref_id']=$order['id'];
-                       $data['debit_amount']=0;
-                       $data['credit_amount']=$totalCreitAmount;
-                       $data['is_settled']=0;
-                       $data['overdue_date']=0;
-
-                       $this->loadModel('statement')->insertOrUpdateCreditItem($data);
-
-
 
                        $data_invoice=array(
                            'factory_id'=>$order['business_userId'],
@@ -1869,9 +1917,6 @@ class ctl_factory extends cmsPage
                        );
 
                        $this->loadModel('invoice_list')->insertOrUpdate($data_invoice);
-
-
-
                        $issuccessupdate =1;
                    }
                 }
@@ -1896,26 +1941,8 @@ class ctl_factory extends cmsPage
                 if($mdl_return_details->insert($insertData)) {
                   //  var_dump($customerCoupon['order_id']);exit;
                     $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($customerCoupon['order_id']);
-                   //
-                    //向 statement 插入数
-                    $data=array();
-                    $data['create_user'] = $this->loginUser['id'];
-                    $data['gen_date']=time();
-                    $data['invoice_number']='ret'.$order['id'];
-                    $data['type_code']=2002;
-                    $data['factory_id']=$customerCoupon['business_id'];
-                    $data['customer_id']=$customerCoupon['userId'];
-                    $data['customer_ref_id']=$order['id'];
-                    $data['debit_amount']=0;
-                    $data['credit_amount']=$totalCreitAmount;
-                    $data['is_settled']=0;
-                    $data['overdue_date']=0;
 
-                    $this->loadModel('statement')->insertOrUpdateCreditItem($data);
-
-
-
-                    $data_invoice=array(
+                 $data_invoice=array(
                         'factory_id'=>$order['business_userId'],
                         'gendate'=>time(),
                         'createUserId'=>$this->loginUser['id'],

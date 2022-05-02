@@ -189,14 +189,23 @@ class mdl_factory2c_list extends mdl_base
 	   public static  function getSqlofAllOrdersDataOfCurrentBusiness($businessId,$tableName,$factroy_id,$totalandeverychannelPrint) {
 		
 		//如果指定某一个商家
-		
+
 		if(!$totalandeverychannelPrint) {
-				//var_dump($totalandeverychannelPrint);exit;
+			//	var_dump($businessId);exit;
 		  if($businessId) {
-			$sql =" select o.logistic_delivery_date, r.restaurant_category_id as cate_id,c.business_id,cate.category_sort_id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,if(length(r.menu_en_name)>0,r.menu_en_name,c.bonus_title) as bonus_title,c.guige1_id ,c.guige_des,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c left join $tableName o on c.order_id =o.orderId left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";
+			$sql =" select  stock.stock_qty,o.logistic_delivery_date, r.restaurant_category_id as cate_id,c.business_id,cate.category_sort_id,r.id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,if(length(r.menu_en_name)>0,r.menu_en_name,c.bonus_title) as bonus_title,c.guige1_id ,c.guige_des,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c
+        left join $tableName o on c.order_id =o.orderId
+     left join cc_restaurant_menu r on c.restaurant_menu_id =r.id 
+     
+        
+           left join cc_restaurant_menu_option spec_details on c.guige1_id=spec_details.id 
+                 left join cc_producing_item_stock stock on c.restaurant_menu_id =stock.item_id and if(c.guige1_id ,c.guige1_id,0)=stock.spec_id 
+                        
+     
+     left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";
 			$sql .= " where (c.business_id =$businessId or c.business_id in (select customer_id from cc_factory2c_list where factroy_id =$businessId)  or c.business_id in (select customer_id from cc_factory_2blist where factroy_id =$businessId) )  and o.coupon_status='c01' and (o.status =1 or o.accountPay =1 ) ";
 				
-	
+
 			}else{
 				
 				$sql =" select o.logistic_delivery_date, r.restaurant_category_id as cate_id,cate.category_sort_id,r.menu_order_id,cate.category_cn_name,cate.category_en_name,r.source_menu_id as main_code_id,r.menu_id,r.menu_en_name,if(length(r.unit_en)>0,r.unit_en,r.unit) as unit ,if(length(r.menu_en_name)>0,r.menu_en_name,c.bonus_title) as bonus_title,c.guige1_id,c.guige_des,sum(c.customer_buying_quantity) as  total_quantity from cc_wj_customer_coupon c left join $tableName o on c.order_id =o.orderId left join cc_restaurant_menu r on c.restaurant_menu_id =r.id left join  cc_restaurant_category  cate on r.restaurant_category_id =cate.id";

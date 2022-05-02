@@ -460,9 +460,7 @@
 
 
                         $sql = "select  spec.id as spec_type_id ,spec.category_en_name  as spec_type_name , if(spec_details.id is null,0,spec_details.id) as  spec_id, stock.stock_qty,spec_details.menu_en_name as spec_name, o.* ,b.category_cn_name,b.category_en_name
-
-
-                        from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
+                          from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
                             left join cc_restaurant_menu_option_category spec on o.menu_option = spec.id 
                             left join cc_restaurant_menu_option spec_details on spec.id=spec_details.restaurant_category_id  and (length(spec_details.menu_en_name)>0 or length(spec_details.menu_cn_name)>0 )
                             left join cc_producing_item_stock stock on o.id =stock.item_id and if(spec_details.id is null ,0,spec_details.id)=stock.spec_id 
@@ -644,7 +642,8 @@
                     $business_user = $mdl_user->get($business_id) ;
                     $business_tradingName=$business_user ['displayName'];
                 } else{
-                    $business_tradingName=$this->loginUser['displayName'];
+                    $business_id =$this->current_business['id'];
+                    $business_tradingName=$this->current_business['displayName'];
                 }
 
                 // 做到这里，如果 是suppliersID 且数据源!=1 则要使用cc_order_import 做为引导。
@@ -698,7 +697,7 @@
 
                 // 加入了一个前面可以选择一个商家，然后显示该商家的相关记录，如果商家id 为空，则保持原来的处理，如果不为空则进行相应的处理
                 //获得该商家是否为外部数据源，如果是外部数据源，则需要使用外部订单总表关联
-                //var_dump($business_id);exit;
+             //   var_dump('businessid is '.$business_id);exit;
                 $sql= Factory2c_centre::getSqlofAllOrdersDataOfCurrentBusiness($business_id,$query_table_name,$this->current_business['id']);
 
 
@@ -764,7 +763,7 @@
                     $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
 
                 }
-                //var_dump($pageSql);exit;
+               // var_dump($pageSql);exit;
                 $data = $mdl_order->getListBySql($pageSql);
 
                 // var_dump($data);exit;
@@ -790,7 +789,7 @@
 
 
 
-                $this->setData(HTTP_ROOT_WWW.'factory_2c/print_single_item_buying_list', 'searchUrl');
+                $this->setData(HTTP_ROOT_WWW.'factory_2c/producing_stock_to_dispatching', 'searchUrl');
                 $this->setData($this->parseUrl(), 'currentUrl');
 
                 $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching','factory_2c/producing_stock_to_dispatching');

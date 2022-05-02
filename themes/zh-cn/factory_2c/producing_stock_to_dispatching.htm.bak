@@ -213,21 +213,18 @@
                             	<th>选择</th>		
 								<th>打印</th>	
 								<{/if}>
-							<{if $business_id}>								
-								<th>Business ID</th>								
-							<{/if}>
-									<th>Delivery Date</th>
-									<!--<th>Type</th> -->
+							
 									
-									<th>Category Id</th>
+									
 									<th>Product Code</th>
 								<!--	<th>prduct Name (cn)</th>  -->
 									
 									
 									<th>Product Name</th>	
 									<th>Spec Id</th>		
-									<th>Spec Desc</th>									
-									<th>Quantity</th>	
+									<th>Spec Desc</th>	
+									<th>Stock Qty</th>										
+									<th>Order Qty</th>	
 									<th>Unit</th>	
 									
 												
@@ -244,18 +241,15 @@
 								 </td>
 								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>,<{$item.guige1_id}>);">打&nbsp;印</button></td>
                                  <{/if}>
-								<{if $business_id}>		
-								<td><{$item.business_id}></td> <{/if}>
-								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
-								<!--	<td><{$item.category_cn_name}></td>  -->
+							
+								 
+							
 								  
-										<td><{$item.category_en_name}></td>
+									
 									  <td><{$item.menu_id}></td>
 									
 									  
-								<!--	<td>
-										<{$item.bonus_title}>
-									</td> -->
+							
 									<td><{$item.menu_en_name}></td>
 									<td>
 										<{$item.guige1_id}>
@@ -265,7 +259,7 @@
 									</td>
 									
 								
-									
+									<td><{$item.stock_qty}></td>
 									
 										<td><{$item.total_quantity}></td>
 									<td><{$item.unit}></td>

@@ -22,6 +22,16 @@ class mdl_statement extends mdl_base
        // var_dump($statement_details); exit;
     }
 
+
+    public function  getStatementDetailsById($id){
+
+        $sql ="select s.* ,c.code_desc_en from cc_statement s left join cc_statement_code c on c.code =s.type_code  where  s.type_code !='5001' and s.statement_id =$id order by s.id 
+         ";
+        $statement_details = $this->getListBySql($sql);
+        return $statement_details;
+        // var_dump($statement_details); exit;
+    }
+
     // get statement details for certain statement
     public function  getStatementDetailsNotOverDue($statement_ids,$statementdate){
 
@@ -47,22 +57,31 @@ class mdl_statement extends mdl_base
        // 获得notoverdue date 的汇总
         $current_time =time();
 
-        // 获得当前未过期的订单付款
-        $sql ="select ifnull(sum(debit_amount),0.00) as sum_debit,ifnull(sum(credit_amount),0.00) as sum_credit 
+        // 获得当前未过期的欠款总额 （ 付款时间是当前时间之后，且
+        $sql ="select ifnull(sum(debit_amount),0.00) as sum_debit
                 from cc_statement
-                where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date>=$current_time";
-
+                where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date>$current_time";
 
         $not_overdue_sum_rec  = $this->getListBySql($sql);
-        $total_not_overdue_amount =   $not_overdue_sum_rec[0]['sum_debit']-$not_overdue_sum_rec[0]['sum_credit'];
 
-        // 获得当前已过期的订单付款
-        $sql ="select ifnull(sum(debit_amount),0.00) as sum_debit,ifnull(sum(credit_amount),0.00) as sum_credit 
-                from cc_statement
-                where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date<$current_time";
-        $overdue_sum_rec  = $this->getListBySql($sql);
-        $total_overdue_amount =   $overdue_sum_rec[0]['sum_debit']-$overdue_sum_rec[0]['sum_credit'];
-      //  var_dump($sql);exit;
+        if($not_overdue_sum_rec){
+            $total_not_overdue_amount =   $not_overdue_sum_rec[0]['sum_debit'];
+        }else{
+            $total_not_overdue_amount =  0.00;
+        }
+
+        $total_overdue_amount =$closeBalance-$total_not_overdue_amount;
+
+        if($total_overdue_amount<0) {
+            $total_not_overdue_amount =$closeBalance;
+            $total_overdue_amount=0.00;
+        }
+
+      // var_dump($total_overdue_amount);exit;
+
+
+
+
         $factoryrec =loadModel('user')->get($factoryId);
         $factoryabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$factoryId));
         $customerrec=loadModel('user')->get($customer_id);
@@ -86,7 +105,7 @@ class mdl_statement extends mdl_base
         $data['customer_id']=$customer_id;
         $data['gen_date']=time();
         $data['create_user']=$login_user;
-        $data['statementPDFpath']='not yet';
+        $data['statementPDFpath']='0';
         $data['not_due_amount']=$total_not_overdue_amount;
         $data['overdue_amount']=$total_overdue_amount;
         $data['factory_name']=$factoryabnRec['untity_name'];
@@ -100,7 +119,7 @@ class mdl_statement extends mdl_base
         $data['customer_legal_name']=$customerabnRec['untity_name'];
         $data['open_balance_amount']=$openBalance;
         $data['close_balance_amount']=$closeBalance;
-
+        $data['statementType']=1;
 
 
 
@@ -109,40 +128,64 @@ class mdl_statement extends mdl_base
 
     }
 
-    public function  getCustomerCloseingBalanceAndData($factoryId,$customerId){
-        //必须为正式的statement ，临时的statement 不包括。
-
-        // lock the data
+    public  function changeStatementData($factory_id,$customer_id,$status){
 
         $where =array(
-            'factory_id'=>$factoryId,
-            'customer_id'=>$customerId,
+            'factory_id'=>$factory_id,
+            'customer_id'=>$customer_id,
             'statement_id'=>0
         );
         $data =array(
-            'process_status'=>-1
+            'process_status'=>$status
         );
 
         $this->updateByWhere($data,$where);
 
+   }
 
-        $sql ="select * from cc_statement where factory_id =$factoryId and customer_id =$customerId and statement_id =0 and process_status =-1 order by id ";
+    public function  getCustomerCloseingBalanceAndData($factoryId,$customerId){
+        //必须为正式的statement ，临时的statement 不包括。
 
-        $list = $this->getListBySql($sql);
 
-        $transcationAmount =0.00;
-        foreach ($list as $key => $value) {
-            if($value['type_code']!=5001) {
-                $transcationAmount += $value['debit_amount']-$value['credit_amount'];
-            }
 
+
+        $sql ="select * from cc_statement where factory_id =$factoryId and customer_id =$customerId and statement_id =0 and process_status =-1 order by id desc limit 1 ";
+
+        $rec =$this->getListBySql($sql);
+
+        if($rec){
+            return $rec[0]['balance_due'];
+        }else{
+            return 0.00;
 
         }
 
-        return $transcationAmount;
+
 
     }
 
+
+
+
+    //检查再statment中是否存在退货记录
+
+    //检查当前的order的退货项是否已经settle
+
+    public function isExistOfReturnRecOnStatement($ref_id){
+
+        $where =array(
+            'customer_ref_id'=>$ref_id,
+            'type_code'=>2002
+        );
+        $rec =$this->getByWhere($where);
+        if($rec){
+            return 1;
+        }else{
+            return 0;
+        }
+
+
+    }
 
    // 更新客户credit或退货的statment记录
     public function insertOrUpdateCreditItem($data){
@@ -162,7 +205,8 @@ class mdl_statement extends mdl_base
         $dataUpdate =array(
             'create_user'=>$data['create_user'],
             'gen_date'=>time(),
-            'credit_amount'=>$data['credit_amount']
+            'credit_amount'=>$data['credit_amount'],
+            'balance_due'=>$data['balance_due'],
          );
        // var_dump($dataUpdate);exit;
         $this->update($dataUpdate,$rec['id']);
@@ -178,6 +222,9 @@ class mdl_statement extends mdl_base
     //生成客户付款插入的数据
 public function  getCustomerPaymentData($login_user,$factory_user,$payment_amount){
 
+   $balance_amount = $this->getBalanceAmountOfCustomer($factory_user['factory_id'],$factory_user['user_id']);
+   $balance_due = $balance_amount -$payment_amount;
+
     $data=array();
     $data['create_user'] = $login_user;
     $data['gen_date']=time();
@@ -188,6 +235,7 @@ public function  getCustomerPaymentData($login_user,$factory_user,$payment_amoun
     $data['customer_ref_id']='0';
     $data['debit_amount']=0;
     $data['credit_amount']=$payment_amount;
+    $data['balance_due']=$balance_due;
     $data['is_settled']=0;
     $data['overdue_date']=0;
 
@@ -215,6 +263,10 @@ public function  getCustomerPaymentData($login_user,$factory_user,$payment_amoun
 
 
 function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
+
+    $balance_amount = $this->getBalanceAmountOfCustomer($factory_user['factory_id'],$factory_user['user_id']);
+   //如果插入的是清算记录，则不影响 balance_due ,直接写入最后的balance即可
+
     $data=array();
     $data['create_user'] = $login_user;
     $data['gen_date']=time();
@@ -225,6 +277,7 @@ function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
     $data['customer_ref_id']='0';
     $data['debit_amount']=0;
     $data['credit_amount']=$rest_credit_amount;
+    $data['balance_due']=$balance_amount;
     $data['is_settled']=0;
     $data['overdue_date']=0;
 
@@ -241,8 +294,18 @@ public function getStatementTranscations($factoryId, $customer_id,$search){
 }
 
 
+// get the customer last transcation balance amount ;
+public function getBalanceAmountOfCustomer($factoryId,$customer_id){
+       $sql ="select * from cc_statement where factory_id =$factoryId and customer_id=$customer_id order by id desc limit 1";
+       $rec =$this->getListBySql($sql);
+       if($rec){
+           $balanceDue =$rec[0]['balance_due'];
+       }else{
+           $balanceDue =0.00;
+       }
+       return $balanceDue;
 
-
+}
 
 //更新付款明细
 public function  updatePaymentsDetails($new_id,$payment_amount,$factory_user,$login_user){
@@ -365,11 +428,11 @@ function getAllUnSettledCreditTranscationOfCustomer($factory_user){
         $factory_id = $factory_user['factory_id'];
         $customer_id =$factory_user['user_id'];
 
-    $sql ="select *  from cc_statement
-                where factory_id =$factory_id and customer_id=$customer_id  and is_settled =0  and credit_amount>0
-                 order by id";
+        $sql ="select *  from cc_statement
+                    where factory_id =$factory_id and customer_id=$customer_id  and is_settled =0   and credit_amount>0
+                     order by id";
 
-    return $this->getListBySql($sql);
+        return $this->getListBySql($sql);
 
 }
 
@@ -379,7 +442,7 @@ function getAllUnSettledCreditTranscationOfCustomer($factory_user){
         $customer_id =$factory_user['user_id'];
 
         $sql ="select *  from cc_statement
-                where factory_id =$factory_id and customer_id=$customer_id  and is_settled =0  and debit_amount>0 order by id ";
+                where factory_id =$factory_id and customer_id=$customer_id  and is_settled =0   and debit_amount>0 order by id ";
 
         return $this->getListBySql($sql);
 

@@ -46,6 +46,10 @@ class ctl_statement extends cmsPage
         3) 将statement 的 生成信息写入数据库。
         */
 
+        $mdl_user_factory =$this->loadModel("user_factory");
+
+
+
 
 
 
@@ -65,18 +69,56 @@ class ctl_statement extends cmsPage
             // get opening balance
            $openBalance = $mdl_statement_list->getCustomerOpeningBalance($factoryId,$value['customer_id']);
 
-        //  var_dump($openBalance);exit;
-            // get closeing balance
 
+
+         // 检查是否有退货，如果有退货则对该退货进行清算 ，清算之后，将该退货标为不可再更改。 清算之后，再生成statment 就不需要再次计算。
+         // 比如有一笔退货 settle =0 ，且没有 statement id ，则直接写清算记录。 这个退货的代码为 xxxxx
+        // process all customer refund code 2002
+
+
+
+      //      $mdl_statement->updatePaymentsDetails(0,0.00,$factory_user,$login_user){
+
+          //生成statament 的时候 会有一个close balance ,每次清算会有一笔，是 + debit -credit ,做为本次 closebalance 和下次opening balance .
+
+
+
+
+        // var_dump($openBalance);exit;
+            // get closeing balance
+            $mdl_statement->changeStatementData($factoryId,$value['customer_id'],-1);
             $closeBalance = $mdl_statement->getCustomerCloseingBalanceAndData($factoryId,$value['customer_id']);
             //  label all statment detail is process
 
-          //  var_dump($closeBalance);exit;
+          //   var_dump($closeBalance);exit;
+            // lock the data
 
             $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],$openBalance,$closeBalance);
-//var_dump($statementData);exit;
-            $mdl_statement_list->insert($statementData);
+       // var_dump($statementData);exit;
 
+
+
+            $new_statement_id = $mdl_statement_list->insert($statementData);
+            if($new_statement_id){
+
+                $dataOfstatement = array(
+                    'statement_id'=>$new_statement_id,
+                    'process_status'=>1
+                );
+
+                $where =array(
+                    'factory_id'=>$factoryId,
+                    'customer_id'=>$value['customer_id'],
+                    'statement_id'=>0,
+                    'process_status'=>-1
+                );
+
+             $mdl_statement->updateByWhere($dataOfstatement,$where);
+
+            }
+
+
+            //      var_dump($dataOfstatement_id);exit;
 
         }
         $this->setData('statement_list', 'submenu');
@@ -93,49 +135,52 @@ class ctl_statement extends cmsPage
 
 
 
-        if($currentStatementRec && $currentStatementRec['statement_ids']) {
+        if($currentStatementRec) {
             //var_dump($currentStatementRec['statement_ids']);exit;
-           $statement_details_data_not_over_due = $this->loadModel('statement')->getStatementDetailsNotOverDue($currentStatementRec['statement_ids'],$currentStatementRec['gen_date']);
-           $statement_details_data_over_due = $this->loadModel('statement')->getStatementDetailsOverDue($currentStatementRec['statement_ids'],$currentStatementRec['gen_date']);
+
+            if($currentStatementRec['factory_id'] != $this->current_business['id'] && $currentStatementRec['customer_id'] !=$this->loginUser['id']) {
+                $this->form_response_msg('no access!');
+            }
+            $statement_details_data = $this->loadModel('statement')->getStatementDetailsById($id);
+          // var_dump($statement_details_data);exit;
+         //  $statement_details_data_over_due = $this->loadModel('statement')->getStatementDetailsOverDue($currentStatementRec['statement_ids'],$currentStatementRec['gen_date']);
 
         }else{
             $this->form_response_msg('Could not find the record!');
         }
 
 
-        $orderId = get2('order_id');
         $mel_user = $this->loadModel('user');
         $mdl_abn_application = $this->loadModel('wj_abn_application');
         $mdl_user_account_info = $this->loadModel('user_account_info');
 
-        $order = $this->loadModel('order')->getByOrderId($orderId);
-        $items = $this->loadModel('wj_customer_coupon')->getItemsInOrder_menu($orderId, $this->loginUser['id']);
 
-        $user =$mel_user->getUserById($order['userId']);
+
+        $user =$mel_user->getUserById($currentStatementRec['customer_id']);
         $userWhere = [
-            'userId' => $order['userId'],
+            'userId' => $currentStatementRec['customer_id'],
         ];
         $userABN = $mdl_abn_application->getByWhere($userWhere);
 //var_dump($order['userId']);exit;
 
-        $factory = $mel_user->getUserById($this->loginUser['id']);
+        $factory = $mel_user->getUserById($currentStatementRec['factory_id']);
         $factoryWhere = [
-            'userId' => $this->loginUser['id'],
+            'userId' => $currentStatementRec['factory_id'],
         ];
         $factoryAccount = $mdl_user_account_info->getByWhere($factoryWhere);
         $factoryABN = $mdl_abn_application->getByWhere($factoryWhere);
 
         // 获得该用户的简称
         $mdl_user_factory =$this->loadModel("user_factory");
-        $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$this->loginUser['id']));
+        $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$currentStatementRec['customer_id'],'factory_id'=>$currentStatementRec['factory_id']));
         //var_dump($user_code_rec);exit;
 
         $this->loadModel('statement_output');
-        $report = new customer_statement($currentStatementRec,$statement_details_data_over_due,$statement_details_data_not_over_due);
+        $report = new customer_statement($currentStatementRec,$statement_details_data);
 
 
         if($this->loginUser['logo']) {
-            $report->logoPath('data/upload/' . $this->loginUser['logo']);
+            $report->logoPath('data/upload/' . $this->current_business['logo']);
         }
 
 
@@ -152,13 +197,16 @@ class ctl_statement extends cmsPage
 
         $report->generatePDF($this->lang);
 
-
-        $report->outPutToBrowser('statement.pdf');
         $filePath = date('Y-m');
+        $fileName =$filePath.'-'.$currentStatementRec['customer_id'].'-'.$currentStatementRec['id'].'.pdf';
+
+
+        $report->outPutToBrowser($fileName);
+
         $this->file->createdir('data/statement/'.$filePath);
 
          if($filePath) {//如果是系统内部调用会直接在指定路径创建文件
-             $report->outPutToFile('data/statement/'.$filePath.'/'.'statement.pdf');
+             $report->outPutToFile('data/statement/'.$filePath.'/'.$fileName);
              return $filePath;
          }
        // $report->outPutToFile('data/statement/'.$filePath.'/'.$order['userId'].'-'.$currentStatementRec['id'].".pdf","F");

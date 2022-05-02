@@ -2904,6 +2904,8 @@ class ctl_company extends cmsPage
              * 新增statement 记录
              */
 
+            $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
+            $balance_due =$order['money_new']+$balance;
             $data=array(
                 'create_user'=>$this->loginUser['id'],
                 'gen_date'=>time(),
@@ -2913,6 +2915,7 @@ class ctl_company extends cmsPage
                 'customer_id'=>$order['userId'],
                 'customer_ref_id'=>$order['id'],
                 'debit_amount'=>$order['money_new'],
+                'balance_due'=>$balance_due,
                 'credit_amount'=>0.00,
                 'gst'=>0.00,
                 'is_settled'=>0,

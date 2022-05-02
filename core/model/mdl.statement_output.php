@@ -208,7 +208,7 @@ class pdfGenerator extends PDF_Chinese
 
         $this->Ln(5);
         $this->SetX(30);
-        $this->Cell(60,4,'LINCENSE NO: P00950',0,0,'L');
+        $this->Cell(60,4,'LINCENSE NO: ',0,0,'L');
         $this->SetX(120);
         $this->Cell(50,4,'Att:',0,0,'R');
         $this->SetX(150);
@@ -234,7 +234,7 @@ class pdfGenerator extends PDF_Chinese
 
         $this->Ln(5);
         $this->SetX(30);
-        $this->Cell(60,4,'5/20 AJAX RD,ALTONA VIC 3018',0,0,'L');
+        $this->Cell(60,4,$this->StatementData['factory_mail_address'],0,0,'L');
         $this->cell(150);
         $this->Cell(0,4,$address1,0,0,'R');
 
@@ -255,12 +255,12 @@ class pdfGenerator extends PDF_Chinese
         $this->SetY(-40);
         $this->row("", 1, 1, 'C', 0.1);
 
-        $this->row("MTV NO :0100/1404/3370/3371", 0.7, 0, "L", 6);
+        $this->row(" ", 0.7, 0, "L", 6);
 
-        $this->row("Temperature: 1.9", 0.3, 0, "L", 6);
+        $this->row("", 0.3, 0, "L", 6);
 
         $this->ln();
-        $this->row("No Claim will be recognised unless received with 24 hours date of delivery.", 0.7, 0, "L", 6);
+        $this->row("please contact Business if you the statement not match your record.", 0.7, 0, "L", 6);
         $this->ln(5);
 
         $this->row("Acc Name: " . $this->factoryAccount['account_name'], 0.7, 0, "L", 6);
@@ -482,7 +482,7 @@ class customer_statement
 
     public $title;//标题
 
-    function __construct($StatementData, $items,$itemsNotYetDue)
+    function __construct($StatementData, $items)
     {
         $this->pdf = new pdfGenerator();
         $this->StatementData = $StatementData;
@@ -540,15 +540,10 @@ class customer_statement
         $this->factoryABN = $factoryABN;
     }
 
-    function orderTitle()
-    {
-        // return 'Invoice-'.$this->order['orderId'];
-        return 'DNL Trading PTY LTD';
-    }
 
     function generatePDF()
     {
-        $this->pdf->setTitle($this->orderTitle(),'2020-12-11');
+        $this->pdf->setTitle($this->factoryABN['untity_name'],'2020-12-11');
         $this->pdf->setLogo(DOC_DIR.$this->logoPath);
         $this->pdf->setBusinessName($this->factoryABN['untity_name']);
         $this->pdf->setStatementData($this->StatementData);
@@ -557,7 +552,7 @@ class customer_statement
         $this->pdf->setABN($this->factoryABN['ABNorACN']);
         $this->pdf->setPhone($this->factory['phone']);
         $this->pdf->setBusinessId($this->factory['id']);
-        $this->pdf->setOrderId($this->StatementData['id']);
+
         $this->pdf->setDate(date('Y-m-d ',$this->StatementData['gen_date']));
         $this->pdf->setUserName($this->userABN['business_name']);
         $this->pdf->setFactoryAccount($this->factoryAccount);
@@ -574,133 +569,95 @@ class customer_statement
 
 
         $this->pdf->ln(5);
-        $this->pdf->row("Date ", 0.20, 0, "L", 6);
-        $this->pdf->row('Account Number ', 0.20, 0, "L", 6);
+        $this->pdf->row("Date ", 0.15, 0, "L", 6);
+        $this->pdf->row('Account Number ', 0.15, 0, "L", 6);
         $this->pdf->row('Account Name ', 0.40, 0, "L", 6);
-        $this->pdf->row('Term', 0.20, 0, "L", 6);
+        $this->pdf->row('Term', 0.15, 0, "L", 6);
+
+        $this->pdf->row('Opening Balance', 0.15, 0, "L", 6);
 
 
 
         $this->pdf->ln();
-        $this->pdf->row(date('Y-m-d ',$this->StatementData['gen_date']), 0.20, 0, "L", 6);
-        $this->pdf->row($this->StatementData['customer_id'], 0.20, 0, "L", 6);
+        $this->pdf->row(date('Y-m-d ',$this->StatementData['gen_date']), 0.15, 0, "L", 6);
+        $this->pdf->row($this->StatementData['customer_id'], 0.15, 0, "L", 6);
         $this->pdf->row($this->StatementData['customer_business_name'], 0.40, 0, "L", 6);
-        $this->pdf->row("1 week ", 0.20, 0, "L", 6);
+        $this->pdf->row("1 week ", 0.15, 0, "L", 6);
+        $this->pdf->setFontSize(11);
+        $this->pdf->row(" $ ".$this->StatementData['open_balance_amount'], 0.15, 0, "L", 6);
+        $this->pdf->setFontSize();
         $this->pdf->ln();
         $this->pdf->row("", 1, 1, 'C', 0.1);
         $this->pdf->ln();
 
 
         $this->pdf->ln(5);
+        $this->pdf->row('Ref Id', 0.10, 0, "l", 6);
         $this->pdf->row("Date ", 0.10, 0, "L", 6);
         $this->pdf->row('Description ', 0.2, 0, "L", 6);
-        $this->pdf->row('Your Reference ', 0.15, 0, "L", 6);
-        $this->pdf->row('Our Referenece', 0.15, 0, "L", 6);
-        $this->pdf->row('Debit', 0.10, 0, "L", 6);
-        $this->pdf->row('Credit', 0.10, 0, "L", 6);
-        $this->pdf->row('Balance', 0.10, 0, "L", 6);
-        $this->pdf->row('Due Date', 0.10, 0, "L", 6);
+        $this->pdf->row('Your Reference ', 0.15, 0, "R", 6);
 
-        $balanceTotal=0.00;
+        $this->pdf->row('Debit', 0.10, 0, "R", 6);
+        $this->pdf->row('Credit', 0.10, 0, "R", 6);
+        $this->pdf->row('Balance', 0.10, 0, "R", 6);
+        $this->pdf->row('Due Date', 0.15, 0, "R", 6);
+
+
          if($this->items ) {
 
-             $balancesubTotal = 0.00;
+
              foreach ($this->items as $item) {
                 if($item['debit_amount']<=0  && abs($item['credit_amount']<=0)) continue;
-                 $this->pdf->ln();
-                 $this->pdf->row(date('Y-m-d ', $item['gen_date']), 0.10, 0, "L", 6);
-                 $this->pdf->row($item['code_desc_en'], 0.2, 0, "L", 6);
-                 $this->pdf->row($item['id'], 0.15, 0, "L", 6);
-                 $this->pdf->row($item['id'], 0.15, 0, "L", 6);
 
-                 $this->pdf->row(number_format($item['debit_amount'],2), 0.10, 0, "L", 6);
-
-                 $this->pdf->row(number_format((-1)*$item['credit_amount'],2), 0.10, 0, "L", 6);
-
-                 if ($item['debit_amount'] > 0) {
-                     $balance = $item['debit_amount'];
-                 } else {
-                     $balance =(-1)* $item['credit_amount'];
-                 }
-                 $this->pdf->row(number_format($balance,2), 0.10, 0, "L", 6);
-                 if(!$item['overdue_date']) {
-                     $this->pdf->row('-', 0.10, 0, "L", 6);
+                 $customer_ref =$item['customer_ref_id'];
+                 if(!$customer_ref){
+                     $customer_ref='-';
                  }else{
-                     $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.10, 0, "L", 6);
+
+                 }
+                 $this->pdf->ln();
+                 $this->pdf->row($item['id'], 0.10, 0, "L", 6);
+                 $this->pdf->row(date('Y-m-d ', $item['gen_date']), 0.10, 0, "L", 6);
+                 $this->pdf->row(strtoupper($item['code_desc_en']), 0.2, 0, "L", 6);
+                 $this->pdf->row(strtoupper($customer_ref), 0.15, 0, "R", 6);
+
+
+                 $this->pdf->row(number_format($item['debit_amount'],2), 0.10, 0, "R", 6);
+
+                 $this->pdf->row(number_format($item['credit_amount'],2), 0.10, 0, "R", 6);
+
+
+                 $this->pdf->row(number_format($item['balance_due'],2), 0.10, 0, "R", 6);
+                 if(!$item['overdue_date']) {
+                     $this->pdf->row('-', 0.10, 0, "R", 6);
+                 }else{
+                     $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.15, 0, "R", 6);
                  }
 
-                 $balancesubTotal += $balance;
+
 
              }
 
-             $this->pdf->ln();
+             $this->pdf->ln(7);
              $this->pdf->row("", 1, 1, 'C', 0.1);
-             $this->pdf->ln();
+             $this->pdf->ln(5);
              $this->pdf->setFontSize(11);
 
 
-             $this->pdf->row('AMOUNT DUE ', 0.6, 0, "L", 6);
-             $this->pdf->row('Balance Totals: $' . number_format($balancesubTotal,2), 0.3, 0, "L", 6);
+             $this->pdf->row('Not Over Due: $'.number_format($this->StatementData['not_due_amount'],2), 0.3, 0, "L", 6);
+             $this->pdf->row(' Over Due: $'.number_format($this->StatementData['overdue_amount'],2), 0.3, 0, "L", 6);
+             $this->pdf->row('Close Balance: $'.number_format($this->StatementData['close_balance_amount'],2), 0.3, 0, "R", 6);
              $this->pdf->row('AUD', 0.1, 0, "L", 6);
+
              $this->pdf->setFontSize();
 
              $this->pdf->ln(6);
-             $balanceTotal +=$balancesubTotal;
+
          }
 
-        if($this->itemsNotYetDue ) {
-            $balancesubTotal =0;
-            foreach ($this->itemsNotYetDue as $item) {
-                if($item['debit_amount'] <=0 && abs($item['credit_amount'])<=0 ) continue;
-                $this->pdf->ln();
-                $this->pdf->row(date('Y-m-d ',$item['gen_date']), 0.10, 0, "L", 6);
-                $this->pdf->row($item['code_desc_en'], 0.2, 0, "L", 6);
-                $this->pdf->row($item['id'], 0.15, 0, "L", 6);
-                $this->pdf->row($item['id'], 0.15, 0, "L", 6);
-
-                $this->pdf->row(number_format($item['debit_amount'],2), 0.10, 0, "L", 6);
-
-                $this->pdf->row(number_format((-1)*$item['credit_amount'],2), 0.10, 0, "L", 6);
-
-                if($item['debit_amount']>0){
-                    $balance =$item['debit_amount'];
-                }else{
-                    $balance =(-1)* $item['credit_amount'];
-                }
-                $this->pdf->row(number_format($balance,2), 0.10, 0, "L", 6);
-                if(!$item['overdue_date']) {
-                    $this->pdf->row('-', 0.10, 0, "L", 6);
-                }else{
-                    $this->pdf->row(date('Y-m-d ', $item['overdue_date']), 0.10, 0, "L", 6);
-                }
-
-                $balancesubTotal +=$balance;
-
-            }
-            $this->pdf->ln();
-            $this->pdf->row("", 1, 1, 'C', 0.1);
-            $this->pdf->ln();
-            $this->pdf->setFontSize(11);
-
-
-            $this->pdf->row('Amount Not Yet  DUE ', 0.6, 0, "L", 6);
-            $this->pdf->row('Balance Totals: $'.number_format($balancesubTotal,2), 0.3, 0, "L", 6);
-            $this->pdf->row('AUD', 0.1, 0, "L", 6);
-            $this->pdf->setFontSize();
-
-            $balanceTotal +=$balancesubTotal;
-        }
-
-        $this->pdf->ln(6);
-        $this->pdf->row("", 1, 1, 'C', 0.1);
-        $this->pdf->ln(6);
-        $this->pdf->setFontSize(11);
 
 
 
-        $this->pdf->row('Balance Totals: $'.number_format($balanceTotal,2), 0.9, 0, "R", 6);
-        $this->pdf->row('AUD', 0.1, 0, "L", 6);
-        $this->pdf->setFontSize();
 
 
 
