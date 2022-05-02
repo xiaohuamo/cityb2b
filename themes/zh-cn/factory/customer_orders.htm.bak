@@ -710,7 +710,7 @@
               //  alert(result.merge_to_another_order);
 			   if (result.error) {
 			   alert(result.error);
-			   
+			   console.log(result.error);
 			 //  alert($('#myonoffswitch_xero'+orderId).attr("checked"));
 			   $('#myonoffswitch_xero'+orderId).attr("checked",false);
 			   context.html("<span style='color:#F30;'>not yet</span>");

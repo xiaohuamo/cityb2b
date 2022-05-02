@@ -2906,6 +2906,12 @@ class ctl_company extends cmsPage
 
             $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
             $balance_due =$order['money_new']+$balance;
+
+            if(!$order['xero_invoice_id']) {
+                $ref_customer_id =$order['xero_invoice_id'];
+            }else{
+                $ref_customer_id =$order['id'];
+            }
             $data=array(
                 'create_user'=>$this->loginUser['id'],
                 'gen_date'=>time(),
@@ -2913,7 +2919,7 @@ class ctl_company extends cmsPage
                 'type_code'=>1001,
                 'factory_id'=>$order['business_userId'],
                 'customer_id'=>$order['userId'],
-                'customer_ref_id'=>$order['id'],
+                'customer_ref_id'=>$ref_customer_id,
                 'debit_amount'=>$order['money_new'],
                 'balance_due'=>$balance_due,
                 'credit_amount'=>0.00,
