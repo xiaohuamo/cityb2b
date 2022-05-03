@@ -472,7 +472,7 @@
 									<{if !$item.merge_to_another_order}>
 									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}>
 									
-									<{if $item.coupon_status!='d01'}>
+									<{if $item.coupon_status=='c01'}>
 									<br>
 								
 								 <input type="text" class="input-text" data-id='<{$item.id}>' id="deliveryTime-<{$item.id}>" style="width:100px;" name="deliveryTime" onchange="update_deliveryTime(this);" onclick="WdatePicker();" onfocus="WdatePicker();"
@@ -499,6 +499,7 @@
 										本日唯一订单
 									
 									<{elseif $item.merge ==1}> <!--发现记录，且非第一笔记录，可以进行合并-->
+										<{if $item.coupon_status=='c01'}>
 										
 										<div id="hebin_<{$item.id}>" class="onoffswitch">
 													<input type="checkbox"  <{if $item.merge_to_another_order==1 ||$item.sent_to_xero==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
@@ -520,6 +521,9 @@
 												<{/if}>
 										
 										 <span class='promote-ajax'></span>
+										 <{else}>
+										 -
+										 <{/if}>
 									
 									<{elseif $item.merge==0}><!-- 为原始记录，是合并目标订单，该订单不能被其它合并 -->
 										第一笔订单

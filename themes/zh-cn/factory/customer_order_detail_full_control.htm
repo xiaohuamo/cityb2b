@@ -385,8 +385,8 @@
 									</td>
 									
 									<td>
-                                        <{if $days>21}>
-											超21天 无法修改
+                                        <{if $data.coupon_status=='b01'}>
+											<span><{$item.new_customer_buying_quantity}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="new_customer_buying_quantity-<{$item.id}>" style="width:50px;" name="new_customer_buying_quantity"
@@ -395,8 +395,8 @@
 										<{/if}>
 									</td>
 									<td>
-                                        <{if $days>21}>
-											超21天 无法修改
+                                        <{if $data.coupon_status=='b01'}>
+											<span><{$item.voucher_deal_amount}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="voucher_deal_amount-<{$item.id}>" style="width:50px;" name="voucher_deal_amount"
@@ -406,8 +406,8 @@
 									</td>
 
 									<td>
-										<{if $days>21}>
-											超21天 无法修改
+										 <{if $data.coupon_status=='b01'}>
+											<span><{$item.adjust_subtotal_amount}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:100px;" name="adjust_subtotal_amount"
