@@ -3489,7 +3489,7 @@ public function xero_test_action() {
 		$mdl_xero =$this->loadModel('xero') ;
 		$mdl_tokens =$this->loadModel('tokens') ;
 
-		$credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+		//$credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
         if(!$credentials){
 			var_dump('Could not get the xero tokens ,please contact admin.');exit;
 		}
