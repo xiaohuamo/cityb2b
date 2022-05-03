@@ -41,7 +41,7 @@ window.onload = function () {
 		]
 	},
 	]
-	
+	console.log(data);
 });
 chart.render();
 
