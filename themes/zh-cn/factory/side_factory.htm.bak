@@ -266,7 +266,7 @@
 				<a <{if $menu=='account_management'}> class="current"<{/if}>><{$lang->money_account}></a>
 			</div>
 			<div class='second-level'>
-<!--
+		<!--
 				<a href="<{$http_root_www}>factory/receive_payments" <{if $submenu=='receive_payments'}> class="current"<{/if}>>
 				Payments
 				</a>

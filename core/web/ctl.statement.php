@@ -121,6 +121,7 @@ class ctl_statement extends cmsPage
             //      var_dump($dataOfstatement_id);exit;
 
         }
+        $this->setData('generate_statement', 'submenu_top');
         $this->setData('statement_list', 'submenu');
         $this->setData('account_management', 'menu');
         $this->display('statement/statement_list');
@@ -268,6 +269,8 @@ class ctl_statement extends cmsPage
 
         $this->setData($search, 'search');
         $this->setData($data, 'data');
+
+        $this->setData('statement_list', 'submenu_top');
 
         $this->setData('statement_list', 'submenu');
         $this->setData('account_management', 'menu');

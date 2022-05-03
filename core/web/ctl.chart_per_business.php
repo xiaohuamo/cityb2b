@@ -173,16 +173,38 @@
 		
 
 		
-		 $list_month = trim(get2('list_month'));
+		  $list_month = trim(get2('list_month'));
 		  $business_id = trim(get2('business_id'));
+          $category = trim(get2('category'));
+          $sub_category = trim(get2('sub_category'));
+          $accountType =get2('accountType');
+
+          if(!$accountType){
+              $accountType='all';
+
+          }
+
+        if(!$category) {
+            $category='all';
+        }
+
+         if(!$sub_category) {
+            $sub_category='all';
+         }
+
+
+           $this->setData($accountType,'accountType');
+           $this->setData($sub_category,'sub_category');
+           $this->setData($category,'category1');
+
 		  
 		  //如果为空，为当前登陆商家
 		  if(!$business_id){
 			  
-			  $business_id = $this->loginUser['id'];
+			  $business_id = $this->current_business['id'];
 			  
 		  }
-		  $business_name =$this->loadModel('user')->getUserDisplayName($business_id);
+		 $business_name =$this->loadModel('user')->getUserDisplayName($business_id);
 		$this->setData($business_name,'business_name');
 		 
 		 $this->setData($business_id,'business_id');
@@ -207,18 +229,52 @@
 		
 		$curr_user = $this->loadModel('user')->get($business_id);
 		
-			if($curr_user['role']==101) {
-				$sql ="SELECT date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') as months,date_format(FROM_UNIXTIME(a.gen_date),'%Y,%m,%d') as days,sum(`adjust_subtotal_amount`) as subtotal FROM `cc_wj_customer_coupon` a left join cc_user_factory u  on a.userId = u.user_id   left join cc_order o on o.orderId=a.order_id WHERE   u.factory_sales_id = $business_id and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2021' and DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') ='$list_month' and (a.`coupon_status`='c01' or a.`coupon_status`='b01')  group by months,days order by months,days limit 31";
-		//var_dump ($sql);exit;
-			}else{
-				
-				$sql ="SELECT date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') as months,date_format(FROM_UNIXTIME(a.gen_date),'%Y,%m,%d') as days,sum(`adjust_subtotal_amount`) as subtotal FROM `cc_wj_customer_coupon` a left join cc_user u on a.business_Id = u.id  left join cc_order o on o.orderId=a.order_id WHERE  a.business_id =$business_id  and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2021' and DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') ='$list_month' and (a.`coupon_status`='c01' or a.`coupon_status`='b01')  group by months,days order by months,days limit 31";
-		
-			}
-			
+
+		$sql ="SELECT date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') as months,
+       date_format(FROM_UNIXTIME(a.gen_date),'%Y,%m,%d') as days,round(sum(a.voucher_deal_amount*a.new_customer_buying_quantity),2) as subtotal FROM `cc_wj_customer_coupon` a 
+           left join cc_user u on a.business_Id = u.id 
+           left join cc_order o on o.orderId=a.order_id 
+            left join cc_restaurant_menu m  on a.restaurant_menu_id=m.id 
+            left join cc_user_factory factory on a.business_id =factory.factory_id and a.userId =user_id 
+            
+        WHERE  a.business_id =$business_id  
+          and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2022' 
+          and DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') ='$list_month' 
+          and (a.`coupon_status`='c01' or a.`coupon_status`='b01')  ";
+
+
+
+
+       if($category && $category !='all') {
+
+           $sql .= "and m.restaurant_category_id = $category ";
+       }
+          //  var_dump ($accountType);exit;
+            if($accountType && $accountType !='all') {
+                if($accountType=='1'){
+                    $sql .= "and factory.to_xero = 1 ";
+
+                }
+                if($accountType=='2'){
+                    $sql .= "and factory.to_xero = 0 ";
+
+                }
+
+            }
+
+
+
+        if($sub_category && $sub_category !='all') {
+
+            $sql .= "and m.sub_category_id = $sub_category ";
+        }
+
+
+      $sql .= "   group by months,days order by months,days limit 31";
+
 				
 
-			//var_dump ($sql);exit;
+		//	var_dump ($sql);exit;
 				$current_user =$mdl_user->get($business_id);
 				if($current_user){
 					
@@ -232,27 +288,21 @@
 						
 					}
 				}
-	          
-			
-	
-		
-		
+
 		//var_dump ($sql);exit;
 		$mdl_order =$this->loadModel('order');
 		$daily_selling =$mdl_order->getListBySql($sql);
 		//var_dump($daily_selling);exit;
-		
-		
+
 		//获得月份列表
-		$sql ="SELECT date_format(FROM_UNIXTIME(a.createTime),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.createTime),'%Y%m') as months FROM `cc_order` a left join cc_user u on a.business_userId = u.id WHERE date_format(FROM_UNIXTIME(a.createTime),'%Y')>=2019  group by years, months  order by years,months limit 40 ";
+		$sql ="SELECT date_format(FROM_UNIXTIME(a.createTime),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.createTime),'%Y%m') as months FROM `cc_order` a left join cc_user u on a.business_userId = u.id WHERE date_format(FROM_UNIXTIME(a.createTime),'%Y')>=2022  group by years, months  order by years,months limit 50 ";
 		$mdl_user=$this->loadModel('user');
 		$list_months = $mdl_user->getListBySql($sql);
 		
 		foreach ($list_months as $key => $value) {
 			$list_months[$key]['year_month'] =substr_replace($value['months'], '-', 4, 0);;
-			
 		}
-		if($curr_user['role']==101) {
+		if($curr_user['role']==20) {
 			
 			$business_id =$curr_user['user_belong_to_user'];
 			
@@ -260,16 +310,28 @@
 		//var_dump($list_months);exit;
 		$this->setData($list_months,'list_months');
 		// 获取 最近30个生鲜商家 
-			$sql ="select u.id,  IFNULL(u.name, IFNULL(u.displayName, u.businessName))as name from cc_user u   where ( u.id=$business_id  or u.user_belong_to_user = $business_id ) order by u.id desc limit 30";
+			$sql ="select u.id,  IFNULL(u.name, IFNULL(u.displayName, u.businessName))as name from cc_user u   where ( u.id=$business_id  or u.user_belong_to_user = $business_id ) order by u.id desc limit 50";
 
 		//	var_dump($sql);exit;
-		
-		
-		
-		
-		
-		
-		$lastest_business_list = $mdl_user->getListBySql($sql);
+
+
+            $mdl_restaurant_category = $this->loadModel('restaurant_category');
+            $pageSql = "select  * from cc_restaurant_category where createUserId=$business_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+            $data = $mdl_restaurant_category->getListBySql($pageSql);
+            $this->setData($data,'restaurant_category');
+
+
+            $sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$business_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+            $data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+            //var_dump($sql_Parent_cate_list);exit;
+
+
+
+            $this->setData($data_parent_cate_list, 'data_parent_cate_list');
+
+
+            $lastest_business_list = $mdl_user->getListBySql($sql);
 		
 		//var_dump($lastest_business_list);exit;
 		$this->setData($daily_selling,'daily_selling');
@@ -278,7 +340,7 @@
 		
 		$this->setData('selling', 'menu');
         $this->setData('selling_daily', 'submenu');
-        $this->setData('销售分析 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('turnover -business Centre ' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('chart_per_business/selling_daily');
 		
 		}

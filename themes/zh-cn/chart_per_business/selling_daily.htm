@@ -60,20 +60,95 @@
 						
 						
 					</select>
-					 <{if $loginUser['role']!=101}>
-					<select id="business_id" name="business_id" >
+					
+						<select name="category" id='category'  onChange="catChg(this);">
 						
 					
-						<{foreach from=$lastest_business_list item=item}>
+
+							<option value="all"
+                                    <{if $category=='all'}> selected<{/if}>>选择分类
+							</option>
+
+                            <{foreach from=$restaurant_category item=item}>
+								<option value="<{$item.id}>"
+                                        <{if $item.id==$category1}> selected<{/if}>>
+                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+								</option>
+                            <{/foreach}>
+
+						</select>
 						
-						<option value="<{$item.id}>" <{if $business_id==$item.id}> selected<{/if}>><{if !$item.name}><{$item.id}><{else}><{$item.name}><{/if}></option>
+						<script> 
 						
-						<{/foreach}>
+														
+
+								var cats = [];
+								<{foreach from=$data_parent_cate_list item=item}>
+								cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
+								<{/foreach}>
+
+
+
+								$(function(){
+									var cate='<{$category1}>';
+									var sub_cate ='<{$sub_category}>';
+									//alert('init');
+									if(cate) {
+									  catChg($('#category'));
+									}
+								})
+
+
+								function catChg(obj) {
+									var vv = $(obj).val(); 
+									if(vv ) {
+										
+										
+										//alert('here');
+										if ($('#sub_category').length > 0) { 
+										
+											$('#sub_category').remove();
+										}
+									
+										var c = $('<select id ="sub_category" name="sub_category" >');
+										c.append('<option value="">选择子分类</option>');
+										for (var i = 0; i < cats.length; i++) {
+											if ( cats[i][2] == vv ) {
+											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											if('<{$sub_category}>' == cats[i][0]){
+											c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+											}else{
+											c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											}
+												
+												
+											}
+										}
+										$(obj).next().after(c);
+										//setDroplist(c);
+									
+									}else{
+									
+									}
+										
+									
+								}
+
+								</script>
+					
+					
+					
+					<select id="accountType" name="accountType" >
 						
+						<option value="all" <{if $accountType=='all'}> selected<{/if}>>All</option>				
+						<option value="1" <{if $accountType=='1'}> selected<{/if}>>OnAccount</option>
+						<option value="2" <{if $accountType=='2'}> selected<{/if}>>NonAccount</option>
 						
 					</select>
 					
-					<{/if}>
+				
 	               
 						
 						<button type="submit"><{$lang->search}></button>

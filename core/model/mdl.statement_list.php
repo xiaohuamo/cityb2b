@@ -18,7 +18,7 @@ class mdl_statement_list extends mdl_base
  /* 获得当前查询条件的 statement list */
     public function getStatementList($factoryId, $search = null) {
 
-     $sql = "select * from cc_statement_list s where factory_id = $factoryId";
+     $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId";
         //var_dump ($sql);exit;
 
 
