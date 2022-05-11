@@ -15,7 +15,7 @@ class mdl_wj_customer_coupon_delete_details extends mdl_base
         );
         $this->update($create_user,$id);
 
-
+ 
     }
 
     public function restoreOrder($id){
