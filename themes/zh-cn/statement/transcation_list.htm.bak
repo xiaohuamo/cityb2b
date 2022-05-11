@@ -189,7 +189,7 @@
 									<td><{date('Y-m-d', $item.gen_date)}></td>
 									<td><{$item.invoice_number}></td>
 									<td><{$item.code_desc_en}>
-									<{if $item.note}><br><{$item.note}>  <{/if}>
+									<{if $item.notes}><br><{$item.notes}>  <{/if}>
 									</td>
 								    <td><{$item.customer_id}></td>
 									<td><{$item.customer_ref_id}></td>

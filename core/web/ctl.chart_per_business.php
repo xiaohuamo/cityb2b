@@ -205,7 +205,7 @@
 			  
 		  }
 
-         $current_u =$this->loadModel('user')->get($business_id);
+        $current_u =$this->loadModel('user')->get($business_id);
 		$business_name =$current_u['displayName'];
 		$this->setData($business_name,'business_name');
 		 

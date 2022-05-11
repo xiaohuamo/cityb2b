@@ -494,7 +494,9 @@
 									</td>
 									<td>
 									
-									
+									<{if $item.coupon_status=='d01'}>
+									 -
+									<{else}>
 									<{if $item.merge ==2}> <!--未发现相同客户记录 -->
 										本日唯一订单
 									
@@ -528,7 +530,7 @@
 									<{elseif $item.merge==0}><!-- 为原始记录，是合并目标订单，该订单不能被其它合并 -->
 										第一笔订单
 									<{/if}>
-									
+									<{/if}>
 									
 									
 									</td>
@@ -669,6 +671,10 @@
                 }else if (result.merge_to_another_order == '2') {
                     context.html("<span style='color:#F30;'>未合并</span>");
 					alert('main order has been sent to xero ');
+					$('#myonoffswitch'+orderId).attr("checked",false);
+                }else if (result.merge_to_another_order == '3') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+					alert('could not find the main order!');
 					$('#myonoffswitch'+orderId).attr("checked",false);
                 }
             }

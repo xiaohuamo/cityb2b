@@ -220,21 +220,39 @@ class mdl_statement extends mdl_base
     }
 
     //生成客户付款插入的数据
-public function  getCustomerPaymentData($login_user,$factory_user,$payment_amount){
+public function  getCustomerPaymentData($login_user,$factory_user,$payment_amount,$code){
 
    $balance_amount = $this->getBalanceAmountOfCustomer($factory_user['factory_id'],$factory_user['user_id']);
-   $balance_due = $balance_amount -$payment_amount;
+
+
+
+   if($code) {
+       $paycode =$code;
+   }else{
+       $paycode =2001;
+   }
+
+   $statement_code_rec =loadModel('statement_code')->getByWhere(array('code'=>$paycode));
+   if($statement_code_rec['isCredit']){
+       $creditAmount = $payment_amount;
+       $debitAmount =0.00;
+       $balance_due = $balance_amount -$payment_amount;
+   }else{
+       $creditAmount = 0.00;
+       $debitAmount =$payment_amount;
+       $balance_due = $balance_amount + $payment_amount;
+   }
 
     $data=array();
     $data['create_user'] = $login_user;
     $data['gen_date']=time();
     $data['invoice_number']='0';
-    $data['type_code']=2001;
+    $data['type_code']=$paycode;
     $data['factory_id']=$factory_user['factory_id'];
     $data['customer_id']=$factory_user['user_id'];
     $data['customer_ref_id']='0';
-    $data['debit_amount']=0;
-    $data['credit_amount']=$payment_amount;
+    $data['debit_amount']=$debitAmount;
+    $data['credit_amount']=$creditAmount;
     $data['balance_due']=$balance_due;
     $data['is_settled']=0;
     $data['overdue_date']=0;
@@ -288,7 +306,7 @@ function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
 //获得某个客户的交易流水
 public function getStatementTranscations($factoryId, $customer_id,$search){
 
-        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id order by id ";
+        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id and code !='5001' order by id desc ";
        // var_dump($sql);exit;
         return $this->getListBySql($sql);
 }

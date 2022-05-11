@@ -423,7 +423,7 @@ class ctl_factory extends cmsPage
             $data = $mdl_order->getListBySql($page['outSql']);
 			//var_dump($page['outSql']);exit;
 			 foreach ($data as $key => $value) {
-                 $sql="select id,orderId from cc_order where business_userId=".$value['business_userId']. " and userId =".$value['userId']." and logistic_delivery_date =".$value['logistic_delivery_date']." order by id  " ;
+                 $sql="select id,orderId from cc_order where business_userId=".$value['business_userId']. " and userId =".$value['userId']." and coupon_status ='c01' and logistic_delivery_date =".$value['logistic_delivery_date']." order by id  " ;
 				 $dulplicate_order_rec =$mdl_order->getListBySql($sql);
 				 if(count( $dulplicate_order_rec)>1) {
 					 if($dulplicate_order_rec[0]['orderId'] !=$value['orderId']) {
@@ -1032,6 +1032,13 @@ class ctl_factory extends cmsPage
 
         //订单信息
         $data = $mdl_order->getByOrderId($orderId);
+
+
+        // 获取是否有被删除的的记录
+
+        $deleteDetailsCount = $this->loadModel('wj_customer_coupon_delete_details')->getCount(array('order_id'=>$orderId));
+        $this->setData($deleteDetailsCount,'deleteDetailsCount');
+
 
         // 获得该商家的精确订单汇总 （可能上面的是含多个商家的汇总）
 
@@ -1741,9 +1748,9 @@ class ctl_factory extends cmsPage
                $mdl_order->update($orderUpdateData, $order['id']);
            }
 
-           $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
+          $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
 
-           $returnData =array(
+          $returnData =array(
                'adjust_subtotal_amount'=>$itemDetails['adjust_subtotal_amount'],
                'goods_total'=>$money_details['goodsTotal_new'],
                'money_new'=>$money_details['transactionBalance_new']
@@ -3881,6 +3888,98 @@ public function return_items_submit_to_statment_action() {
 
     }
 
+    public function restore_delete_order_details_action(){
+        $order_id = get2('order_id');
+       // order_id =
+        if(!$order_id)$this->sheader(null, "no order id");
+
+        $mdl_order = $this->loadModel('order');
+        $order_rec = $mdl_order->getByWhere(array('orderId'=>$order_id));
+
+        if($order_rec['business_userId']!=$this->current_business['id']) {
+            $this->sheader(null, "no access supplier not match");
+        }
+
+        if($order_rec['coupon_status']!='c01') {
+            $this->sheader(null, "order status could not support restore action!");
+        }
+
+        $mdl_delete = $this->loadModel('wj_customer_coupon_delete_details');
+
+        $ajust_amount = $mdl_delete->restoreOrder($order_id);
+
+        $money_details = $mdl_order->getMoneyDetail1($order_id,$this->current_business['id']);
+        $orderUpdateData = [
+            'money' => $money_details['transactionBalance_new']+$ajust_amount,
+            'money_new' =>$money_details['transactionBalance_new']+$ajust_amount,
+        ];
+      //  var_dump($orderUpdateData);exit;
+        $mdl_order->update($orderUpdateData, $order_rec['id']);
+
+
+        $this->sheader(HTTP_ROOT_WWW."factory/customer_order_detail?id=$order_id");
+
+    }
+
+    public  function order_details_delete_action()
+    {
+
+
+        $item_id = (int)get2('item_id');
+        if(!$item_id)$this->sheader(null, "no id");
+
+        $order_id = get2('order_id');
+        if(!$order_id)$this->sheader(null, "no order id");
+
+        $mdl_order = $this->loadModel('order');
+        $order_rec = $mdl_order->getByWhere(array('orderId'=>$order_id));
+
+        if($order_rec['business_userId']!=$this->current_business['id']) {
+           $this->sheader(null, "no access supplier not match");
+        }
+
+        if($order_rec['coupon_status']!='c01') {
+            $this->sheader(null, "order status could not support delete action!");
+        }
+
+        $mdl_details = $this->loadModel('wj_customer_coupon');
+        $details_rec =$mdl_details->get($item_id);
+        if($details_rec['business_id']!=$this->current_business['id']) {
+            $this->sheader(null, "no access details supplier not matach");
+        }
+        $mdl_delete = $this->loadModel('wj_customer_coupon_delete_details');
+
+        $ajust_amount = $details_rec['new_customer_buying_quantity'] * $details_rec['voucher_deal_amount'] ;
+/* insert ,delete ,and update the total amount  */
+        $mdl_delete->insertCurrentRecord($item_id,$this->loginUser['id']);
+        $mdl_details->delete($item_id);
+
+        $money_details = $mdl_order->getMoneyDetail1($order_id,$this->current_business['id']);
+        $orderUpdateData = [
+            'money' => $money_details['transactionBalance_new']-$ajust_amount,
+            'money_new' =>$money_details['transactionBalance_new']-$ajust_amount,
+        ];
+        $mdl_order->update($orderUpdateData, $order_rec['id']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $this->sheader(HTTP_ROOT_WWW."factory/customer_order_detail?id=$order_id");
+
+    }
+
     public function receive_payments_action() {
         $mdl_user_factory = $this->loadModel('user_factory');
 
@@ -4151,6 +4250,138 @@ public function return_items_submit_to_statment_action() {
         $this->display('factory/customer_list_recycle');
     }
 
+    public function add_new_payment_action(){
+
+
+
+
+        if(is_post()){
+
+            $mdl_user_factory =$this->loadModel("user_factory");
+
+            $customer_id = post('customer_id');
+            $payment_amount = post('payment_amount');
+            $paymentOption = post('paymentOption');
+            $notes = post('notes');
+
+            if(!$customer_id){
+                $this->form_response(600,'please choose customer!');
+            }
+
+
+            if(!$paymentOption){
+                $this->form_response(600,'please choose payment Option!');
+            }
+
+            if($payment_amount<=0) {
+                $this->form_response(500, 'please input amount  larger than 0!');
+            }
+
+
+
+
+            if(!$notes){
+                if($paymentOption=='2002') {
+                    $this->form_response(600,'you have to note  orderId,item and quantitys , if this order has not done return before ,you can direct do return on customer order panel!');
+                }
+                if($paymentOption=='2003') {
+                    $this->form_response(600,'you have to note reason for this debit from .');
+                }
+                if($paymentOption=='2004') {
+                    $this->form_response(600,'you have to note reason for this credit from .!');
+                }
+            }
+
+
+            $isAuthorizeOperateTheCustomer = $mdl_user_factory->isUserAuthorisedToOperate($customer_id, $this->current_business['id']);
+            if(!$isAuthorizeOperateTheCustomer){
+                 $this->form_response(600,'no access');
+             }
+
+
+         // var_dump('success');exit;
+
+
+
+
+
+            // $payment_amount =450;
+            // 校对当日同笔付款是否已执行 ，如果付过 则 不允许再付款。
+            // 插入付款数据
+
+
+
+            $mdl_statement= $this->loadModel('statement');
+            $factoryId =$this->current_business['id'];
+
+            $mdl_statement->begin();
+
+            $factory_user = $mdl_user_factory->getByWhere(array('factory_id'=>$factoryId,'user_id'=>$customer_id));
+            if(!$factory_user){
+                $this->form_response(600,'could not find customer info.');
+            }
+
+            //插入客户支付数据
+            $customer_payment_data = $mdl_statement->getCustomerPaymentData($this->loginUser['id'],$factory_user,$payment_amount,$paymentOption);
+          // var_dump($customer_payment_data);exit;
+
+            if($notes){
+                $customer_payment_data['note'] =$notes;
+            }
+            $new_id= $mdl_statement->insert($customer_payment_data);
+
+            if(!$new_id){
+                $error=1;
+            }
+
+            // 分析该笔支付 是支付那个账单， 顺序依次 是 overdue账单 （按overdue日期递增走），not yet due , 如果还有剩余，则做一个credit . 如果，所剩余额不够下笔账单
+            // 付款，则 将余额转成credit .
+            //   if(! $isProcessed) $error=1;
+            $statement_code_rec = $this->loadModel('statement_code')->getByWhere(array('code'=>$paymentOption));
+            if($statement_code_rec) {
+                $isTriggerSettled = $statement_code_rec['trigger_settle'];
+                if($isTriggerSettled) {
+                    $mdl_statement->updatePaymentsDetails($new_id, $payment_amount, $factory_user, $this->loginUser['id']);
+                }
+            }
+
+            if($error) {
+                $mdl_statement->rollback();
+                $this->form_response(500, 'error happen when generate data!','');
+            }else{
+                $mdl_statement->commit();
+
+                $this->form_response(200,'Success ',HTTP_ROOT_WWW.'statement/transcation_list?customer_id='.$customer_id);
+            }
+
+            //   $this->form_response(600,$payment_amount);
+
+
+
+        }else{
+            //wrong protocol
+            //get customer info
+            $customer_id=get2('customer_id');
+            $this->setData($customer_id,'customer_id');
+
+            // check if customer is belong to current business
+
+            $mdl_user_factory =$this->loadModel('user_factory');
+
+            $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+            //var_dump($salesManId);exit;
+            $this->setData($factoryList, 'factoryUsers');
+
+
+            $this->setData('receive_payments', 'submenu');
+            $this->setData('account_management', 'menu');
+             $this->setData('ADD New payments - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('factory/add_a_payment');
+
+        }
+
+
+    }
 
     public function customer_price_management_action() {
         $mdl_user_factory = $this->loadModel('user_factory');

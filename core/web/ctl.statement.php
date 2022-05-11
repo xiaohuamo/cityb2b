@@ -225,6 +225,8 @@ class ctl_statement extends cmsPage
         $search = trim(get2('search'));
 
         $customer_id=get2('customer_id');
+        $this->setData($customer_id,'customer_id');
+
         $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
         // var_dump($factoryId);exit;
 

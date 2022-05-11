@@ -149,7 +149,8 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
    public function  get_first_order_sameuserId_sameday ($orderId){
 	   
  	   $curr_rec =$this->get($orderId);
-	   $sql ="select DISTINCT id,orderId,money,money_new,sent_to_xero from cc_order where userID =".$curr_rec['userId']." and logistic_delivery_date=".$curr_rec['logistic_delivery_date']." order by id ";
+	   $sql ="select DISTINCT id,orderId,money,money_new,sent_to_xero from cc_order where userID =".$curr_rec['userId']." 
+	   and business_userId =".$curr_rec['business_userId']." and id !=$orderId and coupon_status='c01' and logistic_delivery_date=".$curr_rec['logistic_delivery_date']." order by id ";
 			
 	   $rec =$this->getListBySql($sql);
 	   $first_rec=$rec[0];

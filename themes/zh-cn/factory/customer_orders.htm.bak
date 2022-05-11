@@ -472,7 +472,7 @@
 									<{if !$item.merge_to_another_order}>
 									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}>
 									
-									<{if $item.coupon_status!='d01'}>
+									<{if $item.coupon_status=='c01'}>
 									<br>
 								
 								 <input type="text" class="input-text" data-id='<{$item.id}>' id="deliveryTime-<{$item.id}>" style="width:100px;" name="deliveryTime" onchange="update_deliveryTime(this);" onclick="WdatePicker();" onfocus="WdatePicker();"
@@ -669,6 +669,10 @@
                 }else if (result.merge_to_another_order == '2') {
                     context.html("<span style='color:#F30;'>未合并</span>");
 					alert('main order has been sent to xero ');
+					$('#myonoffswitch'+orderId).attr("checked",false);
+                }else if (result.merge_to_another_order == '3') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+					alert('could not find the main order!');
 					$('#myonoffswitch'+orderId).attr("checked",false);
                 }
             }

@@ -329,18 +329,18 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>编号</th>
-								<th>产品</th>
-								<th>规格</th>
-								<th>单品留言</th>
-								<th>单位</th>
-								<th>原价</th>
-								<th>现价</th>
-								<th>数量</th>
-								<th>调整后数量</th>
-								<th>单价</th>
-								<th>调整后累计（单价*数量）</th>
-								
+								<th>Code</th>
+								<th>Name</th>
+								<th>Spec</th>
+								<th>Message</th>
+								<th>Unit</th>
+								<th>Ori Price</th>
+								<th>Price</th>
+								<th>Qty</th>
+								<th>New Qty</th>
+								<th>Adj Price</th>
+								<th>New SubTotal</th>
+								<th>Delete</th>
 
 							</tr>
 
@@ -357,7 +357,6 @@
 										<{if $item.menu_en_name}><{$item.menu_en_name}><{else}><{$item.bonus_title}> <{/if}>
 									
 									<{/if}>
-									
 									
 									
 									</a></td>
@@ -385,8 +384,8 @@
 									</td>
 									
 									<td>
-                                        <{if $days>21}>
-											超21天 无法修改
+                                        <{if $data.coupon_status=='b01'}>
+											<span><{$item.new_customer_buying_quantity}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="new_customer_buying_quantity-<{$item.id}>" style="width:50px;" name="new_customer_buying_quantity"
@@ -395,8 +394,8 @@
 										<{/if}>
 									</td>
 									<td>
-                                        <{if $days>21}>
-											超21天 无法修改
+                                        <{if $data.coupon_status=='b01'}>
+											<span><{$item.voucher_deal_amount}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="voucher_deal_amount-<{$item.id}>" style="width:50px;" name="voucher_deal_amount"
@@ -406,8 +405,8 @@
 									</td>
 
 									<td>
-										<{if $days>21}>
-											超21天 无法修改
+										 <{if $data.coupon_status=='b01'}>
+											<span><{$item.adjust_subtotal_amount}></span>
                                         <{else}>
 											<input type="text" <{if $editAble == false}>disabled <{/if}> class="input-text 	"
 												   data-id='<{$item.id}>' id="adjust_subtotal_amount-<{$item.id}>" style="width:100px;" name="adjust_subtotal_amount"
@@ -415,7 +414,9 @@
 											<span class='promote-ajax'></span>
 										<{/if}>
 									</td>
-								
+								 <td>
+										<a onclick ="if(confirm('Delete item ?')==false)return; window.location.href('<{$http_root_www}>factory/order_details_delete?item_id=<{$item.id}>&order_id=<{$data.orderId}>');">delete</a>
+									</td>
 									
 								</tr>
                             <{/foreach}>
@@ -465,6 +466,14 @@
 								<span>交易总额</span><span>:</span><span id="totalAmount"><{$moneyDetail.transactionBalance_new}></span>
 							</div>
                         <{/if}> 
+						
+						 <{if $deleteDetailsCount}>
+						 <br>
+							<div style="font-weight: bolder;">
+								<a href ="<{$http_root_www}>factory/restore_delete_order_details?order_id=<{$data.orderId}>">Restore Delte Details</a>
+							</div>
+                        <{/if}> 
+						
 						
 					</div>
 

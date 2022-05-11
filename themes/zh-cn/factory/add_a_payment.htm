@@ -1,0 +1,220 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #close-customer-select-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #close-customer-select-modal:hover,
+    #close-customer-select-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+				<div class="colCurTit">
+					New Payment
+				 
+				 
+				</div>
+
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_payment?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+
+							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
+							
+
+						<div class="input-box clearfix">	
+							
+
+						
+								<span id="close-customer-select-modal"></span>
+							<span><label><{$lang->select_customer}></label></span>	
+								
+								<select class="customer-select" name="customer_id"  onchange="changeCustomer(this)">
+									<option value="">
+									</option>
+									<{foreach from=$factoryUsers item=user}>
+										<{if $user['approved'] == 1}>
+										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
+											<{$user['id']}>-<{$user['code']}>(<{$user['displayName']}>)&nbsp;(<{$user['phone']}>)
+										</option>
+
+										<{/if}>
+									<{/foreach}>
+								</select>
+								<p>&nbsp;</p>
+							
+
+						</div>
+
+						<script>
+
+							var closeCustomerSelect = document.getElementById("close-customer-select-modal");
+
+							// When the user clicks on <span> (x), close the modal
+							closeCustomerSelect.onclick = function() {
+								showCustomerSelectModal(false);
+							}
+
+							// Get the modal
+							function showCustomerSelectModal(show) {
+								var selectCustomerModal = document.getElementById("customer-modal");
+								if(show) {
+									selectCustomerModal.style.display = "block";
+								} else {
+									selectCustomerModal.style.display = "none";
+								}
+							}
+
+							function changeCustomer(select) {
+							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							}
+
+							$(document).ready(function() {
+								$('.customer-select').select2();
+								<{if !$userId}>
+								showCustomerSelectModal(true);
+								<{/if}>
+							});
+						</script>
+
+					<div class="input-box clearfix">	
+
+								<span><label>payment Option</label></span>	
+
+								<select name="paymentOption" id="paymentOption">
+						
+					
+
+							<option value="0" selected="">select Payment Option	</option>
+                            	<option value="2001">Customer Payments 	</option>
+                            	<option value="2002">Stock Return  	</option>
+                            	<option value="2004">Other credit to Customer (payment Adjust)	</option>
+                            	<option value="2003">other debit from Customer (payment Adjust)</option>
+								<option value="2006">Opening Balance</option>
+						</select>
+
+					</div>	
+
+							<div class="input-box clearfix">	
+
+								<span><label>amount </label></span>		
+
+								<input type="text" name="payment_amount" class="input-text" value="" />
+
+							</div>   
+							
+							
+							<div class="input-box clearfix">	
+
+								<span><label>Notes </label></span>		
+
+								<input type="text" name="notes" class="input-text" value="<{$data.Notes}>" />
+
+							</div>   
+
+
+
+							<div class="input-box input-submit clearfix">		
+
+								<button type="submit" style='float:left'>SAVE </button>	
+
+					
+
+							</div>		
+
+
+							
+
+						</form>	
+
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+					</div>		
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div><{include file='footer.htm'}></body></html>

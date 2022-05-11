@@ -2576,7 +2576,7 @@ class ctl_company extends cmsPage
 		 $id = get2('id');
         //echo json_encode(array('merge_to_another_order' => 1));
 		//检查改产品是否为改商家所有
-		
+	//	$id ='26902';
 		$mdl_order =$this->loadModel("order");
 		
 		// 销售员的用户role 为101
@@ -2590,7 +2590,7 @@ class ctl_company extends cmsPage
 			   $business_userid = $this->loginUser['id'];
 			  
 		  }
-		//var_dump($business_userid);exit;
+
 		if( !$mdl_order->check_if_order_belong_to_login_user($business_userid,$id)) {
 			
 			$this->form_response(600,'Did not find items!','Did not find items!');
@@ -2600,10 +2600,10 @@ class ctl_company extends cmsPage
 		
 		
 		$first_rec = $mdl_order->get_first_order_sameuserId_sameday ($id);
-		
+		//var_dump($first_rec);exit;
 		if( !$first_rec) {
-			
-			$this->form_response(600,'Did not find original order !','Did not find original order !!');
+
+            echo json_encode(array('merge_to_another_order' => 3));
 			return;
 		}
 		if($first_rec['sent_to_xero']==1) {
