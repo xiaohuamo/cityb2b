@@ -1746,6 +1746,7 @@ class ctl_factory extends cmsPage
 
              //  $this->form_response(600, $order['money']);
                $mdl_order->update($orderUpdateData, $order['id']);
+               $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order['orderId']);
            }
 
           $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
@@ -2086,6 +2087,7 @@ public function return_items_submit_to_statment_action() {
 
                 //  $this->form_response(600, $order['money']);
                 $mdl_order->update($orderUpdateData, $order['id']);
+                $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order['orderId']);
             }
 
             $money_details = $mdl_order->getMoneyDetail1($customerCoupon['order_id'],$this->current_business['id']);
@@ -3915,7 +3917,7 @@ public function return_items_submit_to_statment_action() {
         ];
       //  var_dump($orderUpdateData);exit;
         $mdl_order->update($orderUpdateData, $order_rec['id']);
-
+        $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order_rec['orderId']);
 
         $this->sheader(HTTP_ROOT_WWW."factory/customer_order_detail?id=$order_id");
 
@@ -3960,6 +3962,7 @@ public function return_items_submit_to_statment_action() {
             'money_new' =>$money_details['transactionBalance_new']-$ajust_amount,
         ];
         $mdl_order->update($orderUpdateData, $order_rec['id']);
+        $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order_rec['orderId']);
 
 
 

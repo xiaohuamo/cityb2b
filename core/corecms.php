@@ -1006,9 +1006,12 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
        
 		if(!$mdl_order->insert( $data_order )){
+
 			$rollback=1;
 			$tablename='order';
-		}
+		}else{ //更新呢总箱数
+            $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($orderId);
+        }
 
         //如果新客户第一次购买，之前没有填过用户的基本信息，系统挂自动给补填一下；
 

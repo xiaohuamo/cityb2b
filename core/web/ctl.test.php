@@ -3469,7 +3469,21 @@ public function xero_get_contacts_action(){
 
 	 }
 
+public function test_boxnumber_action(){
 
+		   $orderId =get2('order_id');
+
+		   if($orderId){
+
+			   $mdl=$this->loadModel('boxNumberOutput');
+			   $totalBoxNumber =$mdl->UpdateOrderBoxInfo($orderId);
+			//   $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($orderId);
+			   var_dump($totalBoxNumber);exit;
+		   }else{
+			   var_dump('no order id');exit;
+		   }
+
+}
 
 public function xero_test_action() {
 

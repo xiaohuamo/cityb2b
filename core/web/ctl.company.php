@@ -2621,6 +2621,8 @@ class ctl_company extends cmsPage
 		
 			
 			if ( !$error) {
+                //更新箱数;
+                $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($first_rec['orderId']);
 				echo json_encode(array('merge_to_another_order' => 1));
 			} else {
 				echo json_encode(array('merge_to_another_order' => 7));

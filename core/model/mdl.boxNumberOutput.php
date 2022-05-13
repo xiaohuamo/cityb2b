@@ -8,21 +8,56 @@ class mdl_boxNumberOutput extends mdl_base
      * 获取订单需要的总箱数
      * @param $orderId 订单id
      */
+
+
+    public function  UpdateOrderBoxInfo($orderId) {
+
+
+        $orderBoxNumber = 0;
+        $orderBoxdata =$this->getOrderBoxes($orderId);
+
+
+
+        if($orderBoxdata) {
+            $orderWholeBox =$orderBoxdata['orderboxnumber'];
+            $orderPinBox =$orderBoxdata['splicingboxnumber'];
+            $orderBoxNumber =$orderWholeBox +$orderPinBox;
+        }
+
+        $orderUpdateData =array(
+          'boxesNumber' =>$orderBoxNumber
+        );
+        loadModel('order')->updateByWhere($orderUpdateData,array('orderId'=>$orderId));
+        return $orderBoxNumber;
+    }
+
+
+
+
+
     public function getOrderBoxes($orderId)
     {
-        $where = [
-            ['o.orderId', '=', $orderId],
-            ['wcc.customer_buying_quantity', '>', 0]
-        ];
-        //1.获取该订单所有的加工明细单数据
-        $order = Db::name('wj_customer_coupon')
-            ->alias('wcc')
-            ->field('wcc.id,wcc.menu_id,wcc.restaurant_menu_id product_id,wcc.guige1_id,wcc.customer_buying_quantity,wcc.new_customer_buying_quantity,rm.unitQtyPerBox,rm.overflowRate,rm.restaurant_category_id cate_id')
-            ->leftJoin('order o','wcc.order_id = o.orderId')
-            ->leftJoin('restaurant_menu rm','rm.id = wcc.restaurant_menu_id')
-            ->where($where)
-            ->order('rm.menu_id asc,wcc.id asc')
-            ->select()->toArray();
+       $sql ="SELECT
+             `wcc`.`id`,
+             `wcc`.`menu_id`,
+             wcc.restaurant_menu_id product_id,
+             `wcc`.`guige1_id`,
+             `wcc`.`customer_buying_quantity`,
+             `wcc`.`new_customer_buying_quantity`,
+             `rm`.`unitQtyPerBox`,
+             `rm`.`overflowRate`,
+             rm.restaurant_category_id cate_id 
+            FROM
+             `cc_wj_customer_coupon` `wcc`
+             LEFT JOIN `cc_order` `o` ON `wcc`.`order_id` = `o`.`orderId`
+             LEFT JOIN `cc_restaurant_menu` `rm` ON `rm`.`id` = `wcc`.`restaurant_menu_id` 
+            WHERE
+             `o`.`orderId` = $orderId
+             AND `wcc`.`customer_buying_quantity` > '0' 
+            ORDER BY
+             `rm`.`menu_id` ASC,
+             `wcc`.`id` ASC";
+       $order = $this->getListBySql($sql);
         $box_data = [];
         foreach($order as &$v){
             //2.获取该产品实际的数量
@@ -35,6 +70,7 @@ class mdl_boxNumberOutput extends mdl_base
         }
 //        dump($order);
         $boxesNumber = $this->orderBoxNumber($order);
+       // var_dump($boxesNumber);exit;
         return $boxesNumber;
     }
 
@@ -152,7 +188,7 @@ class mdl_boxNumberOutput extends mdl_base
         $a = array_keys($splicingboxnumber_arr);//需要组合排序的数据的key值;
         $d = array();//存储所有可能的组合排序
         $r = 1;//组合排序综合最大不能超过1
-        for($i=1; $i<count($a); $i++) {
+        for($i=1; $i<=count($a); $i++) {
             foreach($this->Combination($a, $i) as $v){
                 $v = explode(',',(string)$v);
                 //取出组合中大于0小于1的所有组合
