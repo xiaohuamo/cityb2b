@@ -19,9 +19,10 @@ class mdl_boxNumberOutput extends mdl_base
 
 
         if($orderBoxdata) {
-            $orderWholeBox =$orderBoxdata['orderboxnumber'];
+            $orderTotalBoxesCount =$orderBoxdata['orderboxnumber'];
             $orderPinBox =$orderBoxdata['splicingboxnumber'];
-            $orderBoxNumber =$orderWholeBox +$orderPinBox;
+          //  $orderBoxNumber =$orderWholeBox +$orderPinBox;
+            $orderBoxNumber =$orderTotalBoxesCount ;
         }
 
         $orderUpdateData =array(
