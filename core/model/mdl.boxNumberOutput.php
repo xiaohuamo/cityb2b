@@ -29,10 +29,37 @@ class mdl_boxNumberOutput extends mdl_base
           'boxesNumber' =>$orderBoxNumber
         );
         loadModel('order')->updateByWhere($orderUpdateData,array('orderId'=>$orderId));
+
+        if($orderBoxdata){
+            $this->updateDetailsBoxInfo($orderBoxdata); //更新明细中的拼箱信息
+        }
+
+
         return $orderBoxNumber;
     }
 
+ public function  updateDetailsBoxInfo($orderBoxdata) {
 
+     // 更新明细的整箱数信息，及拼箱数信息；
+     $mdl =loadModel('wj_customer_coupon');
+
+     $detailsInfo = $orderBoxdata['order'];
+
+     foreach ($detailsInfo as$key1=>$pinValue) {
+         $mdl->update(array('boxnumber'=>$pinValue['boxnumber'],'splicingboxnumber'=>$pinValue['splicingboxnumber']),$pinValue['id']);
+     }
+    // var_dump($detailsInfo);exit;
+     $splicing_arr = $orderBoxdata['splicing_arr'];
+
+     foreach ($splicing_arr as $key =>$pinInfo){
+         foreach ($pinInfo as$key1=>$pinValue) {
+            $mdl->update(array('mix_box_group'=>$key+1),$pinValue['id']);
+         }
+     }
+   // var_dump('here');exit;
+     //填写拼箱信息；
+
+ }
 
 
 
@@ -109,6 +136,7 @@ class mdl_boxNumberOutput extends mdl_base
             'orderboxnumber' => $orderboxnumber,//该订单的总箱数
             'splicingboxnumber' => $splicingboxnumber,//需要拼箱的箱数
             'splicing_arr' => $splicing_arr,//需要拼箱的数据
+            'order'=>$order
         ];
     }
 

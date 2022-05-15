@@ -23,13 +23,27 @@ class mdl_statement extends mdl_base
     }
 
 
-    public function  getStatementDetailsById($id){
+    public function  getStatementDetailsById($id,$custom){
 
-        $sql ="select s.* ,c.code_desc_en from cc_statement s left join cc_statement_code c on c.code =s.type_code  where  s.type_code !='5001' and s.statement_id =$id order by s.id 
+        if(!$custom) {
+
+            $sql ="select s.* ,c.code_desc_en from cc_statement s left join cc_statement_code c on c.code =s.type_code  where  s.type_code !='5001' and s.statement_id =$id order by s.id 
          ";
-        $statement_details = $this->getListBySql($sql);
-        return $statement_details;
-        // var_dump($statement_details); exit;
+            $statement_details = $this->getListBySql($sql);
+            return $statement_details;
+            // var_dump($statement_details); exit;
+        }else{
+            $rec_ids =loadModel('statement_list')->get($id);
+            $ids =$rec_ids['ids'];
+            $sql ="select s.* ,c.code_desc_en from cc_statement s left join cc_statement_code c on c.code =s.type_code  where  s.type_code !='5001' and s.id in ($ids)  order by s.id
+         ";
+            $statement_details = $this->getListBySql($sql);
+            //var_dump($statement_details);exit;
+            return $statement_details;
+            // var_dump($statement_details); exit;
+        }
+
+
     }
 
     // get statement details for certain statement
@@ -50,6 +64,124 @@ class mdl_statement extends mdl_base
         $statement_details = $this->getListBySql($sql);
         return $statement_details;
         // var_dump($statement_details); exit;
+    }
+
+
+
+    //生成statement所需数据
+    public function getStatementTempData($factoryId,$customer_id,$login_user,$openBalance,$closeBalance,$startTime,$endTime) {
+        // 获得notoverdue date 的汇总
+        $current_time =time();
+
+        // 获得当前未过期的欠款总额 （ 付款时间是当前时间之后，且
+        $sql ="select ifnull(sum(debit_amount),0.00) as sum_debit
+                from cc_statement
+                where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date>$current_time ";
+
+        $sql_data = "select *
+                from cc_statement
+                where factory_id =$factoryId and customer_id=$customer_id and type_code !='5001'   ";
+
+        if($startTime) {
+
+            $startTime = strtotime($startTime." 00:00:00");
+            $sql .= " and gen_date >=$startTime ";
+            $sql_data .= " and gen_date >=$startTime ";
+        }
+
+        if($endTime) {
+
+            $endTime = strtotime($endTime." 23:59:59");
+
+            $sql .= " and gen_date <= $endTime ";
+            $sql_data .= " and gen_date <= $endTime order by id ";
+        }
+
+        $not_overdue_sum_rec  = $this->getListBySql($sql);
+
+        $statements_rec = $this->getListBySql($sql_data);
+      // var_dump($statements_rec);exit;
+
+        foreach ($statements_rec as $key=>$value){
+            if($key==0){
+                $ids =$value['id'];
+            }else{
+                $ids .=','. $value['id'];
+            }
+
+        }
+        //var_dump($ids);exit;
+
+        if($not_overdue_sum_rec){
+            $total_not_overdue_amount =   $not_overdue_sum_rec[0]['sum_debit'];
+        }else{
+            $total_not_overdue_amount =  0.00;
+        }
+
+        $total_overdue_amount =$closeBalance-$total_not_overdue_amount;
+
+        if($total_overdue_amount<0) {
+            $total_not_overdue_amount =$closeBalance;
+            $total_overdue_amount=0.00;
+        }
+
+        // var_dump($total_overdue_amount);exit;
+
+
+
+
+        $factoryrec =loadModel('user')->get($factoryId);
+        $factoryabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$factoryId));
+        $customerrec=loadModel('user')->get($customer_id);
+        $customerabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$customer_id));
+
+
+
+        // var_dump($statementIds);exit;
+        if ($factoryrec['tel'] ) {
+            $phone =$factoryrec['tel'];
+            if($factoryrec['phone']) {
+                $phone .= ' (' .$factoryrec['phone'].')';
+            }
+        }else{
+            $phone =$factoryrec['phone'];
+        }
+
+        $data =array();
+
+        $data['factory_id']=$factoryId;
+        $data['customer_id']=$customer_id;
+        $data['gen_date']=time();
+        $data['create_user']=$login_user;
+        $data['statementPDFpath']='0';
+        $data['not_due_amount']=$total_not_overdue_amount;
+        $data['overdue_amount']=$total_overdue_amount;
+        $data['factory_name']=$factoryabnRec['untity_name'];
+        $data['factory_ABN']=$factoryabnRec['ABNorACN'];
+        $data['factory_mail_address']=$factoryrec['googleMap'];
+        $data['factory_phone']=$phone;
+        $data['factory_email']=$factoryrec['email'];
+        $data['customer_business_name']=$customerabnRec['business_name'];
+        $data['customer_contact_name']=$customerrec['nickname'];
+        $data['customer_address']=$customerrec['googleMap'];
+        $data['customer_legal_name']=$customerabnRec['untity_name'];
+        $data['open_balance_amount']=$openBalance;
+        $data['close_balance_amount']=$closeBalance;
+        $data['statementType']=2;
+        $data['ids']=$ids;
+
+        if($startTime){
+            $data['startTime']=$startTime ;
+        }
+
+        if($endTime){
+            $data['endTime']=$endTime ;
+        }
+
+
+
+        return $data;
+
     }
 
     //生成statement所需数据
@@ -304,9 +436,25 @@ function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
 }
 
 //获得某个客户的交易流水
-public function getStatementTranscations($factoryId, $customer_id,$search){
+public function getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime){
 
-        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id and code !='5001' order by id desc ";
+        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id and code !='5001' ";
+
+        if($startTime) {
+
+            $startTime = strtotime($startTime." 00:00:00");
+            $sql .= " and s.gen_date >=$startTime ";
+        }
+
+        if($endTime) {
+
+            $endTime = strtotime($endTime." 23:59:59");
+
+            $sql .= " and s.gen_date <= $endTime ";
+        }
+
+
+     $sql .= " order by id desc ";
        // var_dump($sql);exit;
         return $this->getListBySql($sql);
 }

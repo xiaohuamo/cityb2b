@@ -29,44 +29,7 @@ class ctl_statement extends cmsPage
     public function generate_customer_temp_statement($customer_id,$data,$startTime,$endTime)
     {
 
-        //首先发现是否有对于某一个供应商存在 该客户的 起始日期和终止日期相同的statement_list id ;
-
-       if(!$startTime){
-           $startTime =0;
-           $startTimestamp=0;
-       }else{
-
-           $startTimestamp = strtotime($startTime." 00:00:00");
-
-
-       }
-
-        if(!$endTime){
-            $endTime =0;
-            $endTimestamp=0;
-        }else{
-            $endTimestamp = strtotime($endTime." 23:59:59");
-        }
-      
-
         $mdl_statement_list = $this->loadModel('statement_list');
-        $statement_id = $mdl_statement_list->getByWhere(array(
-                'factory_id'=>$this->current_business['id'],
-                'customer_id'=>$customer_id,
-                'startTime'=>$startTimestamp,
-                'endTime'=>$endTimestamp,
-                'statementType'=>2
-         ) );
-
-        if($statement_id){
-         //   var_dump($statement_id);exit;
-            return $statement_id['id'];
-        }else{
-          // var_dump(0);exit;
-        }
-
-
-
         $mdl_statement = $this->loadModel('statement');
 
 
@@ -74,7 +37,7 @@ class ctl_statement extends cmsPage
         $mdl_user_factory = $this->loadModel('user_factory');
         $factoryId = $this->current_business['id'];
 
-
+        // var_dump('here');exit;
 
         /*
         生成statement 的处理过程
@@ -107,24 +70,43 @@ class ctl_statement extends cmsPage
 
             // var_dump($openBalance);exit;
             // get closeing balance
-
-            $closeBalance = $data[0]['balance_due'];
+            $mdl_statement->changeStatementData($factoryId,$value['customer_id'],-1);
+            $closeBalance = $mdl_statement->getCustomerCloseingBalanceAndData($factoryId,$value['customer_id']);
             //  label all statment detail is process
 
             //   var_dump($closeBalance);exit;
             // lock the data
-      //  var_dump($closeBalance);exit;
-            $statementData = $mdl_statement->getStatementTempData($factoryId,$customer_id,$this->loginUser['id'],$openBalance,$closeBalance,$startTime,$endTime);
 
-      //  var_dump($statementData);exit;
+            $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],$openBalance,$closeBalance);
+            // var_dump($statementData);exit;
 
-       $new_statement_id = $mdl_statement_list->insert($statementData);
+            $new_statement_id = $mdl_statement_list->insert($statementData);
+            if($new_statement_id){
 
-      if($new_statement_id){
-          return $new_statement_id;
-      }else{
-          return 0;
-      }
+                $dataOfstatement = array(
+                    'statement_id'=>$new_statement_id,
+                    'process_status'=>1
+                );
+
+                $where =array(
+                    'factory_id'=>$factoryId,
+                    'customer_id'=>$value['customer_id'],
+                    'statement_id'=>0,
+                    'process_status'=>-1
+                );
+
+                $mdl_statement->updateByWhere($dataOfstatement,$where);
+
+            }
+
+
+            //      var_dump($dataOfstatement_id);exit;
+
+
+        $this->setData('generate_statement', 'submenu_top');
+        $this->setData('statement_list', 'submenu');
+        $this->setData('account_management', 'menu');
+        $this->display('statement/statement_list');
 
     }
 
@@ -232,11 +214,12 @@ class ctl_statement extends cmsPage
 
     }
 
-    public function statement_view($id,$custom){
+    public function statement_view_action() {
 
+        $id =  get2('id');
         $currentStatementRec = $this->loadModel('statement_list')->get($id);
 
-        // var_dump($currentStatementRec);exit;
+        var_dump($currentStatementRec);exit;
 
 
         if($currentStatementRec) {
@@ -245,12 +228,9 @@ class ctl_statement extends cmsPage
             if($currentStatementRec['factory_id'] != $this->current_business['id'] && $currentStatementRec['customer_id'] !=$this->loginUser['id']) {
                 $this->form_response_msg('no access!');
             }
-
-               $statement_details_data = $this->loadModel('statement')->getStatementDetailsById($id,$custom);
-
-
-            // var_dump($statement_details_data);exit;
-            //  $statement_details_data_over_due = $this->loadModel('statement')->getStatementDetailsOverDue($currentStatementRec['statement_ids'],$currentStatementRec['gen_date']);
+            $statement_details_data = $this->loadModel('statement')->getStatementDetailsById($id);
+          // var_dump($statement_details_data);exit;
+         //  $statement_details_data_over_due = $this->loadModel('statement')->getStatementDetailsOverDue($currentStatementRec['statement_ids'],$currentStatementRec['gen_date']);
 
         }else{
             $this->form_response_msg('Could not find the record!');
@@ -312,20 +292,11 @@ class ctl_statement extends cmsPage
 
         $this->file->createdir('data/statement/'.$filePath);
 
-        if($filePath) {//如果是系统内部调用会直接在指定路径创建文件
-            $report->outPutToFile('data/statement/'.$filePath.'/'.$fileName);
-            return $filePath;
-        }
-        // $report->outPutToFile('data/statement/'.$filePath.'/'.$order['userId'].'-'.$currentStatementRec['id'].".pdf","F");
-
-    }
-
-
-
-    public function statement_view_action() {
-
-        $id =  get2('id');
-        $this->statement_view($id,0);
+         if($filePath) {//如果是系统内部调用会直接在指定路径创建文件
+             $report->outPutToFile('data/statement/'.$filePath.'/'.$fileName);
+             return $filePath;
+         }
+       // $report->outPutToFile('data/statement/'.$filePath.'/'.$order['userId'].'-'.$currentStatementRec['id'].".pdf","F");
         exit;
 
 
@@ -363,10 +334,8 @@ class ctl_statement extends cmsPage
                 $customer_id=get2('customer_id');
                 $startTime=get2('startTime');
                 $endTime=get2('endTime');
-                $viewPdf =get2('viewPdf');
                 $this->setData($startTime, 'startTime');
                 $this->setData($endTime, 'endTime');
-                //var_dump('customer id is '.$customer_id. ' and start time is '.$startTime .' and endtime is '. $endTime);exit;
              }
             $this->setData($customer_id,'customer_id');
              $search = trim(get2('search'));
@@ -374,20 +343,7 @@ class ctl_statement extends cmsPage
 
             $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
            // var_dump($data);exit;
-		   if($data) {
-               if ($viewPdf){
-                   $result = $this->generate_customer_temp_statement($customer_id, $data, $startTime, $endTime);
-
-               if ($result) {
-                   $this->statement_view($result, 1); // 1 means custom .
-                   exit;
-               } else {
-
-               }
-           }
-               $this->setData($data, 'data');
-           }
-
+            $this->setData($data, 'data');
             $this->display('statement/statement_custom');
 
           //  $this->form_response(200, '',HTTP_ROOT_WWW . 'statement/statement_custom');
