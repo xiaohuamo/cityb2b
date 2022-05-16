@@ -241,6 +241,13 @@ class mdl_statement extends mdl_base
         $factoryabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$factoryId));
         $customerrec=loadModel('user')->get($customer_id);
         $customerabnRec =loadModel('wj_abn_application')->getByWhere(array('userId'=>$customer_id));
+        if(!$customerabnRec) {
+            $customer_business_name = $customerabnRec['business_name'];
+            $customer_legel_name = $customerabnRec['untity_name'];
+        }else{
+            $customer_business_name = $factoryrec['displayName'];
+            $customer_legel_name = $factoryrec['displayName'];
+        }
 
 
 
@@ -268,10 +275,10 @@ class mdl_statement extends mdl_base
         $data['factory_mail_address']=$factoryrec['googleMap'];
         $data['factory_phone']=$phone;
         $data['factory_email']=$factoryrec['email'];
-        $data['customer_business_name']=$customerabnRec['business_name'];
+        $data['customer_business_name']=$customer_business_name;
         $data['customer_contact_name']=$customerrec['nickname'];
         $data['customer_address']=$customerrec['googleMap'];
-        $data['customer_legal_name']=$customerabnRec['untity_name'];
+        $data['customer_legal_name']=$customer_legel_name;
         $data['open_balance_amount']=$openBalance;
         $data['close_balance_amount']=$closeBalance;
         $data['statementType']=1;
