@@ -7180,7 +7180,7 @@ public function return_items_submit_to_statment_action() {
         //   var_dump($needToProcessCustomerList);exit;
         $overdue_customer_list =[];
         $index=0;
-
+        $mdl_user =$this->loadModel('user');
         foreach ($customer_list as $key => $value) {
 
             // $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id']);
@@ -7191,7 +7191,10 @@ public function return_items_submit_to_statment_action() {
               if($statementData['overdue_amount']>0) {
                 $firstDateUnsetlled = $mdl_statement->getFirstUnselltedDateOfCustomer($factoryId,$value['customer_id']) ;
                 $statementData['firstDateUnsetlled'] = $firstDateUnsetlled;
+                $user_rec =$mdl_user->get($statementData['customer_id']);
+                $statementData['phone'] =$user_rec['phone'];
                 $overdue_customer_list[$index]=$statementData;
+
                 $index ++;
             }
 
