@@ -7188,8 +7188,7 @@ public function return_items_submit_to_statment_action() {
             $closeBalance = $mdl_statement->getCustomerCloseingBalanceAll($factoryId,$value['customer_id']);
             //  var_dump($closeBalance); exit;
             $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],0,$closeBalance);
-          var_dump($statementData);
-            if($statementData['overdue_amount']>0) {
+              if($statementData['overdue_amount']>0) {
                 $firstDateUnsetlled = $mdl_statement->getFirstUnselltedDateOfCustomer($factoryId,$value['customer_id']) ;
                 $statementData['firstDateUnsetlled'] = $firstDateUnsetlled;
                 $overdue_customer_list[$index]=$statementData;
