@@ -200,6 +200,7 @@ class mdl_statement extends mdl_base
     }
 
 
+
     //生成statement所需数据
     public function getStatementData($factoryId,$customer_id,$login_user,$openBalance,$closeBalance) {
        // 获得notoverdue date 的汇总

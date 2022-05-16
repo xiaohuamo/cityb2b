@@ -7496,9 +7496,17 @@ public function return_items_submit_to_statment_action() {
         // var_dump($factoryId);exit;
 
 
-        $data = $mdl_statement_list->getStatementList($factoryId,$customer_id,$startTime,$endTime, $search);
+        $pageSql = $mdl_statement_list->getStatementListSql($factoryId,$customer_id,$startTime,$endTime, $search);
+
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 100;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 
 
+        $data = $mdl_statement_list->getListBySql($page['outSql']);
+
+        $this->setData($page['pageStr'], 'pager');
         $this->setData($search, 'search');
         $this->setData($data, 'data');
 
