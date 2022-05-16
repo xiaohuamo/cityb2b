@@ -163,7 +163,7 @@
 							});
 						</script>
 
-					
+					<br>
 					<div class="input-box clearfix">	
 
 						<span><label><{$lang->logistic_delivery_date_choose}> </label></span> 
