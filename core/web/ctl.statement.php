@@ -426,7 +426,7 @@ class ctl_statement extends cmsPage
             if (!$customer_id) {
                 //  var_dump($customer_id);exit;
                 //$this->form_response(600, 'please select customer !');
-                $this->display('factory/transcations');
+                $this->display('/factory/transcations');
 
             }
         }else{
@@ -463,7 +463,7 @@ class ctl_statement extends cmsPage
 
 
 
-            $this->display('factory/transcations');
+            $this->display('/factory/transcations');
 
 
 
