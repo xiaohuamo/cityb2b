@@ -184,9 +184,10 @@
 								<{if  !$customer_id}>	<th>Customer Id</th>		
 									<th>Customer_name</th>		 <{/if}>
 									<th>Opening</th>		
-									<th>Closing</th>	
+									
 									<th>Not OverDue</th>	
 									<th>OverDue</th>	
+									<th>Closing</th>	
 									<th>preiview</th>	
 								
 									<{if  !$customer_id}><th>Phone</th>	<{/if}>
@@ -201,9 +202,10 @@
 									<{if  !$customer_id}><td><{$item.customer_id}></td>
 									<td><{$item.customer_business_name}></td> <{/if}>
 									<td><{$item.open_balance_amount}></td>
-									<td><{$item.close_balance_amount}></td>
+									
 									<td><{$item.not_due_amount}></td>
 									<td><{$item.overdue_amount}></td>
+									<td><{$item.close_balance_amount}></td>
 									<td><a target = _blank href="<{$http_root_www}>statement/statement_view?id=<{$item.id}>">view</a> </td>
 									
 									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
