@@ -345,6 +345,11 @@ var_dump($sql);
         if($rec){
             return $rec[0]['balance_due'];
         }else{
+            $sql ="select * from cc_statement where factory_id =$factoryId and customer_id =$customerId  order by id desc limit 1";
+            $rec1 =$this->getListBySql($sql);
+            if($rec1){
+                return $rec1[0]['balance_due'];
+            }
             return 0.00;
 
         }
