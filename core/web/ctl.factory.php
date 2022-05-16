@@ -4376,7 +4376,7 @@ public function return_items_submit_to_statment_action() {
             $this->setData($factoryList, 'factoryUsers');
 
 
-            $this->setData('receive_payments', 'submenu');
+            $this->setData('add_new_payment', 'submenu');
             $this->setData('account_management', 'menu');
              $this->setData('ADD New payments - Business Center' . $this->site['pageTitle'], 'pageTitle');
             $this->display('factory/add_a_payment');

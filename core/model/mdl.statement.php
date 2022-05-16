@@ -184,6 +184,15 @@ class mdl_statement extends mdl_base
 
     }
 
+
+    public function getStatementCustomerList($factory_id){
+        $sql ="select s.customer_id from  cc_statement s  where s.factory_id = $factory_id   group by customer_id order by customer_id" ;
+        $list = $this->getListBySql($sql);
+        // var_dump($list); exit;
+        return $list;
+    }
+
+
     //生成statement所需数据
     public function getStatementData($factoryId,$customer_id,$login_user,$openBalance,$closeBalance) {
        // 获得notoverdue date 的汇总
@@ -260,6 +269,20 @@ class mdl_statement extends mdl_base
 
     }
 
+    public function getFirstUnselltedDateOfCustomer($factoryId,$customer_id) {
+        $sql ="select * from cc_statement where factory_id = $factoryId and customer_id =$customer_id and is_settled =0 order by id limit 1 " ;
+        $rec = $this->getListBySql($sql);
+
+        if($rec){
+           // var_dump( $rec);exit;
+            $firstDateofUnsettled = date("Y-m-d",$rec[0]['gen_date']);
+            return $firstDateofUnsettled;
+        }else{
+            return 0 ;
+        }
+
+}
+
     public  function changeStatementData($factory_id,$customer_id,$status){
 
         $where =array(
@@ -295,7 +318,26 @@ class mdl_statement extends mdl_base
 
 
     }
+    public function  getCustomerCloseingBalanceAll($factoryId,$customerId){
+        //必须为正式的statement ，临时的statement 不包括。
 
+
+
+
+        $sql ="select * from cc_statement where factory_id =$factoryId and customer_id =$customerId and statement_id =0  order by id desc limit 1 ";
+
+        $rec =$this->getListBySql($sql);
+//var_dump($rec);exit;
+        if($rec){
+            return $rec[0]['balance_due'];
+        }else{
+            return 0.00;
+
+        }
+
+
+
+    }
 
 
 

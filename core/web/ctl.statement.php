@@ -129,6 +129,78 @@ class ctl_statement extends cmsPage
     }
 
 
+
+    /* 获得overdue list  */
+    public function get_over_due_customer_list_action(){
+
+
+        $mdl_statement = $this->loadModel('statement');
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $mdl_statement_list = $this->loadModel('statement_list');
+
+        $factoryId =  $this->current_business['id'];
+        $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+        $this->setData($factoryList, 'factoryUsers');
+
+
+        if(is_post()) {
+
+            $customer_id = post('customer_id');
+
+        }else{
+            $customer_id=get2('customer_id');
+
+            $viewPdf =get2('viewPdf');
+
+        }
+
+        $this->setData($customer_id,'customer_id');
+
+
+        $factoryId = $this->current_business['id'];
+        $customer_list = $mdl_statement->getStatementCustomerList($factoryId);
+
+      //  var_dump($customer_list);exit;
+
+
+
+        //依次生成statement
+
+        //   var_dump($needToProcessCustomerList);exit;
+        $overdue_customer_list =[];
+        $index=0;
+
+        foreach ($customer_list as $key => $value) {
+
+           // $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id']);
+
+                $closeBalance = $mdl_statement->getCustomerCloseingBalanceAll($factoryId,$value['customer_id']);
+              //  var_dump($closeBalance); exit;
+                $statementData = $mdl_statement->getStatementData($factoryId,$value['customer_id'],$this->loginUser['id'],0,$closeBalance);
+              if($statementData['overdue_amount']>0) {
+                  $firstDateUnsetlled = $mdl_statement->getFirstUnselltedDateOfCustomer($factoryId,$value['customer_id']) ;
+                  $statementData['firstDateUnsetlled'] = $firstDateUnsetlled;
+                  $overdue_customer_list[$index]=$statementData;
+                  $index ++;
+              }
+
+
+
+       }
+
+        $this->setData($overdue_customer_list, 'data');
+        $this->setData('over_due_customer_list', 'submenu');
+        $this->setData('account_management', 'menu');
+        $this->display('statement/over_due_customer_list');
+
+
+
+
+    }
+
+
+
+
     /*
      生成商家的客户的statement
      * */
@@ -225,10 +297,8 @@ class ctl_statement extends cmsPage
             //      var_dump($dataOfstatement_id);exit;
 
         }
-        $this->setData('generate_statement', 'submenu_top');
-        $this->setData('statement_list', 'submenu');
-        $this->setData('account_management', 'menu');
-        $this->display('statement/statement_list');
+      // $this->form_response(200,'generate successful !',HTTP_ROOT_WWW.'statement/statement_list');
+      $this->sheader(HTTP_ROOT_WWW.'statement/statement_list');
 
     }
 
@@ -331,7 +401,7 @@ class ctl_statement extends cmsPage
 
     }
 
-    public function statement_custom_action(){
+    public function transcations_action(){
 
 
         $mdl_statement = $this->loadModel('statement');
@@ -340,7 +410,7 @@ class ctl_statement extends cmsPage
         $factoryId =  $this->current_business['id'];
         $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
         $this->setData($factoryList, 'factoryUsers');
-        $this->setData('statement_custom', 'submenu_top');
+        $this->setData('transcations', 'submenu_top');
         $this->setData('statement_list', 'submenu');
         $this->setData('account_management', 'menu');
         $this->setData('Custom Statement - Business Center' . $this->site['pageTitle'], 'pageTitle');
@@ -356,7 +426,7 @@ class ctl_statement extends cmsPage
             if (!$customer_id) {
                 //  var_dump($customer_id);exit;
                 //$this->form_response(600, 'please select customer !');
-                $this->display('statement/statement_custom');
+                $this->display('statement/transcations');
 
             }
         }else{
@@ -374,7 +444,7 @@ class ctl_statement extends cmsPage
 
             $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
            // var_dump($data);exit;
-		   if($data) {
+		    if($data) {
                if ($viewPdf){
                    $result = $this->generate_customer_temp_statement($customer_id, $data, $startTime, $endTime);
 
@@ -388,14 +458,12 @@ class ctl_statement extends cmsPage
                $this->setData($data, 'data');
            }
 
-            $this->display('statement/statement_custom');
-
-          //  $this->form_response(200, '',HTTP_ROOT_WWW . 'statement/statement_custom');
 
 
 
 
 
+            $this->display('statement/transcations');
 
 
 
@@ -421,7 +489,6 @@ class ctl_statement extends cmsPage
         foreach ($data as $key => $value) {
 
 
-
         }
 
         $this->setData($search, 'search');
@@ -434,24 +501,56 @@ class ctl_statement extends cmsPage
 
     public function statement_list_action() {
 
-        $mdl_statement_list = $this->loadModel('statement_list');
-        $mdl_user_factory = $this->loadModel('user_factory');
 
-        $search = trim(get2('search'));
+
+
+        $mdl_statement = $this->loadModel('statement');
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $mdl_statement_list = $this->loadModel('statement_list');
+
+        $factoryId =  $this->current_business['id'];
+        $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+        $this->setData($factoryList, 'factoryUsers');
+
+
+
+        if(is_post()) {
+
+            $customer_id = post('customer_id');
+            $startTime=post('startTime');
+            $endTime=post('endTime');
+            $search = post('search');
+
+
+        }else{
+            $customer_id=get2('customer_id');
+            $startTime=get2('startTime');
+            $endTime=get2('endTime');
+            $viewPdf =get2('viewPdf');
+            $search = trim(get2('search'));
+
+            //var_dump('customer id is '.$customer_id. ' and start time is '.$startTime .' and endtime is '. $endTime);exit;
+        }
+
+        $this->setData($startTime, 'startTime');
+        $this->setData($endTime, 'endTime');
+        $this->setData($search, 'search');
+        $this->setData($customer_id,'customer_id');
+
+
+
+
+
+
+
 
 
         $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);
        // var_dump($factoryId);exit;
 
 
-        $data = $mdl_statement_list->getStatementList($factoryId, $search);
-       // var_dump($data);exit;
+        $data = $mdl_statement_list->getStatementList($factoryId,$customer_id,$startTime,$endTime, $search);
 
-        foreach ($data as $key => $value) {
-
-
-
-        }
 
         $this->setData($search, 'search');
         $this->setData($data, 'data');

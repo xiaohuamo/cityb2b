@@ -16,11 +16,14 @@ class mdl_statement_list extends mdl_base
 
 
  /* 获得当前查询条件的 statement list */
-    public function getStatementList($factoryId, $search = null) {
+    public function getStatementList($factoryId,$customer_id,$startTime =0 ,$endTime=0, $search = null) {
 
      $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId";
         //var_dump ($sql);exit;
 
+      if($customer_id){
+          $sql .= " and customer_id =$customer_id";
+      }
 
         if($search) {
             $sql .= " AND (s.id ='%$search%'
@@ -29,6 +32,23 @@ class mdl_statement_list extends mdl_base
 					  OR s.customer_legal_name like '%$search%'
 					 )";
         }
+        if($startTime) {
+
+            $startTime = strtotime($startTime." 00:00:00");
+            $sql .= " and gen_date >=$startTime ";
+
+        }
+
+        if($endTime) {
+
+            $endTime = strtotime($endTime." 23:59:59");
+
+            $sql .= " and gen_date <= $endTime ";
+
+        }
+
+        $sql .= " order by id desc ";
+
    // var_dump($sql);exit;
         return $this->getListBySql($sql);
     }

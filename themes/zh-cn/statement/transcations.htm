@@ -85,12 +85,12 @@
 
 			<{include file='company/side.htm'}>	
 
-			<div class="main">	
+			<div class="main" style ="background:#fff;">		
 
 				<div class="box2">	
-				<{include file='factory/statement_top_menu.htm'}>
+				
 				<div class="colCurTit">
-					Custom Statement
+					Transactions
 				  <span class="links">
 						<a class='btn-yellow' href="<{$http_root_www}>factory/add_new_payment?customer_id=<{$customer_id}>" class="link2"><i class='fa fa-plus'></i>New payment</a>
 					</span>
@@ -99,16 +99,16 @@
 				</div>
 
 
-					<div class="main-form">			
+						<div class="search-row" style="padding: 20px 18px">		
 
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>statement/statement_custom?customer_id=<{$customer_id}>" enctype="multipart/form-data" method="post" target="post_frame">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>statement/transcations?customer_id=<{$customer_id}>" enctype="multipart/form-data" method="post" target="post_frame">
 
 							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
 							<input type="hidden" name="startTime" class="input-text" value="<{$startTime}>" />
 							<input type="hidden" name="endTime" class="input-text" value="<{$endTime}>" />
 							
 
-						<div class="input-box clearfix">	
+						<div class=" clearfix">	
 							
 
 						
@@ -163,10 +163,10 @@
 							});
 						</script>
 
-					
+					<br>
 					<div class="input-box clearfix">	
 
-						<span><label>Date Range </label></span><label>From </label>
+						<span><label><{$lang->logistic_delivery_date_choose}> </label></span> 
 						<input type="text" class="input-text" style="width:150px;" id="st" name="startTime" value="<{$startTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
 						<label>&nbsp;To&nbsp;</label>
 						<input type="text" class="input-text" style="width:150px;" id="et" name="endTime" value="<{$endTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
@@ -180,7 +180,7 @@
 						
 
 					</div>		
-					<div class="main-list">		
+					<div class="main-list" style ="background:#fff;">		
 					<{if $data}>				
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
@@ -235,7 +235,7 @@
 							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i>  -->
 							
 							<{if $data}><i class='fa fa-sign-out ' style='color:#58964E'>
-							<a target="_blank" href="<{$http_root_www}>statement/statement_custom?viewPdf=1&customer_id=<{$customer_id}>&startTime=<{$startTime}>&endTime=<{$endTime}>">DownLoad Pdf</a>
+							<a target="_blank" href="<{$http_root_www}>statement/transcations?viewPdf=1&customer_id=<{$customer_id}>&startTime=<{$startTime}>&endTime=<{$endTime}>">DownLoad Pdf</a>
 							</i>	<{/if}>
 						</div>
 
@@ -243,7 +243,7 @@
 						<div class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						No Data
+						
 						<{/if}>			
 				</div>
 

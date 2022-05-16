@@ -1,8 +1,4 @@
-<!doctype html>
-
-<html>
-
-<head>
+<!doctype html><html><head>
 
 <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -12,102 +8,72 @@
 
 <{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
 
-<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
 
 <link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
 
-
 <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
-
-<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
 
 <script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
 
+
 <!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #close-customer-select-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #close-customer-select-modal:hover,
+    #close-customer-select-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
 </head>
-
-
-	<style type="text/css">
-        .onoffswitch {
-            position: relative;
-            width: 70px;
-            margin: auto;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .onoffswitch-checkbox {
-            display: none;
-        }
-
-        .onoffswitch-label {
-            display: block;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid #999999;
-            border-radius: 22px;
-        }
-
-        .onoffswitch-inner {
-            display: block;
-            width: 200%;
-            margin-left: -100%;
-            transition: margin 0.3s ease-in 0s;
-        }
-
-        .onoffswitch-inner:before, .onoffswitch-inner:after {
-            display: block;
-            float: left;
-            width: 50%;
-            height: 30px;
-            padding: 0;
-            line-height: 30px;
-            font-size: 14px;
-            color: white;
-            font-family: Trebuchet, Arial, sans-serif;
-            font-weight: bold;
-            box-sizing: border-box;
-        }
-
-        .onoffswitch-inner:before {
-            content: "ON";
-            padding-left: 0px;
-            background-color: #34A7C1;
-            color: #FFFFFF;
-        }
-
-        .onoffswitch-inner:after {
-            content: "OFF";
-            padding-right: 10px;
-            background-color: #EEEEEE;
-            color: #999999;
-            text-align: right;
-        }
-
-        .onoffswitch-switch {
-            display: block;
-            width: 8px;
-            margin: 11px;
-            background: #FFFFFF;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 36px;
-            border: 2px solid #999999;
-            border-radius: 22px;
-            transition: all 0.3s ease-in 0s;
-        }
-
-        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-            margin-left: 0;
-        }
-
-        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-            right: 0px;
-        }
-	</style>
 
 <body>
 
@@ -131,77 +97,77 @@
 
 					<form method="get" action="<{$searchUrl}>">
 						
-						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="&nbsp;please input id,name or phone..." style="width:250px; margin-right:5px;" />
-						
-						<br><br>
-
-						<label><{$lang->filter}>:</label>
-						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$st}>" onclick="WdatePicker();" onfocus="WdatePicker();">
-						<label>to</label>
-						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$et}>" onclick="WdatePicker();" onfocus="WdatePicker();">
-						
-						<!--	<select id="currentBusinessId" name="currentBusinessId">
-							<option value="all" <{if $currentBusinessId=='all'}> selected<{/if}>>选择商家</option>
-							<{foreach from=$authrise_manage_other_business_account item=item}>
-								<option value="<{$item.customer_id}>" <{if $currentBusinessId==$item.customer_id}> selected<{/if}>><{$item.displayName}></option>
-							<{/foreach}>
+						<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
+							<input type="hidden" name="startTime" class="input-text" value="<{$startTime}>" />
+							<input type="hidden" name="endTime" class="input-text" value="<{$endTime}>" />
 							
-						</select>
-						
-						<select name="ifpaid" id='ifpaid'>
 
-							<option value="all"<{if $ifpaid=='all'}> selected<{/if}>><{$lang->ifpaid}></option>
-
-							<option value="3" <{if $ifpaid=='3'}> selected<{/if}>><{$lang->unpaid}></option>
-
-							<option value="1"<{if $ifpaid=='1'}> selected<{/if}>><{$lang->paid}></option>
-
-							<option value="2"<{if $ifpaid=='2'}> selected<{/if}>><{$lang->pinding}></option>
-
-						</select>
-
-
-						<select name="status" id='status'>
-
-							<option value="all"<{if $status=='all'}> selected<{/if}>><{$lang->order_status}></option>
-
-							<option value="c01" <{if $status=='c01'}> selected<{/if}>>客户购买</option>
-
-							<option value="b01"<{if $status=='b01'}> selected<{/if}>>已兑付</option>
-
-							<option value="d01"<{if $status=='d01'}> selected<{/if}>>已取消</option>
-
-						</select>
-
-						<select id="customer_delivery_option" name="customer_delivery_option">
-							<option value="all" <{if $customer_delivery_option=='all'}> selected<{/if}>><{$lang->logistic_delivery_or_pickup}></option>
-							<option value="1"<{if $customer_delivery_option=='1'}> selected<{/if}>>商家递送</option>
-							<option value="2"<{if $customer_delivery_option=='2'}> selected<{/if}>>客户自取</option>
-						</select>
-
-						<select id="payment" name="payment">
-							<option value="all" <{if $payment=='all'}> selected<{/if}>><{$lang->order_payment_method}></option>
-							<option value="paypal" <{if $payment=='paypal'}> selected<{/if}>>paypal</option>
-							<option value="offline" <{if $payment=='offline'}> selected<{/if}>>offline</option>
-							<option value="royalpay" <{if $payment=='royalpay'}> selected<{/if}>>royalpay</option>
-							<option value="alipay" <{if $payment=='alipay'}> selected<{/if}>>alipay</option>
-							<option value="hcash" <{if $payment=='hcash'}> selected<{/if}>>hcash</option>
-							<option value="creditcard" <{if $payment=='creditcard'}> selected<{/if}>>creditcard</option>
-						</select> 
-
-						<select id="staff" name="staff">
-							<option value="all" <{if $staff=='all'}> selected<{/if}>><{$lang->business_department}></option>
-							<{foreach from=$staff_list item=item}>
-								<option value="<{$item.id}>" <{if $staff==$item.id}> selected<{/if}>><{$item.displayName}></option>
-							<{/foreach}>
+						<div class="input-box clearfix">	
 							
-						</select>
-						-->
 
-						<button type="submit"><{$lang->search}></button>
+						
+							<span id="close-customer-select-modal"></span>
+							<span><label><{$lang->select_customer}></label></span>	
+								
+								<select class="customer-select" name="customer_id"  onchange="changeCustomer(this)">
+									<option value="">
+									</option>
+									<{foreach from=$factoryUsers item=user}>
+										<{if $user['approved'] == 1}>
+										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
+											<{$user['id']}>-<{$user['code']}>(<{$user['displayName']}>)&nbsp;(<{$user['phone']}>)
+										</option>
+
+										<{/if}>
+									<{/foreach}>
+								</select>
+								
+							
+
+						</div>
+
+						<script>
+
+							var closeCustomerSelect = document.getElementById("close-customer-select-modal");
+
+							// When the user clicks on <span> (x), close the modal
+							closeCustomerSelect.onclick = function() {
+								showCustomerSelectModal(false);
+							}
+
+							// Get the modal
+							function showCustomerSelectModal(show) {
+								var selectCustomerModal = document.getElementById("customer-modal");
+								if(show) {
+									selectCustomerModal.style.display = "block";
+								} else {
+									selectCustomerModal.style.display = "none";
+								}
+							}
+
+							function changeCustomer(select) {
+							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							}
+
+							$(document).ready(function() {
+								$('.customer-select').select2();
+								<{if !$userId}>
+								showCustomerSelectModal(true);
+								<{/if}>
+							});
+						</script>
+<br>
 					
+					<div class="input-box clearfix">	
+
+						<span><label><{$lang->logistic_delivery_date_choose}> </label></span> 
+						<input type="text" class="input-text" style="width:150px;" id="st" name="startTime" value="<{$startTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>&nbsp;To&nbsp;</label>
+						<input type="text" class="input-text" style="width:150px;" id="et" name="endTime" value="<{$endTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+							&nbsp;&nbsp;
+						<button type="submit"><{$lang->search}></button>	&nbsp;&nbsp;
 						
+					</div>
 						
                         
 					</form>
@@ -214,17 +180,17 @@
 							<thead>				
 								<tr>
 									<th>Select</th>	
-									<th>Generate Date</th>		
-									<th>Customer Id</th>		
-									<th>Customer_name</th>		
+									<th>Issue Date</th>		
+								<{if  !$customer_id}>	<th>Customer Id</th>		
+									<th>Customer_name</th>		 <{/if}>
 									<th>Opening</th>		
-									<th>Closing</th>	
+									
 									<th>Not OverDue</th>	
 									<th>OverDue</th>	
+									<th>Closing</th>	
 									<th>preiview</th>	
-									<th>Send Email</th>	
-									<th>Print</th>	
-									<th>Phone</th>	
+								
+									<{if  !$customer_id}><th>Phone</th>	<{/if}>
 								</tr>			
 							</thead>		
 							<tbody>		
@@ -233,16 +199,16 @@
 
 								<td><input  type="checkbox"  name="selectItemsList"   value=0> </td>
 									<td><{date('Y-m-d H:i', $item.gen_date)}></td>
-									<td><{$item.customer_id}></td>
-									<td><{$item.customer_business_name}></td>
+									<{if  !$customer_id}><td><{$item.customer_id}></td>
+									<td><{$item.customer_business_name}></td> <{/if}>
 									<td><{$item.open_balance_amount}></td>
-									<td><{$item.close_balance_amount}></td>
+									
 									<td><{$item.not_due_amount}></td>
 									<td><{$item.overdue_amount}></td>
+									<td><{$item.close_balance_amount}></td>
 									<td><a target = _blank href="<{$http_root_www}>statement/statement_view?id=<{$item.id}>">view</a> </td>
-									<td><{if $item.email}>send Email <{else}>no Email<{/if}></td>
-									<td>Print</td>
-									<td><{$item.phone}></td>
+									
+									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
 
 
 								</tr>			
