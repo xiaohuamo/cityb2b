@@ -1,0 +1,415 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #close-customer-select-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #close-customer-select-modal:hover,
+    #close-customer-select-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+			
+			<div class="box2">
+			
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						
+						<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
+							<input type="hidden" name="startTime" class="input-text" value="<{$startTime}>" />
+							<input type="hidden" name="endTime" class="input-text" value="<{$endTime}>" />
+							
+
+						<div class="input-box clearfix">	
+							
+
+						
+							<span id="close-customer-select-modal"></span>
+							<span><label><{$lang->select_customer}></label></span>	
+								
+								<select class="customer-select" name="customer_id"  onchange="changeCustomer(this)">
+									<option value="">
+									</option>
+									<{foreach from=$factoryUsers item=user}>
+										<{if $user['approved'] == 1}>
+										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
+											<{$user['id']}>-<{$user['code']}>(<{$user['displayName']}>)&nbsp;(<{$user['phone']}>)
+										</option>
+
+										<{/if}>
+									<{/foreach}>
+								</select>
+								
+							
+
+						</div>
+
+						<script>
+
+							var closeCustomerSelect = document.getElementById("close-customer-select-modal");
+
+							// When the user clicks on <span> (x), close the modal
+							closeCustomerSelect.onclick = function() {
+								showCustomerSelectModal(false);
+							}
+
+							// Get the modal
+							function showCustomerSelectModal(show) {
+								var selectCustomerModal = document.getElementById("customer-modal");
+								if(show) {
+									selectCustomerModal.style.display = "block";
+								} else {
+									selectCustomerModal.style.display = "none";
+								}
+							}
+
+							function changeCustomer(select) {
+							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							}
+
+							$(document).ready(function() {
+								$('.customer-select').select2();
+								<{if !$userId}>
+								showCustomerSelectModal(true);
+								<{/if}>
+							});
+						</script>
+<br>
+					
+					<div class="input-box clearfix">	
+
+							<button type="submit"><{$lang->search}></button>	&nbsp;&nbsp;
+						
+					</div>
+						
+                        
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>
+									<th>Select</th>	
+										
+								<{if  !$customer_id}>	<th>Customer Id</th>		
+									<th>Customer_name</th>		 <{/if}>
+									
+									<th>Not OverDue</th>	
+									<th>OverDue</th>	
+									<th>Closing</th>	
+									<th>preiview</th>	
+								
+									<{if  !$customer_id}><th>Phone</th>	<{/if}>
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+								<td><input  type="checkbox"  name="selectItemsList"   value=0> </td>
+								
+									<{if  !$customer_id}><td><{$item.customer_id}></td>
+									<td><{$item.customer_business_name}></td> <{/if}>
+									
+									
+									<td><{$item.not_due_amount}></td>
+									<td><{$item.overdue_amount}></td>
+									<td><{$item.close_balance_amount}></td>
+									<td><a target = _blank href="<{$http_root_www}>factory/transcations?customer_id=<{$item.customer_id}>&startTime=<{$item.firstDateUnsetlled}>">view</a> </td>
+									
+									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
+
+
+								</tr>			
+								<{/foreach}>		
+									<tr>
+									<td style ="text-align:left;    padding-left: 16px;" colspan="2"><input  type="checkbox"  onclick ="selectAllCheckBox(this);" name="selectAllCheckbox" >&nbsp;&nbsp;Select All</td>
+									<td style ="padding: 10px;"><button  type="button" onclick="">Send to Email</button></td>
+								</tr>								
+							</tbody>		
+						</table>	
+
+					
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						No Data
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+								
+								 
+								  
+	 var loading = false;
+	 
+	    $('input[name=onoffswitch]').on('click', function () {
+        var orderId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>company/merge_order_update",
+            data: {"id": orderId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+                if (result.merge_to_another_order == '0') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+                } else if (result.merge_to_another_order == '1') {
+                    context.html("<span style='color:#58964E;'>已合并</span>");
+					$("#myonoffswitch"+orderId).attr("disabled","true");
+					
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+	 
+	 
+
+    function  update_deliveryTime(obj) {
+    if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+    
+        var id = $(obj).data('id');
+        var update_field_name = 'delivery_time';
+        var value;
+       
+            value = $(obj).val();//常规改动直接抓取改动值
+       
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(obj).next('.promote-ajax');
+		
+        $.ajax({
+            url: "<{$http_root_www}>company/update_delivery_time",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    }
+								  
+								  
+								</script>
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+function showPdf(type)
+{	
+	var vCustomerDeliveryOption= $('#customer_delivery_option option:selected').val();
+	var vStaff= $('#staff option:selected').val();
+	var vStatus= $('#status option:selected').val();
+	var vPayment=  $('#payment option:selected').val();
+	var vIfpaid=  $('#ifpaid option:selected').val();
+	
+	var vSk=$('#id_sk').val();
+	var vSt=$('#st').val();
+	var vEt=$('#et').val();
+
+	var fitInPage=$('#fitInPage').prop('checked');
+
+	var vUrl='<{$http_root_www}>factory/customer_orders?output='+type+'&ifpaid='+vIfpaid+'&status='+vStatus+'&payment='+vPayment+'&sk='+vSk+'&startTime='+vSt+'&endTime='+vEt+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+function export_csv() {
+
+  window.location.assign='<{$http_root_www}>company/export_csv_fresh_and_restaurant';
+
+}
+</script>
+
+
+</body>
+
+</html>

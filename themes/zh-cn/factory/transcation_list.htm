@@ -1,0 +1,458 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #close-customer-select-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #close-customer-select-modal:hover,
+    #close-customer-select-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+	<style type="text/css">
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+			
+			<div class="colCurTit">
+                 payments
+				 
+				 <span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>factory/add_new_payment?customer_id=<{$customer_id}>" class="link2"><i class='fa fa-plus'></i>New payment</a>
+					</span>
+				</div>
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="please input userID amount refID" style="width:250px; margin-right:5px;" />
+						
+						<br><br>
+
+						<label><{$lang->filter}>:</label>
+						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$st}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>to</label>
+						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$et}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						
+
+
+
+
+						<button type="submit"><{$lang->search}></button>
+						
+						<br><br>
+                     
+						<button type="button" onclick="showPdf('pdf');">Print Pdf</button>
+						
+
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>
+									<th>txn_Id</th>
+									<th>Create date</th>
+									<th>INV NO.</th>
+									<th>Payment Type</th>
+									<th>Customer Id</th>
+									<th>Cust RefId</th>
+									<th>Debit Amount</th>
+									<th>Credit Amount</th>
+									<th>Balance</th>
+									<th>is Settled</th>
+									<th>Over Due Date </th>
+
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+									<td><{$item.id}></td>
+									<td><{date('Y-m-d', $item.gen_date)}></td>
+									<td><{$item.invoice_number}></td>
+									<td><{$item.code_desc_en}>
+									<{if $item.note}><br><{$item.note}>  <{/if}>
+									</td>
+								    <td><{$item.customer_id}></td>
+									<td><{$item.customer_ref_id}></td>
+
+									<td><{$item.debit_amount}></td>
+									<td><{$item.credit_amount}></td>
+									<td><{$item.balance_due}></td>
+
+								    <{if $item.is_settled}>
+										<td>settled</td>
+								    <{else}>
+										<td>unsettled</td>
+								    <{/if}>
+									<td><{if $item.overdue_date}><{date('Y-m-d', $item.overdue_date)}><{else}>-<{/if}></td>
+
+
+
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+						<div>
+							<i class='fa fa-sign-out ' style='color:#58964E'></i>快速兑付按钮	
+							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> 已经发货标识
+						</div>
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						没有任何订单	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+								
+								 
+								  
+	 var loading = false;
+	 
+	    $('input[name=onoffswitch]').on('click', function () {
+        var orderId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>company/merge_order_update",
+            data: {"id": orderId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+                if (result.merge_to_another_order == '0') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+                } else if (result.merge_to_another_order == '1') {
+                    context.html("<span style='color:#58964E;'>已合并</span>");
+					$("#myonoffswitch"+orderId).attr("disabled","true");
+					
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+	 
+	 
+
+    function  update_deliveryTime(obj) {
+    if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+    
+        var id = $(obj).data('id');
+        var update_field_name = 'delivery_time';
+        var value;
+       
+            value = $(obj).val();//常规改动直接抓取改动值
+       
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(obj).next('.promote-ajax');
+		
+        $.ajax({
+            url: "<{$http_root_www}>company/update_delivery_time",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    }
+								  
+								  
+								</script>
+<script type="text/javascript">
+	$(function(){
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('确认要兑付该订单？')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+function showPdf(type)
+{	
+	var vCustomerDeliveryOption= $('#customer_delivery_option option:selected').val();
+	var vStaff= $('#staff option:selected').val();
+	var vStatus= $('#status option:selected').val();
+	var vPayment=  $('#payment option:selected').val();
+	var vIfpaid=  $('#ifpaid option:selected').val();
+	
+	var vSk=$('#id_sk').val();
+	var vSt=$('#st').val();
+	var vEt=$('#et').val();
+
+	var fitInPage=$('#fitInPage').prop('checked');
+
+	var vUrl='<{$http_root_www}>factory/customer_orders?output='+type+'&ifpaid='+vIfpaid+'&status='+vStatus+'&payment='+vPayment+'&sk='+vSk+'&startTime='+vSt+'&endTime='+vEt+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+function export_csv() {
+
+  window.location.assign='<{$http_root_www}>company/export_csv_fresh_and_restaurant';
+
+}
+</script>
+
+
+</body>
+
+</html>
