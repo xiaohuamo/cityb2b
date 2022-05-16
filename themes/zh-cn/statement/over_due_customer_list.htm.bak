@@ -183,7 +183,7 @@
 									<th>OverDue</th>	
 									<th>Closing</th>	
 									<th>preiview</th>	
-								
+								 
 									<{if  !$customer_id}><th>Phone</th>	<{/if}>
 								</tr>			
 							</thead>		
@@ -200,7 +200,7 @@
 									<td><{$item.not_due_amount}></td>
 									<td><{$item.overdue_amount}></td>
 									<td><{$item.close_balance_amount}></td>
-									<td><a target = _blank href="<{$http_root_www}>statement/transcations??customer_id=<{$item.customer_id}>&startTime=<{$item.firstDateUnsetlled}>">view</a> </td>
+									<td><a target = _blank href="<{$http_root_www}>statement/transcations?customer_id=<{$item.customer_id}>&startTime=<{$item.firstDateUnsetlled}>">view</a> </td>
 									
 									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
 

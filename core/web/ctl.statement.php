@@ -297,7 +297,7 @@ class ctl_statement extends cmsPage
             //      var_dump($dataOfstatement_id);exit;
 
         }
-      // $this->form_response(200,'generate successful !',HTTP_ROOT_WWW.'statement/statement_list');
+    
       $this->sheader(HTTP_ROOT_WWW.'statement/statement_list');
 
     }
