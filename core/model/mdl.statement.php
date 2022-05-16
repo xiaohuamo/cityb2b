@@ -224,14 +224,14 @@ class mdl_statement extends mdl_base
             $total_not_overdue_amount =$closeBalance;
             $total_overdue_amount=0.00;
         }
-         if($customer_id ==319343) {
+     /*    if($customer_id ==331339343) {
              var_dump('toal is '.$total_overdue_amount);
              var_dump(' not over due amount  is '.$total_not_overdue_amount);
              var_dump('close balance is :' .$closeBalance);
              var_dump($not_overdue_sum_rec);
 
 
-         }
+         } */
       // var_dump($total_overdue_amount);exit;
 
 
