@@ -7168,7 +7168,8 @@ public function return_items_submit_to_statment_action() {
 
        //var_dump($customerType);exit;
         $factoryId = $this->current_business['id'];
-        $customer_list = $mdl_statement->getStatementCustomerList($factoryId);
+
+        $customer_list = $mdl_statement->getStatementCustomerList($factoryId,$customerType);
 
         //  var_dump($customer_list);exit;
 
