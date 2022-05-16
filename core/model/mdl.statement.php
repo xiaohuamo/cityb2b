@@ -186,7 +186,7 @@ class mdl_statement extends mdl_base
 
 
     public function getStatementCustomerList($factory_id){
-        $sql ="select s.customer_id from  cc_statement s  where s.factory_id = $factory_id   group by customer_id order by customer_id" ;
+        $sql ="select s.customer_id from  cc_statement s left join cc_user_factory u on s.factory_id =u.factory_id and s.customer_id =u.user_id  where s.factory_id = $factory_id  and u.to_xero =0  group by customer_id order by customer_id" ;
         $list = $this->getListBySql($sql);
         // var_dump($list); exit;
         return $list;

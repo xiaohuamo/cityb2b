@@ -100,6 +100,7 @@
 						<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
 							<input type="hidden" name="startTime" class="input-text" value="<{$startTime}>" />
 							<input type="hidden" name="endTime" class="input-text" value="<{$endTime}>" />
+							<input type="hidden" name="customerType" class="input-text" value="<{$customerType}>" />
 							
 
 						<div class="input-box clearfix">	
@@ -159,8 +160,14 @@
 <br>
 					
 					<div class="input-box clearfix">	
+						<span><label><{$lang->customer_type}> &nbsp;</label></span>	
+						<select name ="customerType" >
+									
+										<option value="all" <{if $customerType == 'all'}>selected <{/if}>>All</option>
+										<option value="custom" <{if $customerType == 'custom'}>selected <{/if}>>Custom</option>
 
-							<button type="submit"><{$lang->search}></button>	&nbsp;&nbsp;
+						</select>
+						&nbsp;&nbsp;	<button type="submit"><{$lang->search}></button>	&nbsp;&nbsp;
 						
 					</div>
 						
@@ -200,7 +207,7 @@
 									<td><{$item.not_due_amount}></td>
 									<td><{$item.overdue_amount}></td>
 									<td><{$item.close_balance_amount}></td>
-									<td><a target = _blank href="<{$http_root_www}>statement/transcations?customer_id=<{$item.customer_id}>&startTime=<{$item.firstDateUnsetlled}>">view</a> </td>
+									<td><a target = _blank href="<{$http_root_www}>factory/transcations?customer_id=<{$item.customer_id}>&startTime=<{$item.firstDateUnsetlled}>">view</a> </td>
 									
 									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
 
