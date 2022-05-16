@@ -163,11 +163,11 @@
 					
 
 							<option value="0" selected="">select Payment Option	</option>
-                            	<option value="2001">Customer Payments 	</option>
+                            	<option value="2001" <{if $paymentType=='newpayment'}>selected<{/if}>	 >Customer Payments </option>
                             	<option value="2002">Stock Return  	</option>
                             	<option value="2004">Other credit to Customer (payment Adjust)	</option>
                             	<option value="2003">other debit from Customer (payment Adjust)</option>
-								<option value="2008">Opening Balance</option>
+								<option value="2006">Opening Balance</option>
 						</select>
 
 					</div>	

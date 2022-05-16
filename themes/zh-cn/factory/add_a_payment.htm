@@ -94,7 +94,7 @@
 
 					<div class="main-form">			
 
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_payment?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_payment?id=<{$data.id}>&returnPage=<{$returnPage}>" enctype="multipart/form-data" method="post" target="post_frame">
 
 							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
 							
@@ -163,7 +163,7 @@
 					
 
 							<option value="0" selected="">select Payment Option	</option>
-                            	<option value="2001">Customer Payments 	</option>
+                            	<option value="2001" <{if $paymentType=='newpayment'}>selected<{/if}>	 >Customer Payments </option>
                             	<option value="2002">Stock Return  	</option>
                             	<option value="2004">Other credit to Customer (payment Adjust)	</option>
                             	<option value="2003">other debit from Customer (payment Adjust)</option>

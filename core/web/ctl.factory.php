@@ -4256,8 +4256,10 @@ public function return_items_submit_to_statment_action() {
     public function add_new_payment_action(){
 
 
-
-
+      $paymentType =get2('paymentType');
+      $this->setData($paymentType,'paymentType');
+      $returnPage =get2('returnPage');
+       $this->setData($returnPage,'returnPage');
         if(is_post()){
 
             $mdl_user_factory =$this->loadModel("user_factory");
@@ -4353,9 +4355,14 @@ public function return_items_submit_to_statment_action() {
                 $this->form_response(500, 'error happen when generate data!','');
             }else{
                 $mdl_statement->commit();
+                if($returnPage =='overdue'){
+                    $this->form_response(200,'Success ',HTTP_ROOT_WWW.'factory/get_over_due_customer_list?customer_id='.$customer_id);
 
-                $this->form_response(200,'Success ',HTTP_ROOT_WWW.'factory/transcation_list?customer_id='.$customer_id);
-            }
+                }else{
+                    $this->form_response(200,'Success ',HTTP_ROOT_WWW.'factory/transcations?customer_id='.$customer_id);
+
+                }
+               }
 
             //   $this->form_response(600,$payment_amount);
 
@@ -4388,6 +4395,8 @@ public function return_items_submit_to_statment_action() {
 
     public function transcations_action(){
 
+        $returnPage =get2('returnPage');
+        $this->setData($returnPage,'$returnPage');
 
         $mdl_statement = $this->loadModel('statement');
         $mdl_user_factory = $this->loadModel('user_factory');
