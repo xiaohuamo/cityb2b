@@ -7152,11 +7152,11 @@ public function return_items_submit_to_statment_action() {
         if(is_post()) {
 
             $customer_id = post('customer_id');
-            $customerType =post('$customerType');
+            $customerType =post('customerType');
 
         }else{
             $customer_id=get2('customer_id');
-            $customerType =get2('$customerType');
+            $customerType =get2('customerType');
             $viewPdf =get2('viewPdf');
 
         }

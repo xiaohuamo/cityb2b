@@ -195,7 +195,7 @@ class mdl_statement extends mdl_base
 
         $sql .= " group by customer_id order by customer_id" ;
         $list = $this->getListBySql($sql);
-        // var_dump($list); exit;
+       //  var_dump($customerType); exit;
         return $list;
     }
 
