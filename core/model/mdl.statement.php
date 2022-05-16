@@ -245,8 +245,9 @@ class mdl_statement extends mdl_base
             $customer_business_name = $customerabnRec['business_name'];
             $customer_legel_name = $customerabnRec['untity_name'];
         }else{
-            $customer_business_name = $factoryrec['displayName'];
-            $customer_legel_name = $factoryrec['displayName'];
+            $customer_rec =loadModel('user')->get($customer_id);
+            $customer_business_name = $customer_rec['displayName'];
+            $customer_legel_name = $customer_rec['displayName'];
         }
 
 
