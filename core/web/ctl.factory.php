@@ -7178,11 +7178,18 @@ public function return_items_submit_to_statment_action() {
        //var_dump($customerType);exit;
         $factoryId = $this->current_business['id'];
 
-        $customer_list = $mdl_statement->getStatementCustomerList($factoryId,$customerType);
+
+        $pageSql =$mdl_statement->getStatementCustomerListSql($factoryId,$customerType);
+     //   $customer_list = $mdl_statement->getStatementCustomerList($factoryId,$customerType);
 
         //  var_dump($customer_list);exit;
 
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 100;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 
+        $customer_list = $mdl_statement->getListBySql($page['outSql']);
 
         //依次生成statement
 
@@ -7210,7 +7217,7 @@ public function return_items_submit_to_statment_action() {
 
 
         }
-
+        $this->setData($page['pageStr'], 'pager');
         $this->setData($overdue_customer_list, 'data');
         $this->setData('over_due_customer_list', 'submenu');
         $this->setData('account_management', 'menu');
