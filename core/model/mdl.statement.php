@@ -189,7 +189,7 @@ class mdl_statement extends mdl_base
         $sql ="select s.customer_id from  cc_statement s left join cc_user_factory u on s.factory_id =u.factory_id and s.customer_id =u.user_id  where s.factory_id = $factory_id ";
 
         if($customerType=='custom') {
-          $sql .= "and u.custom_statement =1 ";
+          $sql .= "and u.to_xero =0 ";
 
             }
 
@@ -203,7 +203,7 @@ class mdl_statement extends mdl_base
         $sql ="select s.customer_id from  cc_statement s left join cc_user_factory u on s.factory_id =u.factory_id and s.customer_id =u.user_id  where s.factory_id = $factory_id ";
 
         if($customerType=='custom') {
-            $sql .= "and u.custom_statement =1 ";
+            $sql .= "and u.to_xero =0 ";
 
         }
 
