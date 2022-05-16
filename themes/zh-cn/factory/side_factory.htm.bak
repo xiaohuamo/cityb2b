@@ -274,7 +274,7 @@
 				New Payment
 				</a>
 				
-				<a href="<{$http_root_www}>statement/transcations" <{if $submenu=='transcations'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/transcations" <{if $submenu=='transcations'}> class="current"<{/if}>>
 				Transcations 
 				</a>
 				
