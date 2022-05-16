@@ -209,7 +209,7 @@ class mdl_statement extends mdl_base
         $sql ="select ifnull(sum(debit_amount),0.00) as sum_debit
                 from cc_statement
                 where factory_id =$factoryId and customer_id=$customer_id  and is_settled =0 and  overdue_date>$current_time";
-
+var_dump($sql);
         $not_overdue_sum_rec  = $this->getListBySql($sql);
 
         if($not_overdue_sum_rec){
