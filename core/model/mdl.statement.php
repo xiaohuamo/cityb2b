@@ -518,10 +518,49 @@ function getdataofrestCreditOf($login_user,$rest_credit_amount,$factory_user){
 
 }
 
+
+//获得某个客户的交易流水
+    public function getStatementTranscationsSql($factoryId, $customer_id,$search,$startTime,$endTime){
+
+        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId  and code !='5001' ";
+
+
+        if($customer_id && $customer_id!='all') {
+
+
+            $sql .= " and s.customer_id =$customer_id ";
+        }
+
+        if($startTime) {
+
+            $startTime = strtotime($startTime." 00:00:00");
+            $sql .= " and s.gen_date >=$startTime ";
+        }
+
+        if($endTime) {
+
+            $endTime = strtotime($endTime." 23:59:59");
+
+            $sql .= " and s.gen_date <= $endTime ";
+        }
+
+
+        $sql .= " order by id desc ";
+        // var_dump($sql);exit;
+        return $sql;
+    }
+
 //获得某个客户的交易流水
 public function getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime){
 
-        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId and s.customer_id=$customer_id and code !='5001' ";
+        $sql = "select s.*,c.code_desc_en  from cc_statement s left join cc_statement_code c  on s.type_code =c.code where s.factory_id =$factoryId  and code !='5001' ";
+
+
+       if($customer_id && $customer_id!='all') {
+
+
+           $sql .= " and s.customer_id >=$customer_id ";
+       }
 
         if($startTime) {
 

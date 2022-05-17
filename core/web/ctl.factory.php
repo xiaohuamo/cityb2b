@@ -4436,8 +4436,19 @@ public function return_items_submit_to_statment_action() {
         $search = trim(get2('search'));
         $this->setData($search, 'search');
 
-        $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
+
+//var_dump($customer_id);exit;
+        $pageSql = $mdl_statement->getStatementTranscationsSql($factoryId, $customer_id,$search,$startTime,$endTime);
+       // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
         // var_dump($data);exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 10;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+        $data = $mdl_statement->getListBySql($page['outSql']);
+
+
         if($data) {
             if ($viewPdf){
                 $result = $this->generate_customer_temp_statement($customer_id, $data, $startTime, $endTime);
@@ -4456,7 +4467,7 @@ public function return_items_submit_to_statment_action() {
 
 
 
-
+        $this->setData($page['pageStr'], 'pager');
         $this->display('factory/transcations');
 
 
@@ -7499,13 +7510,6 @@ public function return_items_submit_to_statment_action() {
         $this->setData($endTime, 'endTime');
         $this->setData($search, 'search');
         $this->setData($customer_id,'customer_id');
-
-
-
-
-
-
-
 
 
         $factoryId =  $mdl_user_factory->getFactoryId($this->loginUser['id']);

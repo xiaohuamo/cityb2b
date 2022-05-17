@@ -19,7 +19,7 @@ class mdl_statement_list extends mdl_base
         $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId";
         //var_dump ($sql);exit;
 
-        if($customer_id){
+        if($customer_id && $customer_id !='all'){
             $sql .= " and customer_id =$customer_id";
         }
 

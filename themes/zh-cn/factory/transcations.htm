@@ -112,19 +112,19 @@
 							
 
 						
-								<span id="close-customer-select-modal"></span>
+							<span id="close-customer-select-modal"></span>
 							<span><label><{$lang->select_customer}></label></span>	
 								
 								<select class="customer-select" name="customer_id"  onchange="changeCustomer(this)">
-									<option value="">
+									<option value="all" <{if strlen($customer_id)==0 || $customer_id=='all'}>selected<{/if}>>All
 									</option>
 									<{foreach from=$factoryUsers item=user}>
-										<{if $user['approved'] == 1}>
+										
 										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
 											<{$user['id']}>-<{$user['code']}>(<{$user['displayName']}>)&nbsp;(<{$user['phone']}>)
 										</option>
 
-										<{/if}>
+										
 									<{/foreach}>
 								</select>
 								
@@ -152,7 +152,9 @@
 							}
 
 							function changeCustomer(select) {
-							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							     var value = $(select).val();
+								alert(value);
+								window.location.href= `<{$http_root_www}>factory/transcations?customer_id=` +value;
 							}
 
 							$(document).ready(function() {
@@ -234,7 +236,7 @@
 					<!--		<i class='fa fa-sign-out ' style='color:#58964E'></i>	
 							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i>  -->
 							
-							<{if $data}><i class='fa fa-sign-out ' style='color:#58964E'>
+							<{if $data && $customer_id !='all'}><i class='fa fa-sign-out ' style='color:#58964E'>
 							<a target="_blank" href="<{$http_root_www}>factory/transcations?viewPdf=1&customer_id=<{$customer_id}>&startTime=<{$startTime}>&endTime=<{$endTime}>">DownLoad Pdf</a>
 							</i>	<{/if}>
 						</div>

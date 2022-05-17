@@ -110,8 +110,7 @@
 							<span><label><{$lang->select_customer}></label></span>	
 								
 								<select class="customer-select" name="customer_id"  onchange="changeCustomer(this)">
-									<option value="">
-									</option>
+									<option value="all" <{if strlen($customer_id)==0 || $customer_id=='all'}>selected<{/if}>>All
 									<{foreach from=$factoryUsers item=user}>
 										<{if $user['approved'] == 1}>
 										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
@@ -146,7 +145,8 @@
 							}
 
 							function changeCustomer(select) {
-							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							 var value =$(select).val();
+								window.location.href= `<{$http_root_www}>factory/statement_list?customer_id=` +value;
 							}
 
 							$(document).ready(function() {

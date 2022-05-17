@@ -94,7 +94,7 @@
 
 					<div class="main-form">			
 
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_payment?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_payment?id=<{$data.id}>&returnPage=<{$returnPage}>" enctype="multipart/form-data" method="post" target="post_frame">
 
 							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
 							

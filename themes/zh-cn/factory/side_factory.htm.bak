@@ -274,15 +274,15 @@
 				New Payment
 				</a>
 				
-				<a href="<{$http_root_www}>factory/transcations" <{if $submenu=='transcations'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/transcations?customer_id=all" <{if $submenu=='transcations'}> class="current"<{/if}>>
 				Transcations 
 				</a>
 				
-				<a href="<{$http_root_www}>statement/statement_list" <{if $submenu=='statement_list'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/statement_list" <{if $submenu=='statement_list'}> class="current"<{/if}>>
 				Statment
 				</a>
 				
-				<a href="<{$http_root_www}>statement/get_over_due_customer_list" <{if $submenu=='over_due_customer_list'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/get_over_due_customer_list" <{if $submenu=='over_due_customer_list'}> class="current"<{/if}>>
 				Over Due Lists
 				</a> 
  
