@@ -1122,6 +1122,24 @@
                 $this->display_pc_mobile('factory_2c/singleItemPrintEdit', 'factory_2c/singleItemPrintEdit');
             }
 
+            public function adjust_item_box_action(){
+                $id=get2('id');
+                $delivery_date =get2('delivery_date');
+                $mdl_details =$this->loadModel('wj_customer_coupon');
+                $delivery_date_number =   strtotime($delivery_date." 00:00:00");
+                $sql ="select order_id from cc_wj_customer_coupon c left join cc_order o on c.order_id =o.orderId where c.restaurant_menu_id = $id and  o.logistic_delivery_date =$delivery_date_number group by c.order_id";
+                $orderList = $mdl_details->getListBySql($sql);
+//var_dump($sql);exit;
+                $mdl=$this->loadModel('boxNumberOutput');
+                foreach ($orderList as $key=>$value){
+                    $totalBoxNumber =$mdl->UpdateOrderBoxInfo($value['order_id']);
+                    $str .= "order id :".$value['order_id'].' and new box number is : '.$totalBoxNumber.' ';
+
+                }
+                echo  $str;
+
+
+            }
 	/**
 		 * 菜单编辑页面
 		 */

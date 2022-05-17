@@ -421,6 +421,7 @@
 									<th name="cn_name1">中文单位</th>
 									<th name="cn_name1">描述</th>
 									<th >最低价</th>
+									<th >id</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -729,6 +730,10 @@
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="lowest_price-<{$item.id}>" style="width:50px;" name="lowest_price"
 												   value="<{$item.lowest_price}>" >
 											<span class='promote-ajax'></span>
+										</td>
+										 <td>
+											
+											<span ><{$item.id}></span>
 										</td>
 									</tr>
                                 <{/foreach}>

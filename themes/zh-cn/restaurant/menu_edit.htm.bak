@@ -589,7 +589,7 @@
 										</td>
 										
 										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:30px;" name="unitQtyPerBox"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
 												   value="<{$item.unitQtyPerBox}>">
 											<span class='promote-ajax'></span>
 										</td>
