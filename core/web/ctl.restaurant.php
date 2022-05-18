@@ -4421,7 +4421,9 @@ function category_migration_action(){
 
 			$unitQtyPerBox = post('unitQtyPerBox');
 			if($unitQtyPerBox)$data['unitQtyPerBox']=$unitQtyPerBox;
-			
+
+			$overflowRate = post('overflowRate');
+			if($overflowRate)$data['overflowRate']=$overflowRate;
 			
 			$barcode_number = post('barcode_number');
 			
