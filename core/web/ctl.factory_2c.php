@@ -588,10 +588,6 @@
             function producing_stock_to_dispatching_action(){
 
 
-
-
-
-
                 $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
                 $mdl_order = $this->loadModel('order');
                 $mdl_user= $this->loadModel('user');
@@ -766,7 +762,7 @@
                // var_dump($pageSql);exit;
                 $data = $mdl_order->getListBySql($pageSql);
 
-                // var_dump($data);exit;
+                // var_dump($pageSql);exit;
 
                 // 获得当前订单得大类汇总
 
@@ -778,7 +774,6 @@
 
                 $this->setData($page['pageStr'],'pager');
 
-                $this->setData($data,'data');
 
 
                 $this->setData('producing_stock_to_dispatching', 'submenu_top');
@@ -786,13 +781,37 @@
                 $this->setData('dispatching_center', 'menu');
                 $this->setData('dispatching center - ' . $this->site['pageTitle'], 'pageTitle');
 
+                $assign_stock = trim(get2('assign_stock'));
+                $this->setData($assign_stock,'assign_stock');
+            // 这里需要加入 如果正在被锁定或者已经处理好的item 不要放在分配的列表中。
+                //或者将这个逻辑放在细节中处理 。。。。 ，is procedduing down ar is lock
+                if ($assign_stock==1) {
+                    $mdl_stock_assign = $this->loadModel('stock_assign');
+                    $assign_stock_quantity=0;
+                    $mdl_producing_item_stock = $this->loadModel('producing_item_stock');
+                    foreach ($data as $key => $value) {
+                        // lock this product all items detials
+
+                      $assign_stock_quantity = $mdl_stock_assign->assgin_single_item_stock($value,$logistic_truck_No,$this->loginUser['id']);
+                      $data[$key]['assign_stock_quantity'] = $assign_stock_quantity;
+
+                      $new_stock_qty = $value['stock_qty']-$assign_stock_quantity;
+                      $data[$key]['rest_stock_qty'] = $new_stock_qty;
+                       $mdl_producing_item_stock->updateByWhere(array('stock_qty'=>$new_stock_qty),array('item_id'=>$value['id'],'spec_id'=>$value['guige1_id']));
+                      // unlocak this prodouct details
+
+                    }
+                }
+                $this->setData($data,'data');
+
+                    $this->setData(HTTP_ROOT_WWW.'factory_2c/producing_stock_to_dispatching', 'searchUrl');
+                    $this->setData($this->parseUrl(), 'currentUrl');
+
+                    $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching','factory_2c/producing_stock_to_dispatching');
 
 
 
-                $this->setData(HTTP_ROOT_WWW.'factory_2c/producing_stock_to_dispatching', 'searchUrl');
-                $this->setData($this->parseUrl(), 'currentUrl');
 
-                $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching','factory_2c/producing_stock_to_dispatching');
 
 
 

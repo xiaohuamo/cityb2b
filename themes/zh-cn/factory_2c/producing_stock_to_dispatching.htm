@@ -192,12 +192,9 @@
 						<button id="searchbutton" style="display:none; margin-left:0.5rem;" type="submit"><{$lang->search}></button>
 					  <{if $customer_delivery_date}>
 						<br><br>
-						 <div id="printer">
-							<button  id="printtotal" type="button"  onclick="showPdf('allDefinedItem','');">全部预定义单品</button>
-						&nbsp;&nbsp;
-							 <button  id="exportdata" type="button"   onclick="showPdf('selectedItem','');">当前勾选单品</button>
-								&nbsp;&nbsp; <input  type="checkbox" <{if $sepratePage}>checked<{/if}> name="sepratePage" id='sepratePage' value='true'>分页
-							
+						 <div id="printer1">
+							<button  type="button"  onclick="assignStock();" > 全部分配 </button>
+						
 							</div>
 						<{/if}>
 					</form>
@@ -226,6 +223,8 @@
 									<th>Spec Desc</th>	
 									<th>Stock Qty</th>										
 									<th>Order Qty</th>	
+								<{if $assign_stock==1}>	<th>Assign Stock Qty</th>	
+									<th>Rest Stock Qty</th>	 <{/if}>
 									<th>Unit</th>	
 									
 												
@@ -240,7 +239,7 @@
 								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
 								 
 								 </td>
-								    <td><button name="singItemPrint" type="button" onclick="showPdf('singItemPrint',<{$item.main_code_id}>,<{$item.guige1_id}>);">打&nbsp;印</button></td>
+								    <td><button name="assign_all_stock" type="button" onclick="">分配库存</button></td>
                                  <{/if}>
 							
 								 
@@ -262,7 +261,10 @@
 								
 									<td><{$item.stock_qty}></td>
 									
-										<td><{$item.total_quantity}></td>
+									<td><{$item.total_quantity}></td>
+									<{if $assign_stock==1}>		<td><{$item.assign_stock_quantity}></td>
+									<td><{$item.rest_stock_qty}></td> <{/if}>
+									
 									<td><{$item.unit}></td>
 									
 								
@@ -431,6 +433,25 @@ function showPdf(type,item_id,guige_id)
 	window.open(vUrl);
 }
 
+function assignStock()
+{	
+	
+	
+	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
+	if(!vcustomer_delivery_date) {
+	
+	 alert('请选择日期！');
+	}
+	
+	
+	var vbusiness_id= $('#business_id option:selected').val();
+	
+	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+	 
+	var vUrl='<{$http_root_www}>factory_2c/producing_stock_to_dispatching?producing=1&customer_delivery_date='+vcustomer_delivery_date+'&assign_stock=1&logistic_truck_No='+vlogistic_truck_No+'&business_id='+vbusiness_id;
+	//var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	window.open(vUrl);
+}
 
 
 </script>
