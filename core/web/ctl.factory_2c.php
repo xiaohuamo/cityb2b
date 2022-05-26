@@ -726,6 +726,7 @@
                 }else{
                     $whereStr.=" and r.proucing_item =0 ";
                 }
+               // var_dump($logistic_truck_No);exit;
 
                 if (!empty($logistic_truck_No)) {
                     if($logistic_truck_No !='all') {
@@ -759,7 +760,7 @@
                     $pageSql=$sql . $whereStr . " group by  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),r.source_menu_id,c.guige1_id order by o.logistic_delivery_date,cate.category_sort_id,r.menu_order_id";
 
                 }
-               // var_dump($pageSql);exit;
+              //  var_dump($pageSql);exit;
                 $data = $mdl_order->getListBySql($pageSql);
 
                 // var_dump($pageSql);exit;
@@ -791,7 +792,8 @@
                     $mdl_producing_item_stock = $this->loadModel('producing_item_stock');
                     foreach ($data as $key => $value) {
                         // lock this product all items detials
-
+                    //    var_dump($logistic_truck_No);
+                    //var_dump($value);exit;
                       $assign_stock_quantity = $mdl_stock_assign->assgin_single_item_stock($value,$logistic_truck_No,$this->loginUser['id']);
                       $data[$key]['assign_stock_quantity'] = $assign_stock_quantity;
 
@@ -802,26 +804,30 @@
 
                     }
                 }
-                $this->setData($data,'data');
+                    $this->setData($data,'data');
 
                     $this->setData(HTTP_ROOT_WWW.'factory_2c/producing_stock_to_dispatching', 'searchUrl');
                     $this->setData($this->parseUrl(), 'currentUrl');
 
                     $this->display_pc_mobile('factory_2c/producing_stock_to_dispatching','factory_2c/producing_stock_to_dispatching');
 
+        }
+
+        public function assign_single_item_stock_action(){
+
+                $item_id =get2('item_id');
+                $spec_id =get2('spec_id');
+
+                $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+                $item_rec = $mdl_restaurant_menu->get($item_id);
+                if($item_rec['restaurant_id'] != $this->current_business['id']){
+                    var_dump('no access');exit;
+                }else{
+
+                }
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-                           }
             /**
              * 菜单编辑页面
              */

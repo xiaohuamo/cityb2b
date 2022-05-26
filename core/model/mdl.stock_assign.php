@@ -4,13 +4,13 @@ class mdl_stock_assign extends mdl_base
 {
 
 	protected $tableName = '#@_stock_assign';
-    /**
-     * 获取订单需要的总箱数
-     * @param $orderId 订单id
-     */
 
 
-    public function assgin_single_item_stock($value,$logistic_truck_No,$currentUserId){
+
+    /*
+     *分配某个item (specid)库存 到
+     * */
+    public function assgin_single_item_stock($value,$logistic_truck_No,$operator_user_id){
 
           $item_id =$value['id'];
           $item_spec_id =$value['guige1_id'];
@@ -18,29 +18,40 @@ class mdl_stock_assign extends mdl_base
           $order_qty =$value['total_quantity'];
           $delivery_date =$value['logistic_delivery_date'];
           $business_id =$value['business_id'];
+          //$logistic_truck_No =$value['logistic_truck_No'];
 
 
           $mdl =loadModel('wj_customer_coupon');
+          // 锁定当前产品（规格），某个供应商，某个配送日，某个车辆的加工明细 ,将状态设置为 is_producing_done 0->3
           $this->LockItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No);
+          // 获得所有的能够分配库存的加工明细信息
           $item_details =  $this->getItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No);
         // var_dump($item_details);exit;
 
 
           //如果发现分配记录则开始处理，未发现则直接返回；
         if($item_details){
-            if($item_stock_qty>=$order_qty) {
-                //  var_dump('full assign waiting assign ...');exit;
-                //    $this->setAllOrderItemFromStock($value);
+
+            //获得当前的加工明细的订单量的总和
+            $total_current_sum_qty =0;
+            foreach ($item_details as $key =>$value){
+                $total_current_sum_qty +=$value['new_customer_buying_quantity'];
+
+            }
+
+
+            if($item_stock_qty>=$total_current_sum_qty) {
+
                 foreach ($item_details as $key =>$value){
                     $data =array(
                         'assign_stock'=>1,
                         'is_producing_done'=>5, //设置标志等待巡检程序处理。
-                        'operator_user_id'=>$currentUserId
+                        'operator_user_id'=>$operator_user_id
                     );
                     $mdl->update($data,$value['id']);
 
                 }
-                return $order_qty;
+                return $total_current_sum_qty;
             }else{
                 // 获得所有的加工明细数据
 
@@ -53,7 +64,7 @@ class mdl_stock_assign extends mdl_base
                     $data =array(
                         'assign_stock'=>1,
                         'is_producing_done'=>5 ,//设置标志等待巡检程序处理。
-                        'operator_user_id'=>$currentUserId
+                        'operator_user_id'=>$operator_user_id
                     );
                     $mdl->update($data,$value['id']);
                     $assign_stock_qty += $value['new_customer_buying_quantity'];
@@ -107,6 +118,8 @@ where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id
         }
 
         $mdl =loadModel('wj_customer_coupon');
+
+
         $mdl->getListBySql($sql);
         return 1;
     }
@@ -119,7 +132,7 @@ where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id
      if($logistic_truck_No && $logistic_truck_No !='all'){
          $sql .= " and o.logistic_truck_No =$logistic_truck_No ";
      }
-       // var_dump($sql);exit;
+
        $mdl =loadModel('wj_customer_coupon');
         $result =$mdl->getListBySql($sql);
         return $result;

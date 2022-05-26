@@ -4959,9 +4959,9 @@ public function return_items_submit_to_statment_action() {
 
             // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
 
-            if(!is_numeric($customer_price) || $customer_price<0) {
+            if(!is_numeric($customer_price) ) {
 
-                $this->form_response(500,'Please input number and must be >=0','');
+                $this->form_response(500,'Please input number ','');
             }
 
             //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');
@@ -5079,9 +5079,9 @@ public function return_items_submit_to_statment_action() {
 
             // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
 
-            if(!is_numeric($discount_rate) || number_format($discount_rate,1)<0) {
+            if(!is_numeric($discount_rate) ) {
 
-                $this->form_response(500,'Please input number and must be >=0','');
+                $this->form_response(500,'Please input number !','');
             }
 
             //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');
@@ -5185,9 +5185,9 @@ public function return_items_submit_to_statment_action() {
 
             // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
 
-            if(!is_numeric($customer_price) || number_format($customer_price,1)<0) {
+            if(!is_numeric($customer_price) ) {
 
-                $this->form_response(500,'Please input number and must be >=0','');
+                $this->form_response(500,'Please input number !','');
             }
 
             //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');
@@ -5293,9 +5293,9 @@ public function return_items_submit_to_statment_action() {
 
            // 如果输入的数字不是数字或者是小于0的数字则提示输入错误;
 
-            if(!is_numeric($discount_rate) || number_format($discount_rate,1)<0) {
+            if(!is_numeric($discount_rate) ) {
 
-                $this->form_response(500,'Please input number and must be >=0','');
+                $this->form_response(500,'Please input number!','');
             }
 
             //$this->form_response(500,$id.'='.$userId.'='.$cate_id.'='.$discount_rate,'');

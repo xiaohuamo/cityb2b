@@ -855,6 +855,7 @@ public function AgentActiveCheck($id,$agentId){
      //   var_dump($act);exit;
         // 根据当前的当作，获得可以执行该动作的角色
         $authroised_roles = $this->loadModel("action_roles")->getByWhere (array('action_name'=>$act));
+
         if(!$authroised_roles) {
          // 如果没有发现该动作对应的角色，则默认可以执行
          //   var_dump('did not find this action  '); exit;
@@ -864,6 +865,7 @@ public function AgentActiveCheck($id,$agentId){
 
             // 如果为管理员或总经理 可以执行
             $user_can_do_rules = explode(',', $role);
+          //  var_dump($role);exit;
             foreach ($user_can_do_rules as $key1 => $value1) {
                if($value1=='0'|| $value1 =='1') {
                 //  var_dump('role match (is a administrator) '); exit;

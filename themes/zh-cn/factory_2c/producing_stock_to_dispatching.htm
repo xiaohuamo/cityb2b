@@ -223,7 +223,8 @@
 									<th>Spec Desc</th>	
 									<th>Stock Qty</th>										
 									<th>Order Qty</th>	
-								<{if $assign_stock==1}>	<th>Assign Stock Qty</th>	
+									<th>Total Assign</th>
+								<{if $assign_stock==1}>	<th>current Assign</th>	
 									<th>Rest Stock Qty</th>	 <{/if}>
 									<th>Unit</th>	
 									
@@ -239,7 +240,7 @@
 								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
 								 
 								 </td>
-								    <td><button name="assign_all_stock" type="button" onclick="">分配库存</button></td>
+								    <td><!--<button name="assign_all_stock" type="button" onclick="">分配库存--></button></td>
                                  <{/if}>
 							
 								 
@@ -262,6 +263,7 @@
 									<td><{$item.stock_qty}></td>
 									
 									<td><{$item.total_quantity}></td>
+									<td><{$item.assign_quantity}></td>
 									<{if $assign_stock==1}>		<td><{$item.assign_stock_quantity}></td>
 									<td><{$item.rest_stock_qty}></td> <{/if}>
 									
