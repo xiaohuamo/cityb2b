@@ -380,11 +380,11 @@
 										
 										
 											<{if ($item.to_xero==1 && $item.sent_to_xero==1) || $item.to_xero==0}>
-												<a id='print_<{$item.id}>'  class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')"><{$lang->print}></a>
+												<a id='print_<{$item.id}>'  class="link" target="_blank"  onclick="print_order('<{$item.orderId}>');"><{$lang->print}></a>
 												<a id='forceprint_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="force_print('<{$item.orderId}>')" <span ><{$lang->force_print}></span></a>
 						
 											<{else}>
-												<a id='print_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$item.orderId}>')"><{$lang->print}></a>
+												<a id='print_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="print_order('<{$item.orderId}>');"><{$lang->print}></a>
 												<a id='forceprint_<{$item.id}>'  style =""  class="link" target="_blank"  onclick="force_print('<{$item.orderId}>')" <span ><{$lang->force_print}></span></a>
 										 
 											<{/if}>
@@ -849,13 +849,59 @@
 
     })
 	
-	
+
+   function approve_delivery(orderID){
+   
+   var iconupdate= new IconUpdate(this);
+
+			
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : orderID},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+   
+   }
 	
 
+
+   function print_order(orderID) {
+   
+	  approve_delivery(orderID);
+	  window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
+	   
+   
+   }
 
 	function force_print(orderID){
 		if(confirm('<{$lang->forceprintalert}>')==false)return;
+		
+		approve_delivery(orderID);
+			
+		
 		window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
+	
 
 	}
 

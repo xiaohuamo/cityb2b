@@ -1795,11 +1795,18 @@ public function return_items_submit_to_statment_action() {
                     $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
                     $balance_due =$balance-$totalCreitAmount;
                     //    var_dump($totalCreitAmount);exit;
+
+
+                    if($order['xero_invoice_id']) {
+                        $ref_customer_id =$order['xero_invoice_id'];
+                    }else{
+                        $ref_customer_id =$order['id'];
+                    }
                     //向 statement 插入数
                     $data=array();
                     $data['create_user'] = $this->loginUser['id'];
                     $data['gen_date']=time();
-                    $data['invoice_number']='ret'.$order['id'];
+                    $data['invoice_number']=$ref_customer_id;
                     $data['type_code']=2002;
                     $data['factory_id']=$order['business_userId'];
                     $data['customer_id']=$order['userId'];
@@ -7086,7 +7093,7 @@ public function return_items_submit_to_statment_action() {
 
         if($statement_id){
             //   var_dump($statement_id);exit;
-            return $statement_id['id'];
+            $mdl_statement_list ->delete($statement_id['id']);
         }else{
             // var_dump(0);exit;
         }

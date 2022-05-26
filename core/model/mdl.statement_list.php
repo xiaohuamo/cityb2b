@@ -16,7 +16,7 @@ class mdl_statement_list extends mdl_base
     /* 获得当前查询条件的 statement list */
     public function getStatementListSql($factoryId,$customer_id,$startTime =0 ,$endTime=0, $search = null) {
 
-        $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId";
+        $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId and s.statementType =1 ";
         //var_dump ($sql);exit;
 
         if($customer_id && $customer_id !='all'){
@@ -54,7 +54,7 @@ class mdl_statement_list extends mdl_base
  /* 获得当前查询条件的 statement list */
     public function getStatementList($factoryId,$customer_id,$startTime =0 ,$endTime=0, $search = null) {
 
-     $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId";
+     $sql = "select s.* ,u.phone,u.email from cc_statement_list s left join cc_user u on s.customer_id =u.id where factory_id = $factoryId and s.statementType =1 ";
         //var_dump ($sql);exit;
 
       if($customer_id){

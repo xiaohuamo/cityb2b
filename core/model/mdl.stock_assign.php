@@ -119,7 +119,7 @@ where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id
 
         $mdl =loadModel('wj_customer_coupon');
 
-
+//var_dump($sql);exit;
         $mdl->getListBySql($sql);
         return 1;
     }
@@ -132,7 +132,7 @@ where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id
      if($logistic_truck_No && $logistic_truck_No !='all'){
          $sql .= " and o.logistic_truck_No =$logistic_truck_No ";
      }
-
+//var_dump($sql);exit;
        $mdl =loadModel('wj_customer_coupon');
         $result =$mdl->getListBySql($sql);
         return $result;
