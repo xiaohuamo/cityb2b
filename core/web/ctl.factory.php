@@ -7404,7 +7404,7 @@ public function return_items_submit_to_statment_action() {
         $report = new customer_statement($currentStatementRec,$statement_details_data);
 
 
-        if($this->loginUser['logo']) {
+        if($this->current_business['logo']) {
             $report->logoPath('data/upload/' . $this->current_business['logo']);
         }
 
