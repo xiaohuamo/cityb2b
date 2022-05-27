@@ -7431,10 +7431,10 @@ public function return_items_submit_to_statment_action() {
         $this->file->createdir('data/statement/'.$filePath);
 
         if($filePath) {//如果是系统内部调用会直接在指定路径创建文件
-            $report->outPutToFile('data/statement/'.$filePath.'/'.$fileName);
+         //   $report->outPutToFile('data/statement/'.$filePath.'/'.$fileName);
             return $filePath;
         }
-        // $report->outPutToFile('data/statement/'.$filePath.'/'.$order['userId'].'-'.$currentStatementRec['id'].".pdf","F");
+
 
     }
 
