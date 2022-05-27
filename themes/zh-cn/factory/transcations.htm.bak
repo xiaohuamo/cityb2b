@@ -152,9 +152,9 @@
 							}
 
 							function changeCustomer(select) {
-							     var value = ${select.value};
+							     var value = $(select).val();
 								alert(value);
-								window.location.href= `<{$http_root_www}>factory/transcations?customer_id=${select.value}`;
+								window.location.href= `<{$http_root_www}>factory/transcations?customer_id=` +value;
 							}
 
 							$(document).ready(function() {

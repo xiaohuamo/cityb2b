@@ -576,13 +576,17 @@ class customer_statement
 
         $this->pdf->row('Opening Balance', 0.15, 0, "L", 6);
 
-
+        if($this->pdf->user_code['account_type']=='COD') {
+            $account_type = $this->pdf->user_code['account_type'];
+        }else{
+            $account_type = (int)$this->pdf->user_code['account_type']*7 .'D';
+        }
 
         $this->pdf->ln();
         $this->pdf->row(date('Y-m-d ',$this->StatementData['gen_date']), 0.15, 0, "L", 6);
         $this->pdf->row($this->StatementData['customer_id'], 0.15, 0, "L", 6);
         $this->pdf->row($this->StatementData['customer_business_name'], 0.40, 0, "L", 6);
-        $this->pdf->row("1 week ", 0.15, 0, "L", 6);
+        $this->pdf->row($account_type, 0.15, 0, "L", 6);
         $this->pdf->setFontSize(11);
         $this->pdf->row(" $ ".$this->StatementData['open_balance_amount'], 0.15, 0, "L", 6);
         $this->pdf->setFontSize();
@@ -643,10 +647,21 @@ class customer_statement
              $this->pdf->ln(5);
              $this->pdf->setFontSize(11);
 
+             if($this->StatementData['not_due_amount']<0){
+                 $not_over_due =0.00;
+             }else{
+                 $not_over_due =number_format($this->StatementData['not_due_amount'],2);
+             }
 
-             $this->pdf->row('Not Over Due: $'.number_format($this->StatementData['not_due_amount'],2), 0.3, 0, "L", 6);
+             if($this->StatementData['close_balance_amount']<0){
+                 $close_balance_amount ='(We Owe You)   $'.number_format($this->StatementData['close_balance_amount']*-1,2);
+             }else{
+                 $close_balance_amount ='$'.number_format($this->StatementData['overdue_amount'],2);
+             }
+
+             $this->pdf->row('Not Over Due: $'.$not_over_due, 0.3, 0, "L", 6);
              $this->pdf->row(' Over Due: $'.number_format($this->StatementData['overdue_amount'],2), 0.3, 0, "L", 6);
-             $this->pdf->row('Close Balance: $'.number_format($this->StatementData['close_balance_amount'],2), 0.3, 0, "R", 6);
+             $this->pdf->row('Close Balance: '.$close_balance_amount, 0.3, 0, "R", 6);
              $this->pdf->row('AUD', 0.1, 0, "L", 6);
 
              $this->pdf->setFontSize();
