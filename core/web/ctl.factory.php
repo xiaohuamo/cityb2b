@@ -1720,6 +1720,9 @@ class ctl_factory extends cmsPage
 
         $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
 
+        $mdl_order = $this->loadModel('order');
+        $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
        if($orderPriceChange) {
 
           $itemDetails =array(
@@ -1736,8 +1739,7 @@ class ctl_factory extends cmsPage
 
            if ($orderPriceChange != 0) {
 
-               $mdl_order = $this->loadModel('order');
-               $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
 
                $orderUpdateData = [
                    'money' => round($order['money'] + $orderPriceChange, 2),
@@ -1756,6 +1758,11 @@ class ctl_factory extends cmsPage
                'goods_total'=>$money_details['goodsTotal_new'],
                'money_new'=>$money_details['transactionBalance_new']
         );
+
+          //更新xero
+
+           $this->auto_send_invoice_to_xero($order['id'],$order['business_userId'],'update');
+
            $this->form_response(200, json_encode($returnData));
        } else {
            $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);
@@ -2079,6 +2086,8 @@ public function return_items_submit_to_statment_action() {
 
         $orderPriceChange =round(floatval($new_sub_total-$old_sub_total),2);
 
+        $mdl_order = $this->loadModel('order');
+        $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
         if($orderPriceChange) {
 
             $itemDetails =array(
@@ -2095,8 +2104,7 @@ public function return_items_submit_to_statment_action() {
 
             if ($orderPriceChange != 0) {
 
-                $mdl_order = $this->loadModel('order');
-                $order = $mdl_order->getByWhere(array('orderId'=>$customerCoupon['order_id']));
+
 
                 $orderUpdateData = [
                     'money' => round($order['money'] + $orderPriceChange, 2),
@@ -2115,6 +2123,10 @@ public function return_items_submit_to_statment_action() {
                 'goods_total'=>$money_details['goodsTotal_new'],
                 'money_new'=>$money_details['transactionBalance_new']
             );
+
+            //更新xero
+            $this->auto_send_invoice_to_xero($order['id'],$order['business_userId'],'update');
+
             $this->form_response(200, json_encode($returnData));
         } else {
             $this->form_response(200, $customerCoupon['adjust_subtotal_amount']);

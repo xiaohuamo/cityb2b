@@ -1089,6 +1089,12 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
         $order_info = $mdl->get($id);
 
+        //如果中间xero信息被重置，则修改未创建模式；
+        if(strlen($order_info['xero_id'])<2  && $order_info['sent_to_xero']==0) {
+            $createOrUpdate='create';
+        }
+
+
         if ($id < 0 || ($order_info['business_userId']!=$this->current_business['id'] && $order_info['userId']!=$this->loginUser['id'])) $this->form_response_msg(' no access !');
 
         //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
