@@ -2581,15 +2581,8 @@ class ctl_company extends cmsPage
 		
 		// 销售员的用户role 为101
 
-		  if($this->loginUser['role']==20) {
-			  
-			  $business_userid = $this->loginUser['user_belong_to_user'];
-			  
-		  }else{
-			  
-			   $business_userid = $this->loginUser['id'];
-			  
-		  }
+        $business_userid =$this->current_business['id'];
+
 
 		if( !$mdl_order->check_if_order_belong_to_login_user($business_userid,$id)) {
 			
@@ -2606,11 +2599,12 @@ class ctl_company extends cmsPage
             echo json_encode(array('merge_to_another_order' => 3));
 			return;
 		}
+        /*
 		if($first_rec['sent_to_xero']==1) {
             echo json_encode(array('merge_to_another_order' => 2)); //main order has been sent to xero
             return;
         }
-		
+		*/
 		$error =$mdl_order->merge_order($id,$first_rec);
 		
 		
@@ -2623,6 +2617,12 @@ class ctl_company extends cmsPage
 			if ( !$error) {
                 //更新箱数;
                 $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($first_rec['orderId']);
+
+                //更新xero
+                 $this->auto_send_invoice_to_xero($id,$business_userid,'update');
+                 $this->auto_send_invoice_to_xero($first_rec['id'],$business_userid,'update');
+
+                
 				echo json_encode(array('merge_to_another_order' => 1));
 			} else {
 				echo json_encode(array('merge_to_another_order' => 7));
