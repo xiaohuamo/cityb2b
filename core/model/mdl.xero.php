@@ -281,7 +281,7 @@ class mdl_xero extends mdl_base
             o.house_number ,
             o.street,
             f.nickname as customer_code ,
-            o.city,
+            o.city,o.coupon_status,       
             o.state,
             o.postalcode as postcode,
             o.country,
@@ -411,7 +411,11 @@ class mdl_xero extends mdl_base
             $new_data['Reference'] =$order_data['orderId'];
             $new_data['BrandingThemeID'] ='';
             $new_data['CurrencyCode'] ='AUD';
-            $new_data['Status'] ='DRAFT';
+            if($order_data['coupon_status']=='d01' || $order_data['merge_to_another_order']==1) {
+                $new_data['Status'] ='DELETED';
+            }else{
+                $new_data['Status'] ='DRAFT';
+            }
             $new_data['SentToContact'] ='';
             $new_data['ExpectedPaymentDate'] ='';
             $new_data['PlannedPaymentDate'] ='';

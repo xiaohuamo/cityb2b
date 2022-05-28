@@ -545,6 +545,11 @@ class corecms
 			return false;
 		}else {
 			$mdl_coupon->commit();
+
+            //更新xero
+
+            $this->auto_send_invoice_to_xero($order['id'],$order['business_userId'],'update');
+
 			return true;
 		}
 		
