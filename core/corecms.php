@@ -1101,7 +1101,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
         $api = new MyApi($db);
         $mdl_xero =$this->loadModel('xero') ;
         $mdl_tokens =$this->loadModel('tokens') ;
-        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+        $credentials =$mdl_tokens->getCredentials($order_info['business_userId'],'xero') ;
 
         if(!$credentials) {
             echo json_encode(array('error' => 'please refresh the page or login in again!'));
