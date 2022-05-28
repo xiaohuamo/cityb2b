@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: center;
+	}
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+                    Customer Lists
+				</div>
+				<form>
+					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">&nbsp;
+					<select class='chooseCustomer' name="grade">
+											
+												<option value="0" <{if !$gradeId}>selected<{/if}>>
+													Select Customer Grade 
+												</option>
+												<{foreach from=$grade_list item=g_list}>
+													<option value="<{$g_list.id}>" <{if $g_list.id==$gradeId}>selected<{/if}>>
+														<{$g_list.grade_name}>(<{$g_list.grade_discount_rate}>%)
+													</option>
+												<{/foreach}>
+											</select>&nbsp;
+					<input type="submit" value="搜索">
+				</form>
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>ID</th>
+								<th>客户名称</th>
+								<th>客户级别</th>
+								<th>客户折扣率</th>
+								<th>大类折扣</th>
+								<th>小类折扣</th>
+								<th>产品折扣</th>
+								
+								<th>订单查询</th>
+								<th>手机号</th>
+								<th>Invoice Disc</th>
+								
+
+								
+								
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$users item=user name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+									<td>
+                                       <{$user.id}>
+									</td>
+
+									<td>
+                                        <a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>"><{$user.name}></a>
+									</td>
+										
+									<td  >
+										
+											<select class='chooseCustomer' data-id='<{$user.idd}>' id="garde_id-<{$user.idd}>" name="grade_id">
+											
+												<option value="0" <{if !$user.gradeId}>selected<{/if}>>
+													Select Customer Grade 
+												</option>
+												<{foreach from=$grade_list item=g_list}>
+													<option value="<{$g_list.id}>" <{if $g_list.id==$user.gradeId}>selected<{/if}>>
+														<{$g_list.grade_name}>(<{$g_list.grade_discount_rate}>%)
+													</option>
+												<{/foreach}>
+											</select>
+										    <span class='promote-ajax'></span>
+									</td>
+									
+									<td>
+
+
+										<input type="text" class="input-text" data-id='<{$user.idd}>' id="business_discount_rate-<{$user.idd}>" style="padding-right: 4px;width:50px;text-align:right;" name="business_discount_rate"
+											   value="<{if !$user.business_discount_rate}>0<{else}><{$user.business_discount_rate}><{/if}>">%
+										<span class='promote-ajax'></span>
+									
+
+
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/discount_edit_parant_category?customer_id=<{$user.id}>">
+										大类
+										</a>
+
+										
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/discount_edit_sub_category?customer_id=<{$user.id}>">&nbsp;&nbsp;小类</a>
+									</td>
+									
+									<td>
+										<a href="<{$http_root_www}>restaurant/customer_product_discount_edit?user_id=<{$user.id}>">&nbsp;&nbsp;产品及规格</a>
+									</td>
+									
+									
+									<td>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
+									</td>
+									<td>
+                                        <{$user.phone}>
+									</td>
+								   <td>
+                                       
+										<input type="text" class="input-text" data-id='<{$user.idd}>' id="discountOfInvoice-<{$user.idd}>" style="padding-right: 4px;width:50px;text-align:right;" name="discountOfInvoice"
+											   value="<{if !$user.discountOfInvoice}>0<{else}><{$user.discountOfInvoice}><{/if}>">%
+										<span class='promote-ajax'></span>
+								
+									</td>
+
+									
+
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+					</div>
+					 <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+<script>
+    function copyToClip(value) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value",value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("已复制");
+    }
+</script>
+
+<script type="text/javascript">
+    var loading = false;
+
+    $('input[name=business_discount_rate],input[name=discountOfInvoice],select[name=grade_id],select[name=account_type]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+		  updateData['update_field'] = update_field_name;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_business_discount_rate",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+
+
+
+
+</script>
+<{include file = 'footer.htm'}>
+
+</body>
+</html>
