@@ -2553,7 +2553,7 @@ class ctl_company extends cmsPage
 			);
 			 try {
                 $mdl_order->update($data,$id);
-
+                $this->auto_send_invoice_to_xero($id,$curr_user_id,'update');
                 $this->form_response(200,'','');
             } catch (Exception $e) {
                 $this->form_response(500, $e->getMessage(),'');
@@ -2593,7 +2593,7 @@ class ctl_company extends cmsPage
 		
 		
 		$first_rec = $mdl_order->get_first_order_sameuserId_sameday ($id);
-		//var_dump($first_rec);exit;
+
 		if( !$first_rec) {
 
             echo json_encode(array('merge_to_another_order' => 3));
@@ -2606,11 +2606,10 @@ class ctl_company extends cmsPage
         }
 		*/
 		$error =$mdl_order->merge_order($id,$first_rec);
-		
-		
-		
-		
-	  
+
+
+
+
    		
 		
 			
@@ -2618,6 +2617,7 @@ class ctl_company extends cmsPage
                 //更新箱数;
                 $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($first_rec['orderId']);
 
+                 //var_dump('here');exit;
                 //更新xero
                  $this->auto_send_invoice_to_xero($id,$business_userid,'update');
                  $this->auto_send_invoice_to_xero($first_rec['id'],$business_userid,'update');

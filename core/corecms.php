@@ -1061,7 +1061,12 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
   public function auto_send_invoice_to_xero($new_id,$factory_id,$createOrUpdate){
       $supplier_rec =$this->loadModel('supplier')->getByWhere(array('userId'=>$factory_id));
       if($supplier_rec['xero_auto_pass'] ==1){
-          $this->xero_send_invoice($new_id,$createOrUpdate,0);
+          $order_rec =$this->loadModel('order')->get($new_id);
+          $user_factory_rec =$this->loadModel('user_factory')->getByWhere(array('factory_id'=>$factory_id,'user_id'=>$order_rec['userId']));
+          if($user_factory_rec['to_xero']==1){
+              $this->xero_send_invoice($new_id,$createOrUpdate,0);
+          }
+
       }
 
   }
@@ -1120,7 +1125,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
         $orderId =$order_info['orderId'];
         $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
-        //var_dump($order_data);exit;
+      //  var_dump($order_data);exit;
         if(!$order_data) {
             echo json_encode(array('error' => 'could not find the order Info!'));
         }
