@@ -1058,13 +1058,13 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
   
   }
 
-  public function auto_send_invoice_to_xero($new_id,$factory_id,$createOrUpdate){
+  public function auto_send_invoice_to_xero($new_id,$factory_id,$createOrUpdate,$secondId){
       $supplier_rec =$this->loadModel('supplier')->getByWhere(array('userId'=>$factory_id));
       if($supplier_rec['xero_auto_pass'] ==1){
           $order_rec =$this->loadModel('order')->get($new_id);
           $user_factory_rec =$this->loadModel('user_factory')->getByWhere(array('factory_id'=>$factory_id,'user_id'=>$order_rec['userId']));
           if($user_factory_rec['to_xero']==1){
-              $this->xero_send_invoice($new_id,$createOrUpdate,0);
+              $this->xero_send_invoice($new_id,$createOrUpdate,0,$secondId);
           }
 
       }
@@ -1093,7 +1093,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
     }
 
-    public function xero_send_invoice($id,$createOrUpdate,$returnresult=1){
+    public function xero_send_invoice($id,$createOrUpdate,$returnresult=1,$secondId){
 
         $mdl= $this->loadModel('order');
 
@@ -1162,6 +1162,15 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
                 }
             }else{
                 $data['sent_to_xero'] =1;
+
+                if($secondId){
+
+                    $order_info = $mdl->get($id);
+                    $orderId =$order_info['orderId'];
+                    $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
+                    $response_arr = $api->updateInvoice($credentials,$order_data);
+                }
+
                 if($returnresult) {
                     echo json_encode($data);
                 }
