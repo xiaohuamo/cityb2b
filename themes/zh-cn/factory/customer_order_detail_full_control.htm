@@ -71,8 +71,51 @@
 					<div class="input-box input-submit clearfix">
 
 						<a class='link' href="<{$http_root_www}>factory/customer_orders">返回列表</a>
-						<a class='link' target='_blank'
-						   onclick="window.open('<{$http_root_www}>factory/order_invoice?order_id=<{$data.orderId}>')">Invoice</a>
+						<a class='link' target='_blank'    onclick=" print_order('<{$data.orderId}>');">Invoice</a>
+						   
+						   <script type="text/javascript">
+						      function approve_delivery(orderID){
+   
+							   var iconupdate= new IconUpdate(this);
+
+										
+
+										$.ajax({
+										  url: "<{$http_root_www}>company/customer_coupon_approving",
+										  type: "POST",
+										  data: { id : orderID},
+										  beforeSend:function(){
+											
+										  }
+										}).done(function(data){
+											try{
+												data = JSON.parse(data);
+											}catch(err){
+												data['msg'] = data;
+											}
+
+											if(data.status==200){
+											
+											}else if(data.status==500){
+												alert(data.msg);
+												
+											}else{
+												
+											}
+										}).fail(function(){
+											
+										});
+							   
+							   }
+						   
+						   function print_order(orderID) {
+   
+								//  approve_delivery(orderID);
+								  window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
+								   
+							   
+							   }
+						   </script>
                     
 					 <{if $data.sent_to_xero==1}>
 

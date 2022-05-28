@@ -64,13 +64,14 @@
 								<th>ID</th>
 								<th>客户名称</th>
 								<th>客户级别</th>
-								<th>当前折扣率</th>
-								<th>大类折扣设置</th>
-								<th>小类类折扣设置</th>
-								<th>定制产品折扣设置</th>
+								<th>客户折扣率</th>
+								<th>大类折扣</th>
+								<th>小类折扣</th>
+								<th>产品折扣</th>
 								
 								<th>订单查询</th>
 								<th>手机号</th>
+								<th>Invoice Disc</th>
 								
 
 								
@@ -139,7 +140,13 @@
 									<td>
                                         <{$user.phone}>
 									</td>
+								   <td>
+                                       
+										<input type="text" class="input-text" data-id='<{$user.idd}>' id="discountOfInvoice-<{$user.idd}>" style="padding-right: 4px;width:50px;text-align:right;" name="discountOfInvoice"
+											   value="<{$user.discountOfInvoice}>">%
+										<span class='promote-ajax'></span>
 								
+									</td>
 
 									
 
@@ -176,7 +183,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=business_discount_rate],select[name=grade_id],select[name=account_type]').on('change', function () {
+    $('input[name=business_discount_rate],input[name=discountOfInvoice],select[name=grade_id],select[name=account_type]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";

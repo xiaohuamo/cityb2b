@@ -1791,6 +1791,17 @@ public function return_items_submit_to_statment_action() {
                     $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
 
                     $totalCreitAmount =$mdl_wj_customer_coupon->getOrderTotalCredit($order['orderId']);
+
+
+                    //如果该客户对于该商家有invocie discount ,则 退款的时候也相应做出对应。
+
+                    $mdl_user_factory=$this->loadModel('user_factory');
+
+                    $user_factory_rec = $mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$order['business_userId']));
+                    if($user_factory_rec['discountOfInvoice']>0) {
+                        $totalCreitAmount =$totalCreitAmount*(100-$user_factory_rec['discountOfInvoice'])/100;
+                    }
+
                     $mdl_statement =$this->loadModel('statement');
                     $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
                     $balance_due =$balance-$totalCreitAmount;
@@ -3124,9 +3135,10 @@ public function return_items_submit_to_statment_action() {
     {
 
         $business_discount_rate =post('business_discount_rate');
+        $discountOfInvoice =post('discountOfInvoice');
         $grade_id =post('grade_id');
 
-        if(!is_numeric($business_discount_rate) && is_null($grade_id)){
+        if(!is_numeric($business_discount_rate) && is_null($grade_id) && !is_numeric($discountOfInvoice)){
             $this->form_response(600, 'please input number! for example 5.5', 'no access');
         }
 
@@ -3161,6 +3173,10 @@ public function return_items_submit_to_statment_action() {
 
             if($data_field  =='grade_id') {
                 $data['grade']  =$grade_id;
+            }
+
+            if($data_field  =='discountOfInvoice') {
+                $data['discountOfInvoice']  =$discountOfInvoice;
             }
 
 
@@ -4447,7 +4463,7 @@ public function return_items_submit_to_statment_action() {
 //var_dump($customer_id);exit;
         $pageSql = $mdl_statement->getStatementTranscationsSql($factoryId, $customer_id,$search,$startTime,$endTime);
        // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
-        // var_dump($data);exit;
+       //  var_dump($pageSql);exit;
         $pageUrl = $this->parseUrl()->set('page');
         $pageSize = 40;
         $maxPage = 10;
@@ -4458,6 +4474,7 @@ public function return_items_submit_to_statment_action() {
 
         if($data) {
             if ($viewPdf){
+               // var_dump($data);exit;
                 $result = $this->generate_customer_temp_statement($customer_id, $data, $startTime, $endTime);
 
                 if ($result) {

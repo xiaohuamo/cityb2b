@@ -379,7 +379,7 @@
 										<{if !$item.merge_to_another_order && $item.coupon_status!='d01'}>
 										
 										
-											<{if ($item.to_xero==1 && $item.sent_to_xero==1) || $item.to_xero==1}>
+											<{if ($item.to_xero==1 && $item.sent_to_xero==1) || $item.to_xero==0}>
 												<a id='print_<{$item.id}>'  class="link" target="_blank"  onclick="print_order('<{$item.orderId}>');"><{$lang->print}></a>
 												<a id='forceprint_<{$item.id}>'  style ="display:none;" class="link" target="_blank"  onclick="force_print('<{$item.orderId}>')" <span ><{$lang->force_print}></span></a>
 						

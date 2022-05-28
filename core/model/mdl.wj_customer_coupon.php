@@ -215,7 +215,8 @@ class mdl_wj_customer_coupon extends mdl_base
                 $credit += $value['new_customer_buying_quantity']*$value['voucher_deal_amount']-$value['adjust_quantity']*$value['adjust_price'];
 
             }
-           
+
+
             return $credit;
         }else{
             return 0;

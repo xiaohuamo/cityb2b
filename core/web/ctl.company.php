@@ -2828,17 +2828,22 @@ class ctl_company extends cmsPage
         
         $mdl_user = $this->loadModel('user');
         $mdl_order = $this->loadModel('order');
+        $mdl_user_factory = $this->loadModel('user_factory');
         $where = array(
             'orderId' => $orderId
         );
         $order = $mdl_order->getByWhere($where);
-
+        if($this->current_business['id']!=$order['business_userId']){
+            throw new Exception("no access", 1);
+        }
         $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $where1 = array(
             'order_Id' => $orderId
         );
         $customer_coupon = $mdl_wj_customer_coupon->getByWhere($where1);
 
+        $user_factory_rec = $mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$order['business_userId']));
+       // throw new Exception($user_factory_rec['discountOfInvoice'], 1);
         /**
         * 验证操作用户
         */
@@ -2906,14 +2911,22 @@ class ctl_company extends cmsPage
              * 新增statement 记录
              */
 
-            $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
-            $balance_due =$order['money_new']+$balance;
+
 
             if($order['xero_invoice_id']) {
                 $ref_customer_id =$order['xero_invoice_id'];
             }else{
                 $ref_customer_id =$order['id'];
             }
+
+            if($user_factory_rec['discountOfInvoice']>0) {
+                $invoice_amount = $order['money_new']*(100-$user_factory_rec['discountOfInvoice'])/100;
+            }else{
+                $invoice_amount =$order['money_new'];
+            }
+            $balance =$mdl_statement->getBalanceAmountOfCustomer($order['business_userId'],$order['userId']);
+            $balance_due =$invoice_amount+$balance;
+
             $data=array(
                 'create_user'=>$this->loginUser['id'],
                 'gen_date'=>time(),
@@ -2922,7 +2935,7 @@ class ctl_company extends cmsPage
                 'factory_id'=>$order['business_userId'],
                 'customer_id'=>$order['userId'],
                 'customer_ref_id'=>$order['id'],
-                'debit_amount'=>$order['money_new'],
+                'debit_amount'=>$invoice_amount,
                 'balance_due'=>$balance_due,
                 'credit_amount'=>0.00,
                 'gst'=>0.00,

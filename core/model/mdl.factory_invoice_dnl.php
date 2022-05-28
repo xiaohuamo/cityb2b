@@ -885,17 +885,25 @@ class OrderInvoice
         $this->pdf->ln(1);
 
 
+        if($this->user_Code['discountOfInvoice'] >0) {
+            $this->pdf->Cell(115);
+            $this->pdf->Cell(50,7,'Discount '.$this->user_Code['discountOfInvoice'].'%',0,0,'L');
+            //  $this->pdf->SetFont('Arial','B',12);
+            $discount_amount = $totalAmount['total_with_gst']*($this->user_Code['discountOfInvoice']/100);
+            $this->pdf->Cell(30,7,$this->displayAmount( $discount_amount).'     ',0,0,'R');
+
+        }else{
+            $discount_amount =0;
+        }
+
+
+
 
 		 $this->pdf->ln();
-
-
-
-
-
-        $this->pdf->Cell(115);
+         $this->pdf->Cell(115);
     	$this->pdf->Cell(50,7,'Boxes     ',0,0,'L');
         $this->pdf->SetFont('Arial','B',12);
-        $this->pdf->Cell(30,7,'Total '.$this->displayAmount( $totalAmount['total_with_gst']).'    ',0,0,'R');
+        $this->pdf->Cell(30,7,'Total '.$this->displayAmount( $totalAmount['total_with_gst']-$discount_amount).'    ',0,0,'R');
 		$this->pdf->ln(8);
         $this->pdf->SetFont('Arial','B',9);
         $reportSubtitle ='NO CLAIMS RECOGNISED UNLESS RECEIVED WITHIN 24 HOURS OF DELIVERY . ';

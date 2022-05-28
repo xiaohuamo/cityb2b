@@ -656,7 +656,7 @@ class customer_statement
              if($this->StatementData['close_balance_amount']<0){
                  $close_balance_amount ='(We Owe You)   $'.number_format($this->StatementData['close_balance_amount']*-1,2);
              }else{
-                 $close_balance_amount ='$'.number_format($this->StatementData['overdue_amount'],2);
+                 $close_balance_amount ='$'.number_format($this->StatementData['close_balance_amount'],2);
              }
 
              $this->pdf->row('Not Over Due: $'.$not_over_due, 0.3, 0, "L", 6);
