@@ -288,6 +288,7 @@ class mdl_xero extends mdl_base
             o.address,
             o.orderId,
             o.displayName as trading_name,
+            o.logistic_delivery_date,
             o.id as reference_id, 
             o.email,
             abn.untity_name, 
@@ -393,9 +394,16 @@ class mdl_xero extends mdl_base
             $new_data['InvoiceID'] =$order_data['xero_id'];
             $new_data['InvoiceNumber'] =$order_data['invoice_id'];
        // $new_data['InvoiceNumber'] ='INV-0015';
-            $todaydays =1;
+
+            $days = ceil(($order_data['logistic_delivery_date']-time())/86400);
+
+          //  $current_date =date('m/d/Y',strtotime("+0 day"));
+          //  $delivery_date =date('m/d/Y',$order_data['logistic_delivery_date']);
+
+           // var_dump($current_date.' '.$delivery_date.' days is '.$days);exit;
+            $todaydays =$days+1;
             $new_data['Date'] =date('m/d/Y',strtotime("+$todaydays day"));
-            $dueDays =$order_data['payment_period']+2;
+            $dueDays =$todaydays  + $order_data['payment_period']+1;
 
             $new_data['DueDate'] =date('m/d/Y',strtotime("+$dueDays day"));
             $new_data['LineAmountTypes'] ="Exclusive";
