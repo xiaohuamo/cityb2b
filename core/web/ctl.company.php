@@ -2619,7 +2619,8 @@ class ctl_company extends cmsPage
 
                  //var_dump('here');exit;
                 //更新xero
-                // $this->auto_send_invoice_to_xero($id,$business_userid,'update');
+                 $this->auto_send_invoice_to_xero($id,$business_userid,'update');
+                 sleep(4);
                  $this->auto_send_invoice_to_xero($first_rec['id'],$business_userid,'update');
 
 
