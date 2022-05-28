@@ -1165,7 +1165,7 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 
                 if($secondId){
 
-                    $order_info = $mdl->get($id);
+                    $order_info = $mdl->get($secondId);
                     $orderId =$order_info['orderId'];
                     $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
                     $response_arr = $api->updateInvoice($credentials,$order_data);
