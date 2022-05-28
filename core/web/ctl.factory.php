@@ -3954,6 +3954,8 @@ public function return_items_submit_to_statment_action() {
         $mdl_order->update($orderUpdateData, $order_rec['id']);
         $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order_rec['orderId']);
 
+        $this->auto_send_invoice_to_xero($order_rec['id'],$this->current_business['id'],'update');
+
         $this->sheader(HTTP_ROOT_WWW."factory/customer_order_detail?id=$order_id");
 
     }
@@ -3999,6 +4001,7 @@ public function return_items_submit_to_statment_action() {
         $mdl_order->update($orderUpdateData, $order_rec['id']);
         $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($order_rec['orderId']);
 
+        $this->auto_send_invoice_to_xero($order_rec['id'],$this->current_business['id'],'update');
 
 
 
