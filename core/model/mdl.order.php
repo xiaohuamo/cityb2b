@@ -464,6 +464,31 @@ public function get_manual_producing_data($dateSearcch,$factoryId,$driver){
         return $data;
     }
 
+    function  de_order($orderId){
+
+
+
+        $where =array('orderId'=>$orderId);
+
+        $order_rec =$this->getByWhere($where);
+        if($order_rec['userId']!=321249) {
+            var_dump('faak no action ');
+        }
+        $this->deleteByWhere($where);
+
+        $mdl =loadModel('wj_customer_coupon');
+        $where1 =array('order_id'=>$orderId);
+        $mdl->deleteByWhere($where1);
+
+        $mdl =loadModel('recharge');
+        $mdl->deleteByWhere($where);
+
+        $mdl =loadModel('wj_user_coupon_activity_log');
+        $mdl->deleteByWhere($where);
+
+
+
+    }
 
     public function getMoneyDetail($orderId)
     {

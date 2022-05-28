@@ -3469,7 +3469,17 @@ public function xero_get_contacts_action(){
 
 	 }
 
+public function de_order_action(){
 
+		   $order_id =get2('order_id');
+		   if($this->loginUser['id']!=319188 ){
+			   var_dump('faaak'); exit ;
+		   }
+		   $mdl_order=$this->loadModel('order');
+		   $mdl_order->de_order($order_id);
+
+
+}
 
 public function test_boxnumber_action(){
 
