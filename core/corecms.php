@@ -1004,13 +1004,14 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			}
 		}
 
-       
-		if(!$mdl_order->insert( $data_order )){
+       $new_id = $mdl_order->insert( $data_order );
+		if(!$new_id){
 
 			$rollback=1;
 			$tablename='order';
 		}else{ //更新呢总箱数
             $this->loadModel('boxNumberOutput')->UpdateOrderBoxInfo($orderId);
+
         }
 
         //如果新客户第一次购买，之前没有填过用户的基本信息，系统挂自动给补填一下；
@@ -1044,10 +1045,126 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
 			$this->form_response_msg('something wrong! '.$tablename);
 		}else{
 			$mdl_order->commit();
-		}
+
+            $this->auto_send_invoice_to_xero($new_id,$arr_post['business_userId'],'create');
+
+
+        }
   
   }
-  
+
+  public function auto_send_invoice_to_xero($new_id,$factory_id,$createOrUpdate){
+      $supplier_rec =$this->loadModel('supplier')->getByWhere(array('userId'=>$factory_id));
+      if($supplier_rec['xero_auto_pass'] ==1){
+          $this->xero_send_invoice($new_id,$createOrUpdate);
+      }
+
+  }
+
+    public function xero_invoice_manage($action,$id){
+
+
+        switch ($action) {
+            case 'craete':
+                $this->xero_send_invoice($id);
+                break;
+            case 'update':
+                $this->xero_send_invoice($id,'update');
+                break;
+            case 'void':
+                $nav_page ="dispatching/index";
+                break;
+
+            default:
+                break;
+
+
+        }
+
+    }
+
+    public function xero_send_invoice($id,$createOrUpdate){
+
+        $mdl= $this->loadModel('order');
+
+        $order_info = $mdl->get($id);
+
+        if ($id < 0 || ($order_info['business_userId']!=$this->current_business['id'] && $order_info['userId']!=$this->loginUser['id'])) $this->form_response_msg(' no access !');
+
+        //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials_ubonus100mtest_latest.php';
+        // require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Credentials.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/Database.php';
+        require_once DOC_DIR.'core/b2b_2_0/b2b/lib/MyApi001.php';
+
+        $api = new MyApi($db);
+        $mdl_xero =$this->loadModel('xero') ;
+        $mdl_tokens =$this->loadModel('tokens') ;
+        $credentials =$mdl_tokens->getCredentials($this->current_business['id'],'xero') ;
+
+        if(!$credentials) {
+            echo json_encode(array('error' => 'please refresh the page or login in again!'));
+        }
+
+        $orderId =$order_info['orderId'];
+        $order_data = $mdl_xero->getOrderInvoiceData($orderId,$createOrUpdate);
+        //var_dump($order_data);exit;
+        if(!$order_data) {
+            echo json_encode(array('error' => 'could not find the order Info!'));
+        }
+
+        if($createOrUpdate=='update'){
+            $response_arr = $api->updateInvoice($credentials,$order_data);
+        }else{
+            $response_arr = $api->createInvoices($credentials,$order_data);
+        }
+
+        if(!$response_arr) {
+            echo json_encode(array('error' => 'no result return when create invoice! '));
+        }
+        if($createOrUpdate !='update') {
+            $custom_response = $mdl_xero->createXeroInvoiceInfo($response_arr, $orderId);
+        }
+        if($custom_response) {
+            echo json_encode(array('error' => (string)$custom_response));
+        }else{
+            $data = array();
+            $order_info=$mdl->get($order_info['id']);
+            $data['xero_invoice_id']=$order_info['xero_invoice_id'];
+
+            if($createOrUpdate!='update'){
+                $data['sent_to_xero'] = ($order_info['sent_to_xero'] == '0') ? '1' : '0';
+
+                if ($mdl->update($data, $order_info['id'])) {
+
+                    echo json_encode($data);
+                } else {
+                    $this->form_response_msg('Please try again later');
+                }
+            }else{
+                $data['sent_to_xero'] =1;
+                echo json_encode($data);
+            }
+
+        }
+
+
+    }
+
+
+    public function xero_send_invoice_action(){
+
+        $id = (int)get2('id');
+        $createOrUpdate =trim(get2('createOrUpdate'));
+
+        $this->xero_send_invoice($id,$createOrUpdate);
+
+
+
+
+
+    }
   
  protected  function get_customer_coupon_data($coupon,$qty,$couponBuyer,$menu_idd){
 
