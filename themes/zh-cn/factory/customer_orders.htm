@@ -504,7 +504,7 @@
 										<{if $item.coupon_status=='c01'}>
 										
 										<div id="hebin_<{$item.id}>" class="onoffswitch">
-													<input type="checkbox"  <{if $item.merge_to_another_order==1 ||$item.sent_to_xero==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+													<input type="checkbox"  <{if $item.merge_to_another_order==1}> disabled <{/if}> name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
 														   data-id='<{$item.id}>' <{if $item.merge_to_another_order==1}> checked <{/if}>>
 													<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
 														<span class="onoffswitch-inner"></span>

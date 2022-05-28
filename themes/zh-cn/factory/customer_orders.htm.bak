@@ -888,7 +888,7 @@
 
    function print_order(orderID) {
    
-	  approve_delivery(orderID);
+	 // approve_delivery(orderID);
 	  window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
 	   
    
@@ -897,7 +897,7 @@
 	function force_print(orderID){
 		if(confirm('<{$lang->forceprintalert}>')==false)return;
 		
-		approve_delivery(orderID);
+	//	approve_delivery(orderID);
 			
 		
 		window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);

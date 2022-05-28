@@ -2622,7 +2622,7 @@ class ctl_company extends cmsPage
                  $this->auto_send_invoice_to_xero($id,$business_userid,'update');
                  $this->auto_send_invoice_to_xero($first_rec['id'],$business_userid,'update');
 
-                
+
 				echo json_encode(array('merge_to_another_order' => 1));
 			} else {
 				echo json_encode(array('merge_to_another_order' => 7));
