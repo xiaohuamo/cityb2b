@@ -171,12 +171,9 @@ class pdfGenerator extends PDF_Chinese
         $this->Cell(60,7,'A.B.N '.$this->abn.'  ' .'Tel: '.$this->phone.'  Fax:',0,1,'L');
 
         $this->SetFont('Arial','',10);
-        if($this->businessId ==319188) {
-            $this->Cell(60,5,'LINCENSE NO: P00950',0,1,'L');
-        }else{
-            $this->Cell(60,5,'',0,1,'L');
-        }
-        $this->Cell(60,5,$this->factory['address'],0,1,'L');
+        $this->Cell(60,5,'',0,1,'L');
+
+        $this->Cell(60,5,$this->factory['googleMap'],0,1,'L');
          $this->Cell(60,5,'',0,1,'L');
 
 
