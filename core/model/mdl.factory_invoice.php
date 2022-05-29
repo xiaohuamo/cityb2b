@@ -176,12 +176,9 @@ class pdfGenerator extends PDF_Chinese
         }else{
             $this->Cell(60,5,'',0,1,'L');
         }
-        $this->Cell(60,5,'5/20 AJAX RD,ALTONA VIC 3018',0,1,'L');
-        if($this->businessId ==319188) {
-            $this->Cell(60,5,'H/P NO : 0451 288 666',0,1,'L');
-        }else{
-            $this->Cell(60,5,'',0,1,'L');
-        }
+        $this->Cell(60,5,$this->factory['address'],0,1,'L');
+         $this->Cell(60,5,'',0,1,'L');
+
 
 
 
