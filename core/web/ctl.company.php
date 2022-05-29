@@ -1755,6 +1755,7 @@ class ctl_company extends cmsPage
                 'businessName'=>$businessName,
 				'displayName_en'=>$displayName_en,
 				 'googleMap' => $googleMap,
+                'address'=> $googleMap,
                 'google_location' => $google_location,
                 'latitude'=>$latitude,
                 'longitude'=>$longitude,
