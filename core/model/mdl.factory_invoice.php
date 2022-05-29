@@ -244,7 +244,7 @@ class pdfGenerator extends PDF_Chinese
         $this->SetY(-40);
         $this->row("", 1, 1, 'C', 0.1);
 
-        $this->row("MTV NO :0100/1404/3370/3371", 0.7, 0, "L", 6);
+        $this->row("", 0.7, 0, "L", 6);
 
         $this->row("Temperature: 1.9", 0.3, 0, "L", 6);
 
