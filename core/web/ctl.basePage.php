@@ -975,8 +975,8 @@ public function AgentActiveCheck($id,$agentId){
         }else{
             $this->loadModel('factory_invoice');
             $report = new OrderInvoice($order, $items);
-            if($this->loginUser['logo']) {
-                $report->logoPath('UPLOAD_PATH' . $this->loginUser['logo']);
+            if($this->current_business['logo']) {
+                $report->logoPath(UPLOAD_PATH . $this->current_business['logo']);
             }
 
             $user['address']=$order['address'];
