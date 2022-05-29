@@ -246,7 +246,7 @@ class pdfGenerator extends PDF_Chinese
 
         $this->row("", 0.7, 0, "L", 6);
 
-        $this->row("Temperature: 1.9", 0.3, 0, "L", 6);
+        $this->row("", 0.3, 0, "L", 6);
 
         $this->ln();
         $this->row("No Claim will be recognised unless received with 24 hours date of delivery.", 0.7, 0, "L", 6);
