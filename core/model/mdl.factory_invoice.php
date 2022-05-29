@@ -178,7 +178,7 @@ class pdfGenerator extends PDF_Chinese
         $this->Ln(8);
         $this->SetFont('Arial','B',10);
         $this->Cell(60,7,'A.B.N '.$this->abn.'  ' .'Tel: '.$this->phone.'  Fax:',0,1,'L');
-       
+
              $this->Cell(60,5,$this->address,0,1,'L');
          $this->Cell(60,5,'',0,1,'L');
 

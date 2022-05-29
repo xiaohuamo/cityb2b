@@ -9862,6 +9862,8 @@ function freshfood_edit_action()    {
         $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/truck_list');
     }
+
+
     function staff_permissions_action()
     {
 
@@ -9893,7 +9895,7 @@ function freshfood_edit_action()    {
             $data['staff_id'] = $staff_id;
             $data['roles'] = $roles;
 
-            var_dump(($data));exit;
+           // var_dump(($data));exit;
             $staff = $mdl_staff_roles->getByWhere(array('staff_id' => $staff_id));
 
            if ($staff) {
