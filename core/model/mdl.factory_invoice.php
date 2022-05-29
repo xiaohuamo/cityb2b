@@ -56,6 +56,7 @@ class pdfGenerator extends PDF_Chinese
         $this->chFontStyleDefault = '';
 
         $this->businessname='';
+        $this->address='';
     }
 
     function isEnglish($string)
@@ -98,6 +99,14 @@ class pdfGenerator extends PDF_Chinese
         $this->businessname = $businessname;
 
     }
+
+    public function setBusinessAddress($address)
+    {
+        $this->address = $address;
+
+    }
+
+
 
     public function setABN($abn)
     {
@@ -173,7 +182,7 @@ class pdfGenerator extends PDF_Chinese
         $this->SetFont('Arial','',10);
         $this->Cell(60,5,'',0,1,'L');
 
-        $this->Cell(60,5,$this->factory['googleMap'],0,1,'L');
+        $this->Cell(60,5,$this->address,0,1,'L');
          $this->Cell(60,5,'',0,1,'L');
 
 
@@ -521,6 +530,7 @@ class OrderInvoice
         $this->pdf->setTitle($this->orderTitle(),'2020-12-11');
         $this->pdf->setLogo(DOC_DIR.$this->logoPath);
         $this->pdf->setBusinessName($this->factoryABN['untity_name']);
+        $this->pdf->setBusinessAddress($this->factory['address']);
         $this->pdf->setABN($this->factoryABN['ABNorACN']);
         $this->pdf->setPhone($this->factory['phone']);
         $this->pdf->setBusinessId($this->factory['id']);
