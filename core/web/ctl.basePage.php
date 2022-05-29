@@ -983,6 +983,7 @@ public function AgentActiveCheck($id,$agentId){
             $report->setUser_Code($user_code_rec);
             $report->setUser($user, $userABN);
             $report->setFactory($factory, $factoryABN, $factoryAccount);
+            var_dump($factory);exit;
             $report->generatePDF();
         }
 
