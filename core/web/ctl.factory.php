@@ -5471,7 +5471,7 @@ public function return_items_submit_to_statment_action() {
                foreach ($userList as $key=>$user){
 
                        $expiredAt =strtotime("+36 months", time());
-                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt);
+                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt,$this->current_business['id']);
                        $userList[$key]['login_link'] = $link;
 
 
@@ -5627,7 +5627,7 @@ public function return_items_submit_to_statment_action() {
                foreach ($userList as $key=>$user){
 
                        $expiredAt =strtotime("+36 months", time());
-                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt);
+                       $link = self::customer_login_link_groupMember($user['id'], $expiredAt,$this->current_business['id']);
                        $userList[$key]['login_link'] = $link;
 
 
@@ -5767,9 +5767,9 @@ public function return_items_submit_to_statment_action() {
 
 
 
-    public function customer_login_link_groupMember($userId, $expired) {
+    public function customer_login_link_groupMember($userId, $expired,$factoryId) {
         $mdl_user_factory = $this->loadModel('user_factory');
-        $factoryId = 319188;
+      //  $factoryId = 319188;
         $token = $mdl_user_factory->generateUserLoginToken($userId,$factoryId, $expired);
 
         return HTTP_ROOT . "factorypage/user_link_login?user_id=$userId&factory_id=" . $factoryId. "&token=$token";
