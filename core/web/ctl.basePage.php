@@ -571,16 +571,16 @@ public function AgentActiveCheck($id,$agentId){
                     $nav_page ="salesman/index";
                     break;
                 case '9':
-                    $nav_page ="dispatching/index";
+                    $nav_page ="https://d.cityb2b.com/product/pickingOrder.html";
                     break;
                 case '10':
-                    $nav_page ="dispatching/index";
+                    $nav_page ="https://d.cityb2b.com/product/pickingOrder.html";
                     break;
                 case '11':
-                    $nav_page ="operator/index";
+                    $nav_page ="https://m.cityb2b.com/product/index";
                     break;
                 case '12':
-                    $nav_page ="dispatching/index";
+                    $nav_page ="https://d.cityb2b.com/product/pickingOrder.html";
                     break;
                 case '16':
                     $nav_page ="driver/index";

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>CityB2B</title>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<script src="<{$SKIN_PATH}>js/vue.min.js"></script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="me">
+			<div class="head bgfff center">
+				<img src="<{$SKIN_PATH}>img/return.png" class="return" @click="returnPage"/>
+				<span v-if="isLanguageEn">Supplier Join</span><span v-else>供应商加盟</span>
+			</div>
+			<div style="height:3.5rem;"></div>
+			<div  v-if="isLanguageEn">
+
+
+				<!-- 主體部分開始 -->
+
+				<div class="bgfff borR7 ma15 pa15 f35 col0D0D0D relative maT30">
+					<div class="flexBox1 KHbox2 pmb15 maT30">
+						<img src="<{$SKIN_PATH}>img/kh1.png" class="khIcon">
+						<span>Harry 0425 616 988</span>
+					</div>
+					<div class="flexBox1 KHbox2">
+						<img src="<{$SKIN_PATH}>img/kh2.png" class="khIcon">
+						<span>Matt 0451 288 666</span>
+					</div>
+					<div class="khBtn2 f25 colfff" v-if="isLanguageEn" >Contact Sales</div><div class="khBtn2 f25 colfff" v-else>拨打电话开户</div>
+				</div>
+
+				<div class="bgfff borR7 ma15 pa15 f35 col0D0D0D relative maT30">
+					<div class="flexBox1 maT30">
+						<div class="center ma">
+							<img src="<{$SKIN_PATH}>img/ma.png"/>
+							<p class="col0D0D0D f30" v-if="isLanguageEn" >Customer Service</p><p class="col0D0D0D f30" v-else>开户助手</p>
+						</div>
+						<div class="center ma">
+							<img src="<{$SKIN_PATH}>img/ma.png"/>
+							<p class="col0D0D0D f30" v-if="isLanguageEn" >Customer Service</p><p class="col0D0D0D f30" v-else>开户助手</p>
+						</div>
+					</div>
+					<div class="f30 col929292 center maT15" v-if="isLanguageEn" >Sales Consultant will help you setting up account</div>
+					<div class="f30 col929292 center maT15" v-else>客服专员会帮您完成注册</div>
+					<div class="khBtn2 f25 colfff" v-if="isLanguageEn">Contact Sales</div><div class="khBtn2 f25 colfff" v-else>拨打电话开户</div>
+				</div>
+
+			</div>
+			<div  v-else>
+				<img src="<{$SKIN_PATH}>img/jmpage.png" class="w100"/>
+			</div>
+
+
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#me",
+			data:{
+				isLanguageEn:1  //语言环境
+			},
+			mounted:function(){
+
+				var _self =this;
+
+
+				// 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+
+
+			},
+		    methods:{
+				returnPage:function(){
+					window.history.go(-1)
+				}
+			}
+		})	
+	</script>
+</html>
