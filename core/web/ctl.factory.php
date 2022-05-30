@@ -5735,7 +5735,8 @@ public function return_items_submit_to_statment_action() {
         $nav_page = $this->employee_navigation_panel($role_id);
        //  var_dump();
         if(strpos($nav_page,'https')){
-            $this->display( $nav_page);
+            $this->sheader($nav_page);
+           // $this->display( $nav_page);
         }else{
             $this->display('factory/' . $nav_page);
         }
