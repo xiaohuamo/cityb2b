@@ -5733,11 +5733,15 @@ public function return_items_submit_to_statment_action() {
         //检测员工是否拥有权限；
         /*   $isHasRole = $this->loadModel('staff_roles')->isHasRoles($this->loginUser['id'],$role_id); */
         $nav_page = $this->employee_navigation_panel($role_id);
-       //  var_dump();
-        if(strpos($nav_page,'https')){
+       //  var_dump(strpos($nav_page,'https'));exit;
+        if(strpos($nav_page,'https') !==false){
+          //  var_dump('here'.$nav_page);exit;
             $this->sheader($nav_page);
-           // $this->display( $nav_page);
+
+       
+            // $this->display( $nav_page);
         }else{
+          //  var_dump('here1'.$nav_page);exit;
             $this->display('factory/' . $nav_page);
         }
 
