@@ -5734,7 +5734,12 @@ public function return_items_submit_to_statment_action() {
         /*   $isHasRole = $this->loadModel('staff_roles')->isHasRoles($this->loginUser['id'],$role_id); */
         $nav_page = $this->employee_navigation_panel($role_id);
        //  var_dump();
-        $this->display('factory/' . $nav_page);
+        if(strpos($nav_page,'https')){
+            $this->display( $nav_page);
+        }else{
+            $this->display('factory/' . $nav_page);
+        }
+
 
     }
 
