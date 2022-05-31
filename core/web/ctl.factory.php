@@ -7566,7 +7566,7 @@ public function return_items_submit_to_statment_action() {
 
 
         $pageSql = $mdl_statement_list->getStatementListSql($factoryId,$customer_id,$startTime,$endTime, $search);
-
+//var_dump($pageSql);exit;
         $pageUrl = $this->parseUrl()->set('page');
         $pageSize = 40;
         $maxPage = 100;

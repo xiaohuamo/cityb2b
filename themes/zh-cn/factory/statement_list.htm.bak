@@ -145,7 +145,8 @@
 							}
 
 							function changeCustomer(select) {
-							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							 var value =$(select).val();
+								window.location.href= `<{$http_root_www}>factory/statement_list?customer_id=` +value;
 							}
 
 							$(document).ready(function() {
@@ -180,7 +181,7 @@
 								<tr>
 									<th>Select</th>	
 									<th>Issue Date</th>		
-								<{if  !$customer_id}>	<th>Customer Id</th>		
+								<{if  !$customer_id || $customer_id=='all'}>	<th>Customer Id</th>		
 									<th>Customer_name</th>		 <{/if}>
 									<th>Opening</th>		
 									
@@ -189,7 +190,7 @@
 									<th>Closing</th>	
 									<th>preiview</th>	
 								
-									<{if  !$customer_id}><th>Phone</th>	<{/if}>
+									<{if  !$customer_id || $customer_id=='all'}><th>Phone</th>	<{/if}>
 								</tr>			
 							</thead>		
 							<tbody>		
@@ -198,7 +199,7 @@
 
 								<td><input  type="checkbox"  name="selectItemsList"   value=0> </td>
 									<td><{date('Y-m-d H:i', $item.gen_date)}></td>
-									<{if  !$customer_id}><td><{$item.customer_id}></td>
+									<{if  !$customer_id || $customer_id=='all'}><td><{$item.customer_id}></td>
 									<td><{$item.customer_business_name}></td> <{/if}>
 									<td><{$item.open_balance_amount}></td>
 									
@@ -207,7 +208,7 @@
 									<td><{$item.close_balance_amount}></td>
 									<td><a target = _blank href="<{$http_root_www}>factory/statement_view?id=<{$item.id}>">view</a> </td>
 									
-									<{if  !$customer_id}><td><{$item.phone}></td> <{/if}>
+									<{if  !$customer_id || $customer_id=='all'}><td><{$item.phone}></td> <{/if}>
 
 
 								</tr>			
