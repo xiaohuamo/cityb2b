@@ -7163,7 +7163,7 @@ public function return_items_submit_to_statment_action() {
 
         // get opening balance
         $data_count =sizeof($data);
-        $openBalance =$data[$data_count-1]['balance_due'];
+        $openBalance =$data[$data_count-1]['balance_due']+$data[$data_count-1]['credit_amount']-$data[$data_count-1]['debit_amount'];
 
 
 
