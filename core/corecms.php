@@ -1108,8 +1108,12 @@ sum((`voucher_deal_amount`*`platform_commission_rate`+`platform_commission_base`
             $createOrUpdate='create';
         }
 
+       if($createOrUpdate =='updateFromAuto'){
+           $createOrUpdate='update';
+       }else{
+           if ($id < 0 || ($order_info['business_userId']!=$this->current_business['id'] && $order_info['userId']!=$this->loginUser['id'])) $this->form_response_msg(' no access !');
 
-        if ($id < 0 || ($order_info['business_userId']!=$this->current_business['id'] && $order_info['userId']!=$this->loginUser['id'])) $this->form_response_msg(' no access !');
+       }
 
         //检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 

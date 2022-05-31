@@ -384,7 +384,7 @@ public function data_refresh(){
     $result =$mdl_autorun_data->getListBySql('select * from cc_autorun_data where status=0');
     foreach ($result as $key=>$value){
         if($value['data_type']==100){
-            $this->auto_send_invoice_to_xero($value['ref_id'],$value['ref_value1'],'update');
+            $this->auto_send_invoice_to_xero($value['ref_id'],$value['ref_value1'],'updateFromAuto');
         }
     }
     $where =array(
