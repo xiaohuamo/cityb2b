@@ -230,7 +230,9 @@
 										
 									 
 									  <td>
-										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}></span>
+										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
+										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
+										</span>
 									  </td>
 									  
 								<!--  <td>

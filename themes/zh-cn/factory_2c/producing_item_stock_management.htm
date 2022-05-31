@@ -181,13 +181,10 @@
 									<th>设置</th>
 									<th>Item Id</th>
 									<th>Item Code</th>
-									<th>Item Name</th>
-								
-								
-								
-                                 	
-									<th>库存</th>
+									
+							    	<th>库存</th>
 									<th>调整后库存</th>
+									<th>Item Name</th>
 									<th>单位</th>
 									<th  style="width:"10%;">产品名称-中文</th> 
 									
@@ -229,11 +226,7 @@
 										</td>
 										
 									 
-									  <td>
-										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
-										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
-										</span>
-									  </td>
+									 
 									  
 								<!--  <td>
 									
@@ -258,6 +251,11 @@
 									   <input type="text" class="input-text" data-id='<{$item.id}>' data-spec-id='<{$item.spec_id}>' id="stock_adjust-<{$item.id}>-<{$item.spec_id}>" style="width:50px;" name="stock_adjust"
 													   value="<{$item.stock_qty}>">
 												<span class='promote-ajax'>
+									  </td>
+									   <td>
+										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
+										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
+										</span>
 									  </td>
 									   <td>
 											<span><{$item.unit}></span>

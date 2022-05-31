@@ -159,7 +159,7 @@
 							
 							$('.chooseTruck').on('change',function(){
 							
-							 	$('#printer').css({ "display": "none" });
+							 	$('#printer1').css({ "display": "none" });
 								  $('#main_table').css({ "display": "none" });
 								
 								var catestr = $(this).val();
@@ -207,23 +207,24 @@
 							<thead>				
 								<tr>	
 								<{if $customer_delivery_date}>
-                            	<th>选择</th>		
-								<th>打印</th>	
+                            	<!--<th>选择</th>		
+								<th>打印</th>	 -->
 								<{/if}>
 							
 									
-									
+									<th>item Id</th>		
 									<th>Product Code</th>
 								<!--	<th>prduct Name (cn)</th>  -->
 									
 									
 									
-									<th>item Id</th>		
+									
 									<th>Product Name</th>	
 									<th>Spec Desc</th>	
 									<th>Stock Qty</th>										
 									<th>Order Qty</th>	
-								<{if $assign_stock==1}>	<th>Assign Stock Qty</th>	
+									<th>Total Assign</th>
+								<{if $assign_stock==1}>	<th>current Assign</th>	
 									<th>Rest Stock Qty</th>	 <{/if}>
 									<th>Unit</th>	
 									
@@ -235,23 +236,22 @@
 								<{foreach from=$data item=item name='dl'}>		
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>		
 								 <{if $customer_delivery_date}>
-								 <td><input  type="checkbox"  name="printItemLists"    value='<{$item.main_code_id}>'>
-								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
+							<!--	 <td>
 								 
 								 </td>
-								    <td><!--<button name="assign_all_stock" type="button" onclick="">分配库存--></button></td>
+								    <td><button name="assign_all_stock" type="button" onclick="">分配库存</button></td>-->
                                  <{/if}>
 							
 								 
-							
+							<td>
+										<{$item.id}><{if $item.guige1_id}>-<{$item.guige1_id}><{/if}>
+									</td>
 								  
 									
 									  <td><{$item.menu_id}></td>
 									
 									  
-									<td>
-										<{$item.id}><{if $item.guige1_id}>-<{$item.guige1_id}><{/if}>
-									</td>
+									
 									<td><{$item.menu_en_name}></td>
 									
 									<td>
@@ -259,9 +259,13 @@
 									</td>
 									
 								
-									<td><{$item.stock_qty}></td>
+									<td><{$item.stock_qty}>
+									<input  type="hidden"  name="printItemLists"    value='<{$item.main_code_id}>'>
+								 <input  type="hidden"  name="printItemLists_guige"    value='<{$item.guige1_id}>'>
+									</td>
 									
 									<td><{$item.total_quantity}></td>
+									<td><{$item.assign_quantity}></td>
 									<{if $assign_stock==1}>		<td><{$item.assign_stock_quantity}></td>
 									<td><{$item.rest_stock_qty}></td> <{/if}>
 									
@@ -274,11 +278,11 @@
 								
 								</tr>			
 								<{/foreach}>			
-								<tr>
+							<!--	<tr>
 									<td><input  type="checkbox"  onclick ="selectAllCheckBox(this);" name="selectAllCheckbox" ></td>
 								    <td>全部选定</td>
                                
-								</tr>
+								</tr> -->
 							</tbody>		
 						</table>	
 
@@ -443,10 +447,17 @@ function assignStock()
 	 alert('请选择日期！');
 	}
 	
+	var vlogistic_truck_No ='<{$logistic_truck_No}>';
 	
+	if(vlogistic_truck_No =='all' || !vlogistic_truck_No){
+	
+	if(confirm('您未选择某个司机，如果想先将库存分配某个司机，点击取消按钮；如果对所有司机分配，请点击确认按钮！')==false)return;
+	}
+	//alert(vlogistic_truck_No);
+	if(confirm('重要：本次分配不能取消，是否确认分配当前库存到' + vcustomer_delivery_date +'的订单？')==false)return;
 	var vbusiness_id= $('#business_id option:selected').val();
 	
-	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+
 	 
 	var vUrl='<{$http_root_www}>factory_2c/producing_stock_to_dispatching?producing=1&customer_delivery_date='+vcustomer_delivery_date+'&assign_stock=1&logistic_truck_No='+vlogistic_truck_No+'&business_id='+vbusiness_id;
 	//var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
