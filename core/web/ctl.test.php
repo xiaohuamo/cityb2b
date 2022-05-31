@@ -3469,7 +3469,13 @@ public function xero_get_contacts_action(){
 
 	 }
 
-public function de_order_action(){
+	 public function test_data_fresh_action(){
+
+		   $this->data_refresh();
+
+	 }
+
+     public function de_order_action(){
 
 		   $order_id =get2('order_id');
 		   if($this->loginUser['id']!=319188 ){

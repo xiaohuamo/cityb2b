@@ -81,29 +81,11 @@ class corecms
             $lang='en';
         }
 
-        $this->autoRunCheck();
+     //   $this->autoRunCheck();
 
 	}
 
-    function autoRunCheck(){
 
-        ignore_user_abort(true);
-        set_time_limit(0);
-        $mdl_autorun_data =$this->loadModel('autorun_data');
-        while(0) {
-              $result =$mdl_autorun_data->getListBySql('select * from cc_autorun_data where status=0');
-              foreach ($result as $key=>$value){
-                  if($value['data_type']==100){
-                      $this->auto_send_invoice_to_xero($value['ref_id'],$value['ref_value1'],'update');
-                  }
-              }
-              $where =array(
-                  'status'=>0
-              );
-             $mdl_autorun_data->updateByWhere(array('status'=>1),$where);
-             sleep(5);
-             }
-    }
 
 	function getUserDevice( $ua = null ) {
 		if ( ! isset( $ua ) ) {
