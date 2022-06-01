@@ -6281,7 +6281,8 @@ public function return_items_submit_to_statment_action() {
 
                 //如果当前为新客户，则在次行写入 seq number
                 if(!$old_customerCode || $old_customerCode != $_v['CustomerCode']) {
-                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), 'SEQ: ' . $_v['SeqNo']);
+                    //$obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), 'SEQ: ' . $_v['SeqNo']);
+                    $obj->getActiveSheet(0)->setCellValue($cellName[0] . ($i + $_row), ' ');
                     if(strlen($_v['ItemMessage'])>0) {
 
                         $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
