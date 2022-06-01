@@ -3471,7 +3471,7 @@ public function xero_get_contacts_action(){
 
 	 public function test_data_fresh_action(){
 
-		//   $this->data_refresh();
+		   $this->data_refresh();
 
 	 }
 
