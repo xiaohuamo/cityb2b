@@ -600,11 +600,11 @@ class mdl_user extends mdl_base
 		if($user['nickname']){
 			$displayName = $user['nickname'];
 
-		}else if($user['person_first_name'] || $user['person_last_name']) {
-			$displayName = $user['person_first_name'] . ' '. $user['person_last_name'];
-
 		}else if($user['contactPersonNickName']) {
             $displayName = $user['contactPersonNickName'] ;
+
+        }else if($user['person_first_name'] || $user['person_last_name']) {
+            $displayName = $user['person_first_name'] . ' '. $user['person_last_name'];
 
         }else{
 			$displayName = $user['name'];
