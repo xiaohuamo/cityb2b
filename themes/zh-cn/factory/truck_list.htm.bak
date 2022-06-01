@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='company/side_business_option_menu.htm'}>
+				
+				<div class="colCurTit">
+					<span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>factory/truck_edit" class="link2"><i class='fa fa-plus'></i>New</a>
+					</span>
+				</div>
+				<div class="main-form">			
+				<form id="memberForm" class='form-style-green' action="" method="post" target="post_frame" enctype="multipart/form-data">
+
+				<div class="input-box multi-select clearfix">
+
+							<h1>Truck Management</h1>
+
+						</div> </form> </div>
+				<div class="main-list">
+					<table cellspacing="0" cellpadding="0" width="100%" >
+						<thead>
+							<tr>
+
+								<th>TruckId</th>
+								<th>Truck_no</th>
+								<th>Name</th>
+								<th>Current Driver</th>
+								<th>Plate Number</th>
+								<th>Manufactory</th>
+								<th>Load capicity</th>
+								<th>Avaliable</th>
+								<th>Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<{foreach from=$list item=item name='dl'}>
+							<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td>
+									<{$item.id}>
+									
+								</td>
+								<td>
+									<{$item.truck_no}>
+									
+								</td>
+								
+								<td>
+									<{$item.truck_name}>
+									
+								</td>
+
+								<td>
+									<select id="diverId-<{$item.id}>" name='diverId' data-id='<{$item.id}>'>
+													<option value='0'>Choose the Driver</option>
+                                                    <{foreach from=$driverList item=sitem1}>
+														<option value='<{$sitem1.id}>'
+                                                                <{if $item.current_driver==$sitem1.id}>selected<{/if}>>
+                                                            <{$sitem1.name}>-<{$sitem1.id}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+									
+								</td>
+								<td><{$item.plate_number}> </td>
+
+								<td><{$item.made_factory}></td>
+
+								<td><{$item.load_tones}></td>
+								<td>-</td>
+								
+								<td><a href="<{$http_root_www}>factory/truck_edit?id=<{$item.id}>">编辑</a></td>
+							
+							</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+    var loading = false;
+	
+    $('select[name=diverId]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var  value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		updateData['value'] = value;
+		//alert(value);
+		//alert(id);
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_truck_driver",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+				if(update_field_name='barcode_number'){
+				  //alert(data.msg + ' ' +id);
+				  if(data.msg) {
+				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
+				
+				  }else{
+				  }
+				}
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+
+	
+		
+	
+		 </script>
+	
+	
+	
+	   
+
+</body>
+</html>
