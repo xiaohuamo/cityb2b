@@ -6084,20 +6084,20 @@ public function return_items_submit_to_statment_action() {
      //   $phpFont = new PHPExcel_Style_Font();
 
     //    $phpFont->setName('Arial Narrow');
-     //   $phpFont->setSize(20);
+     //   $phpFont->setSize(16);
 
      //   $phpColor = new PHPExcel_Style_Color();
-    //    $phpColor->setRGB('FF0000');
+    //    $phpColor->setRGB('000000');
 
     $countOfRows =count($dispatching_data)+150;
 
         $obj->getActiveSheet()->getStyle("A0:G".$countOfRows)->getFont()
             ->setName('Arial Narrow')
-            ->setSize(20)
+            ->setSize(16)
             ->setBold(false)
             ->getColor()
 
-            ->setRGB('FF0000');
+            ->setRGB('000000');
 
         $styleThinBlackBorderOutline = array(
             'borders' => array(
@@ -6128,7 +6128,7 @@ public function return_items_submit_to_statment_action() {
 
 
         $obj->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
-        $obj->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+        $obj->getActiveSheet()->getStyle('A1')->getFont()->setSize(16);
       //  $obj->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
         $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 // Add some data
@@ -6194,7 +6194,7 @@ public function return_items_submit_to_statment_action() {
                     //加入driver 列
                     $obj->getActiveSheet()->getRowDimension($i + $_row)->setRowHeight(25);
                   //  $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setBold(true);
-                    $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setSize(20);
+                    $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setSize(16);
 
                     $obj->getActiveSheet()->mergeCells($cellName[0] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row));
                     $obj->getActiveSheet()->getStyle($cellName[0] . ($i + $_row))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -6264,7 +6264,7 @@ public function return_items_submit_to_statment_action() {
                 $obj->getActiveSheet(0)->getRowDimension($i + $_row)->setRowHeight(23);
               //  $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->setFont( $phpFont );
                // $obj->getActiveSheet()->getStyle($cellName[1] . ($i + $_row) . ':' . $cellName[$_cnt - 1] . ($i + $_row))->getFont()->setColor( $phpColor );
-               $specName =substr(str_replace(' ','',$_v['specName']),0,9 );
+               $specName =substr(str_replace('CENTS','C',str_replace(' ','',$_v['specName'])),0,9 );
                 //写入行数据
                 $obj->getActiveSheet(0)->getStyle($cellName[1] . ($i + $_row))->getAlignment()->setWrapText(true);//自动换行
                 $obj->getActiveSheet(0)->setCellValue($cellName[1] . ($i + $_row), ' ' . strtoupper($_v['ItemName']));
