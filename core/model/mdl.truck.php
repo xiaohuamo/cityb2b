@@ -6,7 +6,7 @@ class mdl_truck extends mdl_base
 	protected $tableName = '#@_truck';
     public function getAllTruckOfBusiness($business_id) {
 		
-		$sql =" select t.* ,concat(u.contactPersonFirstname,' ',u.contactPersonFirstname) as driverName  from cc_truck t
+		$sql =" select t.* ,if(length(contactPersonNickName)>0,u.contactPersonNickName,concat(u.contactPersonFirstname,' ',u.contactPersonLastname)) as driverName  from cc_truck t
          left join cc_user u on t.current_driver =u.id
         where business_id =$business_id and isAvaliable =1";
 		$allTruckList  = $this->getListBySql($sql);
@@ -23,7 +23,7 @@ class mdl_truck extends mdl_base
 		group by logistic_truck_No ) as o  
 		on t.id =o.logistic_truck_No
 		where t.business_id =$business_id and t.isAvaliable =1";
-		//var_dump($sql);exit;
+		var_dump($sql);exit;
 		$allTruckList  = $this->getListBySql($sql);
 		//var_dump($allTruckList);exit;
 		return $allTruckList;
