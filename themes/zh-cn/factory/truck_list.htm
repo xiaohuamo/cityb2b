@@ -77,7 +77,7 @@
                                                     <{foreach from=$driverList item=sitem1}>
 														<option value='<{$sitem1.id}>'
                                                                 <{if $item.current_driver==$sitem1.id}>selected<{/if}>>
-                                                            <{$sitem1.name}>-<{$sitem1.id}>
+                                                            <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
 														</option>
                                                     <{/foreach}>

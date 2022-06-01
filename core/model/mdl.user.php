@@ -603,7 +603,10 @@ class mdl_user extends mdl_base
 		}else if($user['person_first_name'] || $user['person_last_name']) {
 			$displayName = $user['person_first_name'] . ' '. $user['person_last_name'];
 
-		}else{
+		}else if($user['contactPersonNickName']) {
+            $displayName = $user['contactPersonNickName'] ;
+
+        }else{
 			$displayName = $user['name'];
 		}
 

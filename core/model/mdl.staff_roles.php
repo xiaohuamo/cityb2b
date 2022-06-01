@@ -199,7 +199,7 @@ class mdl_staff_roles extends mdl_base
 
     public function  getAllDriverOfBusiness($business_id){
 
-        $sql ="select user.id,user.name from cc_user user
+        $sql ="select user.id,user.name,user.contactPersonNickName from cc_user user
             left join cc_staff_roles staff on user.id =staff.staff_id
             where user.user_belong_to_user =$business_id and user.role =20 
             and ( staff.roles like '%,0,%' or staff.roles like '%,1,%'or staff.roles like '%,16,%' )
