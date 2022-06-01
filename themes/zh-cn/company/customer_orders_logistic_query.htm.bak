@@ -249,7 +249,7 @@
 									
 
 
-							<td><{if $item.boxesNumber>0}><{$item.boxesNumber}><{else}><{$item.boxes}><{/if}></td>
+							<td><{if $item.boxesNumber>0}><{$item.boxesNumber}>(real)<{else}><{$item.boxes}>(est)<{/if}></td>
 									<td><{$item.logistic_stop_No}></td>
 									    <td><{$item.logistic_sequence_No}></td>
 									  

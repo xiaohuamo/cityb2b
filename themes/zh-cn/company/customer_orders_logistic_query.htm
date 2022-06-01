@@ -444,7 +444,7 @@ function showPdf(type)
 
 	var fitInPage=$('#fitInPage').prop('checked');
 
-	var vUrl='<{$http_root_www}>company/customer_orders_logistic?output='+type+'&status='+vStatus+'&customer_delivery_date='+vcustomer_delivery_date+'&logistic_truck_No='+vlogistic_truck_No+'&sk='+vSk+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	var vUrl='<{$http_root_www}>factory/customer_orders_logistic?output='+type+'&status='+vStatus+'&customer_delivery_date='+vcustomer_delivery_date+'&logistic_truck_No='+vlogistic_truck_No+'&sk='+vSk+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
 	window.open(vUrl);
 }
 
