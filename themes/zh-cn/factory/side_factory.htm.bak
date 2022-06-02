@@ -278,7 +278,7 @@
 				Transcations 
 				</a>
 				
-				<a href="<{$http_root_www}>factory/statement_list" <{if $submenu=='statement_list'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>factory/statement_list?customer_id=all" <{if $submenu=='statement_list'}> class="current"<{/if}>>
 				Statment
 				</a>
 				
