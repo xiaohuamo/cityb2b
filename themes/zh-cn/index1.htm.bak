@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+		<title>CityB2B</title>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>common.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/orderGoods.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/placeOrder.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/datePop.css"/>
+		<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/cart.css"/>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
+
+		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+
+		
+
+		<script>
+		  Vue.use(VueLazyload)
+		  
+		</script>
+	</head>
+	<body class="bgF2F2F2">
+		<div id="order" v-cloak class="relative">
+			<script src="<{$SKIN_PATH}>/js/b2b.js"></script>
+			<{include file ="mobile/b2btop1.htm"}>
+
+			<!-- 主体部分开始 -->
+			   <!-- 上面目录部分 -->
+			<div class="pa15 classifyBox z7">
+				  <!--只有一级分类的情况-->
+				 
+				<!-- <div class="flexBox6">
+					<div class="bigclassify2">
+						<div class="classify" @click="choseBigClassify(index)" v-for="(item,index) in classifBigyList2" :class="currentBigClassify==index?'colFD5001':''">{{item}}</div>
+					</div>
+					<div class="flexBox2">
+						<img src="<{$SKIN_PATH}>img/fl.png" class="xxx" @click="classifyPop"/>&nbsp;&nbsp;
+						<img src="<{$SKIN_PATH}>img/xxx.png" class="xxx" @click="layoutChange"/>
+					</div>
+				</div> -->
+				<div class="bigclassifyall ">
+                   <div style="width:33%;display: inline-block;">
+					   <div class="classifyAll bold " :class="isBought==0?'colFD5001':''" @click="rangeOfproduct(1)" > <!-- -->
+						   <span v-if="isLanguageEn">All</span> <span v-else>全部</span>
+					   </div>
+
+
+
+					   <div class="classifyAll bold" :class="isBought==1?'colFD5001':''" @click="rangeOfproduct(0)">
+						   <span v-if="isLanguageEn">Bought</span><span v-else>已购</span>
+
+					   </div>
+
+				   </div>
+
+					<div class="searchhead" style="width:66%;">
+						<!--	<div class="searchBox flexBox1" v-if="layout"  style=";    margin-bottom: 10px;"> -->
+						<div class="searchBox flexBox1"   style=";    margin-bottom: 10px;">
+							<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
+							<input v-model="searchCon" placeholder="Please Input .." style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-if="isLanguageEn"/>
+							<input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff;"  @input="search" @focus="getFocus" @blur="loseFocus" v-else/>
+							<img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+						</div>
+					</div>
+				</div>
+
+			<!--	<div class="searchhead"  v-else> 
+					<div class="searchBox flexBox1" style="margin-bottom: 10px;">
+						<img src="<{$SKIN_PATH}>img/search.png" class="searchIcon"/>
+						<input v-model="searchCon" placeholder="请输入商家或产品" style="background: #fff; " @input="search" @focus="getFocus" @blur="loseFocus"/>
+					    <img v-if="searchCon!=''" src="<{$SKIN_PATH}>img/cha.png" class="cha" @click="remove"/>
+					</div>
+				</div> 	 -->
+				 	
+				 <!-- 一级分类 -->
+				<div class="flexBox6">
+
+
+					<div class="bigclassify">
+
+						<div class="classify" @click="choseBigClassify(index,item.id)" v-for="(item,index) in classifBigyList" :class="currentBigClassify==index?'colFD5001':''">
+						<span v-if="isLanguageEn">{{item.title_en}}</span> <span v-else>{{item.title_cn}}</span>
+						</div>
+					</div>
+					<div class="flexBox2 pa3-0">
+						<img src="<{$SKIN_PATH}>img/fl.png" class="xxx" @click="classifyPop"/>&nbsp;&nbsp;
+						<img src="<{$SKIN_PATH}>img/xxx.png" class="xxx" @click="layoutChange"/>
+					</div>
+				</div>
+				      <!-- 二级分类 -->
+				<div class="flexBox6 maT15 maL04rem" v-show="scroll2">
+					<div class="bigclassify">
+
+						<div class="classify2" v-for="(item,index) in classifyList2" @click="choseClassify(index,item.id)">
+							<span v-if="isLanguageEn">{{item.title_en}}</span> <span v-else>{{item.title_cn}}</span>
+						    <img class="classify2Active" src="<{$SKIN_PATH}>img/tabActive.png" v-show="currentClassify==index"/>  
+						</div>
+					</div>
+					<div class="flexBox2">
+						<img src="<{$SKIN_PATH}>img/fl.png" class="xxx" @click="classifyPopSubCategory"/>
+					</div>
+				</div>	
+
+				
+			</div>
+			<!-- 二级分类占位 -->
+			<div style="height:55px;"></div>
+			<!-- 只有一级分类占位 -->
+			<!-- <div style="height:43px;"></div> -->
+			<!-- 两级分类弹出框 -->
+			<div v-if="scroll">
+
+
+			<div class="classifyPop  bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
+				<div v-for="(item,index) in classifBigyList" class="w33 center pmb10" @click="clickdetailBig(item.id,index)">
+					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
+				</div>
+			</div>
+
+			</div>
+
+			<div v-else>
+
+
+				<div class="classifyPop0  bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
+					<div v-for="(item,index) in classifBigyList" class="w33 center pmb10" @click="clickdetailBig(item.id,index)">
+						<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="classifyPops  bgfff flexBox2 wrap pa15" v-if="isclassifyPopSubCategory" >
+				<div v-for="(item,index) in classifyList2" class="w33 center pmb10" @click="clickdetailSub(item.id,index)">
+					<span v-if="isLanguageEn">{{item.title_en}}</span><span v-else>{{item.title_cn}}</span>
+
+				</div>
+			</div>
+
+
+
+			
+			<!-- 一级分类弹出框 -->
+			
+			<!-- <div class="classifyPop2 bgfff flexBox2 wrap pa15" v-if="isclassifyPop">
+				<div v-for="item in classifyList2" class="w33 center pmb10" @click="clickdetail">{{item}}</div>
+			</div> -->
+			
+			
+			
+			、
+			<!-- 目录结束 -->
+			<div class="ma15 bgfff borR7" style ="margin-top:50px;">
+				
+				
+				<!-- 橫版判斷 -->
+				<div :class="layout?'flexBox1 bgF2F2F2 wrap':''">
+
+					<div :class="layout?'bgfff goodsbox':''" class="pa15bottom5 borderB" v-for="(item2,index2) in ProductList_filter"  v-bind:id="item2.parent_category_id"      >
+
+
+							<div :class="layout?'':'flexBox3'" pa5-0 >
+							
+							<div class="goodInfo2_" style="display:inline; height:2.0rem;"  v-if="isDiffOfLastCateId(item2.parent_category_id ,(index2-1),'parent')">
+
+								<div class="classify colFD5001 bold" v-if="isLanguageEn" >{{item2.parent_cate_en_name}}</div>
+								<div class="classify colFD5001 bold" v-else>
+									<span v-if="item2.parent_cat_cn_name">{{item2.parent_cat_cn_name}}</span>
+									<span v-else>{{item2.parent_cate_en_name}}</span>
+
+								</div>
+
+							</div>
+							<div class="goodInfo2_" style="display:inline;height:2.0rem;" v-bind:id="getsubid(index2)" v-if="isDiffOfLastCateId(getsubid(index2),(index2-1),'sub')">
+
+                                <div v-if="isLanguageEn">
+
+                                    <div v-if="isexist(item2.sub_cat_en_name)" class="classify colFD5001 bold">{{item2.parent_cate_en_name}}-{{item2.sub_cat_en_name}}</div>
+
+
+                                </div>
+
+                                <div v-else>
+
+                                    <div v-if="isexist(item2.sub_cat_cn_name)" class="classify colFD5001 bold">{{item2.parent_cat_cn_name}}-{{item2.sub_cat_cn_name}}</div>
+
+
+                                </div>
+
+
+
+
+
+							</div>
+
+						</div>
+						<div :class="layout?'':'flexBox3'">
+							<img v-lazy="item2.menu_pic_300"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
+							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
+							<div   class="goodInfo2_">
+								<div >{{item2.title}}</div><div class ="f28 pa5-0" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
+								<div class="flexBox1 pa5-0 " >Code:{{item2.menu_id}}&nbsp;&nbsp;{{item2.unit_en}} </div>
+								<div class="flexBox1 price" v-if="item2.hasGG==0">
+									<span><span class="colFD5001">${{item2.price}}</span> &nbsp;&nbsp;<span class="col9a9a9a linethrough f28 pa" v-if="item2.price != item2.old_price">${{item2.old_price}}</span></span>
+									<div class="flexBox2">
+										<div class="numreduce" @click.stop="numreduce(index2,'g',item2)"></div>
+										<input type="number" v-model="item2.num" class="numInput"  @focus="focus($event,index2,'g')"  @change="Enter(item2.num,index2,item2)" />
+										<div class="numadd" @click.stop="numadd(index2,'g',item2)"></div>
+									</div>
+								
+							
+								</div>
+								<div class="flexBox1 price" v-else>
+                                   <span  v-if="isLanguageEn">
+								   
+								   <span class="colFD5001" >From &nbsp;${{GetGuigeMinPrice(item2)}}</span>
+								   <span  class="col9a9a9a linethrough f28 pa"  v-if ="GetGuigeMinPrice(item2) != GetGuigeOldMinPrice(item2)" >${{GetGuigeOldMinPrice(item2)}}</span>
+								 </span> 
+									<span  v-else>
+									   <span class="colFD5001" >从&nbsp;${{GetGuigeMinPrice(item2)}}</span>
+									   <span class="col9a9a9a linethrough f28 pa"  v-if ="GetGuigeMinPrice(item2) != GetGuigeOldMinPrice(item2)">&nbsp;${{GetGuigeOldMinPrice(item2)}}&nbsp;</span>
+									    <span class="colFD5001" >起</span>
+									</span>
+
+									<div class="commonBtn" @click.stop="Specifications(item2)" v-if="isLanguageEn">
+										Choose Spec
+									</div>
+									<div class="commonBtn" @click.stop="Specifications(item2)" v-else>
+										选规格
+									</div>
+								</div>
+							</div>		
+							
+						</div>
+					<div class="pa15bottom5  col9A9A9A" v-if="item2.menu_en_desc !=''">{{item2.menu_en_desc}}</div>
+				<div class="pa15bottom5  col9A9A9A" v-if="(item2.menu_desc !='') && CheckChinese(this.searchCon) ">{{item2.menu_desc}}</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 点击加载 -->
+	<!--		<div class="col9A9A9A more flexBox4">
+				<img src="<{$SKIN_PATH}>img/loading.png" class="loadingIcon"/>&nbsp;
+			 	<span>正在加载中...</span>
+			</div> -->
+			
+			<!-- 底部 -->
+			<div style="height:3.125rem;"></div>
+			<div class="flexBox1 menuBox z5">
+				<div class="flexBox1">
+					<div @click="gohome('<{$http_root_www}>')" style="margin-right:2.8rem;">
+						<img src="<{$SKIN_PATH}>img/menu1.png"/>
+						<span class="col333 f26"  v-if="isLanguageEn">Home</span> <span class="col333 f26"  v-else>首页</span>
+					</div>
+					<div @click="cartPop" class="cartnumBox">
+						<img src="<{$SKIN_PATH}>img/menu4.png" />
+						<span class="col333 f26"  v-if="isLanguageEn">Cart</span><span class="col333 f26"  v-else>购物车</span>
+						<div v-show="goodsList.length>0">{{goodsList.length}}</div>
+					</div>
+				</div>
+				<div class="flexBox1">
+					<div class="colFD5001 bold">$<span class="f40">{{allTotal}}</span></div>&nbsp;&nbsp;&nbsp;&nbsp;
+				    <div class="commonBtn" @click="placeOrder" v-if="isLanguageEn">Place Order</div><div class="commonBtn" @click="placeOrder"  v-else>下单</div>
+				</div>
+			</div>
+			<!-- 规格弹出框 -->
+			<div class="mask z10" v-if="isPop" @click="closePop('g')">
+				<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('g')" class="closeGuige"/>
+				<div class="pop2 center" @click.stop="clickPop">
+					<div class="flexBox2 borderB pa15 relative">
+						<img :src="guige1Info[0]" class="cartImg"/>
+						<div class="goodInfo2 textLeft">
+							<div class="bold">{{guige1Info[1]}}</div>
+							<div class="pa5-0">{{guige1Info[5]}}</div>
+							<div class="flexBox1 price">
+                                <span>
+								   <span class="colFD5001" v-if="{selectedGuige1Item}">${{selectedGuige1Item['price']}}</span>
+								 <span  class="col9a9a9a linethrough f28 pa" v-if="{selectedGuige1Item} &&  selectedGuige1Item['price'] != selectedGuige1Item['old_price']">${{selectedGuige1Item['old_price']}}</span>
+								</span>
+								
+								
+								<span class="colFD5001" v-else >$-</span>
+
+
+							</div>
+						</div>
+					</div>
+					<div class="pa0-15">
+						<div class="f28 col333 textLeft bold pa15-0" v-if="isLanguageEn">{{guige1Info[4][5]}}</div>
+						<div class="f28 col333 textLeft bold pa15-0" v-else>
+							<span v-if="guige1Info[4][4].length>0">{{guige1Info[4][4]}} </span>	<span v-else>{{guige1Info[4][5]}} </span>
+
+						</div>
+						<div class="flexBox2 wrap">
+							<div :class="current1==index?'checkedBtn detail_btn_45':'detail_btn_45'" v-for="(item,index) in guige1List" @click.stop="choseGuige(index,1)">
+                               <div v-if="isLanguageEn">
+									<div class ="blinkact" v-if="item.islastBought==1"> 
+										<div>{{item.menu_en_name}}</div>
+										<div style="    line-height: 1.375rem;margin-bottom: 5px;"><strong >（Bough last time）</strong></div>
+									</div>
+									<div v-else>{{item.menu_en_name}}</div>
+								</div>
+								 <div v-else>
+							        <div class ="blinkact" v-if="item.islastBought==1">
+										<div>{{item.menu_en_name}}</div>
+										<div style="    line-height: 1.375rem;margin-bottom: 5px;"><strong >（上次购买）</strong></div>
+									</div>
+							      <div v-else>{{item.menu_en_name}}</div>
+								 </div> 
+								 
+								</div>
+						</div>
+						<div class="flexBox1 maT15">
+							<div class="f28">
+								<span class="colFD5001"  v-if="isLanguageEn">From &nbsp;${{guige1Info[3]}}</span>
+								<span class="colFD5001"  v-else>从&nbsp;{{guige1Info[3]}}&nbsp;起</span>
+
+								<span class="col666" style="text-decoration:line-through;"></span>
+							</div>
+							<div class="flexBox2">
+								<div class="numreduce" @click.stop="guige1Numreduce"></div>
+								<input type="number" v-model="num" class="numInput"   @focus="focus($event,1,'s')"  @click.stop="guige1Enter(num)"/>
+								<div class="numadd" @click.stop="guige1Numadd"></div>
+							</div>
+						</div>
+						<div class="relative joinCartBtnBox">
+							<div class="joinCartBtn f30" @click="guige1AddTOCart" v-if="isLanguageEn">Add to Cart</div><div class="joinCartBtn f30" @click="guige1AddTOCart" v-else>加入购物车</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+			
+			<!-- 购物车弹出框 -->
+			
+			<div class="mask z4" v-if="iscartPop" @click="closePop('c')">
+				<div class="bgfff cartPop" @click="closePop('n')" >
+					<img src="<{$SKIN_PATH}>/img/cha2.png" @click="closePop('c')" class="close3"/>
+
+					<div class="center col333 f30 pa15-0 borderB" v-if="isLanguageEn">Total {{goodsList.length}} items（finger slip left see delete button）</div>
+					<div class="center col333 f30 pa15-0 borderB" v-else>共{{goodsList.length}}件（手指左滑显示删除按钮）</div>
+
+					<div class="pa15 borderB relative" v-for="(item2,index2) in goodsList" >
+						<div class="flexBox3"  :class="item2.isTouch?'touchStart':'touchStart2'" @touchStart='touchStart'  @touchend='touchEnd($event,index2)'>
+							<img :src="item2.menu_pic" class="cartImgLarge"  @click.stop="clickGoods" v-if="isLargeScreen"/>
+							<img :src="item2.menu_pic" class="cartImg"  @click.stop="clickGoods" v-else/>
+							<div class="goodInfo2_">
+								<div v-if="isLanguageEn">{{item2.title}}</div>
+								<div v-else>{{item2.title}} {{item2.title_cn}} </div>
+								<div >Code：{{item2.menu_code_id}}</div>
+
+								<div v-if="item2.guige_ids >0 ">
+									<span v-if="isLanguageEn">Spec: {{item2.guige_des}}</span>
+									
+									<span v-else>规格: {{item2.guige_des}}</span>
+								
+								</div>
+
+								
+
+								<div class="flexBox1 price">
+									<span >
+										<span class="colFD5001">${{item2.price}}&nbsp;</span>
+										<span v-if="isLanguageEn">/&nbsp;{{item2.unit_en}} </span><span v-else>/{{item2.unit}} </span>
+									
+									</span>
+									<div class="flexBox2">
+										<div class="numreduce" @click.stop="numreduceCart(index2,'c')"></div>
+										<input type="number" v-model="item2.num" class="numInput"  @focus="focus($event,index2,'c')" @click.stop="EnterCart(item2.num,index2)" @change.stop="EnterCart(item2.num,index2)"/>
+										<div class="numadd" @click.stop="numaddCart(index2,'c')"></div>
+									</div>
+								</div>
+							</div>		
+						</div>
+						<div :class="item2.isTouch?'touchRemoveActive':'touchRemoveActive2'" class="touchRemove f25" @click.stop="clickRemove(index2,item2)">
+							<span v-if="isLanguageEn">Delete</span>	<span v-else>删除</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 配送日期弹框 -->
+			
+			<div class="mask z6" v-if="isDatePop">
+				<img src="<{$SKIN_PATH}>img/cha2.png" @click="closePop('d')" class="datePopDelete"/>
+				<div class="datePop">
+
+					<div class="title col333 f30 bold"  v-if="isLanguageEn">Choose Delivery Date</div>
+					<div class="title col333 f30 bold"  v-else>配送日期</div>
+					<div class="flexBox1" style="flex-wrap:wrap;">
+						<div  class=" dateBox2 relative " v-for="(item,index) in businessDispSchedule">
+
+
+							<div class="  dateBox2selected " v-if="item.isselected" @click ="selectDeliveryDate(index)" >
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+								<img src="<{$SKIN_PATH}>img/sj.png"/>
+							</div >
+
+							<div class="  dateBox2avaliable " v-if="!item.isselected && item.isAvaliable" @click ="selectDeliveryDate(index)">
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+							<div v-if="!item.isselected && !item.isAvaliable">
+
+								<div class="f30 col333 pa5-0" v-if="isLanguageEn">{{item.days}}</div>
+								<div class="f30 col333 pa5-0" v-else>{{item.days_cn}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-if="isLanguageEn">{{item.optionalDisplay}}</div>
+								<div class="f25 colFD5203 pa4-0-4-0" v-else>{{item.optionalDisplay_cn}}</div>
+
+								<div class="f25 col999">{{item.disPlayDate}}</div>
+
+							</div >
+
+
+						</div>
+					</div>
+
+					<div class="title col333 f30 bold" v-if="isLanguageEn">Cut time & Delivery Schedule</div>
+					<div class="title col333 f30 bold" v-else>下单时间及配送时间</div>
+					<div class="flexBox1 pa15-15-5-15">
+						<div class="journal"  v-if="isLanguageEn">Order & Cut Time</div>
+						<div class="journal"  v-else>下单截单时间</div>
+						<div class="journal"  v-if="isLanguageEn">Delivery Schedule</div>
+						<div class="journal"  v-else>配送日期</div>
+					</div>
+					<div class="pa5-15-5-15 f28 col0B0B0B">
+						<div class="flexBox1 pmb15" v-for="item in orderTimeAndDeliveryTime" >
+							<span v-if="isLanguageEn">{{item.ordertime}}</span>
+							<span v-else>{{item.ordertime_cn}}</span>
+							<span v-if="isLanguageEn">{{item.delivery_date_of_week}}</span>
+							<span v-else>{{item.delivery_date_of_week_cn}}</span>
+						</div>
+
+
+					</div>
+					<div class="continue sure"  @click="closePop('d')" >
+						<span v-if="isLanguageEn">Confirm</span>
+						<span v-else>确定</span>
+
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+	
+<script>
+		new Vue({
+			el:"#order",
+			data:{
+				isLanguageEn:1, //语言环境
+				langStrDisplay:'中文',
+
+				selectDateIndex:-1,
+				scroll:true,
+				scroll2:false,
+				currentBigClassify:0,
+				currentClassify:0,
+				current1:0, //规格1组当前选择索引
+				cuurent1ItemId:0, //规格1组当前对应的goodlist2 产品id
+				current2:0,
+
+
+                //仅有主类商家的大类数据
+				classifBigyList2:[],
+
+                //主类子类共有的大类数据
+				classifBigyList:[
+				/*		{
+						id:25685,
+						title_cn:'全部',
+						title_en:'all',
+						sort:0,
+						status:1     // 是否选中状态  1为选中  2是不选中
+						},
+						{
+						id:24685,
+						title_cn:'猪肉',
+						title_en:'pork',
+						sort:1,
+						status:0     // 是否选中状态  1为选中  2是不选中
+						}*/
+
+                     ],
+
+
+				// 子类数据 
+				classifyList2:[
+						
+
+				],
+				list1:[],
+                guige1Info:[ //规格数据结构
+				/*	
+						'/data/upload/2021-10/20211008160210756411.jpg', // pic
+						'pork',  //en_name
+						'猪肉立即',  // cn_name
+						'7.89',  // price 
+					
+	            */
+				],
+				guige1List:[ //规格细节
+
+					/*	{
+							id:'32222',
+							price:'8.5',
+							menu_cn_name:'5mm 肉条',
+							menu_en_name:'5mm stripe',
+							menu_desc:'bala bala bala 5mm',
+						},
+						{
+							id:'322e22',
+							price:'7.5',
+							menu_cn_name:'10mm 肉条',
+							menu_en_name:'10mm stripe',
+							menu_desc:'10mmbala bala bala 5mm',
+						},
+						{
+							id:'322e22',
+							price:'9.5',
+							menu_cn_name:'15mm 肉条',
+							menu_en_name:'15mm stripe',
+							menu_desc:'15mmbala bala bala 5mm',
+						},
+						{
+							id:'322e22',
+							price:'9.5',
+							menu_cn_name:'15mm 肉条',
+							menu_en_name:'15mm stripe',
+							menu_desc:'15mmbala bala bala 5mm',
+						},
+						{
+							id:'322e22',
+							price:'9.5',
+							menu_cn_name:'15mm 肉条',
+							menu_en_name:'15mm stripe',
+							menu_desc:'15mmbala bala bala 5mm',
+						},
+						{
+							id:'322e22',
+							price:'9.5',
+							menu_cn_name:'15mm 肉条',
+							menu_en_name:'15mm stripe',
+							menu_desc:'15mmbala bala bala 5mm',
+						} */
+
+					],
+				selectedGuige1Item:[], //选择规格1当前组
+				num:1,   // 规格中的
+				oldGoodsList2:[],
+				goodsList2:[
+					/*{
+						title:'峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:false,
+						status:0     // 是否选中状态  1为选中  2是不选中
+					},
+				
+				
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:2,
+						num:2,
+						isTouch:false,
+						hasGG:true,
+						status:0
+					} */
+				],
+				goodsList:[
+					/*{
+						title:'1色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:false,
+						status:0     // 是否选中状态  1为选中  2是不选中
+					},
+					{
+						title:'2色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:6,
+						num:2222,
+						isTouch:false,
+						hasGG:false,
+						status:0
+					},
+					{
+						title:'色泽自然利隆赤峰天山大金苗小米2斤/袋',
+						price:2,
+						num:2,
+						isTouch:false,
+						hasGG:true,
+						status:0
+					} */
+				],
+				//商家可以配送的时间；
+				businessDispSchedule:[
+					/*{
+						name:'明天',
+						status:'已选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'已选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:1
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'不可选',
+						date:'周三10:26',
+						isavaliable:0,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:0,
+						isselected:0
+					},
+					{
+						name:'明天',
+						status:'可选',
+						date:'周三10:26',
+						isavaliable:1,
+						isselected:0
+					}*/
+				],
+				orderTimeAndDeliveryTime:[
+				],
+
+				searchCon:'',
+				isPop:false,
+				isDatePop:false,  // 日期弹出框
+				isclassifyPop:false,   // 分类弹出框
+				isclassifyPopSubCategory:false, //次级分类弹出框
+				iscartPop:false,
+				isAddShow:false,      // 点击＋ 
+				isSC:false,           // 是否收藏
+				isShare:false,
+				sum:0,
+				startX:0,
+				endX:0,
+				layout:false  ,   //  0是一排一個 1是一排兩個  	
+				newitem:[],
+				scrollOldPosition:0,
+                ScrollDirection:'',
+				scrollDownCount:0,
+				scrollUpCount:0,
+				user_setting:[],
+				isLargeScreen:0,
+				isBought:0,
+				currentOnfucsInputItemIndex:-1, //记录当前获得焦点的输入框的索引
+				currentOnfucsInputItemIndexCart:-1,
+				currentOnfucsInputItemIndexGuige:-1,
+				isUpdatedCart:0,
+
+			},
+			mounted:function(){
+			  
+			},
+			watch:{
+				'goodsList.length': {
+			        handler(newValue, oldValue) {
+			           if(newValue==0){
+			           	this.iscartPop=false
+			           }
+			        }
+			    }
+			},
+			computed:{
+				 allTotal() {
+				 	var sum=0
+					// alert('goodlist length is :' + this.goodList.length);
+                  //  alert('goods length is :' + this.goodsList.length);
+						 this.goodsList.map(
+								 (item)=>{
+									 sum+=item.price*item.num				 		}
+						 )
+
+
+                    sum = sum.toFixed(2);
+
+				 	return sum
+				 },
+
+				ProductList_filter() {
+
+					let _this=this;
+					let value =_this.searchCon;
+
+					let arrvalue =[];
+					if(value.trim()) {
+						arrvalue = value.trim().split(' ');
+					}
+
+					let find=0;
+
+
+						if(arrvalue.length>0) { //有搜索内容
+							return    _this.goodsList2.filter(item=>{
+								find=0; //每次查找前 find清0
+								for(let i=0;i<arrvalue.length;i++) {
+									if(!this.isBought) {
+										if ((item.title.toUpperCase().indexOf(arrvalue[i].trim().toUpperCase()) != -1) || (item.title_cn.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1) || (item.menu_desc.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1)) {
+											find++;
+										}
+
+									}else{
+										if ( (parseInt(item.bought)>0) && ((item.title.toUpperCase().indexOf(arrvalue[i].trim().toUpperCase()) != -1) || (item.title_cn.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1) || (item.menu_desc.trim().toUpperCase().indexOf(arrvalue[i].toUpperCase()) != -1))) {
+											find++;
+										}
+									}
+
+
+
+
+
+								}
+								if(find == arrvalue.length) {
+
+									return item; //如果输入多个单词，需要每个单词都模糊匹配，如果有一个不匹配也不行
+								}
+
+							});
+
+						}else{ //未有搜索内容
+							if(!this.isBought) {
+								return  _this.goodsList2;
+
+							}else{
+								return    _this.goodsList2.filter(item=>{
+
+									if (parseInt(item.bought)>0) {
+										//alert(item.title);
+										return item; //如果输入多个单词，需要每个单词都模糊匹配，如果有一个不匹配也不行
+									}
+
+								});
+
+							}
+
+
+						}
+
+
+
+				}
+				 
+			},
+			mounted:function(){
+
+				var _self =this;
+				window.addEventListener('scroll', this.scrollToTop);
+
+
+				//获取分类及商品数据
+				this.createcode();
+
+				//获取商家关于该客户的下单及配送时间的文字表述；
+				this.orderTimeAndDeliveryTime=JSON.parse('<{$current_business_tuangou_time}>');
+
+
+				// 获得当前客户可以下单的日期列表显示，
+				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
+                console.log(this.businessDispSchedule);
+			//	this.checkcookievalue();
+			//	console.log('current cookie is :'. getCookie('DispCenterUserSelectedDeliveryDate'));
+
+				//设置默认的配送日期
+				this.selectDefaultDeliveryDate();
+				//console.log(this.businessDispSchedule);
+
+				// 判断屏幕宽度
+				if(window.innerWidth>=500){
+					this.isLargeScreen=1;
+				}
+             //    console.log('window width is :' + window.innerWidth);
+
+                // 获得当前的语言环境
+				this.isLanguageEn =parseInt('<{$user_setting}>');
+				setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+				//根据当前语言环境改变pop menu 的关于语言的提示；
+				this.langStrDisplay =setLanguageContext(this.isLanguageEn);
+
+				//console.log('important !current language is :' + this.isLanguageEn);
+				this.choseBigClassify(0,0); //默认显示第一个大分类的小分类
+				//console.log('jere' + _self.classifBigyList);
+				//this.classifyList2 =_self.classifyList2;
+
+			},
+		    methods:{
+			     checkcookievalue:function(){
+					// console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+					// let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
+					// setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+				 },
+		    	scrollToTop:function(){
+		    		var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  　　				if(scrollTop>207){
+  					//	this.scroll=false
+					//	this.scroll2=false	
+  					}else{
+  					//	this.scroll=true
+					//	this.scroll2=true
+  					}
+					this.isclassifyPop=false;
+					this.isclassifyPopSubCategory =false;
+
+					if(this.scrollOldPosition){
+                       if(this.scrollOldPosition>scrollTop){
+                          this.ScrollDirection='up';
+							this.scrollDownCount =0;
+							this.scrollUpCount++;
+						}else{
+							this.ScrollDirection='down';
+							this.scrollDownCount ++;
+							this.scrollUpCount=0;
+
+						}
+                   }
+                    if(this.scrollDownCount>3  && this.ScrollDirection=='down' && scrollTop>500){
+							this.scroll=false
+							this.scroll2=false	
+					}else if(this.scrollUpCount>5){
+							this.scroll=true
+							this.scroll2=true
+					}
+                
+
+                 //   console.log(this.ScrollDirection);
+					this.scrollOldPosition =scrollTop;
+				//	console.log(scrollTop);
+		    	},scrollToId:function(id){
+                    //alert(id);
+		    		document.getElementById(id).scrollIntoView(true);
+                    if(this.scroll){
+						window.scrollBy(0, -200);
+                    }else{
+						window.scrollBy(0, -200);
+                    }
+				
+					this.isclassifyPop=false
+					this.isclassifyPopSubCategory =false
+
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
+		    	},createcode:function(){
+				  var self = this;
+				 // alert('here');
+				
+				 axios.get('<{$http_root_www}>factorypage/get_cart_json?businessUserId=<{$businessUserId}>')
+					  .then(function (response) {
+					   self.goodsList = response.data;
+
+					//	   alert('good lists is : ' +self.goodsList);
+
+					//  console.log('cart_date is :' +self.goodsList);
+					 })
+					  .catch(function (error) {
+						 console.log(error);
+					  });
+				// 获取商品列表
+				axios.get('<{$http_root_www}>factorypage/get_good_list?id=<{$businessUserId}>')
+					  .then(function (response) {
+					   self.goodsList2 = response.data;
+                       self.oldGoodsList2 =response.data;
+					   console.log(self.goodsList2);
+					 })
+					  .catch(function (error) {
+						 console.log(error);
+					  });
+					
+                 // 获取商品大类列表
+				axios.get('<{$http_root_www}>factorypage/get_category_list_json?id=<{$businessUserId}>')
+					  .then(function (response) {
+					   self.classifBigyList = response.data;
+
+					   self.classifyList2=self.classifBigyList[0].subCategoryList;
+					  // console.log(self.classifBigyList);
+					  // console.log('first sub cate list is :' + self.classifyList2);
+					 })
+					  .catch(function (error) {
+						 console.log(error);
+					  });
+
+					var timer = setInterval(function() {
+
+						if(self.isUpdatedCart ==1){
+							//console.log('before process' + self.goodsList);
+							self.addDataToTable(self.goodsList);
+							self.isUpdatedCart =0;
+							//调用临时购物车表同步数据程序；
+							//console.log('start to update temp table!')
+						}
+					}, 500);
+
+				
+				 
+				},
+				addDataToTable:function(itemData)
+					{
+                      var url = '<{$http_root_www}>factorypage/add_items_temp_cart_table';
+                   //   console.log(itemData);
+					//var businessId =319188;
+
+					var params = new URLSearchParams();
+				
+				   //	console.log(JSON.stringify(itemData));
+					//   alert('here');
+					params.append('itemlist', JSON.stringify(itemData));
+					params.append('businessId', <{$businessUserId}>);
+
+					axios.post('<{$http_root_www}>factorypage/add_items_temp_cart_table',params)
+
+						 .then(function(res) {
+						//	console.log(res);
+						})
+						.catch(function(err) {
+							console.log(err);
+						});
+
+
+					},
+
+				CheckChinese:function(str1)	{
+						let str =this.searchCon;
+						if (escape(str).indexOf('%u') != -1)
+						{return true;
+						}
+						else {return false;}
+				},
+				//设置语言提示
+
+				switchDisplayLanguage:function(){
+					if(this.isLanguageEn) {
+						this.langStrDisplay='En';
+						this.isLanguageEn=0;
+					}else{
+						this.langStrDisplay='中文';
+						this.isLanguageEn=1;
+					}
+					setLanguage(this.isLanguageEn,'<{$http_root_www}>'); //将改变后的值放入后台；
+					this.isAddShow=!this.isAddShow; //关闭弹框
+					//向后台写入目前的语言环境状态；
+				},
+				// 设置某个日期为配送日期，用户点击选择
+				selectDeliveryDate:function(index){
+					// 清除所有的 select 标志
+					var arrlength =this.businessDispSchedule.length;
+			  		for (let i = 0; i < arrlength; i++) {
+						this.businessDispSchedule[i].isselected =0;
+					}
+
+					//设置当前的标志为 select
+					this.businessDispSchedule[index].isselected =1;
+					this.selectDateIndex =index;
+
+
+					setCookie("deliveryDateIndex",index,1);
+					//系统解析选择日期时用了一个特殊符号@，符号前是日期的unix 数字，后面是 morning afternoon ,anytime ,这里暂时设置为anytime .
+					let datetime = this.businessDispSchedule[index].orderDeliveryTimestamp +'@anytime';
+					setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+
+
+					//console.log('index is' + index);
+					//console.log('the setting cookie index is :' + getCookie('deliveryDateIndex'));
+					console.log('the setting cookie DispCenterUserSelectedDeliveryDate is :' + getCookie('DispCenterUserSelectedDeliveryDate'));
+
+				},
+				// 设置默认配送日期
+				selectDefaultDeliveryDate:function(){
+
+
+                   //获取第一个可用日期
+					var firstAvaliableDeliveryDateTime = 0;
+					var cookieDeiveryDatewithanytime =''; //获取cookie的值带有@
+					var cookieDeiveryDatetime =0;//获取具体的delivery Date 时间戳
+					var arrlength =this.businessDispSchedule.length;
+					for (let i = 0; i < arrlength; i++) {
+						if(this.businessDispSchedule[i].isAvaliable) {
+							firstAvaliableDeliveryDateTime =parseInt(this.businessDispSchedule[i].orderDeliveryTimestamp);
+							this.selectDateIndex =i;
+						    break;
+						}
+  					}
+					if(firstAvaliableDeliveryDateTime ==0) {
+						alert('There is no available Date for ordering ,please contact the supplier!')
+					}
+
+					cookieDeiveryDatewithanytime =getCookie('DispCenterUserSelectedDeliveryDate');
+					if(!cookieDeiveryDatewithanytime) {
+					//	alert('cookie is null');
+					}else{
+						//将时间拆分出来
+                       let pos = cookieDeiveryDatewithanytime.indexOf('@');
+						cookieDeiveryDatetime = parseInt(cookieDeiveryDatewithanytime.substr(0,pos));
+						//alert('current time is ' +cookieDeiveryDatetime);
+					}
+                  // alert('first'+firstAvaliableDeliveryDateTime);
+					//alert('cookie'+cookieDeiveryDatetime);
+
+					if(!cookieDeiveryDatetime) {
+						//alert('cookie no value ,just set the first date ,then return !');
+						//alert(this.selectDateIndex);
+						this.businessDispSchedule[this.selectDateIndex].isselected =1;
+						let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+						setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+						//console.log('current cookie is :'+ getCookie('DispCenterUserSelectedDeliveryDate'));
+					}else{
+                    //  alert('has cookie already');
+					  //console.log('current cookie is :'+ getCookie('DispCenterUserSelectedDeliveryDate'));4
+						if(cookieDeiveryDatetime >= firstAvaliableDeliveryDateTime) {
+							//如果cookie的time大于等于ccc，表示客户设置了配送日期，则选择该日期做为当前配送的日期，那样需要获取该时间的索引索引，然后设置，如果
+							//找不到则使用第一个可用配送时间
+							let find =0;
+							for (let i = 0; i < arrlength; i++) {
+								if(this.businessDispSchedule[i].isAvaliable && this.businessDispSchedule[i].orderDeliveryTimestamp ==cookieDeiveryDatetime ) {
+									this.businessDispSchedule[i].isselected =1;
+									let datetime = this.businessDispSchedule[i].orderDeliveryTimestamp +'@anytime';
+									setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+									find =1;
+									//alert('发现并重新设置cookie!' +i + ' ' + datetime);
+									break;
+								}
+							}
+							if(!find){ //如果没有发现，则使用之前发现的第一个可用日期做为默认配送日，并设置cookie .
+								this.businessDispSchedule[this.selectDateIndex].isselected =1;
+								let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+								setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+
+							}
+						}else{
+							//如果小于，表示cookie里面的日期不可用，将当前默认日期换成第一个可配送日，并且存入cookie .
+							this.businessDispSchedule[this.selectDateIndex].isselected =1;
+							let datetime = this.businessDispSchedule[this.selectDateIndex].orderDeliveryTimestamp +'@anytime';
+							setCookie("DispCenterUserSelectedDeliveryDate",datetime,1);
+
+
+						}
+			    	}
+
+
+					//this.businessDispSchedule[i].isselected =1; 设置某个为默认项，这个语法需要用哦到
+				},
+				isDiffOfLastCateId:function(currentCateId,index2,type){
+                    if(index2<0)	return 1;
+					
+                if(type=='parent'){
+					if(this.goodsList2[index2].parent_category_id != currentCateId) 	return 1;
+				}else{
+                    if(!this.goodsList2[index2].sub_category_id) {
+                       return 0;
+                    }
+					if( this.goodsList2[index2].sub_category_id != currentCateId) 	return 1;
+					
+				}
+
+										
+				return 0;
+							  
+						
+				   	
+                    
+				},
+				// 逐一将cart里面的购买单品数量赋值给good list ;
+				synCartDataToList:function(tt){
+                   // alert('here');
+                   
+				},
+				getsubid:function(index) {
+                   // alert(index);
+                    if(!this.goodsList2[index].sub_category_id){
+							return '0';
+                   }else{
+							return  this.goodsList2[index].sub_category_id;
+                    }
+					
+				},
+				scPage:function(){
+				   	this.isSC=!this.isSC
+				},
+				shareApp:function(){
+				  	this.isShare=true
+				},
+				dismissShare:function(){
+					this.isShare=false
+				},
+				clickAdd:function(){
+					this.isAddShow=!this.isAddShow
+				},
+				clickSC:function(){
+					_self=this
+					this.isSC=!this.isSC
+					setTimeout(function(){
+						_self.isAddShow=false
+					},2000)
+				},
+				layoutChange:function(){
+					this.layout=!this.layout
+				},
+				returnPage:function(){
+					window.history.go(-1)
+				},
+				search:function(){
+					//alert(this.searchCon);
+                    this.ProductList_filter;
+				},
+				getFocus:function(){
+//如果是在折叠大类和小类时，滚动到更上的位置，否则，滚动到初始
+
+					if(!this.scroll && !this.scroll2) {
+						window.scrollTo(0,35);
+
+					}else{
+						window.scrollTo(0,0);
+					}
+
+				},
+				loseFocus:function(){
+					
+				},
+				remove:function(){
+					this.searchCon=''
+				}, // 规格弹窗数量增加1
+				guige1Numadd:function() {
+					if(this.currentOnfucsInputItemIndexGuige ==1) { //如果输入框获得焦点，加号第一次点击忽略
+						this.currentOnfucsInputItemIndexGuige =-1;
+						return 1;
+					}
+					this.num++;
+				},guige1Numreduce:function() {
+					if(this.currentOnfucsInputItemIndexGuige ==1) {//如果输入框获得焦点，减号第一次点击忽略
+						this.currentOnfucsInputItemIndexGuige =-1;
+						return 1;
+					}
+                    if(this.num>0) {
+					this.num--;
+					}
+				},guige1AddTOCart:function(){ //规格产品添加购物车按钮动作
+						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得输入框得焦点为-1，不再聚焦
+						this.isPop=false ;//关闭弹窗
+						//this.num++;
+						
+						var arrlength =this.goodsList2.length;
+					
+						for (let i = 0; i < arrlength; i++) {
+						   if( this.cuurent1ItemId ==this.goodsList2[i].id) { //如果当前选择规格的id 
+							
+							//this.goodsList2[i].num++; // 因为是规格，所以商品列表中的数量就不再更新，反正看不到。
+							this.guiGeitemNumUpdateOnCart(this.goodsList2[i],'s'); //调用关于规格的增加，更新购物车里面的数量;
+						   }
+						} 
+
+                      this.num =0;
+
+				},
+
+
+               // 为什么不直接使用index ，因为开启过滤功能之后，index和goodslist2里面的不符合，同时产品列表中可能有多个相同的产品（一个产品在不同的小类或大类中），需要同时同步更新。
+				numadd:function(index2,source,item){   //  数量增加
+					if(source=='g'){//  商品中的g  购物车中的c  规格中的s
+                    //     alert('click add:' + index2 + " focu index is :" +this.currentOnfucsInputItemIndex );
+					if(this.currentOnfucsInputItemIndex ==index2){ // 如果焦点产品和当前产品相同 则不执行增加操作
+						this.currentOnfucsInputItemIndex=-1;
+						//alert('click the same items');
+						return 1;
+					}
+					var arrlength =this.goodsList2.length;
+					
+				    for (let i = 0; i < arrlength; i++) {
+					   if(item.id ==this.goodsList2[i].id) {
+					    
+						this.goodsList2[i].num++;
+						this.itemNumUpdateOnCart(this.goodsList2[i],'g');
+					   }
+					} 
+
+						
+					}else if(source=='c'){
+						this.goodsList2[index2].num++
+					}else{  // 规格中的
+						this.num ++;
+						//console.log(item);
+
+					}
+				// console.log(this.goodsList);
+				},numaddCart:function(index2,source){   //  数量增加
+                  
+					if(source=='g'){//  商品中的g  购物车中的c  规格中的s
+						this.goodsList[index2].num++;
+						
+					}else if(source=='c'){
+
+						if(this.currentOnfucsInputItemIndexCart ==index2){ // 如果焦点产品和当前产品相同 则不执行增加操作
+							this.currentOnfucsInputItemIndexCart=-1;
+							//alert('click the same items');
+							return 1;
+						}
+
+						this.goodsList[index2].num++;
+						this.itemNumUpdateOnList(this.goodsList[index2],'c');
+						
+					}else{  // 规格中的
+						this.num++
+					}
+				// console.log(this.goodsList);
+				},
+				itemNumUpdateOnList:function(goodItem,source){
+				 
+				  // check if cart has the item already.
+				  // add item to cart if not exist .\
+				  
+				  var indexOfiteminGoodslist = this.checkPositionofItemInList(goodItem,source);
+
+				  if(indexOfiteminGoodslist >=0 ){
+				    // 找到该产品，更新该数量为列表中的数量
+					
+					this.goodsList2[indexOfiteminGoodslist].num=goodItem.num;
+				  }
+					this.isUpdatedCart =1; //设置cart被改变
+				  // update the database 
+				  
+				},guiGeitemNumUpdateOnCart:function(goodItem,source){ // gooditem为主产品信息
+
+                     var indexOfiteminGoodslist = this.guigeCheckPositionofItemInCart(goodItem,source);
+
+				  if(indexOfiteminGoodslist >=0 ){
+				    // 找到该产品，更新该数量为列表中的数量
+					
+                    
+                    // if the num equal 0 , then delete the item on the cart .
+                    if(this.num ==0) {
+                        this.clickRemove(indexOfiteminGoodslist);
+                     }else{
+						this.goodsList[indexOfiteminGoodslist].num=this.num;
+					}
+					
+				  }else{
+				   //alert('not find the item');
+					this.guigeAdditemtocart(goodItem,source); // 没有发现，则添加一个产品到购物车列表
+				  }
+
+
+				  this.isUpdatedCart =1; //设置cart被改变
+
+
+				},
+                // 更新购物车列表 （商品添加）
+				itemNumUpdateOnCart:function(goodItem,source){
+				
+				  // check if cart has the item already.
+				  // add item to cart if not exist .\
+
+				  var indexOfiteminGoodslist = this.checkPositionofItemInCart(goodItem,source);
+
+				  if(indexOfiteminGoodslist >=0 ){
+				    // 找到该产品，更新该数量为列表中的数量
+					
+                    
+                    // if the num equal 0 , then delete the item on the cart .
+                    if(goodItem.num ==0) {
+                        this.clickRemove(indexOfiteminGoodslist);
+
+                     }else{
+						this.goodsList[indexOfiteminGoodslist].num=goodItem.num;
+					}
+					
+				  }else{
+				   //alert('not find the item');
+					this.additemtocart(goodItem,source); // 没有发现，则添加一个产品到购物车列表
+				  }
+				 
+				  // update the database 
+					this.isUpdatedCart =1; //设置cart被改变
+				},
+				
+				//check if item in the cart , will details whne do guige 
+				checkPositionofItemInList(goodItem,source){ 
+				    var arrlength =this.goodsList2.length;
+					
+				    for (let i = 0; i < arrlength; i++) {
+					   if(goodItem.id ==this.goodsList2[i].id) {
+					    
+						return i; //返回找到的索引
+					   }
+					} 
+					
+					return -1; //没有发现
+				},//检查规格中有没有相同的产品 ，产品号和规格号都相同；
+				guigeCheckPositionofItemInCart(goodItem,source) {
+                  var arrlength =this.goodsList.length;
+					
+				    for (let i = 0; i < arrlength; i++) {
+                      // 如果产品编号和规格编号都相同
+					   if(this.goodsList[i].id ==goodItem.id   && this.goodsList[i].guige_ids ==this.selectedGuige1Item.id) {
+					   
+						return i; //返回找到的索引
+					   }
+					} 
+					return -1; //没有发现
+
+
+
+                },
+				
+				//check if item in the cart , will details whne do guige 
+				checkPositionofItemInCart(goodItem,source){ 
+				    var arrlength =this.goodsList.length;
+					
+				    for (let i = 0; i < arrlength; i++) {
+					   if(goodItem.id ==this.goodsList[i].id) {
+					   
+						return i; //返回找到的索引
+					   }
+					} 
+					return -1; //没有发现
+				}, //添加一个无规格产品到购物车
+				additemtocart:function(goodItem,source){
+				  this.newitem=
+					[ {
+						title:goodItem.title,
+						title_cn:goodItem.title_cn,
+						price:goodItem.price,
+						old_price:goodItem.old_price,
+						num:goodItem.num,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:false,
+						status:0,     // 是否选中状态  1为选中  2是不选中
+						menu_pic:goodItem.menu_pic,
+						id:goodItem.id, //产品编号
+						guige_ids:0,
+						guige_des:'',
+						unit:goodItem.unit,
+						unit_en:goodItem.unit_en,
+						menu_code_id :goodItem.menu_id
+					}];					
+					this.goodsList.push(this.newitem[0]);
+                    
+
+				
+				},//添加一个有规格产品到购物车
+				guigeAdditemtocart:function(goodItem,source){
+				  this.newitem=
+					[ {
+						title:goodItem.title,
+						title_cn:goodItem.title_cn,
+						price:this.selectedGuige1Item.price,
+						old_price:this.selectedGuige1Item.old_price,
+						num:this.num,
+						isTouch:false,   // 是否显示删除按钮
+						hasGG:true,
+						status:0,     // 是否选中状态  1为选中  2是不选中
+						menu_pic:goodItem.menu_pic,
+						id:goodItem.id,
+						guige_ids:this.selectedGuige1Item.id,
+						guige_des:this.guige1Info[4][5] + ' ' + this.selectedGuige1Item.menu_en_name,
+						unit:goodItem.unit,
+						unit_en:goodItem.unit_en,
+						menu_code_id :goodItem.menu_id
+
+					}];
+
+					this.goodsList.push(this.newitem[0]);
+				
+				},
+				numreduce:function(index2,source,item){   // 数量减少
+					if(source=='g'){//  商品中的
+					   if(item.num <=0){
+					   	return false
+					   }else{
+
+							var arrlength =this.goodsList2.length;
+							
+							for (let i = 0; i < arrlength; i++) {
+							   if(item.id ==this.goodsList2[i].id) {
+								
+								this.goodsList2[i].num--;
+								this.itemNumUpdateOnCart(this.goodsList2[i],'g');
+							   }
+							} 
+
+
+					   	//this.goodsList2[index2].num--;
+						//this.itemNumUpdateOnCart(this.goodsList2[index2],'g');
+					   }
+					}else if(source=='c'){
+						if(this.goodsList[index2].num==1){
+					   		return false
+					   }else{
+					   		this.goodsList[index2].num--
+					   }
+					}else{
+						if(this.num==1){
+							return false
+						}else{
+							this.num--
+						}
+					}	
+				},
+				numreduceCart:function(index2,source){   // 数量减少
+					if(source=='g'){//  商品中的
+					   if(this.goodsList2[index2].num <=0){
+					   	return false
+					   }else{
+					   	this.goodsList2[index2].num--;
+						
+					   }
+					}else if(source=='c'){
+						if(this.goodsList[index2].num<=0){
+					   		return false
+					   }else{
+					   		this.goodsList[index2].num--;
+							this.itemNumUpdateOnList(this.goodsList[index2],'c');
+                            if(this.goodsList[index2].num ==0) {
+                                this.clickRemove(index2);
+							}
+					   }
+					}else{
+						if(this.num==1){
+							return false
+						}else{
+							this.num--
+						}
+					}	
+				},
+				touchStart:function(e){ //滑动开始
+				   // 记录初始位置
+				   this.startX = e.touches[0].clientX;
+				},
+				touchEnd:function(e,index2){   //滑动删除
+				  // 当前滑动的元素
+				  let parentElement = e.currentTarget;
+				  // 记录结束位置
+				  this.endX = e.changedTouches[0].clientX;
+				  // 左滑,计算滑动距离
+				  if (this.startX - this.endX > 30) {
+					  // console.log('///////')
+					   this.goodsList[index2].isTouch=true
+					   
+					  // console.log(this.goodsList[index2].isTouch)
+					  // console.log(this.goodsList)
+					   
+				  }
+				  // 右滑,计算滑动距离
+				  if (this.startX - this.endX < -30) {
+						this.goodsList[index2].isTouch=false	
+				  }
+				  this.startX = 0;
+				  this.endX = 0;
+				},
+				clickRemove:function(index2,item){ // 点击删除
+					this.goodsList.splice(index2,1);
+
+					//循环查找产品列表中的对应menu id匹配，并清楚数量。
+					var arrlength =this.goodsList2.length;
+					if(item) {
+						for (let i = 0; i < arrlength; i++) {
+							if (item.id == this.goodsList2[i].id) {
+
+								this.goodsList2[i].num = 0;
+
+							}
+						}
+					}
+					this.isUpdatedCart =1; //标记需要处理
+				},
+				focus:function(event,index2,source){
+					event.currentTarget.select();
+					if(source =='g') {
+						this.currentOnfucsInputItemIndex=index2; //当前获得焦点的索引；
+					}
+					if(source=='c'){
+						this.currentOnfucsInputItemIndexCart=index2; //当前获得焦点的索引；
+					}
+					if(source=='s'){
+						this.currentOnfucsInputItemIndexGuige=1; //当前获得焦点的索引；
+					}
+
+					// alert(index2);
+				},
+				Enter:function(num,index2,item){
+					if(num.length==1){
+					  // this.goodsList[index2].num=this.goodsList[index2].num.replace(/[^1-9]/g,'')
+					}else{
+					  // this.goodsList[index2].num=this.goodsList[index2].num.replace(/\D/g,'')
+					}
+					// 修改购物车列表数量
+				this.itemNumUpdateOnCart(item,'g');
+				},guige1Enter:function(num){
+					this.num =num;
+				},
+				EnterCart:function(num,index2){
+					if(num.length==1){
+					  // this.goodsList[index2].num=this.goodsList[index2].num.replace(/[^1-9]/g,'')
+					}else{
+					  // this.goodsList[index2].num=this.goodsList[index2].num.replace(/\D/g,'')
+					}
+					// 修改购物车列表数量
+				this.itemNumUpdateOnList(this.goodsList[index2],'c');
+					if(num==0){
+						this.clickRemove(index2,0);
+					}
+				}, //获得某个产品规格组中的最小价格
+				GetGuigeMinPrice:function(item){
+					let GuigeItemArr = item['menu_option_list'];
+					let arrlength =GuigeItemArr.length;
+					let min_price =0.00;
+					let new_price =0.00;
+					for (let i = 0; i < arrlength; i++) {
+
+						let new_price =GuigeItemArr[i].price;
+						if(i==0){
+							min_price =new_price;
+						}else{
+							if(new_price < min_price){
+
+									min_price =new_price;
+							}
+
+						}
+
+					}
+					return min_price;
+
+				},
+				GetGuigeOldMinPrice:function(item){
+					let GuigeItemArr = item['menu_option_list'];
+					let arrlength =GuigeItemArr.length;
+					let min_price =0.00;
+					let new_price =0.00;
+					for (let i = 0; i < arrlength; i++) {
+						let new_price =GuigeItemArr[i].old_price;
+						if(i==0){
+							min_price =new_price;
+						}else{
+							if(new_price < min_price){
+								min_price =new_price;
+							}
+
+						}
+					}
+					return min_price;
+
+				},
+				Specifications:function(item){  // 点击规格
+					//获得 该项目的实际产品
+					this.guige1Info[0] =item['menu_pic'];
+					this.guige1Info[1] =item['title'];
+					this.guige1Info[2] =item['title_cn'];
+					this.guige1Info[3] =this.GetGuigeMinPrice(item);
+					this.guige1Info[4] =item['guige_des1'];
+					this.guige1Info[5] =item['unit_en'];
+					this.guige1Info[6] =item['unit'];
+					this.guige1Info[7] =this.GetGuigeOldMinPrice(item);
+					
+                    //赋值 规格列表
+					this.guige1List =item['menu_option_list'];
+
+                    //初始化 规格 
+                    this.choseGuige(0,1);
+					//this.current1=0;
+					//this.selectedGuige1Item=this.guige1List[0];
+				//	console.log(this.selectedGuige1Item);
+                 // 设置当前规格对应的goodlist2中的 产品id 
+                    this.cuurent1ItemId =item.id;
+					
+					this.isPop=true;
+				},
+				choseGuige:function(index,source){  //选择规格
+					if(source==1){ //选择第一层规格
+						this.current1=index;
+						this.selectedGuige1Item=this.guige1List[index];
+                       
+						// 获得当前选定的规格在购物车中的数量；
+						this.num = 1;
+						var arrlength =this.goodsList.length;
+					    let find =0 ;
+						for (let i = 0; i < arrlength; i++) {
+						  // 如果产品编号和规格编号都相同
+						   if(this.goodsList[i].id == this.cuurent1ItemId   && this.goodsList[i].guige_ids ==this.selectedGuige1Item.id) {
+						   this.num = this.goodsList[i].num;
+							break;
+						   }
+						} 
+
+
+                        
+						//console.log(this.selectedGuige1Item);
+					}else{
+						this.current2=index
+					}
+				},
+				closePop:function(source){  // 关闭弹窗
+					if(source=='c'){  // 购物车
+						this.iscartPop=false;
+						this.currentOnfucsInputItemIndexCart =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
+					}else if(source=='d'){
+						this.isDatePop=false
+					}else if(source=='n'){
+						//alert('here');
+						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
+						return 1;
+					}else{
+						this.isPop=false;
+						this.currentOnfucsInputItemIndexGuige =-1; // 标记当前跟踪得弹出规格框输入框得焦点为-1，不再聚焦
+					}
+				},
+				cartPop:function(){  // 购物车弹出框
+					this.iscartPop=!this.iscartPop
+				},
+				classifyPop:function(){  // 分类弹出框
+					// alert('here');
+					if(this.scroll){
+						this.isclassifyPop=!this.isclassifyPop;
+						//alert('scroll');
+					}else{
+						this.isclassifyPop=!this.isclassifyPop;
+						//alert('not scroll');
+						//return false;
+					}
+				},
+				classifyPopSubCategory:function() {  // 分类弹出框
+					if (this.classifyList2.length > 0) {
+
+					if (this.scroll) {
+						this.isclassifyPopSubCategory = !this.isclassifyPopSubCategory
+					} else {
+						return false
+					}
+					}
+				},
+				rangeOfproduct:function(type){
+					if(type ==1) {
+						this.isBought =0
+						//alert('all');
+					}else{
+						this.isBought =1
+						//alert('bought');
+					}
+
+				},
+				choseBigClassify:function(index,id){  //  选择一级分类
+					this.searchCon ='';					
+					this.currentBigClassify=index;
+					this.scroll2=true;
+					this.classifyList2=this.classifBigyList[index].subCategoryList;
+					//console.log ('middle change sub cat list is :' + this.classifyList2);
+					if(parseInt(id)>0) {
+						this.scrollToId(id);
+					}
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
+					
+                      
+					//console.log(this.classifyList2);
+					
+				},
+				choseClassify:function(index,id){  //  选择二级分类
+					this.searchCon =''; 
+					this.currentClassify=index;
+					this.scrollToId(id);
+
+
+				},
+				clickdetailBig:function(id,index){
+					this.searchCon ='';
+					this.currentBigClassify=index;
+					this.isclassifyPop=false
+					this.isclassifyPopSubCategory =false
+					this.scrollToId(id);
+				//	alert('点击大类pop框');
+
+					this.classifyList2=this.classifBigyList[index].subCategoryList;
+
+					if(this.classifyList2.length>0){
+						this.scroll2=true;
+					} else{
+						this.scroll2=false;
+					}
+					
+				},
+				clickdetailSub:function(id,index){
+					this.searchCon ='';
+					this.currentClassify=index;
+					this.isclassifyPop=false
+					this.isclassifyPopSubCategory =false
+					this.scrollToId(id);
+					
+				},
+				placeOrder:function(){    // 下单
+                 this.addDataToTable(this.goodsList);
+					window.location.href="<{$http_root_www}>member/showcart?checkout=1&business_userid=<{$businessUserId}>#directCheckout"
+				},
+				nextPage:function(){  // 跳转店铺说明
+					window.location.href="serviceDescription.htm"
+				},
+
+				datePop:function(){
+					this.isDatePop=true
+				},
+				clickPop(){
+				  return false	
+				},
+				clickGoods(){
+				/*	window.location.href="<{$SKIN_PATH}>/goods/detail.htm" */
+				},
+                isexist:function(item1){
+                   if (item1 ) {
+                       return true;
+                   }else{
+                       return false;
+                   }
+
+                 }
+			}
+		});
+
+
+
+
+	</script>
+</html>
