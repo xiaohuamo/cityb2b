@@ -123,6 +123,8 @@
 				<{/if}>
 			</div>
 		</li>
+		
+		
 
         //订单管理
 		<li>
@@ -152,7 +154,48 @@
 
 		<{/if}>
 
-   //配货中心
+  //库存管理
+  <{if in_array('9', explode(',', $user_roles.roles))
+		||  in_array('10', explode(',', $user_roles.roles))
+		||  in_array('1', explode(',', $user_roles.roles))
+		||  in_array('2', explode(',', $user_roles.roles))
+		||  in_array('0', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
+		
+		
+		<li>
+	<div class='top-level'>
+		<i class="fa fa-fw fa-line-chart" ></i>
+		<a <{if $menu=='Store_centre'}> class="current"<{/if}>><{$lang->stock_center}></a>
+	</div>
+	<div class='second-level'>
+				
+		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='Store_List'}> class="current"<{/if}>>
+			   库房管理
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
+			   入库管理
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
+			   出库管理
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
+			   库存调整
+		</a>
+		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
+			   库存报表
+		</a>
+	
+			
+	</div>
+	</li>
+		
+		
+	<{/if}>
+  
+
+
+  //配货中心
 		//角色为客户服务或客户经理
 		<{if in_array('9', explode(',', $user_roles.roles))
 		||  in_array('10', explode(',', $user_roles.roles))

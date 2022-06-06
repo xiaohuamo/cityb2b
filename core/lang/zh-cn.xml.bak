@@ -55,7 +55,7 @@
 	<customer_list_recycle>隐藏客户</customer_list_recycle>
 	<customer_price_management>折扣管理</customer_price_management>
 	<orderLists>订货列表</orderLists>
-	
+	<order_return>退货</order_return>
 	<add_new_order>新增订单</add_new_order>
 	<print_picking_list>非加工总备货单</print_picking_list>
 	<Single_Picking_item_edit>备货单品管理</Single_Picking_item_edit> 

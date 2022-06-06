@@ -684,6 +684,7 @@
     <!-- 15 -->
     <customer_center>Customer Center</customer_center>
     <dispatching_center>Dispatching Center</dispatching_center>
+		<stock_center>Stock Management</stock_center>
 	<Producing_Centre>Producing Center</Producing_Centre>
     <logistic_center>Logistic</logistic_center>
     <order_management>Orders</order_management>

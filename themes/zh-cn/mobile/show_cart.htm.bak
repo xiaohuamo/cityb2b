@@ -67,7 +67,7 @@
 			}
 			/* 定义blink类*/
 			.blink{
-				color: #000;
+				color: #f30303;
 			
 				animation: blink 1s linear infinite;  
 				/* 其它浏览器兼容性前缀 */
@@ -75,6 +75,7 @@
 				-moz-animation: blink 1s linear infinite;
 				-ms-animation: blink 1s linear infinite;
 				-o-animation: blink 1s linear infinite;
+				font-weight:600;
 			}
 			<style>
 
@@ -2180,7 +2181,7 @@
             var item_message = $('#item_note').val();
 			var  sav_temp_message =$("input[name='sav_temp_message']:checked").val();
 			//$('.sav_temp_message').val();
-			//alert(sav_temp_message);
+			alert(sav_temp_message);
           // alert(current_menu_id);
 		  // alert(item_message);
 		  //  alert(sav_temp_message);
