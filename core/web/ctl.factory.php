@@ -1727,6 +1727,7 @@ class ctl_factory extends cmsPage
 
           $itemDetails =array(
             'new_customer_buying_quantity'  =>$quantity,
+            'customer_buying_quantity'  =>$quantity,
          //   'voucher_deal_amount' =>$amount,
             'adjust_subtotal_amount'=>round(floatval($new_sub_total),2)
           );
