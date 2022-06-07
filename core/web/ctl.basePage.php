@@ -385,6 +385,7 @@ public function data_refresh(){
     foreach ($result as $key=>$value){
         if($value['data_type']==100){
             $this->auto_send_invoice_to_xero($value['ref_id'],$value['ref_value1'],'updateFromAuto');
+            sleep(2);
         }
     }
     $where =array(

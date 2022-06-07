@@ -294,7 +294,7 @@ public function get_manual_producing_data($dateSearcch,$factoryId,$driver){
       }
       $sql .= "  order by o.logistic_truck_No,o.city";
      $data =$this->getListBySql($sql);
-var_dump($sql);exit;
+//var_dump($sql);exit;
    /* if($data){
 
         foreach ($data as $key=>$value){
