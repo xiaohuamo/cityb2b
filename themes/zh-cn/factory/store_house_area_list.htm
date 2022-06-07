@@ -26,7 +26,7 @@
 				
 				<div class="colCurTit">
 					<span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>factory/store_house_area_edit" class="link2"><i class='fa fa-plus'></i>New</a>
+						<a class='btn-yellow' href="<{$http_root_www}>factory/store_house_area_edit?house_id=<{$house_id}>" class="link2"><i class='fa fa-plus'></i>New</a>
 					</span>
 				</div>
 				<div class="main-form">			
@@ -34,9 +34,21 @@
 
 				<div class="input-box multi-select clearfix">
 
-							<h1>Store House Management</h1>
+							<h1>Store House Area Management</h1>
 
 						</div> </form> </div>
+						
+				<div>
+				<span>&nbsp;&nbsp;<a href ="<{$http_root_www}>factory/store_house_list" >Return </a></span>&nbsp;&nbsp;
+						
+						<span style="padding-left: 20px;" > Store Info <{if $data}>
+									<{$data.store_house_id}>-<{$data.store_house_code}>
+								<{else}>
+									<{$house_id}>-<{$code}>
+								<{/if}></span>		
+					
+						</div>
+						<br>
 				<div class="main-list">
 					<table cellspacing="0" cellpadding="0" width="100%" >
 						<thead>

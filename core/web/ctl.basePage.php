@@ -388,7 +388,8 @@ public function data_refresh(){
         }
     }
     $where =array(
-        'status'=>0
+        'status'=>0,
+        'data_type'=>100
     );
     $mdl_autorun_data->updateByWhere(array('status'=>1),$where);
 

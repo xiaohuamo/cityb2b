@@ -3930,6 +3930,35 @@ public function return_items_submit_to_statment_action() {
 
     }
 
+    public  function delete_store_house_area_action()
+    {
+        $mdl_store_house_area = $this->loadModel('store_house_area');
+
+        $id = (int)get2('id');
+
+        if(!$id)$this->sheader(null, "no id");
+
+
+        $store_house_area = $mdl_store_house_area->get($id);
+
+        if(!$store_house_area)$this->sheader(null, "no find house");
+
+        if($store_house_area['factory_id'] !=$this->current_business['id'] ) {
+            $this->sheader(null, "no access");
+        }
+      /* $count = $this->loadModel('store_house_area')->getCountOfStoreRoomOfFactory($this->current_business['id'],$id);
+       var_dump($count);exit;
+        if($count>0) {
+            $this->sheader(null, "Items setting on the area  ,can not delete !");
+        }else{
+            $mdl_store_house_area->delete($id);
+        }
+     */
+
+        $mdl_store_house_area->delete($id);
+        $this->sheader(HTTP_ROOT_WWW."factory/store_house_area_list?id=".$store_house_area['store_house_id']);
+
+    }
 
 
    public  function staff_sales_delete_action()
@@ -6449,22 +6478,20 @@ public function return_items_submit_to_statment_action() {
         if(!$id) {
             $this->form_response_msg('no store id');
         }
+        $this->setData($id,'house_id');
 
-        $mdl_store_house_area = $this->loadModel('store_house_area');
         $mdl_store_house = $this->loadModel('store_house');
-        $where =array(
-            'factory_id' =>$this->current_business['id'],
-            'id'=>$id
-        );
-
 
         //获得供应商 room info
-        $store_hosue_rec = $mdl_store_house->getByWhere($where);
+        $store_hosue_rec = $mdl_store_house->get($id);
+        $this->setData($store_hosue_rec['code'],'code');
 
-        if($store_hosue_rec['factory_id'] !=$this->current_business['id'] || !$store_hosue_rec) {
+        if($store_hosue_rec['factory_id'] !=$this->current_business['id'] ) {
             $this->form_response_msg('no access');
         }
 
+
+        $mdl_store_house_area = $this->loadModel('store_house_area');
         $where =array(
             'factory_id' =>$this->current_business['id'],
             'store_house_id'=>$id
@@ -6565,22 +6592,35 @@ public function return_items_submit_to_statment_action() {
     function store_house_area_edit_action()
     {
 
-        $mdl_store_house_area = $this->loadModel('store_house_area');
+       $mdl_store_house_area = $this->loadModel('store_house_area');
 
-      //  $house_id = (int)get2('house_id');
+
         $id = (int)get2('id');
 
-        $store_house_area = $mdl_store_house_area->getByWhere(array('id' => $id, 'factory_id' => $this->current_business['id']));
-//var_dump($store_house_area);exit;
-        if(!$store_house_area && $id ){
+       //如果是新增
+       if(!$id) {
+
+           $house_id = (int)get2('house_id');
+
+           if($house_id){
+               $this->setData($house_id,'house_id');
+               $rec = $this->loadModel('store_house')->get($house_id);
+               $this->setData($rec['code'],'code');
+               //var_dump($rec);exit;
+           }
+       }
+
+        $store_house_area_rec = $mdl_store_house_area->get($id);
+
+        //var_dump($store_house_area);exit;
+
+        if($store_house_area_rec['factory_id']!=$this->current_business['id'] && $id){
             $this->form_response_msg('no_access');
         }
 
         if (is_post()) {
 
-
-
-            //var_dump($id);exit;
+     //var_dump($id);exit;
 
             $store_house_id = trim(post('store_house_id'));
             $store_area = trim(post('store_area'));
@@ -6595,53 +6635,44 @@ public function return_items_submit_to_statment_action() {
             }
 
 
-            $where =array(
-                'factory_id'=>$this->current_business['id'],
-                'store_house_id'=>$store_house_id,
-                'store_area'=>$store_area,
-            );
 
-            $store_area_rec = $mdl_store_house_area->getByWhere($where);
-//var_dump($store_area_rec);exit;
-            if($store_area_rec && $id != $store_area_rec['id']){
-                $this->form_response_msg('the store store_house_id  is exist,please use a different store code');
-            }
 
 
             $data = array(
-                'store_house_id'=>$store_house_id,
-                'store_area'=>$store_area,
+               'store_area'=>$store_area,
                 'note'=>$note
             );
 
 
-            if($store_area_rec && $id) {
+            if($id) {
 
                 if ($mdl_store_house_area->update($data, $id)) {
 
-                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_house_area_list?id='.$id);
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_house_area_list?id='.$store_house_id);
                 } else {
                     $this->form_response_msg('something wrong');
                 }
 
             }else{
                 $data['factory_id'] = $this->current_business['id'];
+                $data['store_house_id'] = $store_house_id;
                 if ($mdl_store_house_area->insert($data)) {
 
 
-                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_house_area_list?id='.$id);
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_house_area_list?id='.$store_house_id);
                 } else {
                     $this->form_response_msg('something wrong');
                 }
             }
 
-
-
-
-
-
         } else {
-            $this->setData($store_house_area, 'data');
+            if($id){
+                $store_house_rec = $this->loadModel('store_house')->get($store_house_area_rec['store_house_id']);
+                $store_house_area_rec['store_house_code'] =$store_house_rec['code'];
+            }
+
+
+            $this->setData($store_house_area_rec, 'data');
             $this->setData('Store House Area Edit', 'pagename');
             $this->setData('Store_List', 'submenu');
             $this->setData('Store_centre', 'menu');
