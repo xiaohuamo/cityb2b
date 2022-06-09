@@ -40,7 +40,19 @@
 
 				<div class="box2">	
 
-				
+					<div>
+						<br>
+						<{if $customer_info}>
+						<span style="padding-left: 20px;" > Store Info <{if $data}>
+									<{$data.store_house_id}>-<{$data.store_house_code}>
+								<{else}>
+									<{$house_id}>-<{$code}>
+								<{/if}></span>		
+						<{/if}>
+					</div>
+	  
+	  
+					<br>
 
 					<div class="main-form">			
 

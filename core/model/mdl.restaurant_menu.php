@@ -476,6 +476,23 @@ class mdl_restaurant_menu extends mdl_base
 		
 		
 	}
+
+    public function getItemWithSpecInfo($factory_id){
+
+        $sql ="select spec.id as spec_type_id ,spec.category_en_name as spec_type_name , 
+       if(spec_details.id is null,0,spec_details.id) as spec_id, stock.stock_qty,spec_details.menu_en_name as spec_name,
+       o.* ,b.category_cn_name,b.category_en_name 
+from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
+    left join cc_restaurant_menu_option_category spec on o.menu_option = spec.id 
+    left join cc_restaurant_menu_option spec_details on spec.id=spec_details.restaurant_category_id 
+                                                            and (length(spec_details.menu_en_name)>0 or length(spec_details.menu_cn_name)>0 ) 
+    left join cc_producing_item_stock stock on o.id =stock.item_id and if(spec_details.id is null ,0,spec_details.id)=stock.spec_id 
+where o.isDeleted=0 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0)
+  and o.restaurant_id=$factory_id order by restaurant_category_id,LENGTH(o.menu_id),o.menu_id";
+     // var_dump($sql);exit;
+       $result = $this->getListBySql($sql);
+       return $result;
+    }
 	
 	
 	public function addMenusUponCategory($BusinessId,$category,$sub_category,$isSubCategory,$currentCategoryCount,$new_add_count){

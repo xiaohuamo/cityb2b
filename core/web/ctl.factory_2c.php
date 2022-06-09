@@ -398,10 +398,156 @@
             /**
              * 菜单编辑页面
              */
+            /*
+                    * 菜单编辑页面
+                    */
+            function item_stock_add_action(){
 
-/*
-        * 菜单编辑页面
-        */
+
+
+                $customer_id =get2('customer_id');
+
+                if(!$customer_id) {
+                    $customer_id =$this->current_business['id'];
+
+                }
+                $this->setData($customer_id,'customer_id');
+
+                $dataType =get2('dataType');
+
+                $this->setData($dataType,'dataType');
+
+                        $mdl_restaurant_category = $this->loadModel('restaurant_category');
+                        $pageSql = "select  * ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0)  and isdeleted =0  order by  parent_id,category_sort_id ";
+                       // var_dump($pageSql);exit;
+                        $data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+                        if(!$data) {
+                            //$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+                        }
+                        $this->setData($data,'restaurant_category');
+
+                        $sk = trim(get2('sk'));
+
+
+
+
+
+                        $category = trim(get2('category'));
+
+                        $this->setData($sk,'sk');
+                        $this->setData($category,'category');
+
+
+                        $sql = "select  spec.id as spec_type_id ,spec.category_en_name  as spec_type_name , if(spec_details.id is null,0,spec_details.id) as  spec_id, stock.stock_qty,spec_details.menu_en_name as spec_name, o.* ,b.category_cn_name,b.category_en_name
+                          from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
+                            left join cc_restaurant_menu_option_category spec on o.menu_option = spec.id 
+                            left join cc_restaurant_menu_option spec_details on spec.id=spec_details.restaurant_category_id  and (length(spec_details.menu_en_name)>0 or length(spec_details.menu_cn_name)>0 )
+                            left join cc_producing_item_stock stock on o.id =stock.item_id and if(spec_details.id is null ,0,spec_details.id)=stock.spec_id 
+                        
+                        ";
+//var_dump($sql);exit;
+                        if($category =='all' or empty($category)) {
+                            $whereStr.=" o.isDeleted=0 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and o.restaurant_id=$customer_id  ";
+                        }else{
+                            $whereStr.=" o.isDeleted=0 and  (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and o.restaurant_id=$customer_id   and (o.restaurant_category_id =$category or o.sub_category_id =$category) ";
+                        }
+
+
+                        if (!empty($sk)) {
+                            $whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
+                            $whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
+                            $whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
+                            $whereStr.=" or o.Menu_desc  like  '%" . $sk . "%')";
+                        }
+
+                        if($dataType =='ProducingItem') {
+                            $whereStr.=" and proucing_item =1";
+
+                        }elseif ($dataType =='NoProducingItem'){
+                            $whereStr.=" and proucing_item =0";
+                        }
+
+                        // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+                        // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+                        $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+                        $pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(o.menu_id),o.menu_id ";
+                      //  var_dump($pageSql);exit;
+                        $pageUrl = $this->parseUrl()->set('page');
+                        $pageSize =200;
+                        $maxPage = 10;
+                        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+                        $data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+
+
+                        // 获得该用户的gst type
+
+                        $mdl_user =$this->loadModel("user");
+                        $customerInfo = $mdl_user->get($customer_id);
+
+                        //var_dump($customerInfo);exit;
+
+
+
+                        //获取该商家是否有多个供应商，是否为集合店
+
+                        $this->loadModel('freshfood_disp_suppliers_schedule');
+                        $suppliersList = DispCenter::getSupplierListWithName($customer_id);
+                        //var_dump($suppliersList);exit;
+                        if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
+
+
+                        }
+
+
+                        $this->setData($suppliersList, 'suppliersList');
+                        $this->setData($data, 'data');
+                        $this->setData($page['pageStr'], 'pager');
+                        $this->setData($this->parseUrl()->setPath('ctl.factory_2c/restaurant_edit'), 'editUrl');
+
+                        /**
+                         * 获得配菜分类列表
+                         */
+                        $where=array();
+                        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+                        $where['restaurant_id']=$customer_id;
+                        $restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
+                        $this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
+                        /**
+                         * 获得配菜分类列表
+                         */
+                        $where=array();
+                        $where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+                        $where['restaurant_id']=$customer_id;
+                        $restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+                        $this->setData($restaurant_menu_option_list,'menu_option_list');
+
+
+
+
+
+                $this->setData('item_stock_add', 'submenu');
+                $this->setData('Store_centre', 'menu');
+
+                $pagename = "Item stock add";
+                $pageTitle=  $pagename." - Business Center - ". $this->site['pageTitle'];
+
+                $this->setData($pagename, 'pagename');
+
+                $this->setData($pageTitle, 'pageTitle');
+
+                $this->setData($this->loginUser['gst_type'], 'gstType');
+                $this->display_pc_mobile('factory_2c/item_stock_add', 'factory_2c/item_stock_add');
+            }
+
+
+
+
+            /*
+                    * 菜单编辑页面
+                    */
             function producing_item_stock_management_action(){
 
 

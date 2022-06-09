@@ -4495,6 +4495,159 @@ public function return_items_submit_to_statment_action() {
 
     }
 
+    public function add_new_stock_action(){
+
+
+        $factory_id =$this->current_business['id'];
+
+
+
+        if(is_post()){
+
+            $roomAreaId = post('roomAreaId');
+            $roomAreaId= ",".join(',',$roomAreaId).",";
+
+
+            $select_item_id = post('select_item_id');
+            $select_spec_id = post('select_spec_id');
+            $note = post('note');
+            $expire_date = post('expire_date');
+            if($expire_date){
+                $expire_date =strtotime($expire_date);
+            }
+          // var_dump($expire_date);exit;
+            $store_house_area = $roomAreaId;
+            $quantity = post('quantity');
+
+            if(!$select_item_id){
+                $this->form_response(600,'please choose item!');
+            }
+
+            //查看是否可以操作
+            $item_rec  = $this->loadModel('restaurant_menu')->get($select_item_id);
+            if($item_rec['restaurant_id']!=$this->current_business['id']) {
+                $this->form_response(600,'no access');
+            }
+
+
+
+
+            if(!$store_house_area && !$roomAreaId){
+                $this->form_response(600,'please choose store room area');
+            }
+
+
+            if($quantity<=0) {
+
+                $this->form_response(500, 'please input quantity  larger than 0!');
+             }
+
+
+            $mdl_stock =$this->loadModel('stock_details');
+
+            $new_id= $mdl_stock->refreshStock(100,$this->current_business['id'],$select_item_id,$select_spec_id,$this->loginUser['id'],$quantity,$store_house_area,$note,$expire_date,0);
+
+            if(!$new_id){
+
+                $this->form_response(500, 'error happen when generate data!','');
+            }else{
+
+                $this->form_response(200, 'Added');
+            }
+
+            //   $this->form_response(600,$payment_amount);
+
+
+
+        }else{
+
+            $mdl_restaurant_category = $this->loadModel('restaurant_category');
+            $pageSql = "select  * from cc_restaurant_category where createUserId=$factory_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+            $data = $mdl_restaurant_category->getListBySql($pageSql);
+
+
+            if(!$data) {
+                //$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+            }
+            $this->setData($data,'restaurant_category');
+
+            $sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$factory_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+            $data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+            //var_dump($sql_Parent_cate_list);exit;
+
+            // 获得 储藏区 的信息
+
+            $sql ="select * from cc_store_house where factory_id = $factory_id" ;
+            $data_store_house = $this->loadModel('store_house')->getListBySql($sql);
+            //var_dump($data_store_house);exit;
+            //获得储藏区货架信息
+            $this->setData($data_store_house, 'data_store_house');
+
+            $sql ="select a.*,concat(h.code,'-',a.store_area) as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id order by a.store_house_id " ;
+            $data_store_house_area = $this->loadModel('store_house_area')->getListBySql($sql);
+            //var_dump($data_store_house);exit;
+            //获得储藏区货架信息
+            $this->setData($data_store_house_area, 'data_store_house_area');
+            // var_dump($data_store_house_area);exit;
+
+            $this->setData($data_parent_cate_list, 'data_parent_cate_list');
+
+
+            // var_dump($data);exit;
+
+
+            // check if customer is belong to current business
+
+            $mdl_item =$this->loadModel('restaurant_menu');
+
+            $item_list = $mdl_item->getItemWithSpecInfo($this->current_business['id']);
+           // var_dump($item_list);exit;
+            $this->setData($item_list, 'item_list');
+
+
+            $this->setData('item_stock_add', 'submenu');
+            $this->setData('Store_centre', 'menu');
+            $this->setData('ADD New payments - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('factory/add_new_stock');
+
+        }
+
+
+    }
+
+    public function get_select_item_history_ajax_action()
+    {
+        $item_id = trim(get2('item_id'));//Y-m-d
+        $spec_id = trim(get2('spec_id'));//Y-m-d
+
+        //	$date = strtotime($datestr);
+
+        $item_stock_history =$this->loadModel('stock_details')->getItemStockHistroy($item_id,$spec_id);
+
+
+        // var_dump($item_stock_history);
+
+
+        echo json_encode($item_stock_history);
+    }
+
+    public function get_select_item_area_info_ajax_action()
+    {
+        $item_id = trim(get2('item_id'));//Y-m-d
+        $spec_id = trim(get2('spec_id'));//Y-m-d
+
+              //	$date = strtotime($datestr);
+
+       $item_area_info =$this->loadModel('producing_item_stock')->getItemAreaInfo($item_id,$spec_id);
+
+
+   // var_dump($item_area_info);
+
+
+        echo json_encode($item_area_info);
+    }
+
     public function transcations_action(){
 
         $returnPage =get2('returnPage');
