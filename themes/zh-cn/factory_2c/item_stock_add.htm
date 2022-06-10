@@ -187,7 +187,8 @@
 									<th>Item Code</th>
 									
 							    	<th>库存</th>
-									<th>调整后库存</th>
+									<th>盘点库存</th>
+									<th>盘点记录</th>
 									<th>Item Name</th>
 									<th>单位</th>
 									<th  style="width:"10%;">产品名称-中文</th> 
@@ -210,14 +211,22 @@
 										</td>
 										
 											 
-									  <td id="stock_qty_<{$item.id}>_<{$item.spec_id}>">
-									   <{if $item.stock_qty}> <{$item.stock_qty}><{else}>0<{/if}>
+									  <td >
+									  <span id="stock_qty_<{$item.id}>_<{$item.spec_id}>"> <{if $item.stock_qty}> <{$item.stock_qty}><{else}>0<{/if}></span>
+									  
 									  </td>
 									 <td>
-									   <input type="text" class="input-text" data-id='<{$item.id}>' data-spec-id='<{$item.spec_id}>' id="stock_adjust-<{$item.id}>-<{$item.spec_id}>" style="width:50px;" name="stock_adjust"
+									   <input type="text" class="input-text" data-unit ="<{$item.unit}>" data-stock_qty_value ="<{if $item.stock_qty}> <{$item.stock_qty}><{else}>0<{/if}>" data-id='<{$item.id}>' data-spec-id='<{$item.spec_id}>' id="stock_adjust-<{$item.id}>-<{$item.spec_id}>" style="width:50px;" name="stock_adjust"
 													   value="<{$item.stock_qty}>">
 												<span class='promote-ajax'>
 									  </td>
+									  
+									   <td>
+									   <input disabled  type="text" class="input-text" id="stock_adjust_note-<{$item.id}>-<{$item.spec_id}>" style="width:150px;" name="stock_adjust_note"
+													   value="">
+												
+									  </td>
+									  
 									   <td>
 										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
 										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
@@ -308,7 +317,11 @@
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
-		 var spec_id = $(this).data('spec-id');
+		var spec_id = $(this).data('spec-id');
+		 
+		var stock_qty_value = $('#stock_qty_'+id+'_'+spec_id).html();
+		// alert(stock_qty_value);
+		 var unit =  $(this).data('unit');
 		
         var update_field_name = $(this).attr('name');
         var value;
@@ -324,6 +337,14 @@
 			}
 			
 		//	alert(value);
+		var differ = parseFloat(value)-parseFloat(stock_qty_value);
+		if(!confirm('Current Stock is '+ stock_qty_value + ' ' + unit +',new stock will be adjust to ' + value + ' ' + unit+', ' +differ + ' ' + unit+' will be adjusted .' )){
+			//alert('取消修改');
+			$(this).val(stock_qty_value);
+		 return;
+		}
+		
+		
         var updateData = {};
 
         updateData['id'] = id;
@@ -348,6 +369,8 @@
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
 				$('#stock_qty_'+id+'_'+spec_id).html(value);
+				var adjustDesc = differ +unit +' adjusted';
+		$('#stock_adjust_note-'+id+'-'+spec_id).val(adjustDesc);
                // alert('yes');
             } else if (data.status == 500) {
                 alert(data.msg);

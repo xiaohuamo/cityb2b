@@ -17,7 +17,12 @@ class mdl_producing_item_stock extends mdl_base
 
              $areaStr =$rec['store_area_ids'];
              $areaStrWithCut =substr($areaStr,1,strlen($areaStr)-2);
-             $totalStockQuantity = $rec['stock_qty'];
+             if(!$rec['stock_qty']) {
+                 $totalStockQuantity = 0;
+             }else{
+                 $totalStockQuantity = $rec['stock_qty'];
+             }
+
 
              $sql ="SELECT area.id ,area.store_house_id,concat(room.code,'-',area.store_area) as area_name,area.note  , $totalStockQuantity as totalstk 
                 FROM `cc_store_house_area` area left join cc_store_house room on area.store_house_id = room.id 

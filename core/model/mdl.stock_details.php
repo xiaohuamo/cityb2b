@@ -7,7 +7,7 @@ class mdl_stock_details extends mdl_base
 
 
     public function getItemStockHistroy($item_id,$spec_id){
-        $sql ="select d.id, st.name,from_unixtime(d.gen_date,'%Y-%m-%d') as stock_date,d.store_area_ids,concat(user.name,'-',user.person_first_name) as operator_name ,d.quantity,from_unixtime(d.expire_date,'%Y-%m-%d') as expire_date,d.note 
+        $sql ="select d.id, st.name,if(d.gen_date <=0,'-',from_unixtime(d.gen_date,'%Y-%m-%d')) as stock_date,d.store_area_ids,concat(user.name,'-',user.person_first_name) as operator_name ,d.quantity,if(d.expire_date <=0,'-',from_unixtime(d.expire_date,'%Y-%m-%d')) as expire_date,d.note 
             from cc_stock_details d  
                 left join cc_user user on d.operator_user_id =user.id 
                     left join cc_stock_type st on d.type=st.type where d.item_id =$item_id and spec_id =$spec_id  order by d.id desc limit 40";
@@ -48,6 +48,12 @@ class mdl_stock_details extends mdl_base
 
 
         // insert data to stock details log ..
+
+        if($type == 100 || $type == 103 || $type == 106 ){
+
+        }else{
+            $quantity = $quantity *(-1);
+        }
 
         $data=array(
             'factory_id'=>$factory_id,

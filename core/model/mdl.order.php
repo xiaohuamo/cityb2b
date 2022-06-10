@@ -264,6 +264,7 @@ public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
           and logistic_truck_No = '$driverId' 
         order by logistic_stop_No,f.nickname  ";
      $list = $this->getListBySql($sql);
+     var_dump($sql);exit;
      return $list;
 }
 

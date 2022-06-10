@@ -3660,13 +3660,55 @@ public function return_items_submit_to_statment_action() {
                   'spec_id'=>$spec_id
               );
             $stock_rec = $mdl->getByWhere($where);
+
+
+            if ($stock_rec){
+                    if($stock_qty>$stock_rec['stock_qty']){
+                        $stocktype='106';
+                        $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
+                    }else{
+                        $stocktype='107';
+                        $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
+                    }
+
+            }else{
+                if($stock_qty>0){
+                    $stocktype='106';
+                    $adjust_stk=$stock_qty;
+                }else{
+                    $stocktype='107';
+                    $adjust_stk=(-1)*$stock_qty;
+                }
+            }
+
+            //插入盘点数据
+            $newAdjustdata =array(
+                'factory_id'=>$this->current_business['id'],
+                'type'=>$stocktype,
+                'item_id'=>$id,
+                'spec_id'=>$spec_id,
+                'gen_date'=>time(),
+                'store_area_ids'=>0,
+                'operator_user_id'=>$this->loginUser['id'],
+                'quantity'=>$adjust_stk,
+                'expire_date'=>0,
+                'ref_id'=>0,
+                'note'=>'stocking adjust '
+            );
+
+            $mdl_stock_details =$this->loadModel('stock_details');
+
             if($stock_rec){
+
+
+
                 $updatedata=array(
                     'stock_qty'=>$stock_qty
                 );
 
                 try {
                     $mdl->updateByWhere($updatedata,$where);
+                    $mdl_stock_details->insert($newAdjustdata);
                     $this->form_response(200,'','');
                 } catch (Exception $e) {
                     $this->form_response(500, $e->getMessage(),'');
@@ -3682,6 +3724,7 @@ public function return_items_submit_to_statment_action() {
 
                 try {
                     $mdl->insert($insertData);
+                    $mdl_stock_details->insert($newAdjustdata);
                     $this->form_response(200,'','');
                 } catch (Exception $e) {
                     $this->form_response(500, $e->getMessage(),'');
@@ -4499,15 +4542,17 @@ public function return_items_submit_to_statment_action() {
 
 
         $factory_id =$this->current_business['id'];
-
+        $stockstatus =trim(get2('stock'));
 
 
         if(is_post()){
 
-            $roomAreaId = post('roomAreaId');
-            $roomAreaId= ",".join(',',$roomAreaId).",";
+            $roomAreaId0 = post('roomAreaId');
+            $roomAreaId= ",".join(',',$roomAreaId0).",";
 
 
+
+            $stockType = post('stockType');
             $select_item_id = post('select_item_id');
             $select_spec_id = post('select_spec_id');
             $note = post('note');
@@ -4523,6 +4568,10 @@ public function return_items_submit_to_statment_action() {
                 $this->form_response(600,'please choose item!');
             }
 
+            if(!$stockType){
+                $this->form_response(600,'please choose stock type!');
+            }
+
             //查看是否可以操作
             $item_rec  = $this->loadModel('restaurant_menu')->get($select_item_id);
             if($item_rec['restaurant_id']!=$this->current_business['id']) {
@@ -4532,7 +4581,7 @@ public function return_items_submit_to_statment_action() {
 
 
 
-            if(!$store_house_area && !$roomAreaId){
+            if(!$roomAreaId0 ){
                 $this->form_response(600,'please choose store room area');
             }
 
@@ -4545,14 +4594,14 @@ public function return_items_submit_to_statment_action() {
 
             $mdl_stock =$this->loadModel('stock_details');
 
-            $new_id= $mdl_stock->refreshStock(100,$this->current_business['id'],$select_item_id,$select_spec_id,$this->loginUser['id'],$quantity,$store_house_area,$note,$expire_date,0);
+            $new_id= $mdl_stock->refreshStock($stockType,$this->current_business['id'],$select_item_id,$select_spec_id,$this->loginUser['id'],$quantity,$store_house_area,$note,$expire_date,0);
 
             if(!$new_id){
 
                 $this->form_response(500, 'error happen when generate data!','');
             }else{
 
-                $this->form_response(200, 'Added');
+                $this->form_response(200, 'success !');
             }
 
             //   $this->form_response(600,$payment_amount);
@@ -4606,9 +4655,15 @@ public function return_items_submit_to_statment_action() {
             $this->setData($item_list, 'item_list');
 
 
-            $this->setData('item_stock_add', 'submenu');
+            $this->setData($stockstatus,'stock');
+            if($stockstatus){
+                $this->setData('stock_in', 'submenu');
+            }else{
+                $this->setData('stock_out', 'submenu');
+            }
+
             $this->setData('Store_centre', 'menu');
-            $this->setData('ADD New payments - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('stock Management - Business Center' . $this->site['pageTitle'], 'pageTitle');
             $this->display('factory/add_new_stock');
 
         }

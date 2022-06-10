@@ -87,7 +87,7 @@
 
 				<div class="box2">	
 				<div class="colCurTit">
-					Stock In
+					Stock ManageMent
 				 
 				 
 				</div>
@@ -99,7 +99,7 @@
 
 							<input type="hidden" id ="select_item_id" name="select_item_id" class="input-text" value="" />
 							<input type="hidden" id ="select_spec_id" name="select_spec_id" class="input-text" value="" />
-							
+							<input type="hidden"  name="stock" class="input-text" value="<{$stock}>" />
 
 						<div class="input-box clearfix">	
 							<span><label>Category</label></span>	
@@ -109,7 +109,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>选择类别
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -323,6 +323,7 @@
 											//alert('no spec' + index0);
 											$('#select_item_id').val(vv);
 											item_id=vv;
+											spec_id=0;
 										}else{
 											//alert(index0);
 											$('#select_item_id').val(vv.substring(0,index0));
@@ -514,7 +515,7 @@
 										
 										<option value="<{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}>" >
 											<{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}>-<{$item.menu_id}>  <{if $item.menu_code}>- <{$item.menu_code}><{/if}>-<br>
-											<{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
+											<{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>-<{$item.unit_en}>
 											</option>
 
 										
@@ -596,9 +597,43 @@
 
 								<span><label>quantity </label></span>		
 
-								<input type="text" id = "quantity" name="quantity" class="input-text" value="" />
+								<input type="text" id = "quantity" name="quantity" class="input-text" value="" /><label id="item_unit_name"> </label>
 
+							</div>  
+
+							<{if $stock==1}>
+							
+							<div class="input-box clearfix">	
+
+								<span><label>Stock In Type </label></span>	
+
+										<select name="stockType" id="stockType" >
+											<option value="0" selected="">Select StorKIn Type</option>
+												<option value="100" >Purchase</option>
+												<option value="103" >Return</option>
+												<option value="106" >Stocking Add</option>
+												
+										</select>	
+
+						
 							</div>   
+							<{else}>
+							<div class="input-box clearfix">	
+
+								<span><label>Stock Out Type </label></span>	
+
+										<select name="stockType" id="stockType" >
+											<option value="0" selected="">Select StorKOut Type</option>
+												<option value="102" >Stock Out</option>
+												<option value="104" >Missing</option>
+												<option value="105" >Normal Loss</option>
+												
+										</select>	
+
+						
+							</div>   
+							<{/if}>
+							
 							
 							<div class="input-box clearfix">	
 
@@ -621,7 +656,7 @@
 
 								<span><label>note </label></span>		
 
-								<input type="text" id ="note" name="note" style="width:80%;"  class="input-text" value="" />
+								<input type="text" id ="note" name="note" style="width:70%;"  class="input-text" value="" />
 
 							</div>   
 							
@@ -685,7 +720,17 @@
 									//Further action
 									if (data.status==200) {
 									    var newTotal = 0.00;
-										newTotal =parseFloat($('#Totalquantity').val())+parseFloat($('#quantity').val());
+										var oldTotal =$('#Totalquantity').val();
+										if(!oldTotal) {
+										  oldTotal =0.00;
+										}
+										var stockType ='<{$stock}>';
+										if(stockType) {
+											newTotal =parseFloat(oldTotal)+parseFloat($('#quantity').val());
+										}else{
+											newTotal =parseFloat(oldTotal)-parseFloat($('#quantity').val());
+										}
+										
 										$('#Totalquantity').val(newTotal);
 										getCurrentItemHistory(item_id,spec_id);
 										
