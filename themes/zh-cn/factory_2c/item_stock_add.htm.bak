@@ -320,7 +320,7 @@
 		var spec_id = $(this).data('spec-id');
 		 
 		var stock_qty_value = $('#stock_qty_'+id+'_'+spec_id).html();
-		 alert(stock_qty_value);
+		// alert(stock_qty_value);
 		 var unit =  $(this).data('unit');
 		
         var update_field_name = $(this).attr('name');

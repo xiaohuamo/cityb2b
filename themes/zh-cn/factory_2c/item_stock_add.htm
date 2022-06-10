@@ -288,7 +288,7 @@
             type: "GET",
             url: "<{$http_root_www}>factory_2c/item_producing_set_ajax",
             data: {"id": couponId},
-            beforeSend: function (xhr) {
+            beforeSend: function (xhr) {   
                 loading = true;
 
                 context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");

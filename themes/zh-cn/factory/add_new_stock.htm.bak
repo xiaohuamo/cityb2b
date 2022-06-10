@@ -725,7 +725,7 @@
 										  oldTotal =0.00;
 										}
 										var stockType ='<{$stock}>';
-										if(stockType) {
+										if(stockType =='1') {
 											newTotal =parseFloat(oldTotal)+parseFloat($('#quantity').val());
 										}else{
 											newTotal =parseFloat(oldTotal)-parseFloat($('#quantity').val());
