@@ -70,7 +70,60 @@
 .main-form .input-box span label { width:200px; }
 
 </style>
-<script> 
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+				<div class="colCurTit">
+					Stock ManageMent
+				 
+				 
+				</div>
+
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_stock" enctype="multipart/form-data" method="post" target="post_frame">
+
+							<input type="hidden" id ="select_item_id" name="select_item_id" class="input-text" value="" />
+							<input type="hidden" id ="select_spec_id" name="select_spec_id" class="input-text" value="" />
+							<input type="hidden"  name="stock" class="input-text" value="<{$stock}>" />
+
+						<div class="input-box clearfix">	
+							<span><label>Category</label></span>	
+							
+								<select name="category" id='category'  onChange="catChg(this);">
+						
+					
+
+							<option value="all"
+                                    <{if $category=='all'}> selected<{/if}>>选择类别
+							</option>
+
+                            <{foreach from=$restaurant_category item=item}>
+								<option value="<{$item.id}>"
+                                        <{if $item.id==$category1}> selected<{/if}>>
+                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+								</option>
+                            <{/foreach}>
+
+						</select>
+						
+						<script type="text/javascript">
 						
 								var item_id=0;
 								var spec_id=0;	
@@ -444,59 +497,6 @@
 								}
 
 								</script>
-</head>
-
-<body>
-
-	<{include file='header.htm'}>
-
-	<div class="container">	
-
-		<div class="wrap clearfix">	
-
-			<{include file='company/side.htm'}>	
-
-			<div class="main">	
-
-				<div class="box2">	
-				<div class="colCurTit">
-					Stock ManageMent
-				 
-				 
-				</div>
-
-
-					<div class="main-form">			
-
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/add_new_stock" enctype="multipart/form-data" method="post" target="post_frame">
-
-							<input type="hidden" id ="select_item_id" name="select_item_id" class="input-text" value="" />
-							<input type="hidden" id ="select_spec_id" name="select_spec_id" class="input-text" value="" />
-							<input type="hidden"  name="stock" class="input-text" value="<{$stock}>" />
-
-						<div class="input-box clearfix">	
-							<span><label>Category</label></span>	
-							
-								<select name="category" id='category'  onChange="catChg(this);">
-						
-					
-
-							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择类别
-							</option>
-
-                            <{foreach from=$restaurant_category item=item}>
-								<option value="<{$item.id}>"
-                                        <{if $item.id==$category1}> selected<{/if}>>
-                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
-                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
-								</option>
-                            <{/foreach}>
-
-						</select>
-						
-						
 						
 						</div>
 
@@ -668,7 +668,7 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'> SAVE </button>	 
+								<button type="submit" style='float:left'>SAVE </button>	 
 
 					
 
