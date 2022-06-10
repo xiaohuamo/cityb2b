@@ -57,6 +57,7 @@
 								<th>Id</th>
 								<th>Store_room</th>
 								<th>Area</th>
+								<th>Sort</th>
 								<th>note</th>
 								<th> Edit</th>
 								
@@ -79,6 +80,11 @@
 									<{$item.store_area}>
 									
 								</td>
+								 <td>
+									   <input type="text" class="input-text" data-sort_id ="<{$item.sort_id}>"  data-id='<{$item.id}>'  style="width:50px;" name="sort_id"
+													   value="<{$item.sort_id}>">
+												<span class='promote-ajax'>
+									  </td>
 								<td>
 									<{$item.note}>
 									
@@ -102,13 +108,14 @@
 <script type="text/javascript">
     var loading = false;
 	
-    $('select[name=diverId]').on('change', function () {
+     $('input[name=sort_id]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
+		//alert(id);
         var update_field_name = $(this).attr('name');
         var  value = $(this).val();//常规改动直接抓取改动值
         var updateData = {};
@@ -120,7 +127,7 @@
 		//alert(id);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_truck_driver",
+            url: "<{$http_root_www}>factory/update_house_area_sort_id",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -136,14 +143,7 @@
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
                 //alert('yes');
-				if(update_field_name='barcode_number'){
-				  //alert(data.msg + ' ' +id);
-				  if(data.msg) {
-				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
 				
-				  }else{
-				  }
-				}
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);

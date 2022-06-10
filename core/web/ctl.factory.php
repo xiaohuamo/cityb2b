@@ -4633,7 +4633,7 @@ public function return_items_submit_to_statment_action() {
             //获得储藏区货架信息
             $this->setData($data_store_house, 'data_store_house');
 
-            $sql ="select a.*,concat(h.code,'-',a.store_area) as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id order by a.store_house_id " ;
+            $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id order by a.store_house_id,a.sort_id " ;
             $data_store_house_area = $this->loadModel('store_house_area')->getListBySql($sql);
             //var_dump($data_store_house);exit;
             //获得储藏区货架信息
@@ -6072,6 +6072,52 @@ public function return_items_submit_to_statment_action() {
 
         return HTTP_ROOT . "factorypage/user_link_login_index?user_id=$userId&notAgent=".$notAgent."&factory_id=" . $factoryId. "&token=$token";
     }
+
+
+
+
+
+    public function update_house_area_sort_id_action()
+    {
+        if(is_post()){
+
+            $mdl = $this->loadModel('store_house_area');
+
+            $id = post('id');
+
+
+            $rec  = $mdl->get($id);
+
+            if($rec['factory_id'] != $this->current_business['id']){
+                $this->form_response(600,'no access');
+            }
+
+
+          //  $this->form_response(600,$id);
+
+
+            $data=array();
+
+            $update_field_name = post('update_field_name');
+
+            $value = post('value');
+
+            $data['sort_id'] =$value;
+
+
+            try {
+                $mdl->update($data,$id);
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
     /**
      *  Ajax update the driver of Truck 
      */
