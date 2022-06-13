@@ -975,13 +975,17 @@ class ctl_orderpaymentprocess extends cmsPage
             $this->setData($agentId,'agentid');
         }
 
+       if($agentId){
+           $this->sheader(HTTP_ROOT_WWW."factory/order_for_customer_new");
+       }else{
+           if($this->getUserDevice()=='desktop'){
+               $this->display( 'orderPage/orderSuccess' );
 
-		if($this->getUserDevice()=='desktop'){
-			$this->display( 'orderPage/orderSuccess' );
-
-		}else{
-			$this->display( 'orderPage/orderSuccess' );
-		}
+           }else{
+               $this->display( 'orderPage/orderSuccess' );
+           }
+       }
+		
 	}
 
 
