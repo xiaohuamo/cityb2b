@@ -3088,11 +3088,16 @@ public function return_items_submit_to_statment_action() {
 
         if(!$userId) {
             $userId = trim(get2('user_id'));
-
+            $page = trim(get2('page'));
             $mdl_user_factory->updateApprove($userId, $factoryId, $approve,$salesManId);
-            header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+            $where =array('userId'=>$userId,'business_userId'=>$factoryId);
+            $data=array('accountPay'=>1);
+            $this->loadModel('order')->updateByWhere($data,$where);
+
+            header("Location: ".  HTTP_ROOT_WWW."factory/customer_list?page=".$page);
         } else {
             $mdl_user_factory->updateApprove($userId, $factoryId, $approve,$salesManId);
+
         }
 
         return;
@@ -3118,8 +3123,18 @@ public function return_items_submit_to_statment_action() {
             var_dump('no access'); exit;
         }
 
-            $mdl_user_factory->updateApprove1($userId, $factoryId, $approve,0);
-            header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+
+        $userId = trim(get2('user_id'));
+
+        $mdl_user_factory->updateApprove($userId, $factoryId, $approve,0);
+        $where =array('userId'=>$userId,'business_userId'=>$factoryId);
+        $data=array('accountPay'=>1);
+        $this->loadModel('order')->updateByWhere($data,$where);
+
+        header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+
+
+
 
     }
 
