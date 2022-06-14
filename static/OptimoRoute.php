@@ -22,7 +22,7 @@ class OptimoRoute
 				"operation" => "SYNC",
 				"type" => "D",
 				"orderNo" => $order['orderId'],
-                "assignedTo"=>["externalId"=>$order['logistic_driver_code']],
+
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
 					"address" => $order['address'],
@@ -40,6 +40,10 @@ class OptimoRoute
 				"customField4" => '',//$order['order_name'], // order name
 				"customField5" => '',
 			];
+            if($order['logistic_driver_code']>0){
+
+                $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
+            }
 
 			try {
 				$response = $this->api->syncOrder($data);	
