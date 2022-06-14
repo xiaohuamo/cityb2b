@@ -22,6 +22,7 @@ class OptimoRoute
 				"operation" => "SYNC",
 				"type" => "D",
 				"orderNo" => $order['orderId'],
+                "assignedTo"=>["externalId"=>$order['logistic_driver_code']],
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
 					"address" => $order['address'],
