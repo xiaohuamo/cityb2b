@@ -22,7 +22,7 @@ class OptimoRoute
 				"operation" => "SYNC",
 				"type" => "D",
 				"orderNo" => $order['orderId'],
-                "duration"=>10,
+
                 "load1" => (int)$order['boxesNumber'],
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
@@ -32,7 +32,7 @@ class OptimoRoute
 				],
 				"phone" => $order['phone'],
 				// "email" => $order['email'],
-				"duration" => 5, //The time in minutes required to unload the goods or perform a task at the given location.
+				"duration" => 10, //The time in minutes required to unload the goods or perform a task at the given location.
 				"notes"=> $order['message_to_business'],
 				//optimoRoute API 预留自定义字段，需要在optimoRoute后台开启后使用
 				"customField1" => $order['logistic_sequence_No'], //统配号
