@@ -15125,7 +15125,7 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 // Add some data
                 $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
-                $obj->getActiveSheet(0)->setTitle(substr($truckName,0,29).' TotalBoxes:'.$totalBoxes);
+                $obj->getActiveSheet(0)->setTitle(substr($truckName,0,29));
 
                 $_row = 2;   //设置纵向单元格标识
                 if ($labels) {
@@ -15136,7 +15136,7 @@ public function custom_delivery_fee_add_action()
                     $obj->getActiveSheet(0)->mergeCells('A1' . ':' . $cellName[$_cnt - 1] . '1');   //合并单元格
                     $obj->setActiveSheetIndex(0)->setCellValue('A1', $truckName);  //设置合并后的单元格内容
                     $obj->getActiveSheet()->mergeCells('A2:C2');//合并起始日期单元格
-                    $obj->setActiveSheetIndex(0)->setCellValue('A2', 'Delivery Date [' . $start_time . ']');//设置值
+                    $obj->setActiveSheetIndex(0)->setCellValue('A2', 'Delivery Date [' . $start_time . ']'.' TotalBoxes:'.$totalBoxes);//设置值
                    // $obj->getActiveSheet()->mergeCells('C2:D2');//合并终止日期单元格
                   //  $obj->setActiveSheetIndex(0)->setCellValue('C2', '终止日期[' . $end_time . ']');//设置值
                     $_row++;
