@@ -301,7 +301,7 @@ class OptimoRoute
 				$where1 = [
 					'orderId' => $stop->orderNo
 				];
-				$mdl_order_import->updateByWhere($data, $where1);
+				//$mdl_order_import->updateByWhere($data, $where1);
 				
 			}
 		}
