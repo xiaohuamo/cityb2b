@@ -22,7 +22,7 @@ class OptimoRoute
 				"operation" => "SYNC",
 				"type" => "D",
 				"orderNo" => $order['orderId'],
-
+                "load1"=>$order['boxesNumber'],
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
 					"address" => $order['address'],
