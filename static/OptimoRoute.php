@@ -276,6 +276,8 @@ class OptimoRoute
 
 		$routes = $this->api->getRoutes($dateStr);
 
+        var_dump($routes);exit;
+
 		foreach ($routes->routes as $route) {
 			//driverExternalId
 			//driverSerial
