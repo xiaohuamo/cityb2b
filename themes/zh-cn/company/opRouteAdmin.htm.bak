@@ -51,7 +51,12 @@
 						<{/foreach}>
 					</select>
 					
-					
+					<select class='chooseDate'>
+						<option>请选择方式</option>
+							<option value="auto" selected >系统自动排单</option>
+							<option value="manunal" >按分配单导入</option>
+						
+					</select>
 
 					<{if $orders}>
 						<button style="padding: 10px 5px;background: #FD5001 ">  

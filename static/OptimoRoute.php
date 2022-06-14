@@ -43,7 +43,7 @@ class OptimoRoute
 			];
             if($order['logistic_driver_code']>0){
 
-                $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
+             //   $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
             }
 
 			try {
