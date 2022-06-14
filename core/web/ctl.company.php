@@ -15054,8 +15054,14 @@ public function custom_delivery_fee_add_action()
                 $lists_new[$key]['StopNumber']=$value['logistic_stop_No'];
                 $lists_new[$key]['logistic_sequence_No']=$value['logistic_sequence_No'];
                 $lists_new[$key]['Phone']=$value['phone'];
-                $lists_new[$key]['BoxesQuantity']=$value['boxesNumber'];
-                $lists_new[$key]['Notes']=$value['Notes'];
+                if($value['edit_boxesNumber']>0){
+                    $lists_new[$key]['BoxesQuantity']=$value['boxesNumber'];
+                    $lists_new[$key]['Notes']=$value['Notes'];
+                }else{
+                    $lists_new[$key]['BoxesQuantity']=$value['edit_boxesNumber'];
+                    $lists_new[$key]['Notes']='Boxes Change ! '.$value['Notes'];
+                }
+
             //    $lists_new[$key]['signed']=' ';
                 $logistic_delivery_time = $value['logistic_delivery_date'];
            }
