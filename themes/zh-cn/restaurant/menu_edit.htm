@@ -782,7 +782,7 @@
 		if((update_field_name == 'menu_en_name') || (update_field_name == 'menu_cn_name')  || (update_field_name == 'menu_en_desc')  || (update_field_name == 'menu_desc') ) {
 		 
 		  if( (value.indexOf("'") ==-1) &&  value.indexOf("&") ==-1) {
-		     alert( '校验通过');
+		    // alert( '校验通过');
 		  }else{
 		     alert(' The item name can not include ' + "' or &");
 			 return 0 ;

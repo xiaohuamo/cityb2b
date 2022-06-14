@@ -39,7 +39,7 @@ $('#memberForm,.memberForm').submit(function(){
 			$('.quantity').val('');
 			$('.form_response_alert').on('click',function(){
 				$(this).remove();
-			}).delay(2500).fadeOut(500);
+			}).delay(2000).fadeOut(500);
 		}else{
 			//alert('300');
 			$('.form_response_alert').on('click',function(){

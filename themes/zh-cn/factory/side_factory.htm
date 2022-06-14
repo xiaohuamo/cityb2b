@@ -53,7 +53,9 @@
 					<{$lang->items_management}>
 				</a>
 				
-				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu=='restaurant_menu_add'}> class="current"<{/if}>>
+					<{$lang->items_add}>
+				</a>
 
 				<a href="<{$http_root_www}>supplier/<{$loginUser.id}>">
                     <{$lang->preview_store}>

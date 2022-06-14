@@ -37,17 +37,9 @@ $('#memberForm,.memberForm').submit(function(){
 		if (data.status==200) {
 			
 			$('.quantity').val('');
-			
-			
-			setTimeout(function(){
-				if(data.redirect=='SELF'){
-					
-					window.location.reload();
-				}else{
-					window.location.href = data.redirect.replace('&amp;', '&');
-				}
-				
-			}, further_action_delay);
+			$('.form_response_alert').on('click',function(){
+				$(this).remove();
+			}).delay(2500).fadeOut(500);
 		}else{
 			//alert('300');
 			$('.form_response_alert').on('click',function(){

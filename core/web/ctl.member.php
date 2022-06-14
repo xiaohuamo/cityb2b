@@ -1829,7 +1829,9 @@ class ctl_member extends cmsPage
 	}
 	function register_action() {
 		if ( is_post() ) {
-			
+          //  $wholeseller = (int)post( 'wholeseller' );
+          //  $this->form_response_msg((string)$wholeseller);
+            //var_dump($Wholeseller); exit;
 			$mdl_reg = $this->loadModel( 'reg' );
 			$mdl_user = $this->loadModel( 'user' );
 

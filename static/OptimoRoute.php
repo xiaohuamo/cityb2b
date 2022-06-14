@@ -25,6 +25,8 @@ class OptimoRoute
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
 					"address" => $order['address'],
+                    "acceptPartialMatch"=> true,
+                     "acceptMultipleResults"=>true
 				],
 				"phone" => $order['phone'],
 				// "email" => $order['email'],

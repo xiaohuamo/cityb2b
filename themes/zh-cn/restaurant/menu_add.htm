@@ -293,10 +293,13 @@ function catChg(obj) {
 
 				<div class="main-list" style="padding: 3px 2px;">
                     <{if $data}>
-						<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<div style="overflow-x: auto;overflow-y: auto; word-break:break-all;">
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
+									<th name="sku" >SKU编码</th>
+									<th  name="sku" >图片链接路径</th>
+									
 									<th>上线下线</th>
 									<th name="special_name1">特价设置</th>
 									<th name="special_name1">特价价格</th>
@@ -304,23 +307,20 @@ function catChg(obj) {
                                     <{if count($suppliersList)>1}>
 										<th>选择商家</th>
                                     <{/if}>
+									<th>图片</th>
 									
+									<th>排序</th>
+									<th>产品编号</th>
+									<th name="cn_name1" >产品名称-中文</th>
 									
+									<!--<th>进价</th> -->
+								
+									<th>售价</th>
+									<th>库存</th>
 								
 									
 									
-									<th>产品编号</th>
-									<th name="cn_name1" >产品名称-中文</th>
-									<th name="cn_name1">中文单位</th>
 									
-									<th>售价</th>
-										<th>图片</th>
-									<th>库存</th>
-									<th name="cn_name1">描述</th>
-										<th>设置分类</th>
-									<th>排序</th>
-									<th>进价</th>
-									<th>原价</th>
                                     <{if in_array($gstType, [3,4])}>
 										<th>是否含税</th>
                                     <{/if}>
@@ -328,23 +328,50 @@ function catChg(obj) {
 									<th name="en_name1">产品名-英文</th>
 								
 									<th name="en_name1">英文单位</th>
-										<th name="en_name1">描述-英文</th>
-									
+									<th >每箱单位数</th>
+									<th>装箱溢出率</th>
+									<th name="en_name1">描述-英文</th>
+									<th >主分类</th>
 							
                                     <{if $menu_option_list}>
-										<th>菜品规格</th>
+										<th name="guigecat">菜品规格</th>
                                     <{/if}>
                                     <{if $sidedish_category_list}>
-										<th>选择配菜</th>
+										<th name="guigecat">选择配菜</th>
                                     <{/if}>
-										
+											<th name="guigecat">设置分类</th>
 								
-									<th>ID</th>
+								
+									<th>放入回收站</th>
+									<th>原价</th>
+									<th name="cn_name1">中文单位</th>
+									<th name="cn_name1">描述</th>
+									<th >最低价</th>
+									<th >id</th>
 								</tr>
 								</thead>
 								<tbody>
                                 <{foreach from=$data item=item name='dl'}>
 									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										<td name="sku"> 
+										
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:110px;" name="barcode_number"
+												   value="<{$item.barcode_number}>">
+											<span class='promote-ajax'></span>
+											<br>
+										
+										</td>
+										
+										<td name="sku">
+											<input type="text" class="input-text" data-id='<{$item.id}>' data-main-pic='<{$item.menu_pic}>' id="filePath-<{$item.id}>" style="width:210px;" name="filePath"
+												   value="">
+											<span class='promote-ajax'></span> 
+											
+												<span class='promote-ajax'></span>
+
+										</td>
+										
 										<td>
 										<div class="onoffswitch">
 												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
@@ -414,9 +441,21 @@ function catChg(obj) {
 												<span class='promote-ajax'></span>
 											</td>
                                         <{/if}>
-									
+										<td id="image-<{$item.id}>">
+                                            <{if $item.menu_pic}>
+												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">修改</a>
+                                            <{else}>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">添加</a>
+                                            <{/if}>
+										</td>
 										
-										
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_order_id-<{$item.id}>" style="width:50px;" name="menu_order_id"
+												   value="<{$item.menu_order_id}>">
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>" style="width:70px;" name="menu_id"
 												   value="<{$item.menu_id}>">
@@ -424,45 +463,147 @@ function catChg(obj) {
 											<br>
 										</td>
 										<td name="cn_name1">
-									  <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:180px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
+										
+										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:120px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
 											
-												<span class='promote-ajax'></span>
-										</td>
-										<td name="cn_name1" >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
-												   value="<{$item.unit}>">
 											<span class='promote-ajax'></span>
 										</td>
-									
+										
+										
+										
+										
+										
+										
+									<!--	<td >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
+												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
+											<span class='promote-ajax'></span>
+										</td> -->
+										
+										
 									   <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>" style="width:50px;" name="price"
 												   value="<{if $item.price >0}><{$item.price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
 											<span class='promote-ajax'></span>
 										</td>
 										<td>
-                                            <{if $item.menu_pic}>
-												<img src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">修改</a>
-                                            <{else}>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">添加</a>
-                                            <{/if}>
-										</td>
-										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="qty-<{$item.id}>" style="width:30px;" name="qty" value="<{$item.qty}>">
 											<span class='promote-ajax'></span>
 										</td>
-										<td name="cn_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" name="menu_desc"><{$item.menu_desc}></textarea>
+										
+										
+										
+										
+									
+                                        <{if in_array($gstType, [3,4])}>
+											<td>
+												<input type="checkbox" name="include_gst" id="includegstswitch<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.include_gst==1}> checked <{/if}>>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>
+										
+										
+										<td name="en_name1">
+
+											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="<{if !$onoffcninfo}>width:180px;<{else}>width:120px;<{/if}>" name="menu_en_name"><{$item.menu_en_name}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
-												<td id="restaurant_categories-td-<{$item.id}>">
+										<td name="en_name1">
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit_en"
+												   value="<{$item.unit_en}>">
+											<span class='promote-ajax'></span>
+										</td>
+										
+										<td >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
+												   value="<{$item.unitQtyPerBox}>">
+											<span class='promote-ajax'></span>
+										</td>
+										<td >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:50px;" name="overflowRate"
+												   value="<{$item.overflowRate}>">
+											<span class='promote-ajax'></span>
+										</td>
+										
+										
+										<td name="en_name1">
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
+											<span class='promote-ajax'></span>
+										</td>
+								
+										<td>
+											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
+                                              <option value="0"  selected>选择分类</option>
+											  <{foreach from=$catList item=category}>
+													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
+													value="<{$category.id}>" 
+													
+													<{if $category.id == $item.sub_category_id}>
+														selected 
+													  
+													<{else}>
+													  <{if $category.id == $item.restaurant_category_id and $item.sub_category_id==0}>
+													  	selected 
+													  <{/if}>
+													
+													
+													<{/if}>
+													
+													 >
+													
+													<{if $langStr == 'zh-cn'}>
+															<{$category.title_cn}>
+															
+														<{else}>
+															<{$category.title_en}>
+														<{/if}>
+													</option>
+                                                <{/foreach}>
+											</select>
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
+                                        <{if $menu_option_list}>
+											<td name="guigecat" style="width:150px;">
+												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
+													<option value='0'>请选择规格</option>
+                                                    <{foreach from=$menu_option_list item=sitem}>
+														<option value='<{$sitem.id}>'
+                                                                <{if $item.menu_option==$sitem.id}>selected<{/if}>>
+                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>
+                                        <{if $sidedish_category_list}>
+											<td name="guigecat">
+												<select name='sidedish_category' data-id='<{$item.id}>'>
+													<option value='0'>请选择配菜</option>
+                                                    <{foreach from=$sidedish_category_list item=sitem}>
+														<option value='<{$sitem.id}>'
+                                                                <{if $item.sidedish_category==$sitem.id}>selected<{/if}>>
+                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>
+								
+										<td  name="guigecat" id="restaurant_categories-td-<{$item.id}>">
 										  <{if $item.category_cn_name}>
 											<span style="height:16px;background-color: grey;color: white" id="menu-<{$item.id}>"><{$item.category_cn_name}> <a style="color:red" onclick="deleteMenuCategory1('<{$item.id}>','<{$item.categoryId}>')">X&nbsp;</a></span>
-                                           <{/if}>
+                                         <br>  <{/if}>
 										   <{foreach from=$item.categoryIds item=categoryId}>
 												<script>
                                                     document.write(generateCategoryHtml(<{$categoryId.category_id}>, <{$item.id}>));
 												</script>
+												<br>
                                             <{/foreach}>
 											<br>
 											<select id="restaurant_categories-<{$item.id}>" onchange="updateMenuCategory(<{$item.id}>, this.value, 1)">
@@ -478,98 +619,54 @@ function catChg(obj) {
 											<span class='promote-ajax'></span>
 											<br>
 										</td>
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_order_id-<{$item.id}>" style="width:50px;" name="menu_order_id"
-												   value="<{$item.menu_order_id}>">
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-											<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
-												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td>
+							
 										
+										
+										
+										<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $item.isDeleted==1}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">已回收</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">未回收</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
 										 <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="original_price-<{$item.id}>" style="width:50px;" name="original_price"
 												   value="<{if $item.original_price >0}><{$item.original_price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
 											<span class='promote-ajax'></span>
 										</td>
-									
-                                        <{if in_array($gstType, [3,4])}>
-											<td>
-												<input type="checkbox" name="include_gst" id="includegstswitch<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.include_gst==1}> checked <{/if}>>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-										
-										
-										<td name="en_name1">
-
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:150px;" name="menu_en_name"
-												   value="<{$item.menu_en_name}>">
+										<td name="cn_name1" >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
+												   value="<{$item.unit}>">
 											<span class='promote-ajax'></span>
 										</td>
-										<td name="en_name1">
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit_en"
-												   value="<{$item.unit_en}>">
+										<td name="cn_name1">
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" style="width:120px;" name="menu_desc"><{$item.menu_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
-										<td name="en_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" name="menu_en_desc"><{$item.menu_en_desc}></textarea>
+										 <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="lowest_price-<{$item.id}>" style="width:50px;" name="lowest_price"
+												   value="<{$item.lowest_price}>" >
 											<span class='promote-ajax'></span>
 										</td>
-										<!--<{if $loginUser.id !=318951}>
-											<td>
-											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
-                                              <option value="0"  selected>选择分类</option>
-											  <{foreach from=$restaurant_category item=category}>
-													<option value="<{$category.id}>" <{if $category.id==$item.restaurant_category_id}> selected<{/if}>>
-                                                        <{if $category.category_cn_name}><{$category.category_cn_name}><{/if}>
-                                                        <{if $category.category_cn_name && $category.category_en_name}>|<{/if}>
-                                                        <{if $category.category_en_name}><{$category.category_en_name}><{/if}>
-													</option>
-                                                <{/foreach}>
-											</select>
-											<span class='promote-ajax'></span>
-											<br>
-										</td><{/if}> -->
-                                        <{if $menu_option_list}>
-											<td>
-												<select name='menu_option' data-id='<{$item.id}>'>
-													<option value='0'>请选择规格</option>
-                                                    <{foreach from=$menu_option_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.menu_option==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-                                        <{if $sidedish_category_list}>
-											<td>
-												<select name='sidedish_category' data-id='<{$item.id}>'>
-													<option value='0'>请选择配菜</option>
-                                                    <{foreach from=$sidedish_category_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.sidedish_category==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-								
-								
-							
-										<td>
-											<span><{$item.id}></span>
+										 <td>
+											
+											<span ><{$item.id}></span>
 										</td>
 									</tr>
                                 <{/foreach}>
@@ -588,7 +685,7 @@ function catChg(obj) {
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
+    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price],input[name=unitQtyPerBox],input[name=overflowRate] , input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -606,7 +703,18 @@ function catChg(obj) {
 
         updateData['id'] = id;
         updateData[update_field_name] = value;
-
+	//	 alert (updateData[update_field_name]);
+		if((update_field_name == 'menu_en_name') || (update_field_name == 'menu_cn_name')  || (update_field_name == 'menu_en_desc')  || (update_field_name == 'menu_desc') ) {
+		 
+		  if( (value.indexOf("'") ==-1) &&  value.indexOf("&") ==-1) {
+		    // alert( '校验通过');
+		  }else{
+		     alert(' The item name can not include ' + "' or &");
+			 return 0 ;
+			 
+		  }
+		}
+       // alert(updateData[update_field_name]);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
             url: "<{$http_root_www}>restaurant/update_menu_item",
@@ -625,6 +733,14 @@ function catChg(obj) {
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
                 //alert('yes');
+				if(update_field_name='barcode_number'){
+				  //alert(data.msg + ' ' +id);
+				  if(data.msg) {
+				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
+				
+				  }else{
+				  }
+				}
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
@@ -661,6 +777,7 @@ function catChg(obj) {
 
 
     $('input[name=onoffswitch]').on('click', function () {
+	
         var couponId = $(this).data('id')
         var context = $('.publish_icon[data-id=' + couponId + ']');
 
@@ -690,6 +807,37 @@ function catChg(obj) {
         })
     })
 	
+	  $('input[name=onoffswitch_deleted]').on('click', function () {
+        var couponId = $(this).data('id')
+		 var context1 = $('.publish_icon[data-id=' + couponId + ']');
+        var context = $('.recycle_icon[data-id=' + couponId + ']');
+       
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>restaurant/menu_publish_ajax_recycle_bin",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.isDeleted == '1') {
+                    context.html("<span style='color:#F30;'>已回收</span>");
+					 context1.html("<span style='color:#F30;'>产品下线</span>");
+                } else if (result.isDeleted == '0') {
+                    context.html("<span style='color:#58964E;'>未回收 </span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
 	
 	
 	 $('input[name=onoffspecialinfo]').on('click', function () {
@@ -711,6 +859,49 @@ function catChg(obj) {
        
 
     })
+	
+		 $('input[name=onoffguigecatinfo]').on('click', function () {
+       
+		 if ($('#onoffguigecatinfo').attr('checked')) {
+			//alert('checked');
+			$("#onoffguigecatinfo").attr("checked",false);
+			
+			 $('[name="guigecat"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffguigecatinfo").attr("checked",true);
+			
+			 $('[name="guigecat"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+		 $('input[name=onoffsku]').on('click', function () {
+       
+		 if ($('#onoffsku').attr('checked')) {
+			//alert('checked');
+			$("#onoffsku").attr("checked",false);
+			
+			 $('[name="sku"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffsku").attr("checked",true);
+			
+			 $('[name="sku"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+	
+	
     $('input[name=onoffcninfo]').on('click', function () {
        
 		 if ($('#onoffcninfo').attr('checked')) {
@@ -750,6 +941,85 @@ function catChg(obj) {
 
     })
 
+function isAssetTypeAnImage(ext) {
+  return [
+  'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'].
+  indexOf(ext.toLowerCase()) !== -1;
+}
+
+$('input[name=filePath]').on('change', function () {
+        var couponId = $(this).data('id')
+        var value =$(this).val();
+        var changeMainpic =1;
+		
+		if(!value) exit;
+		
+		//获取最后一个.的位置
+		var index= value.lastIndexOf(".");
+		//获取后缀
+		var ext = value.substr(index+1);
+		//判断是否是图片
+		if(!isAssetTypeAnImage(ext)){
+		  alert('非图片格式'); return;
+		  $(this).val('');
+		}
+				
+		
+		var mainPic =$(this).data('main-pic')  ;
+		if(mainPic) {
+
+		 if(confirm('点击确认更换主图，否则更换子图')) {
+			changeMainpic =1;
+		 
+		 }else{
+			changeMainpic =0;
+		 }
+		}else{
+		
+		}
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>restaurant/process_link_picture",
+            data: {"id": couponId,"filePath":value,"changeMainpic":changeMainpic},
+            beforeSend: function (xhr) {
+                loading = true;
+
+               
+            },
+            success: function (result) {
+               result = jQuery.parseJSON(result);
+              
+  			  if(result.status==200){
+			      
+				  
+				
+				  
+			       $('#image-'+couponId).html('	<img src="/data/upload/thumbnails/' +result.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+couponId+'">修改</a>');
+				
+			   }else{
+			   
+			    alert(result.msg);
+			  
+			  }
+               
+                
+            }
+        }).fail(function () {
+            alert('no access	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+
+
+
+
+
+
+
+
     $('input[name=onoffswitch1]').on('click', function () {
         var couponId = $(this).data('id')
         var context = $('.special_icon[data-id=' + couponId + ']');
@@ -782,6 +1052,10 @@ function catChg(obj) {
             loading = false;
         })
     })
+	
+	
+	
+	
 
 	function updateMenuCategory(menuId, categoryId, isAdd) {
 	  //alert(menuId);
@@ -811,7 +1085,7 @@ function catChg(obj) {
 	}
 
 	function updateMenuCategory1(menuId) {
-	 alert(menuId);
+	// alert(menuId);
         $.ajax({
             url: "<{$http_root_www}>restaurant/update_restaurant_menu_category1",
             type: "POST",
@@ -849,8 +1123,11 @@ function catChg(obj) {
                 window.location.href = "<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1&customer_id=" + $(this).val();
         });
 		
-		$('[name="en_name1"]').hide();
-	
+		<{if $onoffcninfo =='on'}> $('[name="cn_name1"]').show();<{else}>$('[name="cn_name1"]').hide();<{/if}>
+		<{if $onoffeninfo =='on'}> $('[name="en_name"]').show();<{else}>$('[name="en_name"]').hide();<{/if}>
+		<{if $onoffguigecatinfo =='on'}> $('[name="guigecat"]').show();<{else}>$('[name="guigecat"]').hide();<{/if}>
+		
+		  
 		
 		<{if $allOrspecial=='special'}> 
 			$('[name="special_name1"]').show();
@@ -858,6 +1135,15 @@ function catChg(obj) {
 			$('[name="special_name1"]').hide();
 		
 		<{/if}>
+		
+      <{if $sku=='show'}> 
+			$('[name="sku"]').show();
+		<{else}>
+			$('[name="sku"]').hide();
+		
+		<{/if}>
+		
+		
 		
     })
 </script>

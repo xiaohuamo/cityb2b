@@ -517,7 +517,8 @@ where o.isDeleted=0 and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0)
 					'menu_pic'=>'',
 					'Menu_desc'=>'',
 					'menu_en_name'=>'',
-					'include_gst' => $gstType
+					'include_gst' => $gstType,
+                    'visible'=>0
 				);
 				$newId = $this->insert($menu_info);
 				if($newId) {
