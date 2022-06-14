@@ -15042,7 +15042,7 @@ public function custom_delivery_fee_add_action()
             $this->setData($orders,'orders');
 
 
-
+            $totalBoxes=0;
             $lists_new = array();
 //var_dump($orders);exit;
             foreach ($orders as $key => $value) {
@@ -15062,6 +15062,7 @@ public function custom_delivery_fee_add_action()
                     $lists_new[$key]['Notes']=$value['Notes'];
 
                 }
+                $totalBoxes += $lists_new[$key]['BoxesQuantity'];
 
             //    $lists_new[$key]['signed']=' ';
                 $logistic_delivery_time = $value['logistic_delivery_date'];
@@ -15124,7 +15125,7 @@ public function custom_delivery_fee_add_action()
                 $obj->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 // Add some data
                 $cellName = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ');
-                $obj->getActiveSheet(0)->setTitle(substr($truckName,0,29));
+                $obj->getActiveSheet(0)->setTitle(substr($truckName,0,29).' TotalBoxes:'.$totalBoxes);
 
                 $_row = 2;   //设置纵向单元格标识
                 if ($labels) {
