@@ -42,8 +42,8 @@ class OptimoRoute
 				"customField4" => '',//$order['order_name'], // order name
 				"customField5" => '',
 			];
+            //var_dump($order['logistic_driver_code'] .' 。'. !$auto);exit;
             if($order['logistic_driver_code']>0 && !$auto){
-
                 $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
             }
 

@@ -6332,7 +6332,11 @@ public function return_items_submit_to_statment_action() {
 
             $data['logistic_truck_No'] =$value;
 
-
+            $mdl_truck = $this->loadModel('truck');
+            $truckDriverRec = $mdl_truck->getByWhere(array('truck_no'=>$value,'business_id'=>$this->current_business['id']));
+            if($truckDriverRec){
+                $data['logistic_driver_code']=$truckDriverRec['current_driver'];
+            }
             try {
                 $mdl_order->update($data,$id);
 
