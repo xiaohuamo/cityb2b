@@ -544,16 +544,7 @@
 											<span class='promote-ajax'></span>
 										</td>
 										
-										
-										
-										
-										
-										
-									<!--	<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
-												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td> -->
+								
 										
 										
 									   <td>
@@ -641,7 +632,7 @@
 										</td>
                                         <{if $menu_option_list}>
 											<td name="guigecat" style="width:150px;">
-												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
+												<select  style="width:150px;" name='menu_option' data-ori_value ='<{$item.menu_option}>'  data-id='<{$item.id}>'>
 													<option value='0'>请选择规格</option>
                                                     <{foreach from=$menu_option_list item=sitem}>
 														<option value='<{$sitem.id}>'
@@ -767,6 +758,9 @@
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
+		var ori_value = $(this).data('ori_value');
+		
+		
         var update_field_name = $(this).attr('name');
         var value;
         if (update_field_name == 'include_gst') {
@@ -782,7 +776,7 @@
 		if((update_field_name == 'menu_en_name') || (update_field_name == 'menu_cn_name')  || (update_field_name == 'menu_en_desc')  || (update_field_name == 'menu_desc') ) {
 		 
 		  if( (value.indexOf("'") ==-1) &&  value.indexOf("&") ==-1) {
-		     alert( '校验通过');
+		    // alert( '校验通过');
 		  }else{
 		     alert(' The item name can not include ' + "' or &");
 			 return 0 ;
@@ -818,6 +812,10 @@
 				}
             } else if (data.status == 500) {
                 alert(data.msg);
+				if(update_field_name  == 'menu_option') {
+				 alert('you are operate menu_option');
+				 $(this).val(ori_value);
+				}
                 $(ajax_result).html(errorIcon);
             } else {
                 alert(data.msg);

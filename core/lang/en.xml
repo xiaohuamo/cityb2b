@@ -712,7 +712,8 @@
     <total_number_of_order>Total number of orders query</total_number_of_order>
     <product>Product</product>
     <order_status>Status</order_status>
-    <specification>Specifications</specification>
+    <specification1>Specifications</specification1>
+	 <specification_details>Specifications Details</specification_details>
     <order_name>Order name</order_name>
     <redeem_number>Redeem code</redeem_number>
     <payment_type>Payment type</payment_type>

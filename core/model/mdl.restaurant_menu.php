@@ -202,6 +202,22 @@ class mdl_restaurant_menu extends mdl_base
 
     }
 
+    function CheckIfSpecIdisAvaliable($id,$specId){
+
+        $sql ="select count(*) as count from cc_restaurant_menu where menu_option=$specId and id !=$id";
+        $result  =$this->getListBySql($sql);
+        if($result){
+            if($result[0]['count']==0){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            return 1;
+        }
+
+    }
+
     function  getBoughtGuigeList($userid,$id){
 
         $sql ="select order_id,guige1_id  from cc_wj_customer_coupon where restaurant_menu_id=$id and userId =$userid order by id desc limit 5";

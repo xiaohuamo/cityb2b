@@ -51,12 +51,7 @@
 						<{/foreach}>
 					</select>
 					
-					<select class='chooseDate'>
-						<option>请选择方式</option>
-							<option value="auto" selected >系统自动排单</option>
-							<option value="manunal" >按分配单导入</option>
-						
-					</select>
+					
 
 					<{if $orders}>
 						<button style="padding: 10px 5px;background: #FD5001 ">  
@@ -64,7 +59,11 @@
 						</button>
 
 						<button style="padding: 10px 5px;background: #FD5001 ">
-							<a onclick='return confirm("确认将一下订单导入OptimoRoute?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncup">Sync Up</a>
+							<a onclick='return confirm("确认将一下订单导入OptimoRoute?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncup">Sync Up auto routes</a>
+						</button>
+						
+						<button style="padding: 10px 5px;background: #FD5001 ">
+							<a onclick='return confirm("确认将一下订单导入OptimoRoute?");'	href="<{$http_root_www}>company/oproute?auto=1&date=<{$date}>&task=syncup">Sync Up manual routes</a>
 						</button>
 
 						<button style="padding: 10px 5px;background: #43d1af">

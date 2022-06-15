@@ -3070,6 +3070,7 @@ function category_migration_action(){
 
 		$freshfood =get2('freshfood');
 		$addCount =get2('addCount');
+		if(!$addCount) $addCount=5;
 //var_dump($addCount);exit;
 		if ($freshfood) {
 			$this->setData($freshfood,'freshfood');
@@ -3079,7 +3080,7 @@ function category_migration_action(){
 			//var_dump($freshfood);exit;
 
 		}
-
+		$this->setData($addCount,'addCount');
 		$customer_id =get2('customer_id');
 
 		if(!$customer_id) {
@@ -3118,17 +3119,22 @@ function category_migration_action(){
 					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
 				}
 				$this->setData($data,'restaurant_category');
-				
-				
-				
-				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide,parent_id,category_sort_id ";
-				
+
+
+				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+
+
+
+
 				//var_dump($sql_Parent_cate_list);exit;
 
 				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
 
-
+				//$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
+				$catList = $mdl_restaurant_category->getCateList($customer_id);
+				$this->setData($catList, 'catList');
 				
 
 			
@@ -4631,6 +4637,14 @@ function category_migration_action(){
 			$menu_option = post('menu_option');
 			if(isset($menu_option))$data['menu_option']=$menu_option;
 
+			// check if choose spec is occupied , if occupied ,then promot error
+
+			$ifSpecIdAvaliable = $mdl_restaurant_menu->CheckIfSpecIdisAvaliable($id,$menu_option);
+			if(!$ifSpecIdAvaliable){
+
+				$this->form_response(500, 'The Specification you choose has been used ,on specification can use for only one item！','');
+			}
+
 			$restaurant_id = post('restaurant_id');
 			if(isset($restaurant_id))$data['restaurant_id']=$restaurant_id;
 
@@ -5021,7 +5035,7 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 
-		$pagename = "菜品规格分类编辑";
+		$pagename = "Specification Edit";
 		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
 
 
@@ -5043,7 +5057,7 @@ function category_migration_action(){
 		$data = $mdl_restaurant_menu_option_category->getListBySql($pageSql);
 
 		if(!$data) {
-			$this->sheader(null,'您需要首先定义菜品规格分类,然后才可以定义菜品规格....');
+			$this->sheader(HTTP_ROOT_WWW.'restaurant/restaurant_menu_option_category_edit','please add item Specification  first !');
 		}
 		$this->setData($data,'restaurant_menu_option_category');
 
@@ -5128,7 +5142,7 @@ function category_migration_action(){
 		$this->setData('restaurant_set', 'submenu');
 		$this->setData('index_publish', 'menu');
 
-		$pagename = "specification setting";
+		$pagename = "Specification Detail Edit";
 		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');

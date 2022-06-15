@@ -39,15 +39,15 @@
 
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="菜单名称" style="width:250px; margin-right:5px;" />
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="name" style="width:250px; margin-right:5px;" />
 						
 						<br><br>
 
-						<label>菜单分类选择:</label>
+						<label>Choose Specification</label>
 						
 						<select name="category" id='category'>
  
-						    <option value="all"<{if $category=='all'}> selected<{/if}>>全部</option> 
+						    <option value="all"<{if $category=='all'}> selected<{/if}>>All</option> 
 						
 						  <{foreach from=$restaurant_menu_option_category item=item}>
 						  
@@ -63,9 +63,7 @@
 						</select>
 
 						<button type="submit"><{$lang->search}></button>
-						<p>
-							[1]点击<strong>[菜单分类选项]</strong>选区类别,[2]再点击<strong>[搜索]按钮</strong>将<strong style="color="blue">自动生成</strong>新的菜品表格,填写即可.				
-						</p>
+						
 						
 					</form>
 				</div>
@@ -76,12 +74,12 @@
 							<thead>
 								<tr>
 									<th>Id</th>
-									<th>图片</th>
-									<th>规格编号</th>
-					                <th>规格名-中文</th>
-					                <th>单价</th>
-									<th>规格名-英文</th>
-									<th>描述</th>
+									<th>Pic</th>
+									<th>Spec Details Code</th>
+					                <th>Name</th>
+					                <th>Price</th>
+									<th>name_cn</th>
+									<th>Desc</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -92,11 +90,16 @@
 									<td>
 										<{if $item.menu_pic}>
 											<img src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>">
-											<a  target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>" >修改</a>
+											<a  target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>" >Edit</a>
 											<{else}>
-											<a  target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>" >添加</a>
+											<a  target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>" >Add</a>
 											<{/if}>
 						  				</td>
+										<td>
+										
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>"  style="width:250px;" name="menu_en_name" value="<{$item.menu_en_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
 										
 										 <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>"  style="width:50px;" name="menu_id" value="<{$item.menu_id}>" >
@@ -104,10 +107,7 @@
 							  				<br>
 										</td>
 										
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>"  style="width:250px;" name="menu_cn_name" value="<{$item.menu_cn_name}>" >
-											<span class='promote-ajax'></span>
-										</td>
+										
 
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>"  style="width:50px;" name="price" value="<{if $item.price >0}><{$item.price}><{/if}>" >
@@ -115,12 +115,11 @@
 										</td>
 
 
-										<td>
 										
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>"  style="width:250px;" name="menu_en_name" value="<{$item.menu_en_name}>" >
+									<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>"  style="width:250px;" name="menu_cn_name" value="<{$item.menu_cn_name}>" >
 											<span class='promote-ajax'></span>
 										</td>
-									
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>"  style="width:200px;" name="menu_desc" value="<{$item.menu_desc}>" >
 											<span class='promote-ajax'></span>

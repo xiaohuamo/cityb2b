@@ -684,6 +684,7 @@
     <!-- 15 -->
     <customer_center>Customer Center</customer_center>
     <dispatching_center>Dispatching Center</dispatching_center>
+		<stock_center>Stock Management</stock_center>
 	<Producing_Centre>Producing Center</Producing_Centre>
     <logistic_center>Logistic</logistic_center>
     <order_management>Orders</order_management>
@@ -712,6 +713,7 @@
     <product>Product</product>
     <order_status>Status</order_status>
     <specification>Specifications</specification>
+	 <specification_details>Specifications Details</specification_details>
     <order_name>Order name</order_name>
     <redeem_number>Redeem code</redeem_number>
     <payment_type>Payment type</payment_type>

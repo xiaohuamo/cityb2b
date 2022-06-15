@@ -544,16 +544,7 @@
 											<span class='promote-ajax'></span>
 										</td>
 										
-										
-										
-										
-										
-										
-									<!--	<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
-												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td> -->
+								
 										
 										
 									   <td>
@@ -818,6 +809,7 @@
 				}
             } else if (data.status == 500) {
                 alert(data.msg);
+				
                 $(ajax_result).html(errorIcon);
             } else {
                 alert(data.msg);

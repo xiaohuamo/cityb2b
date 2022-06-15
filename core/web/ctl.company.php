@@ -13599,6 +13599,8 @@ function get_data($url, $ch) {
     		
     	$date = get2('date');
     	$this->setData($date,'date');
+        $auto = get2('auto');
+
     	
     	if (strtotime($date)) {
     		switch (get2('task')) {
@@ -13609,7 +13611,7 @@ function get_data($url, $ch) {
 	    		case 'syncup':
 	    			//Step1
 	    			try {
-	    				$opRoute->syncOrderOnDate($date);
+	    				$opRoute->syncOrderOnDate($date,$auto);
 	    			} catch (Exception $e) {
 	    				$this->sheader(null,$e->getMessage());
 	    			}

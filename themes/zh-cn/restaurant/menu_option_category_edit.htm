@@ -26,20 +26,20 @@
 			<div class="box2">
 				 <{include file='company/side_restaurant_info.htm'}>
 				<div class="colCurTit">
-					<{$pagename}> (菜单类别名 不填写不被显示)
+					<{$pagename}> 
 				</div>
 
-				<p>配菜需要与一道或多道主菜匹配后才能生效。用户必须且只能选择一种规格</p>
+				
 
 				<div class="main-list">
 					<{if $data}>
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 								<tr>
-									<th>类别排序</th>
-									<th>规格类名</th>
-					                <th>规格类名-英语</th>
-									<th>规格类编号</th>
+									<th>Sort</th>
+									<th>name_cn</th>
+					                <th>name</th>
+									<th>Spec_id</th>
 								</tr>
 							</thead>
 							<tbody>

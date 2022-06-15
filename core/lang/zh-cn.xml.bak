@@ -694,6 +694,7 @@
     <!-- 15 -->
     <customer_center>客户中心</customer_center>
     <dispatching_center>配货中心</dispatching_center>
+	<stock_center>库存管理</stock_center>
 	<Producing_Centre>生产中心</Producing_Centre>
     <logistic_center>物流管理</logistic_center>
     <order_management>订单管理</order_management>
@@ -729,6 +730,7 @@
     <product>产品</product>
     <order_status>交易状态</order_status>
     <specification>规格</specification>
+	 <specification_details>规格明细</specification_details>
     <user>用户</user>
     <staff>员工</staff>
     <date_start>起始日期</date_start>

@@ -15,8 +15,9 @@ class OptimoRoute
 	/**
 	 * 将送货日期当天的订单同步到Optimoroute
 	 */
-	public function syncOrderOnDate($dateStr)
-	{	
+	public function syncOrderOnDate($dateStr,$auto)
+	{
+      //  var_dump($auto);exit;
 		foreach ($this->getOrderOnDeliverDate($dateStr) as $order) {
 			$data = [
 				"operation" => "SYNC",
@@ -41,9 +42,9 @@ class OptimoRoute
 				"customField4" => '',//$order['order_name'], // order name
 				"customField5" => '',
 			];
-            if($order['logistic_driver_code']>0){
+            if($order['logistic_driver_code']>0 && !$auto){
 
-             //   $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
+                $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
             }
 
 			try {

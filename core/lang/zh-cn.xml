@@ -729,7 +729,8 @@
     <total_number_of_order>查询订单总数</total_number_of_order>
     <product>产品</product>
     <order_status>交易状态</order_status>
-    <specification>规格</specification>
+    <specification1>规格</specification1>
+	 <specification_details>规格明细</specification_details>
     <user>用户</user>
     <staff>员工</staff>
     <date_start>起始日期</date_start>

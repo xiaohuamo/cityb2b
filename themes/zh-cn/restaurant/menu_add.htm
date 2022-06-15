@@ -132,7 +132,7 @@
         <{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-                <{include file='company/side_restaurant_info.htm'}>
+              
 				<div class="colCurTit">
                     <{$pagename}>
 					
@@ -142,37 +142,15 @@
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$http_root_www}>restaurant/restaurant_menu_add">
-                            店铺：&nbsp;
-                        <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
-							<select class='chooseCustomer'>
-								<option>请选择管理店铺</option>
-								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
-                                    <{$loginUser.displayName}>
-								</option>
-                                <{foreach from=$authrise_manage_other_business_account item=d}>
-								   <{if $loginUser.id==$d.customer_id}><{else}>
-									<option value="<{$d.customer_id}>" <{if $d.customer_id==$customer_id}>selected<{/if}>>
-                                        <{$d.displayName}>
-									</option><{/if}>
-                                <{/foreach}>
-							</select>
-                        <{/if}>
-						&nbsp;&nbsp;
-						
-						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
-						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
-
-						
-<br><br>
-						分类：&nbsp;
-					
+                       
+							
 
 						<select name="category" id='category'  onChange="catChg(this);">
 						
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -219,7 +197,7 @@ function catChg(obj) {
 		}
 	
 		var c = $('<select id ="sub_category" name="sub_category" >');
-		c.append('<option value="">选择子分类</option>');
+		c.append('<option value="">Choose Sub Category</option>');
 		for (var i = 0; i < cats.length; i++) {
 			if ( cats[i][2] == vv ) {
 			//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
@@ -242,30 +220,28 @@ function catChg(obj) {
 	
 }
 
-</script><br><br>
- 新产品：&nbsp;
+</script>&nbsp;
 				<select name="addCount" id='addCount'  >
 						
 					
 
-							<option value="20"  selected>增加20条 </option>
+							
 
                           
 						 
-						   <option value="1"  >增加1条 </option>
-						     <option value="5"  >增加5条 </option>
-							  <option value="10"  >增加10条 </option>
-						   <option value="50"  >增加50条 </option>
-						    <option value="100"  >增加100条 </option>
+						   <option value="1" <{if $addCount==1}> selected<{/if}> >Add 1 item </option>
+						     <option value="5" <{if $addCount==5}> selected<{/if}> >Add 5 items </option>
+							  <option value="10" <{if $addCount==10}> selected<{/if}> >Add 10 items </option>
+						   <option value="20"  <{if $addCount==20}> selected<{/if}>>Add 20 items </option>
 
 						</select>
 						&nbsp;&nbsp;
-						<button type="submit">添加</button>
+						<button type="submit">ADD</button>
 
 						
-						<br> <br>
+						<br> 
 						
-						
+					<!--	
 				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  checked >
 						<span >
 								<span >显示中文版编辑列</span>
@@ -282,7 +258,7 @@ function catChg(obj) {
 											<br>
 										
 										
-						
+					-->	
 
                    
 					
@@ -297,56 +273,14 @@ function catChg(obj) {
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th name="sku" >SKU编码</th>
-									<th  name="sku" >图片链接路径</th>
-									
-									<th>上线下线</th>
-									<th name="special_name1">特价设置</th>
-									<th name="special_name1">特价价格</th>
-									<th name="special_name1">限购数量</th>
-                                    <{if count($suppliersList)>1}>
-										<th>选择商家</th>
-                                    <{/if}>
-									<th>图片</th>
-									
-									<th>排序</th>
-									<th>产品编号</th>
-									<th name="cn_name1" >产品名称-中文</th>
-									
-									<!--<th>进价</th> -->
+									<th name="sku" >SKU Code</th>
+								    <th>Pic</th>
 								
-									<th>售价</th>
-									<th>库存</th>
-								
-									
-									
-									
-                                    <{if in_array($gstType, [3,4])}>
-										<th>是否含税</th>
-                                    <{/if}>
-								
-									<th name="en_name1">产品名-英文</th>
-								
-									<th name="en_name1">英文单位</th>
-									<th >每箱单位数</th>
-									<th>装箱溢出率</th>
-									<th name="en_name1">描述-英文</th>
-									<th >主分类</th>
-							
-                                    <{if $menu_option_list}>
-										<th name="guigecat">菜品规格</th>
-                                    <{/if}>
-                                    <{if $sidedish_category_list}>
-										<th name="guigecat">选择配菜</th>
-                                    <{/if}>
-											<th name="guigecat">设置分类</th>
-								
-								
-									<th>放入回收站</th>
-									<th>原价</th>
-									<th name="cn_name1">中文单位</th>
-									<th name="cn_name1">描述</th>
-									<th >最低价</th>
+									<th name="en_name1">Item Name</th>
+									<th name="en_name1">Unit</th>
+									<th >Qty per Box</th>
+									<th>Load Over rates</th>
+									<th name="en_name1">Desc</th>
 									<th >id</th>
 								</tr>
 								</thead>
@@ -356,314 +290,53 @@ function catChg(obj) {
 										
 										<td name="sku"> 
 										
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:110px;" name="barcode_number"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:150px;" name="barcode_number"
 												   value="<{$item.barcode_number}>">
 											<span class='promote-ajax'></span>
 											<br>
 										
 										</td>
-										
-										<td name="sku">
-											<input type="text" class="input-text" data-id='<{$item.id}>' data-main-pic='<{$item.menu_pic}>' id="filePath-<{$item.id}>" style="width:210px;" name="filePath"
-												   value="">
-											<span class='promote-ajax'></span> 
-											
-												<span class='promote-ajax'></span>
-
-										</td>
-										
-										<td>
-										<div class="onoffswitch">
-												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.visible==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
-													<span class="onoffswitch-inner"></span>
-													<span class="onoffswitch-switch"></span>
-												</label>
-											</div>
-										
-                                            <{if $item.visible==1}>
-												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">产品发布</span>
-                                                    </span>
-                                            <{else}>
-												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">产品下线</span>
-                                                    </span>
-                                            <{/if}>
-											
-										
-										</td>
-																				<td name="special_name1">
-											<div class="onoffswitch1">
-												<input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch1<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.onSpecial==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch1<{$item.id}>">
-													<span class="onoffswitch-inner"></span>
-
-												</label>
-											</div>
-										
-                                            <{if $item.onSpecial==1}>
-												<span class='special_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">特价产品</span>
-                                                    </span>
-                                            <{else}>
-												<span class='special_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">非特价产品</span>
-                                                    </span>
-                                            <{/if}>
-											<br>
-										</td>
-
-										<td name="special_name1">
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="speical_price-<{$item.id}>" style="width:50px;" name="speical_price"
-												   value="<{if $item.speical_price >0}><{$item.speical_price}><{else}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td>
-										<td name="special_name1">
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="limit_buy_qty-<{$item.id}>" style="width:50px;" name="limit_buy_qty"
-												   value="<{if $item.limit_buy_qty >0}><{$item.limit_buy_qty}><{else}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td>
-                                        <{if count($suppliersList)>1}>
-											<td>
-												<select name='restaurant_id' data-id='<{$item.id}>'>
-													<option value='0'>请选择供应商</option>
-                                                    <{foreach from=$suppliersList item=sitem1}>
-														<option value='<{$sitem1.suppliers_id}>'
-                                                                <{if $item.restaurant_id==$sitem1.suppliers_id}>selected<{/if}>>
-                                                            <{$sitem1.suppliers_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
+								
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
 												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">修改</a>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">Edit</a>
                                             <{else}>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">添加</a>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">Add</a>
                                             <{/if}>
 										</td>
-										
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_order_id-<{$item.id}>" style="width:50px;" name="menu_order_id"
-												   value="<{$item.menu_order_id}>">
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>" style="width:70px;" name="menu_id"
-												   value="<{$item.menu_id}>">
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-										<td name="cn_name1">
-										
-										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:120px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
-											
-											<span class='promote-ajax'></span>
-										</td>
-										
-										
-										
-										
-										
-										
-									<!--	<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="freshx_price-<{$item.id}>" style="width:50px;" name="freshx_price"
-												   value="<{if $item.freshx_price >0}><{$item.freshx_price}><{/if}>">
-											<span class='promote-ajax'></span>
-										</td> -->
-										
-										
-									   <td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>" style="width:50px;" name="price"
-												   value="<{if $item.price >0}><{$item.price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
-											<span class='promote-ajax'></span>
-										</td>
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="qty-<{$item.id}>" style="width:30px;" name="qty" value="<{$item.qty}>">
-											<span class='promote-ajax'></span>
-										</td>
-										
-										
-										
-										
-									
-                                        <{if in_array($gstType, [3,4])}>
-											<td>
-												<input type="checkbox" name="include_gst" id="includegstswitch<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.include_gst==1}> checked <{/if}>>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
 										
 										
 										<td name="en_name1">
 
-											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="<{if !$onoffcninfo}>width:180px;<{else}>width:120px;<{/if}>" name="menu_en_name"><{$item.menu_en_name}></textarea>
+											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="<{if !$onoffcninfo}>width:180px;<{else}>width:180px;<{/if}>" name="menu_en_name"><{$item.menu_en_name}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 										<td name="en_name1">
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit_en"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:50px;" name="unit_en"
 												   value="<{$item.unit_en}>">
 											<span class='promote-ajax'></span>
 										</td>
 										
 										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:100px;" name="unitQtyPerBox"
 												   value="<{$item.unitQtyPerBox}>">
 											<span class='promote-ajax'></span>
 										</td>
 										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:50px;" name="overflowRate"
-												   value="<{$item.overflowRate}>">
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:100px;" name="overflowRate"
+												   value="<{$item.overflowRate}>">&nbsp;%
 											<span class='promote-ajax'></span>
 										</td>
 										
 										
 										<td name="en_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:180px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 								
-										<td>
-											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
-                                              <option value="0"  selected>选择分类</option>
-											  <{foreach from=$catList item=category}>
-													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
-													value="<{$category.id}>" 
-													
-													<{if $category.id == $item.sub_category_id}>
-														selected 
-													  
-													<{else}>
-													  <{if $category.id == $item.restaurant_category_id and $item.sub_category_id==0}>
-													  	selected 
-													  <{/if}>
-													
-													
-													<{/if}>
-													
-													 >
-													
-													<{if $langStr == 'zh-cn'}>
-															<{$category.title_cn}>
-															
-														<{else}>
-															<{$category.title_en}>
-														<{/if}>
-													</option>
-                                                <{/foreach}>
-											</select>
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-                                        <{if $menu_option_list}>
-											<td name="guigecat" style="width:150px;">
-												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
-													<option value='0'>请选择规格</option>
-                                                    <{foreach from=$menu_option_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.menu_option==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-                                        <{if $sidedish_category_list}>
-											<td name="guigecat">
-												<select name='sidedish_category' data-id='<{$item.id}>'>
-													<option value='0'>请选择配菜</option>
-                                                    <{foreach from=$sidedish_category_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.sidedish_category==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-								
-										<td  name="guigecat" id="restaurant_categories-td-<{$item.id}>">
-										  <{if $item.category_cn_name}>
-											<span style="height:16px;background-color: grey;color: white" id="menu-<{$item.id}>"><{$item.category_cn_name}> <a style="color:red" onclick="deleteMenuCategory1('<{$item.id}>','<{$item.categoryId}>')">X&nbsp;</a></span>
-                                         <br>  <{/if}>
-										   <{foreach from=$item.categoryIds item=categoryId}>
-												<script>
-                                                    document.write(generateCategoryHtml(<{$categoryId.category_id}>, <{$item.id}>));
-												</script>
-												<br>
-                                            <{/foreach}>
-											<br>
-											<select id="restaurant_categories-<{$item.id}>" onchange="updateMenuCategory(<{$item.id}>, this.value, 1)">
-												<option value=""></option>
-                                                <{foreach from=$data_parent_cate_list item=category}>
-													<option value="<{$category.id}>">
-														<{if $category.category_cn_name1}><{$category.category_cn_name1}><{/if}>
-														<{if $category.category_cn_name1 && $category.category_en_name}>|<{/if}>
-														<{if $category.category_en_name}><{$category.category_en_name}><{/if}>
-													</option>
-                                                <{/foreach}>
-											</select>
-											<span class='promote-ajax'></span>
-											<br>
-										</td>
-							
 										
-										
-										
-										<td>
-										<div class="onoffswitch_deleted">
-												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
-													<span class="onoffswitch-inner"></span>
-												
-												</label>
-											</div>
-										
-                                            <{if $item.isDeleted==1}>
-												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">已回收</span>
-                                                    </span>
-                                            <{else}>
-												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">未回收</span>
-                                                    </span>
-                                            <{/if}>
-											
-										
-										</td>
-										 <td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="original_price-<{$item.id}>" style="width:50px;" name="original_price"
-												   value="<{if $item.original_price >0}><{$item.original_price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
-											<span class='promote-ajax'></span>
-										</td>
-										<td name="cn_name1" >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
-												   value="<{$item.unit}>">
-											<span class='promote-ajax'></span>
-										</td>
-										<td name="cn_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>" style="width:120px;" name="menu_desc"><{$item.menu_desc}></textarea>
-											<span class='promote-ajax'></span>
-										</td>
-										 <td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="lowest_price-<{$item.id}>" style="width:50px;" name="lowest_price"
-												   value="<{$item.lowest_price}>" >
-											<span class='promote-ajax'></span>
-										</td>
+									
 										 <td>
 											
 											<span ><{$item.id}></span>
@@ -1136,12 +809,7 @@ $('input[name=filePath]').on('change', function () {
 		
 		<{/if}>
 		
-      <{if $sku=='show'}> 
-			$('[name="sku"]').show();
-		<{else}>
-			$('[name="sku"]').hide();
-		
-		<{/if}>
+    
 		
 		
 		
