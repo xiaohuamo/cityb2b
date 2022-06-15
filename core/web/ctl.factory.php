@@ -3226,6 +3226,54 @@ public function return_items_submit_to_statment_action() {
         }
     }
 
+
+    public function store_area_bulk_add_action()
+    {
+
+
+        if (is_post()) {
+
+            $id =post('id');
+
+
+            $update_field_name  = post('update_field_name');
+            $value = post('value');
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+           // $this->form_response(500, $id.' '.$update_field_name. ' '.$value, '');
+
+            $mdl_store  =$this->loadModel('store_house');
+            $mdl_store_area  =$this->loadModel('store_house_area');
+
+            $store_rec = $mdl_store->get($id);
+            if(!$store_rec || $store_rec['factory_id'] !=$this->current_business['id']) {
+
+                $this->form_response(500,'no access', '');
+            }
+            $data= array(
+                'factory_id'=>$this->current_business['id'],
+                'store_house_id'=>$id,
+                'store_area'=>' '
+            );
+
+
+             try {
+
+                    for ($i=0; $i <$value ; $i++) {
+
+                        $mdl_store_area->insert($data);
+                    }
+
+                $this->form_response(200, '', '');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(), '');
+            }
+
+        } else {
+            //wrong protocol
+        }
+    }
+
     public function update_business_payment_terms_action()
     {
 
@@ -4648,7 +4696,7 @@ public function return_items_submit_to_statment_action() {
             //获得储藏区货架信息
             $this->setData($data_store_house, 'data_store_house');
 
-            $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id order by a.store_house_id,a.sort_id " ;
+            $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id  and length(trim(store_area))>0 order by a.store_house_id,a.sort_id " ;
             $data_store_house_area = $this->loadModel('store_house_area')->getListBySql($sql);
             //var_dump($data_store_house);exit;
             //获得储藏区货架信息
@@ -6115,9 +6163,18 @@ public function return_items_submit_to_statment_action() {
 
             $update_field_name = post('update_field_name');
 
-            $value = post('value');
+          //  $this->form_response(600,$update_field_name);
 
-            $data['sort_id'] =$value;
+            $value = post('value');
+          ///  $this->form_response(600,$value);
+            if($update_field_name =='sort_id') {
+                $data['sort_id'] =$value;
+            }
+
+            if($update_field_name =='store_area') {
+                $data['store_area'] =$value;
+            }
+
 
 
             try {

@@ -36,7 +36,8 @@
 
 							<h1>Store House Management</h1>
 
-						</div> </form> </div>
+						</div> </form>
+						</div>
 				<div class="main-list">
 					<table cellspacing="0" cellpadding="0" width="100%" >
 						<thead>
@@ -46,8 +47,9 @@
 								<th>Code</th>
 								<th>Name</th>
 								<th>note</th>
-								<th>Active</th>
+								<th>In Use</th>
 								<th>Store Edit</th>
+								<th>Area Bulk New</th>
 								<th>Area Edit</th>
 							</tr>
 						</thead>
@@ -77,6 +79,17 @@
 									
 								</td>
 							<td><a href="<{$http_root_www}>factory/store_house_edit?id=<{$item.id}>">Store Edit</a></td>
+							<td>
+									<select name="addCount" data-id="<{$item.id}>" id='addCount'  >
+										<option value="5"  selected >Choose bulk number</option>
+										 <option value="5">Add 5 areas </option>
+										  <option value="10" >Add 10 areas </option>
+									   <option value="20" >Add 20 areas </option>
+
+									</select>
+									<span class='promote-ajax'></span>
+									
+						</td>
 								
 								<td><a href="<{$http_root_www}>factory/store_house_area_list?id=<{$item.id}>">Area Edit</a></td>
 
@@ -98,7 +111,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-    $('select[name=diverId]').on('change', function () {
+    $('select[name=addCount]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -113,10 +126,11 @@
         updateData['update_field_name'] = update_field_name;
 		updateData['value'] = value;
 		//alert(value);
-		//alert(id);
+		//alert(update_field_name);
+		return;
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_truck_driver",
+            url: "<{$http_root_www}>factory/store_area_bulk_add",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -128,18 +142,10 @@
             } catch (err) {
                 data['msg'] = data;
             }
-
+ $(ajax_result).html(successIcon);
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
-                //alert('yes');
-				if(update_field_name='barcode_number'){
-				  //alert(data.msg + ' ' +id);
-				  if(data.msg) {
-				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
-				
-				  }else{
-				  }
-				}
+               
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
@@ -154,7 +160,8 @@
 
 
     });
-
+	
+	
 
     function IconUpdate(obj) {
         this.target = $(obj).find('.status_updating');
@@ -182,7 +189,7 @@
 		 </script>
 	
 	
-	
+	<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
 	   
 
 </body>

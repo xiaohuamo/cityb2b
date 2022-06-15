@@ -77,7 +77,12 @@
 								</td>
 								
 								<td>
-									<{$item.store_area}>
+								
+								 <input type="text" class="input-text" data-store_area ="<{$item.store_area}>"  data-id='<{$item.id}>'  style="width:150px;" name="store_area"
+													   value="<{$item.store_area}>">
+												<span class='promote-ajax'>
+									  </td>
+									
 									
 								</td>
 								 <td>
@@ -108,7 +113,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-     $('input[name=sort_id]').on('change', function () {
+     $('input[name=sort_id],input[name=store_area]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";

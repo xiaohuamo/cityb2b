@@ -115,7 +115,7 @@
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
-		alert(id);
+		//alert(id);
         var update_field_name = $(this).attr('name');
         var  value = $(this).val();//常规改动直接抓取改动值
         var updateData = {};
@@ -123,7 +123,7 @@
         updateData['id'] = id;
         updateData['update_field_name'] = update_field_name;
 		updateData['value'] = value;
-		alert(value);
+		//alert(value);
 		//alert(id);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
