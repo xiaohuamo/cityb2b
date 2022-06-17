@@ -193,10 +193,14 @@
 								//var area =$('#store_house_area');
 								$('#store_house_area').val(store_house_area);
 								
-								//$("#store_house_area option[value='"+store_house_area+"']").prop("selected", true);
-								  $('#store_house_area').find("option").eq(3).prop("selected",true)
+								$("#store_house_area option[value='"+store_house_area+"']").prop("selected", true);
+								
 								area =$('#store_house_area');
-								areaChg(area);
+								areaChg1(area,'ee','<{$shelf}>','<{$layers}>');
+								
+								 var shelfLayer ='<{$shelfLayer}>';
+								 $('#shelfLayer').val(shelfLayer);
+								 
 							 }
 							 
 						   }
@@ -261,6 +265,39 @@
 									
 								}
 								
+							function areaChg1(obj,areaname,area_shelfLength,area_shelflayers) {
+						
+						if ($('#shelfLayer').length > 0) { 
+										
+											$('#shelfLayer').remove();
+											$('#buttonok').remove();
+										}
+										
+										var vv = $(obj).val(); 
+									
+									
+										//area_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd');
+										//var area_shelfLength =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('length');
+										//var area_shelflayers =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('layers');
+										//alert(area_shelfLength + ' ' + area_shelflayers);
+
+										if (vv >0) {
+										// 如果该区域有货架信息
+										  if(area_shelfLength >0 && area_shelflayers>0) {
+										    
+											//根据货架信息生成货架组
+											genShelfLayers(area_shelfLength,area_shelflayers,vv);
+											// 显示货架组供选择
+											showShelf(obj);
+											//显示货架组区
+										  
+										  }
+										  
+									
+										}
+									}
+						
+						
 						function areaChg(obj) {
 						
 						if ($('#shelfLayer').length > 0) { 

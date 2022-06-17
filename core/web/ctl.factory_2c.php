@@ -424,6 +424,14 @@
 
                 $store_house_area =get2('store_house_area');
 
+                if($store_house_area) {
+                    $rec=$this->loadModel('store_house_area')->get($store_house_area);
+                    $rec1 =$this->loadModel('store_shelf_group_info')->get($rec['shelf_group_id']);
+                    $this->setData($rec1['shelf_count'],'shelf');
+                    $this->setData($rec1['shelf_layers_count'],'layers');
+
+                }
+
                 $this->setData($store_house_area,'store_house_area');
 
 
