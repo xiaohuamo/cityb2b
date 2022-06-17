@@ -127,10 +127,9 @@
 
                       
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称/编码" style="width:250px; margin-right:5px;"/>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="item/code" style="width:100px; margin-right:5px;"/>
 					
-
-				
+						
 				    	<select name="dataType" id='dataType'>
 
 							<option value="all"
@@ -163,6 +162,183 @@
                             <{/foreach}>
 
 						</select>
+						<br>
+						<select name="store_house" id="store_house" style ="margin : 10px 10px 10px 0px;" onChange="storeRoomChg(this);">
+											<option value="0" selected="">Select Store House</option>
+											
+											<{foreach from=$data_store_house item=item}>
+												
+												<option value="<{$item.id}>" ><{$item.code}>- <{$item.name}></option>
+											<{/foreach}> 
+
+
+										 
+												
+										</select>
+										
+						<script type="text/javascript">
+						$(function(){
+						
+						   var storeRoom ='<{$store_house}>';
+						   
+						   
+						   if(storeRoom) {
+							var obj =$('#store_house');
+						    obj.val(storeRoom);
+							storeRoomChg(obj);
+							
+							
+							 var store_house_area ='<{$store_house_area}>';
+							 if(store_house_area){
+								//var area =$('#store_house_area');
+								$('#store_house_area').val(store_house_area);
+								
+								//$("#store_house_area option[value='"+store_house_area+"']").prop("selected", true);
+								  $('#store_house_area').find("option").eq(3).prop("selected",true)
+								area =$('#store_house_area');
+								areaChg(area);
+							 }
+							 
+						   }
+							
+
+						})
+						
+						
+						
+						// store area list 
+						var store_area_lists = [];
+						<{foreach from=$data_store_house_area item=item}>
+						store_area_lists.push(['<{$item.id}>', '<{$item.store_house_id}>', '<{$item.area}>', '<{$item.shelf_count}>', '<{$item.shelf_layers_count}>']);
+						<{/foreach}>
+						
+						function storeRoomChg(obj) {
+								
+									var vv = $(obj).val(); 
+									//$('#shelfLayerDiv').css('display','none');
+									if(vv) {
+										
+										
+										
+										if ($('#store_house_area').length > 0) { 
+										
+											$('#store_house_area').remove();
+										}
+									
+										var areaList = $('<select id ="store_house_area" style="margin:10px;" name="store_house_area"  onchange="areaChg(this)">');
+										areaList.append('<option value="0">Choose store area</option>');
+										for (var i = 0; i < store_area_lists.length; i++) {
+											if ( store_area_lists[i][1] == vv ) {
+											
+											//alert('<option value="'+ store_area_lists[i][0]  +'">'+ store_area_lists[i][2] +'</option>');
+											if(store_area_lists[i][3]>0) {
+												areaList.append('<option value="'+ store_area_lists[i][0] +'" length="'+ store_area_lists[i][3] +'" layers="'+ store_area_lists[i][4] +'" ddd="'+ store_area_lists[i][2] +'">'+ store_area_lists[i][2] +'(Shelves:'+ store_area_lists[i][3]+' x layers:'+ store_area_lists[i][4]+')</option>');
+										
+											}else{
+												areaList.append('<option value="'+ store_area_lists[i][0] +'" length="'+ store_area_lists[i][3] +'" layers="'+ store_area_lists[i][4] +'" ddd="'+ store_area_lists[i][2] +'">'+ store_area_lists[i][2] +'</option>');
+										
+											}
+												
+											//	c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
+												
+											}
+										}
+										$(obj).after(areaList);
+										
+										
+										
+										
+										
+										
+										
+										//setDroplist(c);
+										
+									
+									}else{
+									
+									}
+										
+									
+								}
+								
+						function areaChg(obj) {
+						
+						if ($('#shelfLayer').length > 0) { 
+										
+											$('#shelfLayer').remove();
+											$('#buttonok').remove();
+										}
+										
+										var vv = $(obj).val(); 
+									
+									
+										area_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd');
+										var area_shelfLength =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('length');
+										var area_shelflayers =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('layers');
+										//alert(area_shelfLength + ' ' + area_shelflayers);
+
+										if (vv >0) {
+										// 如果该区域有货架信息
+										  if(area_shelfLength >0 && area_shelflayers>0) {
+										    
+											//根据货架信息生成货架组
+											genShelfLayers(area_shelfLength,area_shelflayers,vv);
+											// 显示货架组供选择
+											showShelf(obj);
+											//显示货架组区
+										  
+										  }
+										  
+									
+										}
+									}
+									
+								function genShelfLayers(shelf,layers,areaid) {
+								shelf_layer_lists =[];
+								 var id =0;
+								 var intshelf =parseInt(shelf);
+								  var intlayers =parseInt(layers);
+										for (var i = 1; i < intshelf+1; i++) {
+												shelf_layer_lists.push([id, areaid+'-'+i,0,'shelf No'+ i ]);
+											
+												id ++;
+											
+										}
+									//	console.log(shelf_layer_lists);
+								
+								}
+
+								function showShelf(obj){
+							
+								var vv = $(obj).val(); 
+								//alert(vv);
+								//alert('here');
+										if ($('#shelfLayer').length > 0) { 
+										
+											$('#shelfLayer').remove();
+											$('#buttonok').remove();
+										}
+										
+										var c = $('<select id ="shelfLayer"  style="margin:10px;" name="shelfLayer"  >');
+										
+										for (var i = 0; i < shelf_layer_lists.length; i++) {
+											c.append('<option value="'+ shelf_layer_lists[i][1]  +'">'+ shelf_layer_lists[i][3] +'</option>');
+											}
+									
+											$(obj).after(c);
+								
+								
+								}
+						
+						</script>
+				
+						
+						
+						
+						
+						
+						
+						
 
 						<button type="submit"><{$lang->search}></button>
 
@@ -229,7 +405,7 @@
 									  
 									   <td>
 										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
-										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
+										
 										</span>
 									  </td>
 									   <td>

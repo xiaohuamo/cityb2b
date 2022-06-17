@@ -26,7 +26,7 @@
 				
 				<div class="colCurTit">
 					<span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>factory/store_house_area_edit?house_id=<{$house_id}>" class="link2"><i class='fa fa-plus'></i>New</a>
+						<a class='btn-yellow' href="<{$http_root_www}>factory/store_shelf_edit" class="link2"><i class='fa fa-plus'></i>New</a>
 					</span>
 				</div>
 				<div class="main-form">			
@@ -34,33 +34,23 @@
 
 				<div class="input-box multi-select clearfix">
 
-							<h1>Store House Area Management</h1>
+							<h1>Store House Management</h1>
 
-						</div> </form> </div>
-						
-				<div>
-				<span>&nbsp;&nbsp;<a href ="<{$http_root_www}>factory/store_house_list" >Return </a></span>&nbsp;&nbsp;
-						
-						<span style="padding-left: 20px;" > Store Info <{if $data}>
-									<{$data.store_house_id}>-<{$data.store_house_code}>
-								<{else}>
-									<{$house_id}>-<{$code}>
-								<{/if}></span>		
-					
+						</div> </form>
 						</div>
-						<br>
 				<div class="main-list">
 					<table cellspacing="0" cellpadding="0" width="100%" >
 						<thead>
 							<tr>
 
 								<th>Id</th>
-								<th>Store_room</th>
-								<th>Area</th>
-								<th>Sort</th>
-	 <{if $shelf_group_list}>	<th>Shelf Group</th> <{/if}>
-								<th>Edit Area</th>
-								<th>note</th>
+								<th>Sort Id</th>
+								<th>Shelf Group Name</th>
+								<th>Shelf Quantities</th>
+								<th>Shelf Layers</th>
+								<th>Create User</th>
+								<th>In Use</th>
+								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,53 +62,32 @@
 									
 								</td>
 								<td>
-									<{$item.code}>
+									<{$item.sort_id}>
 									
 								</td>
 								
 								<td>
-								
-								 <input type="text" class="input-text" data-store_area ="<{$item.store_area}>"  data-id='<{$item.id}>'  style="width:150px;" name="store_area"
-													   value="<{$item.store_area}>">
-												<span class='promote-ajax'>
-									  </td>
-									
+									<{$item.shelf_group_name}>
 									
 								</td>
-								
-								
-								
-								
-								 <td>
-									   <input type="text" class="input-text" data-sort_id ="<{$item.sort_id}>"  data-id='<{$item.id}>'  style="width:50px;" name="sort_id"
-													   value="<{$item.sort_id}>">
-												<span class='promote-ajax'>
-									  </td>
-									  
-									
-								 <{if $shelf_group_list}>
-											<td name="guigecat" style="width:150px;">
-												<select  style="width:150px;" name='shelf_goup_id' data-id='<{$item.id}>'>
-													<option value='0'>Choose Shelf Info</option>
-                                                    <{foreach from=$shelf_group_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.shelf_group_id==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.shelf_group_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>	  
-								
-								
-							    <td><a href="<{$http_root_www}>factory/store_house_area_edit?id=<{$item.id}>">Edit</a></td>
-								
 								<td>
-									<{$item.note}>
+									<{$item.shelf_count}>
 									
 								</td>
+								<td>
+									<{$item.shelf_layers_count}>
+									
+								</td>
+								<td>
+									<{$item.create_user}>
+									
+								</td>
+								<td>
+									<{$item.actived}>
+									
+								</td>
+							<td><a href="<{$http_root_www}>factory/store_shelf_edit?id=<{$item.id}>">Edit</a></td>
+							
 							
 							</tr>
 							<{/foreach}>
@@ -134,14 +103,13 @@
 <script type="text/javascript">
     var loading = false;
 	
-     $('input[name=sort_id],input[name=store_area],select[name=shelf_goup_id]').on('change', function () {
+    $('select[name=addCount]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
-		//alert(id);
         var update_field_name = $(this).attr('name');
         var  value = $(this).val();//常规改动直接抓取改动值
         var updateData = {};
@@ -150,10 +118,11 @@
         updateData['update_field_name'] = update_field_name;
 		updateData['value'] = value;
 		//alert(value);
-		//alert(id);
+		//alert(update_field_name);
+		//return;
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_house_area_sort_id",
+            url: "<{$http_root_www}>factory/store_area_bulk_add",
             type: "POST",
             data: updateData,
             beforeSend: function () {
@@ -168,8 +137,7 @@
 
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
-                //alert('yes');
-				
+               
             } else if (data.status == 500) {
                 alert(data.msg);
                 $(ajax_result).html(errorIcon);
@@ -184,7 +152,8 @@
 
 
     });
-
+	
+	
 
     function IconUpdate(obj) {
         this.target = $(obj).find('.status_updating');
@@ -212,7 +181,7 @@
 		 </script>
 	
 	
-	
+	<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
 	   
 
 </body>

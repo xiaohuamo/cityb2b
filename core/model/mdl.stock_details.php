@@ -42,7 +42,69 @@ class mdl_stock_details extends mdl_base
 
     }
 
-    public  function refreshStock($type,$factory_id,$item_id,$spec_id,$operator_id,$quantity,$store_area_id,$note,$expiration_date,$refId){
+    public function  AdjustStockStoreArea($item_id,$spec_id,$store_area_id,$itemareaShelfLevelInfo){
+
+        // update 总库存
+
+        $where =array (
+            'item_id'=>$item_id,
+            'spec_id'=>$spec_id
+        );
+
+        $mdl_stock = loadModel('producing_item_stock');
+        $stock_rec =$mdl_stock->getByWhere($where);
+        if($stock_rec){
+            $onlySelfStr = $this->getOnlyShelfInfo($itemareaShelfLevelInfo);
+            $dataForUpdate =array(
+                'store_area_ids'=>$store_area_id,
+                'stock_shelf_info'=>$itemareaShelfLevelInfo,
+                'onlyselfInfo'=>$onlySelfStr
+            );
+            if(!$mdl_stock->update($dataForUpdate,$stock_rec['id'])){
+               return 0;
+            }
+
+        }else{
+            return 0;
+        }
+        return 1;
+    }
+
+    public function getOnlyShelfInfo($itemareaShelfLevelInfo){
+        $shelfStr ='';
+
+
+        $arr =json_decode($itemareaShelfLevelInfo,true);
+        $first=1;
+        // 按每个area 循环
+        //[["19",[[1,3],[2,1],[2,2]]],["20",[[1,3],[1,4],[1,5],[2,1],[2,2]]]]
+        foreach ($arr as $key=>$value){
+            // 按该area 货架循环
+            foreach ($value[1] as $key1=>$value1){
+
+
+
+                    if($first){
+                        $first =0;
+                        $shelfStr = $value[0].'-'.$value1[0];
+                    }else{
+                        $shelfStr .=','.$value[0].'-'.$value1[0];
+                    }
+
+
+            }
+        }
+        $shelfArr =explode(',',$shelfStr);
+
+        $shelfArr=array_unique($shelfArr);
+        $shelfStr =implode(',',$shelfArr);
+        $shelfStr =','.$shelfStr.',';
+
+        return $shelfStr;
+
+    }
+
+    public  function refreshStock($type,$factory_id,$item_id,$spec_id,$operator_id,$quantity,$store_area_id,$note,$expiration_date,$refId,$itemareaShelfLevelInfo){
 
         $this->begin();
 
@@ -84,11 +146,16 @@ class mdl_stock_details extends mdl_base
 
         $mdl_stock = loadModel('producing_item_stock');
         $stock_rec =$mdl_stock->getByWhere($where);
+        $onlySelfStr = $this->getOnlyShelfInfo($itemareaShelfLevelInfo);
         if($stock_rec){
             $newQuantity = $stock_rec['stock_qty'] +$quantity;
+
             $dataForUpdate =array(
                 'stock_qty'=>$newQuantity,
-                'store_area_ids'=>$store_area_id
+                'store_area_ids'=>$store_area_id,
+                'stock_shelf_info'=>$itemareaShelfLevelInfo,
+                'onlyselfInfo'=>$onlySelfStr
+
             );
             if(!$mdl_stock->update($dataForUpdate,$stock_rec['id'])){
                 $err=1;
@@ -101,7 +168,9 @@ class mdl_stock_details extends mdl_base
                 'item_id'=>$item_id,
                 'spec_id'=>$spec_id,
                 'stock_qty'=>$quantity,
-                'store_area_ids'=>$store_area_id
+                'store_area_ids'=>$store_area_id,
+                'stock_shelf_info'=>$itemareaShelfLevelInfo,
+                'onlyselfInfo'=>$onlySelfStr
             );
             if( !$mdl_stock->insert($data) ){
                 $err=1;

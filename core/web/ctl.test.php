@@ -3474,6 +3474,20 @@ public function xero_get_contacts_action(){
 		   $this->data_refresh();
 
 	 }
+		public function get_shelf_info_for_item_action(){
+
+		   $id =get2('id');
+
+		   $mdl =$this->loadModel('producing_item_stock');
+		   $rec =$mdl->get($id);
+		 //  var_dump($rec);exit;
+
+			$mdl_details =$this->loadModel('stock_details');
+			$str = $mdl_details->getOnlyShelfInfo($rec['stock_shelf_info']);
+			echo $str;
+
+
+		}
 
      public function de_order_action(){
 

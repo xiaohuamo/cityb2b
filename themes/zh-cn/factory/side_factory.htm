@@ -171,7 +171,9 @@
 		<a <{if $menu=='Store_centre'}> class="current"<{/if}>><{$lang->stock_center}></a>
 	</div>
 	<div class='second-level'>
-				
+		<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
+			   货架组设置
+		</a>	
 		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='Store_List'}> class="current"<{/if}>>
 			   库房管理
 		</a>

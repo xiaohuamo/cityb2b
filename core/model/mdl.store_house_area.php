@@ -13,6 +13,7 @@ class mdl_store_house_area extends mdl_base
 
         $sql = "select store.code , area.* from cc_store_house_area area left join cc_store_house store on area.store_house_id = store.id where area.store_house_id = $id order by area.sort_id ";
         $result = $this->getListBySql($sql);
+
         return $result;
 
     }

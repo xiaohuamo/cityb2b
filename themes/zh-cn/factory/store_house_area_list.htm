@@ -58,9 +58,9 @@
 								<th>Store_room</th>
 								<th>Area</th>
 								<th>Sort</th>
+	 <{if $shelf_group_list}>	<th>Shelf Group</th> <{/if}>
+								<th>Edit Area</th>
 								<th>note</th>
-								<th> Edit</th>
-								
 							</tr>
 						</thead>
 						<tbody>
@@ -85,19 +85,40 @@
 									
 									
 								</td>
+								
+								
+								
+								
 								 <td>
 									   <input type="text" class="input-text" data-sort_id ="<{$item.sort_id}>"  data-id='<{$item.id}>'  style="width:50px;" name="sort_id"
 													   value="<{$item.sort_id}>">
 												<span class='promote-ajax'>
 									  </td>
+									  
+									
+								 <{if $shelf_group_list}>
+											<td name="guigecat" style="width:150px;">
+												<select  style="width:150px;" name='shelf_group_id' data-id='<{$item.id}>'>
+													<option value='0'>Choose Shelf Info</option>
+                                                    <{foreach from=$shelf_group_list item=sitem}>
+														<option value='<{$sitem.id}>'
+                                                                <{if $item.shelf_group_id==$sitem.id}>selected<{/if}>>
+                                                            <{$sitem.shelf_group_name}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>	  
+								
+								
+							    <td><a href="<{$http_root_www}>factory/store_house_area_edit?id=<{$item.id}>">Edit</a></td>
+								
 								<td>
 									<{$item.note}>
 									
 								</td>
-								
-							<td><a href="<{$http_root_www}>factory/store_house_area_edit?id=<{$item.id}>">Edit</a></td>
-								
-								
 							
 							</tr>
 							<{/foreach}>
@@ -113,7 +134,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-     $('input[name=sort_id],input[name=store_area]').on('change', function () {
+     $('input[name=sort_id],input[name=store_area],select[name=shelf_group_id]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";

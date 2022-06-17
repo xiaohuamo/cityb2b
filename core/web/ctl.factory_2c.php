@@ -417,6 +417,39 @@
 
                 $this->setData($dataType,'dataType');
 
+                $store_house =get2('store_house');
+
+                $this->setData($store_house,'store_house');
+
+
+                $store_house_area =get2('store_house_area');
+
+                $this->setData($store_house_area,'store_house_area');
+
+
+                $shelfLayer =get2('shelfLayer');
+                $this->setData($shelfLayer,'shelfLayer');
+
+               // var_dump($store_house_area. ' '. $store_house);exit;
+
+
+                $sql ="select * from cc_store_house where factory_id = $customer_id" ;
+                $data_store_house = $this->loadModel('store_house')->getListBySql($sql);
+                //var_dump($data_store_house);exit;
+                //获得储藏区货架信息
+                $this->setData($data_store_house, 'data_store_house');
+
+                $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area ,shelf.shelf_count,shelf.shelf_layers_count from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id left join cc_store_shelf_group_info shelf on a.shelf_group_id =shelf.id  where a.factory_id = $customer_id  and length(trim(store_area))>0 order by a.store_house_id,a.sort_id " ;
+                $data_store_house_area = $this->loadModel('store_house_area')->getListBySql($sql);
+                //var_dump($data_store_house);exit;
+                //获得储藏区货架信息
+                $this->setData($data_store_house_area, 'data_store_house_area');
+
+
+
+
+
+
                         $mdl_restaurant_category = $this->loadModel('restaurant_category');
                         $pageSql = "select  * ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0)  and isdeleted =0  order by  parent_id,category_sort_id ";
                        // var_dump($pageSql);exit;
@@ -453,6 +486,16 @@
                         }else{
                             $whereStr.=" o.isDeleted=0 and  (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) and o.restaurant_id=$customer_id   and (o.restaurant_category_id =$category or o.sub_category_id =$category) ";
                         }
+
+                        if($store_house_area) {
+                            $whereStr.=" and stock.store_area_ids like '%,$store_house_area,%' ";
+                        }
+
+
+                        if($shelfLayer) {
+                            $whereStr.=" and stock.onlyselfInfo like '%,$shelfLayer,%' ";
+                        }
+
 
 
                         if (!empty($sk)) {

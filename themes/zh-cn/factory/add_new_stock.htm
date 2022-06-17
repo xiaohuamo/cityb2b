@@ -100,6 +100,7 @@
 							<input type="hidden" id ="select_item_id" name="select_item_id" class="input-text" value="" />
 							<input type="hidden" id ="select_spec_id" name="select_spec_id" class="input-text" value="" />
 							<input type="hidden"  name="stock" class="input-text" value="<{$stock}>" />
+							<input type="hidden" ID="itemareaShelfLevelInfo"  name="itemareaShelfLevelInfo" class="input-text" value="0" />
 
 						<div class="input-box clearfix">	
 							<span><label>Category</label></span>	
@@ -141,10 +142,13 @@
 								// store area list 
 								var store_area_lists = [];
 								<{foreach from=$data_store_house_area item=item}>
-								store_area_lists.push(['<{$item.id}>', '<{$item.store_house_id}>', '<{$item.area}>']);
+								store_area_lists.push(['<{$item.id}>', '<{$item.store_house_id}>', '<{$item.area}>', '<{$item.shelf_count}>', '<{$item.shelf_layers_count}>']);
 								<{/foreach}>
 								
-
+								// shelver & layers 
+								var shelf_layer_lists = [];
+								
+								var area_name;
 
 
 
@@ -163,31 +167,151 @@
 								
 								function areaChg(obj) {
 										var vv = $(obj).val(); 
-
+										$('#shelfLayerDiv').css('display','none');
 									
-										var area_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd')
+										area_name =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('ddd');
+										var area_shelfLength =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('length');
+										var area_shelflayers =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('layers');
+										//alert(area_shelfLength + ' ' + area_shelflayers);
 
-										if (vv ) {
+										if (vv >0) {
+										// 如果该区域有货架信息
+										  if(area_shelfLength >0 && area_shelflayers>0) {
+										    
+											//根据货架信息生成货架组
+											genShelfLayers(area_shelfLength,area_shelflayers);
+											// 显示货架组供选择
+											showShelf(obj);
+											//显示货架组区
+											$('#shelfLayerDiv').css('display','');
 											
-
-											if($(".nice-check-box input[value='"+vv+"']").length>0){
-												$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
-											}else{
-												$.get('<{$http_root_www}>company/category_insert_single', 
-													{ 'cid': vv,}, 
-													function(data){
-														$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="roomAreaId[]"  value="' + vv +'" checked /><label for="'+vv+'"><strong>' + area_name + '</strong></label></div>');
-														//$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
-												});
-											}
-
+										  
+										  }
+										  
+										   if($(".nice-check-box input[value='"+vv+"']").length>0){
+										//	如果找到了该area ,则直接放置true 显示
+													$(".nice-check-box input[value='"+vv+"']").prop('checked', true);
+												}else{
+													$.get('<{$http_root_www}>company/category_insert_single', 
+														{ 'cid': vv,}, 
+														function(data){
+															$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="roomAreaId[]"  value="' + vv +'" checked /><label id="label'+vv+'" for="'+vv+'">' + area_name + '</label></div>');
+															//$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+													});
+												}
+											
+								
 										}
 									}
+									
+								function genShelfLayers(shelf,layers) {
+								shelf_layer_lists =[];
+								 var id =0;
+								 var intshelf =parseInt(shelf);
+								  var intlayers =parseInt(layers);
+										for (var i = 1; i < intshelf+1; i++) {
+											for (var j = 1; j < intlayers+1; j++) {
+											   if(j==1) {
+													shelf_layer_lists.push([id, i,j,'shelf No'+ i +'-Level'+j]);
+											   }else{
+													shelf_layer_lists.push([id, i,j,'----------' +'-Level'+j]);
+											   }
+											   
+												
+												id ++;
+											}
+										}
+									//	console.log(shelf_layer_lists);
+								
+								}
 
-
+								function showShelf(obj){
+							
+								var vv = $(obj).val(); 
+								//alert(vv);
+								//alert('here');
+										if ($('#shelfLayer').length > 0) { 
+										
+											$('#shelfLayer').remove();
+											$('#buttonok').remove();
+										}
+										
+										var c = $('<select id ="shelfLayer"  multiple="multiple" size="10" name="shelfLayer"  >');
+										
+										for (var i = 0; i < shelf_layer_lists.length; i++) {
+											c.append('<option value="'+ shelf_layer_lists[i][0]  +'">'+ shelf_layer_lists[i][3] +'</option>');
+											}
+										
+										
+										$('.shelf_layer-list').after(c);
+										var d =$('<input id="buttonok" type="button" value="Select" onclick="chooseLayers()" style=" padding: 5px 15px;    font-size: 18px;    margin: 0 auto;    color: #fff;    background: #00A1E9;    border: 0;    text-align: center;    cursor: pointer;    margin-left: 20px;  ">');
+										$('.shelf_layer-list').next().after(d);
+								
+								
+								}
+								
+								var currentItemAreaShelfInfo=[];
+								
+								
+								function addItemAreaShelfInfo(area_info,ItemAreaShelfInfo){
+								        //检查 area信息在数组中是否存在，如果存在移除该记录，然后进行添加
+										
+										for(var i=0; i<currentItemAreaShelfInfo.length;i++){
+										  if(currentItemAreaShelfInfo[i][0] ==area_info){
+											currentItemAreaShelfInfo.splice(i,1);
+											break;
+										  }
+										
+										}
+								
+								
+										var areaGroupArr=[];
+										areaGroupArr.push(area_info,ItemAreaShelfInfo);
+										currentItemAreaShelfInfo.push(areaGroupArr);
+										console.log(JSON.stringify(currentItemAreaShelfInfo));
+										
+										$('#itemareaShelfLevelInfo').val(JSON.stringify(currentItemAreaShelfInfo));
+										console.log('itemareaShelfLevelInfo '+ $('#itemareaShelfLevelInfo').val());
+										
+										
+								
+								}
+								
+								function  chooseLayers(){
+									 var  select = document.getElementById( "shelfLayer" );
+									 var  str = [];
+									
+									 var  selectShelfandLayers=[];
+									 var area_value = $('#store_house_area').val();
+									 
+									 var desc ='';
+									 for (var i=0;i<select.length;i++){
+										 if (select.options[i].selected){
+										  
+											selectShelfandLayers.push([shelf_layer_lists[select[i].value][1],shelf_layer_lists[select[i].value][2]]);
+											if(desc=='') {
+												desc = ' Shelf-'+shelf_layer_lists[select[i].value][1] +' Level-' +shelf_layer_lists[select[i].value][2];
+											}else{
+												desc =desc +  ' , Shelf-'+shelf_layer_lists[select[i].value][1] +' Level-' +shelf_layer_lists[select[i].value][2];
+											
+											}
+											
+										 }
+									 }
+									 addItemAreaShelfInfo(area_value,selectShelfandLayers);
+									 
+									// console.log(selectShelfandLayers);
+									 console.log(desc);
+									
+									
+									 console.log('new name is :' + area_name +desc);
+									 $('#label'+area_value).html(area_name +desc);
+									
+								}
 
 								function catChg(obj) {
 									var vv = $(obj).val(); 
+									$('#shelfLayerDiv').css('display','none');
 									if(vv && vv!='all') {
 										
 										
@@ -273,6 +397,7 @@
 								function storeRoomChg(obj) {
 								
 									var vv = $(obj).val(); 
+									$('#shelfLayerDiv').css('display','none');
 									if(vv) {
 										
 										
@@ -288,8 +413,14 @@
 											if ( store_area_lists[i][1] == vv ) {
 											
 											//alert('<option value="'+ store_area_lists[i][0]  +'">'+ store_area_lists[i][2] +'</option>');
-											areaList.append('<option value="'+ store_area_lists[i][0] +'" ddd="'+ store_area_lists[i][2] +'">'+ store_area_lists[i][2] +'</option>');
-											
+											if(store_area_lists[i][3]>0) {
+												areaList.append('<option value="'+ store_area_lists[i][0] +'" length="'+ store_area_lists[i][3] +'" layers="'+ store_area_lists[i][4] +'" ddd="'+ store_area_lists[i][2] +'">'+ store_area_lists[i][2] +'(Shelves:'+ store_area_lists[i][3]+' x layers:'+ store_area_lists[i][4]+')</option>');
+										
+											}else{
+												areaList.append('<option value="'+ store_area_lists[i][0] +'" length="'+ store_area_lists[i][3] +'" layers="'+ store_area_lists[i][4] +'" ddd="'+ store_area_lists[i][2] +'">'+ store_area_lists[i][2] +'</option>');
+										
+											}
+												
 											//	c.append('<option value="'+ cats[i][0] +'" cc="'+ cats[i][2]  +'" ddd="'+ cats[i][1] +'">'+ cats[i][1] +'</option>');
 												
 											}
@@ -314,7 +445,10 @@
 								
 								function changeItem(obj) {
 										var vv = $(obj).val(); 
-										
+										//清除货架区显示信息
+										$('#shelfLayerDiv').css('display','none');
+										// 清除之前item 货架配置信息
+										currentItemAreaShelfInfo=[];
 										
 										//alert(vv);
 										// check if there is  - ,if has then split to item id and spec id 
@@ -439,6 +573,7 @@
 								
 								function catChgSub(obj,oldvv) {
 									var vv = $(obj).val(); 
+									$('#shelfLayerDiv').css('display','none');
 									var cate =3;
 									//alert('vv is ' +vv);
 									//alert('oldvv is ' +oldvv);
@@ -555,6 +690,7 @@
 							});
 						</script>
 
+
 							<div class="input-box clearfix">	
 
 										<span><label>Store Room & Area </label></span>	
@@ -573,6 +709,20 @@
 										</select>
 
 							</div>	
+							
+							
+							<div id="shelfLayerDiv" style="height:250px;display:none;" class="input-box clearfix">	
+
+										<span><label>Choose Shelves & Layers </label></span>	
+										<div  class='shelf_layer-list' >
+										
+										
+										
+										</div>
+								<!--		<select id ="shelfLayer"  multiple="multiple" size="10" name="shelfLayer" onchange="saveShelfLayer(this)" > -->
+
+							</div>	
+							
 							
 							<div id="all_category" class="input-box clearfix" >
 							<div class=' form-style-green '>

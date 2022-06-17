@@ -4037,6 +4037,30 @@ public function return_items_submit_to_statment_action() {
 
     }
 
+
+    public  function delete_store_shelf_action()
+    {
+        $mdl_store_shelf_group_info = $this->loadModel('store_shelf_group_info');
+
+        $id = (int)get2('id');
+
+        if(!$id)$this->sheader(null, "no id");
+
+
+        $store_shelf = $mdl_store_shelf_group_info->get($id);
+
+        if(!$store_shelf)$this->sheader(null, "no find shelf");
+
+        if($store_shelf['factory_id'] !=$this->current_business['id'] ) {
+            $this->sheader(null, "no access");
+        }
+        $mdl_store_shelf_group_info->delete($id);
+
+        $this->sheader(HTTP_ROOT_WWW."factory/store_shelf_info");
+
+    }
+
+
     public  function delete_store_house_area_action()
     {
         $mdl_store_house_area = $this->loadModel('store_house_area');
@@ -4613,7 +4637,13 @@ public function return_items_submit_to_statment_action() {
             $roomAreaId0 = post('roomAreaId');
             $roomAreaId= ",".join(',',$roomAreaId0).",";
 
-
+           //获取当前的item 的 库位信息
+            $itemareaShelfLevelInfo1=post('itemareaShelfLevelInfo');
+            $itemareaShelfLevelInfo =str_replace('\\','',$itemareaShelfLevelInfo1);
+           
+          //  $itemareaShelfLevelInfoarr=json_decode($itemareaShelfLevelInfo, true);
+         
+         //   var_dump($itemareaShelfLevelInfoarr);exit;
 
             $stockType = post('stockType');
             $select_item_id = post('select_item_id');
@@ -4631,9 +4661,7 @@ public function return_items_submit_to_statment_action() {
                 $this->form_response(600,'please choose item!');
             }
 
-            if(!$stockType){
-                $this->form_response(600,'please choose stock type!');
-            }
+
 
             //查看是否可以操作
             $item_rec  = $this->loadModel('restaurant_menu')->get($select_item_id);
@@ -4641,31 +4669,45 @@ public function return_items_submit_to_statment_action() {
                 $this->form_response(600,'no access');
             }
 
-
-
-
-            if(!$roomAreaId0 ){
+          if(!$roomAreaId0 ){
                 $this->form_response(600,'please choose store room area');
             }
 
 
-            if($quantity<=0) {
+            if($quantity>0) {
 
-                $this->form_response(500, 'please input quantity  larger than 0!');
+                if(!$stockType){
+                    $this->form_response(600,'please choose stock type!');
+                }
              }
 
 
             $mdl_stock =$this->loadModel('stock_details');
 
-            $new_id= $mdl_stock->refreshStock($stockType,$this->current_business['id'],$select_item_id,$select_spec_id,$this->loginUser['id'],$quantity,$store_house_area,$note,$expire_date,0);
+            if($quantity ==0){
+                //只调整仓位
+                 $result = $mdl_stock->AdjustStockStoreArea($select_item_id,$select_spec_id,$store_house_area,$itemareaShelfLevelInfo);
+                if(!$result){
 
-            if(!$new_id){
+                    $this->form_response(500, 'error happen when generate data!','');
+                }else{
 
-                $this->form_response(500, 'error happen when generate data!','');
+                    $this->form_response(200, 'success adjust stock Area & shelf Info !');
+                }
             }else{
+                //增加库存
+                $new_id= $mdl_stock->refreshStock($stockType,$this->current_business['id'],$select_item_id,$select_spec_id,$this->loginUser['id'],$quantity,$store_house_area,$note,$expire_date,0,$itemareaShelfLevelInfo);
 
-                $this->form_response(200, 'success !');
+                if(!$new_id){
+
+                    $this->form_response(500, 'error happen when generate data!','');
+                }else{
+
+                    $this->form_response(200, 'success !');
+                }
             }
+
+
 
             //   $this->form_response(600,$payment_amount);
 
@@ -4696,7 +4738,7 @@ public function return_items_submit_to_statment_action() {
             //获得储藏区货架信息
             $this->setData($data_store_house, 'data_store_house');
 
-            $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area  from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id  where a.factory_id = $factory_id  and length(trim(store_area))>0 order by a.store_house_id,a.sort_id " ;
+            $sql ="select a.*,concat(h.code,'-',a.store_area,' ') as area ,shelf.shelf_count,shelf.shelf_layers_count from cc_store_house_area a left join cc_store_house h on a.store_house_id=h.id left join cc_store_shelf_group_info shelf on a.shelf_group_id =shelf.id  where a.factory_id = $factory_id  and length(trim(store_area))>0 order by a.store_house_id,a.sort_id " ;
             $data_store_house_area = $this->loadModel('store_house_area')->getListBySql($sql);
             //var_dump($data_store_house);exit;
             //获得储藏区货架信息
@@ -6175,6 +6217,9 @@ public function return_items_submit_to_statment_action() {
                 $data['store_area'] =$value;
             }
 
+            if($update_field_name =='shelf_group_id') {
+                $data['shelf_group_id'] =$value;
+            }
 
 
             try {
@@ -6801,7 +6846,23 @@ public function return_items_submit_to_statment_action() {
         $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/store_house_list');
     }
+    public  function store_shelf_info_action()
+    {
 
+        $mdl_store_shelf_group_info = $this->loadModel('store_shelf_group_info');
+
+
+        $where = array('factory_id' => $this->current_business['id']);
+        $list = $mdl_store_shelf_group_info->getList(null, $where, ' id asc');
+        //var_dump($this->currentBusinessId);exit;
+        $this->setData($list, 'list');
+
+        $this->setData('shelf_info', 'pagename');
+        $this->setData('shelf_info', 'submenu');
+        $this->setData('Store_centre', 'menu');
+        $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('factory/store_shelf_info');
+    }
 
     public  function store_house_area_list_action()
     {
@@ -6829,7 +6890,13 @@ public function return_items_submit_to_statment_action() {
         );
 
         $list =$mdl_store_house_area->getAreaList($id);
-  //  var_dump($list);exit;
+
+        //获得货架信息
+
+        $mdl_shelf =$this->loadModel('store_shelf_group_info');
+        $shelf_group_list =$mdl_shelf->getList(null,array('factory_id'=>$this->current_business['id']));
+        $this->setData($shelf_group_list, 'shelf_group_list');
+   // var_dump($list);exit;
         $this->setData($list, 'list');
 
         $this->setData('Store Area List', 'pagename');
@@ -6917,6 +6984,97 @@ public function return_items_submit_to_statment_action() {
             $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
 
             $this->display('factory/store_house_edit');
+        }
+    }
+
+    function store_shelf_edit_action()
+    {
+
+        $mdl_store_shelf_group_info = $this->loadModel('store_shelf_group_info');
+
+
+        $id = (int)get2('id');
+
+        $store_shelf_group_info = $mdl_store_shelf_group_info->getByWhere(array('id' => $id, 'factory_id' => $this->current_business['id']));
+
+        if(!$store_shelf_group_info && $id ){
+            $this->form_response_msg('no_access');
+        }
+
+        if (is_post()) {
+
+
+
+            //var_dump($id);exit;
+
+            $shelf_group_name = trim(post('shelf_group_name'));
+            $sort_id = trim(post('sort_id'));
+            $shelf_count = trim(post('shelf_count'));
+            $shelf_layers_count = trim(post('shelf_layers_count'));
+            $actived = post('actived');
+
+
+            if(!$shelf_group_name){
+                $this->form_response_msg('store shelf group name could not be empty!');
+            }
+
+            if($shelf_count<1){
+                $this->form_response_msg('at least 1 shelf in one area');
+            }
+
+            if($shelf_layers_count<1){
+                $this->form_response_msg('at least one layer on one shelf');
+            }
+
+            //check if this id belong to user
+
+
+
+            $data = array(
+                'shelf_group_name'=>$shelf_group_name,
+                'sort_id'=>$sort_id,
+                'shelf_count'=>$shelf_count,
+                'shelf_layers_count'=>$shelf_layers_count,
+                'create_user'=>$this->loginUser['id'],
+                'actived'=>$actived,
+
+            );
+
+
+            if($id) {
+
+                if ($mdl_store_shelf_group_info->update($data, $id)) {
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_shelf_info');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+
+            }else{
+                $data['factory_id'] = $this->current_business['id'];
+                $data['gen_date'] = time();
+                if ($mdl_store_shelf_group_info->insert($data)) {
+
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/store_shelf_info');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+            }
+
+
+
+
+
+
+        } else {
+            $this->setData($store_shelf_group_info, 'data');
+            $this->setData('Store Shelf Edit', 'pagename');
+            $this->setData('shelf_info', 'submenu');
+            $this->setData('Store_centre', 'menu');
+            $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
+
+            $this->display('factory/store_shelf_edit');
         }
     }
 
