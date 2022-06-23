@@ -115,9 +115,13 @@
 	
 	<xero_panel>Xero Pamel</xero_panel>
 	<over_due_list>Overdue Lists </over_due_list>
-	<statement>Statement</statement>
+	<statement>Statement</statement> 
     <transcations>Transactions</transcations>
 	 <new_transcation>New Transcation</new_transcation>
+	 
+	    
+	 <weekly_selling>Weekly Selling</weekly_selling>
+	  <daily_selling>Dailying Selling</daily_selling>
 	
 	<switch_to_wholesale_pannel>Switch to Wholesale Panel</switch_to_wholesale_pannel>
 	<Sales_channel_management>Sales channel management </Sales_channel_management>
