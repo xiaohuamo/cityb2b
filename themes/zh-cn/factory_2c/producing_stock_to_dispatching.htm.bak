@@ -62,9 +62,9 @@
 						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
 						<br><br>
 
-						<label>选择渠道：</label>
+						<label><{$lang->choose_account}></label>
 						<select  class='choosebusiness' id="business_id" name="business_id" >
-						<option value="0"  >全部商家</option>
+						<option value="0"  >All Account</option>
 						<{foreach from=$SalesChannelCustomerList item=d}>
 							<option value="<{$d.customer_id}>"<{if $d.customer_id==$business_id}>selected<{/if}>  >
 								<{$d.displayName}>
@@ -72,9 +72,9 @@
 						<{/foreach}>
 						</select>
 						&nbsp;
-						<label>选择配送日期：</label>
+						<label><{$lang->choose_delivery_date}></label>
 						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
-						<option value="all"  ><{$lang->logistic_choosedate1}> </option>
+						<option value="all"  >Choose Delivery Date </option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
 								<{$d}>
@@ -82,7 +82,7 @@
 						<{/foreach}>
 						</select>
 						
-						&nbsp;<label id="chooseCateLable" style='display:none;'>选择大类：</label>
+						&nbsp;<label id="chooseCateLable" style='display:none;'><{$lang->choose_category}></label>
 						<select class='chooseCate' id="cate_id" name="cate_id" style='display:none;'>
 						<option value="all"  >Choose Category </option>
 						<{foreach from=$cateData item=d}>
@@ -92,7 +92,7 @@
 						<{/foreach}>
 						</select>
 						
-						&nbsp;<label id="chooseTruckLable" style='display:none;'>Choose Driver&Truck：</label>
+						&nbsp;<label id="chooseTruckLable" style='display:none;'><{$lang->choose_driver_truck}></label>
 						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
 						<option value="all"  >All Drivers&Truck</option>
 						<{foreach from=$TuckListOfTheDay item=d}>
@@ -193,7 +193,7 @@
 					  <{if $customer_delivery_date}>
 						<br><br>
 						 <div id="printer1">
-							<button  type="button"  onclick="assignStock();" > 全部分配 </button>
+							<button  type="button"  onclick="assignStock();" > Assign All Stock </button>
 						
 							</div>
 						<{/if}>
@@ -292,7 +292,7 @@
 						<div   class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						没有任何订单	
+						No data	
 						<{/if}>			
 				</div>	
 
@@ -313,7 +313,7 @@
 			var id =$(this).data('id');
 			var iconupdate= new IconUpdate(this);
 
-			if(confirm('确认要兑付该订单？')==false)return;
+			if(confirm('Confirm order has been sent?')==false)return;
 
 		 	$.ajax({
 			  url: "<{$http_root_www}>company/customer_coupon_approving",
@@ -391,7 +391,7 @@ function showPdf(type,item_id,guige_id)
 	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
 	if(!vcustomer_delivery_date) {
 	
-	 alert('请选择日期！');
+	 alert('Please Choose the delivery date!！');
 	}
 	
 	var vbusiness_id= $('#business_id option:selected').val();
@@ -444,17 +444,37 @@ function assignStock()
 	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
 	if(!vcustomer_delivery_date) {
 	
-	 alert('请选择日期！');
+	 alert('Please Choose the delivery date!');
 	}
 	
 	var vlogistic_truck_No ='<{$logistic_truck_No}>';
 	
 	if(vlogistic_truck_No =='all' || !vlogistic_truck_No){
 	
-	if(confirm('您未选择某个司机，如果想先将库存分配某个司机，点击取消按钮；如果对所有司机分配，请点击确认按钮！')==false)return;
+	var message1_cn ='未选择司机，如果将库存分配至某司机，点击取消按钮后选择司机；如果对所有司机分配，请点击确认按钮！';
+	var message1_en ='No driver is selected, if the inventory is allocated to a driver, click the Cancel button and select the driver; if all drivers are allocated, click the Confirm button!';
+	
+	 <{if $langStr == 'zh-cn'}> 
+				if(confirm(message1_cn)==false)return;
+		 <{else}>
+				if(confirm(message1_en)==false)return;
+		 <{/if}>
+		 
+	
 	}
 	//alert(vlogistic_truck_No);
-	if(confirm('重要：本次分配不能取消，是否确认分配当前库存到' + vcustomer_delivery_date +'的订单？')==false)return;
+	
+	var message2_cn ='重要：本次分配不能取消，是否确认分配当前库存到' + vcustomer_delivery_date +'的订单？';
+	var message2_en='Important: This allocation cannot be canceled. Are you sure to allocate the current inventory to the order on ' + vcustomer_delivery_date +'?';
+	
+	 <{if $langStr == 'zh-cn'}> 
+				if(confirm(message2_cn)==false)return;
+		 <{else}>
+				if(confirm(message2_en)==false)return;
+		 <{/if}>
+	
+	
+	
 	var vbusiness_id= $('#business_id option:selected').val();
 	
 

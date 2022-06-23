@@ -126,15 +126,16 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                 群组列表
+                 	 <{if $langStr == 'zh-cn'}>  群组列表<{else}>Group Of Customer Lists<{/if}>
 				 
 				 <span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>company/groupmanager_new" class="link2"><i class='fa fa-plus'></i>添加群组</a>
+						<a class='btn-yellow' href="<{$http_root_www}>company/groupmanager_new" class="link2"><i class='fa fa-plus'></i>
+						<{if $langStr == 'zh-cn'}> 新客户群<{else}>Add Group<{/if}></a>
 					</span>
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
-					<input type="submit" value="搜索">
+					<input value="<{$search}>" name="search" placeholder="">
+					<input type="submit" value="<{$lang->search}>">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
 					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
@@ -164,7 +165,7 @@
 
 
 									<td>
-										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
+										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">&nbsp;Copy</button>
 									</td>
 									<td>
                                        <a href ="<{$http_root_www}>company/groupmanager_new?id=<{$user.userId}>" > <{$user.name}></a>
@@ -242,7 +243,7 @@
         document.execCommand("copy");
         document.body.removeChild(aux);
 
-        alert("已复制");
+        alert("Copied");
     }
 </script>
 

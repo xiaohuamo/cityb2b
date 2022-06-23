@@ -76,7 +76,7 @@
 					<span class = 'step-number-icon' style='float:left' >3</span>
 					
 					<div class="colCurTit clearfix">
-						<h1>菜单图片</h1>
+						<h1>Picture</h1>
 					</div>
 
 				
@@ -84,17 +84,17 @@
 					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
 						
 						<div class="input-box clearfix">
-							<p>请上传尺寸最小为 400x400 的图片。 尺寸过小会导致图片不清晰</p>
+							<p>Please upload  minium size of  400x400 image! </p>
 						</div>
 
 						<div class='upload_image_list' data-cropsize='400,400' data-listsize='1'>
-							<span class='image_view_add' >添加图片</span>
+							<span class='image_view_add' >Add Picture</span>
 						</div>
 
 					<div class="input-box clearfix">
 								<div class='form-style-green '>
 									<span>
-										<label>详情</label>
+										<label>Details</label>
 									</span>
 								</div>
 							</div>
@@ -111,7 +111,7 @@
 							</script>
 					
 						<div class="input-box input-submit clearfix">
-							<button type="submit" >保存修改</button>
+							<button type="submit" >Save</button>
 							<input type="hidden" name="id" value="<{$id}>">
 						</div>
 						
@@ -152,7 +152,7 @@
 		if(!src)src='default/image_upload.jpg';
 		$newdiv = $("<div></div>").addClass('image_view')
 					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
-					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"点击编辑"))
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"Click to Edit"))
 					.append($("<input name='images[]' type='hidden'>").val(src))
 					.append($("<div>x</div>").addClass('image_view_remove'));
 
@@ -223,7 +223,7 @@
 	};
 
 	$(function(){
-		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪，补白缩放</label><button type='button' class='close'>x</button></form>");
+		$('body').append("<form class='image_uploader'><label class='hd_label'>Picture Cut</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>Not Cut , fill empty </label><button type='button' class='close'>x</button></form>");
 	})
 
 	$(function(){

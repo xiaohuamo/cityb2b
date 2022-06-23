@@ -135,9 +135,9 @@
                 <{include file='company/side_restaurant_info.htm'}>
 				<div class="colCurTit">
                     <{$pagename}>
-					 <span class="links">
+					<!-- <span class="links">
 						<a class='btn-yellow' href="<{$http_root_www}>restaurant/menu_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->recycleBinProduct}></a>
-					</span>
+					</span> -->
 				</div>
 
 				<div class="search-row" style="padding: 20px 18px">
@@ -146,7 +146,7 @@
 
                         <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 							<select class='chooseCustomer'>
-								<option>选择管理的账户</option>
+								<option>Choose Account</option>
 								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
                                     <{$loginUser.displayName}>
 								</option>
@@ -159,7 +159,7 @@
                         <{/if}>
 						&nbsp;&nbsp;
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称" style="width:250px; margin-right:5px;"/>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
 
@@ -169,10 +169,10 @@
 						<select name="allOrspecial" id='allOrspecial'>
 
 							<option value="all"
-                                    <{if $allOrspecial=='all'}> selected<{/if}>>全部产品
+                                    <{if $allOrspecial=='all'}> selected<{/if}>>All Items
 							</option>
 							<option value="special"
-                                    <{if $allOrspecial=='special'}> selected<{/if}>>特价产品
+                                    <{if $allOrspecial=='special'}> selected<{/if}>>Special Items
 							</option>
 						</select>
 
@@ -181,7 +181,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -228,7 +228,7 @@
 										}
 									
 										var c = $('<select id ="sub_category" name="sub_category" >');
-										c.append('<option value="">选择子分类</option>');
+										c.append('<option value="">Choose Sub Category</option>');
 										for (var i = 0; i < cats.length; i++) {
 											if ( cats[i][2] == vv ) {
 											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
@@ -254,33 +254,33 @@
 								</script>
 
 						<button type="submit"><{$lang->search}></button>
-
+<!--
 						<button type="button" class="btn btn-default btn-success" id="ButtonXML">
 							导入品类更新
-						</button>
+						</button> -->
 						<br> <br>
 							
 						
 				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  <{if $onoffcninfo}> checked<{/if}>    >
 						<span >
-								<span >中文编辑</span>
+								<span >Item Cn Info</span>
 						</span>
 							<input type="checkbox" name="onoffeninfo"  id="onoffeninfo" <{if $onoffeninfo}> checked<{/if}>     >
 						<span >
-								<span >英版编列</span>
+								<span >Item En Info</span>
 						</span>
 						<input type="checkbox" name="onoffspecialinfo"  id="onoffspecialinfo"  <{if $allOrspecial=='special'}> checked<{/if}>  >
 						<span >
-								<span >特价</span>
+								<span >Special Price</span>
 						</span>
 						<input type="checkbox" name="onoffguigecatinfo"  id="onoffguigecatinfo" <{if $onoffguigecatinfo}> checked<{/if}>    >
 						<span >
-								<span >规格分类</span>
+								<span >Specifications</span>
 						</span>
 					
 						<input type="checkbox" name="onoffsku"  id="onoffsku"   >
 						<span >
-								<span >SKU及图片 </span>
+								<span >SKU & pics </span>
 						</span>
 											
 											<br>
@@ -360,7 +360,7 @@
 							</button>
 							<span class='ajax-status'></span>
                         <{/if}>
-						<input type="file" id="inputXMl" style="display: none;" onchange="importf(this)" value="XML导入"/>
+					<!--	<input type="file" id="inputXMl" style="display: none;" onchange="importf(this)" value="XML导入"/> -->
 
 
 					</form>
@@ -372,57 +372,57 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th name="sku" >SKU编码</th>
-									<th  name="sku" >图片链接路径</th>
+									<th name="sku" >SKU Code</th>
+									<th  name="sku" >Pic Link</th>
 									
-									<th>上线下线</th>
-									<th name="special_name1">特价设置</th>
-									<th name="special_name1">特价价格</th>
-									<th name="special_name1">限购数量</th>
+									<th>Public ON/Off </th>
+									<th name="special_name1">Special set</th>
+									<th name="special_name1">Special Price</th>
+									<th name="special_name1">Limit Qty</th>
                                     <{if count($suppliersList)>1}>
-										<th>选择商家</th>
+										<th>Choose Business</th>
                                     <{/if}>
-									<th>图片</th>
+									<th>Picture</th>
 									
-									<th>排序</th>
-									<th>产品编号</th>
-									<th name="cn_name1" >产品名称-中文</th>
+									<th>Sort</th>
+									<th>Item Code</th>
+									<th name="cn_name1" >Item cn Name</th>
 									
 									<!--<th>进价</th> -->
 								
-									<th>售价</th>
-									<th>库存</th>
+									<th>Price</th>
+									<th>Stk Qty</th>
 								
 									
 									
 									
                                     <{if in_array($gstType, [3,4])}>
-										<th>是否含税</th>
+										<th>INC。Gst</th>
                                     <{/if}>
 								
-									<th name="en_name1">产品名-英文</th>
+									<th name="en_name1">Item Name</th>
 								
-									<th name="en_name1">英文单位</th>
-									<th >每箱单位数</th>
-									<th>装箱溢出率</th>
-									<th name="en_name1">描述-英文</th>
-									<th >主分类</th>
+									<th name="en_name1">Unit</th>
+									<th >units/box</th>
+									<th>box Overrate%</th>
+									<th name="en_name1">Description</th>
+									<th >Category</th>
 							
                                     <{if $menu_option_list}>
-										<th name="guigecat">菜品规格</th>
+										<th name="guigecat">Specification</th>
                                     <{/if}>
                                     <{if $sidedish_category_list}>
-										<th name="guigecat">选择配菜</th>
+										<th name="guigecat">Choose Spec</th>
                                     <{/if}>
-											<th name="guigecat">设置分类</th>
+											<th name="guigecat">Set category</th>
 								
 								
-									<th>放入回收站</th>
-									<th>原价</th>
-									<th name="cn_name1">中文单位</th>
-									<th name="cn_name1">描述</th>
-									<th >最低价</th>
-									<th >id</th>
+									<th>Archive</th>
+									<th>Orignal Price</th>
+									<th name="cn_name1">Unit cn</th>
+									<th name="cn_name1">Desc cn</th>
+									<th >Lowest Price</th>
+									<th >Item Id</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -459,11 +459,11 @@
 										
                                             <{if $item.visible==1}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">产品发布</span>
+                                                        <span style="color:#58964E;">Online</span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">产品下线</span>
+                                                        <span style="color:#F30;">Offline</span>
                                                     </span>
                                             <{/if}>
 											
@@ -481,11 +481,11 @@
 										
                                             <{if $item.onSpecial==1}>
 												<span class='special_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">特价产品</span>
+                                                        <span style="color:#58964E;">Special Item</span>
                                                     </span>
                                             <{else}>
 												<span class='special_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">非特价产品</span>
+                                                        <span style="color:#F30;">Non Special Item</span>
                                                     </span>
                                             <{/if}>
 											<br>
@@ -504,7 +504,7 @@
                                         <{if count($suppliersList)>1}>
 											<td>
 												<select name='restaurant_id' data-id='<{$item.id}>'>
-													<option value='0'>请选择供应商</option>
+													<option value='0'>Choose Business</option>
                                                     <{foreach from=$suppliersList item=sitem1}>
 														<option value='<{$sitem1.suppliers_id}>'
                                                                 <{if $item.restaurant_id==$sitem1.suppliers_id}>selected<{/if}>>
@@ -519,9 +519,9 @@
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
 												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">修改</a>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">Edit</a>
                                             <{else}>
-												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">添加</a>
+												<a target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>">Add</a>
                                             <{/if}>
 										</td>
 										
@@ -600,7 +600,7 @@
 								
 										<td>
 											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
-                                              <option value="0"  selected>选择分类</option>
+                                              <option value="0"  selected>Choose Category</option>
 											  <{foreach from=$catList item=category}>
 													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
 													value="<{$category.id}>" 
@@ -632,8 +632,8 @@
 										</td>
                                         <{if $menu_option_list}>
 											<td name="guigecat" style="width:150px;">
-												<select  style="width:150px;" name='menu_option' data-ori_value ='<{$item.menu_option}>'  data-id='<{$item.id}>'>
-													<option value='0'>请选择规格</option>
+												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
+													<option value='0'>Choose Specification</option>
                                                     <{foreach from=$menu_option_list item=sitem}>
 														<option value='<{$sitem.id}>'
                                                                 <{if $item.menu_option==$sitem.id}>selected<{/if}>>
@@ -648,7 +648,7 @@
                                         <{if $sidedish_category_list}>
 											<td name="guigecat">
 												<select name='sidedish_category' data-id='<{$item.id}>'>
-													<option value='0'>请选择配菜</option>
+													<option value='0'>Choose sub Specification</option>
                                                     <{foreach from=$sidedish_category_list item=sitem}>
 														<option value='<{$sitem.id}>'
                                                                 <{if $item.sidedish_category==$sitem.id}>selected<{/if}>>
@@ -701,11 +701,11 @@
 										
                                             <{if $item.isDeleted==1}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">已回收</span>
+                                                        <span style="color:#58964E;">Archived</span>
                                                     </span>
                                             <{else}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">未回收</span>
+                                                        <span style="color:#F30;">Non Archived</span>
                                                     </span>
                                             <{/if}>
 											
@@ -758,9 +758,6 @@
         var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
 
         var id = $(this).data('id');
-		var ori_value = $(this).data('ori_value');
-		
-		
         var update_field_name = $(this).attr('name');
         var value;
         if (update_field_name == 'include_gst') {
@@ -812,10 +809,7 @@
 				}
             } else if (data.status == 500) {
                 alert(data.msg);
-				if(update_field_name  == 'menu_option') {
-				 alert('you are operate menu_option');
-				 $(this).val(ori_value);
-				}
+				
                 $(ajax_result).html(errorIcon);
             } else {
                 alert(data.msg);
@@ -868,9 +862,9 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.visible == '0') {
-                    context.html("<span style='color:#F30;'>产品下线</span>");
+                    context.html("<span style='color:#F30;'>Offline</span>");
                 } else if (result.visible == '1') {
-                    context.html("<span style='color:#58964E;'>产品上线</span>");
+                    context.html("<span style='color:#58964E;'>Online</span>");
                 }
             }
         }).fail(function () {
@@ -899,10 +893,10 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.isDeleted == '1') {
-                    context.html("<span style='color:#F30;'>已回收</span>");
-					 context1.html("<span style='color:#F30;'>产品下线</span>");
+                    context.html("<span style='color:#F30;'>Archived</span>");
+					 context1.html("<span style='color:#F30;'>Offline</span>");
                 } else if (result.isDeleted == '0') {
-                    context.html("<span style='color:#58964E;'>未回收 </span>");
+                    context.html("<span style='color:#58964E;'>Not archived </span>");
                 }
             }
         }).fail(function () {
@@ -1033,7 +1027,7 @@ $('input[name=filePath]').on('change', function () {
 		var ext = value.substr(index+1);
 		//判断是否是图片
 		if(!isAssetTypeAnImage(ext)){
-		  alert('非图片格式'); return;
+		  alert('Not picture format!'); return;
 		  $(this).val('');
 		}
 				
@@ -1041,7 +1035,7 @@ $('input[name=filePath]').on('change', function () {
 		var mainPic =$(this).data('main-pic')  ;
 		if(mainPic) {
 
-		 if(confirm('点击确认更换主图，否则更换子图')) {
+		 if(confirm('Click Ok Update Main Pic ,otherwise Update sub pictures')) {
 			changeMainpic =1;
 		 
 		 }else{
@@ -1113,9 +1107,9 @@ $('input[name=filePath]').on('change', function () {
                 var price = $('#price-' + couponId).val();
                 if (result.onSpecial == '0') {
                     price = 0;
-                    context.html("<span style='color:#F30;'>非特价产品</span>");
+                    context.html("<span style='color:#F30;'>Non Special Item</span>");
                 } else if (result.onSpecial == '1') {
-                    context.html("<span style='color:#58964E;'>特价产品</span>");
+                    context.html("<span style='color:#58964E;'>Special Item</span>");
                 }
                 specialPriceInput.val(price).trigger("change");
             }
@@ -1247,7 +1241,7 @@ $('input[name=filePath]').on('change', function () {
                 //alert(result.message);
                 if (result.message == '0') {
                     //alert(result.message);
-                    $('.ajax-status').html("修改成功，请检查价格后按照比例更改后刷新");
+                    $('.ajax-status').html("Edit successful!");
                 } else if (result.message == '1') {
                     $('.ajax-status').html("success");
                 }

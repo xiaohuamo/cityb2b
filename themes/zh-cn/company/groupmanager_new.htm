@@ -41,8 +41,8 @@
 				<div class="box2">	
 
 			<div class="colCurTit">
-                Group Manager Info
-				 
+              
+				 	 <{if $langStr == 'zh-cn'}>客户群管理员编辑<{else}> Group of Customers Edit<{/if}>
 				 
 				</div>
 
@@ -52,7 +52,7 @@
 
 							<div class="input-box clearfix">	
 
-								<span><label>群组用户名<{$data.name}></label></span>		
+								<span><label>Group Name<{$data.name}></label></span>		
 
 								<{if $data.id}> 
 								<small><{$data.name}></small>
@@ -63,7 +63,7 @@
 								
 
 								<{if $data.id}> 
-									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>重置密码</label>
+									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>Rest Password</label>
 									<input type="checkbox" name="change_password" value="1" id="change_password1" onClick="if (this.checked) $('.pwd').show(200); else $('.pwd').hide(200);" />
 								<{/if}>	
 
@@ -71,7 +71,7 @@
 
 							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
 
-								<span><label>密码</label></span>	
+								<span><label>Password</label></span>	
 
 								<input type="password" name="password" class="input-text" value="" />	
 
@@ -81,7 +81,7 @@
 
 							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
 
-								<span><label>确认密码</label></span>		
+								<span><label>Confirm Password</label></span>		
 
 								<input type="password" name="password2" class="input-text" value="" />	
 
@@ -142,32 +142,32 @@
 
 
 							<div class="input-box multi-select clearfix">
-								<span><label>昵称</span>
+								<span><label>NickName</span>
 								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder=''/>
 							</div>
 							
 							
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人姓</label></span>
+								<span><label>Last Name</label></span>
 								<input type="text" class="input-text" value="<{$data.contactPersonLastname}>" name="contactPersonLastname" />
 							</div>
 
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人名</label></span>
+								<span><label>First Name</label></span>
 								<input type="text" class="input-text" value="<{$data.contactPersonFirstname}>" name="contactPersonFirstname" />
 							</div>
 							
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人电话</label></span>
+								<span><label>Phone</label></span>
 								<input type="text" class="input-text" value="<{$data.phone}>" name="phone" />
 							</div>
 
 
 							<div class="input-box clearfix">
 
-								<span><label>地址</label></span>
+								<span><label>Address</label></span>
 
-								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="请输入地址"    value="<{$data.googleMap}>" name="googleMap" size="80" />
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="Please enter address"    value="<{$data.googleMap}>" name="googleMap" size="80" />
 
 								<input id="find" type="hidden" value="find" />
 
@@ -184,7 +184,7 @@
 							<div style='display: none'>
 								<div class="input-box clearfix "  >
 
-									<span><label>坐标位置</label></span>
+									<span><label>Coordinate position</label></span>
 
 									<input  id ="google_location" type="text" class="input-text" value="<{$data.google_location}>" name="location"  style="width:202px;" />
 
@@ -194,37 +194,37 @@
 
 
 
-									<span><label>号码</label></span>
+									<span><label>Number</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrNumber}>" name="street_number" style="width:110px;" />
 
-									街道<input type="text" class="input-text" value="<{$data.addrStreet}>" name="route"  style="width:202px;" />
+									Street<input type="text" class="input-text" value="<{$data.addrStreet}>" name="route"  style="width:202px;" />
 
 								</div>
 
 								<div class="input-box clearfix"  >
 
-									<span><label>邮编</label></span>
+									<span><label>PostCode</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrPost}>" name="postal_code"  style="width:110px;" />
 
-									城市<input type="text" class="input-text" value="<{$data.addrSuburb}>" name="locality"  style="width:202px;" />
+									Suburb<input type="text" class="input-text" value="<{$data.addrSuburb}>" name="locality"  style="width:202px;" />
 
 								</div>
 
 								<div class="input-box clearfix" >
 
-									<span><label>州</label></span>
+									<span><label>State</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrState}>" name="administrative_area_level_1"  style="width:110px;" />
 
-									国家代码<input type="text" class="input-text" value="<{$data.countryCode}>" name="country_short" style="width:202px;" />
+									Country Code<input type="text" class="input-text" value="<{$data.countryCode}>" name="country_short" style="width:202px;" />
 
 								</div>
 
 								<div class="input-box clearfix"  >
 
-									<span><label>国家</label></span>
+									<span><label>Country</label></span>
 
 									<input type="text" class="input-text" value="<{$data.country}>" name="country"  style="width:100px;" />
 
@@ -236,7 +236,7 @@
 
 								<div class="input-box clearfix" style="display:none;">
 
-									<span><label>地图链接</label></span>
+									<span><label>Map Link</label></span>
 
 									<input  type="text" class="input-text" value="<{$data.googleMapUrl}>" name="url"  />
 
@@ -296,7 +296,7 @@
 							</script>				
 
 							<div class="input-box multi-select clearfix">
-								<span><label>审核状态</label></span>
+								<span><label>Approve Status</label></span>
 						    <input type="checkbox" name="g_approved"  <{if $data.g_approved || !$data.id}>checked <{/if}> value="<{if !$data.id}>1<{else}><{$data.g_approved}><{/if}>" id="g_approved"  />
 
 							</div>
@@ -305,9 +305,9 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'>保存</button>	
+								<button type="submit" style='float:left'><{$lang->save}></button>	
 							
-<{if $data.id}>							<a onClick='return confirm("删除群组管理员后，管理员无法再恢复，是否继续删除？")' href ="<{$http_root_www}>company/group_manager_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除群管理员</a>	
+<{if $data.id}>							<a onClick='return confirm("After deleting a group administrator, the administrator cannot be recovered. Do you want to continue deleting?")' href ="<{$http_root_www}>company/group_manager_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>delete group manager</a>	
 
 	<{/if}>						
 

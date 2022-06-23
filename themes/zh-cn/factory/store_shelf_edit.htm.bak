@@ -44,21 +44,21 @@
 
 					<div class="main-form">			
 
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/store_house_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/store_shelf_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
 
 						
 			          <div class="input-box multi-select clearfix">
 
-							<h1>Store House Management</h1>
+							<h1>Store Shelf Management</h1>
 
 						</div>
 						
 
 						<div class="input-box clearfix">	
 
-								<span><label>Code</label></span>	
+								<span><label>Shelf Group Name</label></span>	
 
-								<input type="text" name="code" class="input-text" value="<{$data.code}>" />						            
+								<input type="text" name="shelf_group_name" class="input-text" value="<{$data.shelf_group_name}>" />						            
 
 							</div>	
 
@@ -66,9 +66,27 @@
 
 							<div class="input-box clearfix">	
 
-								<span><label> Name</label></span>	
+								<span><label> Sort Id </label></span>	
 
-								<input type="text" name="name" class="input-text" value="<{$data.name}>" />						            
+								<input type="text" name="sort_id" class="input-text" value="<{$data.sort_id}>" />						            
+
+							</div>	
+							
+							
+							<div class="input-box clearfix">	
+
+								<span><label> Shelf Numbers </label></span>	
+
+								<input type="text" name="shelf_count" class="input-text" value="<{$data.shelf_count}>" />						            
+
+							</div>	
+							
+							
+							<div class="input-box clearfix">	
+
+								<span><label> Layers of Shelf </label></span>	
+
+								<input type="text" name="shelf_layers_count" class="input-text" value="<{$data.shelf_layers_count}>" />						            
 
 							</div>	
 							
@@ -90,10 +108,6 @@
 							</div>	
 
 
-							<div class="input-box multi-select clearfix">
-								<span><label>Note</span>
-								<input type="text" class="input-text" value="<{$data.note}>" name="note" placeholder='Eg. Frozen'/>
-							</div>
 							
 							
 							
@@ -109,7 +123,7 @@
 
 								<button type="submit" style='float:left'>保存</button>	
 
-								<a onClick='return confirm("remove it?")' href ="<{$http_root_www}>factory/delete_store_house?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>Delete</a>	
+								<a onClick='return confirm("remove it?")' href ="<{$http_root_www}>factory/delete_store_shelf?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>Delete</a>	
 
 
 							</div>		

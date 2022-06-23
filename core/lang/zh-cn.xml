@@ -45,22 +45,33 @@
 	<!-- menu operation-->
 	
 	<switch_to_main_pannel>切换到总控台</switch_to_main_pannel>
-	<wholeseller_card>批发商卡片</wholeseller_card>
+	<wholeseller_card>商家卡片</wholeseller_card>
 	<add_new_customer>添加新客户</add_new_customer>
 	<customer_list>客户列表</customer_list>
 	<group_order_list>订货群管理</group_order_list>
 	<customer_grade>客户级别设置</customer_grade>
 	<add_customer_grade>添加级别</add_customer_grade>
+	<stock_room_shelf>货架组设置</stock_room_shelf>
+	<stock_room_management>库房设置</stock_room_management>
 	
-	<customer_list_recycle>隐藏客户</customer_list_recycle>
+	<Stock_in>入库管理</Stock_in>
+	<stock_out>出库管理</stock_out>
+	<stocking_check>盘点</stocking_check>
+	
+	<category_discount>大类折扣</category_discount>
+	<sub_category_discount>子类折扣</sub_category_discount>
+	<item_discount>单品折扣</item_discount>
+	
+	<customer_list_recycle>归档</customer_list_recycle>
 	<customer_price_management>折扣管理</customer_price_management>
 	<orderLists>订货列表</orderLists>
 	<order_return>退货</order_return>
 	<add_new_order>新增订单</add_new_order>
 	<print_picking_list>非加工总备货单</print_picking_list>
-	<Single_Picking_item_edit>备货单品管理</Single_Picking_item_edit> 
+	<item_summery_list>产品汇总单</item_summery_list>
+	<Single_Picking_item_edit>设置备货单品</Single_Picking_item_edit> 
 	<producing_item_edit>加工产品设置</producing_item_edit> 
-	<export_manual_dispatching_form>导出手工生产单</export_manual_dispatching_form> 
+	<export_manual_dispatching_form>生产单(按客户)</export_manual_dispatching_form> 
 	<print_packing_slips>客户装箱单</print_packing_slips> 
 	<print_item_packing_slips>单品备货单</print_item_packing_slips> 
 	<single_item_buying_list>单品加工单</single_item_buying_list> 
@@ -68,18 +79,30 @@
 	<print_label_logistic>打印标签</print_label_logistic> 
 	<add_dispatching_customer>添加配货客户</add_dispatching_customer>
 	<choose_delivery_date>选择配送日期</choose_delivery_date>
+	<choose_account>选择账户</choose_account>
+	<choose_category>选择类别</choose_category>
+	<choose_driver_truck>选择司机-车辆</choose_driver_truck>
 	<no_truck_yet>等待安排车辆</no_truck_yet>
-
+	
+	<manu_picking_List>手工配货管理</manu_picking_List>
+	<manu_producing_management>手工生产管理</manu_producing_management>
+	
+	<defined_items>全部预设定产品</defined_items>
+	<selected_items>勾选产品</selected_items>
+	<pagination>分页</pagination>
+	
+	<producing_item_stock>加工类剩余库存</producing_item_stock>
+	<producing_item_stock_assign>库存分配至订单</producing_item_stock_assign>
 	
 	<Truck_list>车辆信息</Truck_list>
 	<Truck_schedue>车辆调度</Truck_schedue>
 	<Truck_schedue_histroy>车辆调度历史</Truck_schedue_histroy>
 	
 	<summer_product_list>非加工类总备货单</summer_product_list>
-	<summer_producing_list>加工类总备货单</summer_producing_list>
+	<summer_producing_list>生产汇总单(按单品)</summer_producing_list>
 	<Single_Producint_item_edit>生产单品管理</Single_Producint_item_edit> 
 	<print_item_producing_slips>单品生产列表</print_item_producing_slips> 
-	<producing_platform>进入生产端</producing_platform> 
+	<producing_platform>生产系统</producing_platform> 
 	<manager>管理经理</manager>
 	<switch_to_wholesale_pannel>切换到批发管理台</switch_to_wholesale_pannel>
 	
@@ -89,7 +112,12 @@
 	
 	<Publish_Management>发布管理</Publish_Management>
 	<open_store_setting>开店设置</open_store_setting>
-
+	
+	<xero_panel>Xero 管理台</xero_panel>
+	<over_due_list>逾期付款</over_due_list>
+	<statement>对账单（Statement）</statement>
+    <transcations>往来账（Transcation)</transcations>
+	 <new_transcation>新交易</new_transcation>
 	
 	<Business_card_edit>店铺卡片</Business_card_edit>
 	<refresh_whole_channels>统一刷新 </refresh_whole_channels>
@@ -142,6 +170,7 @@
 	
 	<parent_category_management>主品类管理</parent_category_management>
     <category_management>品类管理</category_management>
+	  <categ_management>品类管理</categ_management>
 	
     <items_management>商品编辑</items_management>
 	<recycleBinProduct>产品垃圾箱</recycleBinProduct>
@@ -346,6 +375,8 @@
     <redeem_code>兑换码</redeem_code>
     <order_desc>订单描述</order_desc>
     <order_confirm_title>您的产品已经被确认，订单明细如下:</order_confirm_title>
+	
+	
 
 
     <!-- 购物车页面-->
@@ -496,7 +527,7 @@
     <business_store>商家网站</business_store>
     <business_store_description>商家可自定义编辑的展示网站</business_store_description>
     <preview_store>网站预览</preview_store>
-    <preview_password>预览口令</preview_password>
+    <preview_password>网站预览口令</preview_password>
 
 
     <panding_email>邮箱设置</panding_email>
@@ -517,7 +548,7 @@
     <order_management>订单管理</order_management>
 	<sales_Management>销售管理</sales_Management>
 	<totalsales_commissions>销售统计及回扣</totalsales_commissions>
-    <order_management_amend>订单调整</order_management_amend>
+    <order_management_amend>退货管理</order_management_amend>
     <together_count>等产品共计数量</together_count>
 
 
@@ -595,12 +626,19 @@
     <please_choose>请选择</please_choose>
     <create_specification_link>合并创建规格链接</create_specification_link>
 	<merge_order>合并订单</merge_order>
-
+	<merged>已合并</merged>
+	<not_merged_yet>未合并</not_merged_yet>
+	<first_order>首笔订单</first_order>
+	
+	<order_status_c01>已购买</order_status_c01>
+	<order_status_b01>已发货</order_status_b01>
+	<order_status_d01>已取消</order_status_d01>
+	
     <!-- 6  -->
 
     <custome_classification>商品分类</custome_classification>
     <offline_voucher>门店优惠券</offline_voucher>
-    <pormotion_code>线上优惠码</pormotion_code>
+    <pormotion_code>优惠码设置</pormotion_code>
 
     <add_top_level_clissification>添加顶级分类</add_top_level_clissification>
     <sort>排序</sort>
@@ -655,6 +693,10 @@
     <edit>编辑</edit>
     <delete>删除</delete>
     <copy>复制</copy>
+	<is_approve>选择审批状态</is_approve>
+	
+	<Driver_route_sheet>司机路程表</Driver_route_sheet>
+	<Logistic_route_management>物流路程管理</Logistic_route_management>
 
     <!-- 11 -->
 
@@ -723,7 +765,7 @@
 
     <payment_type>付款方式</payment_type>
     <delivery>递送</delivery>
-    <submission_time>提交时间</submission_time>
+    <submission_time>订货时间</submission_time>
 
     <!-- 17 -->
     <total_number_of_order>查询订单总数</total_number_of_order>
@@ -1346,6 +1388,7 @@
     <buyer_address>收获人地址</buyer_address>
 
     <cancel_order>取消订单</cancel_order>
+	 <Assign_stock_to_order>库存分配至订单</Assign_stock_to_order>
     <not_support_return>不支持退单</not_support_return>
     <email_customer>客户</email_customer>
 
@@ -1405,11 +1448,23 @@
 	<logistic_choosedate>更改</logistic_choosedate>
 	<logistic_choosedate1>选择日期</logistic_choosedate1>
 	<choose_business1>选择商家</choose_business1>
+	
+	
+	<orders_upload>上传订单</orders_upload>
+	<assign_all_orders>(全部重排)</assign_all_orders>
+	<keep_assigned_orders>(保留排好订单)</keep_assigned_orders>
+	<download_routes>下载路程</download_routes>
+	<mark_order_sent>标记已配送</mark_order_sent>
+	<generate_sequence_number>生成物流号</generate_sequence_number>
+	<export_driver_sheet>下载司机路程表</export_driver_sheet>
+	
+	
     <any_time>不限</any_time>
     <morning>上午</morning>
     <afternoon>下午</afternoon>
     <unified_delivery>配送日期</unified_delivery>
 	 <delivery_date>配送日期</delivery_date>
+	 <manual_route_plan>手动路程安排</manual_route_plan>
     <logistic_selected>已选</logistic_selected>
     <logistic_selectable>可选</logistic_selectable>
     <logistic_more_shop>更多</logistic_more_shop>
@@ -1422,7 +1477,7 @@
 	<logistic_delivery_date>配送</logistic_delivery_date>
 	<logistic_delivery_date_choose>选择日期</logistic_delivery_date_choose>
 	<groupbuy_end>团购结束</groupbuy_end>
-	<logistic_schedule_time>指定配送时间</logistic_schedule_time>
+	<logistic_schedule_time>调度时间</logistic_schedule_time>
 	<logistic_schedule_time1>订单物流安排</logistic_schedule_time1>
 	<logistic_truck_no>车辆编号</logistic_truck_no>
 	<logistic_sequenceNo>统一配货号</logistic_sequenceNo>
@@ -1444,7 +1499,7 @@
 	<stop_number>站号</stop_number>
 	<Estimate_arrive_time>预计到达时间</Estimate_arrive_time>
 	
-	<logistic_arrive_time>预计到达时间</logistic_arrive_time>
+	<logistic_arrive_time>到达时间</logistic_arrive_time>
 	<logistic_management_panel>物流中心管理</logistic_management_panel>
 	<logistic_route_management>路程规划</logistic_route_management>
 	<export_driver_excel>导出司机表格</export_driver_excel>
@@ -1458,6 +1513,9 @@
 	<checkout_message_overlimits>抱歉，您选择的递送日期订单爆表，我们递送能力有限，请改个日子吧!</checkout_message_overlimits>
 	<checkout_message_less_than_min_amount>Opps！小于最低起送金额$</checkout_message_less_than_min_amount>
 	
-	
+	<slogan>宣传语</slogan>
+	<region_keyword>经营区域/关键字</region_keyword>
+	<business_name_categories>商家名称/行业类型</business_name_categories>
+	<pickup_delivery>自取及配送安排</pickup_delivery>
 	
 </language>

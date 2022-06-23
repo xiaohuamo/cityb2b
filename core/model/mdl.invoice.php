@@ -403,19 +403,19 @@ class AccountTransactionReport
     {
         switch ($statusNo) {
             case 0:
-                $str = "处理中";
+                $str = "Processing";
                 break;
             case 1:
-                $str = "已结算";
+                $str = "settled";
                 break;
             case 2:
-                $str = "已取消";
+                $str = "cancelled";
                 break;
             case 3:
-                $str = "未处理";
+                $str = "no process yet";
                 break;
             default:
-                $str = "未定义";
+                $str = "not defined";
                 break;
         }
 
@@ -680,11 +680,11 @@ class OrderInfoReport
         foreach ($this->OrderData as $key => $order) {
             //orderId//first_name+last_name//phone//status//payment//customer_delivery_option
             $this->pdf->row("Order ID", 0.2, 0, 'C', 12);
-            $this->pdf->row('客户姓名', 0.35, 0, 'C', 12);
-            $this->pdf->row('电话', 0.15, 0, 'C', 12);
-            $this->pdf->row('支付方式', 0.1, 0, 'C', 12);
-            $this->pdf->row('支付状态', 0.1, 0, 'C', 12);
-            $this->pdf->row('递送方式', 0.1, 0, 'C', 12);
+            $this->pdf->row('Customer Name', 0.35, 0, 'C', 12);
+            $this->pdf->row('Phone', 0.15, 0, 'C', 12);
+            $this->pdf->row('Payment', 0.1, 0, 'C', 12);
+            $this->pdf->row('Status', 0.1, 0, 'C', 12);
+            $this->pdf->row('Delivery Op', 0.1, 0, 'C', 12);
             $this->pdf->ln(10);
             $orderID = $order['orderId'];
             $this->pdf->row($orderID, 0.2, 1);
@@ -862,10 +862,10 @@ class OrderInfoReport
 
             $this->pdf->ln(10);
 
-            $this->pdf->row('申报产品', 0.3, 0, 'C', 12);
-            $this->pdf->row('原因', 0.2, 0, 'C', 12);
-            $this->pdf->row('申报时间', 0.2, 0, 'C', 12);
-            $this->pdf->row('留言', 0.3, 0, 'C', 12);
+            $this->pdf->row('Claim Item', 0.3, 0, 'C', 12);
+            $this->pdf->row('Reason', 0.2, 0, 'C', 12);
+            $this->pdf->row('Create Time', 0.2, 0, 'C', 12);
+            $this->pdf->row('Message', 0.3, 0, 'C', 12);
 
             $this->pdf->ln(10);
 
@@ -889,11 +889,11 @@ class OrderInfoReport
 
         $this->pdf->AddPage();
 
-        $this->pdf->myText(130, 30, '开始日期:');
+        $this->pdf->myText(130, 30, 'Start Date:');
         $this->pdf->myText(168, 30, $this->startTime);
         $this->pdf->myText(130, 35, $thisLang->end_time.': ');
         $this->pdf->myText(168, 35, $this->endTime);
-        $this->pdf->myText(130, 45, "总计报损额：");
+        $this->pdf->myText(130, 45, "Total Amount：");
         $this->pdf->myText(178, 45, "$".$total);
     }
 

@@ -93,12 +93,12 @@ function catChg(obj) {
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2"><a name="pagename"></a>
-                      <{include file='company/side_restaurant_info.htm'}>
+                  
 				
 				<div class="main-form">
 					<span class = 'step-number-icon' style='float:left' >1</span>
 					<div class="colCurTit clearfix">
-						<h1>&nbsp;店铺名、行业类型</h1>
+						<h1>&nbsp;<{$lang->business_name_categories}></h1>
 					</div>
 
 					<{include file='company/freshfood_edit_step_menu_top.htm'}>
@@ -106,16 +106,16 @@ function catChg(obj) {
 					<form id="memberForm"  action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
 						<div class="input-box  form-style-green">
 							<span>
-							<label>店铺名</label>
+							<label>Business name</label>
 							</span>
 							<input type="text" name="title" id="title" class="input-text" value="<{if $data.title}><{$data.title}><{else}><{$loginUser.displayName}><{/if}>" placeholder="请输入..." style="width:70%" />
-							<span class='help-box' data-content='20个中文字或60个字符'></span>
+							<span class='help-box' data-content='Max 60 characters'></span>
 						</div>
 
 						<div class="input-box clearfix " style="display: none">
 							<div class=' form-style-green '>
 								<span>
-								<label >券类型</label>
+								<label >Categories</label>
 								</span>
 							</div>
 							
@@ -140,7 +140,7 @@ function catChg(obj) {
 										
 									<{/foreach}>
 								<{else}>
-									请先选择行业
+									Please Choose Categories
 								<{/if}>
 							</div>
 						</div>
@@ -148,23 +148,23 @@ function catChg(obj) {
 
 						<div class="input-box clearfix" >
 							<div class=' form-style-green '>
-								<span><label>行业类型</label></span>
+								<span><label>Categories</label></span>
 							</div>
 							<select  id="bigcategoryid" name="allCategoryId[]" class="ahibw" onChange="catChg(this);">
 									<{foreach from=$categories item=item}>
 											<option value="<{$item.id}>" cc="<{$item.childCount}>" <{if substr($item.id,0,6)==$category}>selected<{/if}> ><{$item.name}>   </option>
 									<{/foreach}>
 							</select>
-							<em>点击下拉框进项选择，可多选</em>
+							<em>Click the Drop List , can Multiple Choose</em>
 						</div>
 					
 						
 
 						<div id="all_category" class="input-box clearfix" >
 							<div class=' form-style-green '>
-								<span ><label>已选行业 </label></span> 
+								<span ><label>Selected </label></span> 
 							</div>
-							<em>绿色为已选，灰色为未选，鼠标点击可选择或取消</em>
+							<em>Green means chosed ,grey mean not yet ,Click to switch.</em>
 							<br>
 
 							<div class='my_categorys-list' style='padding-left: 80px;padding-right:30px;'>

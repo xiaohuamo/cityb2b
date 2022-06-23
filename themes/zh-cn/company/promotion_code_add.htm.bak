@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">	
+
+					<form id="memberForm"  class ='form-style-green' action="<{$http_root_www}>company/promotion_code" method="post" target="post_frame" enctype="multipart/form-data">
+						 <div class="input-box clearfix">	
+								<span><label>Base on Item</label></span>	
+								<select name='couponId' style='width:400px;'>
+								  <option value="-1">Suit for whole Store</option>
+								  <{foreach from = $couponList item=item}>
+								  <option value="<{$item.id}>"><{$item.id}> # <{$item.title}></option>
+								  <{/foreach}>
+								</select> 
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>Discount Type</label></span>	
+								<select name='type' style='width:120px;'>
+								  <option value="fixed">Fix Amount</option>
+								  <option value="percentage">Percent</option>
+								</select> 
+
+								<input type="text" name="value" class="input-text"  />
+						</div>
+						<div class="input-box clearfix">	
+								<span><label>Use When</label></span>	
+								<select name='apply_condition_type' style='width:120px;'>
+								  <option value="none">None</option>
+								  <option value="conditionQty">Purchase quantity reached</option>
+								  <option value="conditionMinspend">Reached the consumption amount</option>
+								</select> 
+
+								<input type="text" name="apply_condition_value" class="input-text"  />
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>Expiration method</label></span>	
+								<select name='expireType' style='width:120px;'> 
+								  <option value="unlimited">No Expiration</option>
+								  <option value="fixedQty">Over a certain amount</option>
+								  <option value="expireInDays">Over a certain Date</option>
+								</select> 
+
+								<input type="text" name="expireValue" class="input-text"  />
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>Promotion Code</label></span>	
+								<select name ='codeGenMethod' style='width:120px;'>
+								  <option value="random">Randomly generated</option>
+								  <option value="userInput">Custom discount code</option>
+								</select> 
+
+								<input type="text" name="promotionCode" class="input-text" />
+						</div>
+						<div class="input-box clearfix">	
+								<span><label>Description</label></span>	
+								<textarea   rows="4" cols="50" type="text" name="promotionDes" /></textarea>
+						</div>
+
+						<div class="input-box clearfix">	
+								<span><label>New Customer Only</label></span>	
+								<input type="checkbox" name="single_use_per_user" value='enable'>Can only be used once per user
+						</div>
+
+						<div class="input-box input-submit clearfix">
+							<button type="submit" style='float:right'>Generate new code</button>
+						</div>
+					
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

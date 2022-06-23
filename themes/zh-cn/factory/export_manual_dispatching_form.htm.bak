@@ -216,7 +216,7 @@
 									<td>
 										<{$item.order_name}>
 										<br>
-										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+										<a target='_blank' href="<{$http_root_www}>factory/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
 								
@@ -250,7 +250,7 @@
 						<div class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						没有任何订单	
+						No data	
 						<{/if}>			
 				</div>	
 

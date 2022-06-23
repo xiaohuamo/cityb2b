@@ -152,9 +152,9 @@
 								<th>Xero Account Id</th>
 								<th>Invocie To Xero </th>
 								<th>Customer ID </th>
-								<th>客户名</th>
-								<th>Xero 客户名</th>
-								<th>手机号</th>
+								<th>Customer Name</th>
+								<th>Xero Customer Name</th>
+								<th>Phone</th>
 								
 								<th>城区邮编</th>
 								<th>Xero hash</th>
@@ -498,7 +498,7 @@
                 } else if (result.syn_to_xero == '1') {
                     context.html("<span style='color:#58964E;'>send to xero</span>");
 					$("#send_invoice_to_xero_"+couponId).css("display","");
-					alert(result.contact);
+					alert(result.message);
 					
 					
                 }

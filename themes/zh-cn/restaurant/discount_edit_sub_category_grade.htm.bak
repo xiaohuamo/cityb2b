@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	  <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+    <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+    <script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+		<style type="text/css">
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				 
+				
+
+				<{include file='factory/customer_price_edit_top_menu_grade.htm'}>
+
+				<div>
+				<br>
+				
+				<{if $grade_info}>
+				<span style="padding-left: 20px;" > Grade ID : <{$grade_info.grade_id}> &nbsp;&nbsp;Grade Name: <{$grade_info.grade_name}>&nbsp;&nbsp;</span>		
+				<{/if}>
+				
+				  		<span  ><{if $parent_category_id}> Choose Category:<{/if}></span>		
+						<select name="category" id='category'   class='chooseCategory' >
+							
+							 <{if !$parent_category_id}> 
+							<option value="all"
+                                   selected>Choose Category &nbsp;
+							</option>
+							<{/if}>
+							
+
+                            <{foreach from=$data1 item=item}>
+								<option value="<{$item.cate_id}>"
+                                        <{if $item.cate_id==$parent_category_id}> selected<{/if}>>
+										<{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+                                   
+								</option>
+                            <{/foreach}>
+
+						</select>
+  
+
+						</div>
+  
+  
+    <br>
+
+				<div class="main-list">
+					<{if $data}>
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+								    
+									<th>Category Sort</th>
+									 <{if $langStr == 'zh-cn'}> <th>品类名称</th><{else}><{/if}>
+									
+						             <th>Category</th>
+									  <th>Sub Discount Link</th>
+									<th>Discount rate %</th>
+									<th>Status</th>
+									<th>Reset Discount</th>
+								</tr>
+							</thead>
+							<tbody>
+						  		<{foreach from=$data item=item name='dl'}>
+									<tr  id='tr<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+								   	     <td>
+											<{$item.category_sort_id}>
+										
+										</td>
+
+										<td>
+											<{$item.category_cn_name}>
+											
+										</td>
+									
+										<td>
+											<{$item.category_en_name}>
+											
+										</td>
+										<td>
+											<{$item.sub_cate_id}>
+											
+										</td>
+										
+										<td>
+									     <input type="text" class="input-text" id ="<{$item.id}>_discount_rate"  data-id='<{$item.grade_index_id}>' data-grade_id ='<{$item.gradeId}>' data-cate_id ='<{$item.sub_cate_id}>' style="padding-right: 4px;width:50px;text-align:right;" name="discount_rate" value="<{$item.discount_rate}>" >
+										%
+										  <span class='promote-ajax'></span>
+										</td>
+										
+										<td>
+                                            <{if $item.issetDiscount==1}>
+												<span class='publish_icon' data-id='<{$item.sub_cate_id}>'>
+                                                        <span style="color:#58964E;"><{if $langStr == 'zh-cn'}> 已单独设置<{else}>Individually set<{/if}></span>
+                                                    </span>
+                                            <{else}>
+												<span class='publish_icon' data-id='<{$item.sub_cate_id}>'>
+                                                        <span style="color:#F30;"><{if $langStr == 'zh-cn'}> 未设置，跟随上级折扣<{else}>Not set, follow the previous level discount<{/if}></span>
+                                                    </span>
+                                            <{/if}>
+											<br>
+										</td>
+										<td>
+										<{if $item.issetDiscount==1}>
+											<div  id= "<{$item.sub_cate_id}>_discount_rate_on" class="onoffswitch">
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+												data-cate_id ='<{$item.sub_cate_id}>'	   data-id='<{$item.id}>' <{if $item.issetDiscount==0}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+											 <div  id= "<{$item.sub_cate_id}>_discount_rate_off" style="display:none;" > <span >--</span></div>
+										<{else}>
+											<div  id= "<{$item.sub_cate_id}>_discount_rate_on" class="onoffswitch" style="display:none;" >
+												<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch<{$item.id}>"
+												data-cate_id ='<{$item.sub_cate_id}>'	   data-id='<{$item.id}>' <{if $item.issetDiscount==0}> checked <{/if}> > 
+												<label class="onoffswitch-label" for="myonoffswitch<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+													<span class="onoffswitch-switch"></span>
+												</label>
+											</div>
+										     <div  id= "<{$item.sub_cate_id}>_discount_rate_off" > <span >--</span></div>
+										<{/if}>
+										  
+										</td>
+									</tr>
+								<{/foreach}>
+								
+			
+							</tbody>
+						</table>
+						
+					<{else}>
+						<{$lang->no_data}>
+						
+					<{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+    <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+<script type="text/javascript">
+	$(function(){
+		
+		$('.chooseCategory').on('change', function(){
+			if ($(this).val()) 
+				window.location.href = "<{$http_root_www}>restaurant/discount_edit_sub_category_grade?id=<{$id}>&parent_category_id=" + $(this).val();
+				
+		});
+		
+		
+	})
+</script>
+
+
+
+<script type="text/javascript">
+
+	var loading = false;
+
+
+	function IconUpdate (obj) {
+		this.target = $(obj).next('.promote-ajax');
+	}
+
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+
+	$('input[name=discount_rate]').on('change', function () {
+	
+	
+	//alert('here');
+		var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+		var gradeId = $(this).data('grade_id');
+	   
+		var cate_id= $(this).data('cate_id');
+		var context = $('.publish_icon[data-id=' + cate_id + ']');
+	//	alert(cate_id);
+        var update_field_name = $(this).attr('name');
+        var value;
+		
+		
+		
+        
+        value = $(this).val();//常规改动直接抓取改动值
+       
+        var updateData = {};
+
+
+        updateData['id'] = id;
+		updateData['gradeId'] = gradeId;
+		updateData['cate_id'] = cate_id;
+		
+        updateData['discount_rate'] = value;
+    	
+		
+		
+		
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_garde_parent_cate_discount",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+				
+				
+				<{if $langStr == 'zh-cn'}> 
+
+				  context.html("<span style='color:#58964E;'>已单独设置</span>");
+				 
+				 <{else}>
+				 
+				  context.html("<span style='color:#58964E;'>Individually Set</span>");
+				 
+				 <{/if}>
+				
+				
+				
+                
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+	
+	});
+	
+	$('input[name=onoffswitch]').on('click', function () {
+        var id = $(this).data('id')
+        var cate_id = $(this).data('cate_id')
+	   var context = $('.publish_icon[data-id=' + cate_id + ']');
+        
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>restaurant/delete_grade_parent_category_discount",
+            data: {"id": id},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.deleted);
+                if (result.deleted == '0') {
+                    context.html("<span style='color:#F30;'>Delete Error</span>");
+                } else if (result.deleted == '1') {
+					 context.html("<span style='color:#58964E;'>Deleted</span>");
+					$('#'+ id+ '_discount_rate').val('<{$customer_discount_rate}>');
+					$('#'+ result.id + '_discount_rate_off').css('display','');
+					$('#'+ result.id + '_discount_rate_on').css('display','none');
+				
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
+</script>
+
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+<{include file='footer.htm'}>
+
+</body>
+</html>

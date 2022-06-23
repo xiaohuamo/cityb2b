@@ -239,7 +239,7 @@ function catChg(obj) {
 						<button type="submit">ADD</button>
 
 						
-						<br> <br>
+						<br> 
 						
 					<!--	
 				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  checked >

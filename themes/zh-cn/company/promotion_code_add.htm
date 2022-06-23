@@ -32,9 +32,9 @@
 
 					<form id="memberForm"  class ='form-style-green' action="<{$http_root_www}>company/promotion_code" method="post" target="post_frame" enctype="multipart/form-data">
 						 <div class="input-box clearfix">	
-								<span><label>基于产品</label></span>	
+								<span><label>Base on Item</label></span>	
 								<select name='couponId' style='width:400px;'>
-								  <option value="-1">适用店铺全部商品</option>
+								  <option value="-1">Suit for whole Store</option>
 								  <{foreach from = $couponList item=item}>
 								  <option value="<{$item.id}>"><{$item.id}> # <{$item.title}></option>
 								  <{/foreach}>
@@ -42,57 +42,57 @@
 						</div>
 
 						<div class="input-box clearfix">	
-								<span><label>折扣方式</label></span>	
+								<span><label>Discount Type</label></span>	
 								<select name='type' style='width:120px;'>
-								  <option value="fixed">固定金额</option>
-								  <option value="percentage">百分比</option>
+								  <option value="fixed">Fix Amount</option>
+								  <option value="percentage">Percent</option>
 								</select> 
 
 								<input type="text" name="value" class="input-text"  />
 						</div>
 						<div class="input-box clearfix">	
-								<span><label>使用条件</label></span>	
+								<span><label>Use When</label></span>	
 								<select name='apply_condition_type' style='width:120px;'>
-								  <option value="none">无</option>
-								  <option value="conditionQty">达到购买数量</option>
-								  <option value="conditionMinspend">达到消费金额</option>
+								  <option value="none">None</option>
+								  <option value="conditionQty">Purchase quantity reached</option>
+								  <option value="conditionMinspend">Reached the consumption amount</option>
 								</select> 
 
 								<input type="text" name="apply_condition_value" class="input-text"  />
 						</div>
 
 						<div class="input-box clearfix">	
-								<span><label>过期方式</label></span>	
+								<span><label>Expiration method</label></span>	
 								<select name='expireType' style='width:120px;'> 
-								  <option value="unlimited">无限期</option>
-								  <option value="fixedQty">限定总数量</option>
-								  <option value="expireInDays">限定时间</option>
+								  <option value="unlimited">No Expiration</option>
+								  <option value="fixedQty">Over a certain amount</option>
+								  <option value="expireInDays">Over a certain Date</option>
 								</select> 
 
 								<input type="text" name="expireValue" class="input-text"  />
 						</div>
 
 						<div class="input-box clearfix">	
-								<span><label>打折码</label></span>	
+								<span><label>Promotion Code</label></span>	
 								<select name ='codeGenMethod' style='width:120px;'>
-								  <option value="random">随机生成</option>
-								  <option value="userInput">自定义打折码</option>
+								  <option value="random">Randomly generated</option>
+								  <option value="userInput">Custom discount code</option>
 								</select> 
 
 								<input type="text" name="promotionCode" class="input-text" />
 						</div>
 						<div class="input-box clearfix">	
-								<span><label>描述</label></span>	
+								<span><label>Description</label></span>	
 								<textarea   rows="4" cols="50" type="text" name="promotionDes" /></textarea>
 						</div>
 
 						<div class="input-box clearfix">	
-								<span><label>新人卷</label></span>	
-								<input type="checkbox" name="single_use_per_user" value='enable'>每个用户仅可以使用一次
+								<span><label>New Customer Only</label></span>	
+								<input type="checkbox" name="single_use_per_user" value='enable'>&nbsp;Can only be used once per user
 						</div>
 
 						<div class="input-box input-submit clearfix">
-							<button type="submit" style='float:right'>生成新折扣吗</button>
+							<button type="submit" style='float:right'>Generate new code</button>
 						</div>
 					
 					</form>

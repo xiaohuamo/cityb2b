@@ -132,7 +132,7 @@
         <{include file='company/side.htm'}>  
 		<div class="main">
 			<div class="box2">
-             
+             	<{include file='factory_2c/xero_panle_top_menu.htm'}>
 				<div class="colCurTit">
                     <{$pagename}>
 					 <span class="links">
@@ -224,7 +224,7 @@
 										}
 									
 										var c = $('<select id ="sub_category" name="sub_category" >');
-										c.append('<option value="">选择子分类</option>');
+										c.append('<option value="">Choose Sub Category</option>');
 										for (var i = 0; i < cats.length; i++) {
 											if ( cats[i][2] == vv ) {
 											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');

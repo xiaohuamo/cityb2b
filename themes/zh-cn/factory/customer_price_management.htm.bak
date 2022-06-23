@@ -39,10 +39,10 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                    Customer Lists
+                    <{if $langStr == 'zh-cn'}>  客户折扣设置<{else}>Customer Discount Edit<{/if}>
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">&nbsp;
+					<input value="<{$search}>" name="search" placeholder="">&nbsp;
 					<select class='chooseCustomer' name="grade">
 											
 												<option value="0" <{if !$gradeId}>selected<{/if}>>
@@ -54,7 +54,7 @@
 													</option>
 												<{/foreach}>
 											</select>&nbsp;
-					<input type="submit" value="搜索">
+					<input type="submit" value="<{$lang->search}>">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
 					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
@@ -62,15 +62,15 @@
 							<thead>
 							<tr>
 								<th>ID</th>
-								<th>客户名称</th>
-								<th>客户级别</th>
-								<th>客户折扣率</th>
-								<th>大类折扣</th>
-								<th>小类折扣</th>
-								<th>产品折扣</th>
+								<th>Name</th>
+								<th>Grade</th>
+								<th>Discount Rate(%)</th>
+								<th>Category Discount</th>
+								<th>Sub Category Discount</th>
+								<th>Item Discount</th>
 								
-								<th>订单查询</th>
-								<th>手机号</th>
+								<th>Orders </th>
+								<th>Phone</th>
 								<th>Invoice Disc</th>
 								
 
@@ -143,7 +143,7 @@
 								   <td>
                                        
 										<input type="text" class="input-text" data-id='<{$user.idd}>' id="discountOfInvoice-<{$user.idd}>" style="padding-right: 4px;width:50px;text-align:right;" name="discountOfInvoice"
-											   value="<{if !$user.discountOfInvoice}>0<{else}><{$user.discountOfInvoice}><{/if}>">%
+											   value="<{$user.discountOfInvoice}>">%
 										<span class='promote-ajax'></span>
 								
 									</td>
@@ -176,7 +176,7 @@
         document.execCommand("copy");
         document.body.removeChild(aux);
 
-        alert("已复制");
+        alert("Copied");
     }
 </script>
 

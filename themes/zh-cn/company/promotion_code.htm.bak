@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-list">	
+					<div class="colCurTit">列表
+						<span class="links ">
+						 <a class='btn-yellow' href="<{$http_root_www}>company/promotion_code" ><i class='fa fa-plus'></i>生成新折扣码</a>
+						</span>
+					</div>
+
+					<table style='width:100%'>
+						<thead style='width:100%;background:#00A1E9;color:white'>
+							<th>描述/折扣码</th>
+							<th>基于产品</th>
+							<th>条件</th>
+							<th>折扣方式</th>
+							<th>金额</th>
+							<th>过期方式</th>
+							<th>值</th>
+							<th>生成时间</th>
+							<th>过期</th>
+							<th>兑换次数</th>
+							<th>删除</th>
+						</thead>
+						<tbody>
+							<{foreach from=$promotionCodeList item=item}>
+								<tr data-id='<{$item.id}>'>
+									<td>
+										<{$item.promotion_des}>
+										<br>
+										<small><{$item.promotion_code}></small>
+									</td>
+									<td><{$item.coupon_id}></td>
+									<td><{$item.apply_condition}>:<{$item.apply_condition_value}></td>
+									<td><{$item.type}></td>
+									<td><{$item.value}></td>
+									<td><{$item.expire_type}></td>
+									<td><{$item.expire_value}></td>
+									<td><{$item.gen_time|date_format:"%D"}></td>
+									<td><{$item.is_expired}></td>
+									<td><{$item.applied_times}></td>
+									<td><a href="<{$http_root_www}>company/promotion_code_delete?id=<{$item.id}>" onclick="return confirm('确认删除 #<{$item.promotion_code}>?')"><i class='fa fa-close fa-lg' style='color:red'></i></a></td>
+								</tr>
+							<{/foreach}>
+						</tbody>
+					</table>
+
+					<div class="pager" >
+						<{$pager}>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

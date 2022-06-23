@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: center;
+	}
+	</style>
+<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+                  	 <{if $langStr == 'zh-cn'}>  归档客户列表<{else}>Archived Customer Lists<{/if}>
+				</div>
+				<form>
+					<input value="<{$search}>" name="search" placeholder="">
+					<input type="submit" value="<{$lang->search}>">
+				</form>
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+							   	<th>Restore</th>
+								<th>Customer Id</th>
+								<th>Customer Code</th>
+								<th>Customer Name</th>
+								<th>Orders </th>
+								<th>Phone</th>
+								<th>Approved</th>
+								
+								
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$users item=user name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$user.idd}>"
+													   data-id='<{$user.idd}>' <{if $user.isHide==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$user.idd}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $user.isHide==1}>
+												<span class='recycle_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#58964E;">Archived</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$user.idd}>'>
+                                                        <span style="color:#F30;">Restored</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+
+
+									<td>
+										<{$user.user_id}>
+									</td>
+									<td>
+									<input type="text" class="input-text" data-id='<{$user.idd}>' id="code-<{$user.idd}>" style="width:150px;" name="code"
+												   value="<{$user.code}>">
+											<span class='promote-ajax'></span>
+									
+									<td>
+                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+									</td>
+									<td>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">Orders</a>
+									</td>
+									<td>
+                                        <{$user.phone}>
+									</td>
+									<td>
+                                        <{if $user.approved}>
+											Yes <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
+										<{else}>
+											No <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
+										<{/if}>
+									</td>
+									
+								
+								
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+<script>
+    function copyToClip(value) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value",value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("已复制");
+    }
+</script>
+
+<script type="text/javascript">
+    var loading = false;
+
+
+	  $('input[name=onoffswitch_deleted]').on('click', function () {
+        var couponId = $(this).data('id')
+		
+        var context = $('.recycle_icon[data-id=' + couponId + ']');
+       
+        if (loading) return false;
+        $.ajax({
+            type: "POST",
+            url: "<{$http_root_www}>factory/customer_recycle_bin",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+			    console.log(result);
+                result = jQuery.parseJSON(result);
+                 console.log(result);
+				  console.log(result.isHide);
+                if (result.isHide == '1') {
+                    context.html("<span style='color:#F30;'>Archived</span>");
+					
+                } else if (result.isHide == '0') {
+                    context.html("<span style='color:#58964E;'>Restored </span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
+
+
+
+
+
+
+
+
+    $('input[name=code]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+        
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_business_code",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+    
+	
+
+
+   
+
+</script>
+<{include file = 'footer.htm'}>
+
+</body>
+</html>

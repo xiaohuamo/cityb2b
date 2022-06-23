@@ -173,7 +173,7 @@
 										var area_shelfLength =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('length');
 										var area_shelflayers =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('layers');
 										//alert(area_shelfLength + ' ' + area_shelflayers);
-alert(vv);
+
 										if (vv >0) {
 										// 如果该区域有货架信息
 										  if(area_shelfLength >0 && area_shelflayers>0) {

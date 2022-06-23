@@ -170,7 +170,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -217,7 +217,7 @@
 										}
 									
 										var c = $('<select id ="sub_category" name="sub_category" >');
-										c.append('<option value="">选择子分类</option>');
+										c.append('<option value="">Choose Sub Category</option>');
 										for (var i = 0; i < cats.length; i++) {
 											if ( cats[i][2] == vv ) {
 											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');

@@ -44,6 +44,7 @@
 		<div class="main">
 
 			<div class="box2">
+			<{include file='factory_2c/manual_picking_top_menu.htm'}>
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">
@@ -205,7 +206,7 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>		
-	<th><input type="checkbox" name="all_select" id="all_select"  class="all_select"  " checked >&nbsp;选择全部打印 </th>								
+	<th><input type="checkbox" name="all_select" id="all_select"  class="all_select"  " checked >&nbsp;Print All </th>								
 									<th><{$lang->logistic_delivery_date}></th>
 									<th><{$lang->logistic_sequenceNo}></th>
 									
@@ -237,8 +238,7 @@
 									
 									  
 									<td>
-										<{$item.order_name}>
-										<br>
+										
 										<a target='_blank' href="<{$http_root_www}><{if $loginUser.business_type_factory==1}>factory<{else}>company<{/if}>/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
@@ -268,16 +268,13 @@
 							</tbody>		
 						</table>	
 
-						<div>
-							<i class='fa fa-sign-out ' style='color:#58964E'></i>快速兑付按钮	
-							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> 已经发货标识
-						</div>
+						
 
 						<{if $pager}>
 						<div class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						没有任何订单	
+						No data	
 						<{/if}>			
 				</div>	
 
@@ -315,7 +312,7 @@
 			var id =$(this).data('id');
 			var iconupdate= new IconUpdate(this);
 
-			if(confirm('确认要兑付该订单？')==false)return;
+			if(confirm('Confirm order has been sent?')==false)return;
 
 		 	$.ajax({
 			  url: "<{$http_root_www}>company/customer_coupon_approving",

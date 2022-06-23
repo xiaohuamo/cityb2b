@@ -52,27 +52,28 @@
 		<div class="main">
 
 			<div class="box2">
+						<{include file='factory_2c/manual_picking_top_menu.htm'}>
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder=" " style="width:250px; margin-right:5px;" />
 						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
 					
 						<br><br>
 
-						<label>选择渠道：</label>
+						<label><{$lang->choose_account}></label>
 						<select  class='choosebusiness' id="business_id" name="business_id" >
-						<option value="0"  >全部商家</option>
+						<option value="0"  >All Account</option>
 						<{foreach from=$SalesChannelCustomerList item=d}>
 							<option value="<{$d.customer_id}>"<{if $d.customer_id==$business_id}>selected<{/if}>  >
 								<{$d.displayName}>
 							</option>
 						<{/foreach}>
 						</select>
-						&nbsp;<label>选择配送日期：</label>
+						&nbsp;<label><{$lang->choose_delivery_date}></label>
 						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
-						<option value="all"  ><{$lang->logistic_choosedate1}> </option>
+						<option value="all"  >Choose Delivery Date </option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
 								<{$d}>
@@ -80,7 +81,7 @@
 						<{/foreach}>
 						</select>
 						
-						&nbsp;<label id="chooseCateLable" style='display:none;'>选择大类：</label>
+						&nbsp;<label id="chooseCateLable" style='display:none;'><{$lang->choose_category}></label>
 						<select class='chooseCate' id="cate_id" name="cate_id" style='display:none;'>
 						<option value="all"  >Choose Category </option>
 						<{foreach from=$cateData item=d}>
@@ -90,7 +91,7 @@
 						<{/foreach}>
 						</select>
 						
-						&nbsp;<label id="chooseTruckLable" style='display:none;'>Choose Driver&Truck：</label>
+						&nbsp;<label id="chooseTruckLable" style='display:none;'><{$lang->choose_driver_truck}></label>
 						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
 						<option value="all"  >All Drivers&Truck</option>
 						<{foreach from=$TuckListOfTheDay item=d}>
@@ -186,7 +187,7 @@
 						  <{if $customer_delivery_date && $customer_delivery_date !='all'}>
 						<br><br>
                      <div id="printer">
-						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Summery Picking List (pdf)</button>
+						<button  id="printtotal" type="button" onclick="showPdf('totalOrderSummeryForDeliveryDate');">Export(pdf)</button>
 					
                     <{if !$business_id}>
 				<!--		<input  type="checkbox" name="printAllBusiness" id='printAllBusiness' value='true'>并打印所有渠道汇总分单 -->
@@ -208,7 +209,7 @@
 							<thead>				
 								<tr>	
                              <{if $business_id}>								
-								<th>商家编号</th>								
+								<th>Business_id</th>								
 									<{/if}>
 									<th>Delivery Date</th>
 									
@@ -258,7 +259,7 @@
 						<div  class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						没有任何订单	
+						No data	
 						<{/if}>			
 				</div>	
 
@@ -279,7 +280,7 @@
 			var id =$(this).data('id');
 			var iconupdate= new IconUpdate(this);
 
-			if(confirm('确认要兑付该订单？')==false)return;
+			if(confirm('Confirm the order has been sent?')==false)return;
 
 		 	$.ajax({
 			  url: "<{$http_root_www}>company/customer_coupon_approving",
@@ -338,7 +339,7 @@ function showPdf(type)
 	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
 	if(!vcustomer_delivery_date) {
 	
-	 alert('请选择日期！');
+	 alert('Please Choose Delviery Date！');
 	}
 	
 	var vbusiness_id= $('#business_id option:selected').val();

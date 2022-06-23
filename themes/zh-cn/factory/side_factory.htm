@@ -38,12 +38,12 @@
 				</a>
 			
 			<a href="<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1"<{if $submenu=='restaurant_parant_category_edit'}> class="current"<{/if}>>
-					<{$lang->parent_category_management}>
+					<{$lang->categ_management}>
 				</a>
 				
-				<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
-					<!--<{$lang->category_management}> --> <{$lang->sub_category_managementd}>
-				</a>
+			<!--	<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
+					 <{$lang->sub_category_managementd}>
+				</a>  -->
 <!--
 				<a href="<{$http_root_www}>factorypage/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
                     <{$lang->items_management}>
@@ -53,17 +53,15 @@
 					<{$lang->items_management}>
 				</a>
 				
-				<a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu=='restaurant_menu_add'}> class="current"<{/if}>>
+				<!--<a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu=='restaurant_menu_add'}> class="current"<{/if}>>
 					<{$lang->items_add}>
-				</a>
+				</a> -->
 
 				<a href="<{$http_root_www}>supplier/<{$loginUser.id}>">
                     <{$lang->preview_store}>
 				</a>
 
-				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
-                    <{$lang->preview_password}>
-				</a>
+				
 
 				<a href="<{$http_root_www}>company/dispcenter_schedule"<{if $submenu=='dispcenter_schedule'}> class="current"<{/if}>>
                     <{$lang->delivery_date_open_end_time_setting}>
@@ -146,11 +144,13 @@
 				<!--	<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='customer_orders_return'}> class="current"<{/if}>>
                     <{$lang->order_return}>
 				</a> -->
-			<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
+		<!--	<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
                     <{$lang->order_management_amend}>
-				</a> 
+				</a>  -->
 
-
+			<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='order_return'}> class="current"<{/if}>>
+                   <{$lang->order_management_amend}>
+				</a>
 			</div>
 		</li>
 
@@ -172,19 +172,19 @@
 	</div>
 	<div class='second-level'>
 		<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
-			   货架组设置
+			   <{$lang->stock_room_shelf}>
 		</a>	
 		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='Store_List'}> class="current"<{/if}>>
-			   库房管理
+			   <{$lang->stock_room_management}>
 		</a>
 		<a  href="<{$http_root_www}>factory/add_new_stock?stock=1"<{if $submenu=='stock_in'}> class="current"<{/if}>>
-			   入库管理
+			   <{$lang->Stock_in}>
 		</a>
 		<a  href="<{$http_root_www}>factory/add_new_stock?stock=0"<{if $submenu=='stock_out'}> class="current"<{/if}>>
-			   出库管理
+			   <{$lang->stock_out}>
 		</a>
 		<a  href="<{$http_root_www}>factory_2c/item_stock_add"<{if $submenu=='item_stock_add'}> class="current"<{/if}>>
-			   盘点管理
+			   <{$lang->stocking_check}>
 		</a>
 	<!--	
 		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
@@ -218,9 +218,12 @@
 		<a <{if $menu=='dispatching_center'}> class="current"<{/if}>><{$lang->dispatching_center}></a>
 	</div>
 	<div class='second-level'>
-		<a  href="" <{if $submenu==''}> class="current"<{/if}>>
-		 <{$lang->manager}>
+		
+		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+			<{$lang->manu_picking_List}>
 		</a>
+		
+	<!--	
 		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
 			<{$lang->print_picking_list}>
 		</a>
@@ -237,14 +240,14 @@
 		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
 			   <{$lang->print_item_packing_slips}>
 		</a>
-		
-		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
-			   加工类库存配货
+		-->
+		<a  href="<{$http_root_www}>factory_2c/producing_stock_to_dispatching"<{if $submenu=='producing_stock_to_dispatching'}> class="current"<{/if}>>
+			     <{$lang->dispatching_platform}>
 		</a>
 		
-		<a target=_blank  href="https://d.cityb2b.com/product/picking" >
+	<!--	<a target=_blank  href="https://d.cityb2b.com/product/picking" >
 			   <{$lang->dispatching_platform}>
-		</a>
+		</a> --> 
 	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
 				导入外部订单
 		</a>  -->
@@ -260,9 +263,9 @@
 		<a <{if $menu=='Producing_Centre'}> class="current"<{/if}>><{$lang->Producing_Centre}></a>
 	</div>
 	<div class='second-level'>
-		<a  href="" <{if $submenu==''}> class="current"<{/if}>>
+	<!--	<a  href="" <{if $submenu==''}> class="current"<{/if}>>
 		 <{$lang->manager}>
-		</a>
+		</a> -->
 	<!--	<a  href=""<{if $submenu==''}> class="current"<{/if}>>
 				  <{$lang->summer_product_list}>
 		</a>
@@ -275,7 +278,12 @@
 		
 		
 		
-		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery?producing=1"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+		
+		<a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
+			 <{$lang->manu_producing_management}>
+		</a>
+		
+	<!--	<a  href="<{$http_root_www}>factory_2c/factroy_order_summery?producing=1"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
 			 <{$lang->summer_producing_list}>
 		</a>
 		
@@ -290,7 +298,7 @@
 				 <{$lang->export_manual_dispatching_form}>
 		</a>
 	
-	
+	-->
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
 				<{$lang->producing_platform}> 
@@ -322,21 +330,25 @@
 				Payments
 				</a> -->
 				<a href="<{$http_root_www}>factory/add_new_payment" <{if $submenu=='add_new_payment'}> class="current"<{/if}>>
-				New Payment
+				<{$lang->new_transcation}>
 				</a>
 				
 				<a href="<{$http_root_www}>factory/transcations?customer_id=all" <{if $submenu=='transcations'}> class="current"<{/if}>>
-				Transcations 
+				<{$lang->transcations}> 
 				</a>
 				
 				<a href="<{$http_root_www}>factory/statement_list?customer_id=all" <{if $submenu=='statement_list'}> class="current"<{/if}>>
-				Statment
+				<{$lang->statement}>
 				</a>
 				
 				<a href="<{$http_root_www}>factory/get_over_due_customer_list" <{if $submenu=='over_due_customer_list'}> class="current"<{/if}>>
-				Over Due Lists
+				<{$lang->over_due_list}>
 				</a> 
- 
+				
+				<a href="<{$http_root_www}>factory/customer_xero_management" <{if $submenu=='customer_xero_management'}> class="current"<{/if}>>
+				<{$lang->xero_panel}>
+				</a>
+ <!--
 				<a href="<{$http_root_www}>factory/customer_xero_management" <{if $submenu=='customer_xero_management'}> class="current"<{/if}>>
 				Xero contact sync
 				</a>
@@ -345,7 +357,7 @@
 				</a>
 				<a href="<{$http_root_www}>factory/upload_items_to_xero" <{if $submenu=='upload_items_to_xero'}> class="current"<{/if}>>
 				Xero items upload 
-				</a>
+				</a> -->
 				<!--<a href="<{$http_root_www}>factory/xero_single_create_items_on_xero" <{if $submenu=='upload_items_to_xero'}> class="current"<{/if}>>
 				 test
 				</a> -->
@@ -447,6 +459,9 @@
 				</a>
 				<a href="<{$http_root_www}>company/delivery_setting" <{if $submenu=='delivery_setting'}> class="current"<{/if}>>
                     <{$lang->deliver_setting}>
+				</a>
+				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
+                    <{$lang->preview_password}>
 				</a>
 				<a href="<{$http_root_www}>factory/staff_sales" <{if $submenu=='staff_sales'}> class="current"<{/if}>>
                     <{$lang->salesman_setting}>

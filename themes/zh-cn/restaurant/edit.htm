@@ -26,7 +26,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				 <{include file='company/side_restaurant_info.htm'}>
+				 <{include file='company/side_restaurant_info1.htm'}>
 				<div class="colCurTit">
 					<{$pagename}> 
 				</div>
@@ -68,7 +68,7 @@
 					</select>
 
                <{/if}>
-			   <span >&nbsp;&nbsp;选择分类：&nbsp;</span>
+			   <span >&nbsp;&nbsp;Choose Category：&nbsp;</span>
 			   
 						<select name="category" class='chooseCategory' id='category'>
 
@@ -121,7 +121,7 @@
 										
 											<td>
 											<select name="parent_category_id" data-id='<{$item.id}>'>
-												<option value="0" <{if $item.parent_category_id == null}>selected<{/if}>>选择分类</option>
+												<option value="0" <{if $item.parent_category_id == null}>selected<{/if}>>Choose Category</option>
                                                 <{foreach from=$data_parent_cate_list item=category}>
                                                     <{if $category.category_cn_name || $category.category_en_name}>
 													<option value="<{$category.id}>" <{if $item.parent_category_id == $category.id}>selected<{/if}>>

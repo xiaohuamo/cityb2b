@@ -280,18 +280,18 @@
 
 							<option value="all"<{if $status=='all'}> selected<{/if}>><{$lang->order_status}></option>
 
-							<option value="c01" <{if $status=='c01'}> selected<{/if}>>客户购买</option>
+							<option value="c01" <{if $status=='c01'}> selected<{/if}>>Purchased</option>
 
-							<option value="b01"<{if $status=='b01'}> selected<{/if}>>已兑付</option>
+							<option value="b01"<{if $status=='b01'}> selected<{/if}>>Deliveried</option>
 
-							<option value="d01"<{if $status=='d01'}> selected<{/if}>>已取消</option>
+							<option value="d01"<{if $status=='d01'}> selected<{/if}>>Cancelled</option>
 
 						</select>
 
 						<select id="customer_delivery_option" name="customer_delivery_option">
 							<option value="all" <{if $customer_delivery_option=='all'}> selected<{/if}>><{$lang->logistic_delivery_or_pickup}></option>
-							<option value="1"<{if $customer_delivery_option=='1'}> selected<{/if}>>商家递送</option>
-							<option value="2"<{if $customer_delivery_option=='2'}> selected<{/if}>>客户自取</option>
+							<option value="1"<{if $customer_delivery_option=='1'}> selected<{/if}>>Dleivery</option>
+							<option value="2"<{if $customer_delivery_option=='2'}> selected<{/if}>>Customer Pickup</option>
 						</select>
 
 						<!--
@@ -322,12 +322,7 @@
 						<button type="button" onclick="showPdf('pdf');"><{$lang->order_pdf}></button>
 						<button type="button" onclick="showPdf('shippingLabel');">Shipping Label PDF</button>
 						<input type="checkbox" name="fitInPage" id='fitInPage' value='true'>&nbsp;Fit in page
-                         <{if $loginUser.business_type_restaurant ==1 || $loginUser.business_type_freshfood ==1}>
-							  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_csv_fresh_and_restaurant">&nbsp;&nbsp;导出订单（购买但并未处理）</a></span>
-						  &nbsp;&nbsp; 	  <span><a style="font-weight: 549;background: #00A1E9;color: white;font-size: 14px;" href ="<{$http_root_www}>company/export_freshfood_summery">&nbsp;&nbsp;导出库存总单</a></span>
-						
-						<{/if}>
-						
+                       
 						&nbsp;&nbsp;
 						
 						<input type="checkbox" name="onoffLocalInvoiceInfo"  id="onoffLocalInvoiceInfo"  value='false' >
@@ -498,7 +493,7 @@
 									 -
 									<{else}>
 									<{if $item.merge ==2}> <!--未发现相同客户记录 -->
-										本日唯一订单
+										-
 									
 									<{elseif $item.merge ==1}> <!--发现记录，且非第一笔记录，可以进行合并-->
 										<{if $item.coupon_status=='c01'}>
@@ -514,11 +509,11 @@
 											
 												<{if $item.merge_to_another_order==1}>
 													<span class='publish_icon' data-id='<{$item.id}>'>
-															<span style="color:#58964E;">已合并</span>
+															<span style="color:#58964E;"><{$lang->merged}></span>
 														</span>
 												<{else}>
 													<span class='publish_icon' data-id='<{$item.id}>'>
-															<span style="color:#F30;">未合并</span>
+															<span style="color:#F30;"><{$lang->not_merged_yet}></span>
 														</span>
 												<{/if}>
 										
@@ -528,22 +523,18 @@
 										 <{/if}>
 									
 									<{elseif $item.merge==0}><!-- 为原始记录，是合并目标订单，该订单不能被其它合并 -->
-										第一笔订单
+										<{$lang->first_order}>
 									<{/if}>
 									<{/if}>
 									
 									
 									</td>
 									<td>
-									<{if $dispatching_user}>
-									
-							    	<{$item.money}>
 								
-									<{else}>
 								
 									<{$item.money_new}>
 									
-									<{/if}>
+								
 									
 									
 									</td>
@@ -601,15 +592,15 @@
 						</table>	
 
 						<div>
-							<i class='fa fa-sign-out ' style='color:#58964E'></i>快速兑付按钮	
-							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> 已经发货标识
+							<i class='fa fa-sign-out ' style='color:#58964E'></i> Mark on Sent 	
+							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> Status of sent.
 						</div>
 
 						<{if $pager}>
 						<div class="pager"><{$pager}></div>
 						<{/if}>				
 						<{else}>				
-						没有任何订单	
+						No any data	
 						<{/if}>			
 				</div>	
 
@@ -653,9 +644,9 @@
                 result = jQuery.parseJSON(result);
               //  alert(result.merge_to_another_order);
                 if (result.merge_to_another_order == '0') {
-                    context.html("<span style='color:#F30;'>未合并</span>");
+                    context.html("<span style='color:#F30;'><{$lang->merged}></span>");
                 } else if (result.merge_to_another_order == '1') {
-                    context.html("<span style='color:#58964E;'>已合并</span>");
+                    context.html("<span style='color:#58964E;'><{$lang->merged}></span>");
 					$("#myonoffswitch"+orderId).attr("disabled","true");
 					$("#combine1_"+orderId).css("display","");
 					$("#combine_"+orderId).css("display","none");
@@ -669,11 +660,11 @@
 					$("#invoice_no"+orderId).html('-');
 					
                 }else if (result.merge_to_another_order == '2') {
-                    context.html("<span style='color:#F30;'>未合并</span>");
+                    context.html("<span style='color:#F30;'><{$lang->merged}></span>");
 					alert('main order has been sent to xero ');
 					$('#myonoffswitch'+orderId).attr("checked",false);
                 }else if (result.merge_to_another_order == '3') {
-                    context.html("<span style='color:#F30;'>未合并</span>");
+                    context.html("<span style='color:#F30;'><{$lang->merged}></span>");
 					alert('could not find the main order!');
 					$('#myonoffswitch'+orderId).attr("checked",false);
                 }
@@ -965,7 +956,7 @@
 			var id =$(this).data('id');
 			var iconupdate= new IconUpdate(this);
 
-			if(confirm('确认要兑付该订单？')==false)return;
+			if(confirm('order sent or deliveried?')==false)return;
 
 		 	$.ajax({
 			  url: "<{$http_root_www}>company/customer_coupon_approving",

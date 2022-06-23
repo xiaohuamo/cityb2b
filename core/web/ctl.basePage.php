@@ -681,10 +681,10 @@ public function AgentActiveCheck($id,$agentId){
 		$pageStr = '';
 		if ( $pageCount > 1 ) {
 			if ( $page > 1 ) {
-				$pageStr .= '<a class="prev" href="'.$pageUrl.( $page - 1 ).'">上一页</a>';
+				$pageStr .= '<a class="prev" href="'.$pageUrl.( $page - 1 ).'">Last Page</a>';
 			}
 			else {
-				$pageStr .= '<em class="prev">上一页</em>';
+				$pageStr .= '<em class="prev">Last Page</em>';
 			}
 			if ( $page_l > 1 ) {
 				$pageStr .= '<a href="'.$pageUrl.'1">1</a><a>...</a>';
@@ -697,10 +697,10 @@ public function AgentActiveCheck($id,$agentId){
 				$pageStr .= '<a>...</a><a href="'.$pageUrl.$pageCount.'">'.$pageCount.'</a>';
 			}
 			if ( $page < $pageCount ) {
-				$pageStr .= '<a class="next" href="'.$pageUrl.( $page + 1 ).'">下一页</a>';
+				$pageStr .= '<a class="next" href="'.$pageUrl.( $page + 1 ).'">Next Page</a>';
 			}
 			else {
-				$pageStr .= '<em class="next">下一页</em>';
+				$pageStr .= '<em class="next">Next Page</em>';
 			}
 		}
 

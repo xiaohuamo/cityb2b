@@ -93,7 +93,7 @@
 						</div>
 
 						<div class="borR7 ma15 pa15 bgfff flexBox1">
-							<div v-if="isLanguageEn">Mobile</div><div v-else>手机号</div>
+							<div v-if="isLanguageEn">Mobile</div><div v-else>Phone</div>
 							<input  name="phone" id="phone" value ="<{$user.phone}>" required placeholder="mobile phone number" class="H30 inputW2"/>
 							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
 						</div>
@@ -166,7 +166,7 @@
                             </div>
                         </div> -->
 						<div class="borR7 ma15 pa15 bgfff flexBox1 relative">
-							<div v-if="isLanguageEn">Address</div><div v-else>地址</div>
+							<div v-if="isLanguageEn">Address</div><div v-else>Address</div>
 							<textarea   name="address" id="address" class="inputW2 col686868 mytextarea" /><{$user.googleMap}>
 							</textarea>
 							<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>

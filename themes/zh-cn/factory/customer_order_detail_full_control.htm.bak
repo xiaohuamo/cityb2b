@@ -70,7 +70,7 @@
 
 					<div class="input-box input-submit clearfix">
 
-						<a class='link' href="<{$http_root_www}>factory/customer_orders">返回列表</a>
+						<a class='link' href="<{$http_root_www}>factory/customer_orders"><{$lang->back_to_list}></a>
 						<a class='link' target='_blank'    onclick=" print_order('<{$data.orderId}>');">Invoice</a>
 						   
 						   <script type="text/javascript">
@@ -110,7 +110,7 @@
 						   
 						   function print_order(orderID) {
    
-								  approve_delivery(orderID);
+								//  approve_delivery(orderID);
 								  window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
 								   
 							   
@@ -147,67 +147,67 @@
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>订单编号</label></span>
+						<span><label>Order Id</label></span>
                         <{$data.orderId}>
 					</div>
 					
 					<div class="input-box clearfix  col-6">
-						<span><label>销售员</label></span>
+						<span><label>sales Id</label></span>
                         <{$data.salesmanName}>
 					</div>
 
                    <div class="input-box clearfix  col-6">
-						<span><label>订单状态</label></span>
+						<span><label>Status</label></span>
 
 						<{if $data.coupon_status=='c01'}>
-							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
+							<span style="color:#FD5001 "><{$lang->order_status_c01}></span>
 						<{elseif $data.coupon_status=='b01'}>
-							<span style="color:green"><{$data.cn_coupon_status_name}></span>
+							<span style="color:green"><{$lang->order_status_b01}></span>
 						<{elseif $data.coupon_status=='d01'}>
-							<span style="color:red"><{$data.cn_coupon_status_name}></span>
+							<span style="color:red"><{$lang->order_status_d01}></span>
 						<{/if}>
 
 						<{if $data.coupon_status=='c01' && $editAble == true}>
 						
 							<!-- cancel id is the id of the first item in an order -->
-								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>">商家取消订单</a>
+								<a class='link' onclick='return confirm("Cancel order?");' href="<{$http_root_www}>company/cancel_order?orderId=<{$data.orderId}>"><{$lang->cancel_order}></a>
 						<{/if}>
 					</div>
 
 					<div class="input-box clearfix  col-6">
-						<span><label>下单时间</label></span>
+						<span><label>Create Time</label></span>
 						<{date('Y-m-d H:i:s', $data.createTime)}>
 					</div>
 
 					<div class="input-box clearfix col-6">
-						<span><label>客户ID</label></span>
+						<span><label>Customer ID</label></span>
                         <{$data.userId}>
 					</div>
 
                     <{if $data.customer_delivery_option==2}>
 						<div class="input-box clearfix col-6">
-							<span><label>递送方式</label></span>
-							客户自取
+							<span><label>Delivery option</label></span>
+							Customer pickup
 						</div>
 						<div class="input-box clearfix col-6">
-							<span><label>取货点</label></span>
+							<span><label>Pick up address</label></span>
                             <{$pickupInfo.pickupname}>
 						</div>
 						<div class="input-box clearfix col-6">
-							<span><label>地址</label></span>
+							<span><label>Address</label></span>
                             <{$pickupInfo.pickupaddress}>
 						</div>
 						<div class="input-box clearfix col-6">
-							<span><label>电话</label></span>
+							<span><label>Phone Number</label></span>
                             <{$pickupInfo.pickupphone}>
 						</div>
                     <{elseif $data.customer_delivery_option==1}>
 						<div class="input-box clearfix col-6">
-							<span><label>递送方式</label></span>
-							商家递送
+							<span><label>Delivery Option </label></span>
+							Delivery 
 						</div>
 						<div class="input-box clearfix col-6">
-						<span><label>客户名称</label></span>
+						<span><label>Customer Name</label></span>
                         <{$data.cust_name}>
 					</div>
 						<script type="text/javascript">
@@ -270,7 +270,7 @@
 						<div class='address-validation'>
 							<div class="input-box clearfix">
 								<span>
-									地址：<{$data.address}>
+									Address：<{$data.address}>
 								</span>
 								<input type="hidden" value='<{$data.address}>' class='address'>
 							</div>
@@ -302,10 +302,10 @@
 
 							<div class="input-box clearfix">
 								<button type="button" class='dispatch-btn' onClick="$('.address-validation').hide();dispatch()">
-									确认地址并发货
+									Confiirm address and send
 								</button>
 								<button type="button" class='dispatch-cancel-btn' onClick="$('.address-validation').hide()">
-									取消
+									Cancel 
 								</button>
 							</div>
 						</div>
@@ -363,7 +363,7 @@
 
                     <{if $data.message_to_business}>
 						<div class="input-box clearfix">
-							<span><label>客户留言</label></span>
+							<span><label>Customer Message </label></span>
 							<span style='color:green'><{$data.message_to_business}></span>
 						</div>
                     <{/if}>
@@ -392,7 +392,7 @@
                             <{foreach from=$items item=item name='dl'}>
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 									<td><{$item.menu_id}></td>
-									<td><a target='_blank' href="<{$http_root_www}>coupon/<{$item.bonus_id}>">
+									<td>
 									
 									 <{if $langStr=='zh-cn'}>
 									   <{if $item.menu_cn_name}><{$item.menu_en_name}>&nbsp;<{$item.menu_cn_name}><{else}><{$item.bonus_title}> <{/if}>
@@ -402,7 +402,7 @@
 									<{/if}>
 									
 									
-									</a></td>
+									</td>
 
 									<td><{if $item.guige_des}><{$item.guige1_id}>:&nbsp;<{$item.guige_des}><{/if}></td>
 									<td>
@@ -471,42 +471,42 @@
                        
 					   <{if $moneyDetail.goodsTotal}>
 							<div style="color: #f00;font-weight: bolder;">
-								<span>商品总价</span><span>:</span><span id="totalGoodsAmount"><{$moneyDetail.goodsTotal_new}></span>
+								<span>Subtotal amount :</span><span>:</span><span id="totalGoodsAmount"><{$moneyDetail.goodsTotal_new}></span>
 							</div>
                         <{/if}>
 						
 
                         <{if $moneyDetail.deliveryFee>0}>
 							<div>
-								<span>运费</span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
+								<span>Delivery fee</span><span>:</span><span>＋<{$moneyDetail.deliveryFee}></span>
 							</div>
                         <{/if}>
                         <{if $moneyDetail.platformFee>0}>
 							<div>
-								<span>预订费</span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
+								<span>Booking fee </span><span>:</span><span>＋<{$moneyDetail.platformFee}></span>
 							</div>
                         <{/if}>
                         <{if $moneyDetail.transactionSurcharge>0}>
 							<div>
-								<span>第三方交易手续费</span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
+								<span>Third party Transcation fee</span><span>:</span><span>＋<{$moneyDetail.transactionSurcharge}></span>
 							</div>
                         <{/if}>
 
                         <{if $moneyDetail.promotionTotal>0}>
 							<div>
-								<span>使用折扣码</span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
+								<span>Promotion Code Discount  </span><span>:</span><span>-<{$moneyDetail.promotionTotal}></span>
 							</div>
                         <{/if}>
 
                         <{if $moneyDetail.useMoney>0}>
 							<div>
-								<span>钱包支付</span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
+								<span>Wallet </span><span>:</span><span>-<{$moneyDetail.useMoney}></span>
 							</div>
                         <{/if}>
 
                         <{if $moneyDetail.transactionBalance}>
 							<div style="color: #f00;font-weight: bolder;">
-								<span>交易总额</span><span>:</span><span id="totalAmount"><{$moneyDetail.transactionBalance_new}></span>
+								<span>Total Amount </span><span>:</span><span id="totalAmount"><{$moneyDetail.transactionBalance_new}></span>
 							</div>
                         <{/if}> 
 						
@@ -528,10 +528,10 @@
 
                             <{if $editAble == true}>
 							<div class="input-box clearfix col-6">
-								<span><label>地址</label></span>
+								<span><label>Address</label></span>
 								<input type="text" name="address_update" id='address_update' style="padding:10px;width: 250px" value='<{$data.address}>'>
 								<button type="button" class='address_update'>
-									更新
+									Update
 								</button>
 							</div>
                             <{/if}>
@@ -549,7 +549,7 @@
                                             context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
                                         },
                                         success: function () {
-                                            context.html("已更新");
+                                            context.html("Updated");
                                             context.css('background-color', '#FD5001 ');
                                         }
                                     })
@@ -558,10 +558,10 @@
 
                             <{if $editAble == true}>
 							<div class="input-box clearfix col-6">
-								<span><label>电话</label></span>
+								<span><label>Phone</label></span>
 								<input type="text" name="phone_update" id='phone_update' style="padding:10px;width: 250px" value='<{$data.phone}>'>
 								<button type="button" class='phone_update'>
-									更新
+									Updated
 								</button>
 							</div>
                             <{/if}>
@@ -580,7 +580,7 @@
                                             context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
                                         },
                                         success: function () {
-                                            context.html("已更新");
+                                            context.html("Updated");
                                             context.css('background-color', '#FD5001 ');
                                         }
                                     })
@@ -590,10 +590,10 @@
 
                             <{if $editAble == true}>
 							<div class="input-box clearfix col-6">
-								<span><label>邮箱</label></span>
+								<span><label>Email</label></span>
 								<input type="text" name="email_update" id='email_update' style="padding:10px;width: 250px" value='<{$data.email}>'>
 								<button type="button" class='email_update'>
-									更新
+									Updated
 								</button>
 							</div>
                             <{/if}>
@@ -612,7 +612,7 @@
                                             context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
                                         },
                                         success: function (result) {
-                                            context.html("已更新");
+                                            context.html("Updated");
                                             context.css('background-color', '#FD5001 ');
                                         }
                                     })
@@ -621,7 +621,7 @@
 						</div>
                     <{/if}>
 
-					<h2 style="padding-left:30px; font-size:16px;">操作日志</h2>
+					<h2 style="padding-left:30px; font-size:16px;">Activities Logs</h2>
 					<div class="main-list">
                         <{if $log}>
 							<table cellspacing="0" cellpadding="0" width="100%">
@@ -629,11 +629,11 @@
 								<tr>
 
 
-									<th>操作者</th>
+									<th>Operator</th>
 
-									<th>动作描述</th>
+									<th>Action</th>
 
-									<th>时间</th>
+									<th>Time</th>
 
 								</tr>
 								</thead>
@@ -643,7 +643,12 @@
 
 										<td><{$item.action_user_name}></td>
 
-										<td><{$item.cn_description}> <br><!-- (<{$item.en_description}>) --></td>
+										<td>
+										<{if $item.action_id=='c01'}><{$lang->order_status_c01}><{/if}>
+										<{if $item.action_id=='b01'}><{$lang->order_status_b01}><{/if}>
+										<{if $item.action_id=='d01'}><{$lang->order_status_d01}><{/if}>
+										
+										</td>
 
 										<td><{date('Y-m-d H:i:s', $item.gen_date)}></td>
 
@@ -652,7 +657,7 @@
 								</tbody>
 							</table>
                         <{else}>
-							还没有记录
+							no data 
                         <{/if}>
 					</div>
 

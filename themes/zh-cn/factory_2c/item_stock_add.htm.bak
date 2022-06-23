@@ -197,6 +197,10 @@
 								
 								area =$('#store_house_area');
 								areaChg1(area,'ee','<{$shelf}>','<{$layers}>');
+								
+								 var shelfLayer ='<{$shelfLayer}>';
+								 $('#shelfLayer').val(shelfLayer);
+								 
 							 }
 							 
 						   }
@@ -395,12 +399,13 @@
 									<th>Item Id</th>
 									<th>Item Code</th>
 									
-							    	<th>库存</th>
-									<th>盘点库存</th>
-									<th>盘点记录</th>
+							    	<th>Original Stock Qty</th>
+									<th>Stock Checking Qty</th>
+									<th>note</th>
 									<th>Item Name</th>
-									<th>单位</th>
-									<th  style="width:"10%;">产品名称-中文</th> 
+									<th>Unit</th>
+								  <{if $langStr=='en'}> <{else}>
+								<th  style="width:"10%;">Item Cn Name</th> <{/if}>
 									
 								</tr>
 								</thead>
@@ -444,9 +449,9 @@
 									   <td>
 											<span><{$item.unit}></span>
 										</td>
-										  <td>
+										 <{if $langStr=='en'}> <{else}>  <td>
 											<span><{$item.menu_cn_name}></span>
-										</td>
+										</td> <{/if}>
 										
                                        
 										

@@ -33,17 +33,22 @@
 	
 	<switch_to_main_pannel>Switch to Main Panel </switch_to_main_pannel>
 	
-	<wholeseller_card>Wholeseller Card</wholeseller_card>
-	<add_new_customer>Add New Customer</add_new_customer>
+	<wholeseller_card>Businesss Card</wholeseller_card>
+	<add_new_customer>New Customer</add_new_customer>
 	<customer_list>Customer Lists</customer_list>
 	<group_order_list>Group Order</group_order_list>
-	<customer_grade>grade Setting</customer_grade>
-	<add_customer_grade>add Grade</add_customer_grade>
+	
+	<category_discount>Category Discount</category_discount>
+	<sub_category_discount>Sub Category Discount</sub_category_discount>
+	<item_discount>Item discount</item_discount>
+	
+	<customer_grade>Grade Setting</customer_grade>
+	<add_customer_grade>Add Grade</add_customer_grade>
 	 <customer_type>Customer Type</customer_type>
 	<choose_postcode>Choose Postcode</choose_postcode>
-	<group_discount>group discount edit</group_discount>
-	<accountTypeandDelivery>account and Delivery</accountTypeandDelivery>
-	<customer_list_recycle>Hide Customers</customer_list_recycle>
+	<group_discount>Group discount edit</group_discount>
+	<accountTypeandDelivery>Account and Delivery</accountTypeandDelivery>
+	<customer_list_recycle>Archived</customer_list_recycle>
 	<customer_price_management>Customer disocunt </customer_price_management>
 	  <force_print>Force Print </force_print>
 	   <print>Print </print>
@@ -52,43 +57,67 @@
 	<orderLists>Order Lists</orderLists>
 	<paymentPeriod1>Pay in</paymentPeriod1>
 	<paymentPeriod2>weeks</paymentPeriod2>
-	<order_return>Order Return</order_return>
+	<order_return>Return</order_return>
+	 <Assign_stock_to_order>Assign Stock To Orders</Assign_stock_to_order>
 	<edit_note>Eidt Notes</edit_note>
 	<add_note>Add Notes</add_note>
 	<Save_notes>Save Notes</Save_notes>
 	<always_keep_note>Always keep the notes for this product</always_keep_note>
 	<keep_note_only_once>only use the notes this time</keep_note_only_once>
 	<add_note_promot>Supplier will see the note for this product.</add_note_promot>
-	<dispatching_platform>dispatching platform</dispatching_platform>
-	<export_manual_dispatching_form>export manual producing item</export_manual_dispatching_form> 
+	<dispatching_platform>Online Picking System</dispatching_platform>
+	<export_manual_dispatching_form>Items List (base on customer)</export_manual_dispatching_form> 
 	 <tradinghours_setting>Trading Hours Setting </tradinghours_setting>
 	 <tradinghours_setting_notes>Description</tradinghours_setting_notes>
+	 <manu_producing_management>Manual production </manu_producing_management>
+	 <stock_room_shelf>Shelf group setting</stock_room_shelf>
+	<stock_room_management>Stock Room Setting</stock_room_management>
+	<Stock_in>Stock In </Stock_in>
+	<stock_out>Outbound </stock_out>
+	<stocking_check>Inventory management</stocking_check>
+	
 	
 	<add_new_order>Add New Order</add_new_order>
 	<order_done>order placed!</order_done>
 	<print_picking_list>Summery Picking List</print_picking_list>
-	<Single_Picking_item_edit>Item Picking Edit</Single_Picking_item_edit> 
+	<Single_Picking_item_edit>Item Edit</Single_Picking_item_edit> 
 	<producing_item_edit>Producing Item Edit</producing_item_edit> 
+	<item_summery_list>Item Summery</item_summery_list>
 	<single_item_buying_list>Item Buying List</single_item_buying_list> 
-	<print_packing_slips>Customer Packing List</print_packing_slips> 
-	<print_item_packing_slips>item Picking List</print_item_packing_slips> 
-	<print_label_logistic>Print Logistic Label</print_label_logistic> 
+	<print_packing_slips>Customer slips</print_packing_slips> 
+	<print_item_packing_slips>Item Picking</print_item_packing_slips> 
+	<print_label_logistic>Print Label</print_label_logistic> 
 	<add_dispatching_customer>Add Dispatching Customer</add_dispatching_customer>
 	<choose_delivery_date>Choose Delviery Date</choose_delivery_date>
+		<choose_account>Choose Account</choose_account>
+		<choose_category>Choose Category</choose_category>
 	<no_truck_yet>Waiting for arrange truck</no_truck_yet>
+	<choose_driver_truck>Choose Driver-Truck</choose_driver_truck>
+	<defined_items>All Defined Items</defined_items>
+	<pagination>Pagination</pagination>
+	<selected_items>Selected Items</selected_items>
+	
+		<producing_item_stock>Items Quantity Edit</producing_item_stock>
+	<producing_item_stock_assign>Stock Assign to Orders </producing_item_stock_assign>
+	<manu_picking_List>Manual Picking </manu_picking_List>
 	
 	<Truck_list>Tuck Info </Truck_list>
 	<Truck_schedue>Logistic Schedule</Truck_schedue>
 	<Truck_schedue_histroy>Schedule Histroy</Truck_schedue_histroy>
 	
 	<summer_product_list> Summery Item List </summer_product_list>
-	<summer_producing_list>Summery Producing Item</summer_producing_list>
+	<summer_producing_list>Item Summery(base on item)</summer_producing_list>
 	
 	<Single_Producint_item_edit>Producing Items edit</Single_Producint_item_edit> 
 	<print_item_producing_slips>Item producing List</print_item_producing_slips> 
-	<producing_platform>Enter Producing Platform</producing_platform> 
+	<producing_platform>Production system</producing_platform> 
 	<manager>Manager</manager>
-	<producing_platform>Enter Producing Platform</producing_platform> 
+	
+	<xero_panel>Xero Pamel</xero_panel>
+	<over_due_list>Overdue Lists </over_due_list>
+	<statement>Statement</statement>
+    <transcations>Transactions</transcations>
+	 <new_transcation>New Transcation</new_transcation>
 	
 	<switch_to_wholesale_pannel>Switch to Wholesale Panel</switch_to_wholesale_pannel>
 	<Sales_channel_management>Sales channel management </Sales_channel_management>
@@ -136,8 +165,9 @@
     <shop_card>Shop setting</shop_card>
     <category_management>Sub Categories</category_management>
 	 <parent_category_management>Parent Categories</parent_category_management>
-    <items_management>Items edit</items_management>
-	 <recycleBinProduct>Items Recycle Bin</recycleBinProduct>
+	  <categ_management>Categories</categ_management>
+    <items_management>Items Edit</items_management>
+	 <recycleBinProduct> Archived Items </recycleBinProduct>
 	 <recycleBinCustomer>Hide Customers</recycleBinCustomer>
 	
 	 <category_migration> Change item category</category_migration>
@@ -504,7 +534,7 @@
     <business_center>Seller centre</business_center>
     <business_store_description>Sller can customize the display of website</business_store_description>
     <preview_store>Sites Preview</preview_store>
-    <preview_password>Preview_pass</preview_password>
+    <preview_password>Web Preview pass</preview_password>
 
     <panding_email>Email setting</panding_email>
     <panding_email_desc>Receiving orders via Email.</panding_email_desc>
@@ -526,7 +556,7 @@
 	<sales_Management>sales Management</sales_Management>
 	<totalsales_commissions>sales commissions</totalsales_commissions>
 	
-    <order_management_amend>Orders amend</order_management_amend>
+    <order_management_amend>Orders Refund</order_management_amend>
 
     <marketing_tool>Marketing tools</marketing_tool>
     <online_promotion>Marketing and AD</online_promotion>
@@ -706,7 +736,7 @@
     <status>Status</status>
     <payment>Payment</payment>
     <delivery>Delivery</delivery>
-    <submission_time>Time of submission</submission_time>
+    <submission_time>Order create time</submission_time>
 
     <!-- 17 -->
     <total_number_of_order>Total number of orders query</total_number_of_order>
@@ -827,11 +857,21 @@
 	<customer_id>Cust. ID </customer_id>
 	<customer_ordering_link>Ordering Link</customer_ordering_link>
 	<customer_Code>Code</customer_Code>
-	<logistic_number>Logistic Number</logistic_number>
+	<logistic_number>Logistic SeQuence Number</logistic_number>
+	 <manual_route_plan>Manual Route Plan</manual_route_plan>
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
 	<sales_statistics>Sales Statistics</sales_statistics>
+	<export_driver_sheet>Export Driver Route sheet</export_driver_sheet>
+	
+	<orders_upload>Orders upload</orders_upload>
+	<assign_all_orders>(assign all orders)</assign_all_orders>
+	<keep_assigned_orders>(keep assigned orders)</keep_assigned_orders>
+	<download_routes>Download Routes</download_routes>
+	<mark_order_sent>Mark orders Sent</mark_order_sent>
+	<generate_sequence_number>Generate Seq Number</generate_sequence_number>
+	
 	
 	<payWhenPurchase1>Transfer Money</payWhenPurchase1>
 	<payWhenPurchase2>（Devliery after Paid）</payWhenPurchase2>
@@ -1198,7 +1238,9 @@
     <back_to_list>Back to List</back_to_list>
     <mobile_sucess_footer1>orders->extract qr-code</mobile_sucess_footer1>
     <mobile_sucess_footer2>Click me->my order</mobile_sucess_footer2>
-
+	  <is_approve>Choose Approve Status</is_approve>
+	  <Driver_route_sheet>Driver Routes Sheet</Driver_route_sheet>
+	<Logistic_route_management>Routes Management</Logistic_route_management>
     <order_hint>You can check your order via email or your account on our website !</order_hint>
 
     <homepage_pc_newproduct>newest products</homepage_pc_newproduct>
@@ -1354,8 +1396,8 @@
 
     <logistic_management_panel>Logistic  Management</logistic_management_panel>
 
-    <logistic_arrive_time>logistic Arrive Time</logistic_arrive_time>
-    <logistic_schedule_time1>Order Logistic Schedul</logistic_schedule_time1>
+    <logistic_arrive_time>Arrive Time</logistic_arrive_time>
+    <logistic_schedule_time1>schedule Time</logistic_schedule_time1>
 	
 	<logistic_management>Logistic panel</logistic_management>
 	<logistic_choosedate1>Choose Delivery Date</logistic_choosedate1>
@@ -1367,6 +1409,15 @@
     <logistic_selectable>Optional</logistic_selectable>
 	<unified_delivery>Delivery</unified_delivery>
 		<merge_order>Merge Orders</merge_order>
+		
+		
+	<order_status_c01>Purchased</order_status_c01>
+	<order_status_b01>Sent </order_status_b01>
+	<order_status_d01>Cancelld</order_status_d01>
+	
+		<merged>Merged</merged>
+	<first_order>First Order</first_order>
+	<not_merged_yet>Not Merged Yet</not_merged_yet>
 	 <delivery_date>Delivery date</delivery_date>
 	<logistic_choosetruck>choose Truck</logistic_choosetruck>
 	<logistic_checkarea>Check Post Code</logistic_checkarea>
@@ -1383,7 +1434,7 @@
 	<logistic_delivery_busi>Delivery</logistic_delivery_busi>
 	<logistic_delivery_pickup>pickup</logistic_delivery_pickup>
 	<ordersReport>Sales Report</ordersReport>
-	<logistic_packing_slip>Packing Label</logistic_packing_slip>
+	<logistic_packing_slip>Picking Label</logistic_packing_slip>
 	<logistic_export_order_details>Export XLS Orders</logistic_export_order_details>
 	<logistic_export_Prepare_stock_summery>Export Summary Lists</logistic_export_Prepare_stock_summery>
 	<order_status> OrderStatus</order_status>
@@ -1405,5 +1456,8 @@
 	<checkout_message_overlimits>Sorry,Total orders of date you point is over limits ,please change another day !</checkout_message_overlimits>
 	<checkout_message_less_than_min_amount>Opps! Order amount is not enough ,Minium order amount is $</checkout_message_less_than_min_amount>
 	
-	
+	<slogan>Slogan</slogan>
+	<region_keyword>Regions/Keywords</region_keyword>
+	<business_name_categories>Business Name/Categories</business_name_categories>
+	<pickup_delivery>Pickup and Delivery</pickup_delivery>
 </language>

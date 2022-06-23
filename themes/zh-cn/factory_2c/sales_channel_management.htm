@@ -138,7 +138,7 @@
 									<th>渠道公司名称</th>
 									<th>联系人</th>
 									<th>联系电话</th>
-									<th>地址</th>
+									<th>Address</th>
 									
 								</tr>
 								</thead>
@@ -170,7 +170,7 @@
 											</div>
 										</td>
 										<td>  <{if $item.couponId}>
-										    <span>已复制</span>
+										    <span>Copied</span>
 										  <{else}>
 												<a href="<{$http_root_www}>factory_2c/channel_copy?id=<{$coupon.id}>&customer_id=<{$item.customer_id}>&title=" onClick="return window.confirm('确定要复制吗？');"><{$lang->copy}></a>
 								          <{/if}>

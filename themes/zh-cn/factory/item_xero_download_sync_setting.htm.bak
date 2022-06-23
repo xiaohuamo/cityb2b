@@ -149,7 +149,7 @@
 						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
 
-						<br>
+						<br><br>
 
 
 					
@@ -159,7 +159,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -215,7 +215,7 @@
 										}
 									
 										var c = $('<select id ="sub_category" name="sub_category" >');
-										c.append('<option value="">选择子分类</option>');
+										c.append('<option value="">Choose Sub Category</option>');
 										for (var i = 0; i < cats.length; i++) {
 											if ( cats[i][2] == vv ) {
 											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
@@ -378,7 +378,7 @@
 
 						<button type="submit"><{$lang->search}></button>
 
-						<br> <br>
+						
 							
 
 
@@ -429,7 +429,7 @@
 										
 										<td>
 											<select <{if $item.updated==1}> disabled <{/if}> data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>"  onChange="catChg00(this,'<{$item.id}>');" name="restaurant_category_id">
-                                              <option value="0"  selected>选择分类</option>
+                                              <option value="0"  selected>Choose Category</option>
 											  <{foreach from=$catList item=category}>
 													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
 													value="<{$category.id}>" 

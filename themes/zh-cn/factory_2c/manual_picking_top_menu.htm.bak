@@ -1,0 +1,36 @@
+<{if $producing==1}>
+ <div class="colCurTit clearfix">
+ 	<ul class="clearfix">
+	
+	
+		<li><span><a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu_top=='export_manual_dispatching_form'}> class="current"<{/if}>>
+				 <{$lang->export_manual_dispatching_form}>
+		</a></span></li>
+
+	    <li><span><a href="<{$http_root_www}>factory_2c/factroy_order_summery?producing=1"<{if $submenu_top=='factroy_order_summery'}> class="current"<{/if}>><{$lang->summer_producing_list}></a></span></li>
+
+	
+		<li><span><a href="<{$http_root_www}>company/print_label_admin?producing=1"<{if $submenu_top=='print_label_admin'}> class="current"<{/if}>><{$lang->print_label_logistic}></a></span></li>
+	
+	<li><span><a href="<{$http_root_www}>factory_2c/print_single_item_buying_list?producing=1"<{if $submenu_top=='print_single_item_buying_list'}> class="current"<{/if}>><{$lang->single_item_buying_list}></a></span></li>
+	
+	<li><span><a href="<{$http_root_www}>factory_2c/single_item_print_edit"<{if $submenu_top=='singleItemPrintEdit'}> class="current"<{/if}>><{$lang->Single_Picking_item_edit}></a></span></li>
+
+	</ul>
+ </div>
+
+<{else}>
+ <div class="colCurTit clearfix">
+ 	<ul class="clearfix">
+
+	    <li><span><a href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu_top=='factroy_order_summery'}> class="current"<{/if}>><{$lang->item_summery_list}></a></span></li>
+
+		<li><span><a href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu_top=='customer_coupon_logistic'}> class="current"<{/if}>><{$lang->print_packing_slips}></a></span></li>
+  	
+		<li><span><a href="<{$http_root_www}>company/print_label_admin"<{if $submenu_top=='print_label_admin'}> class="current"<{/if}>><{$lang->print_label_logistic}></a></span></li>
+		  		<li><span><a href="<{$http_root_www}>factory_2c/print_single_item_buying_list""<{if $submenu_top=='print_single_item_buying_list'}> class="current"<{/if}>><{$lang->print_item_packing_slips}></a></span></li>
+		<li><span><a href="<{$http_root_www}>factory_2c/single_item_print_edit"<{if $submenu_top=='singleItemPrintEdit'}> class="current"<{/if}>><{$lang->Single_Picking_item_edit}></a></span></li>
+
+	</ul>
+ </div>
+<{/if}>

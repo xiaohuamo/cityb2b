@@ -118,12 +118,12 @@
 				<span style="padding-left: 20px;" > Grade ID : <{$grade_info.grade_id}> &nbsp;&nbsp;Grade Name: <{$grade_info.grade_name}>&nbsp;&nbsp;</span>		
 				<{/if}>
 				
-				  		<span  ><{if $parent_category_id}> 选择分类:<{/if}></span>		
+				  		<span  ><{if $parent_category_id}> Choose Category:<{/if}></span>		
 						<select name="category" id='category'   class='chooseCategory' >
 							
 							 <{if !$parent_category_id}> 
 							<option value="all"
-                                   selected>选择分类 &nbsp;
+                                   selected>Choose Category &nbsp;
 							</option>
 							<{/if}>
 							
@@ -152,15 +152,14 @@
 							<thead>
 								<tr>
 								    
+									<th>Category Sort</th>
+									 <{if $langStr == 'zh-cn'}> <th>品类名称</th><{else}><{/if}>
 									
-									<th>类别排序</th>
-									<th>品类中文名</th>
-									
-					                <th>品类 英语名</th>
-									  <th>编号</th>
-									<th>折扣率）</th>
-									<th>状态</th>
-									<th>清除折扣设置</th>
+						             <th>Category</th>
+									  <th>Sub Discount Link</th>
+									<th>Discount rate %</th>
+									<th>Status</th>
+									<th>Reset Discount</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -172,10 +171,12 @@
 										
 										</td>
 
-										<td>
+									
+ <{if $langStr == 'zh-cn'}><td>
 											<{$item.category_cn_name}>
 											
-										</td>
+										</td><{else}><{/if}>
+									
 									
 										<td>
 											<{$item.category_en_name}>
@@ -195,11 +196,11 @@
 										<td>
                                             <{if $item.issetDiscount==1}>
 												<span class='publish_icon' data-id='<{$item.sub_cate_id}>'>
-                                                        <span style="color:#58964E;">已单独设置</span>
+                                                        <span style="color:#58964E;"><{if $langStr == 'zh-cn'}> 已单独设置<{else}>Individually set<{/if}></span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$item.sub_cate_id}>'>
-                                                        <span style="color:#F30;">未设置，跟随上级折扣</span>
+                                                        <span style="color:#F30;"><{if $langStr == 'zh-cn'}> 未设置，跟随上级折扣<{else}>Not set, follow the previous level discount<{/if}></span>
                                                     </span>
                                             <{/if}>
 											<br>
@@ -337,7 +338,20 @@
 
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
-				 context.html("<span style='color:#58964E;'>已单独设置</span>");
+				
+				
+				<{if $langStr == 'zh-cn'}> 
+
+				  context.html("<span style='color:#58964E;'>已单独设置</span>");
+				 
+				 <{else}>
+				 
+				  context.html("<span style='color:#58964E;'>Individually Set</span>");
+				 
+				 <{/if}>
+				
+				
+				
                 
             } else if (data.status == 500) {
                 alert(data.msg);

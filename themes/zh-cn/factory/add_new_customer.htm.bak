@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+        .main-form .input-box span label {
+            width: 120px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1> <{if $langStr == 'zh-cn'}> 新增用户<{else}>New Customer<{/if}>
+						</h1>
+					</div>
+					<form id="register-form" method="post" enctype="multipart/form-data">
+						<input type="text" name="user-id" id="user-id" class="input-text" hidden/>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="abn">ABN</label>
+							</span>
+							<input type="text" name="abn" id="abn" class="input-text" placeholder="" onchange="find_abn(this)"  value="<{$abn}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="nickname">Utility Name(ASIC)</label>
+							</span>
+							<input type="text" name="nickname" id="nickname" class="input-text" placeholder="" value="<{$nickname}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="username">Trading Name</label>
+							</span>
+							<input type="text" name="username" id="username" class="input-text" placeholder="" required value="<{$username}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="mobile">Phone</label>
+							</span>
+							<input type="text" name="mobile" id="mobile" class="input-text" placeholder="" value="<{$mobile}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="mobile">Last Name</label>
+							</span>
+							<input type="text" name="person_first_name" id="person_first_name" class="input-text" placeholder="" value="<{$person_first_name}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="mobile">First Name</label>
+							</span>
+							<input type="text" name="person_last_name" id="person_last_name" class="input-text" placeholder="" value="<{$person_last_name}>">
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="address">Address</label>
+							</span>
+							<input type="text" name="address" id="address" class="input-text" placeholder="" value="<{$addrAddress}>">
+						</div>
+
+						<input hidden type='text' id="addr_house_number" class="addr_house_number" readonly="readonly" name='addr_house_number' value="<{$addrStreet}>">
+						<input hidden type='text' class="addr_street" readonly="readonly"  name='addr_street' value="<{$addrStreet}>">
+						<input hidden type='text' class="addr_city" readonly="readonly"  name='addr_city' value="<{$addrSuburb}>">
+						<input hidden type='text' class="addr_state" readonly="readonly"  name='addr_state' value="<{$addrState}>">
+						<input hidden type='text' class="addr_country" readonly="readonly" name='addr_country' value="<{$country}>">
+						<input hidden type='text' class="addr_post_code" readonly="readonly"  name='addr_post_code' value="<{$addrPost}>">
+
+                        <{if $message}>
+							<p style="color:red"><{$message}></p>
+                        <{/if}>
+
+						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->save}></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    function find_abn(abn) {
+        $.ajax({
+            method: "post",
+            url: "<{$http_root_www}>factory/find_customer_abn",
+            data: {
+                abn: abn.value
+            },
+            success: function (result) {
+				var data = JSON.parse(result);
+				if(data['status'] === 200) {
+                    disableInput(true);
+                    $('#user-id').val(data['msg']['user-id']);
+                    $('#username').val(data['msg']['username']);
+                    $('#nickname').val(data['msg']['nickname']);
+                    $('#mobile').val(data['msg']['mobile']);
+                    $('#address').val(data['msg']['address']);
+				} else {
+                    disableInput(false);
+				}
+            }
+        })
+    }
+
+    function disableInput(disable) {
+        $('#username').prop('disabled', disable);
+        $('#nickname').prop('disabled', disable);
+        $('#mobile').prop('disabled', disable);
+        $('#address').prop('disabled', disable);
+	}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries=places&language=en_AU"></script>
+<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+<script type="text/javascript">
+    $(function(){
+        try {
+            initGeocomplete();
+        }
+        catch(err) {
+            console.log('google API not working. ');
+        }
+    });
+
+    function initGeocomplete(){
+        $("#address").geocomplete()
+            .bind("geocode:result", function(event, result){
+                populateHiddenAddrInput(result);
+                $('.address-display').text($('input#address').val());
+            })
+            .bind("geocode:error", function(event, status){
+                console.log("ERROR: " + status);
+            })
+            .bind("geocode:multiple", function(event, results){
+                geocodeResultDisplay(results);
+            });
+    }
+
+    $(function(){
+        $("#address-validate-btn").click(function(){
+            $("#address").trigger("geocode");
+        });
+
+        $('body').on('click','#geocode-result input',function(){
+            $("#address").val($(this).val());
+        });
+
+    })
+
+    function geocodeResultDisplay(result) {
+        var html = " <ul>"
+
+        for (var i = result.length - 1; i >= 0; i--) {
+            var r = result[i].formatted_address;
+            html+="<li><label><input type='radio' name='geocode-result-list' value='"+r+"'>"+r+"<label></li>"
+        }
+        html+= " </ul>"
+
+        $('#geocode-result').html(html);
+    }
+
+    function populateHiddenAddrInput(result) {
+        var parts = result.address_components;
+
+        for (var i = parts.length - 1; i >= 0; i--) {
+            if (parts[i].types.includes('street_number')) {
+                $(".addr_house_number").val(parts[i].short_name);
+            }
+            if (parts[i].types.includes('route')) {
+                $(".addr_street").val(parts[i].short_name);
+            }
+            if (parts[i].types.includes('locality')) {
+                $(".addr_city").val(parts[i].short_name);
+            }
+            if (parts[i].types.includes('administrative_area_level_1')) {
+                $(".addr_state").val(parts[i].short_name);
+
+            }
+            if (parts[i].types.includes('country')) {
+                $(".addr_country").val(parts[i].short_name);
+            }
+            if (parts[i].types.includes('postal_code')) {
+                $(".addr_post_code").val(parts[i].short_name);
+            }
+        }
+    }
+</script>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

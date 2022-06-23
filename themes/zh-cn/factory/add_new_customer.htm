@@ -18,7 +18,7 @@
 
 	<style>
         .main-form .input-box span label {
-            width: 120px;
+            width: 180px;
         }
 	</style>
 
@@ -34,7 +34,7 @@
 			<div class="box2">
 				<div class="main-form">
 					<div class="colCurTit clearfix">
-						<h1>创建用户
+						<h1> <{if $langStr == 'zh-cn'}> 新增用户<{else}>New Customer<{/if}>
 						</h1>
 					</div>
 					<form id="register-form" method="post" enctype="multipart/form-data">
@@ -47,7 +47,7 @@
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="nickname">实体名（ASIC）</label>
+							<label for="nickname">Utility Name(ASIC)</label>
 							</span>
 							<input type="text" name="nickname" id="nickname" class="input-text" placeholder="" value="<{$nickname}>">
 						</div>
@@ -59,25 +59,25 @@
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="mobile">手机号/电话</label>
+							<label for="mobile">Phone</label>
 							</span>
 							<input type="text" name="mobile" id="mobile" class="input-text" placeholder="" value="<{$mobile}>">
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="mobile">联系人姓</label>
+							<label for="mobile">Last Name</label>
 							</span>
 							<input type="text" name="person_first_name" id="person_first_name" class="input-text" placeholder="" value="<{$person_first_name}>">
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="mobile">联系人名</label>
+							<label for="mobile">First Name</label>
 							</span>
 							<input type="text" name="person_last_name" id="person_last_name" class="input-text" placeholder="" value="<{$person_last_name}>">
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="address">地 址</label>
+							<label for="address">Address</label>
 							</span>
 							<input type="text" name="address" id="address" class="input-text" placeholder="" value="<{$addrAddress}>">
 						</div>
@@ -94,7 +94,7 @@
                         <{/if}>
 
 						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
-							<button type="submit">提交</button>
+							<button type="submit"><{$lang->save}></button>
 						</div>
 					</form>
 				</div>

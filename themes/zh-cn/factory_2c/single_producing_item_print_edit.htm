@@ -112,29 +112,30 @@
         <{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-              
-				<div class="colCurTit">
+             
+				
+ <{include file='factory_2c/manual_picking_top_menu.htm'}>
+ <div class="colCurTit">
                     <{$pagename}>
 				</div>
-
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">
 
                       
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称/编码" style="width:250px; margin-right:5px;"/>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;"/>
 					
 
 				
 				    	<select name="dataType" id='dataType'>
 
 							<option value="all"
-                                    <{if $dataType=='all'}> selected<{/if}>>全部产品
+                                    <{if $dataType=='all'}> selected<{/if}>>All items
 							</option>
 
                            
-								<option value="OnlySelected"  <{if $dataType=='OnlySelected'}> selected<{/if}> > 加工类产品</option>
+								<option value="OnlySelected"  <{if $dataType=='OnlySelected'}> selected<{/if}> > Process items</option>
                          
 							
 						</select>
@@ -143,7 +144,7 @@
 						<select name="category" id='category'>
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>全部分类
+                                    <{if $category=='all'}> selected<{/if}>>All Categories
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -151,8 +152,15 @@
                                         <{if $item.id==$category}> selected<{/if}>>
                                   
 										<{if $item.parent_category_id}>&nbsp;--<{/if}>
-								  <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										
+										
+										 <{if $langStr == 'zh-cn'}> 
+											<{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+											<{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										 <{else}>
+										 
+										 <{/if}>
+									
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>
@@ -177,15 +185,19 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th style="width:"10%;">加工产品</th>
-									<th>设置</th>
-									<th>分类</th>
-									<th>产品编号</th>
-									<th>简码</th>
-									<th>产品名-英文</th>
-                                 	<th>单位</th>
-									<th  style="width:"10%;">产品名称-中文</th> 
-									<th>ID</th>
+								<th style="width:"10%;">Status </th>
+									<th>Set to Process item</th>
+									<th>Category</th>
+									<th>Code</th>
+									<th>short Name</th>
+									<th>Name</th>
+                                 	<th>Unit</th>
+									 <{if $langStr == 'zh-cn'}><th  style="width:"10%;">产品名称</th><{else}><{/if}>
+									
+									<th>Id</th>
+								
+									
+									
 								</tr>
 								</thead>
 								<tbody>
@@ -194,11 +206,11 @@
 										<td>
                                             <{if $item.proucing_item==1}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">已设置</span>
+                                                        <span style="color:#58964E;">Set</span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">未设置</span>
+                                                        <span style="color:#F30;">Not set Yet</span>
                                                     </span>
                                             <{/if}>
 											<br>
@@ -231,7 +243,7 @@
 										
 											
 								
-										<td>
+										</td>
 									
 										  <td>
 											<span><{$item.menu_en_name}></span>
@@ -239,10 +251,11 @@
 											  <td>
 											<span><{$item.unit}></span>
 										</td>
-										
-										  <td>
+										 <{if $langStr == 'zh-cn'}><td>
 											<span><{$item.menu_cn_name}></span>
-										</td>
+										</td><{else}><{/if}>
+									
+										  
 										<td>
 											<span><{$item.id}></span>
 										</td>
@@ -304,9 +317,9 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.proucing_item == '0') {
-                    context.html("<span style='color:#F30;'>未设置</span>");
+                    context.html("<span style='color:#F30;'>Not set yet</span>");
                 } else if (result.proucing_item == '1') {
-                    context.html("<span style='color:#58964E;'>已设置</span>");
+                    context.html("<span style='color:#58964E;'>Set</span>");
                 }
             }
         }).fail(function () {
@@ -329,7 +342,7 @@
         
             value = $(this).val();//常规改动直接抓取改动值
 			 if (value.indexOf("'") >= 0) {
-			  alert('字符串不能包含单引号或双引号,无法保存');
+			  alert('String cannot contain single or double quotes and cannot be saved');
 			  return 0;
 			}
         var updateData = {};

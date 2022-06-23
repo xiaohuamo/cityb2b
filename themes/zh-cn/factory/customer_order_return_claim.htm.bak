@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<script type="text/javascript">
+        function myfun() {
+
+            var target = $('#products_detail').offset().top;
+
+            $('body').animate({scrollTop: target}, 3000);
+
+        }
+
+        window.onload = myfun;
+	</script>
+	<style>
+        .main-form .input-box span label {
+            width: 125px;
+        }
+
+        .moneyDetail span:nth-child(3) {
+            display: inline-block;
+            width: 180px;
+        }
+
+        .address-validation {
+            position: fixed;
+            width: 350px;
+            margin: auto;
+            top: 10%;
+            background: #fff;
+            z-index: 99;
+            border: 2px solid;
+            padding: 20px;
+            display: none;
+        }
+
+        .col-6 {
+            width: 47%;
+			display: inline-block;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+	
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+
+				<div class="main-form form-style-green">
+
+					<div class="input-box input-submit clearfix">
+
+						<a class='link' href="<{$http_root_www}>factory/customer_orders_return"><{$lang->back_to_list}></a>
+						
+                    
+					 <{if $data.sent_to_xero==1}>
+
+						<button class='clearXeroInfo' >Clear Xero Info</button>
+					
+
+					<script type="text/javascript">
+                            $('.clearXeroInfo').on('click', function () {
+                                var context = $(this);
+
+                                if (confirm('will delete all xero info of this order?(after delete ,you can create new invoice on xero)')) {
+                                    $.ajax({
+                                        url: "<{$http_root_www}>factory/delete_xero_info_of_order?id=<{$data.id}>",
+                                        beforeSend: function () {
+                                            context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+                                        },
+                                        success: function () {
+                                            context.html("Delete xero info already!");
+                                            context.css('background-color', '#FD5001 ');
+                                        }
+                                    })
+                                }
+                            })
+
+						</script>
+						
+						<{/if}>
+
+					</div>
+
+					<div class="input-box clearfix  col-6">
+						<span><label>Order ID</label></span>
+                        <{$data.orderId}>
+					</div>
+					
+					<div class="input-box clearfix  col-6">
+						<span><label>Invoice Number</label></span>
+                        <{if $data.xero_invoice_id}>  <{$data.xero_invoice_id}><{else}>-<{/if}>
+					</div>
+
+                   <div class="input-box clearfix  col-6">
+						<span><label>Order Status</label></span>
+
+						<{if $data.coupon_status=='c01'}>
+							<span style="color:#FD5001 "><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='b01'}>
+							<span style="color:green"><{$data.cn_coupon_status_name}></span>
+						<{elseif $data.coupon_status=='d01'}>
+							<span style="color:red"><{$data.cn_coupon_status_name}></span>
+						<{/if}>
+
+					
+					</div>
+
+					<div class="input-box clearfix  col-6">
+						<span><label>Order TIme</label></span>
+						<{date('Y-m-d H:i:s', $data.createTime)}>
+					</div>
+
+					<div class="input-box clearfix col-6">
+						<span><label>Customer Id</label></span>
+                        <{$data.userId}>
+					</div>
+
+                  	<div class="input-box clearfix col-6">
+						<span><label>Customer Name</label></span>
+                        <{$data.cust_name}>
+					</div>
+						
+					
+					
+					<div class="main-list" name="products_detail" id="products_detail">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Code</th>
+								<th>Item</th>
+								<th>Spec</th>
+								<th>Unit</th>
+								<th>price</th>
+								<th>Qty</th>
+								<th>Return qty</th>
+								<th>Reason</th>
+								<th>note</th>
+								
+
+							</tr>
+
+							</thead>
+							<tbody>
+                            <{foreach from=$items item=item name='dl'}>
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									<td><{$item.menu_id}></td>
+									<td>
+									
+									<{if $item.menu_en_name}><{$item.menu_en_name}><{else}><{$item.bonus_title}> <{/if}>
+									
+									</td>
+
+									<td><{if $item.guige_des}><{$item.guige1_id}>:&nbsp;<{$item.guige_des}><{/if}></td>
+									
+									<td><{$item.unit}></td>
+									<td>
+                                        <{$item.voucher_deal_amount}>
+									</td>
+		
+									<td>
+           							  <{$item.new_customer_buying_quantity}>
+									</td>
+									
+									<td>
+									<{if $claim_order_rec.is_approved}>
+									 <{$item.return_qty}>
+									<{else}>
+									<input type="text" class="input-text 	"
+												   data-id='<{$item.id}>' data-claim_id =<{$item.order_return_id}> id="return_qty_<{$item.id}>" style="width:50px;" name="return_qty"
+												   value="<{$item.return_qty}>">
+											<span class='promote-ajax'></span>
+           							
+									<{/if}>
+									
+           							 
+									</td>
+									
+									<td>
+										<select   data-id='<{$item.id}>' data-claim_id =<{$item.order_return_id}>  <{if $claim_order_rec.is_approved}> disabled <{/if}> name='reasonType' id='reasonType_<{$item.id}>'>
+									  		
+										<option value='1' <{if $item.reasonType==1}>selected<{/if}>>item Missing</option>
+										<option value='2'  <{if $item.reasonType==2}>selected<{/if}>>Wrong items  </option>
+										<option value='3'  <{if $item.reasonType==3}>selected<{/if}>>Quality Issues</option>
+										<option value='4'  <{if $item.reasonType==4}>selected<{/if}>>Damage Items</option>
+										<option value='5'  <{if $item.reasonType==5}>selected<{/if}>>others reason</option>	
+										</select>
+											
+											<span class='promote-ajax'></span>
+									</td>
+									<td>
+									
+									<{if $claim_order_rec.is_approved}>
+									 <{$item.note}>
+									<{else}>
+									<input type="text" class="input-text 	"
+												   data-id='<{$item.id}>'  data-claim_id =<{$item.order_return_id}> id="note_<{$item.id}>" style="width:200px;" name="note"
+												   value="<{$item.note}>">
+											<span class='promote-ajax'></span>
+           							
+									<{/if}>
+									
+									
+										
+											
+									</td>
+									
+								</tr>
+                            <{/foreach}>
+							</tbody>
+						</table>
+					</div>
+
+			<{if !$claim_order_rec.is_approved}>		
+
+					<div style="text-align:right;"  class="input-box input-submit clearfix">
+						<a class='link' href="approve_claim('<{$claim_order_rec.id}>');">Approve Claim</a>
+
+					</div>
+				<{/if}>
+				
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+    var loading = false;
+
+
+ $('input[name=note],select[name=reasonType],input[name=return_qty]').on('change', function () {
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+		var claim_id = $(this).data('claim_id');
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData['updateFieldName'] =  $(this).attr('name');
+		updateData['claim_id'] = claim_id;
+		
+		updateData['value'] = $(this).val();
+		alert(updateData['id']);
+		alert(updateData['updateFieldName']);
+		alert(updateData['value']);
+		alert(updateData['claim_id']);
+	
+		//return ;
+		
+		
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_claim_item_details",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+			
+			//data =JSON.parse(data.msg);
+			
+				
+			     $(ajax_result).html(successIcon);
+		    } else if (data.status == 500 || data.status == 600) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+   function approve_claim(id){
+   
+   if(confirm('Once approved , can not cancel, do you want to approve this claim?')) {
+     window.location.href = "<{$http_root_www}>factory/return_claim_approved?id=" + id;
+   }else{
+    return;
+   }
+   
+   
+   
+   }
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+</script>
+
+
+</body>
+</html>

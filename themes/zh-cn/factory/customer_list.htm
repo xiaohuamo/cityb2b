@@ -126,14 +126,14 @@
 		<div class="main">
 			<div class="box2">
 				<div class="colCurTit">
-                 客户列表
+                 <{if $langStr == 'zh-cn'}>  客户列表<{else}>Customer List<{/if}>
 				 
 				 <span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>restaurant/menu_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->customer_list_recycle}></a>
+						<a class='btn-yellow' href="<{$http_root_www}>factory/customer_list_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->customer_list_recycle}></a>
 					</span>
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">&nbsp;&nbsp;
+					<input value="<{$search}>" name="search" placeholder="">&nbsp;&nbsp;
 					<select name="customer_type" id='customer_type'  >
 						
 					
@@ -154,7 +154,7 @@
 						
 						
 						&nbsp;&nbsp;
-					<input type="submit" value="搜索">
+					<input type="submit" value="<{$lang->search}>">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
 					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
@@ -210,22 +210,22 @@
 									
 									</td>
 									<td>
-										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">复制</button>
+										<input type="text" value="<{$user.login_link}>" readonly/><button onclick="copyToClip('<{$user['login_link']}>')">Copy</button>
 									</td>
 									<td>
                                         <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
 									</td>
 									<td>
-										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">用户订单</a>
+										<a href="<{$http_root_www}>factory/customer_orders?sk=<{$user.id}>">Customer Orders</a>
 									</td>
 									<td>
                                         <{$user.phone}>
 									</td>
 									<td>
                                         <{if $user.approved}>
-											是 <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=0" class="button">取消</a>)
+											Yes <i class='fa fa-fw fa-check ' style='color:green'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=0" class="button">Cancel</a>)
 										<{else}>
-											否 <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=1" class="button">审核</a>)
+											No <i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>(<a href="<{$http_root_www}>factory/approve_user1?user_id=<{$user.id}>&approve=1" class="button">Approve</a>)
 										<{/if}>
 									</td>
 								<!--	<td>
@@ -253,11 +253,11 @@
 										
                                             <{if $user.isHide==1}>
 												<span class='recycle_icon' data-id='<{$user.idd}>'>
-                                                        <span style="color:#58964E;">已隐藏</span>
+                                                        <span style="color:#58964E;">Archived</span>
                                                     </span>
                                             <{else}>
 												<span class='recycle_icon' data-id='<{$user.idd}>'>
-                                                        <span style="color:#F30;">未隐藏</span>
+                                                        <span style="color:#F30;">Normal</span>
                                                     </span>
                                             <{/if}>
 											
@@ -293,7 +293,7 @@
         document.execCommand("copy");
         document.body.removeChild(aux);
 
-        alert("已复制");
+        alert("Copied");
     }
 </script>
 
@@ -312,7 +312,7 @@
         
             value = $(this).val();//常规改动直接抓取改动值
 			 if (value.indexOf("'") >= 0) {
-			  alert('字符串不能包含单引号或双引号,无法保存');
+			  alert('String cannot contain single or double quotes and cannot be saved');
 			  return 0;
 			}
         var updateData = {};
@@ -442,10 +442,10 @@
                  console.log(result);
 				  console.log(result.isHide);
                 if (result.isHide == '1') {
-                    context.html("<span style='color:#F30;'>已隐藏</span>");
+                    context.html("<span style='color:#F30;'>Archived</span>");
 					
                 } else if (result.isHide == '0') {
-                    context.html("<span style='color:#58964E;'>未隐藏 </span>");
+                    context.html("<span style='color:#58964E;'>Normal </span>");
                 }
             }
         }).fail(function () {

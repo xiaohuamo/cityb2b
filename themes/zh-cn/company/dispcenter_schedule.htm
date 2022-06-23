@@ -51,11 +51,17 @@
 
 				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/dispcenter_schedule_create" method="post" target="post_frame" enctype="multipart/form-data">
 						<div class="input-box t clearfix">
-						<h1>配送日期设置</h1>
+						<h1>
+						<{if $langStr == 'zh-cn'}>
+							配送日期设置
+						<{else}>
+							Delivery Date Setting
+						<{/if}>
+						</h1>
 					</div>
 					
 					<div class="search-row" >
-						<label>请选择管理的账户：</label>
+						<label>Choose Account</label>
 						<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 							<select class='chooseCustomer'>
 						    	
@@ -76,7 +82,7 @@
 				
 
 					<div id="delivery_management_box" style ="display:none;" class="input-box  clearfix">
-						<label>递送日期：</label>
+						<label>Choose Date：</label>
 						<select name='delivery_date_of_week' required>
 							<option value=''></option>
 							<option value='SUN'>Sunday</option>
@@ -94,7 +100,7 @@
 
 						<br>
 
-						<label>下单起始：</label>
+						<label>Ordering Start Time ：</label>
 						<select name='order_start_of_date' required>
 							<option value=''></option>
 							<option value='SUN'>Sunday</option>
@@ -130,7 +136,7 @@
 
 						<br>
 
-						<label>下单结束：</label>
+						<label>Ordering Cut Time ：：</label>
 						<select name='order_cut_of_date' required>
 							<option value=''></option>
 							<option value='SUN'>Sunday</option>
@@ -185,7 +191,7 @@
 						
 						-->
 						<br>
-						<button type="submit" class="btn btn-default btn-success" id="">添加</button>
+						<button type="submit" class="btn btn-default btn-success" id="">Add</button>
 					</div>
 				</form>
 				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
@@ -195,11 +201,11 @@
 					<table cellspacing="0" cellpadding="0" width="100%">
 						<thead>				
 							<tr>			
-								<th>递送日</th>
-								<th>递送时段</th>
-								<th>下单起始</th>
-								<th>下单结束</th>
-								<th>删除</th>
+								<th>Delivery Date</th>
+								<th>Delivery Time Period</th>
+								<th>Ordering Start Time</th>
+								<th>Ordering Cut Time</th>
+								<th>Delete</th>
 							</tr>			
 						</thead>		
 						<tbody>		
@@ -209,31 +215,43 @@
 									<{$item.delivery_date_of_week}>
 								</td>
 								<td>
-									<{if $item.delivery_anytime}>不限<{/if}>
-									<{if $item.delivery_morning}>/上午<{/if}>
-									<{if $item.delivery_afternoon}>/下午<{/if}>
+									<{if $item.delivery_anytime}>Unlimited<{/if}>
+									<{if $item.delivery_morning}>/Morning<{/if}>
+									<{if $item.delivery_afternoon}>/Afternoon<{/if}>
 								</td>
 								<td><{$item.order_start_of_date}> <{$item.order_start_of_time}></td>
 								<td><{$item.order_cut_of_date}> <{$item.order_cut_of_time}></td>
 								<th>
-									<a href="<{$http_root_www}>company/dispcenter_schedule?customer_id=<{$customer_id}>&deleteid=<{$item.id}>">删除</a>
+									<a href="<{$http_root_www}>company/dispcenter_schedule?customer_id=<{$customer_id}>&deleteid=<{$item.id}>">Delete</a>
 								</th>
 							</tr>
 							<{/foreach}>	
 						</tbody>		
 					</table>	
 				</div>
-
+				<{if $langStr == 'zh-cn'}>
+					<div style="padding: 20px">
+						<p>配送日期设置说明：</p>
+						<p>配送周期以每周为单位。</p>
+						<p>Step 1:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;设置一个递送日期，以及是否只用用户选择上午或下午递送，或者不限上下午。</p>
+						<p>Step 2:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;设置可以开始下单的起始时间。</p>
+						<p>Step 3:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;设置可以开始截止时间。</p>
+					</div>
+				<{else}>
 				<div style="padding: 20px">
-					<p>配送日期设置说明：</p>
-					<p>配送周期以每周为单位。</p>
-					<p>Step 1:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;设置一个递送日期，以及是否只用用户选择上午或下午递送，或者不限上下午。</p>
-					<p>Step 2:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;设置可以开始下单的起始时间。</p>
-					<p>Step 3:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;设置可以开始截止时间。</p>
-				</div>
+						<p>Delivery Date Setting Notes：</p>
+						<p>Delivery cycle is weekly。</p>
+						<p>Step 1:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;Set a delivery date and whether to use only AM or PM delivery, or no AM or PM.</p>
+						<p>Step 2:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;Set the start time from which orders can be placed.</p>
+						<p>Step 3:</p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;Set the cut time from which orders can be placed.</p>
+					</div>
+				<{/if}>
 			</div>
 
 		</div>

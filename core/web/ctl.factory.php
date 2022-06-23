@@ -467,6 +467,224 @@ class ctl_factory extends cmsPage
     }
 
 
+
+    public function customer_orders_return_action()
+    {
+
+        $ApproveStatus = trim(get2('ApproveStatus'));
+        if(!$ApproveStatus) {
+            $ApproveStatus =2;
+        }
+        $this->setData($ApproveStatus,'ApproveStatus');
+
+        $mdl_order = $this->loadModel('order');
+        $mdl_user = $this->loadModel('user');
+
+
+        //get loginuser's factory userid
+        $FactoryId= $this->current_business['id'];
+
+        $customer_delivery_date = trim(get2('customer_delivery_date'));
+
+        $this->setData($customer_delivery_date,'customer_delivery_date');
+
+        $three_days_times = time()-259200*0;
+
+        $sql_avaliable_date =" SELECT DISTINCT o.logistic_delivery_date from (select * from cc_order where (`business_userId` = ".
+            $this->current_business['id'].") or (`business_userId` in (select DISTINCT business_id from cc_freshfood_disp_centre_suppliers where suppliers_id =".$this->current_business['id'].")) ) as o where o.logistic_delivery_date >".$three_days_times." order by logistic_delivery_date ";
+        // var_dump($sql_avaliable_date);exit;
+
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+        // $availableDates = $this->loadModel('order')->getListBySql( $sql_avaliable_date);
+        $availableDates = array_map(function($d){
+            return date('Y-m-d',$d['logistic_delivery_date']);
+        }, $availableDates);
+        $this->setData($availableDates, 'availableDates');
+
+
+
+        $sk = trim(get2('sk'));
+         $this->setData($sk, 'sk');
+
+            $sql = "SELECT r.id,o.displayName,o.orderId,o.userId,o.first_name,o.last_name,o.coupon_status,o.xero_invoice_id,o.logistic_delivery_date,r.returnType,r.gen_date,r.create_userId , u1.displayName as create_user ,r.`is_approved` ,r.approve_userId ,u2.displayName as approver_user
+FROM `cc_order_return` r  left join  cc_order o on r.orderId =o.orderId   
+   
+    left join cc_user u1 on r.create_userId = u1.id  
+    left join cc_user u2 on r.approve_userId =u2.id 
+    left join cc_user_factory f on f.user_id =o.userId and f.factory_id = o.business_userId 
+where o.business_userId =$FactoryId ";
+
+
+
+
+        if (! empty($sk)) {
+            $whereStr .= " and ( o.last_name like  '%".$sk."%'";
+            $whereStr .= " or o.phone like  '%".$sk."%'";
+            $whereStr .= " or o.orderId like  '%".$sk."%'";
+            $whereStr .= " or o.displayName like  '%".$sk."%'";
+            $whereStr .= " or o.order_name like  '%".$sk."%'";
+            $whereStr .= " or o.xero_invoice_id like  '%".$sk."%'";
+            $whereStr .= " or f.nickname like  '%".$sk."%'";
+            $whereStr .= " or o.first_name like  '%".$sk."%'";
+            $whereStr .= " or o.userId like  '%".$sk."%')";
+
+        }
+
+
+      if($ApproveStatus !='all'){
+
+          if($ApproveStatus ==2){
+              $ApproveStatus=0;
+          }
+
+          $whereStr .= " and  r.is_approved = $ApproveStatus ";
+
+      }
+
+
+
+
+
+
+
+        if (!empty($customer_delivery_date)) {
+            if ($customer_delivery_date != 'all') {
+                $whereStr.= " and  DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$customer_delivery_date' ";
+            }
+        }
+
+
+
+
+
+
+
+
+        $pageSql = $sql.$whereStr.'  order by r.id desc ';
+        //var_dump($pageSql);exit;
+
+            $pageUrl = $this->parseUrl()->set('page');
+            $pageSize = 40;
+            $maxPage = 10;
+            $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+            $data = $mdl_order->getListBySql($page['outSql']);
+            //var_dump($page['outSql']);exit;
+
+
+
+        $this->setData($page['pageStr'], 'pager');
+
+        $this->setData($data, 'data');
+
+        $this->setData('online_center', 'menu');
+        $this->setData('order_return', 'submenu');
+
+        $this->setData(HTTP_ROOT_WWW.'factory/customer_orders_return', 'searchUrl');
+
+        $this->setData($this->parseUrl(), 'currentUrl');
+
+        $this->setData('Customer Orders - '.$this->site['pageTitle'], 'pageTitle');
+
+        //date_default_timezone_set(Australia/Sydney);
+        //$this->setData(date_default_timezone_get(), 'currentTimeZone');
+        //$this->setData(date('H:i:s'), 'currentTime');
+
+
+
+        $this->display_pc_mobile('factory/customer_orders_return', 'factory/customer_orders_return');
+        return true;
+    }
+// approved a claim by customer_service_centre
+    public function return_claim_approved_action() {
+
+        $id = (int)get2('id');
+        $mdl_order_return =$this->loadModel('order_return');
+
+        $claim_order_rec = $mdl_order_return->get($id);
+        if($claim_order_rec['is_approved']){
+            $this->form_response_msg('already approved!');
+        }
+
+         if($claim_order_rec){
+
+            $mdl_order = $this->loadModel('order');
+            $data = $mdl_order->getByOrderId($claim_order_rec['orderId']);
+             //var_dump($data['business_userId']);exit;
+            if($data['business_userId']!=$this->current_business['id']) {
+                $this->form_response_msg('no access');
+            }
+
+        }else{
+            $this->form_response_msg('no match record');
+        }
+
+        $data0 =array(
+            'is_approved'=>1,
+            'approve_userId'=>$this->loginUser['id'],
+            'approve_date'=>time()
+          );
+        $mdl_order_return->update($data0,$id);
+
+        // 写入statement 1002  return
+
+
+
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $factory_user = $mdl_user_factory->getByWhere(array('factory_id' => $data['business_userId'], 'user_id' => $data['userId']));
+
+
+            //向 statement 表中插入一条退货记录。 然后进行settle计算 ；
+            $mdl_order_return_detail_info = $this->loadModel('order_return_detail_info');
+
+            $totalCreitAmount = $mdl_order_return_detail_info->getTotalCredit($id);
+
+
+            //如果该客户对于该商家有invocie discount ,则 退款的时候也相应做出对应。
+
+
+
+             if ($factory_user['discountOfInvoice'] > 0) {
+                $totalCreitAmount = $totalCreitAmount * (100 - $factory_user['discountOfInvoice']) / 100;
+            }
+
+            $mdl_statement = $this->loadModel('statement');
+            $balance = $mdl_statement->getBalanceAmountOfCustomer($data['business_userId'], $data['userId']);
+            $balance_due = $balance - $totalCreitAmount;
+            //    var_dump($totalCreitAmount);exit;
+
+
+            if ($data['xero_invoice_id']) {
+                $ref_customer_id = $data['xero_invoice_id'];
+            } else {
+                $ref_customer_id = $data['id'];
+            }
+            //向 statement 插入数
+            $dataRec = array();
+        $dataRec['create_user'] = $this->loginUser['id'];
+        $dataRec['gen_date'] = time();
+        $dataRec['invoice_number'] = $ref_customer_id;
+        $dataRec['type_code'] = 1002;
+        $dataRec['factory_id'] = $data['business_userId'];
+        $dataRec['customer_id'] = $data['userId'];
+        $dataRec['customer_ref_id'] = $data['id'];
+        $dataRec['debit_amount'] = 0;
+        $dataRec['credit_amount'] = $totalCreitAmount;
+        $dataRec['balance_due'] = $balance_due;
+        $dataRec['is_settled'] = 0;
+        $dataRec['overdue_date'] = 0;
+
+        $mdl_statement->insert($dataRec);
+
+            //  settled 这笔settle 退货
+
+        $mdl_statement->updatePaymentsDetails(0, $totalCreitAmount, $factory_user, $this->loginUser['id']);
+
+       $this->sheader(HTTP_ROOT_WWW . 'factory/customer_orders_return');
+
+
+    }
     public function save_customer_order_item_notes_action(){
         $id = (int)get2('id');
         $message = get2('message');
@@ -1164,7 +1382,7 @@ class ctl_factory extends cmsPage
         }
 
         //log
-        $activity_log = $this->loadModel('wj_user_coupon_activity_log')->getList(null, ['orderId' => $orderId]);
+            $activity_log = $this->loadModel('wj_user_coupon_activity_log')->getList(null, ['orderId' => $orderId]);
         foreach ($activity_log as $k => $l) {
             $activity_log[$k]['cn_description'] = $mdl_coupons->actionlist_info($l['action_id']);
         }
@@ -1343,6 +1561,68 @@ class ctl_factory extends cmsPage
 
 
             $this->display('factory/customer_order_return');
+
+    }
+
+    public function customer_order_return_claim_action()
+    {
+
+
+        //商家查看的订单详情以及操作
+        $id = trim(get2('id'));
+
+        $mdl_order_return =$this->loadModel('order_return');
+
+        $claim_order_rec = $mdl_order_return->get($id);
+
+        if($claim_order_rec){
+            $mdl_order = $this->loadModel('order');
+            $data = $mdl_order->getByOrderId($claim_order_rec['orderId']);
+           // var_dump($data['business_userId']);exit;
+            if($data['business_userId']!=$this->current_business['id']) {
+                $this->form_response_msg('no access');
+            }
+
+        }else{
+            $this->form_response_msg('no match id');
+
+        }
+        $sql ="  select d.order_return_id,d.item_order_id,d.return_qty,d.reasonType,d.note,c.*  
+  from cc_order_return_detail_info d left join cc_wj_customer_coupon c on d.item_order_id =c.id 
+      left join cc_order_return r on d.order_return_id =r.id where r.id =$id 
+";
+
+        $mdl_order_return_detail_info =$this->loadModel('order_return_detail_info');
+
+        $items = $mdl_order_return_detail_info->getListBySql($sql);
+       // var_dump($sql);exit;
+        $this->setData($items, 'items');
+        $this->setData($data, 'data');
+        $this->setData($claim_order_rec, 'claim_order_rec');
+
+        //订单信息
+
+        $busi_id = $this->current_business['id'];
+
+
+
+
+
+
+
+
+        $days = (time() - $data['createTime']) / (24 * 60 * 60);
+
+        $this->setData($mdl_order->isOrderEditable($orderId), 'editAble');
+        $this->setData($days, 'days');
+
+        $this->setData('online_center', 'menu');
+        $this->setData('order_return', 'submenu');
+
+        $this->setData('order claim and return - Business_centre - '.$this->site['pageTitle'], 'pageTitle');
+
+
+        $this->display('factory/customer_order_return_claim');
 
     }
 
@@ -1855,6 +2135,84 @@ public function return_items_submit_to_statment_action() {
         }
 
 }
+
+    public function update_claim_item_details_action()
+    {
+
+        if (!is_post()) {
+            return;
+        }
+       // $this->form_response(600, 'item could not find', '');
+
+        $id = post('id');
+        // check quantity is vaild
+        $updateFieldName = post('updateFieldName');
+        $value = post('value');
+        $claim_id = post('claim_id');
+
+
+      //    $id =89873;
+      //  $updateFieldName ='return_qty';
+      //   $value =1;
+
+        $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
+        $customerCoupon = $mdl_wj_customer_coupon->get($id);
+
+
+        //if item exist.
+        if (! $customerCoupon) {
+            $this->form_response(600, 'error', '');
+        }
+
+
+        // if is the owner of item
+        $uni_business_id = $customerCoupon['business_id'];
+
+        if($uni_business_id !=$this->current_business['id']) {
+            $this->form_response_msg(600, 'no access' );
+        }
+
+        $updateData =array();
+
+        if($updateFieldName =='return_qty') {
+
+            if (! is_numeric($value) || ($value < 0)) {
+                $this->form_response(600, 'please input number and must not lower than 0。');
+
+                return;
+            }
+
+            $updateData['return_qty']=$value;
+        }
+
+        if($updateFieldName =='reasonType') {
+        $updateData['reasonType']=$value;
+        }
+
+        if($updateFieldName =='note') {
+            $updateData['note']=$value;
+        }
+
+        $mdl_order_return_detail_info=$this->loadModel('order_return_detail_info');
+        $where =array(
+            'order_return_id'=>$claim_id,
+            'item_order_id'=>$id
+        );
+
+         if($mdl_order_return_detail_info->updateByWhere($updateData,$where)) {
+               $issuccessupdate =1;
+        }
+
+
+        if($issuccessupdate) {
+            $this->form_response(200, 'success');
+        }else{
+            $this->form_response(500, 'error');
+        }
+
+    }
+
+
 
     public function update_return_item_details_action()
     {
@@ -5029,6 +5387,8 @@ public function return_items_submit_to_statment_action() {
         $this->setData($search, 'search');
         $this->setData($users, 'users');
         $this->setData('customer_xero_management', 'submenu');
+        $this->setData('customer_xero_management', 'submenu_top');
+
         $this->setData('account_management', 'menu');
         $this->display('factory/customer_xero_management');
     }
@@ -6391,9 +6751,11 @@ public function return_items_submit_to_statment_action() {
         $this->setData($page['pageStr'],'pager');
 
         $this->setData($data,'data');
+        $this->setData(1,'producing');
 
         $this->setData('Producing_Centre', 'menu');
-        $this->setData('export_manual_dispatching_form', 'submenu');
+        $this->setData('factroy_order_summery', 'submenu');
+        $this->setData('export_manual_dispatching_form', 'submenu_top');
 
         $this->setData(HTTP_ROOT_WWW.'factory/export_manual_dispatching_form', 'searchUrl');
 
@@ -7447,9 +7809,9 @@ public function return_items_submit_to_statment_action() {
         }
         $this->setData($data, 'data');
 
-        $this->setData('restaurant_menu', 'submenu_top');
+        $this->setData('item_xero_download_sync_setting', 'submenu_top');
 
-        $this->setData('item_xero_download_sync_setting', 'submenu');
+        $this->setData('customer_xero_management', 'submenu');
         $this->setData('account_management', 'menu');
 
         $pagename = "xero item match";
@@ -7792,8 +8154,8 @@ public function return_items_submit_to_statment_action() {
         $this->setData($data, 'data');
 
 
-
-        $this->setData('upload_items_to_xero', 'submenu');
+        $this->setData('upload_items_to_xero', 'submenu_top');
+        $this->setData('customer_xero_management', 'submenu');
         $this->setData('account_management', 'menu');
 
         $pagename = "Upload Items to Xero";

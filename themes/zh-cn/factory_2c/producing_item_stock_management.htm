@@ -123,7 +123,7 @@
 
                       
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称/编码" style="width:250px; margin-right:5px;"/>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;"/>
 					
 <!--
 				
@@ -143,7 +143,7 @@
 						<select name="category" id='category'>
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>全部分类
+                                    <{if $category=='all'}> selected<{/if}>>All Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -151,8 +151,14 @@
                                         <{if $item.id==$category}> selected<{/if}>>
                                   
 										<{if $item.parent_category_id}>&nbsp;--<{/if}>
-								  <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										 <{if $langStr == 'zh-cn'}> 
+									<{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+																		<{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+											 <{else}>
+											 
+											 <{/if}>
+								  
+									
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>
@@ -177,16 +183,21 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th style="width:"10%;">加工产品</th>
-									<th>设置</th>
+									<th style="width:"10%;">Producing Item</th>
+									<th>Setting</th>
 									<th>Item Id</th>
 									<th>Item Code</th>
 									
-							    	<th>库存</th>
-									<th>调整后库存</th>
+							    	<th>Original Stock Qty</th>
+									<th>New Stock Qty</th>
 									<th>Item Name</th>
-									<th>单位</th>
-									<th  style="width:"10%;">产品名称-中文</th> 
+									<th>Unit</th>
+									 <{if $langStr == 'zh-cn'}> 
+<th  style="width:"10%;">产品名称-中文</th> 
+		 <{else}>
+		 
+		 <{/if}>
+									
 									
 								</tr>
 								</thead>
@@ -196,11 +207,11 @@
 										<td>
                                             <{if $item.proucing_item==1}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">已设置</span>
+                                                        <span style="color:#58964E;">Set</span>
                                                     </span>
                                             <{else}>
 												<span class='publish_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">未设置</span>
+                                                        <span style="color:#F30;">Not set yet</span>
                                                     </span>
                                             <{/if}>
 											<br>
@@ -254,15 +265,21 @@
 									  </td>
 									   <td>
 										<span><{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>
-										<{if $item.menu_cn_name}><br><{$item.menu_cn_name}><{/if}>
+										
 										</span>
 									  </td>
 									   <td>
 											<span><{$item.unit}></span>
 										</td>
-										  <td>
+										
+										 <{if $langStr == 'zh-cn'}> 
+  <td>
 											<span><{$item.menu_cn_name}></span>
 										</td>
+										
+		 <{else}>
+		 
+		 <{/if}>
 										
                                        
 										

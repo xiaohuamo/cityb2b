@@ -2104,7 +2104,7 @@ function updateStandProductUponMenuId($id) {
 					$this->form_response_msg('保存失败');
 				}
 			} else {
-				$this->setData('添加菜单图片 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+				$this->setData('添加菜单图片 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 				$this->setData('restaurant_menu', 'submenu');
 				$this->setData('restaurant', 'menu');
 				$this->display('restaurant/menu_pic');
@@ -2285,7 +2285,7 @@ function updateStandProductUponMenuId($id) {
 		$this->setData('index_publish', 'menu');
 
 		$pagename = "店铺一级品类管理";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 		$this->setData($pagename, 'pagename');
@@ -2801,7 +2801,7 @@ function category_migration_action(){
 			$this->setData('index_publish', 'menu');
 
 			$pagename = "产品分类迁移";
-			$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 			$this->setData($pagename, 'pagename');
@@ -2964,11 +2964,11 @@ function category_migration_action(){
 
 
 			$this->setData('restaurant_edit', 'submenu_top');
-			$this->setData('restaurant_edit', 'submenu');
+			$this->setData('restaurant_parant_category_edit', 'submenu');
 			$this->setData('index_publish', 'menu');
 
-		    $pagename = "店铺二级品类管理";
-			$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		    $pagename = "Category Edit";
+			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 			$this->setData($pagename, 'pagename');
@@ -3024,7 +3024,7 @@ function category_migration_action(){
 			$this->setData('index_publish', 'menu');
 
 			$pagename = "预览及上线管理";
-			$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 			$this->setData($pagename, 'pagename');
@@ -3040,7 +3040,7 @@ function category_migration_action(){
 				$this->setData('index_publish', 'menu');
 
 				$pagename = "预览及上线管理";
-				$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+				$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 				$this->setData($pagename, 'pagename');
@@ -3084,13 +3084,13 @@ function category_migration_action(){
 		$customer_id =get2('customer_id');
 
 		if(!$customer_id) {
-		  $customer_id =$this->loginUser['id'];
+		  $customer_id =$this->current_business['id'];
 
 		}
 		$this->setData($customer_id,'customer_id');
 
 	     $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->current_business['id']);
 
 		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
@@ -3266,13 +3266,13 @@ function category_migration_action(){
 		}
 		$this->setData($data, 'data');
 
-        $this->setData('restaurant_menu', 'submenu_top');
+        $this->setData('restaurant_menu_add', 'submenu_top');
 
         $this->setData('restaurant_menu_add', 'submenu');
         $this->setData('index_publish', 'menu');
 
         $pagename = "店铺单品管理";
-        $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
         $this->setData($pagename, 'pagename');
 
@@ -3496,8 +3496,12 @@ function category_migration_action(){
         $this->setData('restaurant_menu_edit', 'submenu');
         $this->setData('index_publish', 'menu');
 
-        $pagename = "店铺单品管理";
-        $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Item management";
+		}else{
+			$pagename = "产品管理";
+		}
+        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
         $this->setData($pagename, 'pagename');
 
@@ -3542,7 +3546,7 @@ function category_migration_action(){
 
 
 
-		$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+		$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
 
 		$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 		//var_dump($sql_Parent_cate_list);exit;
@@ -3655,7 +3659,7 @@ function category_migration_action(){
 		$this->setData('customer_management', 'menu');
 
 		$pagename = "Item Discount Edit";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
 
@@ -3821,7 +3825,7 @@ function category_migration_action(){
 		$this->setData('customer_management', 'menu');
 
 		$pagename = "单品折扣管理";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
 
@@ -4028,7 +4032,7 @@ function category_migration_action(){
 		$this->setData($data, 'data');
 
 
-
+		$this->setData('menu_recycle', 'submenu_top');
 		$this->setData('restaurant_menu_edit', 'submenu');
 		$this->setData('index_publish', 'menu');
 
@@ -4773,7 +4777,7 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 		$pagename = "餐厅配菜类别管理";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 		$this->setData($pagename, 'pagename');
@@ -4880,7 +4884,7 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 		$pagename = "店铺细项管理";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
 
@@ -5036,7 +5040,7 @@ function category_migration_action(){
 
 
 		$pagename = "Specification Edit";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
 		$this->setData($pagename, 'pagename');
@@ -5143,7 +5147,7 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 		$pagename = "Specification Detail Edit";
-		$pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
 

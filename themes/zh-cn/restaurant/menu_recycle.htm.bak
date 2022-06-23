@@ -1,0 +1,528 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+    padding: 5px 2px;
+    text-align: center;
+}
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+	<script>
+        function generateCategoryHtml(categoryId, menuId) {
+            var categories = {
+				<{foreach from=$data_parent_cate_list item=category}>
+				<{$category.id}>:"<{if $category.category_cn_name}><{$category.category_cn_name}><{/if}><{if $category.category_cn_name && $category.category_en_name}>|<{/if}><{if $category.category_en_name}><{$category.category_en_name}><{/if}>",
+				<{/foreach}>
+			};
+            return `<span style="height:16px;background-color: grey;color: white" id="menu-category-${menuId}-${categoryId}">${categories[categoryId + '']} <a style="color:red" onclick="deleteMenuCategory(${menuId}, ${categoryId})">X&nbsp;</a></span>`;
+        }
+		</script>
+	<script>	
+		function generateCategoryHtml1(categoryId, menuId,categoryName) {
+           
+            return `<span style="height:16px;background-color: grey;color: white" id="menu-category-${menuId}-${categoryId}">ddccdd <a style="color:red" onclick="deleteMenuCategory(${menuId}, ${categoryId})">X&nbsp;</a></span>`;
+        }
+	</script>
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2">
+                      <{include file='company/side_restaurant_info.htm'}>
+				<div class="colCurTit">
+                    <{$pagename}>
+				</div>
+
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+
+                        <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
+							<select class='chooseCustomer'>
+								<option>请选择管理的账户</option>
+								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
+                                    <{$loginUser.displayName}>
+								</option>
+                                <{foreach from=$authrise_manage_other_business_account item=d}>
+									<option value="<{$d.customer_id}>" <{if $d.customer_id==$customer_id}>selected<{/if}>>
+                                        <{$d.displayName}>
+									</option>
+                                <{/foreach}>
+							</select>
+                        <{/if}>
+						&nbsp;&nbsp;
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
+
+						<br><br>
+
+
+						
+
+						<select name="category" id='category'  onChange="catChg(this);">
+						
+					
+
+							<option value="all"
+                                    <{if $category=='all'}> selected<{/if}>>选择分类
+							</option>
+
+                            <{foreach from=$restaurant_category item=item}>
+								<option value="<{$item.id}>"
+                                        <{if $item.id==$category1}> selected<{/if}>>
+                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                    <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
+								</option>
+                            <{/foreach}>
+
+						</select>
+						
+						<script> 
+						
+						
+
+							var cats = [];
+							<{foreach from=$data_parent_cate_list item=item}>
+							cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
+							<{/foreach}>
+
+
+
+							$(function(){
+								var cate='<{$category1}>';
+								var sub_cate ='<{$sub_category}>';
+								//alert('init');
+								if(cate) {
+								  catChg($('#category'));
+								}
+							})
+
+
+							function catChg(obj) {
+								var vv = $(obj).val(); 
+								if(vv ) {
+									
+									
+									//alert('here');
+									if ($('#sub_category').length > 0) { 
+									
+										$('#sub_category').remove();
+									}
+								
+									var c = $('<select id ="sub_category" name="sub_category" >');
+									c.append('<option value="">选择子分类</option>');
+									for (var i = 0; i < cats.length; i++) {
+										if ( cats[i][2] == vv ) {
+										//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+										if('<{$sub_category}>' == cats[i][0]){
+										c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+										}else{
+										c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+										}
+											
+											
+										}
+									}
+									$(obj).next().after(c);
+									//setDroplist(c);
+								
+								}else{
+								
+								}
+									
+								
+							}
+
+							</script>
+
+						<button type="submit"><{$lang->search}></button>
+
+					
+				      
+
+					</form>
+				</div>
+
+				<div class="main-list" style="padding: 3px 2px;">
+                    <{if $data}>
+						<div style="overflow-x: auto;overflow-y: auto; word-break:break-all;">
+							<table cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+								<tr>
+									<th>恢复到产品库</th>
+									<th>产品编号</th>
+                                    <th >产品名-英文</th>
+									<th>产品名称-中文</th>
+									<th>图片</th>
+									<th>售价</th>
+									<th>库存</th>
+									<th>单位</th>
+									<th>ID</th>
+									
+								</tr>
+								</thead>
+								<tbody>
+                                <{foreach from=$data item=item name='dl'}>
+									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+										
+										<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $item.isDeleted==1}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">在回收站</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">已恢复</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+										
+										
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>" style="width:70px;" name="menu_id"
+												   value="<{$item.menu_id}>">
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
+									
+										<td >
+
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:150px;" name="menu_en_name"
+												   value="<{$item.menu_en_name}>">
+											<span class='promote-ajax'></span>
+										</td>
+									
+										
+										<td >
+										
+										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:180px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
+											
+											<span class='promote-ajax'></span>
+										</td>
+										
+										<td id="image-<{$item.id}>">
+                                            <{if $item.menu_pic}>
+												<img src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
+									        <{/if}>
+										</td>
+										
+										
+									
+										
+										
+									   <td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>" style="width:50px;" name="price"
+												   value="<{if $item.price >0}><{$item.price}><{/if}>" >
+											<span class='promote-ajax'></span>
+										</td>
+											
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="qty-<{$item.id}>" style="width:30px;" name="qty" value="<{$item.qty}>">
+											<span class='promote-ajax'></span>
+										</td>
+										
+										<td >
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit"
+												   value="<{if $item.unit}> <{$item.unit}><{else}><{$item.unit_en}><{/if}>"    >
+											<span class='promote-ajax'></span>
+										</td>
+										
+										
+										
+							
+										<td>
+											<span><{$item.id}></span>
+										</td>
+										
+										
+										
+										
+										
+										
+									</tr>
+                                <{/foreach}>
+								</tbody>
+							</table>
+						</div>
+                        <{if $pager}>
+							<div class="pager"><{$pager}></div>
+                        <{/if}>
+                    <{/if}>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    var loading = false;
+
+    $('input[name=menu_en_name],input[name=price],input[name=qty],textarea[name=menu_cn_name],input[name=menu_id]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+       
+            value = $(this).val();//常规改动直接抓取改动值
+      
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+       // alert(updateData[update_field_name]);
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>restaurant/update_menu_item",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+				if(update_field_name='barcode_number'){
+				  //alert(data.msg + ' ' +id);
+				  if(data.msg) {
+				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
+				
+				  }else{
+				  }
+				}
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+
+	
+	  $('input[name=onoffswitch_deleted]').on('click', function () {
+        var couponId = $(this).data('id')
+		
+        var context = $('.recycle_icon[data-id=' + couponId + ']');
+        
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>restaurant/menu_publish_ajax_recycle_bin",
+            data: {"id": couponId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+                //alert(result.visible);
+                if (result.isDeleted == '1') {
+                    context.html("<span style='color:#F30;'>在回收站</span>");
+					
+                } else if (result.isDeleted == '0') {
+                    context.html("<span style='color:#58964E;'>已恢复 </span>");
+                }
+            }
+        }).fail(function () {
+            alert('efef	');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
+	
+
+</script>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.chooseCustomer').on('change', function () {
+            if ($(this).val())
+                window.location.href = "<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1&customer_id=" + $(this).val();
+        });
+		
+		$('[name="en_name1"]').hide();
+	
+		
+		<{if $allOrspecial=='special'}> 
+			$('[name="special_name1"]').show();
+		<{else}>
+			$('[name="special_name1"]').hide();
+		
+		<{/if}>
+		
+      <{if $sku=='show'}> 
+			$('[name="sku"]').show();
+		<{else}>
+			$('[name="sku"]').hide();
+		
+		<{/if}>
+		
+    })
+</script>
+
+
+
+<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"> < /iframe>
+    <{include file = 'footer.htm'}>
+
+	< /body>
+	< /html>

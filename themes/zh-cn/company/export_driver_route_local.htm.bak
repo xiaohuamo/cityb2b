@@ -167,7 +167,7 @@
                        <span id="printer">
 							<button id="export-xls"  style="padding: 10px 5px;background: #43d1af">
 							
-							<a href ="<{$http_root_www}>company/export_driver_route_excel?date=<{$customer_delivery_date}>&driver-serial=<{$logistic_truck_No}>&is-export=true">下载调度表格</a>
+							<a href ="<{$http_root_www}>company/export_driver_route_excel?date=<{$customer_delivery_date}>&driver-serial=<{$logistic_truck_No}>&is-export=true"><{$lang->export_driver_sheet}></a>
 						</span>
 						
                         </div>
@@ -213,8 +213,7 @@
 									    <td><{$item.logistic_sequence_No}></td>
 									  
 									<td>
-										<{$item.order_name}>
-										<br>
+										
 										<a target='_blank' href="<{$http_root_www}>company/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
@@ -288,7 +287,7 @@
              //alert( generateUrl(true));
             $('#export-xls').on('click', function(){
 			   var hreff =generateUrl(true);
-			   alert(hreff);
+			  // alert(hreff);
                 window.location.href = hreff;
             });
         </script>

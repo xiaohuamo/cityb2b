@@ -43,7 +43,7 @@
 			<div class="box2">
 
 					<select class='chooseDate'>
-						<option>请选择日期</option>
+						<option><{$lang->logistic_choosedate1}></option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$date}>selected<{/if}>>
 								<{$d}>
@@ -54,36 +54,37 @@
 					
 
 					<{if $orders}>
-						<button style="padding: 10px 5px;background: #FD5001 ">  
-							<a onclick='return confirm("确认生成统配号?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=generate_logistic_sequence">生成统配号</a>
-						</button>
+						
 
 						<button style="padding: 10px 5px;background: #43d1af ">
-							<a onclick='return confirm("确认将一下订单导入OptimoRoute?");'	href="<{$http_root_www}>company/oproute?auto=1&date=<{$date}>&task=syncup">Sync Up auto routes</a>
+							<a onclick='return confirm("upload to OptimoRoute?");'	href="<{$http_root_www}>company/oproute?auto=1&date=<{$date}>&task=syncup"><{$lang->orders_upload}><br><{$lang->assign_all_orders}></a>
 						</button>
 						
 						<button style="padding: 10px 5px;background: #43d1af ">
-							<a onclick='return confirm("确认将一下订单导入OptimoRoute?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncup">Sync Up manual routes</a>
+							<a onclick='return confirm("upload to OptimoRoute?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncup"><{$lang->orders_upload}><br><{$lang->keep_assigned_orders}></a>
 						</button>
 
 						<button style="padding: 10px 5px;background: #43d1af">
-							<a onclick='return confirm("确认将OptimoRoute的订路线信息导入CityB2B?");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncdown">Sync Down</a>
+							<a onclick='return confirm("Download Routes?");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=syncdown"><{$lang->download_routes}></a>
 						</button>
                    <!--
 						<button style="padding: 10px 5px;background: #eee">
 							<a onclick='return confirm("确认向用户推送配送ETA?");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=notifyuser">一键发货</a>
 						</button>  --> 
 						<button style="padding: 10px 5px;background: #ff659a">
-							<a onclick='return confirm("确认兑付全部订单？");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=approveall">全部兑付</a>
+							<a onclick='return confirm("All orders mark to sent status?");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=approveall"><{$lang->mark_order_sent}></a>
 						</button>
-						<{if $loginUser.id ==7666666666}>
+					<!--	<{if $loginUser.id ==7666666666}>
 						<button style="padding: 10px 5px;background: #65dfff">
 							<a onclick='return confirm("确认将全部订单同步至Freshx？统配号将自动生成");'href="<{$http_root_www}>company/oproute?date=<{$date}>&task=freshx_import">订单同步至Freshx</a>
 						</button>
-						<{/if}>
+						<{/if}> -->
 
 						<button style="padding: 10px 5px;background: #65dfff">
-							<a onclick='return confirm("Label 打印需要定制的打印机，如果您没有请联系微奖网客服。");'href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'>Label 打印</a>
+							<a href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'><{$lang->print_label_logistic}></a>
+						</button>
+						<button style="padding: 10px 5px;background: #FD5001 ">  
+							<a onclick='return confirm("Generate Sequence Number?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=generate_logistic_sequence"><{$lang->generate_sequence_number}></a>
 						</button>
 					<{/if}>
 					<div class="main-list">	
@@ -92,12 +93,12 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>			
-									<th>订单号</th>
-									<th>地址</th>
-									<th>姓名</th>
-									<th>电话</th>
+									<th>OrderID</th>
+									<th>Address</th>
+									<th>Name</th>
+									<th>Phone</th>
 
-									<th style="background: #FD5001 ">统配号</th>	
+									<th style="background: #FD5001 ">Unique Sequence Number</th>	
 
 									<th style="background: #43d1af">Truck</th>	
 									<th style="background: #43d1af">Driver</th>
@@ -151,25 +152,47 @@
 						</table>	
 					<{/if}>
 				</div>	
-
+<{if $langStr == 'zh-cn'}>
 				<div style="padding: 20px">
-					<p>OptimoRoute控制面板适用说明</p>
+					<p>Notes</p>
 					<p>Step 1:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;选择一个递送日期，系统会弹出当天需要递送的全部订单，确认地址和用户信息无误</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;选择递送日期，系统会弹出当天需要递送的全部订单，确认地址和用户信息无误</p>
 					<p>Step 2:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;并生成统配号以及 logistic suppliers count/info</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;上载订单： 将把系统订单推送至OptimoRoute</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;全部重排：系统会自主分配所有司机到任何司机。</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;保持之前排单：系统会保持之前为订单安排的车辆信息。</p>
 					<p>Step 3:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;Sync up 将把系统订单推送至OptimoRoute</p>
-					<p>Step 4:</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;登陆OptimoRoute后台，生成路线</p>
+					<p>Step 4:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;路程下载：  将把OptimoRoute规划好的路线信息同步至系统, 并生Truck,Driver,Stop和ETA</p>
+					
 					<p>Step 5:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;Sync down 将把OptimoRoute规划好的路线信息同步至系统, 并生Truck,Driver,Stop和ETA</p>
-					<p>Step 6:</p>
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;一键发货 将群发商家发货邮件和微信推送</p>
-					<p>Step 7:</p>
 					<p>&nbsp;&nbsp;&nbsp;&nbsp;兑付全部订单 物流结束后，对于取消的订单需要手动进入订单详情中取消，剩余订单确认无误后一键全部兑付</p>
+					<p>Additional Functions </p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;并成统配号：如果发现某些订单的Seq_number等于0 ，可以使用该功能修正。</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;简易标签：可打印简易物流标签</p>
 				</div>
-				
+				<{else}>
+				<div style="padding: 20px">
+					<p>Notes</p>
+					<p>Step 1:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Choose Delivery Date ,will display orders of the date ,check orders info are correct.</p>
+					<p>Step 2:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Upload Orders ： Upload all orders to OptimoRoute.</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;All orders routing : will assign all orders automatically.</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Keep Assign orders : assigned orders (manually or routed by optimoRoute before) will keep on same truck with no change .</p>
+					<p>Step 3:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Login OptimoRoute，Plan the routes , You may learn how to plan routes on OptimoRoute. </p>
+					<p>Step 4:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Download Routes：  DownLoad and update Routes Info include Truck,Driver,Stop and ETA information on orders. </p>
+					
+					<p>Step 5:</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Mark as Sent : mark all orders had been sent to customers . If there are any orders cancel or merge ,you can operate on orders management panel ,then do this action.</p>
+					<p>Additional Functions </p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;If any sequence Number of order is 0 ,you can use this function to correct.</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;Simple label print: the panel can print logistic label.</p>
+				</div>
+				<{/if}>
 			</div>
 
 		</div>

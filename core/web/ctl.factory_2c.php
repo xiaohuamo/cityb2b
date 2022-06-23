@@ -379,13 +379,20 @@
 
 
 
+             $this->setData(1,'producing');
 
-
-
+            $this->setData('single_producing_item_print_edit', 'submenu_top');
 			$this->setData('single_producing_item_print_edit', 'submenu');
 			$this->setData('Producing_Centre', 'menu');
 
-			$pagename = "设置加工类产品";
+            if ($this->getLangStr() == 'en') {
+                $pagename = "Set up processed products";
+            }else{
+                $pagename = "设置加工类产品";
+            }
+
+
+
 			$pageTitle=  $pagename." - Business Center - ". $this->site['pageTitle'];
 
 			$this->setData($pagename, 'pagename');
@@ -755,17 +762,18 @@
                 }
 
 
-
-
-
-
-
-
                 $this->setData('producing_item_stock_management', 'submenu_top');
-                $this->setData('producing_item_stock_management', 'submenu');
+                $this->setData('producing_stock_to_dispatching', 'submenu');
                 $this->setData('dispatching_center', 'menu');
 
-                $pagename = "Producing Item stock Management";
+                if ($this->getLangStr() == 'en') {
+                    $pagename = "Producing Item stock Management";
+                }else{
+                    $pagename = "加工类库存编辑";
+                }
+
+
+
                 $pageTitle=  $pagename." - Business Center - ". $this->site['pageTitle'];
 
                 $this->setData($pagename, 'pagename');
@@ -975,7 +983,7 @@
 
 
                 $this->setData('producing_stock_to_dispatching', 'submenu_top');
-                $this->setData('producing_item_stock_management', 'submenu');
+                $this->setData('producing_stock_to_dispatching', 'submenu');
                 $this->setData('dispatching_center', 'menu');
                 $this->setData('dispatching center - ' . $this->site['pageTitle'], 'pageTitle');
 
@@ -1196,7 +1204,7 @@
 
 
                     if(!$data) {
-                        $this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+                        $this->sheader(null,'you need add specification ');
                     }
                     $this->setData($data,'restaurant_category');
 
@@ -1328,12 +1336,18 @@
 
 
 
-                $this->setData('restaurant_menu', 'submenu_top');
+                $this->setData('singleItemPrintEdit', 'submenu_top');
 
-                $this->setData('singleItemPrintEdit', 'submenu');
+                $this->setData('factroy_order_summery', 'submenu');
                 $this->setData('dispatching_center', 'menu');
 
-                $pagename = "打印单品管理";
+                if ($this->getLangStr() == 'en') {
+                    $pagename = "Define items need print pick List";
+                }else{
+                    $pagename = "定义需打包明细单品";
+                }
+
+
                 $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
 
                 $this->setData($pagename, 'pagename');
@@ -3514,7 +3528,9 @@
 
         }
         $this->setData(HTTP_ROOT_WWW.'factory_2c/factroy_order_summery', 'searchUrl');
+        $this->setData('factroy_order_summery', 'submenu_top');
         $this->setData('factroy_order_summery', 'submenu');
+
         $this->setData($this->parseUrl(), 'currentUrl');
         $this->display_pc_mobile('factory_2c/factroy_order_summery','factory_2c/factroy_order_summery');
 
@@ -3719,11 +3735,15 @@
         if($producing){
             $this->setData('Producing_Centre', 'menu');
             $this->setData('Producing Center - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('print_single_item_buying_list', 'submenu');
+            $this->setData('print_single_item_buying_list', 'submenu_top');
         }else{
             $this->setData('dispatching_center', 'menu');
             $this->setData('dispatching center - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('factroy_order_summery', 'submenu');
+            $this->setData('print_single_item_buying_list', 'submenu_top');
         }
-        $this->setData('print_single_item_buying_list', 'submenu');
+
         $this->setData(HTTP_ROOT_WWW.'factory_2c/print_single_item_buying_list', 'searchUrl');
         $this->setData($this->parseUrl(), 'currentUrl');
 

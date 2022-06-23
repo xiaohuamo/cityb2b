@@ -161,9 +161,9 @@
 
 							<div class="input-box clearfix">
 
-								<span><label>地址</label></span>
+								<span><label>Address</label></span>
 
-								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="请输入地址"    value="<{$data.googleMap}>" name="googleMap" size="80" />
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="Please enter address"    value="<{$data.googleMap}>" name="googleMap" size="80" />
 
 								<input id="find" type="hidden" value="find" />
 
@@ -180,7 +180,7 @@
 							<div style='display: none'>
 								<div class="input-box clearfix "  >
 
-									<span><label>坐标位置</label></span>
+									<span><label>Coordinate position</label></span>
 
 									<input  id ="google_location" type="text" class="input-text" value="<{$data.google_location}>" name="location"  style="width:202px;" />
 
@@ -200,7 +200,7 @@
 
 								<div class="input-box clearfix"  >
 
-									<span><label>邮编</label></span>
+									<span><label>PostCode</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrPost}>" name="postal_code"  style="width:110px;" />
 
@@ -210,17 +210,17 @@
 
 								<div class="input-box clearfix" >
 
-									<span><label>州</label></span>
+									<span><label>State</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrState}>" name="administrative_area_level_1"  style="width:110px;" />
 
-									国家代码<input type="text" class="input-text" value="<{$data.countryCode}>" name="country_short" style="width:202px;" />
+									Country Code<input type="text" class="input-text" value="<{$data.countryCode}>" name="country_short" style="width:202px;" />
 
 								</div>
 
 								<div class="input-box clearfix"  >
 
-									<span><label>国家</label></span>
+									<span><label>Country</label></span>
 
 									<input type="text" class="input-text" value="<{$data.country}>" name="country"  style="width:100px;" />
 
@@ -232,7 +232,7 @@
 
 								<div class="input-box clearfix" style="display:none;">
 
-									<span><label>地图链接</label></span>
+									<span><label>Map Link</label></span>
 
 									<input  type="text" class="input-text" value="<{$data.googleMapUrl}>" name="url"  />
 
@@ -300,7 +300,7 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'>保存</button>	
+								<button type="submit" style='float:left'><{$lang->save}></button>	
 
 								<a onClick='return confirm("删除员工会导致订单中自取点信息缺失，确认要删除该员工？")' href ="<{$http_root_www}>company/staff_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除该员工</a>	
 

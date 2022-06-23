@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>"/>
+    <{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>"/>
+    <{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+	<script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.query.js "></script>
+	<script type="text/javascript " src="<{$SKIN_PATH}>js/bootstrap.min.js "></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]>
+    <script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+	<style type="text/css">
+	.main-list table th, .main-list table td {
+		padding: 5px 2px;
+		text-align: center;
+	}
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="colCurTit">
+                  <{if $langStr == 'zh-cn'}>  客户列表<{else}>Customer List<{/if}>
+				</div>
+				<form>
+					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
+					<input type="submit" value="<{$lang->search}>">
+				</form>
+				<div class="main-list" style="padding: 3px 2px;">
+					<div style="overflow-x: auto;overflow-y: auto;white-space: nowrap;">
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Customer Id</th>
+								<th>Customer Name</th>
+								
+								<th>Phone</th>
+								<th>Payment Period</th>
+								<th>Surburb Postcode</th>
+								
+								<th>Delivery Schedule</th>
+								
+								
+								
+								
+							</tr>
+							</thead>
+							<tbody>
+							<{foreach from=$users item=user name='dl'}>
+								<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+
+
+									<td>
+                                        <{$user.id}>
+									</td>
+
+									<td>
+                                        <a href="<{$http_root_www}>factory/edit_customer1?user_Id=<{$user.id}>"> <{$user.name}></a>
+									</td>
+									
+									<td>
+                                        <{$user.phone}>
+									</td>
+									<td>
+										<select name="account_type" data-id='<{$user.idd}>' id='account_type-<{$user.idd}>'  >
+
+
+
+											<option value="<{$user.account_type}>"
+											<{if $user.account_type=='COD'}> selected<{/if}>>COD</option>
+											<option value="1"	<{if $user.account_type=='1'}> selected<{/if}> >1 Week	</option>
+											<option value="2"	<{if $user.account_type=='2'}> selected<{/if}>>2 Weeks	</option>
+											<option value="3"	<{if $user.account_type=='3'}> selected<{/if}>>3 Weeks	</option>
+											<option value="4"	<{if $user.account_type=='4'}> selected<{/if}>>4 Weeks	</option>
+											<option value="5"	<{if $user.account_type=='5'}> selected<{/if}>>5 Weeks	</option>
+											<option value="6"	<{if $user.account_type=='6'}> selected<{/if}>>5 Weeks	</option>
+											<option value="7"	<{if $user.account_type=='7'}> selected<{/if}>>7 Weeks	</option>
+											<option value="8"	<{if $user.account_type=='8'}> selected<{/if}>>8 Weeks	</option>
+											<option value="9"	<{if $user.account_type=='9'}> selected<{/if}>>9 Weeks	</option>
+											<option value="10"	<{if $user.account_type=='10'}> selected<{/if}>>10 Weeks	</option>
+
+
+										</select>
+										<span class='promote-ajax'></span>
+									</td>
+									<td>
+                                        <{$user.addrSuburb}>&nbsp;  <{$user.addrPost}>
+									</td>
+									
+								
+									
+									
+
+									<td>
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Mon"
+											   <{if $user.delivery_mon}> checked <{/if}> >
+											<span style="padding-right: 10px;" >Mon</span><span  class='promote-ajax'></span>
+										
+
+
+								
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Tue"
+											     <{if $user.delivery_tue}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Tue</span><span  class='promote-ajax'></span>
+										
+
+
+									
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Wed"
+											      <{if $user.delivery_wed}> checked <{/if}> >
+											<span style="padding-right: 10px;" >Wed</span><span  class='promote-ajax'></span>
+										
+
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Thur"
+											      <{if $user.delivery_thur}> checked <{/if}>  >
+										<span style="padding-right: 10px;"  >Thur</span><span  class='promote-ajax'></span>
+										
+
+
+									
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Fri"
+											      <{if $user.delivery_fri}> checked <{/if}>  >
+										<span style="padding-right: 10px;" >Fri</span><span  class='promote-ajax'></span>
+										
+
+
+
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Sat"
+											     <{if $user.delivery_sat}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Sat</span><span  class='promote-ajax'></span>
+										
+										<input type="checkbox" class="input-text" data-id='<{$user.idd}>' id="delivery_date-<{$user.idd}>" style="width:16px;" name="delivery_Sun"
+											      <{if $user.delivery_sun}> checked <{/if}>  >
+											<span style="padding-right: 10px;" >Sun</span><span  class='promote-ajax'></span>
+
+									</td>
+									
+
+								</tr>
+							<{/foreach}>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+<script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+
+
+<script>
+    function copyToClip(value) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value",value);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+
+        alert("已复制");
+    }
+</script>
+
+<script type="text/javascript">
+    var loading = false;
+	
+	
+	  $('input[name=delivery_Mon],input[name=delivery_Tue],input[name=delivery_Wed],input[name=delivery_Thur],input[name=delivery_Fri],input[name=delivery_Sat],input[name=delivery_Sun]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value =0;
+ 
+        if($(this).is(':checked') ) value=1;
+        var updateData = {};
+		
+		//alert(update_field_name);
+		//alert(value);
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		 updateData['value'] = value;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_deliver_avaliable_date",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+	
+
+    $('select[name=account_type]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var value;
+
+            value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+		//alert(id);
+		//alert(id);
+		//alert(update_field_name);
+		//alert(value);
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_business_payment_terms",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
+
+    function IconUpdate(obj) {
+        this.target = $(obj).find('.status_updating');
+    }
+
+    IconUpdate.prototype.iconUpdating = function () {
+        alert(this.target);
+        this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+    }
+    IconUpdate.prototype.iconUpdateSuccess = function () {
+        this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+    }
+    IconUpdate.prototype.iconUpdateFail = function () {
+        this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+    };
+    IconUpdate.prototype.iconUpdateNone = function () {
+        this.target.html('');
+    };
+
+
+
+
+
+
+</script>
+<{include file = 'footer.htm'}>
+
+</body>
+</html>
