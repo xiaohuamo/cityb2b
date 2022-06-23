@@ -85,7 +85,7 @@ class ctl_company extends cmsPage
 			    $this->setData(get2('fullscreen'),'fullscreen');
 				
 			    $this->setData($this->parseUrl,'postUrl');
-                $this->setData('切换店铺类型 - ' . $this->site['pageTitle'], 'pageTitle');
+                $this->setData('Switch Business Type - ' . $this->site['pageTitle'], 'pageTitle');
 				$this->setData('choose_business_type', 'menu');
 				if(get2('freshfood')) {
 					$this->setData('advanced_setting', 'menu');
@@ -108,9 +108,9 @@ class ctl_company extends cmsPage
 	
     function business_start_guide_action()
     {
-        $this->setData('新手导航', 'pagename');
+        $this->setData('Helper', 'pagename');
         $this->setData('index', 'menu');
-        $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/business_start_guide');
     }
 
@@ -123,7 +123,7 @@ class ctl_company extends cmsPage
         //如果当前已agent方式登陆，则强制转换为agent登陆方式
         $this->AgentActiveCheck($this->loginUser['id'],$this->cookie->getCookie('agentcityb2b'));
 		
-		//将可能存在的 groupmanager ，用户端的 管理多家分店管理员的cookie清掉，因为这个cookie的优先级比 agenta 高，有的底，不是一致的。
+		//将可能存在的 groupmanager ，用户端的 管理多家Branch management员的cookie清掉，因为这个cookie的优先级比 agenta 高，有的底，不是一致的。
 		$this->cookie->setCookie( 'groupManager', '');
 
         // 获取公司一段时间内的销售额,30天
@@ -140,9 +140,9 @@ class ctl_company extends cmsPage
 
         $this->setData($this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']), 'businessDisplayName');
 
-        $this->setData('商家首页', 'pagename');
+        $this->setData('Business Home Page', 'pagename');
         $this->setData('index', 'menu');
-        $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 		// var_dump($this->current_business['id'] . 'type id is'.$this->current_business['business_type_factory']);exit;
 		if($this->current_business['business_type_factory']==1) {
 
@@ -193,10 +193,10 @@ class ctl_company extends cmsPage
 	
     function index_publish_action()
     {
-        $this->setData('商家首页', 'pagename');
+        $this->setData('Home Page', 'pagename');
         $this->setData('index_publish', 'menu');
         $this->setData('index_publish', 'submenu');
-        $this->setData('商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display_pc_mobile('company/index_publish', 'mobile/company/index_publish');
     }
 
@@ -535,7 +535,7 @@ class ctl_company extends cmsPage
                     $dataSet1['totalBalance'] += $dataSet2['deliveryFee'];
                 }
 
-				$this->setData('结算中心 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+				$this->setData('Settlement Centre - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 
 				if (get2('output')=="pdf")
 				{
@@ -556,7 +556,7 @@ class ctl_company extends cmsPage
 					$this->loadModel('invoice');
 
 					$report = new AccountTransactionReport();
-					$report->title("订单的资金结算")
+					$report->title("Order Settlement")
 						->from($from)
 						->to($to)
 						->transactionData($arr)
@@ -1020,7 +1020,7 @@ class ctl_company extends cmsPage
                 }
 
 
-            $this->setData('结算中心 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('结算中心 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 				if (get2('output')=="pdf")
 				{
 					$inStr_businessSettleableRecord = "'".join("','",$businessSettleableRecord)."'";
@@ -1484,7 +1484,7 @@ class ctl_company extends cmsPage
         $this->setData('balance_account','menu');
         $this->setData('money_review','submenu');
 
-        $this->setData('结算点纪录 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('结算点纪录 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display('company/settlement_log');
     }
@@ -1519,15 +1519,15 @@ class ctl_company extends cmsPage
 
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
-                $this->form_response_msg( '修改成功');
+                $this->form_response_msg( 'Successfully modified');
             } else {
-                $this->form_response_msg('修改失败');
+                $this->form_response_msg('Fail to edit');
             }
         } else {
             $this->setData('网站社交修改', 'pagename');
             $this->setData('advanced_setting', 'menu');
             $this->setData('profile_web', 'submenu');
-            $this->setData('网站社交修改 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('网站社交修改 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile_web');
         }
     }
@@ -1549,7 +1549,7 @@ class ctl_company extends cmsPage
         }else{
             $this->setData('store_setting', 'menu');
             $this->setData('notice', 'submenu');
-            $this->setData('商家通知 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Notice - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/notice');
         }
         
@@ -1608,16 +1608,16 @@ class ctl_company extends cmsPage
 
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
-                $this->form_response_msg('修改成功');
+                $this->form_response_msg('Successfully modified');
             } else {
-                $this->form_response_msg('修改失败');
+                $this->form_response_msg('Fail to edit');
             } 
         } else {
 
-            $this->setData('联系信息修改', 'pagename');
+            $this->setData('Contact Info Edit', 'pagename');
             $this->setData('store_setting', 'menu');
             $this->setData('profile_contact', 'submenu');
-            $this->setData('联系信息修改 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Contact Info Edit - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile_contact');
         }
     }
@@ -1637,7 +1637,7 @@ class ctl_company extends cmsPage
             $displayName= trim(post('displayName'));
             
             if(!$displayName){
-                 $this->form_response_msg('公司名称不可为空');
+                 $this->form_response_msg('Company name cannot be empty');
             }
 
             $city =post('city');
@@ -1697,14 +1697,14 @@ class ctl_company extends cmsPage
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
                $this->form_response(200, '', HTTP_ROOT_WWW . 'company/index');
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         }else{
 			if(strlen(trim($this->loginUser['cityId']))==0){
 				$this->loginUser['cityId']=',526,556,';
 			}
          //  var_dump('cityid:'.$this->loginUser['cityId']);exit;
-            $this->setData('填写信息成为商家 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Fill in the information to become a merchant - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/become_business_user');
         }
         
@@ -1777,15 +1777,15 @@ class ctl_company extends cmsPage
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
                 $this->form_response(200, 'Saved',"SELF");
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         } else {
             $shop=get2('shop');
 			$this->setData( $shop, 'shop' );
-            $this->setData('商家信息修改', 'pagename');
+            $this->setData('Business Info Edit', 'pagename');
             $this->setData('basic_setting', 'menu');
             $this->setData('profile', 'submenu');
-            $this->setData('商家信息修改 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Business info edit - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile');
         }
     }
@@ -1850,12 +1850,12 @@ class ctl_company extends cmsPage
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
                 $this->form_response(200, "Saved", HTTP_ROOT_WWW . "company/payment_setting?freshfood=");
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         } else {
             $this->setData($this->loadModel('wj_busi_pay_setting_application')->isPaymentSelfManage($this->loginUser['id']),'isPaymentSelfManage');
 
-            $this->setData('商家递送设置', 'pagename');
+            $this->setData('Delivery Setting', 'pagename');
 			if(get2('freshfood')){
 				 $this->setData('open_store', 'menu');
 			}else{
@@ -1863,7 +1863,7 @@ class ctl_company extends cmsPage
 			}
            
             $this->setData('payment_setting', 'submenu');
-            $this->setData('商家递送设置 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Delivery setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/payment_setting');
         }
     }
@@ -1930,7 +1930,7 @@ class ctl_company extends cmsPage
 				
                 $this->form_response(200, "Saved", HTTP_ROOT_WWW . "company/delivery_setting");
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         } else {
 
@@ -1938,7 +1938,7 @@ class ctl_company extends cmsPage
 			 $this->setData($delivery_fee_desc, 'delivery_fee_desc');
 			
 
-            $this->setData('商家递送设置', 'pagename');
+            $this->setData('Delivery setting', 'pagename');
 			
 			if(get2('freshfood')){
 				 $this->setData('open_store', 'menu');
@@ -1948,7 +1948,7 @@ class ctl_company extends cmsPage
 			
            
             $this->setData('delivery_setting', 'submenu');
-            $this->setData('商家递送设置 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Delivery Setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/delivery_setting');
         }
     }
@@ -1987,10 +1987,10 @@ class ctl_company extends cmsPage
         $this->setData($data, 'data');
         $this->setData($page['pageStr'], 'pager');
 
-        $this->setData('客户管理', 'pagename');
+        $this->setData('Customer Management', 'pagename');
         $this->setData('online_center', 'menu');
         $this->setData('customer_list', 'submenu');
-        $this->setData('客户管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Customer Management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/customer_list');
     }
 
@@ -2003,9 +2003,9 @@ class ctl_company extends cmsPage
             $bookingfee = post('bookingfee');
             $bookingfeetype = post('bookingfeetype');
 
-            if (is_null($bookingfee)) $this->form_response_msg('不能为空');
-            if (!is_numeric($bookingfee)) $this->form_response_msg('必须为数字');
-            if ($bookingfee < 0) $this->form_response_msg('不能小于零');
+            if (is_null($bookingfee)) $this->form_response_msg('Can not be empty');
+            if (!is_numeric($bookingfee)) $this->form_response_msg('Must be number');
+            if ($bookingfee < 0) $this->form_response_msg('Can not less then zero.');
             $bookingfee = number_format($bookingfee, 2);
 
             $mdl_user->begin();
@@ -2017,16 +2017,16 @@ class ctl_company extends cmsPage
                 $this->form_response_msg("$" . $bookingfee . " " . $bookingfeetype . " Saved");
             } else {
                 $mdl_user->rollback();
-                $this->form_response_msg("保存失败，请稍后再试");
+                $this->form_response_msg("Fail to save，Please try again later");
             }
 
         } else {
             $this->setData($mdl_user->getBookingFee($user), 'bookingfee');
             $this->setData($mdl_user->getBookingFeeType($user), 'bookingfeetype');
-            $this->setData('其他设置', 'pagename');
+            $this->setData('Other Setting', 'pagename');
             $this->setData('business_setting', 'menu');
             // $this->setData( 'business_setting', 'submenu' );
-            $this->setData('其他设置 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Other setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/other_options');
         }
     }
@@ -2048,10 +2048,10 @@ class ctl_company extends cmsPage
         $this->setData($data, 'data');
         $this->setData($page['pageStr'], 'pager');
 
-        $this->setData('客户评价', 'pagename');
+        $this->setData('Customer Rating', 'pagename');
         $this->setData('online_center', 'menu');
         $this->setData('customer_rating_list', 'submenu');
-        $this->setData('客户评价 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Customer rating - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/customer_rating_list');
 
     }
@@ -2071,7 +2071,7 @@ class ctl_company extends cmsPage
         $order = $mdl_order->getByOrderId($orderId);
 
         if($order['userId']!=$this->loginUser['id'])
-            $this->sheader(null,'越权查看');
+            $this->sheader(null,'View without authority');
 
         $business_id=$order['business_userId'];
 
@@ -2081,11 +2081,11 @@ class ctl_company extends cmsPage
 
             $score = $score/2.0;
             if ($business_id == $this->loginUser['id']) {
-                $this->form_response_msg('您无法给自己做评价！');
+                $this->form_response_msg('You can not rate yourself！');
             }
 
             if($score==0){
-                 $this->form_response_msg('请选择一个分数');
+                 $this->form_response_msg('Please choose a rate');
             }
             
             $data = array(
@@ -2118,8 +2118,8 @@ class ctl_company extends cmsPage
             $this->setData($mdl_user->getBusinessDisplayName($business_id), 'business_name');
             $this->setData($mdl_order->generateOrderName($orderId), 'order_name');
 
-            $this->setData('客户评级', 'pagename');
-            $this->setData('客户评级 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Customer Rating', 'pagename');
+            $this->setData('Customer Rating - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display_pc_mobile('company/customers_rating_edit', 'company/customers_rating_edit');
         }
     }
@@ -2139,7 +2139,7 @@ class ctl_company extends cmsPage
             $epay_account = trim(post('emxhway'));
 
             if (strlen($paypal_email) < 6 || strlen($paypal_email) > 100) {
-                $this->form_response_msg('请填写正确的支付信息');
+                $this->form_response_msg('Please fill in the correct payment information');
             }
             
             $business_name = $this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']);
@@ -2167,16 +2167,16 @@ class ctl_company extends cmsPage
             if ($succ) {
                 $this->form_response(200,'Saved',HTTP_ROOT_WWW . 'company/busi_pay_setting_application');
             } else {
-                $this->form_response_msg('修改失败');
+                $this->form_response_msg('Fail to edit');
             }
 
         } else {
 
             $this->setData($data, 'data');
-            $this->setData('商家支付设置申请', 'pagename');
+            $this->setData('Merchant payment setup application', 'pagename');
             $this->setData('advanced_setting', 'menu');
             $this->setData('busi_pay_setting_application', 'submenu');
-            $this->setData('商家支付设置申请 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Merchant payment setup application - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/busi_pay_setting_application');
         }
     }
@@ -2198,7 +2198,7 @@ class ctl_company extends cmsPage
 
             if (strlen($ABNorACN) < 8 || !is_numeric($ABNorACN) || strlen($ABNorACN) > 15) {
                
-                $this->form_response_msg('请填写正确的ABN或ACN(大于8位-15位数字，可包含空格，不能有字符');
+                $this->form_response_msg('Please fill in the correct ABN or ACN (greater than 8-15 digits, can contain spaces, cannot have characters ');
             }
 
             $business_name = $this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']);
@@ -2221,18 +2221,18 @@ class ctl_company extends cmsPage
             }
 
             if ($succ) {
-                $this->form_response(200,'申请成功',HTTP_ROOT_WWW.'company/abn_application');
+                $this->form_response(200,'Successful application',HTTP_ROOT_WWW.'company/abn_application');
             } else {
-                $this->form_response_msg('修改失败');
+                $this->form_response_msg('Fail to edit');
             }
 
         } else {
 
             $this->setData($data, 'data');
-            $this->setData('ABN/ACN认证申请', 'pagename');
+            $this->setData('ABN/ACN certification application', 'pagename');
             $this->setData('basic_setting', 'menu');
             $this->setData('abn_application', 'submenu');
-            $this->setData('ABN/ACN认证申请 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('ABN/ACN certification application - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/abn_application');
         }
     }
@@ -2291,12 +2291,12 @@ class ctl_company extends cmsPage
 
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
-                $this->form_response_msg( '保存logo成功');
+                $this->form_response_msg( 'Save Successful');
             } else {
-                $this->form_response_msg('保存logo失败');
+                $this->form_response_msg('Save fault');
             }
         } else {
-            $this->setData('修改logo - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Edit Log - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->setData('basic_setting', 'menu');
             $this->setData('logo', 'submenu');
             $this->display('company/logo');
@@ -2306,7 +2306,7 @@ class ctl_company extends cmsPage
 	  function weixin_bangding_action()
     {
       
-            $this->setData('Wechat绑定 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Wechat Pending - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->setData('advanced_setting', 'menu');
             $this->setData('weixin_bangding', 'submenu');
             $this->display('company/weixin_panding');
@@ -2316,7 +2316,7 @@ class ctl_company extends cmsPage
 	  function weixin_kefu_action()
     {
       
-            $this->setData('关注服务号 -接收客服发送客服信息 ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Follow account,you can receive Customer message ' . $this->site['pageTitle'], 'pageTitle');
             $this->setData('advanced_setting', 'menu');
             $this->setData('weixin_kefu', 'submenu');
             $this->display('company/weixin_kefu');
@@ -2330,7 +2330,7 @@ class ctl_company extends cmsPage
         $type1 = get2('type1');
         $type2 = get2('type2');
 
-        $this->setData('Ubonus模板 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Ubonus Temple - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->setData('publishment', 'menu');
 
         $this->setData($type1, 'type1');
@@ -2343,7 +2343,7 @@ class ctl_company extends cmsPage
         $this->setData( $this->loadModel( 'infoClass' )->getChild4( '106' ), 'categories' );
                     
         $this->setData('coupons_template', 'submenu');
-        $this->setData('模板中心', 'pagename');
+        $this->setData('Template Centre', 'pagename');
         $this->display('company/coupons_template');
 
         //var_dump($data);
@@ -2483,7 +2483,7 @@ class ctl_company extends cmsPage
 		// $this->form_response(600,$sql,$sql);
 		if( !$mdl_coupon->getListBySql($sql)) {
 			
-			$this->form_response(600,'未发现产品','未发现产品');
+			$this->form_response(600,'No product found','No product found');
 			return;
 		}
 		
@@ -2525,7 +2525,7 @@ class ctl_company extends cmsPage
 		
 		$sql ="select id from cc_order  where id=$id and  ( business_userId=$curr_user_id " ;  // 商家本身 
 		$sql .=" or business_userId in (select customer_id  from cc_authrise_manage_other_business_account where authorise_business_id =$curr_user_id )"; //是否为授权用户
-		$sql .=" or business_userId in (select business_id  from cc_dispatching_centre_customer_list where dispatching_centre_id =$curr_user_id )";//是否为配货中心用户
+		$sql .=" or business_userId in (select business_id  from cc_dispatching_centre_customer_list where dispatching_centre_id =$curr_user_id )";//是否为Picking Centre用户
 		$sql .=" or business_userId in (select suppliers_id  from cc_freshfood_disp_centre_suppliers where business_id =$curr_user_id )";//是否为统一商铺用户
 		$sql .=" or business_userId in (select customer_id  from cc_factory2c_list where factroy_id =$curr_user_id )";//是否为其管辖的2c附店客户
 		$sql .=" or business_userId in (select cc_logistic_customers_id  from  cc_freshfood_logistic_customers where cc_logistic_business_id =$curr_user_id )";//是否为其管辖的物流客户
@@ -2649,7 +2649,7 @@ class ctl_company extends cmsPage
 		// $this->form_response(600,$sql,$sql);
 		if( !$mdl_order->getListBySql($sql)) {
 			
-			$this->form_response(600,'未发现产品','未发现产品');
+			$this->form_response(600,'No product found','No product found');
 			return;
 		}
 		
@@ -2694,7 +2694,7 @@ class ctl_company extends cmsPage
 		// $this->form_response(600,$id,$id);
 		if( !$mdl_coupon->getListBySql($sql)) {
 			
-			$this->form_response(600,'未发现产品','未发现产品');
+			$this->form_response(600,'No product found','No product found');
 			return;
 		}
 		
@@ -2861,7 +2861,7 @@ class ctl_company extends cmsPage
 */
         if ($order['coupon_status'] != 'c01') {
             // $this->sheader(null,'只能兑付C01订单(还未兑付或还未取消))');
-            throw new Exception("只能兑付C01订单(还未兑付或还未取消)", 1);
+            throw new Exception("Only Status of C01 orders can be redeemed (not yet redeemed or cancelled)", 1);
         }
 
         $mdl_wj_user_coupon_activity_log = $this->loadModel('wj_user_coupon_activity_log');
@@ -2980,7 +2980,7 @@ class ctl_company extends cmsPage
 		}else {
           //  var_dump('no');exit;
 			$data_update_order = array(
-				'cn_coupon_status_name' => '部分使用',
+				'cn_coupon_status_name' => 'partially used',
 				'en_coupon_status_name' => 'parts of used',
 				 'multi_used'=>$order['multi_used'] +1
 			);
@@ -3004,7 +3004,7 @@ class ctl_company extends cmsPage
     {	
     	require_once( DOC_DIR.'static/4pxAPI.php' );
 
-        //商家查看的订单详情以及操作
+        //商家查看的Order Details以及操作
         $orderId = trim(get2('id'));
 		
 		
@@ -3027,7 +3027,7 @@ class ctl_company extends cmsPage
 		//coding end 
 
         $operator = $this->current_business['id'];
-      //  if($data['business_userId']!=$operator&&$data['business_staff_id']!=$operator&&!$this->loadModel('redeem_staff')->isRedeemStaff($operator))$this->sheader(null,'越权查看');
+      //  if($data['business_userId']!=$operator&&$data['business_staff_id']!=$operator&&!$this->loadModel('redeem_staff')->isRedeemStaff($operator))$this->sheader(null,'View without authority');
 
         $this->setData($data,'data');
 
@@ -3037,7 +3037,7 @@ class ctl_company extends cmsPage
 		
 				
 
-        //订单详情
+        //Order Details
         $items = $mdl_wj_customer_coupon->getList(null,array('order_id'=>$orderId));
 		
 		// 获取当前订单和当前客户的关系
@@ -3045,7 +3045,7 @@ class ctl_company extends cmsPage
 		// status 1 : 当前用户为普通查看者，不是订单的商家
 		// status 2 : 当前用户为当前订单唯一商家。
 		// status 3 : 当前用户为当前订单的某一个商家（该情况存在于如果该订单为统配中心订单的情况） 。
-		// status 4 : 当前用户为配货中心管理用户，拥有完整权限管理权和数据管理权
+		// status 4 : 当前用户为Picking Centre管理用户，拥有完整权限管理权和数据管理权
 		// 每种状态对应相应的显示页面。
 		
 		// 如果当前用户就是订单中的商家，代表，其是通配中心商家。
@@ -3144,13 +3144,13 @@ class ctl_company extends cmsPage
         $this->setData('online_center', 'menu');
         $this->setData('customer_coupon_process', 'submenu');
 
-        $this->setData('订单详情 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Order Details - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
 
         //根据状态转向不同的显示页面
 		// status 1 : 当前用户为普通查看者，不是订单的商家 customer_order_detail_gen
 		// status 2 : 当前用户为当前订单唯一商家。
 		// status 3 : 当前用户为当前订单的某一个商家（该情况存在于如果该订单为统配中心订单的情况） 。
-		// status 4 : 当前用户为配货中心管理用户，拥有完整权限管理权和数据管理权
+		// status 4 : 当前用户为Picking Centre管理用户，拥有完整权限管理权和数据管理权
 		if($display_status==1) {
 			$this->display('company/customer_order_detail_full_control');
 		}else if($display_status==2) {
@@ -3234,7 +3234,7 @@ class ctl_company extends cmsPage
 	    			$trackingId = $fourpx->getAusPostTrackingId($trackingId);
 	    		} catch (Exception $e) {
 	    			//timeout
-	    			echo json_encode(['status'=>'error','msg'=>'澳邮发货失败，请联系管理员处理失败订单']);
+	    			echo json_encode(['status'=>'error','msg'=>'Australia Post delivery failed, please contact the administrator to handle the failed order']);
 	    			exit;
 	    		}
 	    	}
@@ -3596,7 +3596,7 @@ class ctl_company extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('客户订单中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Orders - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('company/customer_orders','mobile/company/customer_orders');
     }
@@ -4141,7 +4141,7 @@ class ctl_company extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('配货中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Picking Centre - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('company/customer_orders_logistic','company/customer_orders_logistic');
     }
@@ -4368,7 +4368,7 @@ class ctl_company extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('配货中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Picking Centre - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('company/customer_orders_logistic','company/customer_orders_logistic');
     }
@@ -4579,7 +4579,7 @@ class ctl_company extends cmsPage
 
         $this->setData($this->parseUrl(), 'currentUrl');
 
-        $this->setData('客户订单变更 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Customer Order Amend - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('company/customer_orders_amend','company/customer_orders_amend');
     }
@@ -4607,7 +4607,7 @@ class ctl_company extends cmsPage
 		//var_dump($sql);exit;	  
 	  $list = $mdl_order_amend->getListBySql($sql);
 	   if(!$list){
-		    $this->coupons_edit_failure('无数据！');
+		    $this->coupons_edit_failure('no data！');
 	   }
 	   $this->setData($list[0],$data);
 	   $coupon =$list[0];
@@ -4643,7 +4643,7 @@ class ctl_company extends cmsPage
 					   }
 						
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -4666,7 +4666,7 @@ class ctl_company extends cmsPage
 
     function customer_order_statistics_action()
     {   
-        $this->setData('订单数据统计 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Order data statistics - ' . $this->site['pageTitle'], 'pageTitle');
         $this->setData('online_center', 'menu');
         $this->setData('customer_order_statistics', 'submenu');
         $this->display('company/customer_order_statistics');
@@ -4749,7 +4749,7 @@ class ctl_company extends cmsPage
 
         $this->setData($data,'data');
 
-        $this->setData('订单扫码兑付 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Order scan code redemption - ' . $this->site['pageTitle'], 'pageTitle');
 
         $this->display('company/customer_order_redeem_qrscan');
 
@@ -4828,7 +4828,7 @@ class ctl_company extends cmsPage
         $this->form_response(200,'',$redirect);
     }
 	
-    private function coupons_edit_failure($msg = '保存失败')
+    private function coupons_edit_failure($msg = 'Fail to save')
     {
         $this->form_response(500, $msg, null);
     }
@@ -4883,8 +4883,8 @@ class ctl_company extends cmsPage
 
         if ($id > 0) {
             $coupon = $mdl_coupons->get($id);
-            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
-            if ($coupon['buy'] > 0) $this->sheader(null, '该产品存在兑换记录，不可以删除');
+            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
+            if ($coupon['buy'] > 0) $this->sheader(null, 'This product has a redemption record and cannot be deleted');
 
             $mdl_coupons->delete($id);
             $mdl_coupons_sub->deleteByWhere(array('parent_coupon_id'=>$id));
@@ -4948,42 +4948,42 @@ class ctl_company extends cmsPage
             $this->setData('offline_voucher', 'submenu');
             $this->setData('index_publish', 'menu');
 
-            $pagename = "线下优惠管理";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "Offline discount management";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
         }elseif (($coupon_type == 7)) {
             $this->setData('local', 'submenu');
             $this->setData('index_publish', 'menu');
 
-            $pagename = "本地服务管理";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "local service management";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
             if(get2('sub')=='event'){
                 $this->setData('event', 'submenu');
                 $this->setData('index_publish', 'menu');
 
-                $pagename = "活动管理";
-                $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+                $pagename = "event management";
+                $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
             }
 			
         } elseif (($coupon_type == 18)) {
             $this->setData('daijinquan', 'submenu');
             $this->setData('index_publish', 'menu');
 
-            $pagename = "代金券";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "Voucher";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
       
         }elseif (($coupon_type == 9)) {
             $this->setData('shop', 'submenu');
             $this->setData('index_publish', 'menu');
 
-            $pagename = "商品管理";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "Item Management";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
         } else{
             $this->setData('all', 'submenu');
             $this->setData('index_publish', 'menu');
 
-            $pagename = "全部产品管理";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "All products management";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
         }
 
 
@@ -5110,7 +5110,7 @@ function freshfood_edit_action()    {
             //编辑产品
             $coupon = $mdl_coupons->get($id);
 
-            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
+            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
 
             $this->setData($coupon, 'data');
 
@@ -5146,8 +5146,8 @@ function freshfood_edit_action()    {
         $this->setData($this->parseUrl(), 'postUrl');
         $this->setData($this->parseUrl()->set('step',$step-1), 'prevUrl');
 
-        $this->setData(($coupon ? '编辑' : '添加') . '产品', 'pagename');
-        $this->setData(($coupon ? '编辑' : '添加') . '产品 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product', 'pagename');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
          $mdl_city=$this->loadModel('city');
 
         /**
@@ -5166,9 +5166,9 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($bonusType)) $this->coupons_edit_failure('请选择产品类型');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个行业');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($bonusType)) $this->coupons_edit_failure('Please select product type');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one industry');
 
                     /**
                      * 预处理
@@ -5212,7 +5212,7 @@ function freshfood_edit_action()    {
 							$data_manjian['discount'] =0;
 						if($mdl_restaurant_promotion_manjian->insert($data_manjian))  {
 						}else{
-							$this->form_response_msg('线上餐厅开启失败，请稍候再试');
+							$this->form_response_msg('Failed to open, please try again later');
 						}
 					}
 					
@@ -5257,7 +5257,7 @@ function freshfood_edit_action()    {
                         if ($coupon_id=$mdl_coupons->insert($data)) {
                             $this->freshfood_edit_toStep($coupon_id, 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 						
 						
@@ -5278,7 +5278,7 @@ function freshfood_edit_action()    {
                         if ($mdl_coupons->update($data, $coupon['id'])) {
                             $this->freshfood_edit_toStep($coupon['id'], 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
                     }
 					
@@ -5413,7 +5413,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->freshfood_edit_toStep($coupon['id'], 3);
                     } else {
-                        $this->coupons_edit_failure('保存失败,请稍后再试');
+                        $this->coupons_edit_failure('Fail to save,Please try again later');
                     }
 
                 } else {
@@ -5465,7 +5465,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->freshfood_edit_toStep($coupon['id'], 4);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -5516,7 +5516,7 @@ function freshfood_edit_action()    {
 
                     if ($mdl_coupons->errno()) {
                         $mdl_coupons->rollback();
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     } else {
                         $mdl_coupons->commit();
                         $this->freshfood_edit_toStep($coupon['id'], 5);
@@ -5537,7 +5537,7 @@ function freshfood_edit_action()    {
                             break;
                       
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
  
@@ -5565,7 +5565,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->freshfood_edit_toStep($coupon['id'], 6);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
                 } else {
 					$this->setData('index_publish', 'menu');
@@ -5622,7 +5622,7 @@ function freshfood_edit_action()    {
                           $redirect = HTTP_ROOT_WWW . 'company/payment_setting';
 							$this->form_response(200,'Saved',$redirect);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -5666,24 +5666,24 @@ function freshfood_edit_action()    {
                      //   if (!$confirm) $this->coupons_edit_failure('请先阅读产品发布说明');
 						$data['status'] = 4;
                         if ($mdl_coupons->update($data, $coupon['id'])) {
-                            $this->form_response(200,'发布成功','SELF');
+                            $this->form_response(200,'Published successfully','SELF');
                         } else {
-                            $this->coupons_edit_failure('发布失败');
+                            $this->coupons_edit_failure('Failed to publish');
                         }
-						//$this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+						//$this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
 					}else if($status ==1) {
 						
 						$data['status'] = 1;
                         if ($mdl_coupons->update($data, $coupon['id'])) {
-                            $this->form_response(200,'取消成功，产品已下线','SELF');
+                            $this->form_response(200,'Cancellation is successful, the product has been offline','SELF');
                         } else {
-                            $this->coupons_edit_failure('取消失败');
+                            $this->coupons_edit_failure('Cancellation Failed');
                         }
 						
 						
 					}else{
 						
-						 $this->coupons_edit_failure('未知错误，请联系平台方');
+						 $this->coupons_edit_failure('Unknow Error please contact Admin');
 						
 					}
  
@@ -5877,8 +5877,8 @@ function freshfood_edit_action()    {
             $this->setData('yijianbanjia', 'submenu');
             $this->setData('my_mingxingshop', 'menu');
 
-            $pagename = "全部产品管理";
-            $pageTitle=  $pagename." - 商家中心 - ". $this->site['pageTitle'];
+            $pagename = "Items management";
+            $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
        
 
 
@@ -5926,8 +5926,8 @@ function freshfood_edit_action()    {
          * 页面信息
          */
  
-        $this->setData('设置商家行业类型', 'pagename');
-        $this->setData('设置商家行业类型' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Set industry type', 'pagename');
+        $this->setData('Set industry type' . $this->site['pageTitle'], 'pageTitle');
   
   
   
@@ -5944,7 +5944,7 @@ function freshfood_edit_action()    {
           /**
           * 验证
          */
-         if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个行业');
+         if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one industry');
 
 		/**
 		 * 预处理
@@ -5964,7 +5964,7 @@ function freshfood_edit_action()    {
 				$redirect = HTTP_ROOT_WWW . 'company/company_category_set';
                  $this->form_response(200,'',$redirect);
 			} else {
-				$this->coupons_edit_failure('保存失败');
+				$this->coupons_edit_failure('Fail to save');
 			}
 						
 	}else{
@@ -6031,10 +6031,10 @@ function freshfood_edit_action()    {
 
            
 		
-		      $this->setData('商家信息修改', 'pagename');
+		      $this->setData('Business Info Update', 'pagename');
             $this->setData('basic_setting', 'menu');
             $this->setData('company_category_set', 'submenu');
-            $this->setData('商家信息修改 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Business Info Update - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/company_category_set');
 		
 
@@ -6091,7 +6091,7 @@ function freshfood_edit_action()    {
             //编辑产品
             $coupon = $mdl_coupons->get($id);
 
-            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
+            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
 
             $this->setData($coupon, 'data');
 
@@ -6127,8 +6127,8 @@ function freshfood_edit_action()    {
         $this->setData($this->parseUrl(), 'postUrl');
         $this->setData($this->parseUrl()->set('step',$step-1), 'prevUrl');
 
-        $this->setData(($coupon ? '编辑' : '添加') . '产品', 'pagename');
-        $this->setData(($coupon ? '编辑' : '添加') . '产品 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product', 'pagename');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
          $mdl_city=$this->loadModel('city');
 
         /**
@@ -6147,9 +6147,9 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($bonusType)) $this->coupons_edit_failure('请选择产品类型');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个行业');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($bonusType)) $this->coupons_edit_failure('Please select product type');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one industry');
 
                     /**
                      * 预处理
@@ -6193,7 +6193,7 @@ function freshfood_edit_action()    {
 							$data_manjian['discount'] =0;
 						if($mdl_restaurant_promotion_manjian->insert($data_manjian))  {
 						}else{
-							$this->form_response_msg('线上餐厅开启失败，请稍候再试');
+							$this->form_response_msg('Failed to open, please try again later');
 						}
 					}
 					
@@ -6238,7 +6238,7 @@ function freshfood_edit_action()    {
                         if ($coupon_id=$mdl_coupons->insert($data)) {
                             $this->restaurant_edit_toStep($coupon_id, 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 						
 						
@@ -6259,7 +6259,7 @@ function freshfood_edit_action()    {
                         if ($mdl_coupons->update($data, $coupon['id'])) {
                             $this->restaurant_edit_toStep($coupon['id'], 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
                     }
 					
@@ -6388,7 +6388,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->restaurant_edit_toStep($coupon['id'], 3);
                     } else {
-                        $this->coupons_edit_failure('保存失败,请稍后再试');
+                        $this->coupons_edit_failure('Fail to save,Please try again later');
                     }
 
                 } else {
@@ -6438,7 +6438,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->restaurant_edit_toStep($coupon['id'], 4);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -6489,7 +6489,7 @@ function freshfood_edit_action()    {
 
                     if ($mdl_coupons->errno()) {
                         $mdl_coupons->rollback();
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     } else {
                         $mdl_coupons->commit();
                         $this->restaurant_edit_toStep($coupon['id'], 5);
@@ -6510,7 +6510,7 @@ function freshfood_edit_action()    {
                             break;
                       
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
  
@@ -6538,7 +6538,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->restaurant_edit_toStep($coupon['id'], 6);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
                 } else {
 					$this->setData('index_publish', 'menu');
@@ -6592,7 +6592,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->restaurant_edit_toStep($coupon['id'], 7);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -6630,15 +6630,15 @@ function freshfood_edit_action()    {
 
 
                     if($coupon['status']==4){
-                        $this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+                        $this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
                     }else{
                         $confirm = (int)post('confirm');
-                        if (!$confirm) $this->coupons_edit_failure('请先阅读产品发布说明');
+                        if (!$confirm) $this->coupons_edit_failure('Please check Publish Description');
                         $data['status'] = 4;
                         if ($mdl_coupons->update($data, $coupon['id'])) {
-                            $this->form_response(200,'发布成功','SELF');
+                            $this->form_response(200,'Published successfully','SELF');
                         } else {
-                            $this->coupons_edit_failure('发布失败');
+                            $this->coupons_edit_failure('Failed to publish');
                         }
                     }
 
@@ -6718,7 +6718,7 @@ function freshfood_edit_action()    {
             //编辑产品
             $coupon = $mdl_coupons->get($id);
 
-            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
+            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
 
             $this->setData($coupon, 'data');
 			//var_dump($coupon );exit;
@@ -6759,8 +6759,8 @@ function freshfood_edit_action()    {
         $this->setData($this->parseUrl(), 'postUrl');
         $this->setData($this->parseUrl()->set('step',$step-1), 'prevUrl');
 
-        $this->setData(($coupon ? '编辑' : '添加') . '产品', 'pagename');
-        $this->setData(($coupon ? '编辑' : '添加') . '产品 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product', 'pagename');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
        $mdl_city=$this->loadModel('city');
 
         /**
@@ -6783,10 +6783,10 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($bonusType)) $this->coupons_edit_failure('请选择产品类型');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个产品类别');
-					 if (empty($languageType_cn) && empty($languageType_en)) $this->coupons_edit_failure('至少选择一种语言');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($bonusType)) $this->coupons_edit_failure('Please select product type');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one product category');
+					 if (empty($languageType_cn) && empty($languageType_en)) $this->coupons_edit_failure('Choose at least one language');
 					 
                     /**
                      * 预处理
@@ -6860,7 +6860,7 @@ function freshfood_edit_action()    {
 						 
                             $this->coupons_edit_toStep($coupon_id, 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 
                     } else {
@@ -6897,7 +6897,7 @@ function freshfood_edit_action()    {
 						
                             $this->coupons_edit_toStep($coupon['id'], 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
                     }
                 } else {
@@ -7051,7 +7051,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->coupons_edit_toStep($coupon['id'], 3);
                     } else {
-                        $this->coupons_edit_failure('保存失败,请稍后再试');
+                        $this->coupons_edit_failure('Fail to save,Please try again later');
                     }
 
                 } else {
@@ -7099,7 +7099,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->coupons_edit_toStep($coupon['id'], 4);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -7270,14 +7270,14 @@ function freshfood_edit_action()    {
                         case 10:
                             break;
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
                    
 
                     if ($mdl_coupons->errno()) {
                         $mdl_coupons->rollback();
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     } else {
                         $mdl_coupons->commit();
                         $this->coupons_edit_toStep($coupon['id'], 5);
@@ -7334,7 +7334,7 @@ function freshfood_edit_action()    {
                             $this->display('company/coupons_edit4_11');
                             break;
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
  
@@ -7376,7 +7376,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->coupons_edit_toStep($coupon['id'], 6);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
                 } else {
 
@@ -7428,7 +7428,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->coupons_edit_toStep($coupon['id'], 7);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -7463,15 +7463,15 @@ function freshfood_edit_action()    {
 
 
                     if($coupon['status']==4){
-                        $this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+                        $this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
                     }else{
                         $confirm = (int)post('confirm');
-                        if (!$confirm) $this->coupons_edit_failure('请先阅读产品发布说明');
+                        if (!$confirm) $this->coupons_edit_failure('Please read the product release notes first');
                         $data['status'] = 4;
                         if ($mdl_coupons->update($data, $coupon['id'])) {
-                            $this->form_response(200,'发布成功','SELF');
+                            $this->form_response(200,'Published successfully','SELF');
                         } else {
-                            $this->coupons_edit_failure('发布失败');
+                            $this->coupons_edit_failure('Failed to publish');
                         }
                     }
 
@@ -7533,8 +7533,8 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个产品类别');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one product category');
 
 					
 					$googleMap = trim(post('googleMap'));
@@ -7746,14 +7746,14 @@ function freshfood_edit_action()    {
 							if ($mdl_user->updateUserById($data1, $this->loginUser['id'])) {
 							   // $this->form_response(200, 'Saved',"SELF");
 							} else {
-								//$this->form_response_msg("修改失败");
+								//$this->form_response_msg("Fail to edit");
 							}
 									
 					
 					
                             $this->coupons_edit_toStep($coupon_id, 7);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 
                    
@@ -7887,8 +7887,8 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个行业');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one industry');
 
 					
 					$googleMap = trim(post('googleMap'));
@@ -8196,14 +8196,14 @@ function freshfood_edit_action()    {
 							if ($mdl_user->updateUserById($data1, $this->loginUser['id'])) {
 							   // $this->form_response(200, 'Saved',"SELF");
 							} else {
-								//$this->form_response_msg("修改失败");
+								//$this->form_response_msg("Fail to edit");
 							}
 									
 					
 					
                             $this->coupons_edit_toStep($coupon_id, 7);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 
                    
@@ -8376,7 +8376,7 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
                   
 	
 					$businessName=$this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']);
@@ -8471,17 +8471,17 @@ function freshfood_edit_action()    {
 					    if($article['createUserId']==$this->loginUser['id']) {
 							  if ($mdl_article->update($data,$id)) {
 							$redirect = HTTP_ROOT_WWW . 'company/article';
-							$this->form_response(200,'修改成功',$redirect);
+							$this->form_response(200,'Successfully modified',$redirect);
 						
                         } else {
 							 $this->setData($data, 'data');
 							 $this->display('company/article_add');
-                            $this->coupons_edit_failure('意外原因-保存失败!');
+                            $this->coupons_edit_failure('意外原因-Fail to save!');
                         }
 							
 						}else{
 							
-							$this->coupons_edit_failure('保存失败!');
+							$this->coupons_edit_failure('Fail to save!');
 							
 						}
 					
@@ -8495,7 +8495,7 @@ function freshfood_edit_action()    {
                         } else {
 							 $this->setData($data, 'data');
 							 $this->display('company/article_add');
-                           // $this->coupons_edit_failure('保存失败!');
+                           // $this->coupons_edit_failure('Fail to save!');
                         }
 				}
 						
@@ -8642,7 +8642,7 @@ function freshfood_edit_action()    {
 
         if ($id > 0) {
             $article = $mdl_article->get($id);
-            if (!$article || $article['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
+            if (!$article || $article['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
           
 
             $mdl_article->delete($id);
@@ -8748,7 +8748,7 @@ function freshfood_edit_action()    {
             //编辑产品
             $coupon = $mdl_coupons->get($id);
 
-            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, '产品不存在');
+            if (!$coupon || $coupon['createUserId'] != $this->loginUser['id']) $this->sheader(null, 'Product does not exist');
 
             $this->setData($coupon, 'data');
 
@@ -8788,8 +8788,8 @@ function freshfood_edit_action()    {
         $this->setData($this->parseUrl(), 'postUrl');
         $this->setData($this->parseUrl()->set('step',$step-1), 'prevUrl');
 
-        $this->setData(($coupon ? '编辑' : '添加') . '产品', 'pagename');
-        $this->setData(($coupon ? '编辑' : '添加') . '产品 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product', 'pagename');
+        $this->setData(($coupon ? 'Edit' : 'Add') . 'Product - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
        $mdl_city=$this->loadModel('city');
 
         /**
@@ -8808,9 +8808,9 @@ function freshfood_edit_action()    {
                     /**
                      * 验证
                      */
-                    if (empty($title)) $this->coupons_edit_failure('请添加标题');
-                    if (empty($bonusType)) $this->coupons_edit_failure('请选择产品类型');
-                    if (empty($userCategoryId)) $this->coupons_edit_failure('请将选择至少一个行业');
+                    if (empty($title)) $this->coupons_edit_failure('please add a title');
+                    if (empty($bonusType)) $this->coupons_edit_failure('Please select product type');
+                    if (empty($userCategoryId)) $this->coupons_edit_failure('Please select at least one industry');
 
                     /**
                      * 预处理
@@ -8869,7 +8869,7 @@ function freshfood_edit_action()    {
                         if ($coupon_id=$mdl_coupons->insert($data)) {
                             $this->youhuiquan_edit_toStep($coupon_id, 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
 
                     } else {
@@ -8888,7 +8888,7 @@ function freshfood_edit_action()    {
                         if ($mdl_coupons->update($data, $coupon['id'])) {
                             $this->youhuiquan_edit_toStep($coupon['id'], 2);
                         } else {
-                            $this->coupons_edit_failure('保存失败');
+                            $this->coupons_edit_failure('Fail to save');
                         }
                     }
                 } else {
@@ -9016,7 +9016,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->youhuiquan_edit_toStep($coupon['id'], 3);
                     } else {
-                        $this->coupons_edit_failure('保存失败,请稍后再试');
+                        $this->coupons_edit_failure('Fail to save,Please try again later');
                     }
 
                 } else {
@@ -9064,7 +9064,7 @@ function freshfood_edit_action()    {
                     if ($mdl_coupons->update($data, $coupon['id'])) {
                         $this->youhuiquan_edit_toStep($coupon['id'], 4);
                     } else {
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     }
 
                 } else {
@@ -9250,14 +9250,14 @@ function freshfood_edit_action()    {
                         case 10:
                             break;
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
                    
 
                     if ($mdl_coupons->errno()) {
                         $mdl_coupons->rollback();
-                        $this->coupons_edit_failure('保存失败');
+                        $this->coupons_edit_failure('Fail to save');
                     } else {
                         $mdl_coupons->commit();
                         $this->youhuiquan_edit_toStep($coupon['id'], 5);
@@ -9276,7 +9276,7 @@ function freshfood_edit_action()    {
                             break;
                        
                         default:
-                            $this->sheader(null,'无此类型');
+                            $this->sheader(null,'no such type');
                             break;
                     }
  
@@ -9298,15 +9298,15 @@ function freshfood_edit_action()    {
 
 
                     if($coupon['status']==4){
-                        $this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+                        $this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
                     }else{
                         $confirm = (int)post('confirm');
                         if (!$confirm) $this->coupons_edit_failure('请先阅读产品发布说明');
                         $data['status'] = 4;
                         if ($mdl_coupons->update($data, $coupon['id'])) {
-                            $this->form_response(200,'发布成功','SELF');
+                            $this->form_response(200,'Published successfully','SELF');
                         } else {
-                            $this->coupons_edit_failure('发布失败');
+                            $this->coupons_edit_failure('Failed to publish');
                         }
                     }
 
@@ -9343,7 +9343,7 @@ function freshfood_edit_action()    {
     public function easy_edit_advance_action()
     {   
        if (is_post()) {
-            //$this->form_response_msg('发布成功');
+            //$this->form_response_msg('Published successfully');
 
             
             $data['title'] = post('title');
@@ -9408,9 +9408,9 @@ function freshfood_edit_action()    {
             $data['platform_commission_rate'] = DEFAULT_PLATFORM_COMMISSION_RATE;
 
             if($this->loadModel('coupons')->insert($data)){
-               $this->form_response(200,'发布成功',HTTP_ROOT_WWW .'company/coupons');
+               $this->form_response(200,'Published successfully',HTTP_ROOT_WWW .'company/coupons');
             }else{
-                $this->form_response_msg('抱歉，出错了，请稍后再试');
+                $this->form_response_msg('抱歉，出错了，Please try again later');
             }
         } else {
             /**
@@ -9420,7 +9420,7 @@ function freshfood_edit_action()    {
             
 
             $this->setData( '极速发布 - 产品', 'pagename');
-            $this->setData( '极速发布 - 产品 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData( '极速发布 - 产品 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->setData('publishment', 'menu');
             $this->setData('product_show', 'submenu');
             $this->display('company/easy_edit_advance');
@@ -9430,18 +9430,18 @@ function freshfood_edit_action()    {
 
     function business_application_success_action()
     {
-        $this->setData('商家申请提交成功', 'pagename');
+        $this->setData('Merchant application submitted successfully', 'pagename');
         $this->setData('index', 'menu');
-        $this->setData('商家申请提交成功 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Merchant application submitted successfully - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/business_application_success');
     }
 
     function coupons_edit_success_action()
     {
         $id = (int)get2('id');
-        $this->setData('产品提交审核成功', 'pagename');
+        $this->setData('Product submitted for review successfully', 'pagename');
         $this->setData('coupons', 'menu');
-        $this->setData('产品提交审核成功 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Product submitted for review successfully - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/coupons_edit_success');
     }
 
@@ -9450,16 +9450,16 @@ function freshfood_edit_action()    {
     function business_setting_main_action()
     {
 
-        $this->setData('商家设置', 'pagename');
+        $this->setData('Business settings', 'pagename');
         $this->setData('business_setting', 'menu');
         $this->setData('business_setting', 'submenu');
-        $this->setData('商家设置 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Business settings - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/business_setting_main');
     }
 
     function community_index_action()
     {   
-        $this->setData('社群营销 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('社群营销 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->setData('community', 'menu');
         $this->display_pc_mobile('company/community_index', 'mobile/company/community_index');
 
@@ -9472,7 +9472,7 @@ function freshfood_edit_action()    {
         $this->setData($data,'package');
     
 
-        $this->setData('Ubonus套餐 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Ubonus - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->setData('community', 'menu');
 		  $this->setData('ubonus_package', 'submenu');
 		
@@ -9524,10 +9524,10 @@ function freshfood_edit_action()    {
 
         $this->setData($guige_id, 'guige_id');
         $this->setData($guige_name, 'guige_name');
-        $this->setData('商品参数明细管理', 'pagename');
+        $this->setData('Product specification detail management', 'pagename');
         $this->setData('shop_guige', 'submenu');
         $this->setData('index_publish', 'menu');
-        $this->setData('商品参数明细管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Product specification detail management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/shop_guige_details');
     }
 
@@ -9551,10 +9551,10 @@ function freshfood_edit_action()    {
         $list = $mdl_shop_guige->getListBySql($sql);
         $this->setData($list, 'list');
 
-        $this->setData('商店商品参数管理', 'pagename');
+        $this->setData('Product specification detail management', 'pagename');
         $this->setData('shop_guige', 'submenu');
         $this->setData('index_publish', 'menu');
-        $this->setData('商店商品参数管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Product specification detail management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/shop_guige');
     }
 
@@ -9581,13 +9581,13 @@ function freshfood_edit_action()    {
                 if ($mdl_shop_guige_details->update($data, $shop_guige_details['id'])) {
                     $this->form_response(200,'Saved',HTTP_ROOT_WWW."company/shop_guige_details?guige_id=".$guige_id);
                 } else {
-                    $this->form_response_msg('保存失败');
+                    $this->form_response_msg('Fail to save');
                 }
             } else {
                 if (empty($name)) {
-                    $this->form_response_msg('请填写商品规格描述');
+                    $this->form_response_msg('Please fill in the product specification description');
                 } else if (strlen($name) > 500) {
-                    $this->form_response_msg('每次提交字符串长度最大为500');
+                    $this->form_response_msg('The maximum length of each commit string is 500');
                 }
 
                 $name = str_replace("，", ",", $name);
@@ -9619,10 +9619,10 @@ function freshfood_edit_action()    {
         } else {
             $this->setData($guige_id, 'guige_id');
             $this->setData($shop_guige_details);
-            $this->setData('商品规格参数管理', 'pagename');
+            $this->setData('Product specification  management', 'pagename');
             $this->setData('shop_guige', 'submenu');
             $this->setData('index_publish', 'menu');
-            $this->setData('商品规格参数管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Product specification  management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/shop_guige_details_edit');
         }
     }
@@ -9663,7 +9663,7 @@ function freshfood_edit_action()    {
                 }
             } else {
                 if (empty($name)) {
-                    $this->form_response_msg('请填写商品规格描述');
+                    $this->form_response_msg('Please fill in the product specification description');
                 }
 
                 $data = array(
@@ -9686,10 +9686,10 @@ function freshfood_edit_action()    {
             $this->setData($data_coupon, 'data_coupon');
             $this->setData($shop_guige);
 
-            $this->setData('商城商品规格参数管理', 'pagename');
+            $this->setData('Mall product specification management', 'pagename');
             $this->setData('index_publish', 'menu');
             $this->setData('shop_guige', 'submenu');
-            $this->setData('商城商品规格参数管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Mall product specification management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/shop_guige_edit');
         }
     }
@@ -9776,7 +9776,7 @@ function freshfood_edit_action()    {
 
         $this->setData('advanced_setting', 'menu');
         $this->setData('redeem_staff_manage', 'submenu');
-        $this->setData('兑付员工管理 -' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Redeem staff management -' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/redeem_staff_manage');
     }
 
@@ -9787,7 +9787,7 @@ function freshfood_edit_action()    {
         $userid = $this->loginUser['id'];
 
         if (!$businessId || !$userid) {
-            $msg = '网络错误请稍后再试。'."<br><i class='fa fa-close fa-5x' style ='color:#f30'></i>";
+            $msg = 'Network Error Please try again later。'."<br><i class='fa fa-close fa-5x' style ='color:#f30'></i>";
 
         } elseif (intval($businessId) == intval($userid)) {
             $msg = '错误：不能自己加入自己'."<br><i class='fa fa-close fa-5x' style ='color:#fc3'></i>";
@@ -9799,7 +9799,7 @@ function freshfood_edit_action()    {
             $msg = "您成功加入了 %s 公司，成为可以兑付的员工！"."<br><i class='fa fa-check fa-5x' style ='color:green'></i>";
 
         } else {
-            $msg = '网络错误请稍后再试。'."<br><i class='fa fa-close fa-5x' style ='color:#fc3'></i>";
+            $msg = '网络错误Please try again later。'."<br><i class='fa fa-close fa-5x' style ='color:#fc3'></i>";
 
         }
 
@@ -9824,10 +9824,10 @@ function freshfood_edit_action()    {
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
-        $this->setData('分店管理', 'pagename');
+        $this->setData('Branch management', 'pagename');
         $this->setData('staff', 'submenu');
         $this->setData('advanced_setting', 'menu');
-        $this->setData('分店管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Branch management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staff');
     }
 
@@ -9840,10 +9840,10 @@ function freshfood_edit_action()    {
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
-        $this->setData('员工管理', 'pagename');
+        $this->setData('Staff management', 'pagename');
         $this->setData('staffnew', 'submenu');
         $this->setData('advanced_setting', 'menu');
-        $this->setData('分店管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Branch management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staffnew');
     }
 	
@@ -9907,7 +9907,7 @@ function freshfood_edit_action()    {
              //  var_dump($updatadata);exit;
                if($mdl_staff_roles->updateByWhere($updatadata,array('staff_id' => $staff_id))){
 
-                   $this->form_response(500,'修改成功！');
+                   $this->form_response(500,'Successfully modified！');
                }else{
 
                    $this->form_response(500,'something wrong !');
@@ -9964,10 +9964,10 @@ function freshfood_edit_action()    {
 
 
         $this->setData($this->parseUrl,'postUrl');
-        $this->setData('员工授权', 'pagename');
+        $this->setData('Employee authorization', 'pagename');
         $this->setData('staff_permissions', 'submenu');
         $this->setData('advanced_setting', 'menu');
-        $this->setData('员工授权 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Employee authorization - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staff_permissions');
     }
 
@@ -9977,12 +9977,12 @@ function freshfood_edit_action()    {
 
         $id = (int)get2('id');
 
-        if(!$id)$this->sheader(null, "员工ID缺失");
+        if(!$id)$this->sheader(null, "no find Id");
 
 
         $user = $mdl_user->get($id);
 
-        if(!$user)$this->sheader(null, "没有找到该员工");
+        if(!$user)$this->sheader(null, "Could not find this staff");
 
         
         if ($mdl_user->delete($id)) {
@@ -10066,7 +10066,7 @@ function freshfood_edit_action()    {
             /**
              * 员工信息
              */
-            $businessName = $this->loginUser['businessName'].'-分部';
+            $businessName = $this->loginUser['businessName'];
             $contactPersonFirstname = trim(post('contactPersonFirstname'));
             $contactPersonLastname = trim(post('contactPersonLastname'));
             $contactPersonNickName = trim(post('contactPersonNickName'));
@@ -10101,9 +10101,9 @@ function freshfood_edit_action()    {
                 );
 
                 if ($change_password) {
-                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                    if ($password != $password2)$this->form_response_msg('确认密码与密码填写不一致');
+                    if ($password != $password2)$this->form_response_msg('Confirm password does not match the entered password');
 
                     $passwordByCustomMd5 = $this->md5($password);
 
@@ -10121,15 +10121,15 @@ function freshfood_edit_action()    {
             } else {
                 if (empty($name) ) $this->form_response_msg('Please enter your username');
 
-                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('This user name already exists');
 
                 if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
 
                 if (empty($password)) $this->form_response_msg('Please enter your password');
 
-                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
+                if ($password != $password2) $this->form_response_msg('Confirm password does not match the entered password');
 
 
 
@@ -10193,10 +10193,10 @@ function freshfood_edit_action()    {
 
         } else {
             $this->setData($staff);
-            $this->setData('员工管理', 'pagename');
+            $this->setData('Staff management', 'pagename');
             $this->setData('staff', 'submenu');
             $this->setData('business_setting', 'menu');
-            $this->setData('员工管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Staff management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/staff_edit');
         }
     }
@@ -10284,9 +10284,9 @@ function freshfood_edit_action()    {
                 );
 
                 if ($change_password) {
-                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                    if ($password != $password2)$this->form_response_msg('确认密码与密码填写不一致');
+                    if ($password != $password2)$this->form_response_msg('Confirm password does not match the entered password');
 
                     $passwordByCustomMd5 = $this->md5($password);
 
@@ -10304,15 +10304,15 @@ function freshfood_edit_action()    {
             } else {
                 if (empty($name) ) $this->form_response_msg('Please enter your username');
 
-                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('This user name already exists');
 
                 if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
 
                 if (empty($password)) $this->form_response_msg('Please enter your password');
 
-                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
+                if ($password != $password2) $this->form_response_msg('Confirm password does not match the entered password');
 
                
 
@@ -10376,10 +10376,10 @@ function freshfood_edit_action()    {
 
         } else {
             $this->setData($staff);
-            $this->setData('员工管理', 'pagename');
+            $this->setData('Staff management', 'pagename');
             $this->setData('staffnew', 'submenu');
             $this->setData('advanced_setting', 'menu');
-            $this->setData('员工管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Staff management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/staff_edit_new');
         }
     }
@@ -10525,7 +10525,7 @@ function freshfood_edit_action()    {
             } else {
                 if (empty($name) ) $this->form_response_msg('Please enter your username');
 
-                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('This user name already exists');
 
                 if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
 
@@ -10645,14 +10645,14 @@ function freshfood_edit_action()    {
             if ($mdl_user->update($data, $this->loginUser['id'])) {
                 $this->form_response_msg( 'Saved');
             } else {
-                $this->form_response_msg('保存失败');
+                $this->form_response_msg('Fail to save');
             }
         } else {
             
-            $this->setData('图片信息', 'pagename');
+            $this->setData('Picture Info', 'pagename');
             $this->setData('basic_setting', 'menu');
             $this->setData('profile_pic', 'submenu');
-            $this->setData('图片信息修改 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Picture Info Edit - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile_pic');
 
         }
@@ -10689,9 +10689,9 @@ function freshfood_edit_action()    {
                     $returnUrl=HTTP_ROOT_WWW."group_buy/index?jstrigger=joinaftercreate&group_buy_id=".$id;
                 }
 
-                $this->form_response(200, "修改成功", $returnUrl);
+                $this->form_response(200, "Successfully modified", $returnUrl);
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         } else {
             $type = get2('type');
@@ -10706,10 +10706,10 @@ function freshfood_edit_action()    {
             $this->setData($g_name, 'g_name');
             $this->setData($g_qty, 'g_qty');
 
-            $this->setData('团购资料补全', 'pagename');
+            $this->setData('Complete the information', 'pagename');
             $this->setData('info', 'menu');
             $this->setData('profile_manager', 'submenu');
-            $this->setData('修改资料 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Edit Profile - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/fill_profile');
         }
     }
@@ -10727,13 +10727,13 @@ function freshfood_edit_action()    {
             $email = trim(post('email'));
             $backupEmail = trim(post('backupEmail'));
 
-            if($phone&&!$mdl_reg->chkPhone($phone))$this->form_response_msg('手机仅支持中国或澳洲手机号');
-            if($email&&!$mdl_reg->chkMail($email))$this->form_response_msg('请输入正确的邮箱');
+            if($phone&&!$mdl_reg->chkPhone($phone))$this->form_response_msg('Only supports Australian mobile numbers');
+            if($email&&!$mdl_reg->chkMail($email))$this->form_response_msg('please enter your vaild email');
 
             $data = array();
             $data['nickname'] = $nickname;
-            $data['person_first_name'] = $person_first_name;
-            $data['person_last_name'] = $person_last_name;
+         //   $data['person_first_name'] = $person_first_name;
+          //  $data['person_last_name'] = $person_last_name;
             $data['phone'] = $phone;
             $data['tel'] = $tel;
             $data['backupEmail'] = $backupEmail;
@@ -10744,18 +10744,18 @@ function freshfood_edit_action()    {
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
                 if ($this->returnUrl) {
-                    $this->form_response(200, "修改成功", $this->returnUrl);
+                    $this->form_response(200, "Successfully modified", $this->returnUrl);
                 } else {
-                    $this->form_response(200, "修改成功", 'SELF');
+                    $this->form_response(200, "Successfully modified", 'SELF');
                 }
             } else {
-                $this->form_response_msg("修改失败");
+                $this->form_response_msg("Fail to edit");
             }
         } else {
-            $this->setData('管理员资料修改', 'pagename');
+            $this->setData('Admin Information Update', 'pagename');
             $this->setData('basic_setting', 'menu');
             $this->setData('profile_manager', 'submenu');
-            $this->setData('修改资料 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Information Update - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile_manager');
         }
     }
@@ -11009,10 +11009,10 @@ function freshfood_edit_action()    {
 		
 		
 		
-            $this->setData('自动图片匹配', 'pagename');
+            $this->setData('Automatic image matching', 'pagename');
             $this->setData('index_publish', 'menu');
             $this->setData('images_grab', 'submenu');
-            $this->setData('自动图片匹配 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Automatic image matching - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/images_grab');
        
     }
@@ -11163,7 +11163,7 @@ function get_data($url, $ch) {
         if($mdl_order->updataTransactionStatus($orderId,BalanceProcess::VOID)){
             $this->sheader( HTTP_ROOT_WWW.'company/account_balance' );
         }else{
-            $this->sheader( null, '更新出错，请稍后再试' );
+            $this->sheader( null, '更新出错，Please try again later' );
         }
         
     }
@@ -11178,7 +11178,7 @@ function get_data($url, $ch) {
             $this->sheader(HTTP_ROOT_WWW . 'company/promotion_code');
 
         } else {
-            $this->sheader(null, "不是你的打折码或打折码不存在");
+            $this->sheader(null, "Not your discount code or discount code does not exist");
         }
     }
 
@@ -11201,21 +11201,21 @@ function get_data($url, $ch) {
             $alreadyUsed=$this->loadModel('order')->getByWhere(array('userId'=>$this->loginUser['id'],'promotion_id'=>$promotionData['id'],' coupon_status!="d01" '));
             if($promotionData['single_use_per_user'] && $alreadyUsed){
                 $data['status'] = false;
-                $data['msg'] = '该折扣码只能使用一次,您已经使用过了 ';
+                $data['msg'] = 'This discount code can only be used once, you have already used it ';
                 echo json_encode($data);
                 exit;
             }
 
             if ($promotionCode->isCodeExpired()) {
                 $data['status'] = false;
-                $data['msg'] = '验证失败,折扣码失效';
+                $data['msg'] = 'Verification failed, discount code invalid';
             } else {
                 $promotion_amount = $promotionCode->applyCode($this->loginUser['id']);
                 //var_dump($promotion_amount);exit;
                 if ($promotion_amount == 0) {
                     $data['status'] = false;
                     $value = (int)$promotionData['apply_condition_value'];
-                    $data['msg'] = '验证成功,但是需要购买大于' . $value . '个才能生效。';
+                    $data['msg'] = 'The verification is successful, but you need to purchase more than ' . $value . ' to take effect. ';
                 } else {
 					
 					$value = (int)$promotionData['apply_condition_value'];
@@ -11246,9 +11246,9 @@ function get_data($url, $ch) {
 				     if(  $total_cart_amount <$value ) {
 						   $data['status'] = false;
                   
-							$data['msg'] = '验证成功,但是需要购买大于$' . $value . '个才能生效。';
-						 
-					 }else{
+							$data['msg'] = 'The verification is successful, but you need to purchase more than ' . $value . ' to take effect. ';
+
+                     }else{
 						 $data['status'] = true;
 						$data['msg'] = (string)$this->lang->verified_successful;;
 						$data['promotion_amount'] = $promotion_amount;
@@ -11494,7 +11494,7 @@ function get_data($url, $ch) {
             $this->setData('my_mingxingshop', 'menu');
             $this->setData('referral_product_program1', 'submenu');
 
-            $this->setData('推荐商城产品自定义分类 - ' . ' - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('推荐商城产品自定义分类 - ' . ' - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
       		
 			$this->display_pc_mobile('company/referral_product_category','mobile/company/referral_product_category');
         }
@@ -11509,7 +11509,7 @@ function get_data($url, $ch) {
         $info = null;
 
         $info = $mdl_info->get($id);
-        if (!$info) $this->sheader(null, '文章不存在');
+        if (!$info) $this->sheader(null, 'Article does not exist');
 
         $previousinfo = $mdl_info->getPreviousOfSameClass($id);
         $nextinfo = $mdl_info->getNextOfSameClass($id);
@@ -11522,7 +11522,7 @@ function get_data($url, $ch) {
 
         $this->setData($info, 'info');
         
-        $this->setData('帮助中心 - 信息中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Help Center - Information Center - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display( 'company/help' );
     }
 
@@ -11542,12 +11542,12 @@ function get_data($url, $ch) {
                 $where['createUserId'] = $this->loginUser['id'];
                 $data[post('dataField')] = post('updateValue');
                 if ($this->db->update($data, 'cc_coupons', $where)) {
-                    $this->form_response_msg('修改成功');
+                    $this->form_response_msg('Successfully modified');
                 } else {
-                    $this->form_response_msg('修改出错，请稍后再试');
+                    $this->form_response_msg('Edit error，Please try again later');
                 }
             } else {
-                $this->form_response_msg('信息不全，无法修改');
+                $this->form_response_msg('can not edit');
             }
         } else {
             $editableField = array();
@@ -11601,7 +11601,7 @@ function get_data($url, $ch) {
             $this->form_response_msg('Saved');
 
         }else{
-            $this->setData('未上线产品的口令访问 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Password access for offline products - ' . $this->site['pageTitle'], 'pageTitle');
          
 			
 			$this->setData('coupon_private_view_setting', 'submenu');
@@ -11697,12 +11697,12 @@ function get_data($url, $ch) {
             if ($this->loadModel('user')->update($data, $this->loginUser['id'])) {
                 $this->form_response_msg('Saved');
             } else {
-                $this->form_response_msg('保存失败，请稍后再试');
+                $this->form_response_msg('Fail to save，Please try again later');
             }
         } else {
 			$this->setData('store_banner_edit', 'submenu');
             $this->setData('store_setting', 'menu');
-            $this->setData('店铺Banner管理 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Banner - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/store_banner_edit');
         }
     }
@@ -11733,7 +11733,7 @@ function get_data($url, $ch) {
             if($useQrcode){
                 $shareUrl = HTTP_ROOT_WX."coupon1/".$couponId;
                 $qrCode = generateQRCode($shareUrl,'FILE');
-                if (!is_file($qrCode)) $this->form_response_msg('二维码生成出错啦，请稍后再试');
+                if (!is_file($qrCode)) $this->form_response_msg('二维码生成出错啦，Please try again later');
                 $insertImages[] = ['path'=>$qrCode, 'position'=>Position::BOTTOMRIGHT];
             }
 
@@ -11755,7 +11755,7 @@ function get_data($url, $ch) {
 		 $coupon =$mdl_coupon->get($id);
 		 if ($thhis->loginUser['id'] != $coupon['createUserId']) {
 			 
-			$this->form_response(500, '当前用户无法取消'); 
+			$this->form_response(500, 'no aceess');
 		 }
 		 $data =array (
 		    'status'=>1
@@ -11765,10 +11765,10 @@ function get_data($url, $ch) {
 	
 		 if ( $mdl_coupon->update($data,$id)) {
 				//	 $this->form_response(200, 'Saved', HTTP_ROOT_WWW . 'freshfood_edit?coupon_type=7&restaurant=1');
-				  $this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+				  $this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
 				} else {
- $this->form_response(200,'修改成功',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
-					// $this->form_response(500, '保存失败', HTTP_ROOT_WWW . 'freshfood_edit?coupon_type=7&restaurant=1');
+ $this->form_response(200,'Successfully modified',HTTP_ROOT_WWW .'company/coupons?coupon_type='.$coupon['bonusType']);
+					// $this->form_response(500, 'Fail to save', HTTP_ROOT_WWW . 'freshfood_edit?coupon_type=7&restaurant=1');
 				}
 		
 		
@@ -11796,7 +11796,7 @@ function get_data($url, $ch) {
 		         //判断如果该用户是合法用户 (比如 该记录的商家与登陆的商家相同，或者 与登陆商家的统配管理员账户相同
 				
 		      
-				$this->form_response(600,'未发现产品','未发现产品');
+				$this->form_response(600,'No product found','No product found');
 				
 				
             }else{
@@ -11809,7 +11809,7 @@ function get_data($url, $ch) {
 					 
 					 if ( ($tongpei_busi_rec[0]['business_id'] != $this->current_business['id']) && ( $uni_business_id!=$this->current_business['id']) ) {
 						///	var_dump();exit;
-							$this->form_response(600,'aa无授权','aa无授权'); 
+							$this->form_response(600,'no access','no access');
 						 
 					 }
 				 }
@@ -11820,18 +11820,18 @@ function get_data($url, $ch) {
 			
 				
 				if(!is_numeric($adjust_subtotal_amount)){
-					$this->form_response(600,'请输入数字。','不能高于');
+					$this->form_response(600,'Please input number。','');
 					
 				}
 	            $items_subtotal_old =  $list[0]['voucher_deal_amount']* $list[0]['customer_buying_quantity'];
 				//var_dump($items_subtotal_old );exit;
 				if ($adjust_subtotal_amount >$items_subtotal_old) {
-					$hint =$list[0]['voucher_deal_amount']* $list[0]['customer_buying_quantity'] .'(价格$'.(string)$list[0]['voucher_deal_amount'].'*数量'.(string)$list[0]['customer_buying_quantity'].')';
-					$this->form_response(600,'新的价格不能高于客户之前该产品购买总额：$'.$hint,'不能高于');
+					$hint =$list[0]['voucher_deal_amount']* $list[0]['customer_buying_quantity'] .'($'.(string)$list[0]['voucher_deal_amount'].'*'.(string)$list[0]['customer_buying_quantity'].')';
+					$this->form_response(600,'The new price cannot be higher than the customers previous total purchase of the product: '.$hint,'');
 				}
 				if ($adjust_subtotal_amount <0) {
 					
-					$this->form_response(600,'调整的价格不能小于0，最低为0','');
+					$this->form_response(600,'The adjusted price cannot be less than 0, and the minimum is 0','');
 				}
 				
 			}
@@ -11845,7 +11845,7 @@ function get_data($url, $ch) {
 			$order_record['business_userId']=$uni_business_id;
 			//var_dump($order_record['business_userId']);exit;
 			if (!$order_record) {
-					$this->form_response(500, '未查到订单信息！','');
+					$this->form_response(500, 'can not find order info！','');
 			}
 			// 准备好数据插入到 订单报损表种
 			
@@ -13108,9 +13108,9 @@ function get_data($url, $ch) {
 		$array_menu_price = json_decode($array_menu_price,true);
 
 		if($array_menu_price) {
-			$result['message']='数据取出成功';
+			$result['message']='success';
 		}else{
-			$result['message']='数据未取出';
+			$result['message']='error';
 		}
 
 		$mdl_restaurant_menu= $this->loadModel('restaurant_menu');
@@ -13300,9 +13300,9 @@ function get_data($url, $ch) {
 				if(!$mdl_restaurant_menu->updateByWhere($data,$where)){
 					
 					
-					$result['result']='修改成功';
+					$result['result']='Successfully modified';
 				}  else{
-					$result['result']='修改失败';
+					$result['result']='Fail to edit';
 					
 				}
 			
@@ -13329,10 +13329,10 @@ function get_data($url, $ch) {
 				//$data['menu_pic'] ='';
 			
 				if( $mdl_restaurant_menu ->insert($data)) {
-					$result['result']='插入成功';
+					$result['result']='successful';
 					
 				}else{
-					$result['result']='插入失败';
+					$result['result']='Error';
 					
 				}
 			}
@@ -13340,7 +13340,7 @@ function get_data($url, $ch) {
 			if ( $arr_no_find) {
 				$result['result']=json_encode($arr_no_find);
 			}else{
-				$result['result']='数据全部处理完成';
+				$result['result']='done!';
 			}  
 		} 
 		echo json_encode($result);
@@ -13356,9 +13356,9 @@ function get_data($url, $ch) {
 		$array_menu_price = json_decode($array_menu_price,true);
 
 		if($array_menu_price) {
-			$result['message']='数据取出成功';
+			$result['message']='success';
 		}else{
-			$result['message']='数据未取出';
+			$result['message']='error';
 		}
 
 		$mdl_restaurant_menu= $this->loadModel('restaurant_menu');
@@ -13418,7 +13418,7 @@ function get_data($url, $ch) {
 			if ( $arr_no_find) {
 				$result['result']=json_encode($arr_no_find);
 			}else{
-				$result['result']='数据全部处理完成';
+				$result['result']='done';
 			}  
 		} 
 		echo json_encode($result);
@@ -13438,9 +13438,9 @@ function get_data($url, $ch) {
 
 		if($array_menu_price) {
 			
-			$result['message']='数据取出成功';
+			$result['message']='success';
 		}else{
-			$result['message']='数据未取出';
+			$result['message']='can not access data';
 			
 		}
 		
@@ -13471,10 +13471,10 @@ function get_data($url, $ch) {
 		
 		if ($transfer_success) {
 			$mdl_local_delivery_postcodes->commit();
-			$result['message']='数据处理成功';
+			$result['message']='success';
 		} else {
 			$mdl_local_delivery_postcodes->rollback();
-			$result['message']='数据处理时出错';
+			$result['message']='error';
 		}
 		echo json_encode($result);
 		
@@ -13521,7 +13521,7 @@ function get_data($url, $ch) {
     	}, $availableDates);
     	$this->setData($availableDates, 'availableDates');
 
-    	$this->setData('OptimoRoute 控制面板 - ' . $this->site['pageTitle'], 'pageTitle');
+    	$this->setData('OptimoRoute Panel - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->setData('dispatching_center', 'menu');
         $this->setData('generate_sequence_number', 'submenu');
 		
@@ -13740,7 +13740,7 @@ function get_data($url, $ch) {
         $this->setData('customer_oproute', 'submenu');
 		
 
-    	$this->setData('OptimoRoute 控制面板 - ' . $this->site['pageTitle'], 'pageTitle');
+    	$this->setData('OptimoRoute Panel - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('company/opRouteAdmin');
 	}
 	
@@ -13778,7 +13778,7 @@ function get_data($url, $ch) {
 			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->current_business['id'],$idCreateUser['suppliers_id']);
 
 	       if ($idCreateUser['suppliers_id'] != $this->current_business['id']  || $idCreateUser['business_id'] != $this->current_business['id']  ) {
-			   	if(!$isAuthoriseCustomer ) $this->form_response(500,'未发现产品','未发现产品');
+			   	if(!$isAuthoriseCustomer ) $this->form_response(500,'No product found','No product found');
 		   }
 
 
@@ -13848,7 +13848,7 @@ function get_data($url, $ch) {
 				 $this->setData('index_publish', 'menu');
 			}
         $this->setData('dispcenter', 'submenu');
-		$this->setData('配送中心设置 - ' . $this->site['pageTitle'], 'pageTitle');
+		$this->setData('Picking Centre - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('company/dispcenter');
 	}
 
@@ -13914,7 +13914,7 @@ function get_data($url, $ch) {
         $this->setData($freight_rates_arr,'freight_fees');
 		$this->setData('index_publish', 'menu');
         $this->setData('dispcenter', 'submenu');
-		$this->setData('配送中心设置 - ' . $this->site['pageTitle'], 'pageTitle');
+		$this->setData('Dispatching  Centre  - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('company/custom_delivery_fee');
 	}
 
@@ -13970,17 +13970,17 @@ public function custom_delivery_fee_add_action()
 		
 		if($distance2<$distance1 && $distance2) {
 			
-			 $this->form_response(500,'距离范围2公里数应大于距离范围1公里数！');     
+			 $this->form_response(500,'kilometers  of the distance range of 2 should be greater than kilometers of the distance range of 1 !');
 		}
 		
 		if($distance3<$distance2  && $distance3) {
 			
-			 $this->form_response(500,'距离范围3公里数应大于距离范围2公里数！');     
+			 $this->form_response(500,'kilometers  of the distance range of 3 should be greater than kilometers of the distance range of 2 !');
 		}
 		
 		if($farest_distance<$distance3 && $farest_distance) {
 			
-			 $this->form_response(500,'最远距离公里数不应小于距离范围3公里数！');     
+			 $this->form_response(500,'The maximum distance in kilometers should not be less than the distance range 3！');
 		}
 		
 		
@@ -14085,7 +14085,7 @@ public function custom_delivery_fee_add_action()
    // var_dump($suplierList);exit;
 		$this->setData('dispatching_center', 'menu');
         $this->setData('dispcenter_add_customer', 'submenu');
-		$this->setData('配送中心设置-添加商家 - ' . $this->site['pageTitle'], 'pageTitle');
+		$this->setData('Dispatching  Centre -Add Business - ' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('company/dispcenter_add_customer');
 	}
 
@@ -14148,21 +14148,21 @@ public function custom_delivery_fee_add_action()
 
 	//	$this->form_response_msg('功能暂未开放');
 
-		if ( empty($id) ) $this->form_response_msg('请输入商家ID');
+		if ( empty($id) ) $this->form_response_msg('Please input business id');
 	
-		if ( empty($cn_displayName) ) $this->form_response_msg('请输入商家中文名称');
-		if ( empty($suppliers_name) ) $this->form_response_msg('请输入面单商家简写');
+		if ( empty($cn_displayName) ) $this->form_response_msg('Please enter the business name in Chinese');
+		if ( empty($suppliers_name) ) $this->form_response_msg('Please fill business name');
 
 		$mdl_user = $this->loadModel( 'user' );
 		$user = $mdl_user->getUserById( $id );
-		if ( !$user ) $this->form_response_msg('无此商家');
+		if ( !$user ) $this->form_response_msg('no find record');
 
 		if(strlen($pwd)<=16) {
 			$passwordByCustomMd5 = $this->md5( $pwd );
 		}else{
 			$passwordByCustomMd5 = $pwd;
 		}
-		if ( $passwordByCustomMd5 != $user['password'] ) $this->form_response_msg('密码错误');
+		if ( $passwordByCustomMd5 != $user['password'] ) $this->form_response_msg('wrong password');
 
 		$data = [];
 		$data['business_id'] = $this->loginUser['id'];
@@ -14263,7 +14263,7 @@ public function custom_delivery_fee_add_action()
 		$this->setData($list[0]['business_name'], 'business_name');
         $this->setData($list[0]['business_name_en'], 'business_name_en');
 		$this->setData($list, 'data');
-		$this->setData('配送日期设置 - ' . $this->site['pageTitle'], 'pageTitle');
+		$this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
 		
 		if(get2('freshfood')){
 			 $this->setData('open_store', 'menu');
@@ -14287,7 +14287,7 @@ public function custom_delivery_fee_add_action()
 		  if($customer_id !=$this->loginUser['id']) {
 			  
 			  if(!Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$customer_id ) ){
-				$this->form_response(500,'权限问题',HTTP_ROOT_WWW.'company/dispcenter_schedule');  
+				$this->form_response(500,'no access',HTTP_ROOT_WWW.'company/dispcenter_schedule');
 			  }
 		  }
 		
@@ -14424,7 +14424,7 @@ public function custom_delivery_fee_add_action()
 		header('Content-Disposition: attachment; filename="freshx_price_list.csv";');
 		$out = fopen('php://output', 'w');
 		if (count($new) > 0) {
-			fputcsv($out, ['新增产品数据']);
+			fputcsv($out, ['new product item']);
 			fputcsv($out, ['ID', 'Name', 'Image', 'Unit', 'Category', 'Price', 'last_update']);
 			foreach ($new as $item) {
 				fputcsv($out, array_values((array)$item));
@@ -14471,7 +14471,7 @@ public function custom_delivery_fee_add_action()
 	public function freshx_order_update_ajax_action()
 	{	
 		if ($this->loginUser['id'] != 218639 && $this->loginUser['id'] != 25201) {
-			$this->sheader(null,'您无权限访问该页面');
+			$this->sheader(null,'no access');
 		}
 
 		$freshx_order_id = get2('freshx_order_id');
@@ -14521,7 +14521,7 @@ public function custom_delivery_fee_add_action()
 	public function freshx_order_import_action()
 	{	
 		if ($this->loginUser['id'] != 218639) {
-			$this->sheader(null,'您无权限访问该页面');
+			$this->sheader(null,'no access');
 		}
 		$mdl_order = $this->loadModel('order');
 
@@ -15249,7 +15249,7 @@ public function custom_delivery_fee_add_action()
 
         $this->setData('Logistic_centre', 'menu');
         $this->setData('export_driver_route', 'submenu');
-        $this->setData('导出路程单 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Export Route Sheet - ' . $this->site['pageTitle'], 'pageTitle');
 
 
         $this->display('company/export_driver_route');
@@ -15307,7 +15307,7 @@ public function custom_delivery_fee_add_action()
 		
 		$this->setData('Logistic_centre', 'menu');
         $this->setData('export_driver_route', 'submenu');
-		$this->setData('导出路程单 - ' . $this->site['pageTitle'], 'pageTitle');
+		$this->setData('Export routes sheet - ' . $this->site['pageTitle'], 'pageTitle');
 		
 		
         $this->display('company/export_driver_route');
@@ -15341,9 +15341,9 @@ public function import_new_order_xiaochengxu_action() {
 
 		if($order_import_data) {
 			
-			$result['message']='数据取出成功';
+			$result['message']='success';
 		}else{
-			$result['message']='数据未取出';
+			$result['message']='can not access data';
 			
 			
 			
@@ -15354,7 +15354,7 @@ public function import_new_order_xiaochengxu_action() {
 		//$result['message']=(string)$business_id0;
 		//		echo json_encode($result); return;
 		
-	//	$result['message']='数据未取出';
+	//	$result['message']='can not access data';
 		//echo json_encode($result);
 		//
 		/*if($this->loginUser['id'] !=25201) {
@@ -15416,12 +15416,12 @@ public function import_new_order_xiaochengxu_action() {
 			$data['address'] =$value['Address'];
 			$data['phone'] ='0'.$value['Phone'];
 			
-			if($value['PaymentStatus']=='已支付') {
+			if($value['PaymentStatus']=='Paid') {
 				$data['status'] ='1';
 				
 			}
 			
-			if($value['DeliverMethod']=='仅配送') {
+			if($value['DeliverMethod']=='Only Delviery') {
 				$data['customer_delivery_option'] ='1';
 				
 			}
@@ -15489,9 +15489,9 @@ public function import_new_order_xiaochengxu_action() {
 
 		if($order_import_data) {
 			
-			$result['message']='数据取出成功';
+			$result['message']='success';
 		}else{
-			$result['message']='数据未取出';
+			$result['message']='can not access data';
 			
 			
 			
@@ -15502,7 +15502,7 @@ public function import_new_order_xiaochengxu_action() {
 		//$result['message']=(string)$business_id0;
 		//		echo json_encode($result); return;
 		
-	//	$result['message']='数据未取出';
+	//	$result['message']='can not access data';
 		//echo json_encode($result);
 		//
 		/*if($this->loginUser['id'] !=25201) {

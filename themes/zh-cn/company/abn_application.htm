@@ -37,8 +37,8 @@
 						<!-- processing -->
 						
 					<div class="input-box clearfix">
-						<h1>ABN/ACN认证申请成功提交</h1>
-						<p>ABN/ACN认证申请已成功提交，正常审批速度为24小时，如果您填写了email,结果会在24小时之内发送至您的email.如果您未填写Email，请稍后再检查该页面（最长等待时间为24小时）。如有任联系Cityb2b商家服务中心</p>
+						<h1>ABN/ACN certification application successfully submitted</h1>
+						<p>The ABN/ACN certification application has been successfully submitted, and the normal approval speed is 24 hours. If you fill in the email, the result will be sent to your email within 24 hours. If you do not fill in the email, please check this page later (the most Long wait time of 24 hours). If you have any questions, please contact Cityb2b Admin Center</p>
 					</div>
 					<div class="input-box input-submit clearfix">
 							<button type="button" onClick="window.location.href='<{$http_root_www}>company/index';" > 返回</button>
@@ -48,12 +48,12 @@
 					<{elseif $data.isApproved==1}>
 						<!-- Approved -->
 						<div class="input-box clearfix">
-							<h1>ABN/ACN认证申请成功</h1>
-							<p>该信息审核的通过是您可以在发布产品的时候无需再审批</p>
+							<h1>ABN/ACN certification application is successful</h1>
+							<p>The approval of this information means that you can release the product without further approval.</p>
 						</div>
 
 						<div class="input-box clearfix">
-							<span><label>实体名(正式)</label></span>
+							<span><label>Utility Name</label></span>
 							<{$data.untity_name}>
 						</div>
 						
@@ -63,18 +63,18 @@
 						</div>
 
 						 <div class="input-box input-submit clearfix">
-							<button type="button" onClick="window.location.href='<{$http_root_www}>company/abn_destory';" > 注销认证</button>
+							<button type="button" onClick="window.location.href='<{$http_root_www}>company/abn_destory';" > Cancellation of authentication</button>
 						</div>
 
 					<{elseif $data.isApproved==0}>
 						<!-- Not submit yet -->
 						<div class="input-box clearfix">
-							<h1>ABN/ACN认证申请</h1>
+							<h1>ABN/ACN certification application</h1>
 						</div>
 
 						<div class="input-box clearfix">
-							<span><label>实体名(正式)</label></span>
-							<input type="text" class="input-text" value="<{$data.untity_name}>" name="untity_name" required/><em style="color:red">*</em>（客户不可见，只用于备案）
+							<span><label>Utility Name</label></span>
+							<input type="text" class="input-text" value="<{$data.untity_name}>" name="untity_name" required/><em style="color:red">*</em>
 						</div>
 						
 						<div class="input-box clearfix">
@@ -88,7 +88,7 @@
 						  </div> -->
 
 						<div class="input-box input-submit clearfix">
-							<button type="submit"> 提交ABN/ACN认证申请</button>
+							<button type="submit">Submit ABN/ACN Certification Application</button>
 					<!--		<button type="button" onClick="window.location.href='<{$http_root_www}>message/write';" > 发消息给Ubonus</button> -->
 						</div>
 					    

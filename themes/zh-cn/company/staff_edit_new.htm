@@ -40,7 +40,14 @@
 
 				<div class="box2">	
 
+<div class="main-form">			
+				<form id="memberForm" class='form-style-green' action="" method="post" target="post_frame" enctype="multipart/form-data">
 
+				<div class="input-box multi-select clearfix">
+
+							<h1><{$lang->edit_employees}></h1>
+
+						</div> </form> </div>
 
 					<div class="main-form">			
 
@@ -48,7 +55,7 @@
 
 							<div class="input-box clearfix">	
 
-								<span><label>管理员登录用户名</label></span>		
+								<span><label>Login Name</label></span>		
 
 								<{if $data.id}> 
 								<small><{$data.name}></small>
@@ -59,7 +66,7 @@
 								
 
 								<{if $data.id}> 
-									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>重置密码</label>
+									<label for="change_password1" style='margin: 0px;padding: 5px 20px;'>Reset Password</label>
 									<input type="checkbox" name="change_password" value="1" id="change_password1" onClick="if (this.checked) $('.pwd').show(200); else $('.pwd').hide(200);" />
 								<{/if}>	
 
@@ -67,7 +74,7 @@
 
 							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
 
-								<span><label>密码</label></span>	
+								<span><label>Password</label></span>	
 
 								<input type="password" name="password" class="input-text" value="" />	
 
@@ -77,7 +84,7 @@
 
 							<div class="input-box pwd clearfix"<{if $data.id}> style="display:none;"<{/if}>>	
 
-								<span><label>确认密码</label></span>		
+								<span><label>Confirm Password</label></span>		
 
 								<input type="password" name="password2" class="input-text" value="" />	
 
@@ -138,23 +145,23 @@
 
 
 							<div class="input-box multi-select clearfix">
-								<span><label>昵称</span>
-								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder='Eg:墨尔本总部'/>
+								<span><label>Nickname</span>
+								<input type="text" class="input-text" value="<{$data.contactPersonNickName}>" name="contactPersonNickName" placeholder='Eg:jack'/>
 							</div>
 							
 							
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人姓</label></span>
+								<span><label>Last Name</label></span>
 								<input type="text" class="input-text" value="<{$data.contactPersonLastname}>" name="contactPersonLastname" />
 							</div>
 
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人名</label></span>
+								<span><label>First Name</label></span>
 								<input type="text" class="input-text" value="<{$data.contactPersonFirstname}>" name="contactPersonFirstname" />
 							</div>
 							
 							<div class="input-box multi-select clearfix">
-								<span><label>联系人电话</label></span>
+								<span><label>phone</label></span>
 								<input type="text" class="input-text" value="<{$data.contactMobile}>" name="contactMobile" />
 							</div>
 
@@ -190,11 +197,11 @@
 
 
 
-									<span><label>号码</label></span>
+									<span><label>Number</label></span>
 
 									<input type="text" class="input-text" value="<{$data.addrNumber}>" name="street_number" style="width:110px;" />
 
-									街道<input type="text" class="input-text" value="<{$data.addrStreet}>" name="route"  style="width:202px;" />
+									Street<input type="text" class="input-text" value="<{$data.addrStreet}>" name="route"  style="width:202px;" />
 
 								</div>
 
@@ -204,7 +211,7 @@
 
 									<input type="text" class="input-text" value="<{$data.addrPost}>" name="postal_code"  style="width:110px;" />
 
-									城市<input type="text" class="input-text" value="<{$data.addrSuburb}>" name="locality"  style="width:202px;" />
+									Suburb<input type="text" class="input-text" value="<{$data.addrSuburb}>" name="locality"  style="width:202px;" />
 
 								</div>
 
@@ -302,7 +309,7 @@
 
 								<button type="submit" style='float:left'><{$lang->save}></button>	
 
-								<a onClick='return confirm("删除员工会导致订单中自取点信息缺失，确认要删除该员工？")' href ="<{$http_root_www}>company/staff_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>删除该员工</a>	
+								<a onClick='return confirm("Deleting an employee will result in the loss of self-pickup point information in the order. Are you sure you want to delete the employee?")' href ="<{$http_root_www}>company/staff_delete?id=<{$data.id}>" onclick="" style='float:right;color:#f30'><{$lang->delete}></a>	
 
 
 							</div>		

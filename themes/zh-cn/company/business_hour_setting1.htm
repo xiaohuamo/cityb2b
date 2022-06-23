@@ -53,7 +53,7 @@
 			<div class="box2"><a name="pagename"></a>
            		<div class="main-form">
 				<div class="colCurTit clearfix">
-						<h1>设置餐厅营业时间</h1>
+						<h1>Set Trading Hours</h1>
 					</div>
 
 			
@@ -76,19 +76,19 @@
 
 						<div class="input-box clearfix ">
 						  	<div >
-							<span><label>相关描述</label></span>
+							<span><label>Notes</label></span>
 							</div>
 						</div>
 							<div style="   background-color: #f0f0f0; padding-left: 10px;   padding-top: 10px;padding-bottom: 20px;">
-							<textarea  id="trading_hours_desc" style="width:98%; " name="trading_hours_desc"  rows="4" cols="70" maxlength="100" placeholder='请输入更多营业时间说明...'><{$loginUser.trading_hours_desc}></textarea>
-							<br><em style="font-size:90%" >比如一些特殊节假日的作息时间</em><br>
+							<textarea  id="trading_hours_desc" style="width:98%; " name="trading_hours_desc"  rows="4" cols="70" maxlength="100" placeholder='Please enter more business hours description...'><{$loginUser.trading_hours_desc}></textarea>
+							<br><em style="font-size:90%" >For example, the work and rest time of some special holidays</em><br>
 
 						</div>
 
 						<div class="input-box input-submit clearfix">
 	
 							<button id="btnSerialize" class="btn btn-primary" type="button" style="float:left;margi-left:150px;"> 
-								保存
+								<{$lang->save}>
 							</button>
 						</div>
 
@@ -173,7 +173,7 @@
 
                        // result=JSON.parse(result);
 
-                        alert('保存成功');
+                        alert('Save Successful');
 
                        
                     }catch(err){

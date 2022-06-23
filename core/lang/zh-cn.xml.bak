@@ -118,7 +118,7 @@
 	<statement>对账单（Statement）</statement>
     <transcations>往来账（Transcation)</transcations>
 	 <new_transcation>新交易</new_transcation>
-	 
+	   
 	 <weekly_selling>周销售</weekly_selling>
 	  <daily_selling>日销售</daily_selling>
 	
@@ -1014,10 +1014,11 @@
     <action>动作描述</action>
 
     <operating>操作</operating>
-
+ <staff_permission>Staff permission</staff_permission>
 
     <!-- 43 -->
     <underline_payment>线下支付</underline_payment>
+	<staff_list>员工列表</staff_list>
     <payment_instructions_with_underline>线下支付说明</payment_instructions_with_underline>
 
     <!-- 46 -->

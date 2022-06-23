@@ -62,9 +62,9 @@ class ctl_factory extends cmsPage
 
         $this->setData($this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']), 'businessDisplayName');
 
-        $this->setData('工厂首页', 'pagename');
+        $this->setData('Home page', 'pagename');
         $this->setData('index', 'menu');
-        $this->setData('工厂中心 - '.$this->site['pageTitle'], 'pageTitle');
+        $this->setData('Home page - '.$this->site['pageTitle'], 'pageTitle');
         $this->display_pc_mobile('factory/index', 'factory/index');
     }
 
@@ -1216,7 +1216,7 @@ where o.business_userId =$FactoryId ";
 }
 
 	public function publish_action() {
-		$this->setData('发布中心 - '.$this->site['pageTitle'], 'pageTitle');
+		$this->setData('Publish Centre - '.$this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('mobile/factory/publish', 'mobile/factory/publish');
 		
@@ -1224,7 +1224,7 @@ where o.business_userId =$FactoryId ";
 	}
 	
 	public function packaging_action() {
-		$this->setData('发布中心 - '.$this->site['pageTitle'], 'pageTitle');
+		$this->setData('Publish Centre - '.$this->site['pageTitle'], 'pageTitle');
 
         $this->display_pc_mobile('mobile/factory/packaging', 'mobile/factory/packaging');
 		
@@ -1399,7 +1399,7 @@ where o.business_userId =$FactoryId ";
         $this->setData('online_center', 'menu');
         $this->setData('customer_coupon_process', 'submenu');
 
-        $this->setData('订单详情 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle');
+        $this->setData('Order Details - Business centre - '.$this->site['pageTitle'], 'pageTitle');
 
 
         $this->display('factory/customer_order_detail_full_control');
@@ -1638,7 +1638,7 @@ where o.business_userId =$FactoryId ";
 
             $list = $mdl_wj_customer_coupon->getListBySql($sql);
             if (! $list) {
-                $this->form_response(600, '未发现产品', '未发现产品');
+                $this->form_response(600, 'no find recrod', '');
             } else {
                 $uni_business_id = $list[0]['business_id'];
                 $sql1 = "select business_id  from cc_freshfood_disp_centre_suppliers  where suppliers_id =".$uni_business_id;
@@ -1646,7 +1646,7 @@ where o.business_userId =$FactoryId ";
                 if ($tongpei_busi_rec) {
 
                     if (($tongpei_busi_rec[0]['business_id'] != $this->loginUser['id']) && ($uni_business_id != $this->loginUser['id'])) {
-                        $this->form_response(600, 'aa无授权', 'aa无授权');
+                        $this->form_response(600, 'no access', '');
                     }
                 }
 
@@ -1654,16 +1654,16 @@ where o.business_userId =$FactoryId ";
                 $coupon_id = $list[0]['bonus_id'];
 
                 if (! is_numeric($adjust_subtotal_amount)) {
-                    $this->form_response(600, '请输入数字。', '不能高于');
+                    $this->form_response(600, 'Please input Number。', '');
                 }
                 $items_subtotal_old = $list[0]['voucher_deal_amount'] * $list[0]['customer_buying_quantity'];
                 if ($adjust_subtotal_amount > $items_subtotal_old) {
-                    $hint = $list[0]['voucher_deal_amount'] * $list[0]['customer_buying_quantity'].'(价格$'.(string) $list[0]['voucher_deal_amount'].'*数量'.(string) $list[0]['customer_buying_quantity'].')';
-                    $this->form_response(600, '新的价格不能高于客户之前该产品购买总额：$'.$hint, '不能高于');
+                    $hint = $list[0]['voucher_deal_amount'] * $list[0]['customer_buying_quantity'].'('.(string) $list[0]['voucher_deal_amount'].'*'.(string) $list[0]['customer_buying_quantity'].')';
+                    $this->form_response(600, 'The new price cannot be higher than the customers previous total purchase of the product：$'.$hint, '');
                 }
                 if ($adjust_subtotal_amount < 0) {
 
-                    $this->form_response(600, '调整的价格不能小于0，最低为0');
+                    $this->form_response(600, 'The adjusted price cannot be less than 0, and the minimum is 0');
                 }
             }
 
@@ -1675,7 +1675,7 @@ where o.business_userId =$FactoryId ";
 
             $order_record['business_userId'] = $uni_business_id;
             if (! $order_record) {
-                $this->form_response(500, '未查到订单信息！');
+                $this->form_response(500, 'no find record！');
             }
             // 准备好数据插入到 订单报损表种
 
@@ -3071,20 +3071,20 @@ public function return_items_submit_to_statment_action() {
                     $img_path = str_replace('../../..', '', $new_file);
                     $this->loadModel('user')->saveAvatar($this->loginUser['id'],$filename);
                     $this->cut_image($filename,100,100,'fill',false,true);
-                    $str = '图片上传成功</br>![](' .$img_path.' '.$new_file. ')';
+                    $str = 'Image upload successfully</br>![](' .$img_path.' '.$new_file. ')';
                     $this->loginUser['avatar'] =$filename;
                 }else{
-                    $str =  '图片上传失败</br>';
+                    $str =  'Image upload failed</br>';
 
                 }
             }else{
                 //文件类型错误
-                $str =  '图片上传类型错误';
+                $str =  'mage upload type is wrong';
             }
 
         }else{
             //文件错误
-            $str =  '文件错误';
+            $str =  'file error';
         }
 
 
@@ -4208,10 +4208,10 @@ public function return_items_submit_to_statment_action() {
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
-        $this->setData('销售员管理', 'pagename');
+        $this->setData('Sales Staff List', 'pagename');
         $this->setData('staff_sales', 'submenu');
         $this->setData('advanced_setting', 'menu');
-        $this->setData('销售员管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Sales Staff List - Business centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/staff_sales');
     }
  public   function staff_sales_edit_action()
@@ -4274,9 +4274,9 @@ public function return_items_submit_to_statment_action() {
                 );
 
                 if ($change_password) {
-                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                    if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                    if ($password != $password2)$this->form_response_msg('确认密码与密码填写不一致');
+                    if ($password != $password2)$this->form_response_msg('Confirm password does not match the entered password');
 
                     $passwordByCustomMd5 = $this->md5($password);
 
@@ -4288,21 +4288,21 @@ public function return_items_submit_to_statment_action() {
 
                     $this->form_response(200,'Saved successful',HTTP_ROOT_WWW.'factory/staff_sales');
                 } else {
-                    $this->form_response_msg('保存成功');
+                    $this->form_response_msg('Save successful');
                 }
 
             } else {
-                if (empty($name) ) $this->form_response_msg('请填写用户名');
+                if (empty($name) ) $this->form_response_msg('Please fill user name');
 
-                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('该用户名已经存在');
+                if ($mdl_user->chkUserName($name) > 0)$this->form_response_msg('User name is exist');
 
                 if (!$mdl_reg->chkUserName($name))$this->form_response_msg((string)$this->lang->remind_user_register_5);
 
-                if (empty($password)) $this->form_response_msg('请填写密码');
+                if (empty($password)) $this->form_response_msg('Please fill password');
 
-                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('密码需要6-16个由a-z，A-Z，0-9以及下划线组成的字符串');
+                if (!$mdl_reg->chkPassword($password)) $this->form_response_msg('Password requires 6-16 strings consisting of a-z, A-Z, 0-9 and underscores');
 
-                if ($password != $password2) $this->form_response_msg('确认密码与密码填写不一致');
+                if ($password != $password2) $this->form_response_msg('Confirm password does not match the entered password');
 
                
 
@@ -4351,16 +4351,16 @@ public function return_items_submit_to_statment_action() {
                 $data['needReapprovedAfterEdit'] = 1;
                 $data['isApproved'] = 1;
 
-                if ($mdl_user->addUser($data)) $this->form_response(200,'保存成功',HTTP_ROOT_WWW.'factory/staff_sales');
+                if ($mdl_user->addUser($data)) $this->form_response(200,'Save successful',HTTP_ROOT_WWW.'factory/staff_sales');
 
             }
 
         } else {
             $this->setData($staff);
-            $this->setData('销售员工管理', 'pagename');
+            $this->setData('Staff List', 'pagename');
             $this->setData('staff_sales', 'submenu');
             $this->setData('advanced_setting', 'menu');
-            $this->setData('员工管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+            $this->setData('Staff List - Business centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('factory/staff_sales_edit');
         }
     }

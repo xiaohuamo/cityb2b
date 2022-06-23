@@ -92,7 +92,7 @@
 
 						<div class="main-form">				
 							<div class="colCurTit clearfix">
-						<h1>商家描述</h1>
+						<h1>Business Info</h1>
 					</div>
 					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/profile" method="post" target="post_frame" enctype="multipart/form-data">
 
@@ -101,10 +101,10 @@
 
 						<div class="input-box clearfix">
 
-							<span><label>店铺名<!--<{$lang->showing_company_name}>--></label></span>
+							<span><label>Shop Name<!--<{$lang->showing_company_name}>--></label></span>
 
 							<input type="text" class="input-text" value="<{$loginUser.displayName}>" name="displayName" />
-                       <em>trading name  如: 天府川菜管</em>
+                       <em>trading name  </em>
 						</div>
 						<div class="input-box clearfix">
 
@@ -116,7 +116,7 @@
 
 
 						<div id="city_list" class="input-box clearfix " >
-							<span><label>商家位置</label></span>
+							<span><label>Location</label></span>
 
 							<{foreach from=$fullcitylist item=country}>
 								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
@@ -129,7 +129,7 @@
 									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
 									<{foreach from=$country.child item=city}>
 									<em style="display: inline-block;min-width: 150px">
-										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="city<{$city.id}>"> <{if $langStr == 'zh-cn'}> <{$city.name}> <{else}>	<{$city.en_name}> <{/if}></label>
 									</em>
 									<!--
 										<{if $city.child}>
@@ -247,14 +247,14 @@
 								</div>
 								<div class="input-box clearfix"  >
 
-									<span><label>号码</label></span>
+									<span><label>Number</label></span>
 									<input type="text" class="input-text" value="<{$loginUser.addrNumber}>" name="street_number" style="width:160px;" />
-									街道<input type="text" class="input-text" value="<{$loginUser.addrStreet}>" name="route"  style="width:202px;" />
+									Street<input type="text" class="input-text" value="<{$loginUser.addrStreet}>" name="route"  style="width:202px;" />
 								</div>
 								<div class="input-box clearfix"  >
-									<span><label>城市</label></span>
+									<span><label>City</label></span>
 									<input type="text" class="input-text" value="<{$loginUser.addrSuburb}>" name="locality"  style="width:160px;" />
-									邮编<input type="text" class="input-text" value="<{$loginUser.addrPost}>" name="postal_code"  style="width:202px;" />
+									PostCode<input type="text" class="input-text" value="<{$loginUser.addrPost}>" name="postal_code"  style="width:202px;" />
 								</div>
 								<div class="input-box clearfix" >
 									<span><label>State</label></span>
@@ -305,13 +305,13 @@
 							<span><label><{$lang->legal_company_name}>（option)</label></span>
 							
 							<input type="text" class="input-text" value="<{$loginUser.businessName}>" name="businessName" />
-                          <em>注册的公司名称 xxx Pty Ltd etc.</em>
+                          <em>Utlily Name  xxx Pty Ltd etc.</em>
 						</div>
 						<div id="div03" class="input-box clearfix">
 
 							<span>
 
-							<label>商家介绍（选填）</label>
+							<label>Business Desc</label>
 
 							</span>
 

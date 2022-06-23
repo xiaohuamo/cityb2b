@@ -52,20 +52,20 @@
 			 
 				<div class="main-form">
 				<div class="colCurTit clearfix">
-						<h1>logo</h1>
+						<h1>商家logo</h1>
 					</div>
 					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/logo" method="post" target="post_frame" enctype="multipart/form-data">	
 						<div class="input-box clearfix">
 							
-							<p style="    margin-left: 10px;">Please upload an image with a minimum size of 400 X 400. If the size is too small, the picture will not be clear</p>
+							<p style="    margin-left: 10px;">请上传尺寸最小为 400 X 400 的图片。 尺寸过小会导致图片不清晰</p>
 						</div>
 
 						<div class='upload_image_list' data-cropsize='400,400' data-listsize='1'>
-							<span class='image_view_add' style="display: none">Add Picture</span>
+							<span class='image_view_add' style="display: none">添加一张图片</span>
 						</div>
 
 						<div class="input-box input-submit clearfix">
-							<button type="submit" ><{$lang->save}></button>
+							<button type="submit" >保存修改</button>
 						</div>
 					</form>
 					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
@@ -164,7 +164,7 @@
 	};
 
 	$(function(){
-		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>No cropping, padding and scaling after uploading</label><button type='button' class='close'>x</button></form>");
+		$('body').append("<form class='image_uploader'><label class='hd_label'>图片裁剪</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>不裁剪，上传后补白缩放</label><button type='button' class='close'>x</button></form>");
 	})
 
 	$(function(){

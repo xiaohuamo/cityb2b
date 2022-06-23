@@ -37,7 +37,7 @@
 
 					
 					<div class="colCurTit clearfix">
-						<h1>&nbsp;员工授权</h1>
+						<h1>&nbsp;<{$lang->staff_permission}></h1>
 					</div>
 
 
@@ -45,10 +45,10 @@
 
 						<div class="input-box clearfix" >
 							<div class=' form-style-green '>
-								<span><label>选择要分配权限的员工</label></span>
+								<span><label>Choose Staff</label></span>
 							</div>
 							<select   name="staff_id" class="ahibw" onChange="staffChg(this);">
-								<option value="0" >员工列表  </option>
+								<option value="0" >Staff List  </option>
 								<{foreach from=$stafflist item=item}>
 								<option value="<{$item.id}>"  <{if $item.id ==$current_staff.staff_id}> selected  <{/if}> ><{$item.staffname}>&nbsp;(<{$item.id}>)  </option>
 								<{/foreach}>
@@ -61,18 +61,20 @@
 						<div id="$departmentlist" class="input-box clearfix " >
 
 							<div class=' form-style-green '>
-								<span><label>选择部门角色</label></span>
+								<span><label>Choose Roles </label></span>
 							</div>
 							<{foreach from=$departmentlist item=department}>
 
 								<div style="margin-left: 220px;" class='department<{$department.id}>' >
-									<input type="checkbox" class='checkall'><small><{$department.department_name_cn}></small><br>
+									<input type="checkbox" class='checkall'><small>
+									 <{if $langStr == 'zh-cn'}> <{$department.department_name_cn}>	 <{else}><{$department.department_name_en}>   <{/if}>
+									</small><br>
 
 
 									<{foreach from=$department.roles item=roles}>
 
 									<em style="margin-left: 50px;display: inline-block;min-width: 150px">
-										<input class='cl2' type="checkbox" name="roles[]" value="<{$roles.id}>" id="roles<{$roles.id}>" <{if in_array($roles.id, explode(',', $current_staff.roles))}> checked<{/if}> /><label for="$roles<{$roles.id}>"><{$roles.role_cn_name}></label>
+										<input class='cl2' type="checkbox" name="roles[]" value="<{$roles.id}>" id="roles<{$roles.id}>" <{if in_array($roles.id, explode(',', $current_staff.roles))}> checked<{/if}> /><label for="$roles<{$roles.id}>"> <{if $langStr == 'zh-cn'}> <{$roles.role_cn_name}>	 <{else}>  <{$roles.role_en_name}> <{/if}> </label>
 									</em>
 
 									<{/foreach}>

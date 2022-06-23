@@ -949,7 +949,8 @@
     <payment_setting>Payment setting</payment_setting>
     <online_payment_application>Online payment application</online_payment_application>
     <abn_authentication>ABN/CAN authentication</abn_authentication>
-    <new_employees>New employees</new_employees>
+    <new_employees>New Staff</new_employees>
+	<edit_employees>Staff Edit</edit_employees>
     <branch>Branch</branch>
     <administrators>Administrators</administrators>
     <name_of_branch_store>Name of branch store</name_of_branch_store>
@@ -980,6 +981,8 @@
     <buying_2>Person</buying_2>
 
     <underline_payment>Offline Payment</underline_payment>
+	<staff_list>Staff List</staff_list>
+	<staff_permission>Staff permission</staff_permission>
     <payment_instructions_with_underline>Offline pay Desc</payment_instructions_with_underline>
 
     <!-- 41 -->

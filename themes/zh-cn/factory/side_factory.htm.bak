@@ -394,10 +394,10 @@
 				</a> -->
 				
 				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
-					按周销售分析
+					<{$lang->weekly_selling}>
 				</a>
 					<a href="<{$http_root_www}>chart_per_business/selling_daily"<{if $submenu=='selling_daily'}> class="current"<{/if}>>
-					按日销售分析
+					<{$lang->daily_selling}>
 				</a>
 				<{if $loginUser['role'] !=101}>
 				<!--
@@ -473,7 +473,7 @@
                     <{$lang->redeem_staff}>
 				</a>
 				<a href="<{$http_root_www}>company/staffnew" <{if $submenu=='staffnew'}> class="current"<{/if}>>
-				员工管理
+				<{$lang->staff_list}>
 				</a>
 				<a href="<{$http_root_www}>company/staff_permissions" <{if $submenu=='staff_permissions'}> class="current"<{/if}>>
 			<!--	<{$lang->staff_permissions}> -->员工授权

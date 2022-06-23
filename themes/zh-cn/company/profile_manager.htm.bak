@@ -39,7 +39,7 @@
               
 				<div class="main-form">
 				<div class="colCurTit clearfix">
-						<h1>Admin Info</h1>
+						<h1>联系信息</h1>
 					</div>
 
 					<form id="memberForm" class ='form-style-green' action="<{$http_root_www}>company/profile_manager" method="post" target="post_frame">
@@ -61,7 +61,7 @@
 					
 
 						<div class="input-box clearfix">
-							<span><label>phone</label></span>
+							<span><label>商家电话</label></span>
 							<input type="text" name="tel" class="input-text" value="<{$loginUser.tel}>" />
 						</div>
 						
@@ -75,13 +75,13 @@
 
 						<hr><br>
 	                    <div class="input-box clearfix">	
-							<span><label>Email</label></span>		
+							<span><label>登陆邮箱地址</label></span>		
 							<input type="text" name="email" class="input-text" value="<{$loginUser.email}>" />
 						</div>
 						<div class="input-box clearfix">
 							<span><label><{$lang->information_mailbox}></label></span>
                             <input style="width: 50%" type="text" name="backupEmail" class="input-text" value="<{$loginUser.backupEmail}>" />
-						 <em>If you do not fill in the same email address as above, the registered email address of some merchants is different from the login email address, so they should be distinguished.</em>
+						 <em>如不填与上面邮箱地址相同,某些商家注册邮箱与登陆邮箱不同,予以区别</em>
 						</div>
 
 						<input type='hidden' name='returnUrl' value = '<{$returnUrl}>'>

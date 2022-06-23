@@ -954,6 +954,7 @@
     <online_payment_application>在线支付申请</online_payment_application>
     <abn_authentication>ABN/CAN 认证</abn_authentication>
     <new_employees>新建员工</new_employees>
+	<edit_employees>员工编辑</edit_employees>
     <branch>分店</branch>
     <administrators>管理员</administrators>
     <name_of_branch_store>分店名称</name_of_branch_store>
@@ -1014,10 +1015,11 @@
     <action>动作描述</action>
 
     <operating>操作</operating>
-
+ <staff_permission>Staff permission</staff_permission>
 
     <!-- 43 -->
     <underline_payment>线下支付</underline_payment>
+	<staff_list>员工列表</staff_list>
     <payment_instructions_with_underline>线下支付说明</payment_instructions_with_underline>
 
     <!-- 46 -->
