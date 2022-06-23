@@ -1554,13 +1554,13 @@ public function get_business_delivery_des ($business_id){
 		$delivery_desc ="";
 		
 		if( $start_amount>0){
-			$delivery_desc ="起送金额".$start_amount.'.';
+			$delivery_desc ="Minimum delivery amount".$start_amount.'.';
 		}else{
-			$delivery_desc ="无起订金额".'.';
+			$delivery_desc ="No minimum order amount".'.';
 		}
 		
 		if( $free_delivery_amount >0){
-			$delivery_desc =$delivery_desc." ,免运金额".$free_delivery_amount.'.';
+			$delivery_desc =$delivery_desc." ,Free shipping amount".$free_delivery_amount.'.';
 		}
 		
 		if($freight_rates_arr){
@@ -1570,23 +1570,23 @@ public function get_business_delivery_des ($business_id){
 			
 				if($value['end_amount1']>=9999) {
 					
-					$freight_rates_arr[$key]['end_amount11'] = '<br>'.$index.') 订单额大于$'.(int)$start_amount;
+					$freight_rates_arr[$key]['end_amount11'] = '<br>'.$index.') The order amount is greater than$'.(int)$start_amount;
 				}else{
-					$freight_rates_arr[$key]['end_amount11'] = '<br>'.$index.') 订单额$'.(int)$start_amount.'-$'.(int)$value['end_amount1'];
+					$freight_rates_arr[$key]['end_amount11'] = '<br>'.$index.') Order amount$'.(int)$start_amount.'-$'.(int)$value['end_amount1'];
 				}
 				
 				
-				$delivery_desc_new =' '.$freight_rates_arr[$key]['end_amount11'].','.$value['distance1'].'km内';
+				$delivery_desc_new =' '.$freight_rates_arr[$key]['end_amount11'].', in'.$value['distance1'].'km';
 				
 				if($value['delivery_fees1']<=0) {
-					$delivery_desc_new =$delivery_desc_new .'免运,';
+					$delivery_desc_new =$delivery_desc_new .'Free shipping,';
 				}else{
-					$delivery_desc_new =$delivery_desc_new .'运费'.$value['delivery_fees1'].',';
+					$delivery_desc_new =$delivery_desc_new .'Delivery fee '.$value['delivery_fees1'].',';
 				}
 				
 				
 				if($value['plus_fees_per_km_1']>0){					
-					$delivery_desc_new =$delivery_desc_new .' 并从0公里开始，加收$'.$value['plus_fees_per_km_1'].'/km的运费，';
+					$delivery_desc_new =$delivery_desc_new .' and start from 0 km, plus$'.$value['plus_fees_per_km_1'].'/km，';
 				}
 				
 				if($value['distance2']){
@@ -1595,14 +1595,14 @@ public function get_business_delivery_des ($business_id){
 					
 					
 					if($value['delivery_fees2']<=0) {
-						$delivery_desc_new =$delivery_desc_new .'免运费,';
+						$delivery_desc_new =$delivery_desc_new .'Free charge,';
 					}else{
-						$delivery_desc_new =$delivery_desc_new .'运费$'.$value['delivery_fees2'].',';
+						$delivery_desc_new =$delivery_desc_new .'Delivery Fee $'.$value['delivery_fees2'].',';
 					}
 				
 						
 					if($value['plus_fees_per_km_2']>0){					
-						$delivery_desc_new =$delivery_desc_new .' 并从'.$value['distance1'].'km开始，加收$'.$value['plus_fees_per_km_2'].'/km的运费，';
+						$delivery_desc_new =$delivery_desc_new .' From'.$value['distance1'].'km，charge $'.$value['plus_fees_per_km_2'].'/km，';
 					}
 				}
 				
@@ -1612,17 +1612,17 @@ public function get_business_delivery_des ($business_id){
 					
 					
 					if($value['delivery_fees3']<=0) {
-						$delivery_desc_new =$delivery_desc_new .'免运费,';
+						$delivery_desc_new =$delivery_desc_new .'Free shipping,';
 					}else{
-						$delivery_desc_new =$delivery_desc_new .'运费$'.$value['delivery_fees3'].',';
+						$delivery_desc_new =$delivery_desc_new .'Delivery fee $'.$value['delivery_fees3'].',';
 					}
 					
 					if($value['plus_fees_per_km_3']>0){					
-						$delivery_desc_new =$delivery_desc_new .' 并从'.$value['distance2'].'km开始，加收$'.$value['plus_fees_per_km_3'].'/km的运费，';
+						$delivery_desc_new =$delivery_desc_new .' and From '.$value['distance2'].'km，will charge $'.$value['plus_fees_per_km_3'].'/km，';
 					}
 				}
 				
-				$delivery_desc_new = $delivery_desc_new .'超过'.$value['farest_distance'].'km不配送！';
+				$delivery_desc_new = $delivery_desc_new .'not delivery if over'.$value['farest_distance'].'km！';
 				
 				$start_amount = $value['end_amount1'];
 				$delivery_desc = $delivery_desc . $delivery_desc_new;

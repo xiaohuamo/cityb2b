@@ -1,0 +1,549 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+
+<script>
+
+	$(function(){
+
+		CKEDITOR.replace('offline_pay_des', {
+
+			height : 150,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+		CKEDITOR.replace('offline_pay_des_en', {
+
+			height : 150,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+
+	});
+
+	<{if $isPaymentSelfManage}>
+		var isPaymentSelfManage=true;
+	<{else}>
+		var isPaymentSelfManage=false;
+	<{/if}>
+
+
+
+	function hideAllDescPaypal(){
+		$('.paypal_desc_user,.paypal_desc_business,.paypal_desc_platform').hide();
+	}
+
+	$(function(){
+		hideAllDescPaypal();
+
+		$("select[name='transactionFeeChargeFrom_paypal']").click(function(){
+			hideAllDescPaypal();
+
+			console.log($(this).val());
+
+			switch($(this).val()) {
+			   	case 'user':
+			    	$('.paypal_desc_user').show();
+			        break;
+			    case 'business':
+			    	if(isPaymentSelfManage==false)$('.paypal_desc_business').show();
+			        break;
+			    case 'platform':
+			    	if(isPaymentSelfManage==true)$('.paypal_desc_platform').show();
+			        break;
+			    default:
+			      	break;
+			}
+
+		});
+
+		$("select[name='transactionFeeChargeFrom_paypal']").click();
+	})
+
+
+	function hideAllDescRoyalpay(){
+		$('.royalpay_desc_user,.royalpay_desc_business,.royalpay_desc_platform').hide();
+	}
+
+	$(function(){
+		hideAllDescRoyalpay();
+
+		$("select[name='transactionFeeChargeFrom_royalpay']").click(function(){
+			hideAllDescRoyalpay();
+
+			console.log($(this).val());
+
+			switch($(this).val()) {
+			   	case 'user':
+			    	$('.royalpay_desc_user').show();
+			        break;
+			    case 'business':
+			    	if(isPaymentSelfManage==false)$('.royalpay_desc_business').show();
+			        break;
+			    case 'platform':
+			    	if(isPaymentSelfManage==true)$('.royalpay_desc_platform').show();
+			        break;
+			    default:
+			      	break;
+			}
+
+		});
+
+		$("select[name='transactionFeeChargeFrom_royalpay']").click();
+	})
+
+
+	function hideAllDescHcash(){
+		$('.hcash_desc_user,.hcash_desc_business,.hcash_desc_platform').hide();
+	}
+
+	$(function(){
+		hideAllDescHcash();
+
+		$("select[name='transactionFeeChargeFrom_hcash']").click(function(){
+			hideAllDescHcash();
+
+			console.log($(this).val());
+
+			switch($(this).val()) {
+			   	case 'user':
+			    	$('.hcash_desc_user').show();
+			        break;
+			    case 'business':
+			    	if(isPaymentSelfManage==false)$('.hcash_desc_business').show();
+			        break;
+			    case 'platform':
+			    	if(isPaymentSelfManage==true)$('.hcash_desc_platform').show();
+			        break;
+			    default:
+			      	break;
+			}
+
+		});
+
+		$("select[name='transactionFeeChargeFrom_hcash']").click();
+	})
+
+
+	function hideAllDescCreditcard(){
+		$('.creditcard_desc_user,.creditcard_desc_business,.creditcard_desc_platform').hide();
+	}
+
+	$(function(){
+		hideAllDescCreditcard();
+
+		$("select[name='transactionFeeChargeFrom_creditcard']").click(function(){
+			hideAllDescCreditcard();
+
+			console.log($(this).val());
+
+			switch($(this).val()) {
+			   	case 'user':
+			    	$('.creditcard_desc_user').show();
+			        break;
+			    case 'business':
+			    	if(isPaymentSelfManage==false)$('.creditcard_desc_business').show();
+			        break;
+			    case 'platform':
+			    	if(isPaymentSelfManage==true)$('.creditcard_desc_platform').show();
+			        break;
+			    default:
+			      	break;
+			}
+
+		});
+
+		$("select[name='transactionFeeChargeFrom_creditcard']").click();
+	})
+
+
+	$(function(){
+		$("input[name='supportofflinepayment']").on('click',function(){
+			if($(this).prop('checked')){
+				$('.offline_pay_des').show(200);
+				$('.offline_pay_des_en').show(200);
+			}else{
+				$('.offline_pay_des').hide(200);
+				$('.offline_pay_des_en').show(200);
+			}
+		})
+
+		if($("input[name='supportofflinepayment']").prop('checked')){
+			$('.offline_pay_des').show(200);
+		}else{
+			$('.offline_pay_des').hide(200);
+		}
+		
+
+	})
+	
+</script>
+
+<style>
+
+	.main-form .input-box span label { width:200px; }
+
+	.pay_info_desc{
+		padding: 10px 50px;
+	    margin: 10px;
+	    background: #eee;
+	    border-radius: 10px;
+	}
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+			<{include file='company/side_business_option_menu.htm'}>
+
+				<div class="main-form">				
+
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/payment_setting" method="post" target="post_frame" enctype="multipart/form-data">
+
+						<div class="input-box multi-select clearfix">
+
+							<h1><{$lang->payment_setting}></h1>
+
+						</div>
+						<div class="input-box clearfix">
+
+							<span>
+
+							<label ><{$lang->underline_payment}></label>
+
+							</span>
+							
+							<input name="supportofflinepayment" type = 'checkbox' value='supportofflinepayment' <{if $loginUser.supportofflinepayment=='supportofflinepayment'}>checked <{/if}>>Support offline payment</input>
+
+
+							<span class='help-box' data-content=' After purchase, transfer to merchant account or pay in store'></span>
+
+						</div>
+
+						<div  class="input-box clearfix offline_pay_des" style="display: none">
+
+							<span>
+
+							<label >Instructions  CN </label>
+
+							</span>
+
+							<br />
+							
+							
+							 
+							 <textarea name="offline_pay_des"  class="input-textarea"  style="width:80%; height:60px;" ><{if $loginUser.offline_pay_des}><{$loginUser.offline_pay_des}><{else}>
+							
+						
+							
+
+							<{/if}></textarea>
+
+
+
+							
+						</div>
+						
+						
+						
+							 
+							 
+							 <div  class="input-box clearfix offline_pay_des" style="display: none">
+
+							<span>
+
+							<label >Instructions  </label>
+
+							</span>
+
+							<br />
+
+							<textarea name="offline_pay_des_en"  class="input-textarea"  style="width:80%; height:60px;" >
+							<{if $loginUser.offline_pay_des}><{$loginUser.offline_pay_des_en}><{else}>
+							<p><span style="font-size:14px">1) Pay seller when picking up items or when delivery coming.</span></p>
+
+								<hr />
+								<p><span style="font-size:14px">2） EFT(Transfer fund)：（ Please transfer fund&nbsp;to Seller account&nbsp; in&nbsp;<span style="background-color:#FFD700">30 minutes&nbsp;</span>after finish the order with offline payment method)</span></p>
+
+								<p><span style="font-size:14px">Acc Name： CityB2B  Pty Ltd &nbsp; &nbsp; BSB: xxxxxx</span></p>
+
+								<p><span style="font-size:14px">Account : xxxxxxxx</span></p>
+
+								<p><span style="font-size:14px"><span style="background-color:#FFD700">Please leave message : your name plus last 5 digital figures of order Id。</span></span></p>
+
+							
+							<{/if}>
+							
+							</textarea>
+
+						</div>
+							 
+					
+						
+							
+					<!--
+
+						<div class="input-box clearfix">
+
+							<span>
+
+							<label >paypal支付</label>
+
+							</span>
+							
+							<input name="supportpaypalpayment" type = 'checkbox' value='supportpaypalpayment' <{if $loginUser.supportpaypalpayment=='supportpaypalpayment'}>checked <{/if}>>支持paypal支付</input>
+
+							<div class='pay_info_desc'>
+
+								<{if $isPaymentSelfManage}>
+									目前由商家自行收款
+								<{else}>
+									目前由ubonus负责款项收取
+								<{/if}>
+
+								<br>
+
+								手续费由：
+								<select name="transactionFeeChargeFrom_paypal"  style='padding:0px;margin:0px;'>
+									<option value='business' <{if $loginUser.transactionFeeChargeFrom_paypal=='business'}>selected<{/if}>>商家自己</option>
+									<option value='user' <{if $loginUser.transactionFeeChargeFrom_paypal=='user'}>selected<{/if}>>用户</option>
+									<option value='platform' <{if $loginUser.transactionFeeChargeFrom_paypal=='platform'}>selected<{else}>disabled<{/if}>>平台Ubonus</option>
+								</select>
+								承担
+
+								<br>
+
+								
+								<div class='paypal_desc_user'>
+									--向用户加收paypal手续费：
+									<input name="paypalsurcharge" type='number' step="0.01" min="0" max="100" style='padding:0px;margin:0px;width:100px;' value='<{$loginUser.paypalsurcharge*100}>' >%</input>	
+								</div>
+
+								<div class='paypal_desc_platform'>
+									(平台给商家 手续费补贴：<{$smarty.const.DEFAULT_PAYPAL_SURCHARGE*100}>%)
+								</div>
+
+								<div class='paypal_desc_business'>
+									(平台向商家 额外收取每笔交易的手续费：<{$smarty.const.DEFAULT_PAYPAL_SURCHARGE*100}>%)
+								</div>
+							</div>
+
+						</div>
+						-->
+
+						<div class="input-box clearfix">
+
+							<span>
+
+							<label >微信及支付宝</label>
+
+							</span>
+							
+							<input name="supportroyalpaypayment" type = 'checkbox' value='supportroyalpaypayment' <{if $loginUser.supportroyalpaypayment=='supportroyalpaypayment'}>checked <{/if}>>支持royalpay支付</input>
+							<em>开启royalpay将同时支持微信支付和支付宝支付</em>
+
+							<div class='pay_info_desc'>
+								目前由CityB2B负责款项收取
+
+								<br>
+
+								(手续费由：
+								<select name="transactionFeeChargeFrom_royalpay"  style='padding:0px;margin:0px;'>
+									<option value='business'  <{if $loginUser.transactionFeeChargeFrom_royalpay=='business'}>selected<{/if}>>商家自己</option>
+									<option value='user' <{if $loginUser.transactionFeeChargeFrom_royalpay=='user'}>selected<{/if}>>用户</option>
+									<option value='platform'  <{if $loginUser.transactionFeeChargeFrom_royalpay=='platform'}>selected<{else}>disabled<{/if}>>平台CityB2B</option>
+								</select>
+								承担)
+
+								<br>
+
+								<div class='royalpay_desc_user'>
+									--向用户加收RoyalPay手续费：
+									<input name="royalpaysurcharge" type='number' step="0.01" min="0" max="100" style='padding:0px;margin:0px;width:100px;' value='<{$loginUser.royalpaysurcharge*100}>' >%</input>
+								</div>
+								
+								<div class='royalpay_desc_platform'>
+									(平台给商家 手续费补贴：<{$smarty.const.DEFAULT_ROYALPAY_SURCHARGE*100}>%)
+								</div>
+
+								<div class='royalpay_desc_business'>
+									(平台向商家 额外收取每笔交易的手续费：<{$smarty.const.DEFAULT_ROYALPAY_SURCHARGE*100}>%)
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="input-box clearfix">
+
+							<span>
+
+							<label >银行卡支付</label>
+
+							</span>
+							
+							<input name="supportcreditcardpayment" type = 'checkbox' value='supportcreditcardpayment'
+							<{if $loginUser.supportcreditcardpayment=='supportcreditcardpayment'}>checked <{/if}>>支持Credit Card支付</input>
+
+							<div class='pay_info_desc'>
+								目前由CityB2B负责款项收取
+
+								<br>
+
+								(手续费由：
+								<select name="transactionFeeChargeFrom_creditcard"  style='padding:0px;margin:0px;'>
+									<option value='business'  <{if $loginUser.transactionFeeChargeFrom_creditcard=='business'}>selected<{/if}>>商家自己</option>
+									<option value='user' <{if $loginUser.transactionFeeChargeFrom_creditcard=='user'}>selected<{/if}>>用户</option>
+									<option value='platform'  <{if $loginUser.transactionFeeChargeFrom_creditcard=='platform'}>selected<{else}>disabled<{/if}>>平台CityB2B</option>
+								</select>
+								承担)
+
+								<br>
+
+								<div class='creditcard_desc_user'>
+									--向用户加收Credit Card手续费：
+									<input name="creditcardsurcharge" type='number' step="0.01" min="0" max="100" style='padding:0px;margin:0px;width:100px;' value='<{$loginUser.creditcardsurcharge*100}>' >%</input>
+								</div>
+								
+								<div class='creditcard_desc_platform'>
+									(平台给商家 手续费补贴：<{$smarty.const.DEFAULT_CREDITCARD_SURCHARGE*100}>%)
+								</div>
+
+								<div class='creditcard_desc_business'>
+									(平台向商家 额外收取每笔交易的手续费：<{$smarty.const.DEFAULT_CREDITCARD_SURCHARGE*100}>%)
+								</div>
+							</div>
+
+						</div>
+           <!--
+						<div class="input-box clearfix">
+
+							<span>
+
+							<label >Hcash支付</label>
+
+							</span>
+							
+							<input name="supporthcashpayment" type = 'checkbox' value='supporthcashpayment'
+							<{if $loginUser.supporthcashpayment=='supporthcashpayment'}>checked <{/if}>>支持Hcash支付</input>
+
+							<div class='pay_info_desc'>
+								目前由ubonus负责款项收取
+
+								<br>
+
+								(手续费由：
+								<select name="transactionFeeChargeFrom_hcash"  style='padding:0px;margin:0px;'>
+									<option value='business'  <{if $loginUser.transactionFeeChargeFrom_hcash=='business'}>selected<{/if}>>商家自己</option>
+									<option value='user' <{if $loginUser.transactionFeeChargeFrom_hcash=='user'}>selected<{/if}>>用户</option>
+									<option value='platform'  <{if $loginUser.transactionFeeChargeFrom_hcash=='platform'}>selected<{else}>disabled<{/if}>>平台Ubonus</option>
+								</select>
+								承担)
+
+								<br>
+
+								<div class='hcash_desc_user'>
+									--向用户加收Hcash手续费：
+									<input name="hcashsurcharge" type='number' step="0.01" min="0" max="100" style='padding:0px;margin:0px;width:100px;' value='<{$loginUser.hcashsurcharge*100}>' >%</input>
+								</div>
+								
+								<div class='hcash_desc_platform'>
+									(平台给商家 手续费补贴：<{$smarty.const.DEFAULT_HCASH_SURCHARGE*100}>%)
+								</div>
+
+								<div class='hcash_desc_business'>
+									(平台向商家 额外收取每笔交易的手续费：<{$smarty.const.DEFAULT_HCASH_SURCHARGE*100}>%)
+								</div>
+							</div>
+
+						</div>
+-->
+						<div class="input-box input-submit clearfix" style="background-color: #eee;padding: 10px">
+							<p>提示设置： <label><input type="checkbox" name="noAlert" <{if $loginUser.noAlert==0}>checked<{/if}>>在订单发布最后一步提示我相关的支付设置 </label></p>
+						</div>
+
+
+						<div id="div00" ></div>
+
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit" >保存修改</button>
+
+						</div>
+
+					
+
+					 
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

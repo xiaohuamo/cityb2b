@@ -150,7 +150,7 @@ class ctl_restaurant extends cmsPage
 		$this->setData( $parent_category, 'parents' );
 
 		$parent = $mdl_infoclass->getByAlias( 106121102);
-		$parent['name']='菜系分类';
+		$parent['name']='Menu category';
 		$this->setData( $parent, 'parent' );//parent is always 美食
 
 		$this->setData( $child_category, 'childs' );
@@ -391,7 +391,7 @@ class ctl_restaurant extends cmsPage
 
 		$this->setData($this->loadModel('recharge')->getBalanceOfUser($this->loginUser['id'] ),'userMoneyBalance');
 
-		$this->setData( $mdl_user->getBusinessDisplayName($businessUser['id']).'-Ubonus美食生活', 'pageTitle' );
+		$this->setData( $mdl_user->getBusinessDisplayName($businessUser['id']).'-Cityb2b', 'pageTitle' );
 
 
 		$this->setData( $this->parseUrl()->set( 'page' )->set( 'listType' ), 'listTypeUrl' );
@@ -430,7 +430,7 @@ class ctl_restaurant extends cmsPage
 				$data['name']=$title;
 			}else{
 				$business_name = $this->loadModel('user')->getBusinessDisplayName($this->loginUser['id']);
-				$data['name']=$business_name.'线上餐厅';
+				$data['name']=$business_name;
 			}
 
 			$data['is_approved']=1;
@@ -455,20 +455,20 @@ class ctl_restaurant extends cmsPage
 
 			if( $restaurant_promotion_manjian) {
 
-				$this->form_response(200,'线上餐厅成功开启',HTTP_ROOT_WWW.'company/coupons_edit?coupon_type=7&restaurant=1');
+				$this->form_response(200,'start up successful',HTTP_ROOT_WWW.'company/coupons_edit?coupon_type=7&restaurant=1');
 
 			}else{
 				$data_manjian['restaurant_id'] =$this->loginUser['id'];
 				$data_manjian['createUserId'] =$this->loginUser['id'];
 				if($mdl_restaurant_promotion_manjian->insert($data_manjian))  {
-					$this->form_response(200,'线上餐厅成功开启',HTTP_ROOT_WWW.'company/coupons_edit?coupon_type=7&restaurant=1');
+					$this->form_response(200,'start up successful',HTTP_ROOT_WWW.'company/coupons_edit?coupon_type=7&restaurant=1');
 				}else{
-					$this->form_response_msg('线上餐厅开启失败，请稍候再试');
+					$this->form_response_msg('failed');
 				}
 			}
 
 		}else{
-			$this->setData('启动线上餐厅 - ' . $this->site['pageTitle'], 'pageTitle');
+			$this->setData('start  - ' . $this->site['pageTitle'], 'pageTitle');
 			$this->display('restaurant/setup_restaurant');
 		}
 	}
@@ -525,7 +525,7 @@ class ctl_restaurant extends cmsPage
 		 */
 		$mdl_user=$this->loadModel('user');
 
-		if(!$id)$this->sheader(null,'没有商家被选择');
+		if(!$id)$this->sheader(null,'did not choose business');
 
 		// 获取的餐馆ID--是商家的ID ,判断当前商家是否设置餐厅入口
 		$where =array(
@@ -558,7 +558,7 @@ class ctl_restaurant extends cmsPage
 				$this->setData( $restaurant_coupon, 'coupon' );
 			}else{
 				$this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
-				$this->sheader(null,'当前商家还未开启,请稍后..');
+				$this->sheader(null,'current business is not on service ,please wait ..');
 			}
 
 
@@ -1072,7 +1072,7 @@ class ctl_restaurant extends cmsPage
 				if ($val['category_sort_id'] !== $old_category) {
 						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 
-							$cartItems[$key]['category_cn_name']='团购';
+							$cartItems[$key]['category_cn_name']='Group Buy';
 						}
 						$cartItems[$key]['new_cat']=1;
 					}else{
@@ -1294,7 +1294,7 @@ class ctl_restaurant extends cmsPage
 
 			if ($this->loginUser['id'] != $business_id  &&  !$isAuthoriseCustomer) {
 
-				$this->sheader(null,'您无权使用该功能');
+				$this->sheader(null,'no access');
 			}	//var_dump($this->loginUser['id'] != $business_id);exit;
 
 			// 获得该用户的refreshcode
@@ -1351,7 +1351,7 @@ class ctl_restaurant extends cmsPage
 			$businessUserId=$businessUserIdtt;
 
 		}
-		if(!$id)$this->sheader(null,'请选择正确餐厅');
+		if(!$id)$this->sheader(null,'please choose business');
 
 		// 获取的餐馆ID--是商家的ID ,判断当前商家是否设置餐厅入口
 		$where =array(
@@ -1729,7 +1729,7 @@ class ctl_restaurant extends cmsPage
 			$businessUserId=$businessUserIdtt;
 
 		}
-		if(!$id)$this->sheader(null,'请选择正确商家');
+		if(!$id)$this->sheader(null,'please choose shop');
 
 		// 获取的餐馆ID--是商家的ID ,判断当前商家是否设置餐厅入口
 		$where =array(
@@ -1859,7 +1859,7 @@ class ctl_restaurant extends cmsPage
 				if ($val['category_sort_id'] !== $old_category) {
 						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 
-							$cartItems[$key]['category_cn_name']='团购';
+							$cartItems[$key]['category_cn_name']='Group buy';
 						}
 						$cartItems[$key]['new_cat']=1;
 					}else{
@@ -2284,7 +2284,13 @@ function updateStandProductUponMenuId($id) {
 		$this->setData('restaurant_parant_category_edit', 'submenu');
 		$this->setData('index_publish', 'menu');
 
-		$pagename = "店铺一级品类管理";
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Category management";
+		}else{
+			$pagename = "品类管理";
+		}
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -2777,7 +2783,7 @@ function category_migration_action(){
 				 
 				 
 				
-				$result ="本次成功转换".$count1."个主表分类，及更新了".$count2."个多级分类表，并增加了".$countMulticate."到多级分类表";
+				$result ="successful conversion".$count1." categories, and updated".$count2."multi categories，and add ".$countMulticate." to Multi categories";
 				$this->setData($result,'result');
 				
 				
@@ -2800,7 +2806,7 @@ function category_migration_action(){
 			 $this->setData('category_migration', 'submenu');
 			$this->setData('index_publish', 'menu');
 
-			$pagename = "产品分类迁移";
+			$pagename = "Product Category Migration";
 			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -3011,10 +3017,10 @@ function category_migration_action(){
 				 if( $curruser['store_fresh_time'] && $curruser['store_update_time'] && $curruser['store_fresh_time']>=$curruser['store_update_time'] ) {
 					 //该店铺有过更改，有过刷新 ，且刷新时间大于更改时间表示店铺已经刷新
 					  $authoriseBusinessList[$key]['status'] =1;
-					   $authoriseBusinessList[$key]['status_name'] ='已刷新';
+					   $authoriseBusinessList[$key]['status_name'] ='refreshed';
 				 }else {
 					  $authoriseBusinessList[$key]['status'] ='0';
-					   $authoriseBusinessList[$key]['status_name'] ='未刷新';
+					   $authoriseBusinessList[$key]['status_name'] ='not refreshed yet';
 				 }
 
 
@@ -3023,7 +3029,7 @@ function category_migration_action(){
 			 $this->setData('preview_refresh', 'submenu');
 			$this->setData('index_publish', 'menu');
 
-			$pagename = "预览及上线管理";
+			$pagename = "Preview and management ";
 			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -3039,7 +3045,7 @@ function category_migration_action(){
 				$this->setData('preview_refresh', 'submenu');
 				$this->setData('index_publish', 'menu');
 
-				$pagename = "预览及上线管理";
+				$pagename = "Preview and management";
 				$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -3271,7 +3277,15 @@ function category_migration_action(){
         $this->setData('restaurant_menu_add', 'submenu');
         $this->setData('index_publish', 'menu');
 
-        $pagename = "店铺单品管理";
+
+
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Item management";
+		}else{
+			$pagename = "店铺单品管理";
+		}
+
         $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
         $this->setData($pagename, 'pagename');
@@ -3658,7 +3672,14 @@ function category_migration_action(){
 		$this->setData('customer_price_management', 'submenu');
 		$this->setData('customer_management', 'menu');
 
-		$pagename = "Item Discount Edit";
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Item Discount Edit";
+		}else{
+			$pagename = "产品折扣管理";
+		}
+
+
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
@@ -3824,7 +3845,13 @@ function category_migration_action(){
 		$this->setData('customer_grade', 'submenu');
 		$this->setData('customer_management', 'menu');
 
-		$pagename = "单品折扣管理";
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Item discount management ";
+		}else{
+			$pagename = "单品折扣管理";
+		}
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
@@ -4238,7 +4265,7 @@ function category_migration_action(){
 			
 			if (!strstr($fileName, '.'))
 			{
-			$this->form_response(500,'不是图片文件');
+			$this->form_response(500,'not image format');
 			}
 		  
 		  	  
@@ -4409,7 +4436,7 @@ function category_migration_action(){
 			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$idCreateUser['restaurant_id']);
 
 	   if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
-			if(!$isAuthoriseCustomer) $this->form_response(600,$id.' '.$idCreateUser['restaurant_id'],'未发现产品');
+			if(!$isAuthoriseCustomer) $this->form_response(600,$id.' '.$idCreateUser['restaurant_id'],'could not find item');
 	   }
 
 
@@ -4577,7 +4604,7 @@ function category_migration_action(){
 				);
 				if($mdl_restaurant_menu->getCount($where1)>0) {
 					
-					$this->form_response(500, '编号重复！','');
+					$this->form_response(500, 'repeated number','');
 				}
 				
 			}
@@ -4690,7 +4717,7 @@ function category_migration_action(){
 			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$idCreateUser['restaurant_id']);
 
 	       if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
-			   	if(!$isAuthoriseCustomer ) $this->form_response(600,'未发现产品','未发现产品');
+			   	if(!$isAuthoriseCustomer ) $this->form_response(600,'item not find','item not find');
 		   }
 
 
@@ -4776,7 +4803,7 @@ function category_migration_action(){
 		$this->setData('restaurant_set', 'submenu');
 		$this->setData('index_publish', 'menu');
 
-		$pagename = "餐厅配菜类别管理";
+		$pagename = "menu spedification ";
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -4907,7 +4934,7 @@ function category_migration_action(){
 
 			$sql ="select id from cc_restaurant_sidedish_menu  where id=".$id. " and createUserId=".$this->loginUser['id'];
 
-			if( !$mdl_restaurant_sidedish_menu->getListBySql($sql))$this->form_response(600,'未发现产品','未发现产品');
+			if( !$mdl_restaurant_sidedish_menu->getListBySql($sql))$this->form_response(600,'could not find item','could not find item');
 
 
 			$data=array();
@@ -4956,7 +4983,7 @@ function category_migration_action(){
 			$sql ="select id from cc_restaurant_sidedish_category  where id=".$id. " and createUserId=".$this->loginUser['id'];
 
 
-			if( !$mdl_restaurant_sidedish_category->getListBySql($sql)) $this->form_response(600,'未发现产品','未发现产品');
+			if( !$mdl_restaurant_sidedish_category->getListBySql($sql)) $this->form_response(600,'could not find item','could not find item');
 
 
 			$data=array();
@@ -5039,7 +5066,14 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 
-		$pagename = "Specification Edit";
+
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Specification Edit";
+		}else{
+			$pagename = "规格编辑";
+		}
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -5147,6 +5181,13 @@ function category_migration_action(){
 		$this->setData('index_publish', 'menu');
 
 		$pagename = "Specification Detail Edit";
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Specification Detail Edit";
+		}else{
+			$pagename = "规格明细编辑";
+		}
+		
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
@@ -5170,7 +5211,7 @@ function category_migration_action(){
 
 			$sql ="select id from cc_restaurant_menu_option  where id=".$id. " and createUserId=".$this->loginUser['id'];
 
-			if( !$mdl_restaurant_menu_option->getListBySql($sql))$this->form_response(600,'未发现产品','未发现产品');
+			if( !$mdl_restaurant_menu_option->getListBySql($sql))$this->form_response(600,'could not find item','could not find item');
 
 
 			$data=array();
@@ -5218,7 +5259,7 @@ function category_migration_action(){
 			$sql ="select id from cc_restaurant_menu_option_category  where id=".$id. " and createUserId=".$this->loginUser['id'];
 
 
-			if( !$mdl_restaurant_menu_option_category->getListBySql($sql)) $this->form_response(600,'未发现产品','未发现产品');
+			if( !$mdl_restaurant_menu_option_category->getListBySql($sql)) $this->form_response(600,'could not find item','could not find item');
 
 
 			$data=array();
@@ -5309,7 +5350,7 @@ function category_migration_action(){
 			   
 			   if ($menuCount1>0) {
 				   
-					$this->form_response(500, '该分类主菜单下还有数据，无法删除！请将数据迁移到其它分类，然后删除该分类','');
+					$this->form_response(500, 'There is still data under the main menu of this category, which cannot be deleted! Please migrate data to another category and delete that category','');
 			   }
 		   
 		  }
@@ -5324,7 +5365,7 @@ function category_migration_action(){
 		   
 		   if ($menuCount2>0) {
 			   
-			   	$this->form_response(500, '该分类多级菜单下还有数据，无法删除！请将数据迁移到其它分类，然后删除该分类','');
+			   	$this->form_response(500, 'There is still data under the multi-level menu of this category, which cannot be deleted! Please migrate data to another category and delete that category','');
 		   }
 		   
 		
@@ -5332,9 +5373,9 @@ function category_migration_action(){
 				
 				
 				$mdl_restaurant_category->update(['isdeleted' => 1,'isHide' => 1],$id);
-				$this->form_response(200,'删除成功','');
+				$this->form_response(200,'delete Successful','');
 			} catch (Exception $e) {
-				$this->form_response(500, '删除不成功','');
+				$this->form_response(500, 'Delte Failed','');
 			}
 		}
 	}
@@ -5352,7 +5393,7 @@ function category_migration_action(){
 			$id = post('id');
 			$sql ="select id from cc_restaurant_category  where id=".$id. " and createUserId=".$this->loginUser['id'];
 
-			if( !$mdl_restaurant_category->getListBySql($sql)) $this->form_response(500,'未发现品类','未发现品类');
+			if( !$mdl_restaurant_category->getListBySql($sql)) $this->form_response(500,'could not find category','');
 
 			$include_gst = post('include_gst');
 
@@ -5684,7 +5725,7 @@ function category_migration_action(){
         $this->setData(1,'dy'); //采用动态页面
 
 		if (! $id) {
-			$this->sheader(null, '请选择正确商户');
+			$this->sheader(null, 'Please choose the right shop');
 		}
 
 		if ($this->loginUser) {
@@ -5723,7 +5764,7 @@ function category_migration_action(){
 			 
 		} else {
 			$this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
-			$this->sheader(null, '当前商家还未开启线上餐厅,请稍后..');
+			$this->sheader(null, 'this shop currently close ,please wait ..');
 		}
 
 		$this->setData($id, 'restaurant_id');
@@ -5916,7 +5957,7 @@ function category_migration_action(){
 					   
 				   }else{
 					   
-					   $this->form_response(200,'产品必须有至少一个分类，请指定其它分类后再删除该分类!','');
+					   $this->form_response(200,'The product must have at least one category, please specify another category and then delete the category!','');
 				   }
 					
 			  }else{
@@ -6014,7 +6055,7 @@ function category_migration_action(){
 			if ($val['category_sort_id'] !== $old_category) {
 				if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 
-					$cartItems[$key]['category_cn_name']='团购';
+					$cartItems[$key]['category_cn_name']='Group Buy';
 				}
 				$cartItems[$key]['new_cat']=1;
 			}else{
