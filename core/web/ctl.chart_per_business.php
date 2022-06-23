@@ -232,17 +232,17 @@
 		$curr_user = $this->loadModel('user')->get($business_id);
 		
 
-		$sql ="SELECT date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') as months,
-       date_format(FROM_UNIXTIME(a.gen_date),'%Y,%m,%d') as days,round(sum(a.voucher_deal_amount*a.new_customer_buying_quantity),2) as subtotal FROM `cc_wj_customer_coupon` a 
+		$sql ="SELECT date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y') as years,DATE_FORMAT(FROM_UNIXTIME(o.logistic_delivery_date),'%Y%m') as months,
+       date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y,%m,%d') as days,round(sum(a.voucher_deal_amount*a.new_customer_buying_quantity),2) as subtotal FROM `cc_wj_customer_coupon` a 
            left join cc_user u on a.business_Id = u.id 
            left join cc_order o on o.orderId=a.order_id 
             left join cc_restaurant_menu m  on a.restaurant_menu_id=m.id 
             left join cc_user_factory factory on a.business_id =factory.factory_id and a.userId =user_id 
             
         WHERE  a.business_id =$business_id  
-          and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2022' 
-          and DATE_FORMAT(FROM_UNIXTIME(a.gen_date),'%Y%m') ='$list_month' 
-          and (a.`coupon_status`='c01' or a.`coupon_status`='b01')  ";
+          and date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y')='2022' 
+          and DATE_FORMAT(FROM_UNIXTIME(o.logistic_delivery_date),'%Y%m') ='$list_month' 
+          and (o.`coupon_status`='c01' or o.`coupon_status`='b01')  ";
 
 
 
@@ -364,7 +364,7 @@
 		 
 		 if(!$business_id) {
 			 
-			 $business_id = $this->loginUser['id'];
+			 $business_id = $this->current_business['id'];
 			
 		 }
 		 
@@ -382,22 +382,18 @@
 		
 		$curr_user = $this->loadModel('user')->get($business_id);
 		
-		if($curr_user['role']==101) {
-			
-			$whereStr .= " a.userId in (select user_id from cc_user_factory where factory_sales_id =$business_id ) ";
-			$sql ="SELECT `business_Id`, IFNULL(u.displayName, IFNULL(u.name, u.businessName))as name,date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,date_format(FROM_UNIXTIME(a.gen_date),'%u') as weeks,sum(`adjust_subtotal_amount`) as subtoal FROM `cc_wj_customer_coupon` a left join cc_user u on a.business_Id = u.id WHERE  ". $whereStr." and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2021' and (a.`coupon_status`='c01' or a.`coupon_status`='b01')   group by business_Id,years,weeks order by business_id,weeks limit 52";
-	        //var_dump($sql);exit;
-		}else{
-			$whereStr .= "business_Id = $business_id";
-			$sql ="SELECT `business_Id`, IFNULL(u.displayName, IFNULL(u.name, u.businessName))as name,date_format(FROM_UNIXTIME(a.gen_date),'%Y') as years,date_format(FROM_UNIXTIME(a.gen_date),'%u') as weeks,sum(`adjust_subtotal_amount`) as subtoal FROM `cc_wj_customer_coupon` a left join cc_user u on a.business_Id = u.id WHERE  ". $whereStr." and date_format(FROM_UNIXTIME(a.gen_date),'%Y')='2021' and (a.`coupon_status`='c01' or a.`coupon_status`='b01')   group by business_Id,years,weeks order by business_id,weeks limit 52";
+
+		$whereStr .= "a.business_Id = $business_id";
+		//$sql ="SELECT `business_Id`, IFNULL(u.displayName, IFNULL(u.name, u.businessName))as name,date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y') as years,date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%u') as weeks,sum(`adjust_subtotal_amount`) as subtoal FROM `cc_wj_customer_coupon` a left join cc_order o on a.order_id =o.orderId  left join cc_user u on a.business_Id = u.id WHERE  ". $whereStr." and date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y')='2022' and (a.`coupon_status`='c01' or a.`coupon_status`='b01')   group by business_Id,years,weeks order by business_id,weeks limit 52";
 	//var_dump($sql);exit;
-		}
-	    
-			
-			
-		
-		
-		$mdl_order =$this->loadModel('order');
+
+            $sql ="SELECT  date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y') as years,date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%u') as weeks,sum(`adjust_subtotal_amount`) as subtoal FROM `cc_wj_customer_coupon` a left join cc_order o on a.order_id =o.orderId   WHERE  ". $whereStr." and date_format(FROM_UNIXTIME(o.logistic_delivery_date),'%Y')='2022' and (o.`coupon_status`='c01' or o.`coupon_status`='b01')   group by years,weeks order by weeks limit 52";
+
+
+
+
+
+            $mdl_order =$this->loadModel('order');
 		$weekly_selling =$mdl_order->getListBySql($sql);
 		
 		
@@ -429,7 +425,7 @@
 		
 		$this->setData('selling', 'menu');
         $this->setData('selling_weekly', 'submenu');
-        $this->setData('销售分析 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('Turn Over -Analysis' . $this->site['pageTitle'], 'pageTitle');
 		$this->display('chart_per_business/selling_weekly');
 		
 		}

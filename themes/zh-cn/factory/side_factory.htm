@@ -389,21 +389,21 @@
 
 			<div class='second-level'>
 
-				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
+				<!--<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
 				  销售经理查询
-				</a>
+				</a> -->
 				
 				<a href="<{$http_root_www}>chart_per_business/selling_weeekly"<{if $submenu=='selling_weekly'}> class="current"<{/if}>>
-					按周销售分析
+					<{$lang->weekly_selling}>
 				</a>
 					<a href="<{$http_root_www}>chart_per_business/selling_daily"<{if $submenu=='selling_daily'}> class="current"<{/if}>>
-					按日销售分析
+					<{$lang->daily_selling}>
 				</a>
 				<{if $loginUser['role'] !=101}>
-				
+				<!--
 				<a href="<{$http_root_www}>chart_per_business/selling_weekly_compare"<{if $submenu=='selling_weekly_compare'}> class="current"<{/if}>>
 					按周销售对比图
-				</a>
+				</a> -->
 			   <{/if}>
 				
 			</div>

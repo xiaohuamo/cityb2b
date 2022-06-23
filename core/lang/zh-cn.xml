@@ -118,6 +118,9 @@
 	<statement>对账单（Statement）</statement>
     <transcations>往来账（Transcation)</transcations>
 	 <new_transcation>新交易</new_transcation>
+	 
+	 <weekly_selling>周销售</weekly_selling>
+	  <daily_selling>日销售</daily_selling>
 	
 	<Business_card_edit>店铺卡片</Business_card_edit>
 	<refresh_whole_channels>统一刷新 </refresh_whole_channels>
