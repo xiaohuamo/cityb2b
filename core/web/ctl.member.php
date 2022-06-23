@@ -430,14 +430,14 @@ class ctl_member extends cmsPage
                $mdl_user = $this->loadModel( 'user' );
                if ( $mdl_user->updateUserById( $data, $this->loginUser['id'] ) ) {
                    
-                   $this->form_response(200,'保存头像成功',HTTP_ROOT_WWW."company/avatar");
+                   $this->form_response(200,'Saved',HTTP_ROOT_WWW."company/avatar");
                }
                else {
-                   $this->form_response_msg('保存头像失败');
+                   $this->form_response_msg('Failed');
                }
            }
            else {
-               $this->setData( '修改头像 - 商家中心 - '.$this->site['pageTitle'], 'pageTitle' );
+               $this->setData( 'Eidt Avatar - Business centre - '.$this->site['pageTitle'], 'pageTitle' );
 
                $this->setData( 'user_setting','menu' );
                $this->setData( 'avatar','submenu' );
@@ -1293,7 +1293,7 @@ class ctl_member extends cmsPage
 			$this->setData(get2('side'),'side');
 			$this->setData( 'wx_manage_account','menu' );
 			$this->setData( 'wx_manage_account','submenu' );
-			$this->setData( '管理微信账户'.$this->site['pageTitle'], 'pageTitle' );
+			$this->setData( 'Manage wechat account'.$this->site['pageTitle'], 'pageTitle' );
 
 			$this->display( 'member/wx_manage_account' );
 		}
@@ -2812,7 +2812,7 @@ class ctl_member extends cmsPage
         $this->setData('myorder', 'menu');
         $this->setData('exchange', 'submenu');
         $this->setData('客户Ubonus券管理', 'pagename');
-        $this->setData('客户Ubonus券管理 - 商家中心 - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('客户Ubonus券管理 - Business centre - ' . $this->site['pageTitle'], 'pageTitle');
     
 		$this->display_pc_mobile('member/exchange_detail','mobile/member/orderDetail');
 	}
@@ -2870,7 +2870,7 @@ class ctl_member extends cmsPage
 
 				$heads	= $mdl_lottery_draw_bit_counts->getList( null, $where, "lottery_id desc" );
 				$pagename='Ubonus社区-抽奖';
-				$pagetitle="社区-个人中心";
+				$pagetitle="社区-Me";
 
 				break;
 			case 'events':
@@ -2879,15 +2879,15 @@ class ctl_member extends cmsPage
 			case 'vote':
 			    $heads = $this->loadModel('voting')->getVotingList();
 			    $pagename='Ubonus社区-投票';
-				$pagetitle="社区-个人中心";
+				$pagetitle="社区-Me";
 				break;
 			case 'redbag':
 			    $pagename='Ubonus社区-红包';
-				$pagetitle="社区-个人中心";
+				$pagetitle="社区-Me";
 				break;
 			case 'secondhands':
 			    $pagename='Ubonus社区-二手';
-				$pagetitle="社区-个人中心";
+				$pagetitle="社区-Me";
 				break;
 			case 'groupbuy':
                 /*<{if $item.status==0}>
@@ -3224,7 +3224,7 @@ class ctl_member extends cmsPage
 		$this->setData( '取钱', 'pagename' );
 		$this->setData( 'recharge', 'menu' );
 		$this->setData( 'withdraw', 'submenu' );
-		$this->setData( '取钱 - 个人中心 - '.$this->site['pageTitle'], 'pageTitle' );
+		$this->setData( '取钱 - Me - '.$this->site['pageTitle'], 'pageTitle' );
 		$this->display( 'member/withdraw' );
 	}
 	
@@ -3236,7 +3236,7 @@ class ctl_member extends cmsPage
 	}
 
 
-	// 客户配送地址列表
+	// 客户Delivery Address列表
 	function delivery_address_action(){
       
 		
@@ -3263,11 +3263,11 @@ class ctl_member extends cmsPage
 		$this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'editUrl' );
 		$this->setData( $this->parseUrl()->setPath( 'memeber/delivery_address_edit' ), 'showUrl' );
 
-		$this->setData( '配送地址', 'pagename' );
+		$this->setData( 'Delivery Address', 'pagename' );
 		$this->setData( 'myorder', 'menu' );
 		$this->setData( 'delivery_address', 'submenu' );
 		$this->setData( $menu_item,'menu_item' );
-		$this->setData( '配送地址 - 个人中心 - '.$this->site['pageTitle'], 'pageTitle' );
+		$this->setData( 'Delivery Address - Me - '.$this->site['pageTitle'], 'pageTitle' );
 		$this->display_pc_mobile('member/delivery_address','mobile/member/delivery_address');
 	}
 	function delivery_address_delete_action()
@@ -3330,7 +3330,7 @@ class ctl_member extends cmsPage
 			$this->setData( $lang->delivery.$this->lang->info, 'pagename' );
 			$this->setData( 'myorder', 'menu' );
 			$this->setData( 'delivery_address', 'submenu' );
-			$this->setData( $this->lang->delivery.$this->lang->info .'-个人中心 '.$this->site['pageTitle'], 'pageTitle' );
+			$this->setData( $this->lang->delivery.$this->lang->info .'-Me '.$this->site['pageTitle'], 'pageTitle' );
 			$this->display_pc_mobile('member/delivery_address_edit','mobile/member/delivery_address_edit');
 		}
  

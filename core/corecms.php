@@ -441,7 +441,7 @@ class corecms
 		
 		
 		if ($order['coupon_status'] !='c01' &&  $order['coupon_status'] !='b01') {
-				$this->sheader(null,'只能取消 c01 或 b01 订单');
+				$this->sheader(null,'Can only cancel orders with status not c01 or b01');
 		}
 		
 		/**
@@ -462,7 +462,7 @@ class corecms
 		
 			
 			$total_refund =$order['money'] ;
-			$note ='退款至钱包';
+			$note ='Refund to Wallet';
 			
 			$data_return_wallet =array(
 			   'orderId' =>$orderId,
@@ -518,7 +518,7 @@ class corecms
 			$mdl_wj_user_coupon_activity_log
 			->orderId($orderId)
 			->userId(0)
-			->userName('系统管理员')
+			->userName('system administrator')
 			->actionId('d01')
 			->log();	
 		}
@@ -665,7 +665,7 @@ class corecms
 			    $sidedish_menu=$mdl_restaurant_sidedish_menu->get($arr_post['sidedish_menu_id'][$key]);
 
 			    if($sidedish_menu){
-			    	$data['bonus_title'] = $menu['menu_cn_name'].' 的配菜：'.$sidedish_menu['menu_cn_name'];
+			    	$data['bonus_title'] = $menu['menu_cn_name'].' details ：'.$sidedish_menu['menu_cn_name'];
 			    }else{
 			    	$data['bonus_title'] = $menu['menu_cn_name'];
 			    }

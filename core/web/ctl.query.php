@@ -78,13 +78,13 @@ class ctl_query extends cmsPage
 
                     $mdl_wj_user_temp_carts->commit();
 
-                    $this->form_response_msg('保存成功');
+                    $this->form_response_msg('Saved');
 
                 } catch (Exception $e) {
                     
                     $mdl_wj_user_temp_carts->rollback();
 
-                    $this->form_response_msg('保存失败');
+                    $this->form_response_msg('Failed');
 
                 }
                 
@@ -162,7 +162,7 @@ class ctl_query extends cmsPage
 					 
 					 if($record) {
 						  if ($record['userId'] !=$this->loginUser['id']) {
-								echo ('非法更改!');
+								echo ('no access !');
 						 }else{
 							   
 							$temp->delete($id);
@@ -180,7 +180,7 @@ class ctl_query extends cmsPage
 				 
 				 if($record) {
 					  if ($record['userId'] !=$this->loginUser['id']) {
-							echo ('非法更改!');
+							echo ('no access!');
 					 }
 					  $quantity = $record['quantity']-1;
 					  if ($quantity==0) $quantity=1;
@@ -188,16 +188,16 @@ class ctl_query extends cmsPage
 						'quantity' =>$quantity
 						);
 					 if($temp->update($data,$id)){
-						// echo ('修改成功');
+						// echo ('update successful');
 						 
 					 }else{
 						 
-						 echo ('修改不成功');
+						 echo ('failed');
 					 }
 					 
 				 }else{
 					 
-					 echo ('未找到记录!');
+					 echo ('no record find!');
 				 }
 			
 				break;
@@ -209,7 +209,7 @@ class ctl_query extends cmsPage
 					 
 					 if($record) {
 						  if ($record['userId'] !=$this->loginUser['id']) {
-								echo ('非法更改!');
+								echo ('no access!');
 						 }
 						  $quantity = $record['quantity']+1;
 						 // 获得当前库存是否大于产品中的库存，如果大于则显示，库存以达最大值
@@ -228,11 +228,11 @@ class ctl_query extends cmsPage
 									'quantity' =>$quantity
 									);
 								 if($temp->update($data,$id)){
-									// echo ('修改成功');
+									// echo ('update successful');
 									 
 								 }else{
 									 
-									 echo ('修改不成功');
+									 echo ('failed');
 								 }
 										 
 										 
@@ -246,11 +246,11 @@ class ctl_query extends cmsPage
 							'quantity' =>$quantity
 							);
 						 if($temp->update($data,$id)){
-							// echo ('修改成功');
+							// echo ('update successful');
 							 
 						 }else{
 							 
-							 echo ('修改不成功');
+							 echo ('failed');
 						 }
 						 }
 						 
@@ -260,7 +260,7 @@ class ctl_query extends cmsPage
 						 
 					 }else{
 						 
-						 echo ('未找到记录!');
+						 echo ('could not find record!');
 					 }
 				
 					break;
@@ -528,7 +528,7 @@ class ctl_query extends cmsPage
 
                 $code_str = trim(post('code_str'));
 
-                if(!$code_str) $this->form_response_msg('请选择产品');
+                if(!$code_str) $this->form_response_msg('please select the product');
 
                 $list = explode('#', $code_str);
 
@@ -779,7 +779,7 @@ class ctl_query extends cmsPage
 
                     if($type=='menu_option'){
                         $item = $restaurant_menu_option->get($id);
-                        $option.="规格：".$item['menu_cn_name'];
+                        $option.="Spec：".$item['menu_cn_name'];
 
                         $menuHasOption=true;
                     }elseif($type=='sidedish_menu'){
@@ -810,7 +810,7 @@ class ctl_query extends cmsPage
                 
                 
                 $data['guige_ids']      =null;
-                $data['guige_des']      =$option . " 配菜：" . $sidedish;
+                $data['guige_des']      =$option . " Spec Details：" . $sidedish;
                 
                 $data['businessUserId'] =$menu['restaurant_id'];
                 
@@ -865,7 +865,7 @@ class ctl_query extends cmsPage
 					if ($val['category_sort_id'] !== $old_category) {
 						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 							
-							$cartItems[$key]['category_cn_name']='团购';
+							$cartItems[$key]['category_cn_name']='Group Buy';
 						}
 						$cartItems[$key]['new_cat']=1;
 					}else{
@@ -1061,7 +1061,7 @@ class ctl_query extends cmsPage
 					if ($val['category_sort_id'] !== $old_category) {
 						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 							
-							$cartItems[$key]['category_cn_name']='团购';
+							$cartItems[$key]['category_cn_name']='Group Buy';
 						}
 						$cartItems[$key]['new_cat']=1;
 					}else{
@@ -1860,11 +1860,11 @@ class ctl_query extends cmsPage
 						      $this->loginUser['trading_hours_desc']=$trading_hours_desc;
 						  }
 						 
-						 echo $this->loginUser['trading_hours'].'修改成功';
+						 echo $this->loginUser['trading_hours'].'update successful';
 						 
 					 }else{
 						 
-						 echo '修改失败';
+						 echo 'failed';
 					 }
 				   }
 				  
@@ -1898,7 +1898,7 @@ class ctl_query extends cmsPage
 
                         echo 'success';
                     }else{
-                        echo '用户不存在';
+                        echo 'user not exist';
                     }
                     break;
         }
@@ -1954,7 +1954,7 @@ class ctl_query extends cmsPage
 
         foreach ($data_business as $key => $val) {
             $count = $count + 1;
-            $str .= '<li  onclick="gotoSearchItem(this);" data-hint-type="business">商家: ' . '<span class="search-hint-text">' . mb_substr($val["businessName"], 0, 25) . '</span>' . '</li>';
+            $str .= '<li  onclick="gotoSearchItem(this);" data-hint-type="business"> business: ' . '<span class="search-hint-text">' . mb_substr($val["businessName"], 0, 25) . '</span>' . '</li>';
         }
 
         foreach ($data_coupons as $key => $val) {
@@ -1996,7 +1996,7 @@ class ctl_query extends cmsPage
 
 	    foreach ($data_business as $key => $val) {
             $count = $count + 1;
-            $str .= '<li  onclick="gotoSearchItem(this);" data-hint-type="business"><dl><dt>商家: ' . '<img style="width:66px;height:66px;" src="/data/upload/'. $val['logo'].'"> <span class="search-hint-text" style="    margin-left: 10px;">' . mb_substr($val["businessName"], 0, 25) . '</span>' . '</dt></dl></li>';
+            $str .= '<li  onclick="gotoSearchItem(this);" data-hint-type="business"><dl><dt>business : ' . '<img style="width:66px;height:66px;" src="/data/upload/'. $val['logo'].'"> <span class="search-hint-text" style="    margin-left: 10px;">' . mb_substr($val["businessName"], 0, 25) . '</span>' . '</dt></dl></li>';
         }
 
         foreach ($data_coupons as $key => $val) {
@@ -2044,7 +2044,7 @@ class ctl_query extends cmsPage
 					if ($val['category_sort_id'] !== $old_category) {
 						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 							
-							$cartItems[$key]['category_cn_name']='团购';
+							$cartItems[$key]['category_cn_name']='Group Buy';
 						}
 						$cartItems[$key]['new_cat']=1;
 					}else{
@@ -2099,16 +2099,16 @@ class ctl_query extends cmsPage
 	
 	if(!$customer_address_latitude) 
 	{
-		var_dump('无法获得客户地址位置！');
+		var_dump('Unable to get customer address location');
 	}
 	
-	//获得商家地址
+	//获得business 地址
 	
 	$business_address_latitude=$this->get_business_address_latitue($business_id,$cbdAddress);
 	
 	if(!$business_address_latitude) 
 	{
-		var_dump('无法获得商家地址位置1！');
+		var_dump('Unable to get customer address location!');
 	}
 	
 	//var_dump($business_address_latitude);exit;

@@ -323,7 +323,7 @@ class ctl_orderpaymentprocess extends cmsPage
 				
 				$mdl_wj_temp_orderID_carts_for_yunying=$this->loadModel('wj_temp_orderID_carts_for_yunying')->update_temp_data($arr_post_yunying,'"新用户尝试使用信用卡支付超过50刀，被拒绝"','"用户信用卡支付上限为$50"');
 	
-				$this->form_response(502,"用户信用卡支付上限为$50，请选择转账支付或其它支付方式！");
+				$this->form_response(502,"The user's credit card payment limit is $50, please choose transfer payment or other payment methods!");
 			}
 
 
@@ -928,7 +928,7 @@ class ctl_orderpaymentprocess extends cmsPage
 
 	    	$this->setData( 'RoyalPay Results － '.$this->site['pageTitle'], 'pageTitle' );
 	    	
-	    	$this->setData('支付未完成','heading');
+	    	$this->setData('payment not completed','heading');
 			$this->setData('Opps! RoyalPay paying failed!<br>'.(string)$this->lang->paypal_success3,'sys_message');
 			$this->setData($sys_message_detail,'sys_message_detail');
 			
