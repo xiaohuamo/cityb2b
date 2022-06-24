@@ -96,7 +96,13 @@
 					</div>
 					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/profile" method="post" target="post_frame" enctype="multipart/form-data">
 
-						
+						<div class="input-box clearfix" style="    margin-top: 20px;">
+
+							<span><label><{$lang->legal_company_name}></label></span>
+							
+							<input type="text" class="input-text" value="<{$loginUser.businessName}>" name="businessName" />
+                          <em>Utlily Name  xxx Pty Ltd etc.</em>
+						</div>
 
 
 						<div class="input-box clearfix">
@@ -106,122 +112,33 @@
 							<input type="text" class="input-text" value="<{$loginUser.displayName}>" name="displayName" />
                        <em>trading name  </em>
 						</div>
+						
 						<div class="input-box clearfix">
-
-							<span><label><{$lang->showing_company_name_en}></label></span>
-
-							<input type="text" class="input-text" value="<{$loginUser.displayName_en}>" name="displayName_en" />
-                       <em>trading name  </em>
-						</div>
-
-
-						<div id="city_list" class="input-box clearfix " >
-							<span><label>Location</label></span>
-
-							<{foreach from=$fullcitylist item=country}>
-								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
-							<{/foreach}>
-
-							
-
-							<{foreach from=$fullcitylist item=country}>
-								<div class='country<{$country.id}>' style='display: none;margin-left: 170px;'>
-									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
-									<{foreach from=$country.child item=city}>
-									<em style="display: inline-block;min-width: 150px">
-										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $loginUser.cityId))}> checked<{/if}> /><label for="city<{$city.id}>"> <{if $langStr == 'zh-cn'}> <{$city.name}> <{else}>	<{$city.en_name}> <{/if}></label>
-									</em>
-									<!--
-										<{if $city.child}>
-										<div class='cl3 well' data-parentid='<{$city.id}>' style='display: none'>
-											<input type="checkbox" class='checkallsuburb'><strong>全选</strong>
-
-											<{foreach from=$city.child item=suburb}>
-											<em>
-												<input id ='suburb<{$suburb.id}>' type="checkbox" name="city[]" value="<{$suburb.id}>" <{if in_array($suburb.id, explode(',', $loginUser.cityId))}> checked<{/if}> >
-												<label for='suburb<{$suburb.id}>'><{$suburb.name}></label>
-											</em>
-											<{/foreach}>	
-										</div>
-										<{/if}> -->
-									<{/foreach}>
-								</div>
-							<{/foreach}>
+							<span><label>phone</label></span>
+							<input type="text" name="tel" class="input-text" value="<{$loginUser.tel}>" />
 						</div>
 						
-						<script type="text/javascript">
+						<div class="input-box clearfix">
+							<span><label><{$lang->mobile_phone}></label></span>
+                            <input type="text" name="phone" class="input-text" value="<{$loginUser.phone}>" data-varified='<{$loginUser.phone_verified}>'/>
+						</div>
 
-						function dd(obj) {
-								if($(obj).is(':checked')){
-									$(".country"+$(obj).val()).show(100);
-								}else{
-									$(".country"+$(obj).val()).hide(100);
-									$(".country"+$(obj).val()+" .cl2").prop('checked',false);
-								}
-							}
-
-							function cc(obj) {
-								if($(obj).is(':checked')){
-									$(".cl3[data-parentid="+$(obj).val()+"]").show(100);
-								}else{
-									$(".cl3[data-parentid="+$(obj).val()+"]").hide(100);
-									$(".cl3[data-parentid="+$(obj).val()+"]").find('input').prop('checked',false);
-								}
-							}
-
-							$(function(){
-								$('.cl1').on('click',function(){
-									dd($(this));
-								})
-
-								$('.cl1').each(function(){
-									dd($(this));
-								})
-							})
-
-							$(function(){
-								$('.cl2').on('click',function(){
-									cc($(this));
-								})
-
-								$('.cl2').each(function(){
-									cc($(this));
-								})
-							})
-
-							$(function(){
-								$('.checkall').on('click',function(){
-									if($(this).is(':checked')){
-										$(this).siblings('em').find('.cl2').prop('checked',true);
-										$(this).siblings('.cl3').find('input').prop('checked',true);
-									}else{
-										$(this).siblings('em').find('.cl2').prop('checked',false);
-										$(this).siblings('.cl3').find('input').prop('checked',false);
-									}
-
-									$('.cl1').each(function(){
-										dd($(this));
-									})
-
-									$('.cl2').each(function(){
-										cc($(this));
-									})
-
-								})
-							})
-
-							$(function(){
-								$('.checkallsuburb').on('click',function(){
-									if($(this).is(':checked')){
-										$(this).siblings('em').find('input').prop('checked',true);
-									}else{
-										$(this).siblings('em').find('input').prop('checked',false);
-									}
-								})
-							})
-						</script>
+						<br>
 
 
+						<hr><br>
+	                    <div class="input-box clearfix">	
+							<span><label>Email</label></span>		
+							<input type="text" name="email" class="input-text" value="<{$loginUser.email}>" />
+						</div>
+						<div class="input-box clearfix">
+							<span><label><{$lang->information_mailbox}></label></span>
+                            <input style="width: 50%" type="text" name="backupEmail" class="input-text" value="<{$loginUser.backupEmail}>" />
+						 <em>If you do not fill in the same email address as above, the registered email address of some merchants is different from the login email address, so they should be distinguished.</em>
+						</div>
+						
+						
+						
 					
 
 								<div class="input-box clearfix">
@@ -300,13 +217,7 @@
 							</script>				
 							
 						
-						<div class="input-box clearfix" style="    margin-top: 20px;">
-
-							<span><label><{$lang->legal_company_name}>（option)</label></span>
-							
-							<input type="text" class="input-text" value="<{$loginUser.businessName}>" name="businessName" />
-                          <em>Utlily Name  xxx Pty Ltd etc.</em>
-						</div>
+						
 						<div id="div03" class="input-box clearfix">
 
 							<span>

@@ -1,6 +1,6 @@
 <div class="input-box input-submit clearfix">
 	<{if $step&&$step!='1'}>
-	<button type="button" onClick="window.location.href='<{$prevUrl}>';" style="float:left;">上一步</button>
+	<button type="button" onClick="window.location.href='<{$prevUrl}>';" style="float:left;"> <{if $langStr == 'zh-cn'}> 	上一步 <{else}> Last   <{/if}></button>
 	<{/if}>
 	
 	
@@ -8,13 +8,13 @@
 		<{if $step&&$step=='6'}>
 		
 		
-			完成
-		
+			
+		 <{if $langStr == 'zh-cn'}> 	完成 <{else}> Done   <{/if}>
 		
 		<{elseif  $step&&$step=='1'}>
-		下一步
+		 <{if $langStr == 'zh-cn'}> 	下一步 <{else}> Next   <{/if}>
 		<{else}>
-		下一步
+		  <{if $langStr == 'zh-cn'}> 	下一步 <{else}> Next   <{/if}>
 		<{/if}></button>
 		
 </div>

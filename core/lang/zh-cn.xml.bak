@@ -184,8 +184,17 @@
 	 <category_migration>分类调整</category_migration>
 	 <images_grab>自动图片匹配</images_grab>
 	  
+	  <item_management>产品管理</item_management>
 	  
+	  <shop_banner>店铺Banner</shop_banner>
+	 
+	 <order_for_customer>帮客户点单</order_for_customer>
+	 
+	 <website_centre>网站管理</website_centre>
+	 <website_Publish>网站发布</website_Publish>
+	
 	  
+	  <slogan>宣传语</slogan>
 	<link_wechat_account>绑定微信账户</link_wechat_account>
 	<link_wechat_message>微信消息接收</link_wechat_message>
 
@@ -563,7 +572,7 @@
 
     <setting>设置</setting>
     <business_setting>商家设置</business_setting>
-    <basic_setting>基本设置</basic_setting>
+   
     <advance_setting>高级设置</advance_setting>
 
     <tools>工具</tools>
@@ -764,6 +773,8 @@
     <user>用户</user>
     <status>状态</status>
     <payment>支付</payment>
+	<payment1>支付方式</payment1>
+	<delivery_pickup>物流方式</delivery_pickup>
     <recharge_charge>充值会收取</recharge_charge>
 
     <payment_type>付款方式</payment_type>
@@ -948,6 +959,7 @@
     <!-- 38 -->
     <shop_staff>分店员工</shop_staff>
     <shop_staff_management>分店/取货点</shop_staff_management>
+	<staff_management>员工管理</staff_management>
     <cashing_employee>兑付员工</cashing_employee>
     <delivery_setting>递送设置</delivery_setting>
     <payment_setting>支付设置</payment_setting>
@@ -1015,11 +1027,14 @@
     <action>动作描述</action>
 
     <operating>操作</operating>
- <staff_permission>Staff permission</staff_permission>
+ <staff_permission>员工权限</staff_permission>
 	<Migrate>迁移</Migrate>
     <!-- 43 -->
     <underline_payment>线下支付</underline_payment>
 	<staff_list>员工列表</staff_list>
+	
+	<business_trading_info>营业信息</business_trading_info>
+	
     <payment_instructions_with_underline>线下支付说明</payment_instructions_with_underline>
 
     <!-- 46 -->
@@ -1068,7 +1083,7 @@
     <setting>设置</setting>
     <advanced_setting>高级设置</advanced_setting>
     <user_setting>用户设置</user_setting>
-    <basic_setting>基本设置</basic_setting>
+    <basic_setting>商家设置</basic_setting>
     <basic_setting_desc>设置账户基本信息</basic_setting_desc>
     <advanced_setting_desc>设置账户更多信息</advanced_setting_desc>
 
@@ -1511,7 +1526,7 @@
 	<message_management>配送动态推送</message_management>
 	
 	
-	<delivery_date_open_end_time_setting>开截单及配送日期</delivery_date_open_end_time_setting>
+	<delivery_date_open_end_time_setting>周配送安排</delivery_date_open_end_time_setting>
 
     <waiting_for_approve>您的订单已经保存，需要等待店家审核</waiting_for_approve>
 	<checkout_message_tongpei>配送或取货日期失效，请更换日期</checkout_message_tongpei>

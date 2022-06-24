@@ -32,7 +32,7 @@
 				<div class="main-form">
 						<span class = 'step-number-icon' style='float:left' >5</span>
 						<div class="colCurTit clearfix">
-							<h1>&nbsp;店铺条款</h1>
+							<h1>&nbsp;Term & Conditions </h1>
 						</div>
 
 						<{include file='company/freshfood_edit_step_menu_top.htm'}>
@@ -41,13 +41,13 @@
 
 							<div class="input-box clearfix">
 								<span>
-									<label>退货政策</label>
+									<label>Refund Policy</label>
 								</span>
 							</div>
 						  	
 						  	<textarea name="refund_policy" class="input-textarea" style="width:80%; "> 
-						  		<{if !$data.refund_policy}>1)客户在接到产品后请仔细核对，有任何问题请在24小时内向客服反应，并发送相关图片信息。<br>
-								2）商家根据出货记录进行核对并在2个工作日内（24-48小时）处理。除质量问题原因导致，售出的产品不在支持退货。<{else}><{$data.refund_policy}><{/if}>
+						  		<{if !$data.refund_policy}>1) Please check carefully after receiving the product, if you have any questions, please respond to the customer service within 24 hours, and send relevant picture information.<br>
+								2) The merchant will check according to the shipment record and process it within 2 working days (24-48 hours). Except for quality problems, sold products are no longer eligible for return.<{else}><{$data.refund_policy}><{/if}>
 							</textarea>
 
 						  	<script>
@@ -55,7 +55,7 @@
 									CKEDITOR.replace('refund_policy', {
 										height : 100,
 										filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
-										placeholder:"eg：退货时请将产品按原地址寄回或送还商家。经商家确认产品一切正常后退款。产品支持购买后30天退货",
+										placeholder:"",
 									});
 								});
 							</script>
@@ -64,17 +64,13 @@
 								<div class="input-box clearfix">
 									<div class=' form-style-green '>
 										<span>
-										<label>使用提示</label>
+										<label>Buying Tips</label>
 										</span>
 									</div>
 								</div>
 								
 								<textarea name="finePrint" class="input-textarea" style="width:80%; ">
-								<{if !$data.finePrint}>
-								1)付款可能包含小额手续费，如采用转账方式，需下订单后及时转账并截图给客服	<br>
-								2）信用卡支付，交货时可能要求出示ID，否则可导致订单无法执行。<br>
-								3)如本店提供自提服务，用户取货时需准备好订单以便商家进行核对。
-							<{else}><{$data.finePrint}><{/if}>
+								<{$data.finePrint}>
 								
 								
 								</textarea>
@@ -84,7 +80,7 @@
 										CKEDITOR.replace('finePrint', {
 											height : 150,
 											filebrowserImageUploadUrl : '<{$http_root_www}>?ctl=editor&act=pic',
-											placeholder:"eg：请将重要的产品信息或者需要突出的服务说明添加在这里",
+											placeholder:"",
 										});
 									});
 								</script>

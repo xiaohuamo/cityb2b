@@ -37,27 +37,27 @@
 					<span class = 'step-number-icon' style='float:left' >2</span>
 					
 					<div class="colCurTit clearfix">
-						<h1>&nbsp;服务区域 关键字</h1>
+						<h1>&nbsp; <{if $langStr == 'zh-cn'}> 服务区域 关键字	 <{else}> Region & Keywords  <{/if}></h1>
 					</div>
 
 					<{include file='company/freshfood_edit_step_menu_top.htm'}>
 
 					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
 						<div id="city_list" class="input-box clearfix " >
-							<span><label>产品销售范围</label></span>
+							<span><label>Region</label></span>
 
 							<{foreach from=$fullcitylist item=country}>
 								<input class='cl1' type="checkbox" name="city[]" value="<{$country.id}>" id="country<{$country.id}>"<{if in_array($country.id, explode(',', $data.city))}> checked<{/if}> /><label for="country<{$country.id}>"><{$country.name}></label>
 							<{/foreach}>
 
-							<em>不勾选则全站可见</em>
+							<em><{if $langStr == 'zh-cn'}> 不勾选则全站可见	 <{else}> If unchecked, the whole site will be visible <{/if}>  </em>
 
 							<{foreach from=$fullcitylist item=country}>
 								<div class='country<{$country.id}>' style='display: none'>
 									<input type="checkbox" class='checkall'><small><{$country.name}></small><br>
 									<{foreach from=$country.child item=city}>
 									<em style="display: inline-block;min-width: 150px">
-										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $data.city))}> checked<{/if}> /><label for="city<{$city.id}>"><{$city.name}></label>
+										<input class='cl2' type="checkbox" name="city[]" value="<{$city.id}>" id="city<{$city.id}>" <{if in_array($city.id, explode(',', $data.city))}> checked<{/if}> /><label for="city<{$city.id}>"> <{if $langStr == 'zh-cn'}> 	 <{$city.name}><{else}> <{$city.en_name}>  <{/if}></label>
 									</em>
 
 										
@@ -144,10 +144,10 @@
 
 						<div class="input-box clearfix ">
 						  	<div >
-							<span><label>搜索关键字</label></span>
+							<span><label>KeyWords</label></span>
 							</div>
 								
-							<textarea name="searchKeywords"  rows="4" cols="70" maxlength="200" placeholder='关键子用空格或逗号隔开，有利于用户查询到商家或产品'><{$data.searchKeywords}></textarea>
+							<textarea name="searchKeywords"  rows="4" cols="70" maxlength="200" placeholder=' <{if $langStr == 'zh-cn'}> 关键子用空格或逗号隔开，有利于用户查询到商家或产品	 <{else}> The key words are separated by spaces or commas, which is helpful for users to query businesses or products  <{/if}> '><{$data.searchKeywords}></textarea>
 							<em>Max 150 Words</em>
 
 						</div>
@@ -155,7 +155,7 @@
 					
 						
 						
-						<{include file='company/coupons_edit_step_menu.htm'}>
+						<{include file='company/freshfood_edit_step_menu.htm'}>
 					</form>
 					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
 					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>

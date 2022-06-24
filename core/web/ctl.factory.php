@@ -7203,7 +7203,8 @@ public function return_items_submit_to_statment_action() {
         $this->setData($list, 'list');
 
         $this->setData('Store List', 'pagename');
-        $this->setData('Store_List', 'submenu');
+        $this->setData('store_house_list', 'submenu');
+        $this->setData('store_house_list', 'submenu_top');
         $this->setData('Store_centre', 'menu');
         $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/store_house_list');
@@ -7220,8 +7221,12 @@ public function return_items_submit_to_statment_action() {
         $this->setData($list, 'list');
 
         $this->setData('shelf_info', 'pagename');
-        $this->setData('shelf_info', 'submenu');
+
+        $this->setData('store_house_list', 'submenu');
+        $this->setData('store_shelf_info', 'submenu_top');
         $this->setData('Store_centre', 'menu');
+
+
         $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/store_shelf_info');
     }
@@ -7341,7 +7346,8 @@ public function return_items_submit_to_statment_action() {
         } else {
             $this->setData($store_house, 'data');
             $this->setData('Store House Edit', 'pagename');
-            $this->setData('Store_List', 'submenu');
+            $this->setData('store_house_list', 'submenu');
+            $this->setData('store_house_edit', 'submenu_top');
             $this->setData('Store_centre', 'menu');
             $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
 
@@ -7432,7 +7438,8 @@ public function return_items_submit_to_statment_action() {
         } else {
             $this->setData($store_shelf_group_info, 'data');
             $this->setData('Store Shelf Edit', 'pagename');
-            $this->setData('shelf_info', 'submenu');
+            $this->setData('store_house_list', 'submenu');
+            $this->setData('store_shelf_edit', 'submenu_top');
             $this->setData('Store_centre', 'menu');
             $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
 

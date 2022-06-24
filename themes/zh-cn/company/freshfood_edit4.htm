@@ -32,7 +32,7 @@
 					<span class = 'step-number-icon' style='float:left' >4</span>
 					
 					<div class="colCurTit clearfix">
-						<h1>&nbsp; 宣传语，优惠说明</h1>
+						<h1>&nbsp; <{$lang->slogan}></h1>
 					</div>
 
 					<{include file='company/freshfood_edit_step_menu_top.htm'}>
@@ -48,19 +48,20 @@
 				
 						<br><hr><br>
 						-->
-				    <div class="input-box clearfix">
+						<div class="input-box clearfix">
 							<span>
-							<label>宣传语，优惠说明</label>
+							<label>Solgen</label>
 							</span>
-							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc}>"  name ="promotion_desc" style="width:80%"/><br>  <em>比如线上点餐就送菜,满$15送Drink,满$30送小菜</em>
-						</div>
-						 <div class="input-box clearfix">
+							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc_en}>"  name ="promotion_desc_en" style="width:80%"/> <br> <em>Lowest price just beginning...</em>
+						</div>				   
+						<div class="input-box clearfix">
 							<span>
-							<label>宣传语，优惠说明(English)</label>
+							<label>Slogan_cn</label>
 							</span>
-							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc_en}>"  name ="promotion_desc_en" style="width:80%"/> <br> <em>比如线上点餐就送菜,满$15送Drink,满$30送小菜</em>
+							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc}>"  name ="promotion_desc" style="width:80%"/><br>  <em>Lowest price just beginning...</em>
 						</div>
-						<{include file='company/coupons_edit_step_menu.htm'}>
+						 
+						<{include file='company/freshfood_edit_step_menu.htm'}>
 						
 					</form>
 					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>

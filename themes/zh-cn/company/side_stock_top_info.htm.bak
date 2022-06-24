@@ -2,7 +2,12 @@
  <div class="colCurTit clearfix">
  	<ul class="clearfix">
 
-	   <li><span><a href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu_top=='restaurant_menu_edit'}> class="current"<{/if}>><{$lang->items_management}></a></span></li>
+	   <li><span><a href="<{$http_root_www}>restaurant/stock_parant_category_edit?freshfood=1"<{if $submenu_top=='stock_parant_category_edit'}> class="current"<{/if}>><{$lang->parent_category_management}></a></span></li>
+
+ 		 <li><span><a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu_top=='restaurant_edit'}> class="current"<{/if}>><{$lang->sub_category_managementd}></a></span></li>
+
+
+    	  <li><span><a href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu_top=='stock_item_edit'}> class="current"<{/if}>><{$lang->items_management}></a></span></li>
 
 		<li><span><a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu_top=='restaurant_menu_add'}> class="current"<{/if}>><{$lang->items_add}></a></span></li>
 

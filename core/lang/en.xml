@@ -164,9 +164,11 @@
 	<special_price>Hot Price</special_price>
     <limit_buy>Limit</limit_buy>
 
-    <delivery_date_open_end_time_setting>Delivery Date Setting</delivery_date_open_end_time_setting>
+    <delivery_date_open_end_time_setting>Weekly delivery schedule</delivery_date_open_end_time_setting>
 
     <shop_card>Shop setting</shop_card>
+	 <shop_banner>Banner</shop_banner>
+	  <slogan>Slogan</slogan>
     <category_management>Sub Categories</category_management>
 	 <parent_category_management>Parent Categories</parent_category_management>
 	  <categ_management>Categories</categ_management>
@@ -181,6 +183,10 @@
 	 
 	<link_wechat_account>Link Wechat Account</link_wechat_account>
 	<link_wechat_message>Link Wechat Message</link_wechat_message>
+	<order_for_customer>Order for Customer</order_for_customer>
+	
+	 <website_centre>Website</website_centre>
+	 <website_Publish>Publish</website_Publish>
 		
 	 <onoff_share>publishing/shareing</onoff_share> 
 	 <items_add>Items Add</items_add>
@@ -399,6 +405,8 @@
     <shopping_cart>Cart</shopping_cart>
     <order_confirm>Confirm</order_confirm>
     <payment>Pay</payment>
+	<payment1>Payment</payment1>
+	<delivery_pickup>Delivery/Pickup</delivery_pickup>
     <complete>Finished</complete>
     <unit_price>Unit price</unit_price>
     <quantity>Quantity</quantity>
@@ -570,7 +578,7 @@
 
     <setting>Setting</setting>
     <business_setting>Setting</business_setting>
-    <basic_setting>Basic setting</basic_setting>
+  
     <advance_setting>advanced setting</advance_setting>
 
     <tools>Tool</tools>
@@ -822,7 +830,7 @@
     <business_setting>Seller setting</business_setting>
     <all>Whole</all>
     <administrator_info>Admin_info</administrator_info>
-    <business_info>SellerInfo  address</business_info>
+    <business_info>Business Info</business_info>
     <address>Address</address>
     <default_address>Default address</default_address>
     <supplier_info> Supplier Info</supplier_info>
@@ -943,7 +951,8 @@
 
     <!-- 38 -->
     <shop_staff>Shop staff</shop_staff>
-    <shop_staff_management>Branchs/Pickup</shop_staff_management>
+    <shop_staff_management>Branchs/Pickup Point</shop_staff_management>
+	<staff_management>Staff management</staff_management>
     <cashing_employee>Clerk(checkingout)</cashing_employee>
     <delivery_setting>Delivery setting</delivery_setting>
     <payment_setting>Payment setting</payment_setting>
@@ -1033,7 +1042,9 @@
     <setting>Setting</setting>
     <advanced_setting>Advanced setting</advanced_setting>
     <user_setting>User settings</user_setting>
-    <basic_setting>Basic settings</basic_setting>
+    <basic_setting>Business settings</basic_setting>
+	
+	<business_trading_info>Trading Info</business_trading_info>
 
     <basic_setting_desc>Setting basic Info of the account</basic_setting_desc>
     <advanced_setting_desc>Setting advanced info of the account</advanced_setting_desc>

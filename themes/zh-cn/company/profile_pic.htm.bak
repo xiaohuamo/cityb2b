@@ -1,17 +1,20 @@
 <!doctype html>
 <html>
 <head>
-<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><{$pageTitle}>  </title>
-<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
-<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
-<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}>  </title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+	 
 
 
-<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
-<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
-<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
+	<script src="<{$STATIC_PATH}>Jcrop/js/jquery.min.js"></script>
+	<script src="<{$STATIC_PATH}>Jcrop/js/jquery.Jcrop.min.js"></script>
+	<link rel="stylesheet" href="<{$STATIC_PATH}>Jcrop/css/jquery.Jcrop.css" type="text/css" />
+	
 
 
 <style type="text/css">
@@ -19,11 +22,10 @@
 		position: relative;
 		right: 0;
 		left: 0;
-		margin: 30px auto;
-
+		margin: auto;
 	}
 	.image_item{
-		border: 2px solid #ddd;
+		border: 1px solid #ddd;
 	}
 	.image_mask{
 		position: absolute;
@@ -36,63 +38,38 @@
 	.image_mask:hover{
 		opacity: 0.6;
 	}
-
-	.image_view_remove{
-		position: absolute;
-		display: inline-block;
-		bottom: 0;
-		right: 0;
-		cursor: pointer;
-	}
-
-	.image_view_add{
-		color: #fff;
-	    border: 1px solid #e0b123;
-	    background: #FD5001 ;
-	    padding: 10px;
-	    display: inline-block;
-	}
-
-	@media screen and (max-width:640px) {
-		.image_view,.image_item,.image_mask{
-			width: 100%!important;
-			height: auto!important;
-		}
-	}
 </style>
 
 </head>
 <body>
 
-<{include file='header.htm'}>
+	<{include file='header.htm'}>
 
-<div class="container">
-	<div class="wrap clearfix">
-		<{include file='company/side.htm'}>
-		<div class="main">
-			<div class="box2"><a name="pagename"></a>
-			
-				<div class="main-form">
-					<span class = 'step-number-icon' style='float:left' >3</span>
-					
-					<div class="colCurTit clearfix">
-						<h1>&nbsp;<{$lang->shop_banner}></h1>
+	<div class="container">
+		<div class="wrap clearfix">
+			<{include file='company/side.htm'}>
+			<div class="main">
+				<{include file='company/side_business_picture_top.htm'}>
+				<div class="box2"><a name="pagename"></a>
+						<div class="main-form">
+						<div class="colCurTit clearfix">
+						<h1>Website Picture</h1>
 					</div>
-
-					<{include file='company/freshfood_edit_step_menu_top.htm'}>
-					
-					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/profile_pic" method="post" target="post_frame" enctype="multipart/form-data">
 						
+
 						<div class="input-box clearfix">
-							<p>Please upload an image with a minimum size of 900 X 358. If the size is too small, the picture will not be clear</p>
+						<p style="    margin-left: 10px;">Please upload an image with a minimum size of 660 X 420. If the size is too small, the picture will not be clear</p>
 						</div>
 
-						<div class='upload_image_list' data-cropsize='900,358' data-listsize='1'>
-							<span class='image_view_add' >Add a Picture</span>
+						<div class='upload_image_list' data-cropsize='660,420' data-listsize='1'>
+							<span class='image_view_add' style="display: none">Add a Picture</span>
 						</div>
 
 
-						<{include file='company/freshfood_edit_step_menu.htm'}>
+						<div class="input-box input-submit clearfix">
+							<button type="submit" ><{$lang->save}></button>
+						</div>
 					</form>
 					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
 					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
@@ -103,6 +80,8 @@
 </div>
 
 <{include file='footer.htm'}>
+
+
 
 <script type="text/javascript">
 	var cropsize = $('.upload_image_list').data('cropsize');
@@ -116,31 +95,18 @@
 
 	var displayTarget;
 
-	addImageView('<{$data.pic}>');
-	
-	<{foreach from=$data.pics|@unserialize item=item}>
-		addImageView('<{$item}>');
-	<{/foreach}>
-
-	$('.image_view_add').on('click',function(){
-		addImageView();
-	})
+	addImageView('<{$loginUser.pic}>');
 
 	function addImageView(src){
 		if(!src)src='default/image_upload.jpg';
 		$newdiv = $("<div></div>").addClass('image_view')
 					.append($("<img>").addClass('image_item').attr('src','<{$UPLOAD_PATH}>'+src))
-					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +" click to edit"))
-					.append($("<input name='images[]' type='hidden'>").val(src))
-					.append($("<div>x</div>").addClass('image_view_remove'));
+					.append($("<div></div>").addClass('image_mask').html(w+"x"+h +"Click to Edit"))
+					.append($("<input name='images[]' type='hidden'>").val(src));
 
 		$newdiv.on('click',function(){
 			$(".image_uploader").find('input[name="image"]').click();
 			displayTarget = $(this).find('.image_item');
-		})
-
-		$newdiv.find('.image_view_remove').on('click',function(){
-			$(this).parent().remove();
 		})
 
 		$('.image_view_add').before($newdiv);
@@ -161,8 +127,8 @@
 		}
 
 		$('.preview').Jcrop({
-			boxWidth:  $(window).width()*0.9, 
-			boxHeight: $(window).height()*0.8,
+			boxWidth: 1000, 
+			boxHeight: 1000,
 			onSelect:    function(c){
 				$('input[name="bounds"]').val(c.x+','+c.y+','+c.x2+','+c.y2);
 			},
@@ -201,7 +167,7 @@
 	};
 
 	$(function(){
-		$('body').append("<form class='image_uploader'><label class='hd_label'>image cut</label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>browse local</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>Upload</button><label class='nocut_option'><input  type='checkbox' name='nocut'>No cropping, padding and scalingx</label><button type='button' class='close'>x</button></form>");
+		$('body').append("<form class='image_uploader'><label class='hd_label'>Image Cut </label><img class='preview'><input type='hidden' name='bounds'><input type='hidden' name='resize' ><input type='file' accept='image/*' id='file' name='image' ><label for='file' class='filelabel'>浏览本地</label><span class='selected_size_display'></span><button class='submit_btn' type='submit'>上传</button><label class='nocut_option'><input  type='checkbox' name='nocut'>No cropping, padding and scaling after uploading</label><button type='button' class='close'>x</button></form>");
 	})
 
 	$(function(){
@@ -232,7 +198,7 @@
 					$('body').append('<p class="form_response_loader"></p>');
 				},
 	            success: function(result) {
-	               result=String(result).trim();
+	            	result=String(result).trim();
 	               $(displayTarget).attr('src',"<{$UPLOAD_PATH}>"+result);
 	               $(displayTarget).siblings('input').val(result);
 
@@ -251,6 +217,7 @@
 		})
 	})
 </script>
+
 
 </body>
 </html>

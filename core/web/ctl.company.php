@@ -1712,7 +1712,18 @@ class ctl_company extends cmsPage
 
     function profile_action()
     {
+
+        $mdl_reg = $this->loadModel('reg');
         if (is_post()) {
+
+
+
+            $nickname = trim(post('nickname'));
+
+            $phone = trim(post('phone'));
+            $tel = trim(post('tel'));
+            $email = trim(post('email'));
+            $backupEmail = trim(post('backupEmail'));
 
             $companyDescription = post('companyDescription');
 			 $companyDescription_en = post('companyDescription_en');
@@ -1745,8 +1756,12 @@ class ctl_company extends cmsPage
 
             $country = trim(post('country'));   //Australia
             $googleMapUrl = trim(post('url'));
-			
-	     
+
+            if($phone&&!$mdl_reg->chkPhone($phone))$this->form_response_msg('Only supports Australian mobile numbers');
+            if($email&&!$mdl_reg->chkMail($email))$this->form_response_msg('please enter your vaild email');
+
+
+
             $data = array(
                 'cityId' => $city,
                 'companyDescription' => $companyDescription,
@@ -1771,7 +1786,16 @@ class ctl_company extends cmsPage
                 'country' => $country,
                 'googleMapUrl' => $googleMapUrl,
             );
-          
+            $data['nickname'] = $nickname;
+            //   $data['person_first_name'] = $person_first_name;
+            //  $data['person_last_name'] = $person_last_name;
+            $data['phone'] = $phone;
+            $data['tel'] = $tel;
+            $data['backupEmail'] = $backupEmail;
+            $data['email'] = $email;
+
+            if($this->loginUser['phone']!=$phone)$data['phone_verified']='false';
+
 
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
@@ -1855,15 +1879,18 @@ class ctl_company extends cmsPage
         } else {
             $this->setData($this->loadModel('wj_busi_pay_setting_application')->isPaymentSelfManage($this->loginUser['id']),'isPaymentSelfManage');
 
-            $this->setData('Delivery Setting', 'pagename');
-			if(get2('freshfood')){
-				 $this->setData('open_store', 'menu');
-			}else{
-				 $this->setData('advanced_setting', 'menu');
-			}
-           
-            $this->setData('payment_setting', 'submenu');
-            $this->setData('Delivery setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
+
+             if ($this->getLangStr() == 'en') {
+                 $pagename = "payment_setting";
+             }else{
+                 $pagename = "支付设置";
+             }
+
+             $this->setData('website', 'menu');
+             $this->setData('website_setting', 'submenu');
+             $this->setData('payment_setting', 'submenu_top');
+
+            $this->setData('Payments setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/payment_setting');
         }
     }
@@ -1936,18 +1963,20 @@ class ctl_company extends cmsPage
 
         	$delivery_fee_desc  = $this->get_business_delivery_des ($this->loginUser['id']);
 			 $this->setData($delivery_fee_desc, 'delivery_fee_desc');
-			
 
-            $this->setData('Delivery setting', 'pagename');
+            if ($this->getLangStr() == 'en') {
+                $pagename = "Delivery setting";
+            }else{
+                $pagename = "物流设置";
+            }
+
+            $this->setData($pagename, 'pagename');
 			
-			if(get2('freshfood')){
-				 $this->setData('open_store', 'menu');
-			}else{
-				 $this->setData('advanced_setting', 'menu');
-			}
-			
-           
-            $this->setData('delivery_setting', 'submenu');
+			$this->setData('website', 'menu');
+
+            $this->setData('delivery_setting', 'submenu_top');
+
+
             $this->setData('Delivery Setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/delivery_setting');
         }
@@ -2298,7 +2327,8 @@ class ctl_company extends cmsPage
         } else {
             $this->setData('Edit Log - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->setData('basic_setting', 'menu');
-            $this->setData('logo', 'submenu');
+            $this->setData('profile_pic', 'submenu');
+            $this->setData('logo', 'submenu_top');
             $this->display('company/logo');
         }
     }
@@ -5703,10 +5733,12 @@ function freshfood_edit_action()    {
 
                     $coupon_delivery_info =$mdl_coupons->getDeliveryInfo($id);
                     $this->setData( $coupon_delivery_info, 'coupon_delivery_info' );
-                    $this->setData('index_publish', 'menu');
-                    $this->setData('onoff_share', 'submenu');
-					$this->setData('restaurant_set', 'submenu_top');
-                    $this->display('company/freshfood_edit7');
+                    $this->setData('website', 'menu');
+                    $this->setData('website_Publish', 'submenu');
+					$this->setData('website_publish', 'submenu_top');
+
+
+                    $this->display('company/website_publish');
 
                 }
                 break;
@@ -9824,11 +9856,40 @@ function freshfood_edit_action()    {
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
-        $this->setData('Branch management', 'pagename');
-        $this->setData('staff', 'submenu');
-        $this->setData('advanced_setting', 'menu');
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Branch&Pickup management";
+        }else{
+            $pagename = "门市 自取点";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('website_setting', 'submenu');
+        $this->setData('website', 'menu');
         $this->setData('Branch management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staff');
+    }
+
+    function branchandpickup_action()
+    {
+        $id = (int)get2('id');
+        $mdl_user = $this->loadModel('user');
+
+        $where = array('role' => 5, 'user_belong_to_user' => $this->loginUser['id']);
+        $list = $mdl_user->getList(null, $where, 'createdDate asc');
+        $this->setData($list, 'list');
+
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Branch&Pickup management";
+        }else{
+            $pagename = "门市 自取点";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('website_setting', 'submenu');
+        $this->setData('website', 'menu');
+        $this->setData('branchandpickup', 'submenu_top');
+        $this->setData('Branch management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('company/branchandpickup');
     }
 
     function staffnew_action()
@@ -9840,10 +9901,16 @@ function freshfood_edit_action()    {
         $list = $mdl_user->getList(null, $where, 'createdDate asc');
         $this->setData($list, 'list');
 
-        $this->setData('Staff management', 'pagename');
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Staff management";
+        }else{
+            $pagename = "员工列表";
+        }
+        $this->setData($pagename, 'pagename');
         $this->setData('staffnew', 'submenu');
-        $this->setData('advanced_setting', 'menu');
-        $this->setData('Branch management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('staff_management', 'menu');
+        $this->setData('Staff management - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staffnew');
     }
 	
@@ -9961,13 +10028,18 @@ function freshfood_edit_action()    {
         }
 
             //获取该商家下所有员工信息
-
+       if ($this->getLangStr() == 'en') {
+            $pagename = "Staff permission";
+        }else{
+            $pagename = "员工授权";
+        }
+        $this->setData($pagename, 'pagename');
 
         $this->setData($this->parseUrl,'postUrl');
-        $this->setData('Employee authorization', 'pagename');
+
         $this->setData('staff_permissions', 'submenu');
-        $this->setData('advanced_setting', 'menu');
-        $this->setData('Employee authorization - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData('staff_management', 'menu');
+        $this->setData('Staff permission - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/staff_permissions');
     }
 
@@ -10752,8 +10824,14 @@ function freshfood_edit_action()    {
                 $this->form_response_msg("Fail to edit");
             }
         } else {
-            $this->setData('Admin Information Update', 'pagename');
-            $this->setData('basic_setting', 'menu');
+
+            if ($this->getLangStr() == 'en') {
+                $pagename = "Account Admin";
+            }else{
+                $pagename = "账户管理员";
+            }
+            $this->setData($pagename, 'pagename');
+            $this->setData('staff_management', 'menu');
             $this->setData('profile_manager', 'submenu');
             $this->setData('Information Update - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
             $this->display('company/profile_manager');
@@ -11602,10 +11680,10 @@ function get_data($url, $ch) {
 
         }else{
             $this->setData('Password access for offline products - ' . $this->site['pageTitle'], 'pageTitle');
-         
-			
-			$this->setData('coupon_private_view_setting', 'submenu');
-            $this->setData('advanced_setting', 'menu');
+
+            $this->setData('coupon_private_view_setting', 'submenu_top');
+			$this->setData('website_Publish', 'submenu');
+            $this->setData('website', 'menu');
 			   $this->display('company/coupon_private_view_setting');
         }
     }

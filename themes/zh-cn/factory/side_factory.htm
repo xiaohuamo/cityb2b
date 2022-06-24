@@ -19,6 +19,56 @@
 			</li>
 			<{/if}>
 -->
+//角色为客户服务或客户经理
+		<{if in_array('17', explode(',', $user_roles.roles))
+		|| $user_roles.role==3}>
+
+		//网站管理
+		<li>
+			<div class='top-level'>
+				<i class="fa fa-fw fa-edit"></i>
+				<a <{if $menu=='website'}> class="current"<{/if}>><{$lang->website_centre}></a>
+			</div>
+
+			<div class='second-level'>
+			
+			 
+			
+			<a href="<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1"<{if $submenu=='restaurant_parant_category_edit'}> class="current"<{/if}>>
+					<{$lang->categ_management}>
+				</a>
+				
+			
+				
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+					<{$lang->items_management}>
+				</a>
+				<a href="<{$http_root_www}>company/promotion_code_manage"<{if $submenu=='promotion_code_manage'}> class="current"<{/if}>>
+					<{$lang->pormotion_code}>
+				</a>
+				
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?id=8046&step=7#pagename" <{if $submenu=='website_Publish'}> class="current"<{/if}>> <!-- 通过ID 找到coupon id  -->
+				<{$lang->website_Publish}>
+				</a>
+				
+				<a href="<{$http_root_www}>company/delivery_setting" <{if $submenu=='website_setting'}> class="current"<{/if}>> <!-- 通过ID 找到coupon id  -->
+				<{$lang->setting}>
+				</a>
+
+	
+				
+				
+				
+
+				
+				
+				
+
+			</div>
+		</li>
+		<{/if}>
+<!--
 
 		//角色为客户服务或客户经理
 		<{if in_array('17', explode(',', $user_roles.roles))
@@ -41,21 +91,13 @@
 					<{$lang->categ_management}>
 				</a>
 				
-			<!--	<a href="<{$http_root_www}>restaurant/restaurant_edit?freshfood=1"<{if $submenu=='restaurant_edit'}> class="current"<{/if}>>
-					 <{$lang->sub_category_managementd}>
-				</a>  -->
-<!--
-				<a href="<{$http_root_www}>factorypage/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
-                    <{$lang->items_management}>
-				</a> -->
+			
 				
 				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
 					<{$lang->items_management}>
 				</a>
 				
-				<!--<a href="<{$http_root_www}>restaurant/restaurant_menu_add?freshfood=1"<{if $submenu=='restaurant_menu_add'}> class="current"<{/if}>>
-					<{$lang->items_add}>
-				</a> -->
+				
 
 				<a href="<{$http_root_www}>supplier/<{$loginUser.id}>">
                     <{$lang->preview_store}>
@@ -73,7 +115,7 @@
 
 			</div>
 		</li>
-		<{/if}>
+		<{/if}>-->
 
 		<{if in_array('3', explode(',', $user_roles.roles))
 		||  in_array('4', explode(',', $user_roles.roles))
@@ -147,7 +189,9 @@
 		<!--	<a href="<{$http_root_www}>company/customer_orders_amend"<{if $submenu=='customer_orders_amend'}> class="current"<{/if}>>
                     <{$lang->order_management_amend}>
 				</a>  -->
-
+			<a  target=_blank href="<{$http_root_www}>factory/order_for_customer_new">
+                    <{$lang->order_for_customer}>
+				</a>
 			<a href="<{$http_root_www}>factory/customer_orders_return"<{if $submenu=='order_return'}> class="current"<{/if}>>
                    <{$lang->order_management_amend}>
 				</a>
@@ -171,12 +215,15 @@
 		<a <{if $menu=='Store_centre'}> class="current"<{/if}>><{$lang->stock_center}></a>
 	</div>
 	<div class='second-level'>
-		<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
-			   <{$lang->stock_room_shelf}>
-		</a>	
-		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='Store_List'}> class="current"<{/if}>>
+		
+		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='store_house_list'}> class="current"<{/if}>>
 			   <{$lang->stock_room_management}>
 		</a>
+
+	<!--	<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
+			   <{$lang->stock_room_shelf}>
+		</a>	-->
+		
 		
 		<a  href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu=='stock_item_edit'}> class="current"<{/if}>>
 			   <{$lang->item_management}>
@@ -426,25 +473,20 @@
 				<a <{if $menu=='basic_setting'}> class="current"<{/if}>><{$lang->basic_setting}></a>
 			</div>
 			<div class='second-level'>
-
-				<a href="<{$http_root_www}>company/logo" <{if $submenu=='logo'}> class="current"<{/if}>>
-					Logo
-				</a>
-
-				<a href="<{$http_root_www}>company/profile_manager" <{if $submenu=='profile_manager'}> class="current"<{/if}>>
-                    <{$lang->administrator_info}>
-				</a>
-				<a href="<{$http_root_www}>company/profile_pic" <{if $submenu=='profile_pic'}> class="current"<{/if}>>
-                    <{$lang->image}>
-				</a>
-				<a href="<{$http_root_www}>member/changepwd?side=company"<{if $submenu=='changepwd'}> class="current"<{/if}>>
-                    <{$lang->password_setting}>
+				
+				<a href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"<{if $submenu=='restaurant_set'}> class="current"<{/if}>>
+					<{$lang->wholeseller_card}>
 				</a>
 
 				<a href="<{$http_root_www}>company/profile" <{if $submenu=='profile'}> class="current"<{/if}>>
                     <{$lang->business_info}>
 				</a>
-
+				
+				<a href="<{$http_root_www}>company/profile_pic" <{if $submenu=='profile_pic'}> class="current"<{/if}>>
+                    <{$lang->image}>
+				</a>
+				
+			
 				<a href="<{$http_root_www}>company/abn_application" <{if $submenu=='abn_application'}> class="current"<{/if}>>
                     <{$lang->abn_acn}>
 				</a>
@@ -452,32 +494,32 @@
 				<a href="<{$http_root_www}>company/business_hour_setting"<{if $submenu=='business_hour_setting'}> class="current"<{/if}>>
                     <{$lang->trading_hours}>
 				</a>
+				<a href="<{$http_root_www}>member/changepwd?side=company"<{if $submenu=='changepwd'}> class="current"<{/if}>>
+                    <{$lang->password_setting}>
+				</a>
+				
+				
 			</div>
 		</li>
 		<li>
 			<div class='top-level'>
 				<i class="fa fa-fw  fa-money"></i>
-				<a <{if $menu=='advanced_setting'}> class="current"<{/if}>><{$lang->advanced_setting}></a>
+				<a <{if $menu=='staff_management'}> class="current"<{/if}>><{$lang->staff_management}></a>
 			</div>
 			<div class='second-level'>
-				<a href="<{$http_root_www}>company/payment_setting" <{if $submenu=='payment_setting'}> class="current"<{/if}>>
-                    <{$lang->payment_setting}>
-				</a>
-				<a href="<{$http_root_www}>company/delivery_setting" <{if $submenu=='delivery_setting'}> class="current"<{/if}>>
-                    <{$lang->deliver_setting}>
-				</a>
-				<a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu=='private_view'}> class="current"<{/if}>>
-                    <{$lang->preview_password}>
-				</a>
-				<a href="<{$http_root_www}>factory/staff_sales" <{if $submenu=='staff_sales'}> class="current"<{/if}>>
+				
+				<!--<a href="<{$http_root_www}>factory/staff_sales" <{if $submenu=='staff_sales'}> class="current"<{/if}>>
                     <{$lang->salesman_setting}>
 				</a>
-				<a href="<{$http_root_www}>company/staff" <{if $submenu=='staff'}> class="current"<{/if}>>
-                    <{$lang->shop_staff_management}>
-				</a>
+				
 				<a href="<{$http_root_www}>company/redeem_staff_manage" <{if $submenu=='redeem_staff_manage'}> class="current"<{/if}>>
                     <{$lang->redeem_staff}>
 				</a>
+				-->
+				<a href="<{$http_root_www}>company/profile_manager" <{if $submenu=='profile_manager'}> class="current"<{/if}>>
+                    <{$lang->administrator_info}>
+				</a>
+				
 				<a href="<{$http_root_www}>company/staffnew" <{if $submenu=='staffnew'}> class="current"<{/if}>>
 				<{$lang->staff_list}>
 				</a>
@@ -506,7 +548,7 @@
 		</li>
 	</ul>
 
-
+<!--
     <{if !$loginUser.wx_openID}>
 		<div style='    margin: 5px;padding: 20px;text-align:center'>
 			<h1><a href="<{$http_root_www}>member/wx_manage_account"><{$lang->bind_wx}></a></h1>
@@ -517,6 +559,6 @@
 				</a>
 			</div>
 		</div>
-    <{/if}>
+    <{/if}> -->
 
 </div>

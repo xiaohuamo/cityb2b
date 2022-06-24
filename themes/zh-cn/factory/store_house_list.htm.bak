@@ -127,7 +127,7 @@
 		updateData['value'] = value;
 		//alert(value);
 		//alert(update_field_name);
-		return;
+		//return;
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
             url: "<{$http_root_www}>factory/store_area_bulk_add",
@@ -142,7 +142,7 @@
             } catch (err) {
                 data['msg'] = data;
             }
- $(ajax_result).html(successIcon);
+
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
                

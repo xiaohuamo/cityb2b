@@ -82,9 +82,6 @@
 
 								<select name="actived" id="actived">
 						
-					
-
-									<option value="0" selected="">Select Payment Option	</option>
 										<option value="1" <{if $data.actived=='1'}>selected<{/if}>	 >In Use</option>
 										<option value="0" <{if $data.actived=='0'}>selected<{/if}>	 >Not In Use</option>
 										
@@ -110,7 +107,7 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'>保存</button>	
+								<button type="submit" style='float:left'><{$lang->save}></button>	
 
 								<a onClick='return confirm("remove it?")' href ="<{$http_root_www}>factory/delete_store_house?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>Delete</a>	
 

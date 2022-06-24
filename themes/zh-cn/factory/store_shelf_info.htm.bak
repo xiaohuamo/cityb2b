@@ -86,6 +86,11 @@
 									<{$item.actived}>
 									
 								</td>
+								
+								
+								
+								
+								
 							<td><a href="<{$http_root_www}>factory/store_shelf_edit?id=<{$item.id}>">Edit</a></td>
 							
 							
