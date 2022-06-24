@@ -95,11 +95,7 @@
 											<a  target="_blank" href="<{$http_root_www}>restaurant/menu_pic?id=<{$item.id}>" >Add</a>
 											<{/if}>
 						  				</td>
-										<td>
 										
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>"  style="width:250px;" name="menu_en_name" value="<{$item.menu_en_name}>" >
-											<span class='promote-ajax'></span>
-										</td>
 										
 										 <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>"  style="width:50px;" name="menu_id" value="<{$item.menu_id}>" >
@@ -107,7 +103,11 @@
 							  				<br>
 										</td>
 										
+										<td>
 										
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>"  style="width:250px;" name="menu_en_name" value="<{$item.menu_en_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
 
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="price-<{$item.id}>"  style="width:50px;" name="price" value="<{if $item.price >0}><{$item.price}><{/if}>" >

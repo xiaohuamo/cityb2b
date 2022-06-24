@@ -949,13 +949,15 @@
     <payment_setting>Payment setting</payment_setting>
     <online_payment_application>Online payment application</online_payment_application>
     <abn_authentication>ABN/CAN authentication</abn_authentication>
-    <new_employees>New employees</new_employees>
+    <new_employees>New Staff</new_employees>
+	<edit_employees>Staff Edit</edit_employees>
     <branch>Branch</branch>
     <administrators>Administrators</administrators>
     <name_of_branch_store>Name of branch store</name_of_branch_store>
     <edit>Edit</edit>
     <banner_edit>Banner edit</banner_edit>
     <store_notice>Store Notice</store_notice>
+	<Migrate>Migrate</Migrate>
     <!-- 40 -->
     <support_customers_pickingup_goods>Support customers picking up goods</support_customers_pickingup_goods>
     <self_pickup_desc>you can pickup from the shop address</self_pickup_desc>

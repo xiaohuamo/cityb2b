@@ -24,7 +24,12 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				 <{include file='company/side_restaurant_info.htm'}>
+			<{if $stock ==1}>
+			 <{include file='company/side_restaurant_info.htm'}>
+			<{else}>
+			 <{include file='company/side_stock_top_info.htm'}>
+			<{/if}>
+				
 				<div class="colCurTit">
 					<{$pagename}> 
 				</div>

@@ -173,7 +173,7 @@
     <items_management>Items Edit</items_management>
 	 <recycleBinProduct> Archived Items </recycleBinProduct>
 	 <recycleBinCustomer>Hide Customers</recycleBinCustomer>
-	
+	 <item_management>Products </item_management>
 	 <category_migration> Change item category</category_migration>
 	 <images_grab>auto images match</images_grab>
 	 
@@ -957,6 +957,7 @@
     <edit>Edit</edit>
     <banner_edit>Banner edit</banner_edit>
     <store_notice>Store Notice</store_notice>
+	<Migrate>Migrate</Migrate>
     <!-- 40 -->
     <support_customers_pickingup_goods>Support customers picking up goods</support_customers_pickingup_goods>
     <self_pickup_desc>you can pickup from the shop address</self_pickup_desc>

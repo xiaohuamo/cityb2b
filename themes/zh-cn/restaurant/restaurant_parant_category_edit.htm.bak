@@ -26,7 +26,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				 <{include file='company/side_restaurant_info.htm'}>
+				 <{include file='company/side_restaurant_info1.htm'}>
 				<div class="colCurTit">
 					<{$pagename}> 
 				</div>
@@ -51,7 +51,7 @@
 					</form>
 			<br>
 				<{/if}>
-				<span >选择管理账户：&nbsp;</span>
+				<span >Choose Account：&nbsp;</span>
 				<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select class='chooseCustomer'>
 						
@@ -88,47 +88,54 @@
 								<tr>
 								    
 									
-									<th>类别排序</th>
-									<th>品类中文名</th>
+								  <th>Code</th>	
+								  <th>Sort Id</th>								  
+								  <th>Name</th>
+								 <{if $langStr == 'zh-cn'}> <th>品类名称</th>	 <{else}>   <{/if}>
+									<th>Display on Web</th>
+									<th>IsHot</th>
+									<{if !in_array($gstType, [3,4])}><th>Gst</th>	<{/if}>
 									
-					                <th>品类英语名</th>
-									
-									<th>显示设置<br>（店铺显示该分类）</th>
-									<th>是否热推</th>
-									<{if !in_array($gstType, [3,4])}>
-									<th>含税设置</th>
-									<{/if}>
-									
-									<th>类别编号</th>
-									<th>自动编号</th>
-									<th>迁移数据<br>将分类下产品移其它分类</th>
-									<th>删除</th>
+									<th>Migrate data<br>
+										 <{if $langStr == 'zh-cn'}> 将分类下产品移其它分类<{else}> Move to other category  <{/if}>
+										</th>
+									<th>Delete</th>
+									<th>Id</th>
 								</tr>
 							</thead>
 							<tbody>
 						  		<{foreach from=$data item=item name='dl'}>
 									<tr  id='tr<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 										
-								   	     <td>
+								   	    <td>
+											<{$item.category_id}> 
+						  				</td>
+
+										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:50px;" name="category_sort_id" value="<{$item.category_sort_id}>" >
 											<span class='promote-ajax'></span>
 							  				<br>
 										</td>
-
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_cn_name" value="<{$item.category_cn_name}>" >
-											<span class='promote-ajax'></span>
-										</td>
-									
+										
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_en_name" value="<{$item.category_en_name}>" >
 											<span class='promote-ajax'></span>
 										</td>
 										
+										 <{if $langStr == 'zh-cn'}> 
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_cn_name" value="<{$item.category_cn_name}>" >
+											<span class='promote-ajax'></span>
+										</td>
+										 
+										 <{else}>   <{/if}>
+				
+										
+										
 										<td>
 										<select name="isHide" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.isHide == 0}>selected<{/if}>>显示</option>
-										<option value="1" <{if $item.isHide == 1}>selected<{/if}>>隐藏</option>
+										<option value="0" <{if $item.isHide == 0}>selected<{/if}>>Show</option>
+										<option value="1" <{if $item.isHide == 1}>selected<{/if}>>Hide</option>
 										
 											
 												</select>
@@ -139,8 +146,8 @@
 										<!--	<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="hot" value="<{$item.hot}>" > -->
 											
 											<select name="hot" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.hot == 0}>selected<{/if}>>非热推</option>
-										<option value="1" <{if $item.hot == 1}>selected<{/if}>>热推</option>
+										<option value="0" <{if $item.hot == 0}>selected<{/if}>>-</option>
+										<option value="1" <{if $item.hot == 1}>selected<{/if}>>Hot</option>
 										
 											
 												</select>
@@ -150,31 +157,31 @@
 										</td>
 						  				<{if !in_array($gstType, [3,4])}>
 						  				<td>
-											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">全部含税</button>
-											<span class='promote-ajax'></span>
+											<button style="padding:5px;" class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">All Gst</button>
+											<span  class='promote-ajax'></span>
 											/
-											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">全部不含税</button>
+											<button style="padding:5px;" class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">All Ex.Gst</button>
 											<span class='promote-ajax'></span>
 										</td>
 						  				<{/if}>
 										
+										
+										
+										
 										<td>
-											<{$item.category_id}> 
-						  				</td>
+										<a  target=_blank;  href='<{$http_root_www}>restaurant/category_migration?freshfood=1&sourceCat=<{$item.id}>'><{$lang->Migrate}></a>
+										</td>
+										
+										<td>
+										<a  onCLick='delete_category("<{$item.id}>","<{$item.category_cn_name}>");'><{$lang->delete}></a>
+											
+							  				
+										</td>
+										
 										<td>
 											<input type="hidden" class="input-text" data-id='<{$item.id}>'  style="width:50px;" name="id" value="<{$item.id}>" >
 											<span class='promote-ajax'><{$item.id}></span>
 							  				<br>
-										</td>
-										
-										<td>
-										<a  target=_blank;  href='<{$http_root_www}>restaurant/category_migration?freshfood=1&sourceCat=<{$item.id}>'>迁移数据</a>
-										</td>
-										
-										<td>
-										<a  onCLick='delete_category("<{$item.id}>","<{$item.category_cn_name}>");'>删除</a>
-											
-							  				
 										</td>
 									</tr>
 								<{/foreach}>

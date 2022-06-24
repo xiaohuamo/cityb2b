@@ -132,7 +132,7 @@
         <{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-                      <{include file='company/side_restaurant_info.htm'}>
+                       <{include file='company/side_stock_top_info.htm'}>
 				<div class="colCurTit">
                     <{$pagename}>
 				</div>
@@ -256,15 +256,16 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th>恢复到产品库</th>
-									<th>产品编号</th>
-                                    <th >产品名-英文</th>
-									<th>产品名称-中文</th>
-									<th>图片</th>
-									<th>售价</th>
-									<th>库存</th>
-									<th>单位</th>
-									<th>ID</th>
+									<th>Restore</th>
+									<th>Code</th>
+                                    <th >Name</th>
+									 <{if $langStr == 'zh-cn'}> 	<th>产品名称</th> <{else}>   <{/if}>
+									
+									<th>Pic</th>
+									<th>Price</th>
+									<th>Stock Qty</th>
+									<th>Unit</th>
+									<th>Id</th>
 									
 								</tr>
 								</thead>
@@ -284,11 +285,11 @@
 										
                                             <{if $item.isDeleted==1}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">在回收站</span>
+                                                        <span style="color:#58964E;">Archived</span>
                                                     </span>
                                             <{else}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">已恢复</span>
+                                                        <span style="color:#F30;">Restored</span>
                                                     </span>
                                             <{/if}>
 											
@@ -310,13 +311,16 @@
 											<span class='promote-ajax'></span>
 										</td>
 									
-										
-										<td >
+										 <{if $langStr == 'zh-cn'}> 	
+									<td >
 										
 										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:180px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
 											
 											<span class='promote-ajax'></span>
 										</td>
+
+										 <{else}>   <{/if}>
+										
 										
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
@@ -473,10 +477,10 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.isDeleted == '1') {
-                    context.html("<span style='color:#F30;'>在回收站</span>");
+                    context.html("<span style='color:#F30;'>Archived</span>");
 					
                 } else if (result.isDeleted == '0') {
-                    context.html("<span style='color:#58964E;'>已恢复 </span>");
+                    context.html("<span style='color:#58964E;'>Restored </span>");
                 }
             }
         }).fail(function () {

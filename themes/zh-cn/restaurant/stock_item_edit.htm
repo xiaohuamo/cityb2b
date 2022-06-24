@@ -129,21 +129,52 @@
 
 <div class="container">
 	<div class="wrap clearfix">
-        <{include file='company/side.htm'}>
+        <{include file='company/side.htm'}> 
 		<div class="main">
 			<div class="box2">
                 <{include file='company/side_stock_top_info.htm'}>
 				<div class="colCurTit">
                     <{$pagename}>
-					
-					
+					<!-- <span class="links">
+						<a class='btn-yellow' href="<{$http_root_www}>restaurant/menu_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->recycleBinProduct}></a>
+					</span> -->
 				</div>
 
 				<div class="search-row" style="padding: 20px 18px">
 
-					<form method="get" action="<{$http_root_www}>restaurant/restaurant_menu_add">
-                       
-							
+					<form method="get" action="<{$searchUrl}>">
+
+                        <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
+							<select class='chooseCustomer'>
+								<option>Choose Account</option>
+								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
+                                    <{$loginUser.displayName}>
+								</option>
+                                <{foreach from=$authrise_manage_other_business_account item=d}>
+									<option value="<{$d.customer_id}>" <{if $d.customer_id==$customer_id}>selected<{/if}>>
+                                        <{$d.displayName}>
+									</option>
+                                <{/foreach}>
+							</select>
+                        <{/if}>
+						&nbsp;&nbsp;
+						<label><{$lang->search}>:</label>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
+
+						<br><br>
+
+
+						<select name="allOrspecial" id='allOrspecial'>
+
+							<option value="all"
+                                    <{if $allOrspecial=='all'}> selected<{/if}>>All Items
+							</option>
+							<option value="special"
+                                    <{if $allOrspecial=='special'}> selected<{/if}>>Special Items
+							</option>
+						</select>
 
 						<select name="category" id='category'  onChange="catChg(this);">
 						
@@ -163,105 +194,85 @@
                             <{/foreach}>
 
 						</select>
-						&nbsp;
+						
 						<script> 
 						
+														
+
+								var cats = [];
+								<{foreach from=$data_parent_cate_list item=item}>
+								cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
+								<{/foreach}>
+
+
+
+								$(function(){
+									var cate='<{$category1}>';
+									var sub_cate ='<{$sub_category}>';
+									//alert('init');
+									if(cate) {
+									  catChg($('#category'));
+									}
+								})
+
+
+								function catChg(obj) {
+									var vv = $(obj).val(); 
+									if(vv ) {
+										
+										
+										//alert('here');
+										if ($('#sub_category').length > 0) { 
+										
+											$('#sub_category').remove();
+										}
+									
+										var c = $('<select id ="sub_category" name="sub_category" >');
+										c.append('<option value="">Choose Sub Category</option>');
+										for (var i = 0; i < cats.length; i++) {
+											if ( cats[i][2] == vv ) {
+											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											if('<{$sub_category}>' == cats[i][0]){
+											c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
+											}else{
+											c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
+											}
+												
+												
+											}
+										}
+										$(obj).next().after(c);
+										//setDroplist(c);
+									
+									}else{
+									
+									}
+										
+									
+								}
+
+								</script>
+
+						<button type="submit"><{$lang->search}></button>
+
 						
-
-var cats = [];
-<{foreach from=$data_parent_cate_list item=item}>
-cats.push(['<{$item.id}>', '<{$item.category_cn_name2}>','<{$item.parent_category_id}>']);
-<{/foreach}>
-
-
-
-$(function(){
-	var cate='<{$category1}>';
-	var sub_cate ='<{$sub_category}>';
-	//alert('init');
-	if(cate) {
-	  catChg($('#category'));
-	}
-})
-
-
-function catChg(obj) {
-	var vv = $(obj).val(); 
-	if(vv ) {
-	    
-		
-		//alert('here');
-		if ($('#sub_category').length > 0) { 
-		
-			$('#sub_category').remove();
-		}
-	
-		var c = $('<select id ="sub_category" name="sub_category" >');
-		c.append('<option value="">Choose Sub Category</option>');
-		for (var i = 0; i < cats.length; i++) {
-			if ( cats[i][2] == vv ) {
-			//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
-			if('<{$sub_category}>' == cats[i][0]){
-			c.append('<option value="'+ cats[i][0]  +'" selected >'+ cats[i][1] +'</option>');
-			}else{
-			c.append('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
-			}
-				
-				
-			}
-		}
-		$(obj).next().after(c);
-		//setDroplist(c);
-	
-	}else{
-	
-	}
-		
-	
-}
-
-</script>&nbsp;
-				<select name="addCount" id='addCount'  >
+								<br> <br>
+							
+						
+				 
 						
 					
-
-							
-
-                          
-						 
-						   <option value="1" <{if $addCount==1}> selected<{/if}> >Add 1 item </option>
-						     <option value="5" <{if $addCount==5}> selected<{/if}> >Add 5 items </option>
-							  <option value="10" <{if $addCount==10}> selected<{/if}> >Add 10 items </option>
-						   <option value="20"  <{if $addCount==20}> selected<{/if}>>Add 20 items </option>
-
-						</select>
-						&nbsp;&nbsp;
-						<button type="submit">ADD</button>
-
-						
-						<br> 
-						
-					<!--	
-				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  checked >
+						<input type="checkbox" name="onoffsku"  id="onoffsku"   >
 						<span >
-								<span >显示中文版编辑列</span>
-						</span>
-							<input type="checkbox" name="onoffeninfo"  id="onoffeninfo"   >
-						<span >
-								<span >显示英文版编辑列</span>
-						</span>
-						<input type="checkbox" name="onoffspecialinfo"  id="onoffspecialinfo"  <{if $allOrspecial=='special'}> checked<{/if}>  >
-						<span >
-								<span >显示特价编辑列</span>
+								<span >SKU & pics </span>
 						</span>
 											
-											<br>
+											<br>		
 										
-										
-					-->	
+						
 
-                   
-					
+                        
+				
 
 
 					</form>
@@ -274,14 +285,29 @@ function catChg(obj) {
 								<thead>
 								<tr>
 									<th name="sku" >SKU Code</th>
-								    <th>Pic</th>
-								
+									<th  name="sku" >Pic Link</th>
+									<th>Picture</th>
+									<th>Item Code</th>
 									<th name="en_name1">Item Name</th>
+									
+										
+                                    <{if in_array($gstType, [3,4])}>
+										<th>INC.Gst</th>
+                                    <{/if}>
+								
 									<th name="en_name1">Unit</th>
-									<th >Qty per Box</th>
-									<th>Load Over rates</th>
-									<th name="en_name1">Desc</th>
-									<th >id</th>
+									<th >units/box</th>
+									<th>Box overflow rate%</th>
+									<th name="en_name1">Description</th>
+									<th >Category</th>
+							
+                                    <{if $menu_option_list}>
+										<th name="guigecat">Specification</th>
+                                    <{/if}>
+                               
+									<th>Archive</th>
+									
+									<th >Item Id</th>
 								</tr>
 								</thead>
 								<tbody>
@@ -290,13 +316,24 @@ function catChg(obj) {
 										
 										<td name="sku"> 
 										
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:150px;" name="barcode_number"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:110px;" name="barcode_number"
 												   value="<{$item.barcode_number}>">
 											<span class='promote-ajax'></span>
 											<br>
 										
 										</td>
-								
+										
+										<td name="sku">
+											<input type="text" class="input-text" data-id='<{$item.id}>' data-main-pic='<{$item.menu_pic}>' id="filePath-<{$item.id}>" style="width:210px;" name="filePath"
+												   value="">
+											<span class='promote-ajax'></span> 
+											
+												<span class='promote-ajax'></span>
+
+										</td>
+										
+
+									
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
 												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
@@ -306,37 +343,129 @@ function catChg(obj) {
                                             <{/if}>
 										</td>
 										
+									
+										<td>
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_id-<{$item.id}>" style="width:70px;" name="menu_id"
+												   value="<{$item.menu_id}>">
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
 										
+									
 										<td name="en_name1">
 
-											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="<{if !$onoffcninfo}>width:180px;<{else}>width:180px;<{/if}>" name="menu_en_name"><{$item.menu_en_name}></textarea>
+											<textarea  class="input-text" data-id='<{$item.id}>' id="menu_en_name-<{$item.id}>" style="width:180px;" name="menu_en_name"><{$item.menu_en_name}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
+										
+										
+									
+                                        <{if in_array($gstType, [3,4])}>
+											<td>
+												<input type="checkbox" name="include_gst" id="includegstswitch<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.include_gst==1}> checked <{/if}>>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>
+										
+										
+										
 										<td name="en_name1">
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:50px;" name="unit_en"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unit-<{$item.id}>" style="width:30px;" name="unit_en"
 												   value="<{$item.unit_en}>">
 											<span class='promote-ajax'></span>
 										</td>
 										
 										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:100px;" name="unitQtyPerBox"
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
 												   value="<{$item.unitQtyPerBox}>">
 											<span class='promote-ajax'></span>
 										</td>
 										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:100px;" name="overflowRate"
-												   value="<{$item.overflowRate}>">&nbsp;%
+											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:50px;" name="overflowRate"
+												   value="<{$item.overflowRate}>">
 											<span class='promote-ajax'></span>
 										</td>
 										
 										
 										<td name="en_name1">
-											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:180px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
+											<textarea class="input-text" data-id='<{$item.id}>' id="menu_en_desc-<{$item.id}>" style="width:120px;"  name="menu_en_desc"><{$item.menu_en_desc}></textarea>
 											<span class='promote-ajax'></span>
 										</td>
 								
-										
+										<td>
+											<select data-id='<{$item.id}>' id="restaurant_category_id-<{$item.id}>" name="restaurant_category_id">
+                                              <option value="0"  selected>Choose Category</option>
+											  <{foreach from=$catList item=category}>
+													<option  <{if $category.id == $category.parent_cate_id}> style=" font-weight: 600;"  <{/if}>
+													value="<{$category.id}>" 
+													
+													<{if $category.id == $item.sub_category_id}>
+														selected 
+													  
+													<{else}>
+													  <{if $category.id == $item.restaurant_category_id and $item.sub_category_id==0}>
+													  	selected 
+													  <{/if}>
+													
+													
+													<{/if}>
+													
+													 >
+													
+													<{if $langStr == 'zh-cn'}>
+															<{$category.title_cn}>
+															
+														<{else}>
+															<{$category.title_en}>
+														<{/if}>
+													</option>
+                                                <{/foreach}>
+											</select>
+											<span class='promote-ajax'></span>
+											<br>
+										</td>
+                                        <{if $menu_option_list}>
+											<td name="guigecat" style="width:150px;">
+												<select  style="width:150px;" name='menu_option' data-id='<{$item.id}>'>
+													<option value='0'>Choose Specification</option>
+                                                    <{foreach from=$menu_option_list item=sitem}>
+														<option value='<{$sitem.id}>'
+                                                                <{if $item.menu_option==$sitem.id}>selected<{/if}>>
+                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<span class='promote-ajax'></span>
+											</td>
+                                        <{/if}>
+                                       
 									
+										
+										<td>
+										<div class="onoffswitch_deleted">
+												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
+													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
+												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
+													<span class="onoffswitch-inner"></span>
+												
+												</label>
+											</div>
+										
+                                            <{if $item.isDeleted==1}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#58964E;">Archived</span>
+                                                    </span>
+                                            <{else}>
+												<span class='recycle_icon' data-id='<{$item.id}>'>
+                                                        <span style="color:#F30;">Not yet</span>
+                                                    </span>
+                                            <{/if}>
+											
+										
+										</td>
+										
 										 <td>
 											
 											<span ><{$item.id}></span>
@@ -416,6 +545,7 @@ function catChg(obj) {
 				}
             } else if (data.status == 500) {
                 alert(data.msg);
+				
                 $(ajax_result).html(errorIcon);
             } else {
                 alert(data.msg);
@@ -468,9 +598,9 @@ function catChg(obj) {
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.visible == '0') {
-                    context.html("<span style='color:#F30;'>产品下线</span>");
+                    context.html("<span style='color:#F30;'>Offline</span>");
                 } else if (result.visible == '1') {
-                    context.html("<span style='color:#58964E;'>产品上线</span>");
+                    context.html("<span style='color:#58964E;'>Online</span>");
                 }
             }
         }).fail(function () {
@@ -499,10 +629,10 @@ function catChg(obj) {
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.isDeleted == '1') {
-                    context.html("<span style='color:#F30;'>已回收</span>");
-					 context1.html("<span style='color:#F30;'>产品下线</span>");
+                    context.html("<span style='color:#F30;'>Archived</span>");
+					 context1.html("<span style='color:#F30;'>Offline</span>");
                 } else if (result.isDeleted == '0') {
-                    context.html("<span style='color:#58964E;'>未回收 </span>");
+                    context.html("<span style='color:#58964E;'>Not archived </span>");
                 }
             }
         }).fail(function () {
@@ -513,45 +643,9 @@ function catChg(obj) {
     })
 	
 	
-	 $('input[name=onoffspecialinfo]').on('click', function () {
-       
-		 if ($('#onoffspecialinfo').attr('checked')) {
-			//alert('checked');
-			$("#onoffspecialinfo").attr("checked",false);
-			
-			 $('[name="special_name1"]').hide();
-			}else{
-			//alert('unchecked');
-			$("#onoffspecialinfo").attr("checked",true);
-			
-			 $('[name="special_name1"]').show();
-			}
-
-	 
-		
-       
-
-    })
 	
-		 $('input[name=onoffguigecatinfo]').on('click', function () {
-       
-		 if ($('#onoffguigecatinfo').attr('checked')) {
-			//alert('checked');
-			$("#onoffguigecatinfo").attr("checked",false);
-			
-			 $('[name="guigecat"]').hide();
-			}else{
-			//alert('unchecked');
-			$("#onoffguigecatinfo").attr("checked",true);
-			
-			 $('[name="guigecat"]').show();
-			}
-
-	 
-		
-       
-
-    })
+	
+	
 	
 		 $('input[name=onoffsku]').on('click', function () {
        
@@ -575,44 +669,8 @@ function catChg(obj) {
 	
 	
 	
-    $('input[name=onoffcninfo]').on('click', function () {
-       
-		 if ($('#onoffcninfo').attr('checked')) {
-			//alert('checked');
-			$("#onoffcninfo").attr("checked",false);
-			 $('#cn_name').hide();
-			 $('[name="cn_name1"]').hide();
-			}else{
-			//alert('unchecked');
-			$("#onoffcninfo").attr("checked",true);
-			 $('#cn_name').show();
-			 $('[name="cn_name1"]').show();
-			}
-
-	 
-		
-       
-
-    })
-	    $('input[name=onoffeninfo]').on('click', function () {
-       
-		 if ($('#onoffeninfo').attr('checked')) {
-			//alert('checked');
-			$("#onoffeninfo").attr("checked",false);
-			 $('#en_name').hide();
-			 $('[name="en_name1"]').hide();
-			}else{
-			//alert('unchecked');
-			$("#onoffeninfo").attr("checked",true);
-			 $('#en_name').show();
-			 $('[name="en_name1"]').show();
-			}
-
-	 
-		
-       
-
-    })
+   
+	  
 
 function isAssetTypeAnImage(ext) {
   return [
@@ -633,7 +691,7 @@ $('input[name=filePath]').on('change', function () {
 		var ext = value.substr(index+1);
 		//判断是否是图片
 		if(!isAssetTypeAnImage(ext)){
-		  alert('非图片格式'); return;
+		  alert('Not picture format!'); return;
 		  $(this).val('');
 		}
 				
@@ -641,7 +699,7 @@ $('input[name=filePath]').on('change', function () {
 		var mainPic =$(this).data('main-pic')  ;
 		if(mainPic) {
 
-		 if(confirm('点击确认更换主图，否则更换子图')) {
+		 if(confirm('Click Ok Update Main Pic ,otherwise Update sub pictures')) {
 			changeMainpic =1;
 		 
 		 }else{
@@ -713,9 +771,9 @@ $('input[name=filePath]').on('change', function () {
                 var price = $('#price-' + couponId).val();
                 if (result.onSpecial == '0') {
                     price = 0;
-                    context.html("<span style='color:#F30;'>非特价产品</span>");
+                    context.html("<span style='color:#F30;'>Non Special Item</span>");
                 } else if (result.onSpecial == '1') {
-                    context.html("<span style='color:#58964E;'>特价产品</span>");
+                    context.html("<span style='color:#58964E;'>Special Item</span>");
                 }
                 specialPriceInput.val(price).trigger("change");
             }
@@ -796,20 +854,18 @@ $('input[name=filePath]').on('change', function () {
                 window.location.href = "<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1&customer_id=" + $(this).val();
         });
 		
-		<{if $onoffcninfo =='on'}> $('[name="cn_name1"]').show();<{else}>$('[name="cn_name1"]').hide();<{/if}>
-		<{if $onoffeninfo =='on'}> $('[name="en_name"]').show();<{else}>$('[name="en_name"]').hide();<{/if}>
-		<{if $onoffguigecatinfo =='on'}> $('[name="guigecat"]').show();<{else}>$('[name="guigecat"]').hide();<{/if}>
+		
+	
 		
 		  
+	
 		
-		<{if $allOrspecial=='special'}> 
-			$('[name="special_name1"]').show();
+      <{if $sku=='show'}> 
+			$('[name="sku"]').show();
 		<{else}>
-			$('[name="special_name1"]').hide();
+			$('[name="sku"]').hide();
 		
 		<{/if}>
-		
-    
 		
 		
 		
@@ -842,7 +898,7 @@ $('input[name=filePath]').on('change', function () {
                 //alert(result.message);
                 if (result.message == '0') {
                     //alert(result.message);
-                    $('.ajax-status').html("修改成功，请检查价格后按照比例更改后刷新");
+                    $('.ajax-status').html("Edit successful!");
                 } else if (result.message == '1') {
                     $('.ajax-status').html("success");
                 }

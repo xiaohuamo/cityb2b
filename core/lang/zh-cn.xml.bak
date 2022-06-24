@@ -176,7 +176,7 @@
 	  <categ_management>品类管理</categ_management>
 	
     <items_management>商品编辑</items_management>
-	<recycleBinProduct>产品垃圾箱</recycleBinProduct>
+	<recycleBinProduct>归档</recycleBinProduct>
 	<recycleBinCustomer>隐藏客户</recycleBinCustomer>
 	 <items_add>商品增加</items_add>
 	 <online_publish>上线店铺</online_publish>
@@ -954,6 +954,7 @@
     <online_payment_application>在线支付申请</online_payment_application>
     <abn_authentication>ABN/CAN 认证</abn_authentication>
     <new_employees>新建员工</new_employees>
+	<edit_employees>员工编辑</edit_employees>
     <branch>分店</branch>
     <administrators>管理员</administrators>
     <name_of_branch_store>分店名称</name_of_branch_store>
@@ -1015,7 +1016,7 @@
 
     <operating>操作</operating>
  <staff_permission>Staff permission</staff_permission>
-
+	<Migrate>迁移</Migrate>
     <!-- 43 -->
     <underline_payment>线下支付</underline_payment>
 	<staff_list>员工列表</staff_list>

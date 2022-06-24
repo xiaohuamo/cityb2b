@@ -49,7 +49,7 @@
                     <{$lang->items_management}>
 				</a> -->
 				
-				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit?freshfood=1"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>restaurant/restaurant_menu_edit"<{if $submenu=='restaurant_menu_edit'}> class="current"<{/if}>>
 					<{$lang->items_management}>
 				</a>
 				
@@ -177,6 +177,12 @@
 		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='Store_List'}> class="current"<{/if}>>
 			   <{$lang->stock_room_management}>
 		</a>
+		
+		<a  href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu=='stock_item_edit'}> class="current"<{/if}>>
+			   <{$lang->item_management}>
+		</a>
+		
+		
 		<a  href="<{$http_root_www}>factory/add_new_stock?stock=1"<{if $submenu=='stock_in'}> class="current"<{/if}>>
 			   <{$lang->Stock_in}>
 		</a>

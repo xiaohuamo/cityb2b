@@ -375,7 +375,7 @@
 									<th name="sku" >SKU Code</th>
 									<th  name="sku" >Pic Link</th>
 									
-									<th>Public ON/Off </th>
+									<th>Publish ON/Off </th>
 									<th name="special_name1">Special set</th>
 									<th name="special_name1">Special Price</th>
 									<th name="special_name1">Limit Qty</th>
@@ -939,26 +939,6 @@
 			$("#onoffguigecatinfo").attr("checked",true);
 			
 			 $('[name="guigecat"]').show();
-			}
-
-	 
-		
-       
-
-    })
-	
-		 $('input[name=onoffsku]').on('click', function () {
-       
-		 if ($('#onoffsku').attr('checked')) {
-			//alert('checked');
-			$("#onoffsku").attr("checked",false);
-			
-			 $('[name="sku"]').hide();
-			}else{
-			//alert('unchecked');
-			$("#onoffsku").attr("checked",true);
-			
-			 $('[name="sku"]').show();
 			}
 
 	 

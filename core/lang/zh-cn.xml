@@ -176,7 +176,7 @@
 	  <categ_management>品类管理</categ_management>
 	
     <items_management>商品编辑</items_management>
-	<recycleBinProduct>产品垃圾箱</recycleBinProduct>
+	<recycleBinProduct>归档</recycleBinProduct>
 	<recycleBinCustomer>隐藏客户</recycleBinCustomer>
 	 <items_add>商品增加</items_add>
 	 <online_publish>上线店铺</online_publish>
@@ -184,6 +184,7 @@
 	 <category_migration>分类调整</category_migration>
 	 <images_grab>自动图片匹配</images_grab>
 	  
+	  <item_management>产品管理</item_management>
 	  
 	  
 	<link_wechat_account>绑定微信账户</link_wechat_account>
@@ -1016,7 +1017,7 @@
 
     <operating>操作</operating>
  <staff_permission>Staff permission</staff_permission>
-
+	<Migrate>迁移</Migrate>
     <!-- 43 -->
     <underline_payment>线下支付</underline_payment>
 	<staff_list>员工列表</staff_list>

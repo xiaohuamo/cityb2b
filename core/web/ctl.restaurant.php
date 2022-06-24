@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ctl_restaurant extends cmsPage
 {
 	function ctl_restaurant()
@@ -7,23 +7,23 @@ class ctl_restaurant extends cmsPage
 		$mdl_restaurant =$this->loadModel('restaurant_info');
 		$restaurant =$mdl_restaurant->getByWhere(array('userId'=>$this->loginUser['id']));
 		$this->setData($restaurant,'restaurant');
-		
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
-		
-	
-		
-	}	
-	
+
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+
+
+
+	}
+
 	public function index_action($value='')
 	{
-		
-		
+
+
 		// 获得是否有推荐人,如果有推荐人,生成的查询链接都会加相关的tag
-		
+
 		$reftag = trim( get2( 'reftag' ) );
 		$this->setData( $reftag, 'reftag' );
-		
+
 		/**
 		 * 产品分类
 		 * @var [type]
@@ -127,7 +127,7 @@ class ctl_restaurant extends cmsPage
 		 * 用户模组
 		 */
 		$mdl_user = $this->loadModel( 'user' );
-		
+
 		/**
 		 * 评价模组
 		 */
@@ -161,7 +161,7 @@ class ctl_restaurant extends cmsPage
 
 		$mdl_advancedKeySearch->advancedKeyCalculation($searchKeywords);
 
-		
+
 		if($orderby=='default')$orderby='id desc';
 		if($orderby=='hits')$orderby='hits desc';
 		if($orderby=='buy')$orderby='buy desc';
@@ -182,7 +182,7 @@ class ctl_restaurant extends cmsPage
 		$pageSql.="
 		WHERE !(autoOffline=1 AND ('$currentTime'<startTime or '$currentTime'>endTime))
 		and categoryId like '%,".$category['id']."%'".
-		"and (city like '%,".$cityId."%' or city='')";
+			"and (city like '%,".$cityId."%' or city='')";
 
 		if($searchKeywords)
 			$pageSql.=" and (title like '%$searchKeywords%' or businessName like '%$searchKeywords%' or coupon_summery_description like '%$searchKeywords%' or searchKeywords like '%$searchKeywords%') ";
@@ -219,7 +219,7 @@ class ctl_restaurant extends cmsPage
 			$pageSql.="
 			WHERE !(autoOffline=1 AND ('$currentTime'<startTime or '$currentTime'>endTime))
 			and categoryId like '%,".$category['id']."%'".
-			"and (city like '%,".$cityId."%' or city='')";
+				"and (city like '%,".$cityId."%' or city='')";
 
 			if($meal_type){
 				$meal_type_parts=explode(',', $meal_type);
@@ -227,7 +227,7 @@ class ctl_restaurant extends cmsPage
 					$meal_type_parts[$key]= " u.meal_type like '%$value%'";
 				}
 				$pageSql.=" and (". join(' or ',$meal_type_parts).")";
-			} 
+			}
 
 			if($guest_limit){
 				$guest_limit_parts=explode(',', $guest_limit);
@@ -268,7 +268,7 @@ class ctl_restaurant extends cmsPage
 			$pageSql.="
 			WHERE !(autoOffline=1 AND ('$currentTime'<startTime or '$currentTime'>endTime))
 			and categoryId like '%,".$category['id']."%'".
-			"and (city like '%,".$cityId."%' or city='')";
+				"and (city like '%,".$cityId."%' or city='')";
 
 			if($meal_type){
 				$meal_type_parts=explode(',', $meal_type);
@@ -405,7 +405,7 @@ class ctl_restaurant extends cmsPage
 
 		$this->setData($this->loadModel('info')->getListByClass('115',10,'ordinal'),'bannerData');
 
-    	 //wx share
+		//wx share
 		require_once "wx/wxjssdk.php";
 		$jssdk = new WXjsSDK();
 		$signPackage = $jssdk->GetSignPackage();
@@ -478,17 +478,17 @@ class ctl_restaurant extends cmsPage
 	 */
 	function restaurant_action() {
 		$id = (int)get2( 'id' );
-		
+
 		$mdl = $this->loadModel('user');
 		$curr_user =$mdl->get($id);
-		
+
 		if ($curr_user['shop_version']==1 || get2( 'dy' )){
 			return self::fresh_action();
 		}
 
-		
-			
-	
+
+
+
 		$cart = (int)get2( 'cart' );
 
 		if($id==217005) {
@@ -497,7 +497,7 @@ class ctl_restaurant extends cmsPage
 		if($id==218639) {
 			$id =218812;
 		}
- 
+
 		$force = (int)get2( 'force' ); //后台刷新的时候，强制调用get_menu
 		$this->setData( $force, 'force' );
 
@@ -594,39 +594,39 @@ class ctl_restaurant extends cmsPage
 		$this->setData( $cart, 'cart' );
 		$this->setData( $menu_totalprice, 'totalprice' );
 		$this->setData( $voucher_totalprice, 'voucher_totalprice' );
-		
-  	 // var_dump($restaurant_coupon);exit;
+
+		// var_dump($restaurant_coupon);exit;
 		$title = str_replace('|', '', $restaurant_coupon['title']);
 		$this->setData($title, 'pageTitle');
 		$this->setData($restaurant_coupon['searchKeywords'], 'pageKeywords');
 		$this->setData($restaurant_promotion_manjian['promotion_desc'], 'pageDescription');
 
 
-	   /*
-		//wx share
-		require_once "wx/wxjssdk.php";
-        $jssdk = new WXjsSDK();
-        $signPackage = $jssdk->GetSignPackage();
-        $this->setData($signPackage,'signPackage');
+		/*
+         //wx share
+         require_once "wx/wxjssdk.php";
+         $jssdk = new WXjsSDK();
+         $signPackage = $jssdk->GetSignPackage();
+         $this->setData($signPackage,'signPackage');
 
-        $shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
-        $this->setData($shareUrl,'shareUrl');
-        $this->setData(generateQRCode($shareUrl),'shareQRCode');
+         $shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
+         $this->setData($shareUrl,'shareUrl');
+         $this->setData(generateQRCode($shareUrl),'shareQRCode');
 
-        $this->setData( get2('action'), 'returnAction' );
+         $this->setData( get2('action'), 'returnAction' );
 
-        $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-       */
+         $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
+        */
 		//$this->display_pc_mobile('/mobile/restaurant/restaurant-site/'.$id,'/mobile/restaurant/restaurant-site/'.$id); return;
 
-		 $this->loadModel('freshfood_disp_suppliers_schedule');
+		$this->loadModel('freshfood_disp_suppliers_schedule');
 
 		// 获取 统配店商家号  // 获取供应商商家列表
-			$centreId = DispCenter::getDispCenterIdOfSupplier($id);
-			$data_suppliers = DispCenter::getSupplierListWithRefreshCode($centreId);
-			$data_suppliers_count =count($data_suppliers);
-			$this->setData($data_suppliers, 'data_suppliers');
-			$this->setData($data_suppliers_count, 'data_suppliers_count');
+		$centreId = DispCenter::getDispCenterIdOfSupplier($id);
+		$data_suppliers = DispCenter::getSupplierListWithRefreshCode($centreId);
+		$data_suppliers_count =count($data_suppliers);
+		$this->setData($data_suppliers, 'data_suppliers');
+		$this->setData($data_suppliers_count, 'data_suppliers_count');
 
 
 
@@ -643,92 +643,92 @@ class ctl_restaurant extends cmsPage
 
 		$this->setData(join(DispCenter::getPostcode(DispCenter::getDispCenterIdOfSupplier($id)),','), 'postcodeSupported'); //使用统配商家邮编信息
 		$this->setData(DispCenter::isSingleSupplierDispCenter($id),'isSingleSupplierDispCenter');
-		
-		
-		
-		
+
+
+
+
 		require_once "wx/wxjssdk.php";
-        $jssdk = new WXjsSDK();
-        $signPackage = $jssdk->GetSignPackage();
-        $this->setData($signPackage,'signPackage');
+		$jssdk = new WXjsSDK();
+		$signPackage = $jssdk->GetSignPackage();
+		$this->setData($signPackage,'signPackage');
 
-        $shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
-        $this->setData($shareUrl,'shareUrl');
-        $this->setData(generateQRCode($shareUrl),'shareQRCode');
+		$shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
+		$this->setData($shareUrl,'shareUrl');
+		$this->setData(generateQRCode($shareUrl),'shareQRCode');
 
-        $this->setData( get2('action'), 'returnAction' );
+		$this->setData( get2('action'), 'returnAction' );
 
-        $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-		
-      
-      
-		
-	  
-       
-        $this->setData($shareUrl,'shareUrl');
-        $this->setData(generateQRCode($shareUrl),'shareQRCode');
-        
-       
-      //  $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-		
-		 //获得当前店铺得 订货时间
-		 $mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
-				$where = [];
-				$where['business_id'] = $id;
-				$where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($id);
-				$list = $mdl->getList(null, $where);
-				
-				
-			
-			foreach ($list as $key =>$value) {
-				$order_start_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_start_of_date']);
-				$order_cut_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_cut_of_date']);
-				$delivery_date_of_week_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['delivery_date_of_week']);
-				
-				$list[$key]['order_start_of_date_cn'] = $order_start_of_date_cn ;
-				$list[$key]['order_cut_of_date'] =$order_cut_of_date_cn  ;
-				$list[$key]['delivery_date_of_week_cn'] = $delivery_date_of_week_cn ;
-				$list[$key]['ordertime_cn'] = '从'.$order_start_of_date_cn.$value['order_start_of_time'] .' 到 '.$order_cut_of_date_cn.$value['order_cut_of_time'];
-				$list[$key]['ordertime'] = 'From '.$value['order_start_of_date'].' '.$value['order_start_of_time'] .' To '.$value['order_cut_of_date'].' '.$value['order_cut_of_time'];
-		       
-			}
-				
-				
-				
-				
-            $this->setData($list,'current_business_tuangou_time');
-		
-		
-		
-		
-        $this->display_pc_mobile('mobile/restaurant/coupon_detail_coupon','mobile/restaurant/coupon_detail_coupon');
-    }
-
-    public  function init_page_action() {
+		$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
 
 
-    	$mdl_user=$this->loadModel('user');
 
-    	$id = (int)get2( 'businessUserId' );
 
-    	if(!$id)$this->sheader(null,(string)$this->lang->choose_rihgt_business);
+
+
+		$this->setData($shareUrl,'shareUrl');
+		$this->setData(generateQRCode($shareUrl),'shareQRCode');
+
+
+		//  $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
+
+		//获得当前店铺得 订货时间
+		$mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
+		$where = [];
+		$where['business_id'] = $id;
+		$where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($id);
+		$list = $mdl->getList(null, $where);
+
+
+
+		foreach ($list as $key =>$value) {
+			$order_start_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_start_of_date']);
+			$order_cut_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_cut_of_date']);
+			$delivery_date_of_week_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['delivery_date_of_week']);
+
+			$list[$key]['order_start_of_date_cn'] = $order_start_of_date_cn ;
+			$list[$key]['order_cut_of_date'] =$order_cut_of_date_cn  ;
+			$list[$key]['delivery_date_of_week_cn'] = $delivery_date_of_week_cn ;
+			$list[$key]['ordertime_cn'] = '从'.$order_start_of_date_cn.$value['order_start_of_time'] .' 到 '.$order_cut_of_date_cn.$value['order_cut_of_time'];
+			$list[$key]['ordertime'] = 'From '.$value['order_start_of_date'].' '.$value['order_start_of_time'] .' To '.$value['order_cut_of_date'].' '.$value['order_cut_of_time'];
+
+		}
+
+
+
+
+		$this->setData($list,'current_business_tuangou_time');
+
+
+
+
+		$this->display_pc_mobile('mobile/restaurant/coupon_detail_coupon','mobile/restaurant/coupon_detail_coupon');
+	}
+
+	public  function init_page_action() {
+
+
+		$mdl_user=$this->loadModel('user');
+
+		$id = (int)get2( 'businessUserId' );
+
+		if(!$id)$this->sheader(null,(string)$this->lang->choose_rihgt_business);
 
 		// 获取的餐馆ID--是商家的ID ,判断当前商家是否设置餐厅入口
-    	$where =array(
-    		'createUserId' => $id,
-    		'EvoucherOrrealproduct' =>'restaurant_menu'
-    	);
+		$where =array(
+			'createUserId' => $id,
+			'EvoucherOrrealproduct' =>'restaurant_menu'
+		);
 
-    	$mdl_coupons =$this->loadModel("coupons");
+		$mdl_coupons =$this->loadModel("coupons");
 
-    	$restaurant_coupon= $mdl_coupons->getByWhere($where);
-    	$currentTime=strtotime ('now');
-    	if(($restaurant_coupon['isApproved']==1 && $restaurant_coupon['status']==4) || $restaurant_coupon['createUserId']==$this->loginUser['id']  || $_SESSION['coupon_private_view_allowed']==$restaurant_coupon['id']) {
-    		$mdl_user =$this->loadModel("user");
-    		$business_user =$mdl_user->get($restaurant_coupon['createUserId']);
-    		$restaurant_coupon['business']=$business_user;
+		$restaurant_coupon= $mdl_coupons->getByWhere($where);
+		$currentTime=strtotime ('now');
+		if(($restaurant_coupon['isApproved']==1 && $restaurant_coupon['status']==4) || $restaurant_coupon['createUserId']==$this->loginUser['id']  || $_SESSION['coupon_private_view_allowed']==$restaurant_coupon['id']) {
+			$mdl_user =$this->loadModel("user");
+			$business_user =$mdl_user->get($restaurant_coupon['createUserId']);
+			$restaurant_coupon['business']=$business_user;
 			//获得自己店的其它产品
-    	}/*else if($currentTime < $restaurant_coupon['startTime']){
+		}/*else if($currentTime < $restaurant_coupon['startTime']){
 			$this->sheader(null,'当前产品还未开放，暂时不接受订单,请稍后..');
 
 		}else if($currentTime > $restaurant_coupon['endTime']) {
@@ -758,13 +758,13 @@ class ctl_restaurant extends cmsPage
 
 		if($this->loginUser) {
 
-	     	//清除购物车其它产品
+			//清除购物车其它产品
 			$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
 			$where =array (
 				'businessUserId <>' . $id,
 				'userId '=> $this->loginUser['id']
 			);
-    		//$mdl_wj_user_temp_carts->deleteByWhere($where);
+			//$mdl_wj_user_temp_carts->deleteByWhere($where);
 
 
 			$userId=$this->loginUser['id'];
@@ -797,40 +797,40 @@ class ctl_restaurant extends cmsPage
 
 					}
 
-                   ///如果是特价产品
-				   if($val['onSpecial']) {
+					///如果是特价产品
+					if($val['onSpecial']) {
 
-					   if($menu_rec['speical_price'] != $val['single_amount']) {
+						if($menu_rec['speical_price'] != $val['single_amount']) {
 
 
-						$new_item_price_data= array(
-							'single_amount' =>$menu_rec['speical_price']
-						);
-						$mdl_wj_user_temp_carts->update($new_item_price_data,$val['id']);
+							$new_item_price_data= array(
+								'single_amount' =>$menu_rec['speical_price']
+							);
+							$mdl_wj_user_temp_carts->update($new_item_price_data,$val['id']);
+
+						}
+
+
+
+
+					}else{
+
+						// 如果在菜单中找到该产品，检查价格是否和菜单中描述一致，不一致，则更新
+						if($menu_rec['price'] != $val['single_amount']) {
+
+
+
+
+							$new_item_price_data= array(
+								'single_amount' =>$menu_rec['price']
+							);
+							$mdl_wj_user_temp_carts->update($new_item_price_data,$val['id']);
+
+						}
+
+
 
 					}
-
-
-
-
-				   }else{
-
-					  	// 如果在菜单中找到该产品，检查价格是否和菜单中描述一致，不一致，则更新
-					if($menu_rec['price'] != $val['single_amount']) {
-
-
-
-
-						$new_item_price_data= array(
-							'single_amount' =>$menu_rec['price']
-						);
-						$mdl_wj_user_temp_carts->update($new_item_price_data,$val['id']);
-
-					}
-
-
-
-				   }
 
 
 
@@ -867,126 +867,126 @@ class ctl_restaurant extends cmsPage
 			foreach ($cartItems as $key => $val) {
 				$totalQuantity+=$val['quantity'];
 				if ($val['restaurant_category_id'] !== $old_category) {
-						if(!$val['restaurant_category_id']) { // 没有分类 就是团购套餐
+					if(!$val['restaurant_category_id']) { // 没有分类 就是团购套餐
 
-							$cartItems[$key]['category_cn_name']=(string)$this->lang->group_buy;
+						$cartItems[$key]['category_cn_name']=(string)$this->lang->group_buy;
 
+					}
+
+					$cartItems[$key]['new_cat']=1;
+					if($old_business_id==0 || ($cartItems[$key]['businessUserId'] <> $old_business_id) ) {
+						if($cartItems[$key]['displayName']){
+							$cartItems[$key]['business_name'] =$cartItems[$key]['displayName'];
+						}else{
+							$cartItems[$key]['business_name'] =$cartItems[$key]['businessName'];
 						}
-
-						$cartItems[$key]['new_cat']=1;
-						if($old_business_id==0 || ($cartItems[$key]['businessUserId'] <> $old_business_id) ) {
-							if($cartItems[$key]['displayName']){
-								$cartItems[$key]['business_name'] =$cartItems[$key]['displayName'];
-							}else{
-								$cartItems[$key]['business_name'] =$cartItems[$key]['businessName'];
-							}
-							$old_business_id =$cartItems[$key]['businessUserId'];
-						}
-					}else{
-						$cartItems[$key]['new_cat']=0;
-
+						$old_business_id =$cartItems[$key]['businessUserId'];
 					}
-					$old_category=$val['restaurant_category_id'];
-					if(!$val['restaurant_category_id']) {
-						$cartItems[$key]['pic']=$val['coupon_pic'];
-					}
-
-					if ($val['main_coupon_id']== $restaurant_coupon['id']){
-
-						$menu_totalprice += $val['single_amount']*$val['quantity'];
-					}else{
-
-						$voucher_totalprice += $val['single_amount']*$val['quantity'];
-
-					}
-
-
-					$cartTotalPrice+=$val['single_amount']*$val['quantity'];
-				}
-				//var_dump($cartTotalPrice);exit;
-
-				$this->setData($cartTotalPrice,'totalPrice');
-				$this->setData($totalQuantity,'totalQuantity');
-
-				$this->setData($cartItems,'items');
-				$this->setData($businessUserId,'businessUserId');
-
-
-
-				$us=$this->getUserDevice();
-				if($us=='desktop'){
-					$html = $this->fetch('/ajax_cart');
 				}else{
-					$html = $this->fetch('ajax_cart');
+					$cartItems[$key]['new_cat']=0;
+
 				}
+				$old_category=$val['restaurant_category_id'];
+				if(!$val['restaurant_category_id']) {
+					$cartItems[$key]['pic']=$val['coupon_pic'];
+				}
+
+				if ($val['main_coupon_id']== $restaurant_coupon['id']){
+
+					$menu_totalprice += $val['single_amount']*$val['quantity'];
+				}else{
+
+					$voucher_totalprice += $val['single_amount']*$val['quantity'];
+
+				}
+
+
+				$cartTotalPrice+=$val['single_amount']*$val['quantity'];
 			}
+			//var_dump($cartTotalPrice);exit;
+
+			$this->setData($cartTotalPrice,'totalPrice');
+			$this->setData($totalQuantity,'totalQuantity');
+
+			$this->setData($cartItems,'items');
+			$this->setData($businessUserId,'businessUserId');
 
 
-
-			$this->setData( $restaurant_promotion_manjian_rates*100, 'restaurant_promotion_manjian_rates' );
-			$this->setData( $id, 'restaurant_id' );
-			$this->setData( $menu_totalprice, 'totalprice' );
-			$this->setData( $voucher_totalprice, 'voucher_totalprice' );
-			$title = str_replace('|' ,'',$restaurant_coupon['title']);
-			$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
-			$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
-			$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
-
-		//wx share
-			require_once "wx/wxjssdk.php";
-			$jssdk = new WXjsSDK();
-			$signPackage = $jssdk->GetSignPackage();
-			$this->setData($signPackage,'signPackage');
-
-			$shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
-			$this->setData($shareUrl,'shareUrl');
-			$this->setData(generateQRCode($shareUrl),'shareQRCode');
-
-			$this->setData( get2('action'), 'returnAction' );
-
-			$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-
-
-
-
-	   // init page 的内容
-
-			$data=array();
-
-
-			$this->setData( $coupon_list, 'coupon_list' );
-
-
-			$this->setData( $restaurant_category, 'restaurant_category' );
 
 			$us=$this->getUserDevice();
 			if($us=='desktop'){
-				$category_list = $this->fetch('/mobile/restaurant/category');
-
+				$html = $this->fetch('/ajax_cart');
 			}else{
-				$category_list = $this->fetch('/mobile/restaurant/category');
-
+				$html = $this->fetch('ajax_cart');
 			}
+		}
 
 
 
-			$data['coupon'] =$restaurant_coupon;
-			$data['html'] =$html;
-			$data['totalPrice'] =$cartTotalPrice;
-			$data['totalQuantity'] =$totalQuantity;
+		$this->setData( $restaurant_promotion_manjian_rates*100, 'restaurant_promotion_manjian_rates' );
+		$this->setData( $id, 'restaurant_id' );
+		$this->setData( $menu_totalprice, 'totalprice' );
+		$this->setData( $voucher_totalprice, 'voucher_totalprice' );
+		$title = str_replace('|' ,'',$restaurant_coupon['title']);
+		$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
+		$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
+		$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
+
+		//wx share
+		require_once "wx/wxjssdk.php";
+		$jssdk = new WXjsSDK();
+		$signPackage = $jssdk->GetSignPackage();
+		$this->setData($signPackage,'signPackage');
+
+		$shareUrl = HTTP_ROOT_WX."restaurant/$id?reftag=".$this->loginUser['id'];
+		$this->setData($shareUrl,'shareUrl');
+		$this->setData(generateQRCode($shareUrl),'shareQRCode');
+
+		$this->setData( get2('action'), 'returnAction' );
+
+		$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
 
 
 
-			echo json_encode($data); return;
+
+		// init page 的内容
+
+		$data=array();
 
 
+		$this->setData( $coupon_list, 'coupon_list' );
 
+
+		$this->setData( $restaurant_category, 'restaurant_category' );
+
+		$us=$this->getUserDevice();
+		if($us=='desktop'){
+			$category_list = $this->fetch('/mobile/restaurant/category');
+
+		}else{
+			$category_list = $this->fetch('/mobile/restaurant/category');
 
 		}
 
 
 
-		public function get_category_coupon_list_action(){
+		$data['coupon'] =$restaurant_coupon;
+		$data['html'] =$html;
+		$data['totalPrice'] =$cartTotalPrice;
+		$data['totalQuantity'] =$totalQuantity;
+
+
+
+		echo json_encode($data); return;
+
+
+
+
+	}
+
+
+
+	public function get_category_coupon_list_action(){
 
 
 		/**
@@ -1044,7 +1044,7 @@ class ctl_restaurant extends cmsPage
 		$this->setData($restaurant_promotion_manjian,'restaurant_promotion_manjian');
 
 		if($this->loginUser) {
-	     	//清除购物车其它产品
+			//清除购物车其它产品
 			$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
 			$where =array (
 				'businessUserId <>' . $id,
@@ -1070,64 +1070,64 @@ class ctl_restaurant extends cmsPage
 			foreach ($cartItems as $key => $val) {
 				$totalQuantity+=$val['quantity'];
 				if ($val['category_sort_id'] !== $old_category) {
-						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
+					if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 
-							$cartItems[$key]['category_cn_name']='Group Buy';
-						}
-						$cartItems[$key]['new_cat']=1;
-					}else{
-						$cartItems[$key]['new_cat']=0;
-
+						$cartItems[$key]['category_cn_name']='Group Buy';
 					}
-					$old_category=$val['category_sort_id'];
-					if(!$val['category_sort_id']) {
-						$cartItems[$key]['pic']=$val['coupon_pic'];
-					}
-
-					if ($val['main_coupon_id']== $restaurant_coupon['id']){
-
-						$menu_totalprice += $val['single_amount']*$val['quantity'];
-					}else{
-
-						$voucher_totalprice += $val['single_amount']*$val['quantity'];
-
-					}
-
-
-					$cartTotalPrice+=$val['single_amount']*$val['quantity'];
-				}
-
-				$this->setData($cartTotalPrice,'totalPrice');
-				$this->setData($totalQuantity,'totalQuantity');
-
-				$this->setData($cartItems,'items');
-				$this->setData($businessUserId,'businessUserId');
-
-
-
-				$us=$this->getUserDevice();
-				if($us=='desktop'){
-					$html = $this->fetch('/restaurant/ajax_cart');
+					$cartItems[$key]['new_cat']=1;
 				}else{
-					$html = $this->fetch('ajax_cart');
+					$cartItems[$key]['new_cat']=0;
+
+				}
+				$old_category=$val['category_sort_id'];
+				if(!$val['category_sort_id']) {
+					$cartItems[$key]['pic']=$val['coupon_pic'];
 				}
 
-				$this->setData(json_encode($html),'html');
+				if ($val['main_coupon_id']== $restaurant_coupon['id']){
 
+					$menu_totalprice += $val['single_amount']*$val['quantity'];
+				}else{
+
+					$voucher_totalprice += $val['single_amount']*$val['quantity'];
+
+				}
+
+
+				$cartTotalPrice+=$val['single_amount']*$val['quantity'];
 			}
+
+			$this->setData($cartTotalPrice,'totalPrice');
+			$this->setData($totalQuantity,'totalQuantity');
+
+			$this->setData($cartItems,'items');
+			$this->setData($businessUserId,'businessUserId');
+
+
+
+			$us=$this->getUserDevice();
+			if($us=='desktop'){
+				$html = $this->fetch('/restaurant/ajax_cart');
+			}else{
+				$html = $this->fetch('ajax_cart');
+			}
+
+			$this->setData(json_encode($html),'html');
+
+		}
 
 		//加载餐馆菜单
-			$mdl_restaurant_category=$this->loadModel('restaurant_category');
-			$restaurant_category=$mdl_restaurant_category->getListBySql("select * from cc_restaurant_category where restaurant_id = ".$id . " and (parent_category_id  =0 or parent_category_id is null ) and (length(category_cn_name)>0 or length(category_en_name)>0) order by `category_sort_id`");
+		$mdl_restaurant_category=$this->loadModel('restaurant_category');
+		$restaurant_category=$mdl_restaurant_category->getListBySql("select * from cc_restaurant_category where restaurant_id = ".$id . " and (parent_category_id  =0 or parent_category_id is null ) and (length(category_cn_name)>0 or length(category_en_name)>0) order by `category_sort_id`");
 
-			foreach ($restaurant_category as $key => $value) {
-				if($restaurant_category[$key]['category_en_name']=='') {
-					$restaurant_category[$key]['category_en_name']=$restaurant_category[$key]['category_cn_name'];
-				}
+		foreach ($restaurant_category as $key => $value) {
+			if($restaurant_category[$key]['category_en_name']=='') {
+				$restaurant_category[$key]['category_en_name']=$restaurant_category[$key]['category_cn_name'];
 			}
+		}
 
 
-        // 如果发现有special菜单，那么生成一个新的类别编号，并置顶
+		// 如果发现有special菜单，那么生成一个新的类别编号，并置顶
 		$mdl_restaurant_menu = $this->loadModel( 'restaurant_menu' );
 		$sql_special  = "select count(*) as count from cc_restaurant_menu a where a.restaurant_id =$id and  (length(a.menu_cn_name)>0 or length(a.menu_en_name)>0) and a.visible=1 and a.onSpecial =1  ";
 		//var_dump($sql_special);exit;
@@ -1137,15 +1137,15 @@ class ctl_restaurant extends cmsPage
 			///var_dump($exist_special);exit;
 
 			$special_array = array(
-			   'restaurant_id'=>$id,
-			   'category_id'=>1000,
-			   'category_sort_id'=>10,
-			   'category_cn_name'=>'本期优惠',
-			   'category_en_name'=>'On Sale',
-			   'createUserId'=>$id,
-			   'ref_restaurant_id'=>0,
-			   'ref_DishTypeId'=>0,
-			   'hot'=>1
+				'restaurant_id'=>$id,
+				'category_id'=>1000,
+				'category_sort_id'=>10,
+				'category_cn_name'=>'本期优惠',
+				'category_en_name'=>'On Sale',
+				'createUserId'=>$id,
+				'ref_restaurant_id'=>0,
+				'ref_DishTypeId'=>0,
+				'hot'=>1
 
 			);
 			array_unshift($restaurant_category,$special_array);
@@ -1156,175 +1156,175 @@ class ctl_restaurant extends cmsPage
 
 
 
-	   // 获取该商家的所有coupon 及子coupon 并列表
-			$coupon_list =$mdl_coupons->getAllCouponsofUser($id);
+		// 获取该商家的所有coupon 及子coupon 并列表
+		$coupon_list =$mdl_coupons->getAllCouponsofUser($id);
 
 
 
-	   //如果当前用户购买了那个coupon ,则直接更改其购买的数量
-			foreach ($coupon_list as $key => $value) {
-				if($this->loginUser) {
-					$sql ="select  quantity from cc_wj_user_temp_carts where main_coupon_id=".$coupon_list[$key]['id'] ." and sub_coupon_id=".$coupon_list[$key]["sub_id"]." and  userId=".$this->loginUser['id'];
+		//如果当前用户购买了那个coupon ,则直接更改其购买的数量
+		foreach ($coupon_list as $key => $value) {
+			if($this->loginUser) {
+				$sql ="select  quantity from cc_wj_user_temp_carts where main_coupon_id=".$coupon_list[$key]['id'] ." and sub_coupon_id=".$coupon_list[$key]["sub_id"]." and  userId=".$this->loginUser['id'];
 
-					$temp_item = $mdl_wj_user_temp_carts->getListBySql($sql);
+				$temp_item = $mdl_wj_user_temp_carts->getListBySql($sql);
 
-					if($temp_item) {
-						$coupon_list[$key]['qty']=$temp_item[0]['quantity'];
-					}else{
-						$coupon_list[$key]['qty']=0;
-					}
-
+				if($temp_item) {
+					$coupon_list[$key]['qty']=$temp_item[0]['quantity'];
 				}else{
 					$coupon_list[$key]['qty']=0;
 				}
-			}
-
-			$this->setData( $coupon_list, 'coupon_list' );
-
-
-			$this->setData( $restaurant_category, 'restaurant_category' );
-
-			$us=$this->getUserDevice();
-			if($us=='desktop'){
-				$category_list = $this->fetch('/mobile/restaurant/category');
-				$category_list_en = $this->fetch('/mobile/restaurant/category_en');
-				$coupon_list = $this->fetch('/mobile/restaurant/coupon_list');
-				$title_promotion =$this->fetch('/mobile/restaurant/title_promotion');
-				$title_promotion_en =$this->fetch('/mobile/restaurant/title_promotion_en');
-			}else{
-				$category_list = $this->fetch('/mobile/restaurant/category');
-				$category_list_en = $this->fetch('/mobile/restaurant/category_en');
-				$coupon_list = $this->fetch('/mobile/restaurant/coupon_list');
-				$title_promotion =$this->fetch('/mobile/restaurant/title_promotion');
-				$title_promotion_en =$this->fetch('/mobile/restaurant/title_promotion_en');
-			}
-			$data1=array();
-
-
-
-			//首次直接输出
-			if($this->getLangStr()=='en'){
-
-				$data1['category'] =$category_list_en;
-				$data1['coupon_list'] =$coupon_list;
-				$data1['title_promotion'] =$title_promotion_en;
 
 			}else{
-				$data1['category'] =$category_list;
-				$data1['coupon_list'] =$coupon_list;
-				$data1['title_promotion'] =$title_promotion;
-
+				$coupon_list[$key]['qty']=0;
 			}
+		}
+
+		$this->setData( $coupon_list, 'coupon_list' );
+
+
+		$this->setData( $restaurant_category, 'restaurant_category' );
+
+		$us=$this->getUserDevice();
+		if($us=='desktop'){
+			$category_list = $this->fetch('/mobile/restaurant/category');
+			$category_list_en = $this->fetch('/mobile/restaurant/category_en');
+			$coupon_list = $this->fetch('/mobile/restaurant/coupon_list');
+			$title_promotion =$this->fetch('/mobile/restaurant/title_promotion');
+			$title_promotion_en =$this->fetch('/mobile/restaurant/title_promotion_en');
+		}else{
+			$category_list = $this->fetch('/mobile/restaurant/category');
+			$category_list_en = $this->fetch('/mobile/restaurant/category_en');
+			$coupon_list = $this->fetch('/mobile/restaurant/coupon_list');
+			$title_promotion =$this->fetch('/mobile/restaurant/title_promotion');
+			$title_promotion_en =$this->fetch('/mobile/restaurant/title_promotion_en');
+		}
+		$data1=array();
 
 
 
+		//首次直接输出
+		if($this->getLangStr()=='en'){
 
-			/* 写入数据到静态文件 */
+			$data1['category'] =$category_list_en;
+			$data1['coupon_list'] =$coupon_list;
+			$data1['title_promotion'] =$title_promotion_en;
 
-				//$filename='/data/upload/htm/restaurant/category_'.$id.'htm';
-				//var_dump($filename);exit;
-			//	file_put_contents($filename, $data1['category']);
+		}else{
+			$data1['category'] =$category_list;
+			$data1['coupon_list'] =$coupon_list;
+			$data1['title_promotion'] =$title_promotion;
 
-			$filename =DATA_DIR. 'upload/htm/restaurant/category_'.$id.$refresh_code.'.htm';
-
-			if(!is_file($filename)){
-				$fh = fopen($filename, "w"); //w从开头写入 a追加写入
-				fwrite($fh, $category_list);
-				fclose($fh);
-			}
-
-			$filename =DATA_DIR. 'upload/htm/restaurant/category_'.$id.'_en'.$refresh_code.'.htm';
-			if(!is_file($filename)){
-				$fh = fopen($filename, "w"); //w从开头写入 a追加写入
-				fwrite($fh, $category_list_en);
-				fclose($fh);
-			}
-
-			$filename =DATA_DIR. 'upload/htm/restaurant/title_promotion_'.$id.$refresh_code.'.htm';
-			if(!is_file($filename)){
-				$fh = fopen($filename, "w"); //w从开头写入 a追加写入
-				fwrite($fh, $title_promotion);
-				fclose($fh);
-			}
-
-			$filename =DATA_DIR. 'upload/htm/restaurant/title_promotion_'.$id.'_en'.$refresh_code.'.htm';
-			if(!is_file($filename)){
-				$fh = fopen($filename, "w"); //w从开头写入 a追加写入
-				fwrite($fh, $title_promotion_en);
-				fclose($fh);
-			}
-
-			$filename =DATA_DIR. 'upload/htm/restaurant/coupon_list_'.$id.$refresh_code.'.htm';
-			if(!is_file($filename)){
-				$fh = fopen($filename, "w"); //w从开头写入 a追加写入
-				fwrite($fh, $coupon_list);
-				fclose($fh);
-			}
-
-			echo json_encode($data1); return;
 		}
 
 
 
-		public  function refresh_menu_action() {
 
-			$business_id= get2('business_id');
+		/* 写入数据到静态文件 */
 
-			if(!$business_id) {
+		//$filename='/data/upload/htm/restaurant/category_'.$id.'htm';
+		//var_dump($filename);exit;
+		//	file_put_contents($filename, $data1['category']);
 
-				$business_id =$this->loginUser['id'];
+		$filename =DATA_DIR. 'upload/htm/restaurant/category_'.$id.$refresh_code.'.htm';
+
+		if(!is_file($filename)){
+			$fh = fopen($filename, "w"); //w从开头写入 a追加写入
+			fwrite($fh, $category_list);
+			fclose($fh);
+		}
+
+		$filename =DATA_DIR. 'upload/htm/restaurant/category_'.$id.'_en'.$refresh_code.'.htm';
+		if(!is_file($filename)){
+			$fh = fopen($filename, "w"); //w从开头写入 a追加写入
+			fwrite($fh, $category_list_en);
+			fclose($fh);
+		}
+
+		$filename =DATA_DIR. 'upload/htm/restaurant/title_promotion_'.$id.$refresh_code.'.htm';
+		if(!is_file($filename)){
+			$fh = fopen($filename, "w"); //w从开头写入 a追加写入
+			fwrite($fh, $title_promotion);
+			fclose($fh);
+		}
+
+		$filename =DATA_DIR. 'upload/htm/restaurant/title_promotion_'.$id.'_en'.$refresh_code.'.htm';
+		if(!is_file($filename)){
+			$fh = fopen($filename, "w"); //w从开头写入 a追加写入
+			fwrite($fh, $title_promotion_en);
+			fclose($fh);
+		}
+
+		$filename =DATA_DIR. 'upload/htm/restaurant/coupon_list_'.$id.$refresh_code.'.htm';
+		if(!is_file($filename)){
+			$fh = fopen($filename, "w"); //w从开头写入 a追加写入
+			fwrite($fh, $coupon_list);
+			fclose($fh);
+		}
+
+		echo json_encode($data1); return;
+	}
+
+
+
+	public  function refresh_menu_action() {
+
+		$business_id= get2('business_id');
+
+		if(!$business_id) {
+
+			$business_id =$this->loginUser['id'];
+		}
+
+
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+
+		$isAuthoriseCustomer =0 ;
+		foreach ($authoriseBusinessList as $key => $value) {
+			if($business_id ==$value['customer_id']) {
+				$isAuthoriseCustomer =1;
+
 			}
 
-
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
-
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
-
-			$isAuthoriseCustomer =0 ;
-			foreach ($authoriseBusinessList as $key => $value) {
-					if($business_id ==$value['customer_id']) {
-							$isAuthoriseCustomer =1;
-
-					}
-
-				}
+		}
 
 
 
-			if ($this->loginUser['id'] != $business_id  &&  !$isAuthoriseCustomer) {
+		if ($this->loginUser['id'] != $business_id  &&  !$isAuthoriseCustomer) {
 
-				$this->sheader(null,'no access');
-			}	//var_dump($this->loginUser['id'] != $business_id);exit;
+			$this->sheader(null,'no access');
+		}	//var_dump($this->loginUser['id'] != $business_id);exit;
 
-			// 获得该用户的refreshcode
-			$current_user = $this->loadModel('user')->getUserById($this->loginUser['id']);
-			$refresh_code_old =$current_user['business_store_refresh_code'];
+		// 获得该用户的refreshcode
+		$current_user = $this->loadModel('user')->getUserById($this->loginUser['id']);
+		$refresh_code_old =$current_user['business_store_refresh_code'];
 
 
-        //删除该商家的临时文件。 该操作应该在新的文件生成之后。
+		//删除该商家的临时文件。 该操作应该在新的文件生成之后。
 		$this->restaurantStaticFileDeleteProcess($business_id,$refresh_code_old);
 
-	   //生成新的刷新码
-	   // 当用户调用页面时，保证调用新的页面，而不是缓存得旧页面
+		//生成新的刷新码
+		// 当用户调用页面时，保证调用新的页面，而不是缓存得旧页面
 
 
-			$refresh_code =time();
+		$refresh_code =time();
 
-			$data=array(
-				'business_store_refresh_code'=>$refresh_code,
-				'store_fresh_time'=>$refresh_code
+		$data=array(
+			'business_store_refresh_code'=>$refresh_code,
+			'store_fresh_time'=>$refresh_code
 
-			);
-			$this->loadModel('user')->update($data,$business_id);
-
-
-
-	   // 重新运行页面，生成新的文件。
+		);
+		$this->loadModel('user')->update($data,$business_id);
 
 
-			$this->sheader(HTTP_ROOT_WWW.'restaurant/'. $business_id.'?force=1');
-		}
+
+		// 重新运行页面，生成新的文件。
+
+
+		$this->sheader(HTTP_ROOT_WWW.'restaurant/'. $business_id.'?force=1');
+	}
 
 
 
@@ -1408,31 +1408,31 @@ class ctl_restaurant extends cmsPage
 				$menu_sub[$key]['onSpecial'] =1;
 				if($value['original_price']<=0) { //如果原价为空
 
-						$menu_sub[$key]['original_price'] =$value['price'];
-						$value['original_price'] =$value['price'];
+					$menu_sub[$key]['original_price'] =$value['price'];
+					$value['original_price'] =$value['price'];
 
 				}
-			
+
 				if($value['limit_buy_qty']>0 ) {
-					
+
 					if($value['original_price']>$value['speical_price']) {
-						
-					
-							$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
-				
-						
+
+
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
+
+
 					}else{
-							$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].')'.$menu_sub[$key]['menu_cn_name'];
-			
-						
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].')'.$menu_sub[$key]['menu_cn_name'];
+
+
 					}
-					
+
 				}else{
 					if($value['original_price']>$value['speical_price']) {
-					
-					$menu_sub[$key]['menu_cn_name']='('.$this->lang->special_price.')'.$menu_sub[$key]['menu_cn_name'];
+
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->special_price.')'.$menu_sub[$key]['menu_cn_name'];
 					}else{
-						
+
 					}
 				}
 
@@ -1442,17 +1442,17 @@ class ctl_restaurant extends cmsPage
 				$menu[$key]['onSpecial'] =0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
 				if($value['original_price']<=0) { //如果原价为空
 
-						$menu[$key]['original_price'] =$value['price'];
-						$value['original_price']=$value['price'];
+					$menu[$key]['original_price'] =$value['price'];
+					$value['original_price']=$value['price'];
 
 				}
 			}
 			//array_unshift($menu,$menu_sub);
-            $menu=array_merge($menu_sub,$menu);
+			$menu=array_merge($menu_sub,$menu);
 
 
 		}else{
-	     	//清除购物车其它产品
+			//清除购物车其它产品
 			$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
 			$where =array (
 				'businessUserId <>' . $id,
@@ -1473,28 +1473,28 @@ class ctl_restaurant extends cmsPage
 
 				if($value['original_price']<=0) { //如果原价为空
 
-						$menu_sub[$key]['original_price'] =$value['price'];
-						$value['original_price']=$value['price'];
+					$menu_sub[$key]['original_price'] =$value['price'];
+					$value['original_price']=$value['price'];
 
 				}
-					if($value['limit_buy_qty']>0 ) {
-					
+				if($value['limit_buy_qty']>0 ) {
+
 					if($value['original_price']>$value['speical_price']) {
-						
-					
-							$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
-				
-						
+
+
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
+
+
 					}else{
-							$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].')'.$menu_sub[$key]['menu_cn_name'];
-			
-						
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->limit_buy.' '. $value['limit_buy_qty'].')'.$menu_sub[$key]['menu_cn_name'];
+
+
 					}
-					
+
 				}else{
 					if($value['original_price']>$value['speical_price']) {
-					
-					$menu_sub[$key]['menu_cn_name']='('.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
+
+						$menu_sub[$key]['menu_cn_name']='('.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];
 					}else{
 						$menu_sub[$key]['menu_cn_name']='('.$this->lang->special_price.')'.$menu_sub[$key]['menu_cn_name'];
 					}
@@ -1503,19 +1503,19 @@ class ctl_restaurant extends cmsPage
 
 			foreach ($menu as $key => $value) {
 				$menu[$key]['onSpecial'] =0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
-			if($value['original_price']<=0) { //如果原价为空
+				if($value['original_price']<=0) { //如果原价为空
 
-						$menu[$key]['original_price'] =$value['price'];
+					$menu[$key]['original_price'] =$value['price'];
 
 
 				}
 			}
 			//array_unshift($menu,$menu_sub);
-            $menu=array_merge($menu_sub,$menu);
+			$menu=array_merge($menu_sub,$menu);
 
 
 			//////    做到这里 ，这块 的 价格 需要替换成 特价  加紧购物车价格有问题 / 未登陆的用户还没有处理 / 原价显示不对 （原价显示逻辑是 如果原价未0 ，则找现价未原价， 之前的原价，如果未空或与现价相等则不显示
-		//  var_dump($menu);exit; //  需要检查中文/英文 /登陆/未登录的所有场景
+			//  var_dump($menu);exit; //  需要检查中文/英文 /登陆/未登录的所有场景
 			//显示新价格
 			foreach ($menu as $key => $value) {
 				//$menu[$key]['onSpecial'] =0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
@@ -1786,7 +1786,7 @@ class ctl_restaurant extends cmsPage
 
 			}
 		}else{
-	     	//清除购物车其它产品
+			//清除购物车其它产品
 			$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
 			$where =array (
 				'businessUserId <>' . $id,
@@ -1857,298 +1857,298 @@ class ctl_restaurant extends cmsPage
 			foreach ($cartItems as $key => $val) {
 				$totalQuantity+=$val['quantity'];
 				if ($val['category_sort_id'] !== $old_category) {
-						if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
+					if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
 
-							$cartItems[$key]['category_cn_name']='Group buy';
-						}
-						$cartItems[$key]['new_cat']=1;
-					}else{
-						$cartItems[$key]['new_cat']=0;
-
+						$cartItems[$key]['category_cn_name']='Group buy';
 					}
-					$old_category=$val['category_sort_id'];
-					if(!$val['category_sort_id']) {
-						$cartItems[$key]['pic']=$val['coupon_pic'];
-					}
+					$cartItems[$key]['new_cat']=1;
+				}else{
+					$cartItems[$key]['new_cat']=0;
 
-					if ($val['main_coupon_id']== $restaurant_coupon['id']){
-
-						$menu_totalprice += $val['single_amount']*$val['quantity'];
-					}else{
-
-						$voucher_totalprice += $val['single_amount']*$val['quantity'];
-
-					}
-
-
-					$cartTotalPrice+=$val['single_amount']*$val['quantity'];
+				}
+				$old_category=$val['category_sort_id'];
+				if(!$val['category_sort_id']) {
+					$cartItems[$key]['pic']=$val['coupon_pic'];
 				}
 
-				$this->setData($cartTotalPrice,'totalPrice');
-				$this->setData($totalQuantity,'totalQuantity');
+				if ($val['main_coupon_id']== $restaurant_coupon['id']){
 
-				$this->setData($cartItems,'items');
-				$this->setData($businessUserId,'businessUserId');
+					$menu_totalprice += $val['single_amount']*$val['quantity'];
+				}else{
+
+					$voucher_totalprice += $val['single_amount']*$val['quantity'];
+
+				}
+
+
+				$cartTotalPrice+=$val['single_amount']*$val['quantity'];
 			}
 
+			$this->setData($cartTotalPrice,'totalPrice');
+			$this->setData($totalQuantity,'totalQuantity');
+
+			$this->setData($cartItems,'items');
+			$this->setData($businessUserId,'businessUserId');
+		}
+
 		//加载餐馆菜单
-			$mdl_restaurant_category=$this->loadModel('restaurant_category');
-			$restaurant_category=$mdl_restaurant_category->getListBySql("select * from cc_restaurant_category where restaurant_id = ".$id . " and (length(category_cn_name)>0 or length(category_en_name)>0) order by `category_sort_id`");
+		$mdl_restaurant_category=$this->loadModel('restaurant_category');
+		$restaurant_category=$mdl_restaurant_category->getListBySql("select * from cc_restaurant_category where restaurant_id = ".$id . " and (length(category_cn_name)>0 or length(category_en_name)>0) order by `category_sort_id`");
 
-	   // 获取该商家的所有coupon 及子coupon 并列表
-			$coupon_list =$mdl_coupons->getAllCouponsofUser($id);
+		// 获取该商家的所有coupon 及子coupon 并列表
+		$coupon_list =$mdl_coupons->getAllCouponsofUser($id);
 
-	   //如果当前用户购买了那个coupon ,则直接更改其购买的数量
-			foreach ($coupon_list as $key => $value) {
-				if($this->loginUser) {
-					$sql ="select  quantity from cc_wj_user_temp_carts where main_coupon_id=".$coupon_list[$key]['id'] ." and sub_coupon_id=".$coupon_list[$key]["sub_id"]." and  userId=".$this->loginUser['id'];
+		//如果当前用户购买了那个coupon ,则直接更改其购买的数量
+		foreach ($coupon_list as $key => $value) {
+			if($this->loginUser) {
+				$sql ="select  quantity from cc_wj_user_temp_carts where main_coupon_id=".$coupon_list[$key]['id'] ." and sub_coupon_id=".$coupon_list[$key]["sub_id"]." and  userId=".$this->loginUser['id'];
 
-					$temp_item = $mdl_wj_user_temp_carts->getListBySql($sql);
+				$temp_item = $mdl_wj_user_temp_carts->getListBySql($sql);
 
-					if($temp_item) {
-						$coupon_list[$key]['qty']=$temp_item[0]['quantity'];
-					}else{
-						$coupon_list[$key]['qty']=0;
-					}
-
+				if($temp_item) {
+					$coupon_list[$key]['qty']=$temp_item[0]['quantity'];
 				}else{
 					$coupon_list[$key]['qty']=0;
 				}
-			}
 
-			$this->setData( $coupon_list, 'coupon_list' );
-			$this->setData( $restaurant_category, 'restaurant_category' );
-
-			$this->setData( $restaurant_promotion_manjian_rates*100, 'restaurant_promotion_manjian_rates' );
-			$this->setData( $menu, 'menu' );
-			$this->setData( $id, 'restaurant_id' );
-			$this->setData( $menu_totalprice, 'totalprice' );
-			$this->setData( $voucher_totalprice, 'voucher_totalprice' );
-			$title = str_replace('|' ,'',$restaurant_coupon['title']);
-			$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
-			$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
-			$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
-
-			$this->setData( get2('action'), 'returnAction' );
-
-			$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-			
-			$delivery_fee_desc  = $this->get_business_delivery_des ($business_user['id']);
-			$this->setData($delivery_fee_desc, 'delivery_fee_desc');
-			
-
-			$us=$this->getUserDevice();
-			if($us=='desktop'){
-				$business_info = $this->fetch('/mobile/restaurant/sec_explain');
 			}else{
-				$business_info = $this->fetch('/mobile/restaurant/sec_explain');
+				$coupon_list[$key]['qty']=0;
 			}
-			echo $business_info; return;
 		}
+
+		$this->setData( $coupon_list, 'coupon_list' );
+		$this->setData( $restaurant_category, 'restaurant_category' );
+
+		$this->setData( $restaurant_promotion_manjian_rates*100, 'restaurant_promotion_manjian_rates' );
+		$this->setData( $menu, 'menu' );
+		$this->setData( $id, 'restaurant_id' );
+		$this->setData( $menu_totalprice, 'totalprice' );
+		$this->setData( $voucher_totalprice, 'voucher_totalprice' );
+		$title = str_replace('|' ,'',$restaurant_coupon['title']);
+		$this->setData(  $title. ' | '.'cityb2b' , 'pageTitle' );
+		$this->setData($title. ' | '.'cityb2b', 'pageKeywords' );
+		$this->setData( $title. ' | '.'cityb2b', 'pageDescription' );
+
+		$this->setData( get2('action'), 'returnAction' );
+
+		$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
+
+		$delivery_fee_desc  = $this->get_business_delivery_des ($business_user['id']);
+		$this->setData($delivery_fee_desc, 'delivery_fee_desc');
+
+
+		$us=$this->getUserDevice();
+		if($us=='desktop'){
+			$business_info = $this->fetch('/mobile/restaurant/sec_explain');
+		}else{
+			$business_info = $this->fetch('/mobile/restaurant/sec_explain');
+		}
+		echo $business_info; return;
+	}
 
 //以下程序为： 检查对应id的条形码在产品库中是否存在，如果不存在，可以将该信息更新到产品苦衷，如果存在，那检查这条标准库中的产品图片来源
-					// 如果该来源为该用户，那么，该用户的图片更新可以覆盖之前的图片，如果该图片来源与其它渠道，该用户的图片更新无法更新产品库。
+	// 如果该来源为该用户，那么，该用户的图片更新可以覆盖之前的图片，如果该图片来源与其它渠道，该用户的图片更新无法更新产品库。
 
-function updateStandProductUponMenuId($id) {
-	
-	
-	$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
-	$curr_rec = $mdl_restaurant_menu->get($id);
-					if(strlen($curr_rec['barcode_number'])<=7) {
+	function updateStandProductUponMenuId($id) {
+
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+		$curr_rec = $mdl_restaurant_menu->get($id);
+		if(strlen($curr_rec['barcode_number'])<=7) {
+			//不做处理
+
+		}else{
+			$mdl_standard_product_info= $this->loadModel('standard_product_info');
+			$rec = $mdl_standard_product_info->ifFindBarcode($curr_rec['barcode_number']);
+			if($rec) {
+				//产品库中存在该记录
+				// var_dump ('产品库里存在记录'.$rec['source_business_id'].' ' .$curr_rec['restaurant_id']);exit;
+				if($rec['source_business_id']==$curr_rec['restaurant_id']) {
+					//来源相同，则该商家新更新的图片可以覆盖之前的图片。
+					$updateData001 = array(
+						'images1'=>$curr_rec['menu_pic'],
+						'imagesmore'=>$curr_rec['menu_pics']
+
+					);
+					$mdl_standard_product_info->update($updateData001,$rec['id']);
+
+				}else{
+					//如果来源不同， 则检查当前产品库的图片字段是否有信息，如果有信息，则不能进行更新，如果没有图片信息则可以更新。
+					if($rec['images1']) {
 						//不做处理
-						
-					}else{
-					  $mdl_standard_product_info= $this->loadModel('standard_product_info');
-					  $rec = $mdl_standard_product_info->ifFindBarcode($curr_rec['barcode_number']);
-					  if($rec) {
-						  //产品库中存在该记录
-						 // var_dump ('产品库里存在记录'.$rec['source_business_id'].' ' .$curr_rec['restaurant_id']);exit; 
-							if($rec['source_business_id']==$curr_rec['restaurant_id']) {
-								//来源相同，则该商家新更新的图片可以覆盖之前的图片。
-								$updateData001 = array(
-									     'images1'=>$curr_rec['menu_pic'],
-										 'imagesmore'=>$curr_rec['menu_pics']
-									  
-									  );
-									  $mdl_standard_product_info->update($updateData001,$rec['id']);
-								
-							}else{
-								//如果来源不同， 则检查当前产品库的图片字段是否有信息，如果有信息，则不能进行更新，如果没有图片信息则可以更新。
-								if($rec['images1']) {
-									//不做处理
-									
-								}else{
-									//没有图片则可以更新该用户的图片。
-								
-									$updateData001 = array(
-									     'images1'=>$curr_rec['menu_pic'],
-										 'imagesmore'=>$curr_rec['menu_pics']
-									  
-									  );
-									  $mdl_standard_product_info->update($updateData001,$rec['id']);
-								}
-								
-							}
-						 
-						  
-					  }else{
-						   //产
-						  
-						     
-								  if(!$curr_rec['menu_en_name']) {
-									  $title =$curr_rec['menu_cn_name'];
-								  }else{
-									  $title =$curr_rec['menu_en_name'];
-									  
-								  }
-								  
-								  
-								   if(!$curr_rec['menu_cn_name']) {
-									  $title_cn =$curr_rec['menu_en_name'];
-								  }else{
-									  $title_cn =$curr_rec['menu_cn_name'];
-								  }
-								  
-								  
-								  if(!$curr_rec['menu_desc']) {
-									  $description_cn =$curr_rec['menu_en_desc'];
-								  }else{
-									  $description_cn =$curr_rec['menu_desc'];
-									  
-								  }
-								  
-								  
-								  if(!$curr_rec['menu_en_desc']) {
-									  $description =$curr_rec['menu_desc'];
-								  }else{
-									  $description =$curr_rec['menu_en_desc'];
-									  
-								  }
-								  
-								  
-								
-								  $insertData001=array(
-								  
-								     'barcode_number'=>$curr_rec['barcode_number'],
-									 'title'=>$title,
-									 'title_cn'=>$title_cn,
-									 'category'=>$curr_rec['restaurant_category_id'],
-									 'description'=>$description,
-									 'description_cn'=>$description_cn,
-									 'images1'=>$curr_rec['menu_pic'],
-									 'imagesmore'=>$curr_rec['menu_pics'],
-									 'grapType'=>1,
-									 'source_business_id'=>$curr_rec['restaurant_id']
-								  
-									  
-								  );
-								    //var_dump ($insertData001);exit; 
-								   $mdl_standard_product_info->insert($insertData001);
-						  
-					  }
-					  
-						
-					}
-					
-	
-	
-	
-	
-	
-	
-}
 
-		function menu_pic_action()
-		{
-			$id =get2('id');
-			$this->setData($id,'id');
-			$data= $this->loadModel('restaurant_menu')->get($id);
-			$this->setData($data,'data');
-			
-	
-			if (is_post()) {
-				$id =post('id');
-				$images = post('images');
-				$content                    = post('content');
-				foreach ($images as $key => $value) {
-					if($value=="default/image_upload.jpg")
-						unset($images[$key]);
-					else
-						$images[$key]=trim($value);
+					}else{
+						//没有图片则可以更新该用户的图片。
+
+						$updateData001 = array(
+							'images1'=>$curr_rec['menu_pic'],
+							'imagesmore'=>$curr_rec['menu_pics']
+
+						);
+						$mdl_standard_product_info->update($updateData001,$rec['id']);
+					}
+
 				}
-				$image = reset($images);
-				$data=array(
-					'menu_pic'=>trim(reset($images)),
-					'menu_pics'=>trim(serialize(array_slice($images, 1)))
+
+
+			}else{
+				//产
+
+
+				if(!$curr_rec['menu_en_name']) {
+					$title =$curr_rec['menu_cn_name'];
+				}else{
+					$title =$curr_rec['menu_en_name'];
+
+				}
+
+
+				if(!$curr_rec['menu_cn_name']) {
+					$title_cn =$curr_rec['menu_en_name'];
+				}else{
+					$title_cn =$curr_rec['menu_cn_name'];
+				}
+
+
+				if(!$curr_rec['menu_desc']) {
+					$description_cn =$curr_rec['menu_en_desc'];
+				}else{
+					$description_cn =$curr_rec['menu_desc'];
+
+				}
+
+
+				if(!$curr_rec['menu_en_desc']) {
+					$description =$curr_rec['menu_desc'];
+				}else{
+					$description =$curr_rec['menu_en_desc'];
+
+				}
+
+
+
+				$insertData001=array(
+
+					'barcode_number'=>$curr_rec['barcode_number'],
+					'title'=>$title,
+					'title_cn'=>$title_cn,
+					'category'=>$curr_rec['restaurant_category_id'],
+					'description'=>$description,
+					'description_cn'=>$description_cn,
+					'images1'=>$curr_rec['menu_pic'],
+					'imagesmore'=>$curr_rec['menu_pics'],
+					'grapType'=>1,
+					'source_business_id'=>$curr_rec['restaurant_id']
+
+
 				);
-              $data['content']                    = $content;
+				//var_dump ($insertData001);exit;
+				$mdl_standard_product_info->insert($insertData001);
+
+			}
+
+
+		}
+
+
+
+
+
+
+
+	}
+
+	function menu_pic_action()
+	{
+		$id =get2('id');
+		$this->setData($id,'id');
+		$data= $this->loadModel('restaurant_menu')->get($id);
+		$this->setData($data,'data');
+
+
+		if (is_post()) {
+			$id =post('id');
+			$images = post('images');
+			$content                    = post('content');
+			foreach ($images as $key => $value) {
+				if($value=="default/image_upload.jpg")
+					unset($images[$key]);
+				else
+					$images[$key]=trim($value);
+			}
+			$image = reset($images);
+			$data=array(
+				'menu_pic'=>trim(reset($images)),
+				'menu_pics'=>trim(serialize(array_slice($images, 1)))
+			);
+			$data['content']                    = $content;
 			//  var_dump($data);exit;
 
-				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
-				//cut 两个图象
-				$newimage_100 = $this->cut_image( $image, 100, 100, $method = 'fill') ;
-				$newimage_300 = $this->cut_image( $image, 300, 300, $method = 'fill') ;
-				$data['menu_pic_100'] =$newimage_100;
-				$data['menu_pic_300'] =$newimage_300;
+			$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+			//cut 两个图象
+			$newimage_100 = $this->cut_image( $image, 100, 100, $method = 'fill') ;
+			$newimage_300 = $this->cut_image( $image, 300, 300, $method = 'fill') ;
+			$data['menu_pic_100'] =$newimage_100;
+			$data['menu_pic_300'] =$newimage_300;
 
-				if ($mdl_restaurant_menu->update($data,$id)) {
-					//以下程序为： 如果用户更新了图片，则要检查对应的条形码在产品库中是否存在，如果不存在，可以将该信息更新到产品苦衷，如果存在，那检查这条标准库中的产品图片来源
-					// 如果该来源为该用户，那么，该用户的图片更新可以覆盖之前的图片，如果该图片来源与其它渠道，该用户的图片更新无法更新产品库。
-					
-					$this->updateStandProductUponMenuId($id);
+			if ($mdl_restaurant_menu->update($data,$id)) {
+				//以下程序为： 如果用户更新了图片，则要检查对应的条形码在产品库中是否存在，如果不存在，可以将该信息更新到产品苦衷，如果存在，那检查这条标准库中的产品图片来源
+				// 如果该来源为该用户，那么，该用户的图片更新可以覆盖之前的图片，如果该图片来源与其它渠道，该用户的图片更新无法更新产品库。
+
+				$this->updateStandProductUponMenuId($id);
 
 
-					$this->form_response_msg( 'saved');
-				} else {
-
-					$this->form_response_msg('保存失败');
-				}
+				$this->form_response_msg( 'saved');
 			} else {
-				$this->setData('添加菜单图片 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
-				$this->setData('restaurant_menu', 'submenu');
-				$this->setData('restaurant', 'menu');
-				$this->display('restaurant/menu_pic');
+
+				$this->form_response_msg('保存失败');
 			}
-			
-			
-			
-						
-			/*
-			
-                if (is_post()) {
-
-                    $images=post('images');
-                    if($images){
-                        foreach ($images as $key => $value) {
-                            if($value=="default/image_upload.jpg")
-                                unset($images[$key]);
-                            else
-                                $images[$key]=trim($value);
-                        }
-                        $data['pic']=reset($images);
-
-                        $data['pics'] = serialize(array_slice($images, 1));
-                    }else{
-                       $this->freshfood_edit_toStep($coupon['id'], 4); //no data no update. slow internet error
-                    }
-
-                    if ($mdl_coupons->update($data, $coupon['id'])) {
-                        $this->freshfood_edit_toStep($coupon['id'], 4);
-                    } else {
-                        $this->coupons_edit_failure('保存失败');
-                    }
-
-                }
-			
-			*/
-			
-			
-			
-			
-			
-			
-			
+		} else {
+			$this->setData('添加菜单图片 - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
+			$this->setData('restaurant_menu', 'submenu');
+			$this->setData('restaurant', 'menu');
+			$this->display('restaurant/menu_pic');
 		}
+
+
+
+
+		/*
+
+            if (is_post()) {
+
+                $images=post('images');
+                if($images){
+                    foreach ($images as $key => $value) {
+                        if($value=="default/image_upload.jpg")
+                            unset($images[$key]);
+                        else
+                            $images[$key]=trim($value);
+                    }
+                    $data['pic']=reset($images);
+
+                    $data['pics'] = serialize(array_slice($images, 1));
+                }else{
+                   $this->freshfood_edit_toStep($coupon['id'], 4); //no data no update. slow internet error
+                }
+
+                if ($mdl_coupons->update($data, $coupon['id'])) {
+                    $this->freshfood_edit_toStep($coupon['id'], 4);
+                } else {
+                    $this->coupons_edit_failure('保存失败');
+                }
+
+            }
+
+        */
+
+
+
+
+
+
+
+	}
 
 	function restaurant_parant_category_edit_action(){
 
@@ -2303,7 +2303,7 @@ function updateStandProductUponMenuId($id) {
 	}
 
 
-public function delete_sub_category_discount_action(){
+	public function delete_sub_category_discount_action(){
 
 		//输入参数合法性验证
 		$id =get2('id');
@@ -2365,7 +2365,7 @@ public function delete_sub_category_discount_action(){
 			if (!$id) $this->form_response_msg(' id invalid');
 
 		}
-       $mdl = $this->loadModel('user_factory_category_discount_rate');
+		$mdl = $this->loadModel('user_factory_category_discount_rate');
 		$curr_cat_discount_rec = $mdl->get($id);
 
 		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
@@ -2384,10 +2384,10 @@ public function delete_sub_category_discount_action(){
 
 	/* 一级分类折扣编辑*/
 
-function discount_edit_parant_category_action(){
+	function discount_edit_parant_category_action(){
 
-	    //输入参数合法性验证
-	     $customer_id =get2('customer_id');
+		//输入参数合法性验证
+		$customer_id =get2('customer_id');
 
 		if(!$customer_id) {
 			var_dump('please choose the customer !'); exit;
@@ -2399,8 +2399,8 @@ function discount_edit_parant_category_action(){
 
 
 
-	    //操作权限： 检查当前用户对当前的客户是否拥有操作权限
-        if(!$this->loadModel('user_factory')->isUserAuthorisedToOperate($customer_id,$this->current_business['id']))
+		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
+		if(!$this->loadModel('user_factory')->isUserAuthorisedToOperate($customer_id,$this->current_business['id']))
 		{
 			var_dump('you are not allow to operate this customer !'); exit;
 		}
@@ -2412,12 +2412,12 @@ function discount_edit_parant_category_action(){
 		$mdl = $this->loadModel('user_factory_category_discount_rate');
 		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business['id'],$customer_id);
 
-       // var_dump($parent_cate_discount_rate_data);exit;
-	   //session传递值供前端操作 。
+		// var_dump($parent_cate_discount_rate_data);exit;
+		//session传递值供前端操作 。
 
-        //getcustomer discount rate
+		//getcustomer discount rate
 		$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
-	    $this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
+		$this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
 		//var_dump(number_format($customer_discount_rates,2));exit;
 
 
@@ -2427,17 +2427,17 @@ function discount_edit_parant_category_action(){
 
 
 
-			$this->setData('discount_edit_parant_category', 'submenu_top');
-			$this->setData('customer_price_management', 'submenu');
-			$this->setData('customer_management', 'menu');
+		$this->setData('discount_edit_parant_category', 'submenu_top');
+		$this->setData('customer_price_management', 'submenu');
+		$this->setData('customer_management', 'menu');
 
-		    $pagename = "Discount Management";
-			$pageTitle=  $pagename." - Business_centre - ". $this->site['pageTitle'];
-			$this->setData($pagename, 'pagename');
-			$this->setData($pageTitle, 'pageTitle');
+		$pagename = "Discount Management";
+		$pageTitle=  $pagename." - Business_centre - ". $this->site['pageTitle'];
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
 
 
-			$this->display( 'restaurant/discount_edit_parant_category');
+		$this->display( 'restaurant/discount_edit_parant_category');
 
 	}
 
@@ -2460,7 +2460,7 @@ function discount_edit_parant_category_action(){
 		$this->setData($grade_rec,'grade_info');
 		$gardeId= $grade_rec['grade_id'];
 
-  		// var_dump($grade_rec); exit;
+		// var_dump($grade_rec); exit;
 
 		//操作权限： 检查当前用户对当前的客户是否拥有操作权限
 
@@ -2476,7 +2476,7 @@ function discount_edit_parant_category_action(){
 		//session传递值供前端操作 。
 
 		//getcustomer discount rate
-	//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+		//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
 		//$this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
 		//var_dump(number_format($customer_discount_rates,2));exit;
 
@@ -2608,30 +2608,30 @@ function discount_edit_parant_category_action(){
 		$mdl = $this->loadModel('user_factory_category_discount_rate');
 		$parent_cate_discount_rate_data = $mdl->get_discount_data($this->current_business['id'],$customer_id);
 		$this->setData($parent_cate_discount_rate_data, 'data1');
-       // var_dump(json_encode($parent_cate_discount_rate_data));exit;
+		// var_dump(json_encode($parent_cate_discount_rate_data));exit;
 		//getcustomer discount rate
-         foreach ($parent_cate_discount_rate_data as $key =>$val){
+		foreach ($parent_cate_discount_rate_data as $key =>$val){
 
-			 if($val['cate_id'] ==$parent_category_id) {
-				 $customer_discount_rates = $val['discount_rate'];
-			 }
-		 }
+			if($val['cate_id'] ==$parent_category_id) {
+				$customer_discount_rates = $val['discount_rate'];
+			}
+		}
 
-	//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
+		//	$customer_discount_rates = $this->loadModel('user_factory')->getCustomerDiscountRates($customer_id,$this->current_business['id']);
 
 
 		$this->setData(number_format($customer_discount_rates,1),'customer_discount_rate');
 
 
 		//获取当前供应商大类及改客户关于各个大类的折扣率
-       if($parent_category_id) {
+		if($parent_category_id) {
 
-		   $sub_cate_discount_rate_data = $mdl->get_sub_discount_data($this->current_business['id'],$customer_id,$parent_category_id);
+			$sub_cate_discount_rate_data = $mdl->get_sub_discount_data($this->current_business['id'],$customer_id,$parent_category_id);
 
-		   $this->setData($sub_cate_discount_rate_data, 'data');
-		 //  var_dump($sub_cate_discount_rate_data);exit;
+			$this->setData($sub_cate_discount_rate_data, 'data');
+			//  var_dump($sub_cate_discount_rate_data);exit;
 
-	   }
+		}
 
 		//session传递值供前端操作 。
 
@@ -2654,170 +2654,170 @@ function discount_edit_parant_category_action(){
 // 分类调整 ，指定源类和目标类，将产品标记薇源类的产品都换到目标类别
 
 
-function category_migration_action(){
-	
-	
+	function category_migration_action(){
+
+
 		$freshfood =get2('freshfood');
 		$this->setData($freshfood,'freshfood');
-		
-		
+
+
 		$sourceCat =get2('sourceCat');
 		$this->setData($sourceCat,'sourceCat');
 
 		$destCat =get2('destCat');
 		$this->setData($destCat,'destCat');
-		
-	
+
+
 		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 		//var_dump($authoriseBusinessList);exit;
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
-		
-		 $customer_id =get2('customer_id');
-		 if(!$customer_id) {
-			  $customer_id =$this->loginUser['id'];
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
-			}
-		 $isAuthoriseCustomer =0 ;
-		 foreach ($authoriseBusinessList as $key => $value) {
-				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
-						$isAuthoriseCustomer =1;
-				}
+		$customer_id =get2('customer_id');
+		if(!$customer_id) {
+			$customer_id =$this->loginUser['id'];
 
+		}
+		$isAuthoriseCustomer =0 ;
+		foreach ($authoriseBusinessList as $key => $value) {
+			if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+				$isAuthoriseCustomer =1;
 			}
-		
+
+		}
+
 
 		if ($isAuthoriseCustomer) {
-			
-			 if($sourceCat && $destCat) {
-				 
-				 
-				 $oldDestCat =$destCat;
-				 
-				  $oldSourceCat =$sourceCat;
+
+			if($sourceCat && $destCat) {
+
+
+				$oldDestCat =$destCat;
+
+				$oldSourceCat =$sourceCat;
 				//获得了源分类和目标分类，可以开始转换
-				
-				 // 可能有两个表被转换，一个时 menu主表的分类，另外一个是category_menu表 记录产品可能存在的多分分类。
-				 
-				 // step 1  修改主表的分类
-				 
-				 $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
-				 
-				 
-				 
-				 // 获得该分类的所有数据集
-				 
-				 $menuListForSourCategory =  $mdl_restaurant_menu->getList(null, array('restaurant_category_id' => $sourceCat));
+
+				// 可能有两个表被转换，一个时 menu主表的分类，另外一个是category_menu表 记录产品可能存在的多分分类。
+
+				// step 1  修改主表的分类
+
+				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+
+
+				// 获得该分类的所有数据集
+
+				$menuListForSourCategory =  $mdl_restaurant_menu->getList(null, array('restaurant_category_id' => $sourceCat));
 				// var_dump($menuListForSourCategory);exit;
-				 
-				 
-				 
-				 
-				 //首先查找该分类是否为子类，如果是子类，则获得大类后,修改成指定的大类。 如果是大类直接修改
-				 
-				 $newSourceCateRec =$this->loadModel('restaurant_category')->get($sourceCat);
-				 if($newSourceCateRec['parent_category_id']) { //如果非空或0 表示是一个子类，需转黄成主类
-					 $sourceCat = $newSourceCateRec['parent_category_id'];
-					 
-				 }
-				 
-				  $newDescCateRec =$this->loadModel('restaurant_category')->get($destCat);
-				 if($newDescCateRec['parent_category_id']) { //如果非空或0 表示是一个子类，需转黄成主类
-					 $destCat = $newDescCateRec['parent_category_id'];
-					 
-				 }
-					 
-				 
-				 $updatedata =array (
-				    'restaurant_category_id'=>$destCat
-				 );
-				 
-				 $where  =array (
-				    'restaurant_category_id'=>$sourceCat
-				 );
-				 
-				 $count1 = $mdl_restaurant_menu->updateByWhere($updatedata,$where);
-				 
-				 
-				 
-				 
-				 
-				 if ( !$count) {
-					 
+
+
+
+
+				//首先查找该分类是否为子类，如果是子类，则获得大类后,修改成指定的大类。 如果是大类直接修改
+
+				$newSourceCateRec =$this->loadModel('restaurant_category')->get($sourceCat);
+				if($newSourceCateRec['parent_category_id']) { //如果非空或0 表示是一个子类，需转黄成主类
+					$sourceCat = $newSourceCateRec['parent_category_id'];
+
+				}
+
+				$newDescCateRec =$this->loadModel('restaurant_category')->get($destCat);
+				if($newDescCateRec['parent_category_id']) { //如果非空或0 表示是一个子类，需转黄成主类
+					$destCat = $newDescCateRec['parent_category_id'];
+
+				}
+
+
+				$updatedata =array (
+					'restaurant_category_id'=>$destCat
+				);
+
+				$where  =array (
+					'restaurant_category_id'=>$sourceCat
+				);
+
+				$count1 = $mdl_restaurant_menu->updateByWhere($updatedata,$where);
+
+
+
+
+
+				if ( !$count) {
+
 					// var_dump('操作失败！');exit;
-				 }
-				 
-				 
-			  // 对这个表可以直接进行修改。 而且要做一个增加的处理， 因为 将某个类别 修改成某个大类的子类，在该表中可能不存在数据，所以要进行检测，如果未发现则进行添加 ，要首先获得所有
-			  //该子类的产品，进行循环添加。
-			  
-			  
+				}
+
+
+				// 对这个表可以直接进行修改。 而且要做一个增加的处理， 因为 将某个类别 修改成某个大类的子类，在该表中可能不存在数据，所以要进行检测，如果未发现则进行添加 ，要首先获得所有
+				//该子类的产品，进行循环添加。
+
+
 				$mdl_restaurant_menu_category = $this->loadModel('restaurant_menu_category');
-				 
-				 $updatedata =array (
-				    'category_id'=>$oldDestCat
-				 );
-				 
-				 $where  =array (
-				    'category_id'=>$oldSourceCat
-				 );
-				 
-				 $count2 = $mdl_restaurant_menu_category->updateByWhere($updatedata,$where);
-				 
-				 
-				 // 将前面获得的源列表 在多级分类中逐一添加
-				 $countMulticate =0;
-				  foreach ($menuListForSourCategory as $key => $value) {
-					  
-					  $data =array(
-					  'restaurant_menu_id'=>$value['id'],
-					  'category_id'=>$oldDestCat//destCat 有可能已经能被准换成其对应的大类， 因为在resataruant_menu中只允许填写大类 ，而在多级分类表，这个要改的表，需要写进小类
-					  
-					  );
-					  $mdl_restaurant_menu_category->insert($data);
-                       $countMulticate++; 
-                    }
-				 
-				 
-				
+
+				$updatedata =array (
+					'category_id'=>$oldDestCat
+				);
+
+				$where  =array (
+					'category_id'=>$oldSourceCat
+				);
+
+				$count2 = $mdl_restaurant_menu_category->updateByWhere($updatedata,$where);
+
+
+				// 将前面获得的源列表 在多级分类中逐一添加
+				$countMulticate =0;
+				foreach ($menuListForSourCategory as $key => $value) {
+
+					$data =array(
+						'restaurant_menu_id'=>$value['id'],
+						'category_id'=>$oldDestCat//destCat 有可能已经能被准换成其对应的大类， 因为在resataruant_menu中只允许填写大类 ，而在多级分类表，这个要改的表，需要写进小类
+
+					);
+					$mdl_restaurant_menu_category->insert($data);
+					$countMulticate++;
+				}
+
+
+
 				$result ="successful conversion".$count1." categories, and updated".$count2."multi categories，and add ".$countMulticate." to Multi categories";
 				$this->setData($result,'result');
-				
-				
-			 }
-				
-			
+
+
+			}
+
+
 		}
-	
-	
-	       
-			$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) order by ishide,parent_id, category_sort_id,category_cn_name ";
-			$mdl_restaurant_category = $this->loadModel('restaurant_category');
-			$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
-			//var_dump($data_parent_cate_list);exit;
-
-			$this->setData($data_parent_cate_list, 'data_parent_cate_list');
-
-	
-			$this->setData($authoriseBusinessList, 'authoriseBusinessList');
-			 $this->setData('category_migration', 'submenu');
-			$this->setData('index_publish', 'menu');
-
-			$pagename = "Product Category Migration";
-			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
-			$this->setData($pagename, 'pagename');
-			$this->setData($pageTitle, 'pageTitle');
-			$this->display_pc_mobile('restaurant/category_migration', 'restaurant/category_migration');
 
-	
-	
-	
-}
+		$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) order by ishide,parent_id, category_sort_id,category_cn_name ";
+		$mdl_restaurant_category = $this->loadModel('restaurant_category');
+		$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+		//var_dump($data_parent_cate_list);exit;
+
+		$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+
+
+		$this->setData($authoriseBusinessList, 'authoriseBusinessList');
+		$this->setData('category_migration', 'submenu');
+		$this->setData('index_publish', 'menu');
+
+		$pagename = "Product Category Migration";
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
+		$this->display_pc_mobile('restaurant/category_migration', 'restaurant/category_migration');
+
+
+
+
+	}
 
 
 	/**
@@ -2829,120 +2829,90 @@ function category_migration_action(){
 
 		$freshfood =get2('freshfood');
 		$this->setData($freshfood,'freshfood');
-		
-		
+
+
 		$cat_id =get2('cat_id');
 		$this->setData($cat_id,'cat_id');
 
-			
-	
+
+
 		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 		//var_dump($authoriseBusinessList);exit;
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
-		
-		 $customer_id =get2('customer_id');
-		 if(!$customer_id) {
-			  $customer_id =$this->loginUser['id'];
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
+		$customer_id =get2('customer_id');
+		if(!$customer_id) {
+			$customer_id =$this->loginUser['id'];
+
+		}
+		$isAuthoriseCustomer =0 ;
+		foreach ($authoriseBusinessList as $key => $value) {
+			if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
+				$isAuthoriseCustomer =1;
 			}
-		 $isAuthoriseCustomer =0 ;
-		 foreach ($authoriseBusinessList as $key => $value) {
-				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
-						$isAuthoriseCustomer =1;
+
+		}
+
+
+		if ($isAuthoriseCustomer) {
+
+			$mdl_restaurant_category = $this->loadModel('restaurant_category');
+			$countOfcat =$mdl_restaurant_category->getCountOfCategory($customer_id);
+			//var_dump($countOfcat);exit;
+
+			//如果点击一个主分类，则查找该主分类下面的子分类是否存在
+			if ($cat_id){
+				//如果选择大分类，则检查该账户下面该大分类是否已经创建了小分类
+				$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id and parent_category_id = $cat_id and parent_category_id !=0 ";
+				$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
+				$countOfsubcat = $sub_category_list[0]['count'];
+
+				if(  $countOfsubcat==0) { //如果子分类下面没有数据
+
+					$newAddRecordCount = 20; //设定增加数量为50
+
+				}else { //子分类下面有数据 获得未使用的子分类条数如果小于10条，则再增加10条
+					$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id and parent_category_id = $cat_id and parent_category_id !=0 &&  (length(category_cn_name)=0 && length(category_en_name)=0) ";
+					$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
+					if( $sub_category_list[0]['count'] <=10)
+					{ //如果子分类下面可用分类不足10条，则增加10条子分类
+						$newAddRecordCount = 10;
+					}else{
+
+						$newAddRecordCount = 0;
+					}
+				}
+				//var_dump($newAddRecordCount);exit;
+				//增加该大类下的子分类
+
+				$category_id   =100*(1+$countOfcat);
+				$category_sort_id=10*(1+$countOfcat);
+
+				for($i=0;$i<$newAddRecordCount;$i++) {
+					$menu_category_info=array(
+						'category_cn_name'=>'',
+						'category_en_name'=>'',
+						'restaurant_id'=>$customer_id,
+						'category_id'=>$category_id,
+						'category_sort_id'=>$category_sort_id,
+						'createUserId'=>$customer_id,
+						'parent_category_id'=>$cat_id
+					);
+					//var_dump($menu_category_info);exit;
+					$mdl_restaurant_category->insert($menu_category_info);
+					$category_id =$category_id+100;
+					$category_sort_id =$category_sort_id +10;
 				}
 
-			}
-		
 
-			if ($isAuthoriseCustomer) {
+				$where1 = ' and parent_category_id ='.$cat_id;
+				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  $where1 and isdeleted =0  order by  parent_category_id,category_cn_name desc,category_sort_id ";
 
-				$mdl_restaurant_category = $this->loadModel('restaurant_category');
-				$countOfcat =$mdl_restaurant_category->getCountOfCategory($customer_id);
-				//var_dump($countOfcat);exit;
-				
-				//如果点击一个主分类，则查找该主分类下面的子分类是否存在
-				if ($cat_id){
-					//如果选择大分类，则检查该账户下面该大分类是否已经创建了小分类
-					$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id and parent_category_id = $cat_id and parent_category_id !=0 ";
-					$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
-					$countOfsubcat = $sub_category_list[0]['count'];
-					 
-					if(  $countOfsubcat==0) { //如果子分类下面没有数据
-					   
-						$newAddRecordCount = 20; //设定增加数量为50
-						
-					}else { //子分类下面有数据 获得未使用的子分类条数如果小于10条，则再增加10条
-						$sqlexist =" select count(*) as count  from  cc_restaurant_category where createUserId =$customer_id and parent_category_id = $cat_id and parent_category_id !=0 &&  (length(category_cn_name)=0 && length(category_en_name)=0) ";
-						$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
-						if( $sub_category_list[0]['count'] <=10)
-							{ //如果子分类下面可用分类不足10条，则增加10条子分类
-							$newAddRecordCount = 10;
-							}else{
-								
-								$newAddRecordCount = 0;
-							}
-					}
-						//var_dump($newAddRecordCount);exit;
-								//增加该大类下的子分类
 
-								$category_id   =100*(1+$countOfcat);  
-								$category_sort_id=10*(1+$countOfcat);
-
-								for($i=0;$i<$newAddRecordCount;$i++) {
-									$menu_category_info=array(
-										'category_cn_name'=>'',
-										'category_en_name'=>'',
-										'restaurant_id'=>$customer_id,
-										'category_id'=>$category_id,
-										'category_sort_id'=>$category_sort_id,
-										'createUserId'=>$customer_id,
-										'parent_category_id'=>$cat_id
-									);
-									//var_dump($menu_category_info);exit;
-									$mdl_restaurant_category->insert($menu_category_info);
-									$category_id =$category_id+100;
-									$category_sort_id =$category_sort_id +10;
-								}
-							
-					
-					$where1 = ' and parent_category_id ='.$cat_id;
-					$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  $where1 and isdeleted =0  order by  parent_category_id,category_cn_name desc,category_sort_id ";
-					
-					
-					//var_dump($pageSql);exit;
-					$pageUrl = $this->parseUrl()->set('page');
-					$pageSize =50;
-					$maxPage = 100;
-					$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-					$data = $mdl_restaurant_category->getListBySql($page['outSql']);
-
-					$this->setData($data, 'data');
-					
-					$sql_Parent_cate_list ="select  * from cc_restaurant_category where restaurant_id=".$customer_id. "  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by ishide,category_sort_id,category_cn_name ";
-					$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
-					$this->setData($data_parent_cate_list, 'data_parent_cate_list');
-					//var_dump($sql_Parent_cate_list);exit;
-					$this->setData($page['pageStr'], 'pager');
-					$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
-
-						
-				}else {
-					//如果不选择大分类，则只显示当前已经做好的所有二级分类，分类可以按照主分类序号，子分类序号进行排列显示。不进行增加处理
-					
-					$sqlexist =" select * from  cc_restaurant_category where createUserId =$customer_id  and parent_category_id !=0  and isdeleted= 0  and (length(category_cn_name)>0 or length(category_en_name)>0)";
-					$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
-					
-						
-				
-
-				
-				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and parent_category_id !=0  and (length(category_cn_name)>0 or length(category_en_name)>0) order by  ishide,category_sort_id,category_cn_name  ";
-				
-				
 				//var_dump($pageSql);exit;
 				$pageUrl = $this->parseUrl()->set('page');
 				$pageSize =50;
@@ -2951,37 +2921,67 @@ function category_migration_action(){
 				$data = $mdl_restaurant_category->getListBySql($page['outSql']);
 
 				$this->setData($data, 'data');
-				
+
+				$sql_Parent_cate_list ="select  * from cc_restaurant_category where restaurant_id=".$customer_id. "  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by ishide,category_sort_id,category_cn_name ";
+				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+				//var_dump($sql_Parent_cate_list);exit;
+				$this->setData($page['pageStr'], 'pager');
+				$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+
+			}else {
+				//如果不选择大分类，则只显示当前已经做好的所有二级分类，分类可以按照主分类序号，子分类序号进行排列显示。不进行增加处理
+
+				$sqlexist =" select * from  cc_restaurant_category where createUserId =$customer_id  and parent_category_id !=0  and isdeleted= 0  and (length(category_cn_name)>0 or length(category_en_name)>0)";
+				$sub_category_list = $mdl_restaurant_category->getListBySql($sqlexist);
+
+
+
+
+
+				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and parent_category_id !=0  and (length(category_cn_name)>0 or length(category_en_name)>0) order by  ishide,category_sort_id,category_cn_name  ";
+
+
+				//var_dump($pageSql);exit;
+				$pageUrl = $this->parseUrl()->set('page');
+				$pageSize =50;
+				$maxPage = 100;
+				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+				$data = $mdl_restaurant_category->getListBySql($page['outSql']);
+
+				$this->setData($data, 'data');
+
 				$sql_Parent_cate_list ="select  * from cc_restaurant_category where restaurant_id=".$customer_id. "  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) order by ishide,category_sort_id,category_cn_name ";
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
 				//var_dump($sql_Parent_cate_list);exit;
 				$this->setData($page['pageStr'], 'pager');
 				$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
-				}
-
-			}else {
-				//do nothing  attack
-
 			}
 
+		}else {
+			//do nothing  attack
 
-         
-
-
-			$this->setData('restaurant_edit', 'submenu_top');
-			$this->setData('restaurant_parant_category_edit', 'submenu');
-			$this->setData('index_publish', 'menu');
-
-		    $pagename = "Category Edit";
-			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+		}
 
 
-			$this->setData($pagename, 'pagename');
-			$this->setData($pageTitle, 'pageTitle');
 
-			$this->setData($this->loginUser['gst_type'], 'gstType');
-			$this->display_pc_mobile('restaurant/edit', 'restaurant/edit');
+
+
+		$this->setData('restaurant_edit', 'submenu_top');
+		$this->setData('restaurant_parant_category_edit', 'submenu');
+		$this->setData('index_publish', 'menu');
+
+		$pagename = "Category Edit";
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+
+		$this->setData($pagename, 'pagename');
+		$this->setData($pageTitle, 'pageTitle');
+
+		$this->setData($this->loginUser['gst_type'], 'gstType');
+		$this->display_pc_mobile('restaurant/edit', 'restaurant/edit');
 
 	}
 
@@ -2999,8 +2999,8 @@ function category_migration_action(){
 
 		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 
 
 
@@ -3009,24 +3009,24 @@ function category_migration_action(){
 		if($authoriseBusinessList) { //如果该商家可以托管账户
 			// 检查接收的托管的商家是否合法
 
-		     $mdl_user =$this->loadModel('user');
-		     foreach ($authoriseBusinessList as $key => $value) {
+			$mdl_user =$this->loadModel('user');
+			foreach ($authoriseBusinessList as $key => $value) {
 				$curruser =$mdl_user->get($value['customer_id']);
-				 $authoriseBusinessList[$key]['store_update_time']=$curruser['store_update_time'];
-				 $authoriseBusinessList[$key]['store_fresh_time']=$curruser['store_fresh_time'];
-				 if( $curruser['store_fresh_time'] && $curruser['store_update_time'] && $curruser['store_fresh_time']>=$curruser['store_update_time'] ) {
-					 //该店铺有过更改，有过刷新 ，且刷新时间大于更改时间表示店铺已经刷新
-					  $authoriseBusinessList[$key]['status'] =1;
-					   $authoriseBusinessList[$key]['status_name'] ='refreshed';
-				 }else {
-					  $authoriseBusinessList[$key]['status'] ='0';
-					   $authoriseBusinessList[$key]['status_name'] ='not refreshed yet';
-				 }
+				$authoriseBusinessList[$key]['store_update_time']=$curruser['store_update_time'];
+				$authoriseBusinessList[$key]['store_fresh_time']=$curruser['store_fresh_time'];
+				if( $curruser['store_fresh_time'] && $curruser['store_update_time'] && $curruser['store_fresh_time']>=$curruser['store_update_time'] ) {
+					//该店铺有过更改，有过刷新 ，且刷新时间大于更改时间表示店铺已经刷新
+					$authoriseBusinessList[$key]['status'] =1;
+					$authoriseBusinessList[$key]['status_name'] ='refreshed';
+				}else {
+					$authoriseBusinessList[$key]['status'] ='0';
+					$authoriseBusinessList[$key]['status_name'] ='not refreshed yet';
+				}
 
 
-			 }
-			 $this->setData($authoriseBusinessList, 'authoriseBusinessList');
-			 $this->setData('preview_refresh', 'submenu');
+			}
+			$this->setData($authoriseBusinessList, 'authoriseBusinessList');
+			$this->setData('preview_refresh', 'submenu');
 			$this->setData('index_publish', 'menu');
 
 			$pagename = "Preview and management ";
@@ -3042,17 +3042,17 @@ function category_migration_action(){
 
 		}else{ //直接按照之前的方式走
 
-				$this->setData('preview_refresh', 'submenu');
-				$this->setData('index_publish', 'menu');
+			$this->setData('preview_refresh', 'submenu');
+			$this->setData('index_publish', 'menu');
 
-				$pagename = "Preview and management";
-				$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+			$pagename = "Preview and management";
+			$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
-				$this->setData($pagename, 'pagename');
-				$this->setData($pageTitle, 'pageTitle');
-				//$this->display_pc_mobile('/restaurant/'.$this->loginUser['id']);
-			    $this->sheader(HTTP_ROOT_WWW.'restaurant/'.$this->loginUser['id']);
+			$this->setData($pagename, 'pagename');
+			$this->setData($pageTitle, 'pageTitle');
+			//$this->display_pc_mobile('/restaurant/'.$this->loginUser['id']);
+			$this->sheader(HTTP_ROOT_WWW.'restaurant/'.$this->loginUser['id']);
 
 		}
 
@@ -3090,15 +3090,15 @@ function category_migration_action(){
 		$customer_id =get2('customer_id');
 
 		if(!$customer_id) {
-		  $customer_id =$this->current_business['id'];
+			$customer_id =$this->current_business['id'];
 
 		}
 		$this->setData($customer_id,'customer_id');
 
-	     $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->current_business['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->current_business['id']);
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
 		if($authoriseBusinessList) { //如果该商家可以托管账户
 			// 检查接收的托管的商家是否合法
@@ -3108,19 +3108,19 @@ function category_migration_action(){
 			$isAuthoriseCustomer =0 ;
 			foreach ($authoriseBusinessList as $key => $value) {
 				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
-						$isAuthoriseCustomer =1;
+					$isAuthoriseCustomer =1;
 				}
 
 			}
 
 			if($isAuthoriseCustomer) { //如果是授权的customer
-			
-			
+
+
 				$mdl_restaurant_category = $this->loadModel('restaurant_category');
 				$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide, category_sort_id ";
 				$data = $mdl_restaurant_category->getListBySql($pageSql);
 
-		
+
 				if(!$data) {
 					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
 				}
@@ -3141,52 +3141,52 @@ function category_migration_action(){
 				//$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
 				$catList = $mdl_restaurant_category->getCateList($customer_id);
 				$this->setData($catList, 'catList');
-				
 
-			
+
+
 
 
 				$sub_category =trim(get2('sub_category'));
-			    $this->setData($sub_category,'sub_category');
+				$this->setData($sub_category,'sub_category');
 				$category = trim(get2('category'));
-				
-                if(!$category) {$category='all';}
-			
+
+				if(!$category) {$category='all';}
+
 				$this->setData($sk,'sk');
 				$this->setData($category,'category1');
-				
-			
+
+
 
 
 				$sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
 
 				$whereStr.=" o.restaurant_id = $customer_id ";
-			//	var_dump($customer_id. ' ' . $category. ' ' . $sub_category);exit;
-			$whereStr.=" and (length(o.menu_cn_name) =0 and length(o.menu_en_name) =0) ";
+				//	var_dump($customer_id. ' ' . $category. ' ' . $sub_category);exit;
+				$whereStr.=" and (length(o.menu_cn_name) =0 and length(o.menu_en_name) =0) ";
 				if($category =='all' or empty($category)) {
-						
+
 				}else{
-					
+
 					if($sub_category) {
 						$whereStr.= " and ( m.category_id= $sub_category) ";
 					}else{
 						$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
 					}
-					
-				//var_dump($customer_id. ' ' . $category. ' ' . $sub_category);exit;
-				$this->addNewEmptyMenuUponCategory($customer_id,$category,$sub_category,$addCount);
-					
+
+					//var_dump($customer_id. ' ' . $category. ' ' . $sub_category);exit;
+					$this->addNewEmptyMenuUponCategory($customer_id,$category,$sub_category,$addCount);
+
 				}
-				
-				
+
+
 				// 这块加一个通用程序，判断，如果当前指定的商家，在没有所搜具体产品时，根据其选择的大类，中类，如果当前中文名和英文名称都为空的数据小于10的时候，自动为该大类或大类中类，添加10条空记录，并标记相关的类别，
 				//如果是中类，只记录中类，大类会自动找到（这块检查一下之前的程序）。
-				
-				
-				
-			
-				
-	
+
+
+
+
+
+
 				if (!empty($sk)) {
 					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
 					$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
@@ -3194,9 +3194,9 @@ function category_migration_action(){
 				}
 
 				if($allOrspecial =='special') {
-						$whereStr.=" and onSpecial =1";
-						$this->setData($allOrspecial,'allOrspecial');
-					}else{
+					$whereStr.=" and onSpecial =1";
+					$this->setData($allOrspecial,'allOrspecial');
+				}else{
 					$this->setData($allOrspecial,'all');
 				}
 
@@ -3215,56 +3215,48 @@ function category_migration_action(){
 
 				// 获得该用户的gst type
 
-                $mdl_user =$this->loadModel("user");
-                $customerInfo = $mdl_user->get($customer_id);
+				$mdl_user =$this->loadModel("user");
+				$customerInfo = $mdl_user->get($customer_id);
 
 				//var_dump($customerInfo);exit;
-				
-		
-				
-				
+
+
+
+
 
 			}else{  //如果可以管理更多店铺
 
-				
+
 
 
 			}
 
 
-    	}//结束主处理
+		}//结束主处理
 
 
-			//获取该商家是否有多个供应商，是否为集合店
+		//获取该商家是否有多个供应商，是否为集合店
 
-				$this->loadModel('freshfood_disp_suppliers_schedule');
-				$suppliersList = DispCenter::getSupplierListWithName($customer_id);
-				//var_dump($suppliersList);exit;
-				if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
+		$this->loadModel('freshfood_disp_suppliers_schedule');
+		$suppliersList = DispCenter::getSupplierListWithName($customer_id);
+		//var_dump($suppliersList);exit;
+		if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
 
 
-				}
+		}
 
-				$this->setData($suppliersList, 'suppliersList');
-				$this->setData($page['pageStr'], 'pager');
-				$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+		$this->setData($suppliersList, 'suppliersList');
+		$this->setData($page['pageStr'], 'pager');
+		$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
 
-				/**
-				 * 获得配菜分类列表
-				 */
-				$where=array();
-				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$customer_id;
-				$restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
-				$this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
-				/**
-				 * 获得配菜分类列表
-				 */
-				$where=array();
-				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$customer_id;
-				$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
-				$this->setData($restaurant_menu_option_list,'menu_option_list');
+		/**
+		 * 获得配菜分类列表
+		 */
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+		$this->setData($restaurant_menu_option_list,'menu_option_list');
 
 		foreach ($data as $key => $menu) {
 			$categoryIds = $this->loadModel('restaurant_menu_category')->findCategoryIdsByMenuId($menu['id']);
@@ -3272,10 +3264,10 @@ function category_migration_action(){
 		}
 		$this->setData($data, 'data');
 
-        $this->setData('restaurant_menu_add', 'submenu_top');
+		$this->setData('restaurant_menu_add', 'submenu_top');
 
-        $this->setData('restaurant_menu_add', 'submenu');
-        $this->setData('index_publish', 'menu');
+		$this->setData('restaurant_menu_add', 'submenu');
+		$this->setData('Store_centre', 'menu');
 
 
 
@@ -3283,18 +3275,18 @@ function category_migration_action(){
 		if ($this->getLangStr() == 'en') {
 			$pagename = "Item management";
 		}else{
-			$pagename = "店铺单品管理";
+			$pagename = "店铺产品管理";
 		}
 
-        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
-        $this->setData($pagename, 'pagename');
+		$this->setData($pagename, 'pagename');
 
-        $this->setData($pageTitle, 'pageTitle');
+		$this->setData($pageTitle, 'pageTitle');
 
 		$this->setData($this->loginUser['gst_type'], 'gstType');
-        $this->display_pc_mobile('restaurant/menu_add', 'restaurant/menu_add');
-    }
+		$this->display_pc_mobile('restaurant/menu_add', 'restaurant/menu_add');
+	}
 
 
 
@@ -3318,15 +3310,15 @@ function category_migration_action(){
 		$customer_id =get2('customer_id');
 
 		if(!$customer_id) {
-		  $customer_id =$this->current_business['id'];
+			$customer_id =$this->current_business['id'];
 
 		}
 		$this->setData($customer_id,'customer_id');
 
-	     $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
 		if($authoriseBusinessList) { //如果该商家可以托管账户
 			// 检查接收的托管的商家是否合法
@@ -3336,28 +3328,28 @@ function category_migration_action(){
 			$isAuthoriseCustomer =0 ;
 			foreach ($authoriseBusinessList as $key => $value) {
 				if($customer_id ==$value['customer_id'] || $customer_id ==$this->loginUser['id']) {
-						$isAuthoriseCustomer =1;
+					$isAuthoriseCustomer =1;
 				}
 
 			}
 
 			if($isAuthoriseCustomer) { //如果是授权的customer
-			
-			
+
+
 				$mdl_restaurant_category = $this->loadModel('restaurant_category');
 				$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
 				$data = $mdl_restaurant_category->getListBySql($pageSql);
 
-		
+
 				if(!$data) {
 					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
 				}
 				$this->setData($data,'restaurant_category');
-				
-				
-				
+
+
+
 				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
-				
+
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 				//var_dump($sql_Parent_cate_list);exit;
 
@@ -3378,14 +3370,14 @@ function category_migration_action(){
 
 				$onoffcninfo = trim(get2('onoffcninfo'));
 				$this->setData($onoffcninfo,'onoffcninfo');
-			//	var_dump($onoffcninfo);exit;
+				//	var_dump($onoffcninfo);exit;
 
 				$sub_category =trim(get2('sub_category'));
-			    $this->setData($sub_category,'sub_category');
+				$this->setData($sub_category,'sub_category');
 				$category = trim(get2('category'));
-				
-                if(!$category) {$category='all';}
-			//		var_dump($sub_category);exit;
+
+				if(!$category) {$category='all';}
+				//		var_dump($sub_category);exit;
 				$this->setData($sk,'sk');
 				$this->setData($category,'category1');
 
@@ -3393,21 +3385,21 @@ function category_migration_action(){
 				$sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
 
 				$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0  ";
-				
+
 				if($category =='all' or empty($category)) {
-						$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+					$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
 				}else{
-					
+
 					if($sub_category) {
 						$whereStr.= " and ( m.category_id= $sub_category) ";
 					}else{
 						$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
 					}
-					
+
 				}
-				
-				
-	
+
+
+
 				if (!empty($sk)) {
 					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
 					$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
@@ -3418,9 +3410,9 @@ function category_migration_action(){
 				}
 
 				if($allOrspecial =='special') {
-						$whereStr.=" and onSpecial =1";
-						$this->setData($allOrspecial,'allOrspecial');
-					}else{
+					$whereStr.=" and onSpecial =1";
+					$this->setData($allOrspecial,'allOrspecial');
+				}else{
 					$this->setData('all','allOrspecial');
 				}
 
@@ -3436,96 +3428,257 @@ function category_migration_action(){
 				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
 
-				
-					$key = 'id';
-				 
+
+				$key = 'id';
+
 				$data=$this->assoc_unique($data, $key);
 //var_dump($data);exit;
 
 				// 获得该用户的gst type
 
-                $mdl_user =$this->loadModel("user");
-                $customerInfo = $mdl_user->get($customer_id);
+				$mdl_user =$this->loadModel("user");
+				$customerInfo = $mdl_user->get($customer_id);
 
 				//var_dump($customerInfo);exit;
 
 
 
-				
+
 
 			}else{  //如果可以管理更多店铺
 
-				
+
 
 
 			}
 
 
-    	}//结束主处理
+		}//结束主处理
 
 
-			//获取该商家是否有多个供应商，是否为集合店
+		//获取该商家是否有多个供应商，是否为集合店
 
-				$this->loadModel('freshfood_disp_suppliers_schedule');
-				$suppliersList = DispCenter::getSupplierListWithName($customer_id);
-				//var_dump($suppliersList);exit;
-				if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
-
-
-				}
-
-				$this->setData($suppliersList, 'suppliersList');
-				$this->setData($page['pageStr'], 'pager');
-				$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
-
-		
-
-		
-				 // 获得配菜分类列表
-				 
-				$where=array();
-				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$customer_id;
-				$restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
-				$this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
-				
-				//  获得配菜分类列表
-				
-				$where=array();
-				$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
-				$where['restaurant_id']=$customer_id;
-				$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
-				$this->setData($restaurant_menu_option_list,'menu_option_list');
+		$this->loadModel('freshfood_disp_suppliers_schedule');
+		$suppliersList = DispCenter::getSupplierListWithName($customer_id);
+		//var_dump($suppliersList);exit;
+		if( count($suppliersList) ==1 && $suppliersList[0]['suppliers_id']!=$customer_id ) {  //如果该配货中心下只有一个商家
 
 
-	//	var_dump($pager);exit;
+		}
+
+		$this->setData($suppliersList, 'suppliersList');
+		$this->setData($page['pageStr'], 'pager');
+		$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+
+
+
+		// 获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_sidedish_category_list=$this->loadModel('restaurant_sidedish_category')->getList(null,$where);
+		$this->setData($restaurant_sidedish_category_list,'sidedish_category_list');
+
+		//  获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+		$this->setData($restaurant_menu_option_list,'menu_option_list');
+
+
+		//	var_dump($pager);exit;
 		foreach ($data as $key => $menu) {
 			$categoryIds = $this->loadModel('restaurant_menu_category')->findCategoryIdsByMenuId($menu['id']);
 			$data[$key]['categoryIds'] = $categoryIds;
 		}
 		$this->setData($data, 'data');
 
-        $this->setData('restaurant_menu', 'submenu_top');
+		$this->setData('restaurant_menu', 'submenu_top');
 
-        $this->setData('restaurant_menu_edit', 'submenu');
-        $this->setData('index_publish', 'menu');
+		$this->setData('restaurant_menu_edit', 'submenu');
+		$this->setData('index_publish', 'menu');
 
 		if ($this->getLangStr() == 'en') {
 			$pagename = "Item management";
 		}else{
 			$pagename = "产品管理";
 		}
-        $pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
-        $this->setData($pagename, 'pagename');
+		$this->setData($pagename, 'pagename');
 
-        $this->setData($pageTitle, 'pageTitle');
+		$this->setData($pageTitle, 'pageTitle');
 
 		$this->setData($this->loginUser['gst_type'], 'gstType');
-        $this->display_pc_mobile('restaurant/menu_edit', 'restaurant/menu_edit');
-    }
+		$this->display_pc_mobile('restaurant/menu_edit', 'restaurant/menu_edit');
+	}
+
+	function stock_item_edit_action(){
+		// 获得该用户餐厅的菜单分类信息
+
+		$customer_id =get2('customer_id');
+
+		if(!$customer_id) {
+			$customer_id =$this->current_business['id'];
+
+		}
+		$this->setData($customer_id,'customer_id');
+
+		$mdl_restaurant_category = $this->loadModel('restaurant_category');
+				$pageSql = "select  * from cc_restaurant_category where createUserId=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+				$data = $mdl_restaurant_category->getListBySql($pageSql);
 
 
+				if(!$data) {
+					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+				}
+				$this->setData($data,'restaurant_category');
+
+
+
+				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+
+				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
+				//var_dump($sql_Parent_cate_list);exit;
+
+
+
+				//$ParentCategoryList = $mdl_restaurant_category->getParentCateList($customer_id);
+				$catList = $mdl_restaurant_category->getCateList($customer_id);
+				$this->setData($catList, 'catList');
+				//var_dump($subCategoryList);exit;
+
+				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
+				$sk = trim(get2('sk'));
+
+				$allOrspecial = trim(get2('allOrspecial'));
+
+				$onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
+				$this->setData($onoffguigecatinfo,'onoffguigecatinfo');
+
+				$onoffcninfo = trim(get2('onoffcninfo'));
+				$this->setData($onoffcninfo,'onoffcninfo');
+				//	var_dump($onoffcninfo);exit;
+
+				$sub_category =trim(get2('sub_category'));
+				$this->setData($sub_category,'sub_category');
+				$category = trim(get2('category'));
+
+				if(!$category) {$category='all';}
+				//		var_dump($sub_category);exit;
+				$this->setData($sk,'sk');
+				$this->setData($category,'category1');
+
+
+				$sql = "select   m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id";
+
+				$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0  ";
+
+				if($category =='all' or empty($category)) {
+					$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+				}else{
+
+					if($sub_category) {
+						$whereStr.= " and ( m.category_id= $sub_category) ";
+					}else{
+						$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
+					}
+
+				}
+
+
+
+				if (!empty($sk)) {
+					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
+					$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
+					$whereStr.=" or o.Menu_desc  like  '%" . $sk .  "%'";
+					$whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
+					$whereStr.=" or o.barcode_number  like  '%" . $sk .  "%'";
+					$whereStr.=" or o.id  like  '%" . $sk . "%')";
+				}
+
+				if($allOrspecial =='special') {
+					$whereStr.=" and onSpecial =1";
+					$this->setData($allOrspecial,'allOrspecial');
+				}else{
+					$this->setData('all','allOrspecial');
+				}
+
+				// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+				// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+				$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
+				//var_dump($pageSql);exit;
+				$pageUrl = $this->parseUrl()->set('page');
+				$pageSize =30;
+				$maxPage =200;
+				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+
+
+				$key = 'id';
+
+				$data=$this->assoc_unique($data, $key);
+//var_dump($data);exit;
+
+				// 获得该用户的gst type
+
+				$mdl_user =$this->loadModel("user");
+				$customerInfo = $mdl_user->get($customer_id);
+
+				//var_dump($customerInfo);exit;
+
+
+
+
+
+
+
+
+
+
+
+		$this->setData($page['pageStr'], 'pager');
+		$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
+
+
+
+
+		//  获得配菜分类列表
+
+		$where=array();
+		$where[]="(length(category_cn_name) >0 or length(category_en_name) >0)";
+		$where['restaurant_id']=$customer_id;
+		$restaurant_menu_option_list=$this->loadModel('restaurant_menu_option_category')->getList(null,$where);
+		$this->setData($restaurant_menu_option_list,'menu_option_list');
+
+
+		$this->setData($data, 'data');
+
+		$this->setData('stock_item_edit', 'submenu_top');
+
+		$this->setData('stock_item_edit', 'submenu');
+		$this->setData('Store_centre', 'menu');
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Stock Product management";
+		}else{
+			$pagename = "库房-产品管理";
+		}
+		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
+
+		$this->setData($pagename, 'pagename');
+
+		$this->setData($pageTitle, 'pageTitle');
+
+		$this->setData($this->loginUser['gst_type'], 'gstType');
+		$this->display_pc_mobile('restaurant/stock_item_edit', 'restaurant/stock_item_edit');
+	}
 	function customer_product_discount_edit_action(){
 		// 获得该用户餐厅的菜单分类信息
 
@@ -3715,109 +3868,109 @@ function category_migration_action(){
 		}
 
 
-    			 $customer_id =$this->current_business['id'];
+		$customer_id =$this->current_business['id'];
 
 
 
 
-				$mdl_restaurant_category = $this->loadModel('restaurant_category');
-				$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
-				$data = $mdl_restaurant_category->getListBySql($pageSql);
+		$mdl_restaurant_category = $this->loadModel('restaurant_category');
+		$pageSql = "select  * from cc_restaurant_category where restaurant_id=$customer_id  and (length(category_cn_name)>0 or length(category_en_name)>0) and ( parent_category_id =0 or  parent_category_id is null) and isdeleted =0  order by isHide,category_sort_id ";
+		$data = $mdl_restaurant_category->getListBySql($pageSql);
 
-			//	var_dump($pageSql);exit;
-				$this->setData($data,'restaurant_category');
+		//	var_dump($pageSql);exit;
+		$this->setData($data,'restaurant_category');
 
-				if(!$data) {
-					//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
-				}
-				$this->setData($gardeId,'gardeId');
-
-
+		if(!$data) {
+			//$this->sheader(null,'您需要首先定义餐厅的菜单分类,然后才可以定义菜品....');
+		}
+		$this->setData($gardeId,'gardeId');
 
 
-				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
-
-				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
-
-               // var_dump($data_parent_cate_list);exit;
-				$this->setData($data_parent_cate_list, 'data_parent_cate_list');
 
 
-				$sk = trim(get2('sk'));
+		$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
 
-				$allOrspecial = trim(get2('allOrspecial'));
+		$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 
-				$onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
-				$this->setData($onoffguigecatinfo,'onoffguigecatinfo');
-
-				$onoffcninfo = trim(get2('onoffcninfo'));
-				$this->setData($onoffcninfo,'onoffcninfo');
-				//	var_dump($onoffcninfo);exit;
-
-				$sub_category =trim(get2('sub_category'));
-				$this->setData($sub_category,'sub_category');
-				$category = trim(get2('category'));
-
-				if(!$category) {$category='all';}
-				//		var_dump($sub_category);exit;
-				$this->setData($sk,'sk');
-				$this->setData($category,'category1');
+		// var_dump($data_parent_cate_list);exit;
+		$this->setData($data_parent_cate_list, 'data_parent_cate_list');
 
 
-				$sql = "select   cust.menu_discount_rate as discount_rate ,cust.price as customer_price ,m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  
+		$sk = trim(get2('sk'));
+
+		$allOrspecial = trim(get2('allOrspecial'));
+
+		$onoffguigecatinfo = trim(get2('onoffguigecatinfo'));
+		$this->setData($onoffguigecatinfo,'onoffguigecatinfo');
+
+		$onoffcninfo = trim(get2('onoffcninfo'));
+		$this->setData($onoffcninfo,'onoffcninfo');
+		//	var_dump($onoffcninfo);exit;
+
+		$sub_category =trim(get2('sub_category'));
+		$this->setData($sub_category,'sub_category');
+		$category = trim(get2('category'));
+
+		if(!$category) {$category='all';}
+		//		var_dump($sub_category);exit;
+		$this->setData($sk,'sk');
+		$this->setData($category,'category1');
+
+
+		$sql = "select   cust.menu_discount_rate as discount_rate ,cust.price as customer_price ,m.category_id,m.restaurant_menu_id ,o.* ,b.category_cn_name,b.category_en_name  
 						from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
 							left join cc_restaurant_menu_category m on o.id = m.restaurant_menu_id
 							left join cc_user_factory_grade_menu_price cust on o.id=cust.restaurant_menu_id and cust.grade_id =$gardeId
 							
 							";
 
-				$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0 and ( length(o.menu_cn_name ) > 0 or length( o.menu_en_name ) >0 )  ";
+		$whereStr.=" o.restaurant_id = $customer_id and o.isDeleted =0 and ( length(o.menu_cn_name ) > 0 or length( o.menu_en_name ) >0 )  ";
 
-				if($category =='all' or empty($category)) {
-				//	$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
-				}else{
+		if($category =='all' or empty($category)) {
+			//	$whereStr.=" and (length(o.menu_cn_name) >0 or length(o.menu_en_name) >0) ";
+		}else{
 
-					if($sub_category) {
-						$whereStr.= " and ( m.category_id= $sub_category) ";
-					}else{
-						$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
-					}
+			if($sub_category) {
+				$whereStr.= " and ( m.category_id= $sub_category) ";
+			}else{
+				$whereStr.= " and (o.restaurant_category_id='$category'  or m.category_id= $category ) ";
+			}
 
-				}
+		}
 
-				if($allOrspecial!='all'){
+		if($allOrspecial!='all'){
 
-					$whereStr.= " and cust.price is not null ";
-				}
-
-
-				if (!empty($sk)) {
-					$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
-					$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
-					$whereStr.=" or o.Menu_desc  like  '%" . $sk .  "%'";
-					$whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
-					$whereStr.=" or o.barcode_number  like  '%" . $sk .  "%'";
-					$whereStr.=" or o.id  like  '%" . $sk . "%')";
-				}
+			$whereStr.= " and cust.price is not null ";
+		}
 
 
-
-				// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
-				// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
-
-				$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
-				$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
-				//var_dump($pageSql);exit;
-				$pageUrl = $this->parseUrl()->set('page');
-				$pageSize =30;
-				$maxPage =200;
-				$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
-				$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+		if (!empty($sk)) {
+			$whereStr.=" and (o.menu_cn_name  like  '%" . $sk . "%'";
+			$whereStr.=" or o.menu_en_name  like  '%" . $sk . "%'";
+			$whereStr.=" or o.Menu_desc  like  '%" . $sk .  "%'";
+			$whereStr.=" or o.menu_id  like  '%" . $sk . "%'";
+			$whereStr.=" or o.barcode_number  like  '%" . $sk .  "%'";
+			$whereStr.=" or o.id  like  '%" . $sk . "%')";
+		}
 
 
-				$key = 'id';
 
-				$data=$this->assoc_unique($data, $key);
+		// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+		// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+		$pageSql=$sql . " where " . $whereStr . " order by restaurant_category_id,LENGTH(menu_id),menu_id";
+		//var_dump($pageSql);exit;
+		$pageUrl = $this->parseUrl()->set('page');
+		$pageSize =30;
+		$maxPage =200;
+		$page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+		$data = $mdl_restaurant_menu->getListBySql($page['outSql']);
+
+
+		$key = 'id';
+
+		$data=$this->assoc_unique($data, $key);
 
 
 
@@ -4060,10 +4213,17 @@ function category_migration_action(){
 
 
 		$this->setData('menu_recycle', 'submenu_top');
-		$this->setData('restaurant_menu_edit', 'submenu');
-		$this->setData('index_publish', 'menu');
+		$this->setData('stock_item_edit', 'submenu');
+		$this->setData('Store_centre', 'menu');
 
-		$pagename = "Items Recycle Management";
+
+
+		if ($this->getLangStr() == 'en') {
+			$pagename = " Archived Items";
+		}else{
+			$pagename = "归档产品";
+		}
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
@@ -4073,25 +4233,25 @@ function category_migration_action(){
 		$this->setData($this->loginUser['gst_type'], 'gstType');
 		$this->display_pc_mobile('restaurant/menu_recycle', 'restaurant/menu_recycle');
 	}
-		function assoc_unique($arr, $key) {
-		 
+	function assoc_unique($arr, $key) {
+
 		$tmp_arr = array();
-		 
+
 		foreach ($arr as $k => $v) {
-		 
-		if (in_array($v[$key], $tmp_arr)) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
-		 
-		unset($arr[$k]);
-		 
-		} else {
-		 
-		$tmp_arr[] = $v[$key];
-		 
+
+			if (in_array($v[$key], $tmp_arr)) {//搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
+
+				unset($arr[$k]);
+
+			} else {
+
+				$tmp_arr[] = $v[$key];
+
+			}
+
 		}
-		
-		}
-		 return $arr;
-		}
+		return $arr;
+	}
 	function menu_publish_ajax_recycle_bin_action()
 	{
 		$id = (int)get2('id');
@@ -4145,65 +4305,65 @@ function category_migration_action(){
 
 
 
-    function menu_publish_ajax_action()
-    {
-    	$id = (int)get2('id');
+	function menu_publish_ajax_action()
+	{
+		$id = (int)get2('id');
 
 
 
-    	$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
 
-    	$menu = $mdl_restaurant_menu->get($id);
+		$menu = $mdl_restaurant_menu->get($id);
 
 		if ($id < 0 || !$menu ) $this->form_response_msg('menu id invalid');
 
-	//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
+		//检查该商家是否可以管理其它店铺，如果授权即可以该商家权限进入系统。
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
 
 		$isAuthoriseCustomer =0 ;
 		foreach ($authoriseBusinessList as $key => $value) {
-				if($menu['createUserId'] ==$value['customer_id']) {
-						$isAuthoriseCustomer =1;
-				}
-
+			if($menu['createUserId'] ==$value['customer_id']) {
+				$isAuthoriseCustomer =1;
 			}
 
+		}
 
 
 
-    	if ($menu['createUserId'] != $this->loginUser['id'] && !$isAuthoriseCustomer  ) $this->form_response_msg('you are not allow to update!');
 
-    	$data = array();
-    	$data['visible'] = ($menu['visible'] == '0') ? '1' : '0';
+		if ($menu['createUserId'] != $this->loginUser['id'] && !$isAuthoriseCustomer  ) $this->form_response_msg('you are not allow to update!');
 
-    	if ($mdl_restaurant_menu->update($data, $menu['id'])) {
-    		echo json_encode(array('visible' => $data['visible']));
-    	} else {
-    		$this->form_response_msg('Please try again later');
-    	}
+		$data = array();
+		$data['visible'] = ($menu['visible'] == '0') ? '1' : '0';
 
-
-    }
+		if ($mdl_restaurant_menu->update($data, $menu['id'])) {
+			echo json_encode(array('visible' => $data['visible']));
+		} else {
+			$this->form_response_msg('Please try again later');
+		}
 
 
+	}
 
-	 function update_sell_price_action()
-    {
-    	$userrange = get2('userrange');
+
+
+	function update_sell_price_action()
+	{
+		$userrange = get2('userrange');
 		$pricerates = get2('pricerates');
 		$productrange = get2('productrange');
 
 
 
 
-    	$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
 
-    	if($this->loginUser['id']  != 217005 && $this->loginUser['id']  != 218639 ) {
+		if($this->loginUser['id']  != 217005 && $this->loginUser['id']  != 218639 ) {
 
 			$this->form_response_msg('Please try again later');
 
@@ -4234,129 +4394,129 @@ function category_migration_action(){
 		}
 
 
-        $sql = "update cc_restaurant_menu set price = round(freshx_price * $pricerates +0.1,1) where $whereUserrange $whereproductrange and   freshx_price>0 and visible =1  ";
-       // var_dump ($sql);exit;
+		$sql = "update cc_restaurant_menu set price = round(freshx_price * $pricerates +0.1,1) where $whereUserrange $whereproductrange and   freshx_price>0 and visible =1  ";
+		// var_dump ($sql);exit;
 
 
 
 
-    	if ($mdl_restaurant_menu->getListBySql($sql) ){
-    		echo json_encode(array('message' => 1));
-    	} else {
+		if ($mdl_restaurant_menu->getListBySql($sql) ){
+			echo json_encode(array('message' => 1));
+		} else {
 			echo json_encode(array('message' => 0));
 
-    	}
-      //  echo json_encode($sql);
+		}
+		//  echo json_encode($sql);
 
-    }
-
-
+	}
 
 
- function process_link_picture_action()
-    {
-    	   $id = (int)get2('id');
-           $fileName = get2('filePath');
-		   $changeMainpic = get2('changeMainpic');
-          
-		  
-		
-			//$type     = $this->getImagetype( $type );
-			
-			if (!strstr($fileName, '.'))
-			{
+
+
+	function process_link_picture_action()
+	{
+		$id = (int)get2('id');
+		$fileName = get2('filePath');
+		$changeMainpic = get2('changeMainpic');
+
+
+
+		//$type     = $this->getImagetype( $type );
+
+		if (!strstr($fileName, '.'))
+		{
 			$this->form_response(500,'not image format');
+		}
+
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+		$menu = $mdl_restaurant_menu->get($id);
+
+		if ($id < 0 || $menu['restaurant_id'] != $this->loginUser['id'] ) $this->form_response(500,'menu id invalid');
+
+		if(strlen($fileName)<=0) exit;
+
+		$count_of_pics =$this->count_of_menu_pics($menu);
+		if($count_of_pics >=10) $this->form_response(500,'the count of pictures over 10! please remove and add it again');
+		// 开始按照流程图做即可。
+		//已经获得了是否更换主图的变量。
+		//按照流程图走就可以。 关键是要把 几个地方 通用化。
+		//根据给出的barcode , 的处理流程，根据给出的图片的 处理流程。
+
+
+
+
+		$uploadPath = date("Y-m");
+		$this->file->createdir('data/upload/'.$uploadPath);
+		$pic_arr= $this->gen_image_file_from_barcode_web($fileName,$uploadPath);
+
+		$sucess_save_pic =0;
+
+		if($changeMainpic){
+			//更换主图
+			//将之前的主图片放到附图的第一个位置
+			if(strlen(trim($menu['menu_pics']))<=8) {
+				$menu_pic_arr=array();
+			}else{
+				$menu_pic_arr = unserialize($menu['menu_pics']);
 			}
-		  
-		  	  
-           $mdl_restaurant_menu = $this->loadModel('restaurant_menu');
 
-    	   $menu = $mdl_restaurant_menu->get($id);
+			// $this->form_response(500, $menu_pic_arr);
+			array_push($menu_pic_arr,$menu['menu_pic']);
 
-		   if ($id < 0 || $menu['restaurant_id'] != $this->loginUser['id'] ) $this->form_response(500,'menu id invalid');
+			$menu_pic_json = serialize($menu_pic_arr);
 
-           if(strlen($fileName)<=0) exit;
+			$UpdateData =array (
+				'menu_pic'=>$pic_arr[0],
+				'menu_pics'=>$menu_pic_json
 
-           $count_of_pics =$this->count_of_menu_pics($menu);
-		   if($count_of_pics >=10) $this->form_response(500,'the count of pictures over 10! please remove and add it again');
-		  // 开始按照流程图做即可。
-		  //已经获得了是否更换主图的变量。
-		  //按照流程图走就可以。 关键是要把 几个地方 通用化。 
-		  //根据给出的barcode , 的处理流程，根据给出的图片的 处理流程。
-		  
-		  
+			);
 
-		  
-		   $uploadPath = date("Y-m");
-		   $this->file->createdir('data/upload/'.$uploadPath);
-           $pic_arr= $this->gen_image_file_from_barcode_web($fileName,$uploadPath);
-		  
-		   $sucess_save_pic =0;
 
-           if($changeMainpic){
-			  //更换主图
-              //将之前的主图片放到附图的第一个位置
-			  if(strlen(trim($menu['menu_pics']))<=8) {
-				  $menu_pic_arr=array();
-			  }else{
-				   $menu_pic_arr = unserialize($menu['menu_pics']);
-			  }
-			 
-			   // $this->form_response(500, $menu_pic_arr);
-			  array_push($menu_pic_arr,$menu['menu_pic']);
-			  
-			  $menu_pic_json = serialize($menu_pic_arr);
-			 
-			  $UpdateData =array (
-			    'menu_pic'=>$pic_arr[0],
-			    'menu_pics'=>$menu_pic_json
-			  
-			  );
-			  
-			  
-			  if($mdl_restaurant_menu->update($UpdateData, $menu['id'])){
-				  
-				  
-				  
-				   //更新产品库图片信息
-				   $this->updateStandProductUponMenuId($menu['id']);
-				   
-				   //生成前端替换显示的图片信息
-				   $picPath =$this->image_file_insert_cut_info($pic_arr[0],'_66x66_fill');
-				   $msg =$picPath;
-				   $this->form_response(200,$msg,'');
-				  
-			  }
-			  
-			  // 更换主图
+			if($mdl_restaurant_menu->update($UpdateData, $menu['id'])){
+
+
+
+				//更新产品库图片信息
+				$this->updateStandProductUponMenuId($menu['id']);
+
+				//生成前端替换显示的图片信息
+				$picPath =$this->image_file_insert_cut_info($pic_arr[0],'_66x66_fill');
+				$msg =$picPath;
+				$this->form_response(200,$msg,'');
+
+			}
+
+			// 更换主图
 			//  $this->form_response_msg($id.' '.$menu_pic_json.' ' .$pic_arr[0]);
-			   
-				}else{
-			   //添加至附图
-			   
-			    if(strlen(trim($menu['menu_pics']))<=8) {
-				  $menu_pic_arr=array();
-			  }else{
-				   $menu_pic_arr = unserialize($menu['menu_pics']);
-			  }
-			   
-			  
-			  array_push($menu_pic_arr,$pic_arr[0]);
-			  
-			  $menu_pic_json = serialize($menu_pic_arr);
-			   $UpdateData =array (
-			     'menu_pics'=>$menu_pic_json
-			  
-			  );
-			   $mdl_restaurant_menu->update($UpdateData, $menu['id']);
-			     
-				   //更新产品库图片信息
-				   $this->updateStandProductUponMenuId($menu['id']);
-		   }
+
+		}else{
+			//添加至附图
+
+			if(strlen(trim($menu['menu_pics']))<=8) {
+				$menu_pic_arr=array();
+			}else{
+				$menu_pic_arr = unserialize($menu['menu_pics']);
+			}
+
+
+			array_push($menu_pic_arr,$pic_arr[0]);
+
+			$menu_pic_json = serialize($menu_pic_arr);
+			$UpdateData =array (
+				'menu_pics'=>$menu_pic_json
+
+			);
+			$mdl_restaurant_menu->update($UpdateData, $menu['id']);
+
+			//更新产品库图片信息
+			$this->updateStandProductUponMenuId($menu['id']);
+		}
 
 
 
-  
+
 
 
 
@@ -4366,57 +4526,57 @@ function category_migration_action(){
 
 
 		//   $this->form_response_msg($id.' '.$changeMainpic.' ' .$pic_arr[0]);
-    	
-
-    	
-
-    }
 
 
 
 
-	 function menu_publish_ajax1_action()
-    {
-    		$id = (int)get2('id');
+	}
 
 
 
-    	$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
 
-    	$menu = $mdl_restaurant_menu->get($id);
+	function menu_publish_ajax1_action()
+	{
+		$id = (int)get2('id');
+
+
+
+		$mdl_restaurant_menu = $this->loadModel('restaurant_menu');
+
+		$menu = $mdl_restaurant_menu->get($id);
 
 		if ($id < 0 || !$menu ) $this->form_response_msg('menu id invalid');
 
-		 $mdl = $this->loadModel('authrise_manage_other_business_account');
-         $authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+		$mdl = $this->loadModel('authrise_manage_other_business_account');
+		$authoriseBusinessList = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
 
-		 $this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
+		$this->setData($authoriseBusinessList, 'authrise_manage_other_business_account');
 
 		$isAuthoriseCustomer =0 ;
 		foreach ($authoriseBusinessList as $key => $value) {
-				if($menu['createUserId'] ==$value['customer_id']) {
-						$isAuthoriseCustomer =1;
-				}
-
+			if($menu['createUserId'] ==$value['customer_id']) {
+				$isAuthoriseCustomer =1;
 			}
 
+		}
 
 
 
-    	if ($menu['createUserId'] != $this->loginUser['id'] && !$isAuthoriseCustomer  ) $this->form_response_msg('you are not allow to update!');
 
-    	$data = array();
-    	$data['onSpecial'] = ($menu['onSpecial'] == '0') ? '1' : '0';
+		if ($menu['createUserId'] != $this->loginUser['id'] && !$isAuthoriseCustomer  ) $this->form_response_msg('you are not allow to update!');
+
+		$data = array();
+		$data['onSpecial'] = ($menu['onSpecial'] == '0') ? '1' : '0';
 		$data['limit_buy_qty'] = 1;
 
-    	if ($mdl_restaurant_menu->update($data, $menu['id'])) {
-    		echo json_encode(array('onSpecial' => $data['onSpecial']));
-    	} else {
-    		$this->form_response_msg('Please try again later');
-    	}
+		if ($mdl_restaurant_menu->update($data, $menu['id'])) {
+			echo json_encode(array('onSpecial' => $data['onSpecial']));
+		} else {
+			$this->form_response_msg('Please try again later');
+		}
 
 
-    }
+	}
 
 
 	/**
@@ -4435,9 +4595,9 @@ function category_migration_action(){
 			$mdl  = $this->loadModel('authrise_manage_other_business_account');
 			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$idCreateUser['restaurant_id']);
 
-	   if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
-			if(!$isAuthoriseCustomer) $this->form_response(600,$id.' '.$idCreateUser['restaurant_id'],'could not find item');
-	   }
+			if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
+				if(!$isAuthoriseCustomer) $this->form_response(600,$id.' '.$idCreateUser['restaurant_id'],'could not find item');
+			}
 
 
 			$data=array();
@@ -4449,7 +4609,7 @@ function category_migration_action(){
 			$lowest_price = post('lowest_price');
 			if($lowest_price)$data['lowest_price']=$lowest_price;
 
-			
+
 			$original_price = post('original_price');
 			if($original_price)$data['original_price']=$original_price;
 
@@ -4461,132 +4621,132 @@ function category_migration_action(){
 
 			$overflowRate = post('overflowRate');
 			if($overflowRate)$data['overflowRate']=$overflowRate;
-			
-			$barcode_number = post('barcode_number');
-			
-			 // 如果该编号已经改变 ，则进行相关处理，如果没有改变则不做处理
-          // $this->form_response(500, $barcode_number,'');  
-			
-			if($barcode_number)
-				
-				{
-				  $data['barcode_number']=$barcode_number;
-           		   if( strlen($barcode_number)<=7) {
-					   $this->form_response(500, 'barcode_number too short！','');   
-				   }
-				  					  
-                      //如果当前产品没有图片，则开始处理，如果有图片不做操作
-					  
-					   if(!$idCreateUser['menu_pic']) {
-						   
-						    $mdl_standard_product_info= $this->loadModel('standard_product_info');
-						
-							//$this->form_response(500, $barcode_number,'');   
-						  // 查找在产品库中是否存在，如果存在，则将图片路径新鲜，复制到该产品之下。 可能包含 主图和子图信息。
-							
-							$rec = $mdl_standard_product_info->ifFindBarcode($barcode_number);
-							 if($rec) {
-								 //将 图片信息填到该记录这里
-								$picData = $this->generate_images_data($rec);
-								if($picData) $mdl_restaurant_menu->update($picData,$idCreateUser['id']);
-								
-								
-								$picPath =$this->image_file_insert_cut_info($rec['images1'],'_66x66_fill');
-								//$this->form_response(500, $picPath,'');   
-								$msg =$picPath;
-							  }	
-						   
-						   
-					   }else{
-						   //如果该产品有图片，则检查在标准sku库中是否存在该产品，如果不存在，则增加到标准库中，并标记来源，如果已存在检查是否有图片，如果没有图片则更新图片，有图片不做处理。
-						     $mdl_standard_product_info= $this->loadModel('standard_product_info');
-							 $rec = $mdl_standard_product_info->ifFindBarcode($barcode_number);
-							  if($rec) {
-								  //如果存在产品记录
-								  if($rec['images1']) {
-									  //不做处理
-									  
-								  }else{
-									  //没有图片，生成图片信息数据，及来源数据，更新到该产品标准表的相应信息上。
-									  $updateData001 = array(
-									     'images1'=>$idCreateUser['menu_pic'],
-										 'imagesmore'=>$idCreateUser['menu_pics'],
-										 'source_business_id'=>$idCreateUser['restaurant_id']
-									  
-									  );
-									  $mdl_standard_product_info->update($updateData001,$rec['id']);
-									  
-								  }
-								
-							  }	else{
-								  //不存在产品记录
-								  
-								  if(!$idCreateUser['menu_en_name']) {
-									  $title =$idCreateUser['menu_cn_name'];
-								  }else{
-									  $title =$idCreateUser['menu_en_name'];
-									  
-								  }
-								  
-								  
-								   if(!$idCreateUser['menu_cn_name']) {
-									  $title_cn =$idCreateUser['menu_en_name'];
-								  }else{
-									  $title_cn =$idCreateUser['menu_cn_name'];
-								  }
-								  
-								  
-								  if(!$idCreateUser['menu_desc']) {
-									  $description_cn =$idCreateUser['menu_en_desc'];
-								  }else{
-									  $description_cn =$idCreateUser['menu_desc'];
-									  
-								  }
-								  
-								  
-								  if(!$idCreateUser['menu_en_desc']) {
-									  $description =$idCreateUser['menu_desc'];
-								  }else{
-									  $description =$idCreateUser['menu_en_desc'];
-									  
-								  }
-								  
-								  
-								  
-								  $insertData001=array(
-								  
-								     'barcode_number'=>$barcode_number,
-									 'title'=>$title,
-									 'title_cn'=>$title_cn,
-									 'category'=>$idCreateUser['restaurant_category_id'],
-									 'description'=>$description,
-									 'description_cn'=>$description_cn,
-									 'images1'=>$idCreateUser['menu_pic'],
-									 'imagesmore'=>$idCreateUser['menu_pics'],
-									 'grapType'=>1,
-									 'source_business_id'=>$idCreateUser['restaurant_id']
-								  
-									  
-								  );
-								  
-								   $mdl_standard_product_info->insert($insertData001);
-								  
-							  }
-						   
-						   
-						   
-					   }
-					   
-					   
-						
-						
-						
-					
-				}
-		 
-		   
 
-	      	
+			$barcode_number = post('barcode_number');
+
+			// 如果该编号已经改变 ，则进行相关处理，如果没有改变则不做处理
+			// $this->form_response(500, $barcode_number,'');
+
+			if($barcode_number)
+
+			{
+				$data['barcode_number']=$barcode_number;
+				if( strlen($barcode_number)<=7) {
+					$this->form_response(500, 'barcode_number too short！','');
+				}
+
+				//如果当前产品没有图片，则开始处理，如果有图片不做操作
+
+				if(!$idCreateUser['menu_pic']) {
+
+					$mdl_standard_product_info= $this->loadModel('standard_product_info');
+
+					//$this->form_response(500, $barcode_number,'');
+					// 查找在产品库中是否存在，如果存在，则将图片路径新鲜，复制到该产品之下。 可能包含 主图和子图信息。
+
+					$rec = $mdl_standard_product_info->ifFindBarcode($barcode_number);
+					if($rec) {
+						//将 图片信息填到该记录这里
+						$picData = $this->generate_images_data($rec);
+						if($picData) $mdl_restaurant_menu->update($picData,$idCreateUser['id']);
+
+
+						$picPath =$this->image_file_insert_cut_info($rec['images1'],'_66x66_fill');
+						//$this->form_response(500, $picPath,'');
+						$msg =$picPath;
+					}
+
+
+				}else{
+					//如果该产品有图片，则检查在标准sku库中是否存在该产品，如果不存在，则增加到标准库中，并标记来源，如果已存在检查是否有图片，如果没有图片则更新图片，有图片不做处理。
+					$mdl_standard_product_info= $this->loadModel('standard_product_info');
+					$rec = $mdl_standard_product_info->ifFindBarcode($barcode_number);
+					if($rec) {
+						//如果存在产品记录
+						if($rec['images1']) {
+							//不做处理
+
+						}else{
+							//没有图片，生成图片信息数据，及来源数据，更新到该产品标准表的相应信息上。
+							$updateData001 = array(
+								'images1'=>$idCreateUser['menu_pic'],
+								'imagesmore'=>$idCreateUser['menu_pics'],
+								'source_business_id'=>$idCreateUser['restaurant_id']
+
+							);
+							$mdl_standard_product_info->update($updateData001,$rec['id']);
+
+						}
+
+					}	else{
+						//不存在产品记录
+
+						if(!$idCreateUser['menu_en_name']) {
+							$title =$idCreateUser['menu_cn_name'];
+						}else{
+							$title =$idCreateUser['menu_en_name'];
+
+						}
+
+
+						if(!$idCreateUser['menu_cn_name']) {
+							$title_cn =$idCreateUser['menu_en_name'];
+						}else{
+							$title_cn =$idCreateUser['menu_cn_name'];
+						}
+
+
+						if(!$idCreateUser['menu_desc']) {
+							$description_cn =$idCreateUser['menu_en_desc'];
+						}else{
+							$description_cn =$idCreateUser['menu_desc'];
+
+						}
+
+
+						if(!$idCreateUser['menu_en_desc']) {
+							$description =$idCreateUser['menu_desc'];
+						}else{
+							$description =$idCreateUser['menu_en_desc'];
+
+						}
+
+
+
+						$insertData001=array(
+
+							'barcode_number'=>$barcode_number,
+							'title'=>$title,
+							'title_cn'=>$title_cn,
+							'category'=>$idCreateUser['restaurant_category_id'],
+							'description'=>$description,
+							'description_cn'=>$description_cn,
+							'images1'=>$idCreateUser['menu_pic'],
+							'imagesmore'=>$idCreateUser['menu_pics'],
+							'grapType'=>1,
+							'source_business_id'=>$idCreateUser['restaurant_id']
+
+
+						);
+
+						$mdl_standard_product_info->insert($insertData001);
+
+					}
+
+
+
+				}
+
+
+
+
+
+
+			}
+
+
+
+
 			$freshx_price = post('freshx_price');
 			if($freshx_price)$data['freshx_price']=$freshx_price;
 
@@ -4594,8 +4754,8 @@ function category_migration_action(){
 
 			$menu_id = post('menu_id');
 			if($menu_id)$data['menu_id']=$menu_id;
-			
-			
+
+
 			//检查如果发现相同的menu_id 提示用户选择菜单分类
 			if($menu_id) {
 				$where1 =array (
@@ -4603,10 +4763,10 @@ function category_migration_action(){
 					'menu_id'=>$menu_id
 				);
 				if($mdl_restaurant_menu->getCount($where1)>0) {
-					
+
 					$this->form_response(500, 'repeated number','');
 				}
-				
+
 			}
 
 			$menu_cn_name = post('menu_cn_name');
@@ -4716,9 +4876,9 @@ function category_migration_action(){
 			$mdl  = $this->loadModel('authrise_manage_other_business_account');
 			$isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$idCreateUser['restaurant_id']);
 
-	       if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
-			   	if(!$isAuthoriseCustomer ) $this->form_response(600,'item not find','item not find');
-		   }
+			if($idCreateUser['restaurant_id'] != $this->loginUser['id']) {
+				if(!$isAuthoriseCustomer ) $this->form_response(600,'item not find','item not find');
+			}
 
 
 
@@ -4735,11 +4895,11 @@ function category_migration_action(){
 
 			$parent_category_id = post('parent_category_id');
 			if(isset($parent_category_id))$data['parent_category_id']=$parent_category_id;
-			
+
 			$isHide = post('isHide');
 			if(isset($isHide))$data['isHide']=$isHide;
-			
-			
+
+
 			if($parent_category_id == 0) {
 				$parent_category_id = null;
 			}
@@ -4859,7 +5019,7 @@ function category_migration_action(){
 		}
 
 
-	    // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+		// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
 		// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
 
 		$mdl_restaurant_sidedish_menu = $this->loadModel('restaurant_sidedish_menu');
@@ -5016,9 +5176,13 @@ function category_migration_action(){
 	 */
 
 	function restaurant_menu_option_category_edit_action(){
+
+		$stock =get2('stock');
+		$this->setData($stock,'stcok');
+
 		$mdl_restaurant_menu_option_category = $this->loadModel('restaurant_menu_option_category');
 		$exist = $mdl_restaurant_menu_option_category->getByWhere(array('createUserId'=>$this->loginUser['id']));
-        $countOfTotal =$mdl_restaurant_menu_option_category->getcount(array(
+		$countOfTotal =$mdl_restaurant_menu_option_category->getcount(array(
 			'createUserId'=>$this->loginUser['id']
 
 		));
@@ -5062,8 +5226,16 @@ function category_migration_action(){
 
 		$this->setData('restaurant_menu_option_category', 'submenu_top');
 
-		$this->setData('restaurant_set', 'submenu');
-		$this->setData('index_publish', 'menu');
+		if($stock==1){
+			$this->setData('stock_item_edit', 'submenu');
+			$this->setData('Store_centre', 'menu');
+
+		}else{
+			$this->setData('restaurant_menu_edit', 'submenu');
+			$this->setData('index_publish', 'menu');
+
+		}
+
 
 
 
@@ -5089,6 +5261,8 @@ function category_migration_action(){
 	function restaurant_menu_option_edit_action(){
 
 		// 获得该用户餐厅的菜单分类信息
+		$stock =get2('stock');
+		$this->setData($stock,'stcok');
 
 		$mdl_restaurant_menu_option_category = $this->loadModel('restaurant_menu_option_category');
 		$pageSql = "select  * from cc_restaurant_menu_option_category where createUserId=".$this->loginUser['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
@@ -5129,7 +5303,7 @@ function category_migration_action(){
 		}
 
 
-	    // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
+		// 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
 		// 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
 
 		$mdl_restaurant_menu_option = $this->loadModel('restaurant_menu_option');
@@ -5177,8 +5351,19 @@ function category_migration_action(){
 		$this->setData($this->parseUrl()->setPath('restaurant/restaurant_edit'), 'editUrl');
 
 		$this->setData('restaurant_menu_option', 'submenu_top');
-		$this->setData('restaurant_set', 'submenu');
-		$this->setData('index_publish', 'menu');
+
+		if($stock==1){
+			$this->setData('stock_item_edit', 'submenu');
+			$this->setData('Store_centre', 'menu');
+
+		}else{
+			$this->setData('restaurant_menu_edit', 'submenu');
+			$this->setData('index_publish', 'menu');
+
+		}
+
+
+
 
 		$pagename = "Specification Detail Edit";
 
@@ -5187,7 +5372,7 @@ function category_migration_action(){
 		}else{
 			$pagename = "规格明细编辑";
 		}
-		
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 		$this->setData($pagename, 'pagename');
@@ -5314,64 +5499,64 @@ function category_migration_action(){
 		echo $html;
 
 	}
-	
-	
+
+
 	/**
 	 *  Ajax delete Category
 	 */
 	public function delete_category_action()
 	{
-		
+
 		if(is_post()){
-			
-			
+
+
 			$id = post('id');
 			$mdl_restaurant_category =$this->loadModel("restaurant_category");
-			
+
 			$currentRec = $mdl_restaurant_category->get($id);
-			
+
 			if ($currentRec['restaurant_id'] != $this->loginUser['id']) {
-				
+
 				$this->form_response(500, 'no access','');
 			}
 
-		
-		   //检查如果该分类下面有记录没有被迁移 ，则不能删除
-		   
-		  //如果为大类，则检查主表
-		  
-		  if(!$currentRec['parent_category_id']) {
-			  $where =array (
-				  'restaurant_category_id' =>$id
-			   
-			   );
-			   
-			   $menuCount1 = $this->loadModel('restaurant_menu')->getCount($where);
-			   
-			   if ($menuCount1>0) {
-				   
+
+			//检查如果该分类下面有记录没有被迁移 ，则不能删除
+
+			//如果为大类，则检查主表
+
+			if(!$currentRec['parent_category_id']) {
+				$where =array (
+					'restaurant_category_id' =>$id
+
+				);
+
+				$menuCount1 = $this->loadModel('restaurant_menu')->getCount($where);
+
+				if ($menuCount1>0) {
+
 					$this->form_response(500, 'There is still data under the main menu of this category, which cannot be deleted! Please migrate data to another category and delete that category','');
-			   }
-		   
-		  }
-		   
-		   
-		   $where =array (
-		      'category_id' =>$id
-		   
-		   );
-		   
-		    $menuCount2 = $this->loadModel('restaurant_menu_category')->getCount($where);
-		   
-		   if ($menuCount2>0) {
-			   
-			   	$this->form_response(500, 'There is still data under the multi-level menu of this category, which cannot be deleted! Please migrate data to another category and delete that category','');
-		   }
-		   
-		
+				}
+
+			}
+
+
+			$where =array (
+				'category_id' =>$id
+
+			);
+
+			$menuCount2 = $this->loadModel('restaurant_menu_category')->getCount($where);
+
+			if ($menuCount2>0) {
+
+				$this->form_response(500, 'There is still data under the multi-level menu of this category, which cannot be deleted! Please migrate data to another category and delete that category','');
+			}
+
+
 			try {
-				
-				
+
+
 				$mdl_restaurant_category->update(['isdeleted' => 1,'isHide' => 1],$id);
 				$this->form_response(200,'delete Successful','');
 			} catch (Exception $e) {
@@ -5380,7 +5565,7 @@ function category_migration_action(){
 		}
 	}
 
-	
+
 
 	/**
 	 *  Ajax update Category
@@ -5432,8 +5617,8 @@ function category_migration_action(){
 			echo null;
 		}
 	}
-	
-		public function get_menu_by_keyword_action($id)
+
+	public function get_menu_by_keyword_action($id)
 	{
 		$id = get2('id');
 		$keyword = get2('keyword');
@@ -5442,68 +5627,68 @@ function category_migration_action(){
 		$where1 = [
 			'restaurant_id' => $id,
 		];
-		
-	
 
-		
-			$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
 
-			//菜单列表
-			$sql = "select c.category_cn_name, c.category_en_name,a.*,b.category_sort_id from cc_restaurant_category c,cc_restaurant_menu a, cc_restaurant_category b where a.restaurant_id=".$id."  and (c.category_cn_name like '%$keyword%' or a.menu_cn_name like '%$keyword%' ) and  (length(a.menu_cn_name)>0 or length(a.menu_en_name)>0) and  c.id=a.restaurant_category_id  and b.id = a.restaurant_category_id and a.visible=1 order by b.category_sort_id,a.menu_order_id,a.menu_id";
-			$menu = $mdl_restaurant_menu->getListBySql($sql);
-           // var_dump($sql);exit;
-			$sql_special = "select '本期特价' as category_cn_name, 'On Sale' as category_en_name,a.*,'1000' as  restaurant_category_id,'1' as category_sort_id from cc_restaurant_category c,cc_restaurant_menu a, cc_restaurant_category b where (a.restaurant_id=".$id." ) and  (c.category_cn_name like '%$keyword%' or a.menu_cn_name like '%$keyword%'  ) and a.onSpecial =1 and   c.id=a.restaurant_category_id  and b.id = a.restaurant_category_id and a.visible=1 order by a.menu_order_id,a.menu_id";
-			$menu_sub = $mdl_restaurant_menu->getListBySql($sql_special);
-			foreach ($menu_sub as $key => $value) {
-				$menu_sub[$key]['restaurant_category_id'] = 'hot';
-				$menu_sub[$key]['price'] = $value['speical_price'];
-				$menu_sub[$key]['onSpecial'] = 1;
 
-				if ($value['original_price'] <= 0) { //如果原价为空
 
-					$menu_sub[$key]['original_price'] = $value['price'];
-				}
-				if ($value['limit_buy_qty'] > 0) {
-					$menu_sub[$key]['menu_cn_name'] = '('.$this->lang->limit_buy.' '.$value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];;
-				} else {
-					$menu_sub[$key]['menu_cn_name'] = '('.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];;
+		$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
+
+		//菜单列表
+		$sql = "select c.category_cn_name, c.category_en_name,a.*,b.category_sort_id from cc_restaurant_category c,cc_restaurant_menu a, cc_restaurant_category b where a.restaurant_id=".$id."  and (c.category_cn_name like '%$keyword%' or a.menu_cn_name like '%$keyword%' ) and  (length(a.menu_cn_name)>0 or length(a.menu_en_name)>0) and  c.id=a.restaurant_category_id  and b.id = a.restaurant_category_id and a.visible=1 order by b.category_sort_id,a.menu_order_id,a.menu_id";
+		$menu = $mdl_restaurant_menu->getListBySql($sql);
+		// var_dump($sql);exit;
+		$sql_special = "select '本期特价' as category_cn_name, 'On Sale' as category_en_name,a.*,'1000' as  restaurant_category_id,'1' as category_sort_id from cc_restaurant_category c,cc_restaurant_menu a, cc_restaurant_category b where (a.restaurant_id=".$id." ) and  (c.category_cn_name like '%$keyword%' or a.menu_cn_name like '%$keyword%'  ) and a.onSpecial =1 and   c.id=a.restaurant_category_id  and b.id = a.restaurant_category_id and a.visible=1 order by a.menu_order_id,a.menu_id";
+		$menu_sub = $mdl_restaurant_menu->getListBySql($sql_special);
+		foreach ($menu_sub as $key => $value) {
+			$menu_sub[$key]['restaurant_category_id'] = 'hot';
+			$menu_sub[$key]['price'] = $value['speical_price'];
+			$menu_sub[$key]['onSpecial'] = 1;
+
+			if ($value['original_price'] <= 0) { //如果原价为空
+
+				$menu_sub[$key]['original_price'] = $value['price'];
+			}
+			if ($value['limit_buy_qty'] > 0) {
+				$menu_sub[$key]['menu_cn_name'] = '('.$this->lang->limit_buy.' '.$value['limit_buy_qty'].' '.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];;
+			} else {
+				$menu_sub[$key]['menu_cn_name'] = '('.$this->lang->original_price.$menu_sub[$key]['original_price'].')'.$menu_sub[$key]['menu_cn_name'];;
+			}
+		}
+
+		$menu = array_merge($menu_sub, $menu);
+
+		foreach ($menu as $key => $value) {
+			$menu[$key]['onSpecial'] = 0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
+			if ($value['original_price'] <= 0) { //如果原价为空
+
+				$menu[$key]['original_price'] = $value['price'];
+			}
+
+			if ($this->getLangStr() == 'en') {
+				if (! $menu[$key]['menu_en_name']) {
+					$menu[$key]['menu_en_name'] = $menu[$key]['menu_cn_name'];
 				}
 			}
 
-			$menu = array_merge($menu_sub, $menu);
+			$menu[$key]['new_price'] = number_format($menu[$key]['price'] * (1 - $restaurant_promotion_manjian_rates), 2);
 
-			foreach ($menu as $key => $value) {
-				$menu[$key]['onSpecial'] = 0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
-				if ($value['original_price'] <= 0) { //如果原价为空
+			//加载购物车已购买数量
+			$sql = "select quantity from cc_wj_user_temp_carts where main_coupon_id=".$id." and menu_id=".$value['id']." and sidedish_menu_id=0 and userId=".$this->loginUser['id'];
 
-					$menu[$key]['original_price'] = $value['price'];
-				}
-
-				if ($this->getLangStr() == 'en') {
-					if (! $menu[$key]['menu_en_name']) {
-						$menu[$key]['menu_en_name'] = $menu[$key]['menu_cn_name'];
-					}
-				}
-
-				$menu[$key]['new_price'] = number_format($menu[$key]['price'] * (1 - $restaurant_promotion_manjian_rates), 2);
-
-				//加载购物车已购买数量
-				$sql = "select quantity from cc_wj_user_temp_carts where main_coupon_id=".$id." and menu_id=".$value['id']." and sidedish_menu_id=0 and userId=".$this->loginUser['id'];
-
-				$result = $mdl_wj_user_temp_carts->getListBySql($sql);
-                if($result) {
+			$result = $mdl_wj_user_temp_carts->getListBySql($sql);
+			if($result) {
 				//显示新价格
 				$menu[$key]['quantity'] = $result[0]['quantity'];
-				}else{
-					
-				}
+			}else{
+
 			}
-	
+		}
+
 
 		// 换 en cn
 		$old_cat = "";
 		$menuIds = [];
-	
+
 
 		$menus = [];
 		foreach ($menu as $key => $value) {
@@ -5542,9 +5727,9 @@ function category_migration_action(){
 		echo json_encode($menus);
 		return $menu;
 	}
-	
-	
-	
+
+
+
 
 	public function get_menu_by_category_action($id)
 	{
@@ -5621,7 +5806,7 @@ function category_migration_action(){
 				}
 			}
 
-		
+
 
 			foreach ($menu as $key => $value) {
 				$menu[$key]['onSpecial'] = 0; //之前的on sepcial 都已提出了，下面再常规类别中显示的都可以不视为special
@@ -5646,8 +5831,8 @@ function category_migration_action(){
 				//显示新价格
 				$menu[$key]['quantity'] = $result[0]['quantity'];
 			}
-			
-				$menu = array_merge($menu_sub, $menu);
+
+			$menu = array_merge($menu_sub, $menu);
 		}
 
 		// 换 en cn
@@ -5688,31 +5873,31 @@ function category_migration_action(){
 			} else {
 				$menu[$key]['new_cat'] = 0;
 			}
-			
-				//	var_dump('ff'.substr($menu[$key]['menu_pics'],0,2));exit;
-				
-					
-				$menu_pic =$menu[$key]['menu_pics'];
-				 $aa= unserialize($menu_pic);
-				 $bb= implode(";", $aa);
-				 if($bb) {
-					  $menu[$key]['menu_pics'] =$bb;
-				 }
-				
-		
-			
-		
+
+			//	var_dump('ff'.substr($menu[$key]['menu_pics'],0,2));exit;
+
+
+			$menu_pic =$menu[$key]['menu_pics'];
+			$aa= unserialize($menu_pic);
+			$bb= implode(";", $aa);
+			if($bb) {
+				$menu[$key]['menu_pics'] =$bb;
+			}
+
+
+
+
 
 
 			if(!$categoryId || $menu[$key]['restaurant_category_id'] == $categoryId || in_array($menu[$key]['id'], $menuIds)) {
 				array_push($menus, $menu[$key]);
 			}
-			
+
 			//$menu[$key]['menu_pic'] ='dfdfsdf';
 		}
 
 
-        
+
 		echo json_encode($menus);
 		return $menu;
 	}
@@ -5722,7 +5907,7 @@ function category_migration_action(){
 		$id = (int) get2('id');
 		$userId = $this->loginUser['id'];
 		$cart = (int) get2('cart');
-        $this->setData(1,'dy'); //采用动态页面
+		$this->setData(1,'dy'); //采用动态页面
 
 		if (! $id) {
 			$this->sheader(null, 'Please choose the right shop');
@@ -5757,11 +5942,11 @@ function category_migration_action(){
 			$count = $this->loadModel('wj_customer_coupon')->getCount(['business_id'=>$restaurant_coupon['createUserId']]);
 			$this->setData($count, 'sales_count');
 			$this->setData($restaurant_coupon, 'coupon');
-			
-			
+
+
 			$delivery_fee_desc  = $this->get_business_delivery_des ($business_user['id']);
-			 $this->setData($delivery_fee_desc, 'delivery_fee_desc');
-			 
+			$this->setData($delivery_fee_desc, 'delivery_fee_desc');
+
 		} else {
 			$this->sheader(HTTP_ROOT_WWW.'coupon1/coupon_private_view_gate?id='.$restaurant_coupon['id']);
 			$this->sheader(null, 'this shop currently close ,please wait ..');
@@ -5769,16 +5954,16 @@ function category_migration_action(){
 
 		$this->setData($id, 'restaurant_id');
 		$this->setData($cart, 'cart');
-      
-	  $where1 = [
+
+		$where1 = [
 			'restaurant_id' => $id,
 		];
 		$mdl_restaurant_promotion_manjian = $this->loadModel("restaurant_promotion_manjian");
 		$restaurant_promotion_manjian = $mdl_restaurant_promotion_manjian->getByWhere($where1);
 		$this->setData($restaurant_promotion_manjian, 'restaurant_promotion_manjian');
-	  
-        $prom_rec =$this->loadModel('restaurant_promotion_manjian')->get( $restaurant_coupon['id']);
-  	 // var_dump($restaurant_coupon);exit;
+
+		$prom_rec =$this->loadModel('restaurant_promotion_manjian')->get( $restaurant_coupon['id']);
+		// var_dump($restaurant_coupon);exit;
 		$title = str_replace('|', '', $restaurant_coupon['title']);
 		$this->setData($title, 'pageTitle');
 		$this->setData($restaurant_coupon['searchKeywords'], 'pageKeywords');
@@ -5792,7 +5977,7 @@ function category_migration_action(){
 
 		$this->setData(join(DispCenter::getPostcode(DispCenter::getDispCenterIdOfSupplier($id)), ','), 'postcodeSupported'); //使用统配商家邮编信息
 
-		
+
 		$this->setData(1, 'lazyload');
 
 		$restaurant_category = self::get_category_list($id);
@@ -5803,56 +5988,56 @@ function category_migration_action(){
 
 
 		require_once "wx/wxjssdk.php";
-        $jssdk = new WXjsSDK();
-        $signPackage = $jssdk->GetSignPackage();
-        $this->setData($signPackage,'signPackage');
+		$jssdk = new WXjsSDK();
+		$signPackage = $jssdk->GetSignPackage();
+		$this->setData($signPackage,'signPackage');
 
-        $shareUrl = HTTP_ROOT_WX."restaurant/$id?dy=1&reftag=".$this->loginUser['id'];
-        $this->setData($shareUrl,'shareUrl');
-        $this->setData(generateQRCode($shareUrl),'shareQRCode');
+		$shareUrl = HTTP_ROOT_WX."restaurant/$id?dy=1&reftag=".$this->loginUser['id'];
+		$this->setData($shareUrl,'shareUrl');
+		$this->setData(generateQRCode($shareUrl),'shareQRCode');
 
-        $this->setData( get2('action'), 'returnAction' );
+		$this->setData( get2('action'), 'returnAction' );
 
-        $this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
-      
-		   
-		
-	 
-		
-	  
-       
-        $this->setData($shareUrl,'shareUrl');
-        $this->setData(generateQRCode($shareUrl),'shareQRCode');
+		$this->setData($this->loadModel('overwriteCouponStoreLink')->getOverWriteLink($id),'storeOverWriteLink');
 
 
-    
-        //获得当前店铺得 订货时间
-		 $mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
-				$where = [];
-				$where['business_id'] = $id;
-				$where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($id);
-				$list = $mdl->getList(null, $where);
-				
-				
-			
-			foreach ($list as $key =>$value) {
-				$order_start_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_start_of_date']);
-				$order_cut_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_cut_of_date']);
-				$delivery_date_of_week_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['delivery_date_of_week']);
-				
-				$list[$key]['order_start_of_date_cn'] = $order_start_of_date_cn ;
-				$list[$key]['order_cut_of_date'] =$order_cut_of_date_cn  ;
-				$list[$key]['delivery_date_of_week_cn'] = $delivery_date_of_week_cn ;
-				$list[$key]['ordertime_cn'] = '从'.$order_start_of_date_cn.$value['order_start_of_time'] .' 到 '.$order_cut_of_date_cn.$value['order_cut_of_time'];
-				$list[$key]['ordertime'] = 'From '.$value['order_start_of_date'].' '.$value['order_start_of_time'] .' To '.$value['order_cut_of_date'].' '.$value['order_cut_of_time'];
-		       
-			}
-				
-				
-				
-				
-            $this->setData($list,'current_business_tuangou_time');
-		
+
+
+
+
+
+		$this->setData($shareUrl,'shareUrl');
+		$this->setData(generateQRCode($shareUrl),'shareQRCode');
+
+
+
+		//获得当前店铺得 订货时间
+		$mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
+		$where = [];
+		$where['business_id'] = $id;
+		$where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($id);
+		$list = $mdl->getList(null, $where);
+
+
+
+		foreach ($list as $key =>$value) {
+			$order_start_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_start_of_date']);
+			$order_cut_of_date_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['order_cut_of_date']);
+			$delivery_date_of_week_cn = $this->get_cn_weekdayName_from_en_weekdayName($value['delivery_date_of_week']);
+
+			$list[$key]['order_start_of_date_cn'] = $order_start_of_date_cn ;
+			$list[$key]['order_cut_of_date'] =$order_cut_of_date_cn  ;
+			$list[$key]['delivery_date_of_week_cn'] = $delivery_date_of_week_cn ;
+			$list[$key]['ordertime_cn'] = '从'.$order_start_of_date_cn.$value['order_start_of_time'] .' 到 '.$order_cut_of_date_cn.$value['order_cut_of_time'];
+			$list[$key]['ordertime'] = 'From '.$value['order_start_of_date'].' '.$value['order_start_of_time'] .' To '.$value['order_cut_of_date'].' '.$value['order_cut_of_time'];
+
+		}
+
+
+
+
+		$this->setData($list,'current_business_tuangou_time');
+
 
 
 
@@ -5904,7 +6089,7 @@ function category_migration_action(){
 			}
 			array_unshift($restaurant_category, $special_array);
 		}
-      
+
 		return $restaurant_category;
 	}
 
@@ -5912,18 +6097,18 @@ function category_migration_action(){
 		$restaurantMenuId = post('restaurant_menu_id');
 		$category_id = post('category_id');
 		$isAdd = post('is_add');
-		
+
 		//$restaurantMenuId=388315;
 		//$category_id = 38691;
 		//$isAdd =false;
-		
-		
+
+
 		try {
 			if($isAdd) {
 				//	$this->form_response(500,'1'.$restaurantMenuId. ' '.$category_id .' '.$isAdd);exit;
 				$this->loadModel('restaurant_menu_category')->insertIfExist($restaurantMenuId, $category_id);
 			} else {
-			//	$this->form_response(500,'2'.$restaurantMenuId. ' '.$category_id .' '.$isAdd);exit;
+				//	$this->form_response(500,'2'.$restaurantMenuId. ' '.$category_id .' '.$isAdd);exit;
 				$this->loadModel('restaurant_menu_category')->deleteIfExist($restaurantMenuId, $category_id);
 			}
 			$this->form_response(200,'','');
@@ -5934,38 +6119,38 @@ function category_migration_action(){
 
 	public function update_restaurant_menu_category1_action() {
 		$restaurantMenuId = post('restaurant_menu_id');
-		
+
 		try {
-			
-			
-			 // 检查如果在 restaurant_menu_category里面如果不存在分类，则，这个无法删除，进行提示，如果在 前面提到的表中有，则取第一个，并把他转换成大类标号
-			  $mdl = $this->loadModel('restaurant_menu');
-			  $menuRec = $mdl->get($restaurantMenuId);
-			  
-			  if($menuRec){
-				   $mdl_menu_category = $this->loadModel('restaurant_menu_category');
-				   $newCategoryId =$mdl_menu_category->getFirstCateInRestaurantMenuCategory ($menuRec['id']);
-				   if ($newCategoryId) {
-					   
-						$data =array(
-						 'restaurant_category_id' =>$newCategoryId
-						);
-						$mdl->update($data,$restaurantMenuId);
-						
-					
-						$this->form_response(200,'update success!','');
-					   
-				   }else{
-					   
-					   $this->form_response(200,'The product must have at least one category, please specify another category and then delete the category!','');
-				   }
-					
-			  }else{
-				  $this->form_response(500, 'no access','');
-				  
-			  }
-			  
-			 
+
+
+			// 检查如果在 restaurant_menu_category里面如果不存在分类，则，这个无法删除，进行提示，如果在 前面提到的表中有，则取第一个，并把他转换成大类标号
+			$mdl = $this->loadModel('restaurant_menu');
+			$menuRec = $mdl->get($restaurantMenuId);
+
+			if($menuRec){
+				$mdl_menu_category = $this->loadModel('restaurant_menu_category');
+				$newCategoryId =$mdl_menu_category->getFirstCateInRestaurantMenuCategory ($menuRec['id']);
+				if ($newCategoryId) {
+
+					$data =array(
+						'restaurant_category_id' =>$newCategoryId
+					);
+					$mdl->update($data,$restaurantMenuId);
+
+
+					$this->form_response(200,'update success!','');
+
+				}else{
+
+					$this->form_response(200,'The product must have at least one category, please specify another category and then delete the category!','');
+				}
+
+			}else{
+				$this->form_response(500, 'no access','');
+
+			}
+
+
 		} catch (Exception $e) {
 			$this->form_response(500, $e->getMessage(),'');
 		}
@@ -5973,7 +6158,7 @@ function category_migration_action(){
 
 	public function get_temp_cart_action() {
 		$mdl_wj_user_temp_carts = $this->loadModel('wj_user_temp_carts');
-			$mdl_restaurant_menu =$this->loadModel('restaurant_menu');
+		$mdl_restaurant_menu =$this->loadModel('restaurant_menu');
 		$businessUserId = get2('restaurant_id');
 		$userId=$this->loginUser['id'];
 		$sql ="SELECT category_sort_id,category_cn_name,a.*,b.menu_pic as pic ,d.pic as coupon_pic FROM `cc_wj_user_temp_carts` a left join `cc_restaurant_menu` b on b.id=a.`menu_id` left join `cc_restaurant_category` c on c.id=b.restaurant_category_id left join cc_coupons d on d.id=a.main_coupon_id  where a.userId=" .$userId."   and businessUserId =".$businessUserId . " order by category_sort_id,b.menu_id";
@@ -5987,26 +6172,26 @@ function category_migration_action(){
 
 		$old_category='0';
 		foreach ($cartItems as $key => $val) {
-				$menu_rec =$mdl_restaurant_menu->get($val['menu_id']);
-			
+			$menu_rec =$mdl_restaurant_menu->get($val['menu_id']);
+
 			if(!$menu_rec){
-					$mdl_wj_user_temp_carts->delete($val['id']); // 如果菜单中没有这个，那么从临时购物车中删除。
-					continue;
-				}else{
-					
-					
+				$mdl_wj_user_temp_carts->delete($val['id']); // 如果菜单中没有这个，那么从临时购物车中删除。
+				continue;
+			}else{
+
+
 				// 如果找到菜单中的项目，检查是否已经下线，如果下线，则删除
 
-					if (!$menu_rec['visible']) {
-						//var_dump($menu_rec['visible'].$menu_rec['id']);
-						$mdl_wj_user_temp_carts->delete($val['id']);
+				if (!$menu_rec['visible']) {
+					//var_dump($menu_rec['visible'].$menu_rec['id']);
+					$mdl_wj_user_temp_carts->delete($val['id']);
 
-					}
+				}
 
-                   ///如果是特价产品
-				   if($val['onSpecial']) {
+				///如果是特价产品
+				if($val['onSpecial']) {
 
-					   if($menu_rec['speical_price'] != $val['single_amount']) {
+					if($menu_rec['speical_price'] != $val['single_amount']) {
 
 
 						$new_item_price_data= array(
@@ -6019,9 +6204,9 @@ function category_migration_action(){
 
 
 
-				   }else{
+				}else{
 
-					  	// 如果在菜单中找到该产品，检查价格是否和菜单中描述一致，不一致，则更新
+					// 如果在菜单中找到该产品，检查价格是否和菜单中描述一致，不一致，则更新
 					if($menu_rec['price'] != $val['single_amount']) {
 
 
@@ -6036,41 +6221,41 @@ function category_migration_action(){
 
 
 
-				   }
-
-
-
-					// 如果在菜单中找到该产品，检查库存是否溢出，如果溢出，则把库存调整到当前最大值
-
-					if($menu_rec['qty'] < $val['quantity']) {
-						$new_item_quantity_data= array(
-							'quantity' =>$menu_rec['qty']
-						);
-						$mdl_wj_user_temp_carts->update($new_item_quantity_data,$val['id']);
-
-
-					}		
-					
-		
-			if ($val['category_sort_id'] !== $old_category) {
-				if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
-
-					$cartItems[$key]['category_cn_name']='Group Buy';
 				}
-				$cartItems[$key]['new_cat']=1;
-			}else{
-				$cartItems[$key]['new_cat']=0;
 
+
+
+				// 如果在菜单中找到该产品，检查库存是否溢出，如果溢出，则把库存调整到当前最大值
+
+				if($menu_rec['qty'] < $val['quantity']) {
+					$new_item_quantity_data= array(
+						'quantity' =>$menu_rec['qty']
+					);
+					$mdl_wj_user_temp_carts->update($new_item_quantity_data,$val['id']);
+
+
+				}
+
+
+				if ($val['category_sort_id'] !== $old_category) {
+					if(!$val['category_sort_id']) { // 没有分类 就是团购套餐
+
+						$cartItems[$key]['category_cn_name']='Group Buy';
+					}
+					$cartItems[$key]['new_cat']=1;
+				}else{
+					$cartItems[$key]['new_cat']=0;
+
+				}
+				$old_category=$val['category_sort_id'];
+				if(!$val['category_sort_id']) {
+					$cartItems[$key]['pic']=$val['coupon_pic'];
+				}
+
+
+				$cartTotalQuantity += $val['quantity'];
+				$cartTotalPrice+=$val['single_amount']*$val['quantity'];
 			}
-			$old_category=$val['category_sort_id'];
-			if(!$val['category_sort_id']) {
-				$cartItems[$key]['pic']=$val['coupon_pic'];
-			}
-
-
-			$cartTotalQuantity += $val['quantity'];
-			$cartTotalPrice+=$val['single_amount']*$val['quantity'];
-		}
 		}
 
 		$data = [

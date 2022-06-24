@@ -143,7 +143,7 @@
 
                         <{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 							<select class='chooseCustomer'>
-								<option>请选择管理的账户</option>
+								<option>Choose Account</option>
 								<option value="<{$loginUser.id}>" <{if $loginUser.id==$customer_id}>selected<{/if}>>
                                     <{$loginUser.displayName}>
 								</option>
@@ -156,7 +156,7 @@
                         <{/if}>
 						&nbsp;&nbsp;
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="单品名称" style="width:250px; margin-right:5px;"/>
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
 
@@ -170,7 +170,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择分类
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -217,7 +217,7 @@
 									}
 								
 									var c = $('<select id ="sub_category" name="sub_category" >');
-									c.append('<option value="">选择子分类</option>');
+									c.append('<option value="">Choose Sub Category</option>');
 									for (var i = 0; i < cats.length; i++) {
 										if ( cats[i][2] == vv ) {
 										//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
@@ -256,15 +256,16 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th>恢复到产品库</th>
-									<th>产品编号</th>
-                                    <th >产品名-英文</th>
-									<th>产品名称-中文</th>
-									<th>图片</th>
-									<th>售价</th>
-									<th>库存</th>
-									<th>单位</th>
-									<th>ID</th>
+									<th>Restore</th>
+									<th>Code</th>
+                                    <th >Name</th>
+									 <{if $langStr == 'zh-cn'}> 	<th>产品名称</th> <{else}>   <{/if}>
+									
+									<th>Pic</th>
+									<th>Price</th>
+									<th>Stock Qty</th>
+									<th>Unit</th>
+									<th>Id</th>
 									
 								</tr>
 								</thead>
@@ -284,11 +285,11 @@
 										
                                             <{if $item.isDeleted==1}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">在回收站</span>
+                                                        <span style="color:#58964E;">Archived</span>
                                                     </span>
                                             <{else}>
 												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">已恢复</span>
+                                                        <span style="color:#F30;">Restored</span>
                                                     </span>
                                             <{/if}>
 											
@@ -310,13 +311,16 @@
 											<span class='promote-ajax'></span>
 										</td>
 									
-										
-										<td >
+										 <{if $langStr == 'zh-cn'}> 	
+									<td >
 										
 										    <textarea class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>" style="width:180px;" name="menu_cn_name"><{$item.menu_cn_name}></textarea>
 											
 											<span class='promote-ajax'></span>
 										</td>
+
+										 <{else}>   <{/if}>
+										
 										
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
@@ -473,10 +477,10 @@
                 result = jQuery.parseJSON(result);
                 //alert(result.visible);
                 if (result.isDeleted == '1') {
-                    context.html("<span style='color:#F30;'>在回收站</span>");
+                    context.html("<span style='color:#F30;'>Archived</span>");
 					
                 } else if (result.isDeleted == '0') {
-                    context.html("<span style='color:#58964E;'>已恢复 </span>");
+                    context.html("<span style='color:#58964E;'>Restored </span>");
                 }
             }
         }).fail(function () {
