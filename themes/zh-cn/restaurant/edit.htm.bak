@@ -26,7 +26,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				 <{include file='company/side_restaurant_info.htm'}>
+				 <{include file='company/side_restaurant_info1.htm'}>
 				<div class="colCurTit">
 					<{$pagename}> 
 				</div>
@@ -51,7 +51,7 @@
 					</form>
 			<br>
 				<{/if}>
-				<span >选择管理账户：&nbsp;</span>
+				<span >Choose Category：&nbsp;</span>
 				<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select class='chooseCustomer'>
 						
@@ -68,19 +68,22 @@
 					</select>
 
                <{/if}>
-			   <span >&nbsp;&nbsp;选择分类：&nbsp;</span>
+			   <span >&nbsp;&nbsp;Choose Category：&nbsp;</span>
 			   
 						<select name="category" class='chooseCategory' id='category'>
 
 							<option value="0"
-                                    <{if $category=='0'}> selected<{/if}>>全部
+                                    <{if $category=='0'}> selected<{/if}>>All 
 							</option>
 
                             <{foreach from=$data_parent_cate_list item=item}>
 								<option value="<{$item.id}>"
                                         <{if $item.id==$cat_id}> selected<{/if}>>
-                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										 <{if $langStr == 'zh-cn'}> 
+											<{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+											<{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										 <{else}>   <{/if}>
+                                   
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>
@@ -99,20 +102,22 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 								<tr>
-									<th>主分类</th>
-									<th>类别排序</th>
+									<th>Category</th>
+									<th>SortId</th>
 									<th>中文名</th>
-									<th>英语名</th>
-									<th>是否热推</th>
-									<th>显示设置</th>
+									<th>Name</th>
+									<th>isHot</th>
+									<th>isHide</th>
 								  
 									<{if in_array($gstType, [3,4])}>
-									<th>含税设置</th>
+									<th>GST</th>
 									<{/if}>
-									<th>类别编号</th>
-									 <th>自动编号</th>
-									<th>迁移数据<br>将分类下产品移其它分类</th>
-									<th>删除</th>
+									<th>Category_id</th>
+									 <th>Id</th>
+									<th>Migrate data<br>
+										 <{if $langStr == 'zh-cn'}> 将分类下产品移其它分类<{else}> Move to other category  <{/if}>
+										</th>
+									<th>Delete</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -121,13 +126,16 @@
 										
 											<td>
 											<select name="parent_category_id" data-id='<{$item.id}>'>
-												<option value="0" <{if $item.parent_category_id == null}>selected<{/if}>>选择分类</option>
+												<option value="0" <{if $item.parent_category_id == null}>selected<{/if}>>Choose Category</option>
                                                 <{foreach from=$data_parent_cate_list item=category}>
                                                     <{if $category.category_cn_name || $category.category_en_name}>
 													<option value="<{$category.id}>" <{if $item.parent_category_id == $category.id}>selected<{/if}>>
-                                                        <{if $category.category_cn_name}><{$category.category_cn_name}><{/if}>
-                                                        <{if $category.category_cn_name && $category.category_en_name}>|<{/if}>
-                                                        <{if $category.category_en_name}><{$category.category_en_name}><{/if}>
+                                                      
+											 <{if $langStr == 'zh-cn'}> 	 <{if $category.category_cn_name}><{$category.category_cn_name}><{/if}>
+                                                        <{if $category.category_cn_name && $category.category_en_name}>|<{/if}> <{else}>   <{/if}>
+													 
+                                                      
+													  <{if $category.category_en_name}><{$category.category_en_name}><{/if}>
 													</option>
 													<{/if}>
                                                 <{/foreach}>
@@ -156,8 +164,8 @@
 										<!--	<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="hot" value="<{$item.hot}>" > -->
 											
 											<select name="hot" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.hot == 0}>selected<{/if}>>非热推</option>
-										<option value="1" <{if $item.hot == 1}>selected<{/if}>>热推</option>
+										<option value="0" <{if $item.hot == 0}>selected<{/if}>>No-Hot</option>
+										<option value="1" <{if $item.hot == 1}>selected<{/if}>>Hot</option>
 										
 											
 												</select>
@@ -168,8 +176,9 @@
 										
 										<td>
 										<select name="isHide" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.isHide == 0}>selected<{/if}>>显示</option>
-										<option value="1" <{if $item.isHide == 1}>selected<{/if}>>隐藏</option>
+										<option value="0" <{if $item.isHide == 0}>selected<{/if}>>Show</option>
+										<option value="1" <{if $item.isHide == 1}>selected<{/if}>>Hide</option>
+										
 										
 											
 												</select>
@@ -178,10 +187,10 @@
 										
 						  				<{if in_array($gstType, [3,4])}>
 						  				<td>
-											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">全部含税</button>
+											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">All Gst</button>
 											<span class='promote-ajax'></span>
 											/
-											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">全部不含税</button>
+											<button class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">All Ex.Gst</button>
 											<span class='promote-ajax'></span>
 										</td>
 						  				<{/if}>
@@ -194,11 +203,11 @@
 											<{$item.category_id}> 
 						  				</td>
 								   	    <td>
-										<a  target=_blank;  href='<{$http_root_www}>restaurant/category_migration?freshfood=1&sourceCat=<{$item.id}>'>迁移数据</a>
+										<a  target=_blank;  href='<{$http_root_www}>restaurant/category_migration?freshfood=1&sourceCat=<{$item.id}>'><{$lang->Migrate}></a>
 										</td>
 
 										<td>
-											<a  onCLick='delete_category("<{$item.id}>","<{$item.category_cn_name}>");'>删除</a>
+											<a  onCLick='delete_category("<{$item.id}>","<{$item.category_en_name}>");'><{$lang->delete}></a>
 											
 							  				
 										</td>
@@ -218,7 +227,7 @@
 								   // var id = $(this).val();
 								   var iconUpdate = new IconUpdate(this);
 
-								   var answer =confirm('是否删除该分类:'+name);
+								   var answer =confirm('Do you want to delte '+name+'?');
 								
 									if(answer) {
 									

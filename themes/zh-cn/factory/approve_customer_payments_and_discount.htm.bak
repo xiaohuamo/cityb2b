@@ -42,7 +42,7 @@
                   <{if $langStr == 'zh-cn'}>  客户列表<{else}>Customer List<{/if}>
 				</div>
 				<form>
-					<input value="<{$search}>" name="search" placeholder="输入用户名/ID/手机号搜索">
+					<input value="<{$search}>" name="search" placeholder="">
 					<input type="submit" value="<{$lang->search}>">
 				</form>
 				<div class="main-list" style="padding: 3px 2px;">
@@ -187,7 +187,7 @@
         document.execCommand("copy");
         document.body.removeChild(aux);
 
-        alert("已复制");
+        alert("Copied");
     }
 </script>
 

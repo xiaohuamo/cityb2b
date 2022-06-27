@@ -22,7 +22,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				<{include file='company/side_business_option_menu.htm'}>
+				<{include file='company/side_store_room_top.htm'}>
 				
 				<div class="colCurTit">
 					<span class="links">

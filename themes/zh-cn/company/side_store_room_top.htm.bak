@@ -6,28 +6,40 @@
 	   
 
 	   <li><span>
-	   <a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu_top=='Store_List'}> class="current"<{/if}>>
-			  库房列表
+	   <a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu_top=='store_house_list'}> class="current"<{/if}>>
+			  <{$lang->store_list}>
 		</a>
 	   </span></li>
 	   
 	     <li><span>
-	   <a  href="<{$http_root_www}>factory/store_house_edit"<{if $submenu_top=='Store_List'}> class="current"<{/if}>>
-			  库房编辑
+	   <a  href="<{$http_root_www}>factory/store_house_edit"<{if $submenu_top=='store_house_edit'}> class="current"<{/if}>>
+			 <{$lang->store_edit}>
+		</a>
+	   </span></li>
+	   
+	   <li><span>
+		<a onclick ="alert('Please Choose the Store room, and click Edit Area!');"  href=""<{if $submenu_top=='store_house_area_list'}> class="current"<{/if}>>
+			   <{$lang->Store_area_List}>
+		</a>
+	   </span></li>
+	   	
+		<li><span>
+		<a  onclick ="alert('Please Choose the Store room, and click Edit Area!');" href=""<{if $submenu_top=='store_house_area_edit'}> class="current"<{/if}>>
+			   <{$lang->store_area_edit}>
 		</a>
 	   </span></li>
 	   
    
 	   
 		<li><span>
-		<a href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu_top=='shelf_info'}> class="current"<{/if}>>
-			  货架列表
+		<a href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu_top=='store_shelf_info'}> class="current"<{/if}>>
+			   <{$lang->shelf_list}>
 		</a>
 	   </span></li>
 	   	
 		<li><span>
-		<a href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu_top=='shelf_info'}> class="current"<{/if}>>
-			  货架编辑
+		<a href="<{$http_root_www}>factory/store_shelf_edit"<{if $submenu_top=='store_shelf_edit'}> class="current"<{/if}>>
+			   <{$lang->shelf_edit}>
 		</a>
 	   </span></li>
 		

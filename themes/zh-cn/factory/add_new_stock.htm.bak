@@ -21,6 +21,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script language="javascript" src="<{$STATIC_PATH}>lodop/LodopFuncs.js"></script>
 <style>
     body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -110,7 +111,7 @@
 					
 
 							<option value="all"
-                                    <{if $category=='all'}> selected<{/if}>>选择类别
+                                    <{if $category=='all'}> selected<{/if}>>Choose Category
 							</option>
 
                             <{foreach from=$restaurant_category item=item}>
@@ -160,6 +161,7 @@
 									if(cate) {
 									  catChg($('#category'));
 									}
+									
 								})
 								
 								
@@ -195,7 +197,7 @@
 													$.get('<{$http_root_www}>company/category_insert_single', 
 														{ 'cid': vv,}, 
 														function(data){
-															$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+vv+'" type="checkbox" name="roomAreaId[]"  value="' + vv +'" checked /><label id="label'+vv+'" for="'+vv+'">' + area_name + '</label></div>');
+															$('.my_categorys-list').append('<div class="nice-check-box"><input value="' + area_name +'" style ="left: 184px;    margin-top: 10px;" id="'+vv+'" type="radio" name ="radiobox" /><input id="'+vv+'" type="checkbox" name="roomAreaId[]"  value="' + vv +'" checked /><label id="label'+vv+'" for="'+vv+'">' + area_name + '</label></div>');
 															//$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
 													});
 												}
@@ -322,7 +324,7 @@
 										}
 									
 										var c = $('<select id ="sub_category" name="sub_category" onchange="catChgSub(this,'+ vv +')" >');
-										c.append('<option value="">选择子分类</option>');
+										c.append('<option value="">Choose Sub Category</option>');
 										for (var i = 0; i < cats.length; i++) {
 											if ( cats[i][2] == vv ) {
 											//alert('<option value="'+ cats[i][0]  +'">'+ cats[i][1] +'</option>');
@@ -498,7 +500,7 @@
 														for (var i = 0; i< data.length ; i++) {
 														
 														
-															$('.my_categorys-list').append('<div class="nice-check-box"><input id="'+data[i]['id']+'" type="checkbox" name="roomAreaId[]"  value="' + data[i]['id'] +'" checked /><label for="'+data[i]['id']+'"><strong>' + data[i]['area_name'] + '</strong></label></div>');
+															$('.my_categorys-list').append('<div class="nice-check-box"><input value="' + data[i]['area_name'] +'" style ="left: 184px;    margin-top: 10px;" id="'+vv+'" type="radio" name ="radiobox" /><input id="'+data[i]['id']+'" type="checkbox"  name="roomAreaId[]"  value="' + data[i]['id'] +'" checked /><label for="'+data[i]['id']+'"><strong>' + data[i]['area_name'] + '</strong></label></div>');
 														     $('#Totalquantity').val(data[i]['totalstk']);
 														 }
 														//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
@@ -820,7 +822,8 @@
 
 								<button type="submit" style='float:left'>SAVE </button>	 
 
-					
+							<button type="button" onclick =" printlabel();"  name='print' style='float:left;margin-left:50px;'>Print Label </button>	 
+
 
 							</div>		
 
@@ -936,9 +939,152 @@
 		</div>
 
 	</div><{include file='footer.htm'}>
+	<script type="text/javascript">
 	
+
 	
+	var LODOP;
+	var order = [];
 	
+	function init() {
+		LODOP = getLodop();  
+		//LODOP.SET_LICENSES("","EE0887D00FCC7D29375A695F728489A6","C94CEE276DB2187AE6B65D56B3FC2848","");
+		LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","",""); 
+		LODOP.PRINT_INIT("CityB2B-打印机预览");
+		LODOP.SET_PRINT_PAGESIZE(1, '100mm', '100mm', ""); 
+
+	//	$('.order-panel .btnbox.selected').each(function(k,v){
+			
+			
+			
+			
+		
+			
+
+			
+			generateOrderPrint(order);
+			
+	//	})
+	}	
+
+
+	function printlabel(){
 	
+			var product =$('#select_item_id').val();
+			var spec =$('#select_spec_id').val();
+			var room_area = $("input[name='radiobox']:checked").val();
+			alert(product);
+			alert(spec);
+			alert(room_area);
+			
+			var posofkuohao =room_area.indexOf('(');
+			var posofhenggang =room_area.indexOf('-');
+			alert(posofkuohao);
+			
+			// 发现第一个
+	
+	       if(posofkuohao ==-1) {
+			   order['subtitle'] = room_area.slice(posofhenggang+1);
+			}else{
+			   order['subtitle'] = room_area.slice(posofhenggang+1,posofkuohao);
+			}
+			
+			
+			//order['subtitle'] = 'AAAA1';
+			
+			order['product']=product;
+			order['spec']=spec;
+			preview();
+	
+	}
+	//single label per page
+	function generateOrderPrint(order) {
+	
+	    
+		
+	
+			addOnePage(order);
+		
+			
+		
+	 
+	 
+	 
+		
+	}
+
+	function addOnePage(order) {
+		LODOP.NewPage();
+		//QR CODE
+	//	var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=1223322111' ;
+	//	LODOP.ADD_PRINT_BARCODE(5,310,60,60,"QRCode",qrvalue);
+		// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
+		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body style='font-size:12px' leftmargin=0 topmargin=0>"+labelTemplate(order)+"</body>");
+	}
+
+	function preview() {
+		init();
+		LODOP.PREVIEW();
+	}
+
+	function print() {
+		init();
+		LODOP.PRINT();
+	}
+
+	function labelTemplate(order) {
+	
+		var areafontsize ='96px';
+		var productfontsize='36px';
+		
+		
+		if (order.subtitle.length>5 && order.subtitle.length<10){
+				areafontsize ='48px';
+		}else if(order.subtitle.length>=10){
+				 order.subtitle =order.subtitle.substring(0,10);
+				 areafontsize ='48px';
+		}
+		
+		
+		if (order.product.length>15 && order.product.length<18){
+				productfontsize ='32px';
+		}else if(order.product.length>=18 && order.product.length<25){
+			
+				productfontsize='24px';
+		}else if(order.product.length>=25){
+				order.product =order.product.substring(0,25);
+				productfontsize='24px';
+		}
+		
+		var html = '';
+
+	
+		html+='<table style=" text-align: center; padding-left:5px;padding-right:5px; width: 100%;font-size:72px;font-weight:bolder" cellspacing="0" cellpadding="0">';
+		html+='<tr style="">';
+		html+=	'<td style=" height:144px;font-size:'+ areafontsize +'; width:100%;text-align: centre;">'+order.subtitle+'</td>';
+		html+='</tr>';
+		html+='<tr style="height:36px;font-size:'+ productfontsize +';">';
+		html+=	'<td style="text-align: left;" >'+order.product+'</td>';
+		
+		html+='</tr>';
+		html+='</table>';
+
+	
+		html+='<br>';
+		html+='<div style=" padding: 5px">';
+				html+='	<span style="font-size:36px;font-weight: bolder;">'+order.spec + '</span>';
+
+		html+='</div>';
+
+
+		return html;
+	}
+
+
+
+
+	
+</script>
 	
 	</body></html>

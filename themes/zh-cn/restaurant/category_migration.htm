@@ -37,7 +37,7 @@
 
 	<div class="search-row" style="padding: 20px 18px">
 			<form method="get" action="<{$http_root_www}>restaurant/category_migration">
-				<span >选择管理账户：&nbsp;</span>
+				<span >Choose Account：&nbsp;</span>
 				<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select class='chooseCustomer'>
 						
@@ -56,12 +56,12 @@
 
                <{/if}>
 			   <br><br>
-			   <span >将&nbsp;</span>
+			   <span > <{if $langStr == 'zh-cn'}> 	将 <{else}> Change  <{/if}>&nbsp;</span>
 			   <{if $data_parent_cate_list}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select name='sourceCat'>
 						
 						
-						<option value="0" selected>	源分类	</option>
+						<option value="0" selected>	 <{if $langStr == 'zh-cn'}> 源分类	 <{else}>Source Category   <{/if}>	</option>
 						
 						 <{foreach from=$data_parent_cate_list item=category}>
 													<option value="<{$category.id}>"  <{if $sourceCat ==$category.id}>selected<{/if}>  >
@@ -72,14 +72,14 @@
                                                 <{/foreach}>
 					</select>
 	         <{/if}>
-			   的所有产品分类<br><br>
+			   <{if $langStr == 'zh-cn'}> 	的所有产品分类 <{else}> all items   <{/if}> <br><br>
 			   
-			   <span >改变为：&nbsp;</span>
+			   <span > <{if $langStr == 'zh-cn'}> 	改变为：&nbsp; <{else}> to：&nbsp;  <{/if}> </span>
 			   <{if $data_parent_cate_list}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select name='destCat'>
 						
 						
-						<option value="0" selected>	目标分类	</option>
+						<option value="0" selected>	 <{if $langStr == 'zh-cn'}> 目标分类	 <{else}> category  <{/if}> 	</option>
 						
 						 <{foreach from=$data_parent_cate_list item=category}>
 													<option value="<{$category.id}>" <{if $destCat ==$category.id}>selected<{/if}>   >
@@ -89,13 +89,13 @@
 													</option>
                                                 <{/foreach}>
 					</select>
-	          <{/if}>分类
+	          <{/if}>
 			   
  <br><br>
 					 <input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
 						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
 						
-							<button type="submit">转换</button>
+							<button type="submit">  <{if $langStr == 'zh-cn'}> 转换	 <{else}> Migrate  <{/if}></button>
                 </form>
 			</div>
 				    

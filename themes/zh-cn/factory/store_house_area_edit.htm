@@ -39,10 +39,10 @@
 			<div class="main">	
 
 				<div class="box2">	
-
+					<{include file='company/side_store_room_top.htm'}>
 					<div>
 						
-						<span style="padding-left: 20px;" > Store Info <{if $data}>
+						<span style="padding-left: 20px;" > <{if $langStr == 'zh-cn'}> 库房区域编辑	 <{else}> Store Room Area Edit  <{/if}> <{if $data}>
 									<{$data.store_house_id}>-<{$data.store_house_code}>
 								<{else}>
 									<{$house_id}>-<{$code}>

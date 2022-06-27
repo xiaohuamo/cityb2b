@@ -176,8 +176,10 @@
                             <{foreach from=$restaurant_category item=item}>
 								<option value="<{$item.id}>"
                                         <{if $item.id==$category1}> selected<{/if}>>
-                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+                                 <{if $langStr == 'zh-cn'}><{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}> <{else}>   <{/if}>
+
+								
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>

@@ -42,7 +42,7 @@
 							<thead>
 								<tr>
 									<th>Sort</th>
-									<th>name_cn</th>
+									 <{if $langStr == 'zh-cn'}> <th>name_cn</th>	 <{else}>   <{/if}>
 					                <th>name</th>
 									<th>Spec_id</th>
 								</tr>
@@ -57,11 +57,11 @@
 											<span class='promote-ajax'></span>
 							  				<br>
 										</td>
-
-										<td>
+ <{if $langStr == 'zh-cn'}> <td>
 											<input type="text" class="input-text 	" data-id='<{$item.id}>' id="category_cn_name-<{$item.id}>"  style="width:150px;" name="category_cn_name" value="<{$item.category_cn_name}>" >
 											<span class='promote-ajax'></span>
-										</td>
+										</td>	 <{else}>   <{/if}>
+										
 										
 										<td>
 											<input type="text" class="input-text 	" data-id='<{$item.id}>' id="category_en_name-<{$item.id}>"  style="width:150px;" name="category_en_name" value="<{$item.category_en_name}>" >

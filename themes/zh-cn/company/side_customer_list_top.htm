@@ -1,0 +1,34 @@
+
+ <div class="colCurTit clearfix">
+ 	<ul class="clearfix">
+
+	 
+	   
+
+	   <li><span>
+	   	<a href="<{$http_root_www}>factory/customer_list"<{if $submenu_top=='customer_list'}> class="current"<{/if}>>
+					<{$lang->customer_list}>
+				</a>
+	   </span></li>
+	   
+	     <li><span>
+	  <a href="<{$http_root_www}>factory/add_new_customer"<{if $submenu_top=='add_new_customer'}> class="current"<{/if}>>
+					<{$lang->add_new_customer}>
+				</a>
+	   </span></li>
+	   
+	   
+	   <{if in_array('3', explode(',', $user_roles.roles))
+				||  in_array('0', explode(',', $user_roles.roles))
+				|| $user_roles.role==3}>
+			 <li><span>	<a href="<{$http_root_www}>factory/approve_customer_payments_and_discount"<{if $submenu_top=='approve_customer_payments_and_discount'}> class="current"<{/if}>>
+				 <{$lang->accountTypeandDelivery}>
+				</a> </span></li>
+				<{/if}>
+	   
+		
+	 	
+ 	</ul>
+ </div>
+
+

@@ -132,7 +132,7 @@
 			</div>
 
 			<div class='second-level'>
-				<{if in_array('3', explode(',', $user_roles.roles))
+			<!--	<{if in_array('3', explode(',', $user_roles.roles))
 				||  in_array('0', explode(',', $user_roles.roles))
 				|| $user_roles.role==3}>
 				<a href="<{$http_root_www}>factory/approve_customer_payments_and_discount"<{if $submenu=='approve_customer_payments_and_discount'}> class="current"<{/if}>>
@@ -142,7 +142,7 @@
 
 				<a href="<{$http_root_www}>factory/add_new_customer"<{if $submenu=='add_new_customer'}> class="current"<{/if}>>
 					<{$lang->add_new_customer}>
-				</a>
+				</a> -->
 
 				<a href="<{$http_root_www}>factory/customer_list"<{if $submenu=='customer_list'}> class="current"<{/if}>>
 					<{$lang->customer_list}>
@@ -220,9 +220,9 @@
 			   <{$lang->stock_room_management}>
 		</a>
 
-		<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
+	<!--	<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
 			   <{$lang->stock_room_shelf}>
-		</a>	
+		</a>	-->
 		
 		
 		<a  href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu=='stock_item_edit'}> class="current"<{/if}>>

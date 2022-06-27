@@ -18,7 +18,7 @@
 
 	<style>
         .main-form .input-box span label {
-            width: 120px;
+            width: 180px;
         }
 	</style>
 

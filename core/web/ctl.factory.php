@@ -3304,7 +3304,7 @@ public function return_items_submit_to_statment_action() {
         }
         $this->setData('customer_management', 'menu');
         $this->setData('add_new_customer', 'submenu_top');
-        $this->setData('add_new_customer', 'submenu');
+        $this->setData('customer_list', 'submenu');
         $this->display('factory/add_new_customer');
 
         return;
@@ -5323,7 +5323,8 @@ public function return_items_submit_to_statment_action() {
         $this->setData($search, 'search');
         $this->setData($users, 'users');
         $this->setData(date('d-m-Y', $expiredAt), 'expiredAt');
-        $this->setData('approve_customer_payments_and_discount', 'submenu');
+        $this->setData('approve_customer_payments_and_discount', 'submenu_top');
+        $this->setData('customer_list', 'submenu');
         $this->setData('customer_management', 'menu');
         $this->display('factory/approve_customer_payments_and_discount');
     }
@@ -7266,8 +7267,15 @@ public function return_items_submit_to_statment_action() {
    // var_dump($list);exit;
         $this->setData($list, 'list');
 
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Store Area List";
+        }else{
+            $pagename = "库房区域列表";
+        }
+
         $this->setData('Store Area List', 'pagename');
-        $this->setData('Store_List', 'submenu');
+        $this->setData('store_house_list', 'submenu');
+        $this->setData('store_house_area_list', 'submenu_top');
         $this->setData('Store_centre', 'menu');
         $this->setData('Store House Management' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/store_house_area_list');
@@ -7532,7 +7540,8 @@ public function return_items_submit_to_statment_action() {
 
             $this->setData($store_house_area_rec, 'data');
             $this->setData('Store House Area Edit', 'pagename');
-            $this->setData('Store_List', 'submenu');
+            $this->setData('store_house_list', 'submenu');
+            $this->setData('store_house_area_edit', 'submenu_top');
             $this->setData('Store_centre', 'menu');
             $this->setData('Store House Area Management' . $this->site['pageTitle'], 'pageTitle');
 

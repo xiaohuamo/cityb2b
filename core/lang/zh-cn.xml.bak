@@ -49,7 +49,7 @@
 	<add_new_customer>添加新客户</add_new_customer>
 	<customer_list>客户列表</customer_list>
 	<group_order_list>订货群管理</group_order_list>
-	<customer_grade>客户级别设置</customer_grade>
+	<customer_grade>分级折扣</customer_grade>
 	<add_customer_grade>添加级别</add_customer_grade>
 	<stock_room_shelf>货架组设置</stock_room_shelf>
 	<stock_room_management>库房设置</stock_room_management>
@@ -63,7 +63,7 @@
 	<item_discount>单品折扣</item_discount>
 	
 	<customer_list_recycle>归档</customer_list_recycle>
-	<customer_price_management>折扣管理</customer_price_management>
+	<customer_price_management>客户折扣管理</customer_price_management>
 	<orderLists>订货列表</orderLists>
 	<order_return>退货</order_return>
 	<add_new_order>新增订单</add_new_order>
@@ -650,7 +650,7 @@
 
     <custome_classification>商品分类</custome_classification>
     <offline_voucher>门店优惠券</offline_voucher>
-    <pormotion_code>优惠码设置</pormotion_code>
+    <pormotion_code>优惠码</pormotion_code>
 
     <add_top_level_clissification>添加顶级分类</add_top_level_clissification>
     <sort>排序</sort>
@@ -841,8 +841,15 @@
     <business_setting>商家设置</business_setting>
     <all>全部</all>
     <administrator_info>管理员信息</administrator_info>
-    <business_info>商家信息及地址</business_info>
-    <business_info>商家信息及地址</business_info>
+    <business_info>商家信息</business_info>
+	
+	<store_list>库房列表</store_list>
+	<store_edit>库房编辑</store_edit>
+	<Store_area_List>库房区域列表</Store_area_List>
+	<store_area_edit>库房区域编辑</store_area_edit>
+	<shelf_list>货架列表</shelf_list>
+	<shelf_edit>货架编辑</shelf_edit>
+  
     <address>地址</address>
     <freight_fees>邮寄费用说明</freight_fees>
 

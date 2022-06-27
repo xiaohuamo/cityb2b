@@ -830,10 +830,17 @@
     <business_setting>Seller setting</business_setting>
     <all>Whole</all>
     <administrator_info>Admin_info</administrator_info>
-    <business_info>SellerInfo  address</business_info>
+    <business_info>Business Info</business_info>
     <address>Address</address>
     <default_address>Default address</default_address>
     <supplier_info> Supplier Info</supplier_info>
+	
+	<store_list>Store Room List</store_list>
+	<store_edit>Store Room Edit</store_edit>
+	<Store_area_List>Store Area List</Store_area_List>
+	<store_area_edit>Store Area Edit</store_area_edit>
+	<shelf_list>Shelf List</shelf_list>
+	<shelf_edit>Shelf Edit </shelf_edit>
 
     <verified_address>Verfiy address</verified_address>
     <logo>LOGO</logo>

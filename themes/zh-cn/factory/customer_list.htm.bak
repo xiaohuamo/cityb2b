@@ -129,7 +129,7 @@
                  <{if $langStr == 'zh-cn'}>  客户列表<{else}>Customer List<{/if}>
 				 
 				 <span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>restaurant/menu_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->customer_list_recycle}></a>
+						<a class='btn-yellow' href="<{$http_root_www}>factory/customer_list_recycle" class="link2"><i class='fa fa-plus'></i><{$lang->customer_list_recycle}></a>
 					</span>
 				</div>
 				<form>
@@ -293,7 +293,7 @@
         document.execCommand("copy");
         document.body.removeChild(aux);
 
-        alert("已复制");
+        alert("Copied");
     }
 </script>
 

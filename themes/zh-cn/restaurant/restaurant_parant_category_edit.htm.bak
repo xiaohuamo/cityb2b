@@ -146,7 +146,7 @@
 										<!--	<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="hot" value="<{$item.hot}>" > -->
 											
 											<select name="hot" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.hot == 0}>selected<{/if}>>-</option>
+										<option value="0" <{if $item.hot == 0}>selected<{/if}>>No-Hot</option>
 										<option value="1" <{if $item.hot == 1}>selected<{/if}>>Hot</option>
 										
 											
@@ -173,7 +173,7 @@
 										</td>
 										
 										<td>
-										<a  onCLick='delete_category("<{$item.id}>","<{$item.category_cn_name}>");'><{$lang->delete}></a>
+										<a  onCLick='delete_category("<{$item.id}>","<{$item.category_en_name}>");'><{$lang->delete}></a>
 											
 							  				
 										</td>
@@ -191,7 +191,7 @@
 								   // var id = $(this).val();
 								   var iconUpdate = new IconUpdate(this);
 
-								   var answer =confirm('是否删除该分类:'+name);
+								   var answer =confirm('Do you want to delte :'+name+'?');
 								
 									if(answer) {
 									

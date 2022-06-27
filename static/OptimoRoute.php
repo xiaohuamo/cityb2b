@@ -224,7 +224,7 @@ class OptimoRoute
 		if(!$data_resource) $data_resource =1;
 		
 		if ($data_resource ==1 ) {
-			$sql ="select  if(cc_orer.edit_boxesNumber >0,cc_orer.edit_boxesNumber,cc_orer.boxesNumber) as boxes,
+			$sql ="select  if(cc_order.edit_boxesNumber >0,cc_order.edit_boxesNumber,cc_order.boxesNumber) as boxes,
 
           f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id  where logistic_delivery_date =$timestamp and coupon_status='c01'  and ( status=1 or accountPay =1) ";
 			$sql .=" and ( business_userId =$bid ";
@@ -253,7 +253,7 @@ class OptimoRoute
 			
 		}
 		
-			//var_dump($sql);exit;
+		//	var_dump($sql);exit;
 		return $mdl_order->getListBySql($sql);
 	}
 

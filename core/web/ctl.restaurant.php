@@ -2895,11 +2895,6 @@ class ctl_restaurant extends cmsPage
 
 
 
-				if ( !$count) {
-
-					// var_dump('操作失败！');exit;
-				}
-
 
 				// 对这个表可以直接进行修改。 而且要做一个增加的处理， 因为 将某个类别 修改成某个大类的子类，在该表中可能不存在数据，所以要进行检测，如果未发现则进行添加 ，要首先获得所有
 				//该子类的产品，进行循环添加。
@@ -4382,7 +4377,7 @@ class ctl_restaurant extends cmsPage
 
 
 
-				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_cn_name),category_cn_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_cn_name),category_cn_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
+				$sql_Parent_cate_list ="select *,  if(`parent_category_id`,concat('---',category_en_name),category_en_name) as category_cn_name1 ,if(`parent_category_id`,concat(category_en_name),category_en_name) as   category_cn_name2 ,if(`parent_category_id`,concat(`parent_category_id`,id),concat(id,0)) as parent_id  from cc_restaurant_category where restaurant_id=$customer_id and (length(category_cn_name)>0 or length(category_en_name)>0) and isdeleted =0  order by isHide, parent_id,category_sort_id ";
 
 				$data_parent_cate_list  = $mdl_restaurant_category->getListBySql($sql_Parent_cate_list);
 				//var_dump($sql_Parent_cate_list);exit;
@@ -5898,7 +5893,7 @@ class ctl_restaurant extends cmsPage
 				], [
 					'restaurant_category_id' => $id
 				]);
-				$this->form_response(200,'','');
+				$this->form_response(200,$id,'');
 			} catch (Exception $e) {
 				$this->form_response(500, $e->getMessage(),'');
 			}

@@ -278,10 +278,7 @@
 								<span >Specifications</span>
 						</span>
 					
-						<input type="checkbox" name="onoffsku"  id="onoffsku"   >
-						<span >
-								<span >SKU & pics </span>
-						</span>
+						
 											
 											<br>
 										
@@ -372,16 +369,12 @@
 							<table cellspacing="0" cellpadding="0" width="100%">
 								<thead>
 								<tr>
-									<th name="sku" >SKU Code</th>
-									<th  name="sku" >Pic Link</th>
 									
 									<th>Publish ON/Off </th>
 									<th name="special_name1">Special set</th>
 									<th name="special_name1">Special Price</th>
 									<th name="special_name1">Limit Qty</th>
-                                    <{if count($suppliersList)>1}>
-										<th>Choose Business</th>
-                                    <{/if}>
+                                  
 									<th>Picture</th>
 									
 									<th>Sort</th>
@@ -396,28 +389,23 @@
 									
 									
 									
-                                    <{if in_array($gstType, [3,4])}>
-										<th>INC。Gst</th>
-                                    <{/if}>
+                                  
 								
 									<th name="en_name1">Item Name</th>
 								
 									<th name="en_name1">Unit</th>
-									<th >units/box</th>
-									<th>box Overrate%</th>
+								
 									<th name="en_name1">Description</th>
 									<th >Category</th>
 							
                                     <{if $menu_option_list}>
 										<th name="guigecat">Specification</th>
                                     <{/if}>
-                                    <{if $sidedish_category_list}>
-										<th name="guigecat">Choose Spec</th>
-                                    <{/if}>
+                                  
 											<th name="guigecat">Set category</th>
 								
 								
-									<th>Archive</th>
+								
 									<th>Orignal Price</th>
 									<th name="cn_name1">Unit cn</th>
 									<th name="cn_name1">Desc cn</th>
@@ -429,23 +417,7 @@
                                 <{foreach from=$data item=item name='dl'}>
 									<tr <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 										
-										<td name="sku"> 
 										
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="barcode_number-<{$item.id}>" style="width:110px;" name="barcode_number"
-												   value="<{$item.barcode_number}>">
-											<span class='promote-ajax'></span>
-											<br>
-										
-										</td>
-										
-										<td name="sku">
-											<input type="text" class="input-text" data-id='<{$item.id}>' data-main-pic='<{$item.menu_pic}>' id="filePath-<{$item.id}>" style="width:210px;" name="filePath"
-												   value="">
-											<span class='promote-ajax'></span> 
-											
-												<span class='promote-ajax'></span>
-
-										</td>
 										
 										<td>
 										<div class="onoffswitch">
@@ -501,21 +473,7 @@
 												   value="<{if $item.limit_buy_qty >0}><{$item.limit_buy_qty}><{else}><{/if}>">
 											<span class='promote-ajax'></span>
 										</td>
-                                        <{if count($suppliersList)>1}>
-											<td>
-												<select name='restaurant_id' data-id='<{$item.id}>'>
-													<option value='0'>Choose Business</option>
-                                                    <{foreach from=$suppliersList item=sitem1}>
-														<option value='<{$sitem1.suppliers_id}>'
-                                                                <{if $item.restaurant_id==$sitem1.suppliers_id}>selected<{/if}>>
-                                                            <{$sitem1.suppliers_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
+                                       
 										<td id="image-<{$item.id}>">
                                             <{if $item.menu_pic}>
 												<img style ="width:66px;height:66px;" src="<{$UPLOAD_PATH}><{$item.menu_pic|image:66:66}>"><br>
@@ -561,13 +519,6 @@
 										
 										
 									
-                                        <{if in_array($gstType, [3,4])}>
-											<td>
-												<input type="checkbox" name="include_gst" id="includegstswitch<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.include_gst==1}> checked <{/if}>>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
 										
 										
 										<td name="en_name1">
@@ -581,16 +532,7 @@
 											<span class='promote-ajax'></span>
 										</td>
 										
-										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="unitQtyPerBox-<{$item.id}>" style="width:50px;" name="unitQtyPerBox"
-												   value="<{$item.unitQtyPerBox}>">
-											<span class='promote-ajax'></span>
-										</td>
-										<td >
-											<input type="text" class="input-text" data-id='<{$item.id}>' id="overflowRate-<{$item.id}>" style="width:50px;" name="overflowRate"
-												   value="<{$item.overflowRate}>">
-											<span class='promote-ajax'></span>
-										</td>
+									
 										
 										
 										<td name="en_name1">
@@ -645,22 +587,7 @@
 												<span class='promote-ajax'></span>
 											</td>
                                         <{/if}>
-                                        <{if $sidedish_category_list}>
-											<td name="guigecat">
-												<select name='sidedish_category' data-id='<{$item.id}>'>
-													<option value='0'>Choose sub Specification</option>
-                                                    <{foreach from=$sidedish_category_list item=sitem}>
-														<option value='<{$sitem.id}>'
-                                                                <{if $item.sidedish_category==$sitem.id}>selected<{/if}>>
-                                                            <{$sitem.category_cn_name}>|<{$sitem.category_en_name}>
-
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-											</td>
-                                        <{/if}>
-								
+                                      
 										<td  name="guigecat" id="restaurant_categories-td-<{$item.id}>">
 										  <{if $item.category_cn_name}>
 											<span style="height:16px;background-color: grey;color: white" id="menu-<{$item.id}>"><{$item.category_cn_name}> <a style="color:red" onclick="deleteMenuCategory1('<{$item.id}>','<{$item.categoryId}>')">X&nbsp;</a></span>
@@ -689,28 +616,7 @@
 										
 										
 										
-										<td>
-										<div class="onoffswitch_deleted">
-												<input type="checkbox" name="onoffswitch_deleted" class="onoffswitch-checkbox" id="myonoffswitch_deleted<{$item.id}>"
-													   data-id='<{$item.id}>' <{if $item.isDeleted==1}> checked <{/if}>>
-												<label class="onoffswitch-label" for="myonoffswitch_deleted<{$item.id}>">
-													<span class="onoffswitch-inner"></span>
-												
-												</label>
-											</div>
-										
-                                            <{if $item.isDeleted==1}>
-												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#58964E;">Archived</span>
-                                                    </span>
-                                            <{else}>
-												<span class='recycle_icon' data-id='<{$item.id}>'>
-                                                        <span style="color:#F30;">Non Archived</span>
-                                                    </span>
-                                            <{/if}>
-											
-										
-										</td>
+									
 										 <td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="original_price-<{$item.id}>" style="width:50px;" name="original_price"
 												   value="<{if $item.original_price >0}><{$item.original_price}><{/if}>" <{if $item.commission_free ==1}>disabled<{/if}>>
@@ -751,7 +657,7 @@
 <script type="text/javascript">
     var loading = false;
 
-    $('input[name=barcode_number],textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price],input[name=unitQtyPerBox],input[name=overflowRate] , input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=freshx_price],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id],input[name=include_gst], select[name=restaurant_id],select[name=sidedish_category],select[name=menu_option]').on('change', function () {
+    $('textarea[name=menu_en_name],textarea[name=menu_desc],textarea[name=menu_en_desc],input[name=price],input[name=lowest_price], input[name=original_price],input[name=speical_price],input[name=limit_buy_qty],input[name=qty],input[name=unit],input[name=unit_en],input[name=menu_order_id],select[name=restaurant_category_id],textarea[name=menu_cn_name],input[name=menu_id], select[name=restaurant_id],select[name=menu_option]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -760,11 +666,7 @@
         var id = $(this).data('id');
         var update_field_name = $(this).attr('name');
         var value;
-        if (update_field_name == 'include_gst') {
-            value = $(this).prop("checked") ? 1 : 0; //包含gst使用的checkbox, 需要特殊判断
-        } else {
-            value = $(this).val();//常规改动直接抓取改动值
-        }
+        
         var updateData = {};
 
         updateData['id'] = id;
@@ -874,37 +776,7 @@
         })
     })
 	
-	  $('input[name=onoffswitch_deleted]').on('click', function () {
-        var couponId = $(this).data('id')
-		 var context1 = $('.publish_icon[data-id=' + couponId + ']');
-        var context = $('.recycle_icon[data-id=' + couponId + ']');
-       
-        if (loading) return false;
-        $.ajax({
-            type: "GET",
-            url: "<{$http_root_www}>restaurant/menu_publish_ajax_recycle_bin",
-            data: {"id": couponId},
-            beforeSend: function (xhr) {
-                loading = true;
-
-                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
-            },
-            success: function (result) {
-                result = jQuery.parseJSON(result);
-                //alert(result.visible);
-                if (result.isDeleted == '1') {
-                    context.html("<span style='color:#F30;'>Archived</span>");
-					 context1.html("<span style='color:#F30;'>Offline</span>");
-                } else if (result.isDeleted == '0') {
-                    context.html("<span style='color:#58964E;'>Not archived </span>");
-                }
-            }
-        }).fail(function () {
-            alert('efef	');
-        }).always(function () {
-            loading = false;
-        })
-    })
+	
 	
 	
 	 $('input[name=onoffspecialinfo]').on('click', function () {
@@ -940,10 +812,6 @@
 			
 			 $('[name="guigecat"]').show();
 			}
-
-	 
-		
-       
 
     })
 	
@@ -1183,12 +1051,7 @@ $('input[name=filePath]').on('change', function () {
 		
 		<{/if}>
 		
-      <{if $sku=='show'}> 
-			$('[name="sku"]').show();
-		<{else}>
-			$('[name="sku"]').hide();
-		
-		<{/if}>
+    
 		
 		
 		

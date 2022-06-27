@@ -26,7 +26,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				 <{include file='company/side_restaurant_info1.htm'}>
+				 <{include file='company/side_restaurant_info.htm'}>
 				<div class="colCurTit">
 					<{$pagename}> 
 				</div>
@@ -36,22 +36,8 @@
   
 
 	<div class="search-row" style="padding: 20px 18px">
-				<{if $loginUser.id ==318951 || $loginUser.id ==318951}>
-					<form method="get" action="">
-						
-				    	<input type="checkbox" name="onoffcninfo"  id="onoffcninfo"  checked >
-						<span >
-								<span >忽略已上传产品图片检查</span>
-						</span>
-						<button type="button" class="btn btn-default btn-success" id="ButtonXML">
-                            导入品类及产品清单</button>
-
-						 <input type="file" id="inputXMl"  style="display: none;" onchange="importf(this)" value="导入xml" />
-						
-					</form>
-			<br>
-				<{/if}>
-				<span >Choose Account：&nbsp;</span>
+			<form method="get" action="<{$http_root_www}>restaurant/category_migration">
+				<span >选择管理账户：&nbsp;</span>
 				<{if $authrise_manage_other_business_account}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
 					<select class='chooseCustomer'>
 						
@@ -69,187 +55,58 @@
 					</select>
 
                <{/if}>
-			   
-			   
-
-					
+			   <br><br>
+			   <span >将&nbsp;</span>
+			   <{if $data_parent_cate_list}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
+					<select name='sourceCat'>
 						
 						
+						<option value="0" selected>	源分类	</option>
+						
+						 <{foreach from=$data_parent_cate_list item=category}>
+													<option value="<{$category.id}>"  <{if $sourceCat ==$category.id}>selected<{/if}>  >
+														<{if $category.category_cn_name1}><{$category.category_cn_name1}><{/if}>
+														<{if $category.category_cn_name1 && $category.category_en_name}>|<{/if}>
+														<{if $category.category_en_name}><{$category.category_en_name}><{/if}>
+													</option>
+                                                <{/foreach}>
+					</select>
+	         <{/if}>
+			   的所有产品分类<br><br>
+			   
+			   <span >改变为：&nbsp;</span>
+			   <{if $data_parent_cate_list}> <!--如果该账户可以管理多个账户的品类管理则显示 -->
+					<select name='destCat'>
+						
+						
+						<option value="0" selected>	目标分类	</option>
+						
+						 <{foreach from=$data_parent_cate_list item=category}>
+													<option value="<{$category.id}>" <{if $destCat ==$category.id}>selected<{/if}>   >
+														<{if $category.category_cn_name1}><{$category.category_cn_name1}><{/if}>
+														<{if $category.category_cn_name1 && $category.category_en_name}>|<{/if}>
+														<{if $category.category_en_name}><{$category.category_en_name}><{/if}>
+													</option>
+                                                <{/foreach}>
+					</select>
+	          <{/if}>分类
+			   
+ <br><br>
+					 <input type="hidden" name="freshfood" id='freshfood' value="<{$freshfood}>" style="width:250px; margin-right:5px;"/>
+						<input type="hidden" name="customer_id" id='customer_id' value="<{$customer_id}>" style="width:250px; margin-right:5px;"/>
+						
+							<button type="submit">转换</button>
+                </form>
 			</div>
 				    
+           <{if $result}>
+               <div>
+			     <{$result}>
+			  </div>
+			<{/if}>
 
 
-
-
-				<div class="main-list">
-					<{if $data}>
-						<table cellspacing="0" cellpadding="0" width="100%">
-							<thead>
-								<tr>
-								    
-									
-								  <th>Code</th>	
-								  <th>Sort Id</th>								  
-								  <th>Name</th>
-								 <{if $langStr == 'zh-cn'}> <th>品类名称</th>	 <{else}>   <{/if}>
-									<th>Display on Web</th>
-									<th>IsHot</th>
-									<{if !in_array($gstType, [3,4])}><th>Gst</th>	<{/if}>
-									
-									<th>Migrate data<br>
-										 <{if $langStr == 'zh-cn'}> 将分类下产品移其它分类<{else}> Move to other category  <{/if}>
-										</th>
-									<th>Delete</th>
-									<th>Id</th>
-								</tr>
-							</thead>
-							<tbody>
-						  		<{foreach from=$data item=item name='dl'}>
-									<tr  id='tr<{$item.id}>' <{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
-										
-								   	    <td>
-											<{$item.category_id}> 
-						  				</td>
-
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:50px;" name="category_sort_id" value="<{$item.category_sort_id}>" >
-											<span class='promote-ajax'></span>
-							  				<br>
-										</td>
-										
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_en_name" value="<{$item.category_en_name}>" >
-											<span class='promote-ajax'></span>
-										</td>
-										
-										 <{if $langStr == 'zh-cn'}> 
-										<td>
-											<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="category_cn_name" value="<{$item.category_cn_name}>" >
-											<span class='promote-ajax'></span>
-										</td>
-										 
-										 <{else}>   <{/if}>
 				
-										
-										
-										<td>
-										<select name="isHide" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.isHide == 0}>selected<{/if}>>Show</option>
-										<option value="1" <{if $item.isHide == 1}>selected<{/if}>>Hide</option>
-										
-											
-												</select>
-											<span class='promote-ajax'></span>
-										</td>
-										
-										<td>
-										<!--	<input type="text" class="input-text" data-id='<{$item.id}>' style="width:150px;" name="hot" value="<{$item.hot}>" > -->
-											
-											<select name="hot" data-id='<{$item.id}>'>
-										<option value="0" <{if $item.hot == 0}>selected<{/if}>>No-Hot</option>
-										<option value="1" <{if $item.hot == 1}>selected<{/if}>>Hot</option>
-										
-											
-												</select>
-											
-											
-											<span class='promote-ajax'></span>
-										</td>
-						  				<{if !in_array($gstType, [3,4])}>
-						  				<td>
-											<button style="padding:5px;" class="include_gst" data-id='<{$item.id}>' name="include_gst" value="1">All Gst</button>
-											<span  class='promote-ajax'></span>
-											/
-											<button style="padding:5px;" class="include_gst" data-id='<{$item.id}>' name="include_gst" value="0">All Ex.Gst</button>
-											<span class='promote-ajax'></span>
-										</td>
-						  				<{/if}>
-										
-										
-										
-										
-										<td>
-										<a  target=_blank;  href='<{$http_root_www}>restaurant/category_migration?freshfood=1&sourceCat=<{$item.id}>'><{$lang->Migrate}></a>
-										</td>
-										
-										<td>
-										<a  onCLick='delete_category("<{$item.id}>","<{$item.category_en_name}>");'><{$lang->delete}></a>
-											
-							  				
-										</td>
-										
-										<td>
-											<input type="hidden" class="input-text" data-id='<{$item.id}>'  style="width:50px;" name="id" value="<{$item.id}>" >
-											<span class='promote-ajax'><{$item.id}></span>
-							  				<br>
-										</td>
-									</tr>
-								<{/foreach}>
-								
-								<script type="text/javascript">
-								  function delete_category(val,name) { 
-								   // var id = $(this).val();
-								   var iconUpdate = new IconUpdate(this);
-
-								   var answer =confirm('Do you want to delte '+name+'?');
-								
-									if(answer) {
-									
-									
-									
-									var data1={};
-									data1['id']=val;
-									
-									
-									//alert(updateData);
-									$.ajax({
-										url: "<{$http_root_www}>restaurant/delete_category",
-										type: "POST",
-										data: data1,
-										beforeSend:function(){
-											iconUpdate.iconUpdating();
-										}
-									}).done(function(data){
-										try{
-											data = JSON.parse(data);
-										}catch(err){
-											data['msg'] = data;
-										}
-
-										if(data.status==200){
-											iconUpdate.iconUpdateSuccess();
-											$('#tr'+val).css('display','none');
-											
-											alert(data.msg);
-										}else if(data.status==500){
-											alert(data.msg);
-											iconUpdate.iconUpdateFail();
-										}else{
-											iconUpdate.iconUpdateFail();
-											alert(data.msg);
-										}
-									}).fail(function(){
-										iconUpdate.iconUpdateFail();
-										alert(data.msg);
-									});
-									
-									
-									}else{
-									// alert('no');
-									
-									}
-								  }
-								
-								
-								</script>
-							</tbody>
-						</table>
-						<{if $pager}><div class="pager"><{$pager}></div><{/if}>
-					<{else}>
-						<{$lang->no_data}>
-						
-					<{/if}>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -262,11 +119,7 @@
 	$(function(){
 		$('.chooseCustomer').on('change', function(){
 			if ($(this).val()) 
-				window.location.href = "<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1&customer_id=" + $(this).val();
-		});
-		$('.chooseCategory').on('change', function(){
-			if ($(this).val()) 
-				window.location.href = "<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1&customer_id=<{$customer_id}>&cat_id=" + $(this).val();
+				window.location.href = "<{$http_root_www}>restaurant/category_migration?customer_id=" + $(this).val();
 		});
 		
 		

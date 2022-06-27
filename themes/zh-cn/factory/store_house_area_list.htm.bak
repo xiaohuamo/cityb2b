@@ -11,6 +11,7 @@
 <script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
  
 <script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<script language="javascript" src="<{$STATIC_PATH}>lodop/LodopFuncs.js"></script>
 <!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
 </head>
 <body>
@@ -22,7 +23,7 @@
 		<{include file='company/side.htm'}>
 		<div class="main">
 			<div class="box2">
-				<{include file='company/side_business_option_menu.htm'}>
+				<{include file='company/side_store_room_top.htm'}>
 				
 				<div class="colCurTit">
 					<span class="links">
@@ -34,7 +35,7 @@
 
 				<div class="input-box multi-select clearfix">
 
-							<h1>Store House Area Management</h1>
+							<h1> <{if $langStr == 'zh-cn'}> 库房分区列表	 <{else}>  Store Room Area List <{/if}> </h1>
 
 						</div> </form> </div>
 						
@@ -60,6 +61,7 @@
 								<th>Sort</th>
 	 <{if $shelf_group_list}>	<th>Shelf Group</th> <{/if}>
 								<th>Edit Area</th>
+								<th>Print Label</th>
 								<th>note</th>
 							</tr>
 						</thead>
@@ -78,7 +80,7 @@
 								
 								<td>
 								
-								 <input type="text" class="input-text" data-store_area ="<{$item.store_area}>"  data-id='<{$item.id}>'  style="width:150px;" name="store_area"
+								 <input type="text" id="store_area_<{$item.id}>"  class="input-text" data-store_area ="<{$item.store_area}>"  data-id='<{$item.id}>'  style="width:150px;" name="store_area"
 													   value="<{$item.store_area}>">
 												<span class='promote-ajax'>
 									  </td>
@@ -98,7 +100,7 @@
 									
 								 <{if $shelf_group_list}>
 											<td name="guigecat" style="width:150px;">
-												<select  style="width:150px;" name='shelf_goup_id' data-id='<{$item.id}>'>
+												<select  style="width:150px;" name='shelf_group_id' data-id='<{$item.id}>'>
 													<option value='0'>Choose Shelf Info</option>
                                                     <{foreach from=$shelf_group_list item=sitem}>
 														<option value='<{$sitem.id}>'
@@ -114,6 +116,8 @@
 								
 								
 							    <td><a href="<{$http_root_www}>factory/store_house_area_edit?id=<{$item.id}>">Edit</a></td>
+								
+								 <td><button type="button" onclick =" printlabel('<{$item.id}>');"  name='print' >Print Label </button>	 </td>
 								
 								<td>
 									<{$item.note}>
@@ -134,7 +138,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-     $('input[name=sort_id],input[name=store_area],select[name=shelf_goup_id]').on('change', function () {
+     $('input[name=sort_id],input[name=store_area],select[name=shelf_group_id]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -213,7 +217,159 @@
 	
 	
 	
-	   
+	   	<script type="text/javascript">
+	
+
+	
+	var LODOP;
+	var order = [];
+	
+	function init() {
+		LODOP = getLodop();  
+		//LODOP.SET_LICENSES("","EE0887D00FCC7D29375A695F728489A6","C94CEE276DB2187AE6B65D56B3FC2848","");
+		LODOP.SET_LICENSES("","075ADF287C19B1D1EBF789DC61AAFE9B335","",""); 
+		LODOP.PRINT_INIT("CityB2B-打印机预览");
+		LODOP.SET_PRINT_PAGESIZE(1, '100mm', '100mm', ""); 
+
+	//	$('.order-panel .btnbox.selected').each(function(k,v){
+			
+			
+			
+			
+		
+			
+
+			
+			generateOrderPrint(order);
+			
+	//	})
+	}	
+
+
+	function printlabel(id){
+	//alert(id);
+		
+			var room_area = $("#store_area_"+id).val();
+			
+			
+			
+			
+			
+			// 发现第一个
+	
+	     
+			   order['subtitle'] = room_area.replace(/(^\s*)|(\s*$)/g, "");
+			
+			
+			//order['subtitle'] = 'AAAA1';
+			
+			order['product']= 'AAAA1';
+			order['spec']= 'AAAA1';
+			preview();
+	
+	}
+	//single label per page
+	function generateOrderPrint(order) {
+	
+	    
+		
+	
+			addOnePage(order);
+		
+			
+		
+	 
+	 
+	 
+		
+	}
+
+	function addOnePage(order) {
+		LODOP.NewPage();
+		//QR CODE
+	//	var qrvalue = '<{$http_root}>company/customer_order_redeem_qrscan?qrscanredeemcode=1223322111' ;
+	//	LODOP.ADD_PRINT_BARCODE(5,310,60,60,"QRCode",qrvalue);
+		// LODOP.ADD_PRINT_IMAGE(0,250,60,60,"<img border='0' src='http://www.lodop.net/demolist/PrintSample8.jpg' />");
+		LODOP.SET_PRINT_STYLEA(0,"Stretch",2);
+		LODOP.ADD_PRINT_HTM(0, 0, "100%","100%","<body style='font-size:12px' leftmargin=0 topmargin=0>"+labelTemplate(order)+"</body>");
+	}
+
+	function preview() {
+		init();
+		LODOP.PREVIEW();
+	}
+
+	function print() {
+		init();
+		LODOP.PRINT();
+	}
+
+	function labelTemplate(order) {
+	
+		var areafontsize ='288px';
+		var productfontsize='36px';
+		
+		if(order.subtitle.length <3) {
+				areafontsize ='288px';
+		}else if (order.subtitle.length>=3 && order.subtitle.length<4){
+				areafontsize ='216px';
+		}else if (order.subtitle.length>=4 && order.subtitle.length<6){
+				areafontsize ='144px';
+		}else if(order.subtitle.length>=6 && order.subtitle.length<10){
+				 order.subtitle =order.subtitle.substring(0,10);
+				 areafontsize ='72px';
+		}else if(order.subtitle.length>=10){
+				 order.subtitle =order.subtitle.substring(0,10);
+				 areafontsize ='72px';
+		}
+		
+		
+		if (order.product.length>15 && order.product.length<18){
+				productfontsize ='32px';
+		}else if(order.product.length>=18 && order.product.length<25){
+			
+				productfontsize='24px';
+		}else if(order.product.length>=25){
+				order.product =order.product.substring(0,25);
+				productfontsize='24px';
+		}
+		
+		var html = '';
+
+		  if(order.subtitle.length>=3){
+			html+='<br>';  html+='<br>';
+		//	alert('here');
+		  }
+
+	    
+		
+		
+		html+='<table style=" text-align: center; padding-left:5px;padding-right:5px; width: 100%;font-size:72px;font-weight:bolder" cellspacing="0" cellpadding="0">';
+		html+='<tr style="">';
+		html+=	'<td style=" height:144px;font-size:'+ areafontsize +'; width:100%;text-align: centre;">'+order.subtitle+'</td>';
+		html+='</tr>';
+		//html+='<tr style="height:36px;font-size:'+ productfontsize +';">';
+		//html+=	'<td style="text-align: left;" >'+order.product+'</td>';
+		
+	//	html+='</tr>';
+		html+='</table>';
+
+	
+	//	html+='<br>';
+		//html+='<div style=" padding: 5px">';
+	//			html+='	<span style="font-size:36px;font-weight: bolder;">'+order.spec + '</span>';
+
+	//	html+='</div>';
+
+
+		return html;
+	}
+
+
+
+
+	
+</script>
 
 </body>
 </html>
