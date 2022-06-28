@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$pageTitle}></title>
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+ 
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>
+	.main-form .input-box span label { width:150px; }
+</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+		<{include file='company/side.htm'}>
+		<div class="main">
+			<div class="box2"><a name="pagename"></a>
+			
+				<div class="main-form">
+					<span class = 'step-number-icon' style='float:left' >4</span>
+					
+					<div class="colCurTit clearfix">
+						<h1>&nbsp; <{$lang->slogan}></h1>
+					</div>
+
+					<{include file='company/freshfood_edit_step_menu_top.htm'}>
+					
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+						<!--
+						<div class="input-box clearfix">
+							<span>
+							<label>全店折扣率</label>
+							</span>
+							<input type="number" min='0' step='any' class="input-text" value="<{$manjian_info.discount}>"  name ="discount" style="width:120px;"/> % <em>全店折扣率</em>
+						</div>
+				
+						<br><hr><br>
+						-->
+						<div class="input-box clearfix">
+							<span>
+							<label>Solgen</label>
+							</span>
+							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc_en}>"  name ="promotion_desc_en" style="width:80%"/> <br> <em></em>
+						</div>				   
+						<div class="input-box clearfix">
+							<span>
+							<label>Slogan_cn</label>
+							</span>
+							<input type="text"  class="input-text" value="<{$manjian_info.promotion_desc}>"  name ="promotion_desc" style="width:80%"/><br>  <em></em>
+						</div>
+						 
+						<{include file='company/freshfood_edit_step_menu.htm'}>
+						
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

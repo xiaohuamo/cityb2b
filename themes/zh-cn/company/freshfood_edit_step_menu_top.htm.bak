@@ -1,0 +1,95 @@
+
+<{if $data}>
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/steper.css" />
+
+<div class="mdl-card ">
+  <div class="mdl-card__supporting-text">
+    <div class="mdl-stepper-horizontal-alternative">
+
+      <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=1";'>
+      	<a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>1</span></div>
+        </a>
+        <div class="mdl-stepper-title"><{$lang->business_name_categories}></div>
+     
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+
+      <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=2";' >
+        <a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>2</span></div>
+        </a>
+        <div class="mdl-stepper-title"><{$lang->region_keyword}></div>
+       
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+
+      <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=3";'>
+       <a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>3</span></div>
+        </a>
+        <div class="mdl-stepper-title"><{$lang->picture}></div>
+     
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+
+      <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=4";'>
+        <a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>4</span></div>
+        </a>
+        <div class="mdl-stepper-title"><{$lang->slogan}></div>
+        
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+	  
+
+
+       <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=5";'>
+        <a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>5</span></div>
+        </a>
+        <div class="mdl-stepper-title"><{$lang->term_and_condition}></div>
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+
+          <div class="mdl-stepper-step" onclick='window.location.href="<{$stepUrl}>step=6";'>
+        <a href="javascript:void(0)">
+        	<div class="mdl-stepper-circle"><span>6</span></div>
+        </a>
+        <div class="mdl-stepper-title">自取配送</div>
+        <div class="mdl-stepper-optional">pickup and delivery</div>
+        <div class="mdl-stepper-bar-left"></div>
+        <div class="mdl-stepper-bar-right"></div>
+      </div>
+
+    
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    var currentStep=parseInt('<{$step}>');
+    var currentIndex=currentStep-1;
+    if(currentIndex<0)currentIndex=0;
+
+    $('.mdl-stepper-step').each(function(){
+      if($(this).index()<currentIndex){
+        $(this).addClass('active-step step-done');
+
+      }else if($(this).index()==currentIndex){
+        $(this).addClass('active-step editable-step');
+
+      }else if($(this).index()>currentIndex){
+        $(this).removeClass('active-step');
+      }
+    });
+  })
+</script>
+<{/if}>

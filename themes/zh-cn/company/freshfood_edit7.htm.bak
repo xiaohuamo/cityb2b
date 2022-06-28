@@ -1,0 +1,566 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<style type="text/css">
+.main{
+  //color: #666;
+}
+/* 定义keyframe动画，命名为blink */
+@keyframes blink{
+  0%{opacity: 1;}
+  100%{opacity: 0;} 
+}
+/* 添加兼容性前缀 */
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; } 
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+/* 定义blink类*/
+.blink{
+    color: #dd4814;
+    animation: blink 1s linear infinite;  
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 1s linear infinite;
+    -moz-animation: blink 1s linear infinite;
+    -ms-animation: blink 1s linear infinite;
+    -o-animation: blink 1s linear infinite;
+}
+</style>
+<style type="text/css">
+	.marketing-panel{
+		position: relative;
+	}
+
+	.marketing-panel .panel-item{
+		display: inline-block;
+		width: 32%;
+		height: 200px;
+		border: 1px solid #eee;
+	}
+
+	.marketing-panel .panel-item p{
+		text-align: center;
+		margin: 5px;
+	}
+
+	.marketing-panel .panel-item p.panel-title{
+		font-size: 0.8rem;
+	}
+
+	@media screen and (max-width:640px) {
+		.marketing-panel .panel-item{
+			display: block;
+			width: 100%
+		}
+	}
+</style>
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2"><a name="pagename"></a>
+			
+			  <{include file='company/side_website_publish_top.htm'}>
+				<div class="main-form">
+
+					
+
+					<div class="colCurTit clearfix">
+						<h1><{$lang->website_Publish}></h1>
+					</div>
+<br>
+
+					<form id="memberForm" class='form-style-green' action="<{$postUrl}>" method="post" target="post_frame" enctype="multipart/form-data">
+
+						<{if $data.status==4}>
+
+							<div class="input-box clearfix">
+
+								<{if $data.isApproved==1}>
+									<h1>恭喜！当前店铺已经通过平台审核，成功上线</h1>
+								<{else}>
+									<h1>当前店店主已经上线,但还没有通过平台审核</h1>
+
+									<{if $loginUser.phone_verified=='false'}>
+										<p  class=' main>
+											<i class='fa fa-exclamation-triangle' style='color:#f30'></i>
+											<span style="color:#f30">绑定您的手机号可以避免等待审核，绑定后产品直接上线。</span>
+											<!-- <a target='_blank' href="<{$http_root_www}>company/profile_manager"><em>设置</em></a> -->
+											<span class="verifySMS blink">验证手机号</span> <em class='  '></em>
+										</p>
+									<{/if}>
+								<{/if}>
+
+								
+								<p>U宝网 销售提成按照每个产品的售价抽取   
+								
+								<{if $data.platform_commission_rate>0}>
+									<{$data.platform_commission_rate*100}>%
+								<{/if}>
+
+								<{if $data.platform_commission_base>0}> 
+									+ $<{$data.platform_commission_base}> 
+								<{/if}>
+
+								如有问题请与Ubonus联系
+								</p>
+								
+								
+							</div>
+								<div  class="input-box clearfix">
+								<span><label>上线下线店铺</label></span>
+								
+								<label>
+									<input type="radio" name="status" value="4" <{if $data.status=='4'}> checked<{/if}> />
+									上线店铺
+								</label>
+								<label>
+									<input type="radio" name="status" value="1" <{if $data.status=='1'}> checked<{/if}> />
+									关闭店铺
+								</label>
+							
+						</div>	
+						<div  class="input-box clearfix">
+								<span><label>平台方是否审核通过</label></span>
+								
+								<label>
+									<input type="radio" disabled name="isApproved" value="1" <{if $data.isApproved=='1'}> checked<{/if}> />
+									已审核通过
+								</label>
+								<label>
+									<input type="radio" disabled name="isApproved" value="0" <{if $data.isApproved=='0'}> checked<{/if}> />
+									未审核（或未通过）
+									<em>目前产品还没有对外发布，请联系平台方或运营商审核发布。</em>
+								</label>
+								
+							
+						</div>	
+							<div class='marketing-panel'>
+								<div class='panel-item'>
+									<p class='panel-title'>微信扫码查看产品</p>
+									<p><img src="<{$couponQrCode}>"></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$couponLink}>">查看产品</a></p>
+								</div>
+
+								
+								
+							</div>
+
+							
+						<{else}>
+
+							<div class="input-box clearfix">
+
+								<h1>离最终完成只有一步之遥</h1>
+								
+								<p>Ubonus（U宝网）销售提成按照每个产品的售价抽取   
+								
+								<{if $data.platform_commission_rate>0}>
+									<{$data.platform_commission_rate*100}>%
+								<{/if}>
+
+								<{if $data.platform_commission_base>0}> 
+									+ $<{$data.platform_commission_base}> 
+								<{/if}>
+
+								如有问题请与Ubonus联系
+								</p>
+							</div>
+							<div  class="input-box clearfix">
+								<span><label>上线下线店铺</label></span>
+								
+								<label>
+									<input type="radio" name="status" value="4" <{if $data.status=='4'}> checked<{/if}> />
+									上线店铺
+								</label>
+								<label>
+									<input type="radio" name="status" value="1" <{if $data.status=='1'}> checked<{/if}> />
+									关闭店铺
+								</label>
+							
+						</div>	
+						<div  class="input-box clearfix">
+								<span><label>平台方是否审核通过</label></span>
+								
+								<label>
+									<input type="radio" disabled name="isApproved" value="1" <{if $data.isApproved=='1'}> checked<{/if}> />
+									已审核通过
+								</label>
+								<label>
+									<input type="radio" disabled name="isApproved" value="0" <{if $data.isApproved=='0'}> checked<{/if}> />
+									未审核（或未通过）
+							    	<{if $data.isApproved=='0'}>
+									<p>
+									<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+									设置手机验证后，无需平台方审核自动上线！！
+									<!-- <a target='_blank' href="<{$http_root_www}>company/profile_manager"><em>设置</em></a> -->
+									<em  style ="color:blue;"class='verifySMS'>设置</em>
+							   	</p> <{/if}>
+									
+									
+								</label>
+								
+							
+						</div>	
+						
+						
+
+							<div class="input-box clearfix" >
+								<input name="confirm" type="checkbox" onClick="if (this.checked) $('#memberForm :submit').attr('disabled', false).removeClass('disabled'); else $('#memberForm :submit').attr('disabled', true).addClass('disabled');" value="1" checked /> 
+
+								我已阅读<a href="<{$http_root}>company/help?id=20" target="_blank" class="link2">商家使用协议</a>
+							</div>
+
+							<div class="input-box clearfix" >
+								<button type="button"  onClick="window.open('<{$http_root_www}>coupon/<{$data.id}>')" >产品预览</button>
+							</div>
+
+						<{/if}>
+						
+
+						<br><br><hr><br><br>
+						
+					
+						<div class="input-box clearfix" >
+							<!-- <i class='fa fa-check-circle' style='color:green'></i>
+							<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+							<i class='fa fa-exclamation-circle' style='color:red'></i> -->
+
+							<div style="background: #eee">
+							<{if !$loginUser.email}>
+								<p>
+									<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+									您还没有填写邮件，您将无法收到邮件订单通知
+									<!-- <a target='_blank' href="<{$http_root_www}>company/profile_manager"><em>设置</em></a> -->
+									<em class='updateEmail'>设置</em>
+								</p>
+							<{/if}>
+
+							<{if $loginUser.phone_verified=='false'}>
+								<p>
+									<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+									您还没有验证手机号，手机号完成验证后可以跳过系统人工审核
+									<!-- <a target='_blank' href="<{$http_root_www}>company/profile_manager"><em>设置</em></a> -->
+									<em class='verifySMS'>设置</em>
+								</p>
+							<{/if}>
+
+							<{if !$loginUser.googleMap}>
+								<p>
+									<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+									您还没没有填写商家地址
+									<input type="text" id='geocomplete' name="address" placeholder="请填写地址" style="width: 75%">
+
+									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&libraries&libraries=places"></script>
+									<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+									<script>
+										$(function(){
+											$("#geocomplete").geocomplete({
+												details: "form",
+												types: ["geocode", "establishment"],
+												location: "<{$loginUser.googleMap}>"
+											});
+										});
+									</script>		
+								</p>
+							<{/if}>
+
+							<{if !$loginUser.wx_openID}>
+								<p>
+									<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>
+									您还没有绑定微信，想要接收微信消息推送，您需要绑定微信并且关注我们公众号
+									
+									<em onClick="$('.wxqrscan').fadeIn(200)">绑定微信 关注公众号</em>
+
+									<div class='wxqrscan' style="overflow-y: scroll;display:none;width:100%; height: 100%; position: fixed;margin: auto;left: 0;right: 0;top: 0;z-index: 10000;background: rgba(0,0,0,0.6);text-align: center;" onClick='$(this).fadeOut(200)'>
+											<div style='font-size: 1.5rem;color: #FD5001 ;font-weight: bolder;line-height: 100px'>扫码微信绑定该账号</div> 
+											<img width="200px" src="<{$bindWxQRCode}>" alt="扫码绑定微信"/>
+
+											<div style='font-size: 1.5rem;color: #FD5001 ;font-weight: bolder;line-height: 100px'>扫码关注公众号链接客服</div>
+											<img  width="200px" src="<{$SKIN_PATH}>images/ubonus_wx_qr.jpg" alt="Ubonus 官方微信公众号">
+									</div>
+								</p>
+							<{/if}>
+							</div>
+
+							<br>
+							<{if !$coupon.finePrint}>
+								<!-- No hint -->
+							<{/if}>
+
+							<{if !$coupon.redeemProcedure}>
+								<!-- No hint -->
+							<{/if}>
+
+							<{if !$coupon.refund_policy}>
+								<!-- No hint -->
+							<{/if}>
+
+							<div style="background: #eee  <{if $loginUser.noAlert}> ;display:none; <{/if}>">
+							<{if $coupon_delivery_info.supportofflinepayment=='supportofflinepayment'}>
+								<p><i class='fa fa-check-circle' style='color:green'></i>支持线下支付</p>
+								<{if !$coupon_delivery_info.offline_pay_des}>
+									<p>&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-exclamation-circle' style='color:red'></i>您还没有编辑线下支付说明</p>
+								<{/if}>
+							<{else}>
+								<p><i class='fa fa-info-circle' style='color:#888'></i>未开启线下支付</p>
+							<{/if}>
+
+
+							<{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'||$coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'||$coupon_delivery_info.supporthcashpayment=='supporthcashpayment'||$coupon_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+
+						        <{if $coupon_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
+						        <p><i class='fa fa-check-circle' style='color:green'></i>支持在线paypal转账 
+						            <{if $coupon_delivery_info.transactionFeeChargeFrom_paypal=='user'}>(<{$coupon_delivery_info.paypalsurcharge*100}>%手续费)<{/if}>
+						        </p>
+						        <{else}>
+						        <p><i class='fa fa-info-circle' style='color:#888'></i>未开启paypal转账</p>
+						        <{/if}>
+
+						        <{if $coupon_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
+						        <p><i class='fa fa-check-circle' style='color:green'></i>支持在线微信支付转账， 通过royalpay完成支付
+						            <{if $coupon_delivery_info.transactionFeeChargeFrom_royalpay=='user'}>(<{$coupon_delivery_info.royalpaysurcharge*100}>%手续费)<{/if}>
+						        </p>
+						        <{else}>
+						        <p><i class='fa fa-info-circle' style='color:#888'></i>未开启微信转账支付</p>
+						        <{/if}>
+
+						        <{if $coupon_delivery_info.supporthcashpayment=='supporthcashpayment'}>
+						        <p><i class='fa fa-check-circle' style='color:green'></i>支持Hcash支付，通过Hcash钱包转账(实时汇率)
+						            <{if $coupon_delivery_info.transactionFeeChargeFrom_hcash=='user'}>(<{$coupon_delivery_info.hcashsurcharge*100}>%手续费)<{/if}>
+						        </p>
+						        <{else}>
+						        <p><i class='fa fa-info-circle' style='color:#888'></i>未开启Hcash支付</p>
+						        <{/if}>
+
+						        <{if $coupon_delivery_info.supportcreditcardpayment=='supportcreditcardpayment'}>
+						        <p><i class='fa fa-check-circle' style='color:green'></i>支持信用卡支付
+						            <{if $coupon_delivery_info.transactionFeeChargeFrom_creditcard=='user'}>(<{$coupon_delivery_info.creditcardsurcharge*100}>%手续费)<{/if}>
+						        </p>
+						        <{else}>
+						        <p><i class='fa fa-info-circle' style='color:#888'></i>未开启信用卡支付</p>
+						        <{/if}>
+							<{/if}>
+
+							<p>
+								<a style="text-decoration: none" target='_blank' href="<{$http_root_www}>company/payment_setting"><em class='em-btn-yellow'>支付设置</em></a>
+								<label><input type="checkbox" name="noAlert"><em>不在提醒(下次进入后不会看到)</em></label> 
+							</p>
+
+						    </div>
+
+							<br>
+
+							
+
+							<div style="background: #eee">
+							<{if $coupon_delivery_info.EvoucherOrrealproduct=='realproduct'}>
+								
+							    <{if $coupon_delivery_info.deliver_avaliable}>
+							    	<p><i class='fa fa-check-circle' style='color:green'></i>产品支持递送</p>
+							    	<{if !$coupon_delivery_info.delivery_description}>
+							    		<p>&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>您还没有编辑递送说明</p>
+							    	<{/if}>
+							    <{/if}>
+
+							    <{if $coupon_delivery_info.pickup_avaliable}>
+							   		<p><i class='fa fa-check-circle' style='color:green'></i>产品支持自取</p>
+							    	<{if !$coupon_delivery_info.pickup_des}>
+								   		<p>&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-exclamation-triangle' style='color:#FD5001 '></i>您还没有编辑自取说明</p>
+								   	<{/if}>
+							    <{/if}>
+
+							<p><a style="text-decoration: none"  href="<{$prevUrl}>"><em class='em-btn-yellow'>递送和自取设置</em></a></p>
+
+							<{/if}>
+							</div>
+
+						</div>
+
+
+						
+
+							<div class="input-box input-submit clearfix">
+								
+								
+								
+								<button type="submit" style="float:right;margin-left :40px;"> 
+									<{$lang->save}></button>
+									
+							</div>
+
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<{include file='footer.htm'}>
+
+<script type="text/javascript">
+	$(function(){
+		var varifiedHtml = " <em><i class='fa fa-check-circle' style='color: #30af30;'></i>已验证</em> ";
+		var startVarifiedHtml =  " <em class='start-varify' style='cursor:pointer'><i class='fa fa-exclamation-triangle' style='color: #FD5001 ;'></i>验证手机号</em> ";
+		var varifyingHtml= "<em>验证码已经发送到您的手机，请输入</em><input  type='tel' class=' sms-verify-code ' style='width:60px'/>";
+		var loadingHtml="<i class='fa fa-spinner fa-spin'>";
+		var errorHtml= " <em class='start-varify' style='cursor:pointer'><i class='fa fa-exclamation-triangle' style='color: #FD5001 ;'></i>网络问题请稍后再试</em> "
+
+
+		$('.verifySMS').on('click',function(){
+			$(this).after("<span class='verifySMSInput'><input type='text' class='verifySMSPhone' value='"+'<{$loginUser.phone}>'+"' placeholder='请输入手机号'><em class='sendSMS em-btn-yellow'>发送验证码</em></span>")
+			$(this).remove();
+
+			$('.sendSMS').on('click',function(){
+				var to = $('.verifySMSPhone').val();
+				if(!to)return;
+				$.ajax({
+					url:"/member/send_sms_verify_code",
+					data:{to:to},
+					beforeSend: function( xhr ) {
+						$('.verifySMSInput').html(loadingHtml);
+					}
+				}).done(function(result){
+					try{
+						data = JSON.parse(result);
+					}catch(err){
+						data['msg'] = result;
+					}
+
+					if(data.status==200){
+						$('.verifySMSInput').html(varifyingHtml)
+
+						$('.sms-verify-code').on('keyup',function(){
+							var inputVerifyCode =$(this).val().trim();
+							var serverVerifyCode=data['msg'].trim();
+
+							// console.log(inputVerifyCode);
+							// console.log(serverVerifyCode);
+							if(inputVerifyCode==serverVerifyCode){
+								
+								$.ajax({
+									url:'/member/update_sms_verified',
+									data:{code:inputVerifyCode},
+									beforeSend: function( xhr ) {
+										$('.verifySMSInput').html(loadingHtml);
+									}
+								}).done(function(result){
+									console.log(result);
+									$('.verifySMSInput').before(varifiedHtml);
+									$('.verifySMSInput').remove();
+								}).fail(function(){
+									$('.verifySMSInput').html(errorHtml);
+								})
+							}
+
+						})
+
+					}else{
+						$('.verifySMSInput').html(errorHtml);
+					}
+
+				}).fail(function(){
+					$('.verifySMSInput').html(errorHtml);
+				});
+
+			})
+		})
+	})
+</script>
+
+<script type="text/javascript">
+$(function(){
+
+	var varifiedHtml = " <em><i class='fa fa-check-circle' style='color: #30af30;'></i>已保存</em> ";
+	var loadingHtml="<i class='fa fa-spinner fa-spin'>";
+	var errorHtml= " <em class='start-varify' style='cursor:pointer'><i class='fa fa-exclamation-triangle' style='color: #FD5001 ;'></i>网络问题请稍后再试</em> ";
+
+
+	$('.updateEmail').on('click',function(){
+		$(this).after("<span class='updateEmailSec'><input type='text' class='updateEmailInput' value='"+'<{$loginUser.email}>'+"' placeholder='请输入邮箱'><em class='saveEmail em-btn-yellow'>保存</em></span>");
+		$(this).remove();	
+
+		$('.saveEmail').on('click',function(){
+				var email = $('.updateEmailInput').val();
+				if(!email)return;
+				$.ajax({
+					url:"/member/update_email",
+					data:{email:email},
+					beforeSend: function( xhr ) {
+						$('.updateEmailSec').html(loadingHtml);
+					}
+				}).done(function(result){
+					try{
+						data = JSON.parse(result);
+					}catch(err){
+						data['msg'] = result;
+					}
+
+					if(data.status==200){
+						$('.updateEmailSec').html(varifiedHtml);
+					}else{
+						$('.updateEmailSec').html(errorHtml);
+					}
+
+				}).fail(function(){
+					$('.updateEmailSec').html(errorHtml);
+				});
+		})
+	})
+})
+</script>
+
+</body>
+
+</html>

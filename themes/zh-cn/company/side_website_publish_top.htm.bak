@@ -1,0 +1,21 @@
+
+ <div class="colCurTit clearfix">
+ 	<ul class="clearfix">
+
+	   <li><span><a href="<{$http_root_www}>company/freshfood_edit?id=8046&step=7#pagename"<{if $submenu_top=='website_publish'}> class="current"<{/if}>><{$lang->website_Publish}></a></span></li>
+
+		
+		
+		<li><span><a href="<{$http_root_www}>company/coupon_private_view_setting"<{if $submenu-top=='coupon_private_view_setting'}> class="current"<{/if}>>
+                    <{$lang->preview_password}>
+				</a></span></li>
+
+ 		<li><span><a  target =_blank href="<{$http_root_www}>supplier/<{$loginUser.id}>"><{$lang->preview_store}></a></span></li>
+
+		
+	
+ 	 
+ 	</ul>
+ </div>
+
+

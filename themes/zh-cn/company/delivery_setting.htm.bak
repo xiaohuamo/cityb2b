@@ -1,0 +1,485 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+ 
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+  <script type=" text/javascript " src="<{$SKIN_PATH}>js/jquery.js "></script>
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+
+
+<script src="<{$STATIC_PATH}>/editor/ckeditor/ckeditor.js"></script>
+
+
+<script type="text/javascript">
+	
+	$(function(){
+
+		CKEDITOR.replace('delivery_description', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+
+	});
+	
+	$(function(){
+
+		CKEDITOR.replace('delivery_description_en', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+
+	});
+
+	$(function(){
+
+		CKEDITOR.replace('pickup_des', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+
+	});
+	
+	$(function(){
+
+		CKEDITOR.replace('pickup_des_en', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+			placeholder : ''
+
+		});
+
+	});
+
+
+	$(function(){
+
+		CKEDITOR.replace('refund_policy', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+		});
+
+	});
+	$(function(){
+
+		CKEDITOR.replace('refund_policy_en', {
+
+			height : 200,
+
+			toolbar: 'Basic',
+
+		});
+
+	});
+
+</script>
+<style>
+
+	.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+
+			<{include file='company/side_website_setting_top.htm'}>
+
+				<div class="main-form">				
+
+					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/delivery_setting" method="post" target="post_frame" enctype="multipart/form-data">
+
+
+						<div class="input-box multi-select clearfix">
+
+							<h1><{$pagename}></h1>
+
+						</div>
+
+						<div class="input-box multi-select clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	自取 <{else}> Pick up  <{/if}></label></span>
+
+							<select id="pickup_avaliable" name="pickup_enbale" class="ahibw" >
+
+								<option value="1"<{if $loginUser.pickup_avaliable=='1'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 允许提货	 <{else}>  Allow  to pick up  <{/if}></option>
+
+								<option value="0"<{if $loginUser.pickup_avaliable=='0'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 不允许提货	 <{else}> Pickup not allowed  <{/if}></option>
+
+							</select>
+
+						</div>
+
+						<div class="input-box multi-select clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 配送	 <{else}>  Delivery  <{/if}></label></span>
+
+							<select id="deliver_avaliable" name="deliver_enable" class="ahibw">
+
+								<option value="1"<{if $loginUser.deliver_avaliable=='1'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 提供递送服务	 <{else}> Provide delivery service  <{/if}></option>
+
+								<option value="0"<{if $loginUser.deliver_avaliable=='0'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 不提供递送服务	 <{else}> No delivery service  <{/if}></option>
+
+							</select>
+
+						</div>
+
+						<div class="input-box clearfix">
+						 <{if $langStr == 'zh-cn'}> 
+						 
+						 <em>运费： 订单 + 产品 的运费计算方式。</em>
+						 <{else}>   
+						  <em> Shipping Fee: Order + Product.</em>
+						 <{/if}>
+						
+						</div>
+
+						<div id="delivery1"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	基础运费 <{else}> base shipping fee  <{/if}></label></span>
+
+							<input  type="number" step='0.01' class="input-text" value="<{$loginUser.flat_rates_to_local_city}>" name="base_local_rate" />
+
+						</div>
+
+						<!-- <div  id="delivery2"  class="input-box clearfix">
+
+							<span><label>基础国内邮费</label></span>
+
+							<input  type="number" step='0.01' class="input-text" value="<{$loginUser.flat_rates_national}>" name="base_national_rate" />
+							<em>暂不支持</em>
+
+						</div>
+
+						<div  id="delivery3"  class="input-box clearfix">
+
+							<span><label>基础国际邮费</label></span>
+
+							<input  type="number" step='0.01' class="input-text" value="<{$loginUser.flat_rates_international}>" name="base_international_rate" />
+							<em>暂不支持</em>
+
+						</div> -->
+						
+
+						<div  id="delivery8"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 起送金额	 <{else}> Minimum delivery amount  <{/if}></label></span>
+
+							<input type="number" step='1' class="input-text" class="input-text" value="<{$loginUser.amount_for_minimum_delivery}>" name="amount_for_minimum_delivery" />
+							<!-- 小于等于0 不免运费    大于零按金额免运费  -->
+							
+							<em> <{if $langStr == 'zh-cn'}> 0 表示无限制	 <{else}> 0 means unlimited  <{/if}></em>
+						</div>
+						<div  id="delivery10"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	每日可接受最大订单数量 <{else}> Maximum number of orders accepted per day  <{/if}></label></span>
+
+							<input type="number" step='1' class="input-text" class="input-text" value="<{$loginUser.max_orders_accept_per_day}>" name="max_orders_accept_per_day" />
+							<!-- 小于等于0 不免运费    大于零按金额免运费  --> <em><{if $langStr == 'zh-cn'}> 	-1 表示无限制 <{else}>-1 means unlimited   <{/if}></em>
+						</div>
+						<div  id="delivery5"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	免运费金额 <{else}>Free shipping amount
+   <{/if}></label></span>
+
+							<input type="number" step='0.01' class="input-text" class="input-text" value="<{$loginUser.amount_for_free_delivery}>" name="amount_for_free_delivery" />
+							<!-- 小于等于0 不免运费    大于零按金额免运费  -->
+						</div>
+
+                       	<div  id="delivery5"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 导入配送范围邮编	 <{else}> Import delivery area zip code  <{/if}></label></span>
+  
+							 <button type="button" class="btn btn-default btn-success" id="ButtonXML">
+                             <{if $langStr == 'zh-cn'}> 	导入表格 <{else}> import Data  <{/if}></button>
+							<input type="file" id="inputXMl"  style="display: none;" onchange="importf(this)" value="XML导入" />
+						</div>
+						
+						 <div  id="delivery6"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 高级运费定制	 <{else}> Advanced Shipping fee Customization
+  <{/if}></label></span>
+  
+							 <button type="button" class="btn btn-default" onClick='window.location.href="<{$http_root_www}>company/custom_delivery_fee"' >
+                             <{if $langStr == 'zh-cn'}> 定制运费	 <{else}> Custom shipping fee   <{/if}></button>
+							
+						</div>
+						
+						
+						<div  id="delivery6"  class="input-box clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 运费说明汇总	 <{else}> Summary of shipping instructions  <{/if}></label></span><br>
+  <label><{$delivery_fee_desc}></label>
+							
+						</div>
+						
+
+						<{if $isSuplier}>
+							<div class="input-box clearfix">
+								<span><label> <{if $langStr == 'zh-cn'}> 配送日常安排	 <{else}> Delivery schedule  <{/if}></label></span>
+								<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_schedule"'>
+	                             <{if $langStr == 'zh-cn'}> 	设置 <{else}> Set  <{/if}></button>
+							</div>
+						<{/if}>
+ <script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
+    <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
+    <script>
+
+        $("#ButtonXML").click(function () {
+            $("#inputXMl").click();
+        });
+
+        var wb; //读取
+        var rABS = false;
+
+        //开始导入
+        function importf(obj) {
+            if (!obj.files) {
+                return;
+            }
+            var f = obj.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                if (rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                /**
+                * wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
+                * wb.Sheets[Sheet名]获取第一个Sheet的数据
+                */
+                var excelJson = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                excelJson.pop();
+                console.log(excelJson);
+                InsertProduct(excelJson);
+                //document.getElementById("excelContent").innerHTML = JSON.stringify(excelJson);
+            };
+            if (rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+
+        //文件流转BinaryString
+        function fixdata(data) {
+            var o = "",
+                l = 0,
+                w = 10240;
+            for (; l < data.byteLength / w; ++l) o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+            return o;
+        }
+
+        function InsertProduct(excelJson) {
+            var Jstring = JSON.stringify(excelJson);
+			
+            $.ajax({
+			
+                url: '<{$http_root_www}>company/set_postcodes_xls',      //异步方法
+                method: 'POST',
+                data: { Postcodes: Jstring },                 //传入的那么参数
+                cache: false,
+                timeout: 0,                          //延迟5秒执行
+                error: function () {                        //返回失败后
+                    alert("导入失败");
+                },
+                success: function (result) {
+                result=jQuery.parseJSON( result );
+			     
+                    if (result.result) {
+					  alert(result.result);
+                       alert(result.message);
+                      //  location.reload();
+                    }
+                    else {
+                        alert('no result' + result.message);
+                    }
+                }
+            });
+        }
+    </script>
+	
+	 <{if $langStr == 'zh-cn'}> 	
+
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >商家递送说明(中文）</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="delivery_description" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.delivery_description}></textarea>
+
+						</div>
+						 <{else}>   <{/if}>
+						
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >Delivery Desc</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="delivery_description_en" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.delivery_description_en}></textarea>
+
+						</div>
+ <{if $langStr == 'zh-cn'}> 	
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >自取说明</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="pickup_des" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.pickup_des}></textarea>
+
+						</div>
+						 <{else}>   <{/if}>
+						
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >Picking up Desc</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="pickup_des_en" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.pickup_des_en}></textarea>
+
+						</div>
+
+ <{if $langStr == 'zh-cn'}> 	
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >退货政策</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="refund_policy" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.refund_policy}></textarea>
+
+						</div> <{else}>   <{/if}>
+						
+						<div  class="input-box clearfix">
+
+							<span>
+
+							<label >Refund Policy</label>
+
+							</span>
+
+							<br />
+
+							<textarea name="refund_policy_en" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.refund_policy_en}></textarea>
+
+						</div>
+
+
+						<div id="div00" ></div>
+
+						<div class="input-box input-submit clearfix">
+
+							<button type="submit" style='float:right'><{$lang->save}></button>
+
+						</div>
+					 
+
+					</form>
+
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

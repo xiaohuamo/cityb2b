@@ -1,0 +1,679 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+
+	<style type="text/css">
+        .onoffswitch {
+            position: relative;
+            width: 70px;
+            margin: auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #999999;
+            border-radius: 22px;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 0px;
+            background-color: #34A7C1;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 8px;
+            margin: 11px;
+            background: #FFFFFF;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 36px;
+            border: 2px solid #999999;
+            border-radius: 22px;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+	</style>
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						
+						
+					<{$lang->search}>: <input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="" style="width:150px; margin-right:5px;" />&nbsp;
+					
+		
+						<select class='chooseDate' id="customer_delivery_date" name="customer_delivery_date" >
+						<option value="all"  ><{$lang->choose_delivery_date}></option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+					</select>
+					
+					&nbsp;&nbsp;
+						<select class='chooseApproveStatus' id="ApproveStatus" name="ApproveStatus" >
+							<option value="all" <{if $ApproveStatus=='all'}>selected<{/if}>  ><{$lang->is_approve}></option>
+						
+							<option value="2" <{if $ApproveStatus==2}>selected<{/if}>>Waiting Approve</option>
+							<option value="1" <{if $ApproveStatus==1}>selected<{/if}>>Approved</option>
+					
+					</select>
+				
+				
+					
+					
+						<button type="submit"><{$lang->search}></button>
+						
+					
+					
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table cellspacing="0" cellpadding="0" width="100%">
+							<thead>				
+								<tr>
+									<th>Invoice ID</th>
+									<th>Details</th>
+									<th>Delivery Date</th>
+									<th>Customer ID</th>
+									<th>Customer Name</th>
+									<th>return Type</th>
+									
+									<th>Applicant</th>
+									<th>Aprroved Status</th>
+									<th>Approve User</th>
+									<th>create Date</th>
+									
+									
+									
+								</tr>			
+							</thead>		
+							<tbody>		
+								<{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+									
+									<td>
+										<{$item.xero_invoice_id}>
+									</td>
+									<td><a href ="<{$http_root_www}>factory/customer_order_return_claim?id=<{$item.id}>">Details</a></td>
+									
+									<td>
+									<{if $item.logistic_delivery_date}><{date('Y-m-d', $item.logistic_delivery_date)}><{else}>-<{/if}>
+									</td>
+
+									<td>
+										<{$item.userId}>
+									</td>
+									
+									<td>
+										<{$item.displayName}>
+									</td>
+									<td>
+										<{if $item.returnType==1}> Driver Claim <{else if $item.returnType==2}>Customer Claim <{else}>Customer Centre update<{/if}>									</td>
+									
+									<td>
+										<{$item.create_user}>
+									</td>
+									
+									<td>
+										<{if $item.is_approved}>Approved <{else}>Waiting Approve <{/if}>
+									</td>
+									<td>
+										<{if $item.is_approved}><{$item.approver_user}> <{else}>- <{/if}>
+										
+									</td>
+									<td>
+										<{date('Y-m-d', $item.gen_date)}> 
+									</td>
+ 
+								
+								
+									
+								</tr>			
+								<{/foreach}>			
+							</tbody>		
+						</table>	
+
+						
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						No data	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+<script type="text/javascript">
+								
+								 
+								  
+	 var loading = false;
+	 
+	    $('input[name=onoffswitch]').on('click', function () {
+        var orderId = $(this).data('id')
+        var context = $('.publish_icon[data-id=' + orderId + ']');
+		
+		
+		
+		
+		// if the main order has been sent to xero ,then alert could not combine .
+		
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>company/merge_order_update",
+            data: {"id": orderId},
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+                if (result.merge_to_another_order == '0') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+                } else if (result.merge_to_another_order == '1') {
+                    context.html("<span style='color:#58964E;'>已合并</span>");
+					$("#myonoffswitch"+orderId).attr("disabled","true");
+					$("#combine1_"+orderId).css("display","");
+					$("#combine_"+orderId).css("display","none");
+					$("#publish_"+orderId).css("display","none");
+					$("#no_print_"+orderId).css("display","");
+					$("#print_"+orderId).css("display","none");
+					$("#forceprint_"+orderId).css("display","none");
+					$("#LocalInvoice_"+orderId).html("-");
+					$("#deliveryTime-"+orderId).css("display","none");
+					
+					$("#invoice_no"+orderId).html('-');
+					
+                }else if (result.merge_to_another_order == '2') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+					alert('main order has been sent to xero ');
+					$('#myonoffswitch'+orderId).attr("checked",false);
+                }else if (result.merge_to_another_order == '3') {
+                    context.html("<span style='color:#F30;'>未合并</span>");
+					alert('could not find the main order!');
+					$('#myonoffswitch'+orderId).attr("checked",false);
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+	 
+	  $('input[name=onoffswitch_xero]').on('click', function () {
+		 
+		 var orderId = $(this).data('id');
+		
+		var ischecked = ( $(this).prop('checked'));
+	
+		var createOrUpdate='create';
+		if(ischecked == false) {
+		 createOrUpdate='update';
+		}
+		if(createOrUpdate=='update'){
+		
+				$('#myonoffswitch_xero'+orderId).prop("checked",true)
+		}
+		//alert(createOrUpdate);
+       
+        var context = $('.publish_icon_xero[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/xero_send_invoice",
+            data: {"id": orderId,'createOrUpdate':createOrUpdate},
+			
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+			   if (result.error) {
+			   alert(result.error);
+			   console.log(result.error);
+			 //  alert($('#myonoffswitch_xero'+orderId).attr("checked"));
+			   $('#myonoffswitch_xero'+orderId).attr("checked",false);
+			   context.html("<span style='color:#F30;'>not yet</span>");
+			   return 0;
+			   }
+                if (result.sent_to_xero == '0') {
+                    context.html("<span style='color:#F30;'>not yet</span>");
+                } else if (result.sent_to_xero == '1') {
+                    context.html("<span style='color:#58964E;'>sent</span>");
+					
+				//	$("#myonoffswitch_xero"+orderId).attr("disabled","true");
+						$('#myonoffswitch_xero'+orderId).prop("checked",true);
+					$("#print_"+orderId).css("display","");
+					$("#forceprint_"+orderId).css("display","none");
+					$("#hebin_"+orderId).css("display","none");
+					$("#LocalInvoice_"+orderId).html("-");
+					
+					$("#invoice_no"+orderId).html(result.xero_invoice_id);
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+
+	$('input[name=onoffswitch_localInvoice]').on('click', function () {
+		 
+		 var orderId = $(this).data('id');
+		 var ischecked = ( $(this).prop('checked'));
+		if(ischecked == false) {
+			if(confirm('If you already printed invoice base local invoice id , you can not cancel this ,otherwise ,the invoice sent to xero will return new invoice id, do you still want to do that?')==false)return;
+	      }
+
+		
+	   //  alert(ischecked);
+        var context = $('.publish_icon_localInvoice[data-id=' + orderId + ']');
+       // alert(orderId); return;
+        if (loading) return false;
+        $.ajax({
+            type: "GET",
+            url: "<{$http_root_www}>factory/set_localinvoice",
+            data: {"id": orderId},
+			
+            beforeSend: function (xhr) {
+                loading = true;
+
+                context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
+            },
+            success: function (result) {
+                result = jQuery.parseJSON(result);
+              //  alert(result.merge_to_another_order);
+			   if (result.error) {
+			   alert(result.error);
+			   
+			 //  alert($('#myonoffswitch_localInvoice'+orderId).attr("checked"));
+			   $('#myonoffswitch_localInvoice'+orderId).attr("checked",false);
+			   context.html("<span style='color:#F30;'>not yet</span>");
+			   return 0;
+			   }
+                if (result.isIdAsInvoiceNo== '0') {
+                    context.html("<span style='color:#F30;'></span>");
+					$("#invoice_no"+orderId).html('-');
+					$("#print_"+orderId).css("display","none");
+					$("#forceprint_"+orderId).css("display","");
+                } else if (result.isIdAsInvoiceNo == '1') {
+                    context.html("<span style='color:#58964E;'>Local InvId</span>");
+					
+					
+						$('#myonoffswitch_localInvoice'+orderId).prop("checked",true);
+					$("#print_"+orderId).css("display","");
+					$("#forceprint_"+orderId).css("display","none");
+				$("#forceprint_"+orderId).css("display","none");
+				
+					$("#invoice_no"+orderId).html(result.xero_invoice_id);
+                }
+            }
+        }).fail(function () {
+            alert('some error!');
+        }).always(function () {
+            loading = false;
+        })
+    })
+	
+	
+	
+	 $('input[name=onoffLocalInvoiceInfo]').on('click', function () {
+       
+		 if (!$('#onoffLocalInvoiceInfo').prop('checked')) {  
+			//alert('checked');
+			$("#onoffLocalInvoiceInfo").prop("checked",false);
+			
+			 $('[name="localInvoiceCol"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffLocalInvoiceInfo").prop("checked",true);
+			
+			 $('[name="localInvoiceCol"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+	
+	 $('input[name=onoffmorecontent]').on('click', function () {
+       
+		 if (!$('#onoffmorecontent').prop('checked')) {  
+			//alert('checked');
+			$("#onoffmorecontent").prop("checked",false);
+			
+			 $('[name="morecontent"]').hide();
+			}else{
+			//alert('unchecked');
+			$("#onoffmorecontent").prop("checked",true);
+			
+			 $('[name="morecontent"]').show();
+			}
+
+	 
+		
+       
+
+    })
+	
+
+   function approve_delivery(orderID){
+   
+   var iconupdate= new IconUpdate(this);
+
+			
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : orderID},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+   
+   }
+	
+
+
+   function print_order(orderID) {
+   
+	 // approve_delivery(orderID);
+	  window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
+	   
+   
+   }
+
+	function force_print(orderID){
+		if(confirm('<{$lang->forceprintalert}>')==false)return;
+		
+	//	approve_delivery(orderID);
+			
+		
+		window.open('<{$http_root_www}>factory/order_invoice?order_id=' +orderID);
+	
+
+	}
+
+    function  update_deliveryTime(obj) {
+    if(confirm('<{$lang->confirm_update_delivery_date}>')==false)return;
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+    
+        var id = $(obj).data('id');
+        var update_field_name = 'delivery_time';
+        var value;
+       
+            value = $(obj).val();//常规改动直接抓取改动值
+       
+        var updateData = {};
+
+        updateData['id'] = id;
+        updateData[update_field_name] = value;
+
+        var ajax_result = $(obj).next('.promote-ajax');
+		
+        $.ajax({
+            url: "<{$http_root_www}>company/update_delivery_time",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    }
+								  
+								  
+								</script>
+<script type="text/javascript">
+	$(function(){
+	
+	
+		$('.fast-approving-btn').on('click',function(){
+			var id =$(this).data('id');
+			var iconupdate= new IconUpdate(this);
+
+			if(confirm('Confirm order has been sent?')==false)return;
+
+		 	$.ajax({
+			  url: "<{$http_root_www}>company/customer_coupon_approving",
+			  type: "POST",
+			  data: { id : id},
+			  beforeSend:function(){
+			  	iconupdate.iconUpdating();
+			  }
+			}).done(function(data){
+				try{
+					data = JSON.parse(data);
+				}catch(err){
+					data['msg'] = data;
+				}
+
+				if(data.status==200){
+					iconupdate.iconUpdateSuccess();
+				}else if(data.status==500){
+					alert(data.msg);
+					iconupdate.iconUpdateFail();
+				}else{
+					iconupdate.iconUpdateFail();
+				}
+			}).fail(function(){
+				iconupdate.iconUpdateFail();
+			});
+
+
+		});
+		
+	 <{if $onoffLocalInvoiceInfo =='on'}> $('[name="localInvoiceCol"]').show();<{else}>$('[name="localInvoiceCol"]').hide();<{/if}>
+	  <{if $onoffmorecontent =='on'}> $('[name="morecontent"]').show();<{else}>$('[name="morecontent"]').hide();<{/if}>
+		
+		
+	})
+
+	function IconUpdate (obj) {
+		this.target = $(obj).find('.status_updating');
+	}
+		
+	IconUpdate.prototype.iconUpdating = function(){
+		this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
+	}
+	IconUpdate.prototype.iconUpdateSuccess = function(){
+		this.target.html('<i style="color:green" class="fa fa-check" title="update successful"></i>');
+	}
+	IconUpdate.prototype.iconUpdateFail = function(){
+		this.target.html('<i style="color:red" class="fa fa-close" title="update fail"></i>');
+	};
+	IconUpdate.prototype.iconUpdateNone = function () {
+		this.target.html('');
+	};
+</script>
+
+<script type="text/javascript">
+function showPdf(type)
+{	
+	var vCustomerDeliveryOption= $('#customer_delivery_option option:selected').val();
+	var vStaff= $('#staff option:selected').val();
+	var vStatus= $('#status option:selected').val();
+	var vPayment=  $('#payment option:selected').val();
+	var vIfpaid=  $('#ifpaid option:selected').val();
+	
+	var vSk=$('#id_sk').val();
+	var vSt=$('#st').val();
+	var vEt=$('#et').val();
+
+	var fitInPage=$('#fitInPage').prop('checked');
+
+	var vUrl='<{$http_root_www}>factory/customer_orders?output='+type+'&ifpaid='+vIfpaid+'&status='+vStatus+'&payment='+vPayment+'&sk='+vSk+'&startTime='+vSt+'&endTime='+vEt+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	window.open(vUrl);
+}
+
+function export_csv() {
+
+  window.location.assign='<{$http_root_www}>company/export_csv_fresh_and_restaurant';
+
+}
+</script>
+
+
+</body>
+
+</html>
