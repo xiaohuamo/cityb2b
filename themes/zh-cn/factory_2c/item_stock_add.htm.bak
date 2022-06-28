@@ -128,8 +128,21 @@
                       
 						<label><{$lang->search}>:</label>
 						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="item/code" style="width:100px; margin-right:5px;"/>
-					
-						
+						<input type="hidden" name="alarm" id='alarm' value="<{$alarm}>"/>
+					<{if $alarm==1}>
+						<select name="AlarmType" id='AlarmType'>
+
+							<option value="all"
+                                    <{if $AlarmType=='all'}> selected<{/if}>>All Alarm 
+							</option>
+
+                           
+								<option value="lowAlarm"  <{if $AlarmType=='lowAlarm'}> selected<{/if}> > Lower Alarm</option>
+								<option value="UrgentAlarm"  <{if $AlarmType=='UrgentAlarm'}> selected<{/if}> > Urgent Alarm</option>
+                         
+							
+						</select>
+					<{/if}>
 				    	<select name="dataType" id='dataType'>
 
 							<option value="all"
@@ -155,8 +168,9 @@
                                         <{if $item.id==$category}> selected<{/if}>>
                                   
 										<{if $item.parent_category_id}>&nbsp;--<{/if}>
-								  <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+								 <{if $langStr == 'zh-cn'}> <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}> <{else}><{/if}>
+								
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>
@@ -402,6 +416,8 @@
 							    	<th>Original Stock Qty</th>
 									<th>Stock Checking Qty</th>
 									<th>note</th>
+									<th>Low_Stock_qty</th>
+									<th>Extra_Low_Stock_qty</th>
 									<th>Item Name</th>
 									<th>Unit</th>
 								  <{if $langStr=='en'}> <{else}>
@@ -439,6 +455,16 @@
 									   <input disabled  type="text" class="input-text" id="stock_adjust_note-<{$item.id}>-<{$item.spec_id}>" style="width:150px;" name="stock_adjust_note"
 													   value="">
 												
+									  </td>
+									    <td>
+									   <input   data-id='<{$item.id}>' data-spec-id='<{$item.spec_id}>' type="text" class="input-text" id="low_qty_warning-<{$item.id}>-<{$item.spec_id}>" style="width:50px;" name="low_qty_warning"
+													   value="<{$item.low_qty_warning}>">
+												<span class='promote-ajax'>
+									  </td>
+									    <td>
+									   <input  data-id='<{$item.id}>' data-spec-id='<{$item.spec_id}>'   type="text" class="input-text" id="low_qty_warning_urgent-<{$item.id}>-<{$item.spec_id}>" style="width:50px;" name="low_qty_warning_urgent"
+													   value="<{$item.low_qty_warning_urgent}>">
+												<span class='promote-ajax'>
 									  </td>
 									  
 									   <td>
@@ -524,6 +550,73 @@
     })
 
 
+
+ $('input[name=low_qty_warning],input[name=low_qty_warning_urgent]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+		var spec_id = $(this).data('spec-id');
+		 
+		
+		
+        var update_field_name = $(this).attr('name');
+        var value;
+		
+		//alert(id);
+		//alert(spec_id);
+		
+        
+            value = $(this).val();//常规改动直接抓取改动值
+			 if (value.indexOf("'") >= 0) {
+			  alert('special letter is not allowed');
+			  return 0;
+			}
+			
+		
+		
+		
+        var updateData = {};
+
+        updateData['id'] = id;
+		 updateData['spec_id'] = spec_id;
+        updateData[update_field_name] = value;
+		 updateData['update_field_name'] = update_field_name;
+
+        var ajax_result = $(this).next('.promote-ajax');
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_item_stock_low_warning",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+				
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+        });
+
+
+    });
+
   $('input[name=stock_adjust]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
@@ -546,7 +639,7 @@
         
             value = $(this).val();//常规改动直接抓取改动值
 			 if (value.indexOf("'") >= 0) {
-			  alert('字符串不能包含单引号或双引号,无法保存');
+			  alert('special letter is not allowed');
 			  return 0;
 			}
 			

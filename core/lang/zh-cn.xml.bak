@@ -63,7 +63,7 @@
 	<item_discount>单品折扣</item_discount>
 	
 	<customer_list_recycle>归档</customer_list_recycle>
-	<customer_price_management>客户折扣管理</customer_price_management>
+	<customer_price_management>客户折扣</customer_price_management>
 	<orderLists>订货列表</orderLists>
 	<order_return>退货</order_return>
 	<add_new_order>新增订单</add_new_order>

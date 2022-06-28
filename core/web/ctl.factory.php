@@ -4059,7 +4059,7 @@ public function return_items_submit_to_statment_action() {
 				//wrong protocol
 			}
 		}
-    public function update_item_stock_action(){
+    public function update_item_stock_low_warning_action(){
 
         if(is_post()){
 
@@ -4068,7 +4068,8 @@ public function return_items_submit_to_statment_action() {
 
             $id = post('id');
             $spec_id = post('spec_id');
-            $stock_qty = post('stock_adjust');
+            $low_qty_warning = post('low_qty_warning');
+            $low_qty_warning_urgent = post('low_qty_warning_urgent');
             // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
 
              $menu_rec =$mdl_restaurant_menu->get($id);
@@ -4083,14 +4084,79 @@ public function return_items_submit_to_statment_action() {
             $stock_rec = $mdl->getByWhere($where);
 
 
+
+
+
+
+
+            if($stock_rec){
+
+                $update_field_name = post('update_field_name');
+                if($update_field_name =='low_qty_warning'){
+                    $updatedata=array(
+                        'low_qty_warning'=>$low_qty_warning
+
+                    );
+
+                }else{
+                    $updatedata=array(
+                         'low_qty_warning_urgent'=>$low_qty_warning_urgent
+                    );
+
+                }
+
+
+                try {
+                    $mdl->updateByWhere($updatedata,$where);
+
+                    $this->form_response(200,'','');
+                } catch (Exception $e) {
+                    $this->form_response(500, $e->getMessage(),'');
+                }
+
+            }else{
+
+
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+    public function update_item_stock_action(){
+
+        if(is_post()){
+
+            $mdl =$this->loadModel("producing_item_stock");
+            $mdl_restaurant_menu =$this->loadModel("restaurant_menu");
+
+            $id = post('id');
+            $spec_id = post('spec_id');
+            $stock_qty = post('stock_adjust');
+
+            // 判断如果当前登陆用户和当前操作的记录不是所属关系拒绝操作。
+
+            $menu_rec =$mdl_restaurant_menu->get($id);
+            if($menu_rec['restaurant_id']!=$this->current_business['id']) {
+                $this->form_response(600,'no access','no access');
+
+            }
+            $where =array(
+                'item_id'=>$id,
+                'spec_id'=>$spec_id
+            );
+            $stock_rec = $mdl->getByWhere($where);
+
+
             if ($stock_rec){
-                    if($stock_qty>$stock_rec['stock_qty']){
-                        $stocktype='106';
-                        $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
-                    }else{
-                        $stocktype='107';
-                        $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
-                    }
+                if($stock_qty>$stock_rec['stock_qty']){
+                    $stocktype='106';
+                    $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
+                }else{
+                    $stocktype='107';
+                    $adjust_stk=$stock_qty-$stock_rec['stock_qty'];
+                }
 
             }else{
                 if($stock_qty>0){
@@ -4138,8 +4204,8 @@ public function return_items_submit_to_statment_action() {
             }else{
                 $insertData=array(
                     'item_id'=>$id,
-                  'spec_id'=>$spec_id,
-                  'factory_id'=>$this->current_business['id'],
+                    'spec_id'=>$spec_id,
+                    'factory_id'=>$this->current_business['id'],
                     'stock_qty'=>$stock_qty
                 );
 

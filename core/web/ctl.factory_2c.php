@@ -424,6 +424,18 @@
 
                 $this->setData($dataType,'dataType');
 
+                $alarm =get2('alarm');
+
+                $this->setData($alarm,'alarm');
+
+                $AlarmType =get2('AlarmType');
+
+                if(!$AlarmType) {
+                    $AlarmType ='all';
+                }
+
+                $this->setData($AlarmType,'AlarmType');
+
                 $store_house =get2('store_house');
 
                 $this->setData($store_house,'store_house');
@@ -488,7 +500,7 @@
                         $this->setData($category,'category');
 
 
-                        $sql = "select  spec.id as spec_type_id ,spec.category_en_name  as spec_type_name , if(spec_details.id is null,0,spec_details.id) as  spec_id, stock.stock_qty,spec_details.menu_en_name as spec_name, o.* ,b.category_cn_name,b.category_en_name
+                        $sql = "select  spec.id as spec_type_id ,spec.category_en_name  as spec_type_name , if(spec_details.id is null,0,spec_details.id) as  spec_id, stock.stock_qty,stock.low_qty_warning,stock.low_qty_warning_urgent,spec_details.menu_en_name as spec_name, o.* ,b.category_cn_name,b.category_en_name
                           from cc_restaurant_menu o left join cc_restaurant_category b on b.id=o.restaurant_category_id 
                             left join cc_restaurant_menu_option_category spec on o.menu_option = spec.id 
                             left join cc_restaurant_menu_option spec_details on spec.id=spec_details.restaurant_category_id  and (length(spec_details.menu_en_name)>0 or length(spec_details.menu_cn_name)>0 )
@@ -526,6 +538,17 @@
                         }elseif ($dataType =='NoProducingItem'){
                             $whereStr.=" and proucing_item =0";
                         }
+
+                        if($alarm ==1) {
+                            if($AlarmType =='lowAlarm') {
+                                $whereStr.=" and (stock_qty <= low_qty_warning ) ";
+
+                            }elseif ($AlarmType =='UrgentAlarm'){
+                                $whereStr.=" and (stock_qty <= low_qty_warning_urgent ) ";
+                            }
+
+                        }
+                      //  var_dump($whereStr);exit;
 
                         // 提示用户选择菜单分类,如果没有选择菜单分类,则显示当前全部的菜单.
                         // 如果选择某一种分类,如果当前没有数据则进行增加50个,如果有数据则直接显示即可.
@@ -586,10 +609,33 @@
 
 
 
-                $this->setData('item_stock_add', 'submenu');
+
                 $this->setData('Store_centre', 'menu');
 
-                $pagename = "Item stock add";
+                if($alarm==1){
+
+                    if ($this->getLangStr() == 'en') {
+                        $pagename = "Stocking Alarm";
+                    }else{
+                        $pagename = "库存报警";
+                    }
+
+
+                   
+                    $this->setData('item_stock_alarm', 'submenu');
+                }else{
+
+                    if ($this->getLangStr() == 'en') {
+                        $pagename = "Stocking Checking";
+                    }else{
+                        $pagename = "库存盘点";
+                    }
+
+                    $this->setData('item_stock_add', 'submenu');
+
+                }
+
+
                 $pageTitle=  $pagename." - Business Center - ". $this->site['pageTitle'];
 
                 $this->setData($pagename, 'pagename');
