@@ -181,7 +181,7 @@
 									<p class='panel-title'>	 <{if $langStr == 'zh-cn'}> 扫码查看网站	 <{else}> Scan the code to view the website
   <{/if}></p>
 									<p><img src="<{$couponQrCode}>"></p>
-									<p><a target='_blank' class='em-btn-yellow' href="<{$couponLink}>">	 <{if $langStr == 'zh-cn'}> 网站链接	 <{else}>  Web Link <{/if}></a></p>
+									<p><a target='_blank' class='em-btn-yellow' href="<{$http_root_www}>supplier/<{$data.createUserId}>">	 <{if $langStr == 'zh-cn'}> 网站链接	 <{else}>  Web Link <{/if}></a></p>
 								</div>
 
 								
