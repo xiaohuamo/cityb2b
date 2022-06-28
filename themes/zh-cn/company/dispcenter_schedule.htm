@@ -47,16 +47,16 @@
 		<{include file='company/side.htm'}>
 
 		<div class="main">
+			<div class="box2">
+			<{include file='company/side_website_setting_top.htm'}>
 			<div class="main-form">
 
 				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/dispcenter_schedule_create" method="post" target="post_frame" enctype="multipart/form-data">
 						<div class="input-box t clearfix">
 						<h1>
-						<{if $langStr == 'zh-cn'}>
-							配送日期设置
-						<{else}>
-							Delivery Date Setting
-						<{/if}>
+						
+							<{$pagename}>
+						
 						</h1>
 					</div>
 					
@@ -190,7 +190,7 @@
 						</div>
 						
 						-->
-						<br>
+						<br><br>
 						<button type="submit" class="btn btn-default btn-success" id="">Add</button>
 					</div>
 				</form>
@@ -253,7 +253,7 @@
 					</div>
 				<{/if}>
 			</div>
-
+</div>
 		</div>
 
 	</div>

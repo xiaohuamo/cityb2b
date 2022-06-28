@@ -1973,8 +1973,10 @@ class ctl_company extends cmsPage
             $this->setData($pagename, 'pagename');
 			
 			$this->setData('website', 'menu');
-
             $this->setData('delivery_setting', 'submenu_top');
+
+
+            $this->setData('website_setting', 'submenu');
 
 
             $this->setData('Delivery Setting - Business Centre - ' . $this->site['pageTitle'], 'pageTitle');
@@ -11375,7 +11377,7 @@ function get_data($url, $ch) {
         $this->setData($data, 'promotionCodeList');
         $this->setData($page['pageStr'], 'pager');
 
-        $this->setData('index_publish', 'menu');
+        $this->setData('website', 'menu');
         $this->setData('promotion_code_manage', 'submenu');
         $this->setData('Promotion Code Edit - ' . 'Business Centre ' . $this->site['pageTitle'], 'pageTitle');
         $this->display('company/promotion_code');
@@ -14341,15 +14343,20 @@ public function custom_delivery_fee_add_action()
 		$this->setData($list[0]['business_name'], 'business_name');
         $this->setData($list[0]['business_name_en'], 'business_name_en');
 		$this->setData($list, 'data');
-		$this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Delivery Schedule Setting";
+        }else{
+            $pagename = "配送日程及开截单时间安排";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
 		
-		if(get2('freshfood')){
-			 $this->setData('open_store', 'menu');
-		}else{
-			 $this->setData('index_publish', 'menu');
-		}
-		
-        $this->setData('dispcenter_schedule', 'submenu');
+
+		 $this->setData('website', 'menu');
+
+        $this->setData('website_setting', 'submenu');
+        $this->setData('dispcenter_schedule', 'submenu_top');
 		
 		$this->display('company/dispcenter_schedule');
 	}

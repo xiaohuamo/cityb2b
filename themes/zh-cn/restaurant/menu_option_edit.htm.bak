@@ -83,7 +83,8 @@
 									<th>Spec Details Code</th>
 					                <th>Name</th>
 					                <th>Price</th>
-									<th>name_cn</th>
+										 <{if $langStr == 'zh-cn'}><th>name_cn</th> <{else}>   <{/if}>
+									
 									<th>Desc</th>
 								</tr>
 							</thead>
@@ -120,11 +121,11 @@
 										</td>
 
 
-										
-									<td>
+										 <{if $langStr == 'zh-cn'}><td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_cn_name-<{$item.id}>"  style="width:250px;" name="menu_cn_name" value="<{$item.menu_cn_name}>" >
 											<span class='promote-ajax'></span>
-										</td>
+										</td> <{else}>   <{/if}>
+									
 										<td>
 											<input type="text" class="input-text" data-id='<{$item.id}>' id="menu_desc-<{$item.id}>"  style="width:200px;" name="menu_desc" value="<{$item.menu_desc}>" >
 											<span class='promote-ajax'></span>

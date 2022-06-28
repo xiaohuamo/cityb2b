@@ -118,9 +118,10 @@
 							<div class="input-box clearfix">
 
 								<{if $data.isApproved==1}>
-									<h1>恭喜！当前店铺已经通过平台审核，成功上线</h1>
+									<h1>	 <{if $langStr == 'zh-cn'}> 恭喜！当前店铺已经通过平台审核，成功上线	 <{else}> Congratulations! The current store has passed the platform audit and has been successfully launched  <{/if}></h1>
 								<{else}>
-									<h1>当前店店主已经上线,但还没有通过平台审核</h1>
+									<h1>	 <{if $langStr == 'zh-cn'}> 当前店店主已经发布,但还没有通过平台审核	 <{else}>   The current store owner has been released, but has not passed the platform review
+<{/if}></h1>
 
 									<{if $loginUser.phone_verified=='false'}>
 										<p  class=' main>

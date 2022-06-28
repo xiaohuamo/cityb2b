@@ -155,13 +155,16 @@
 				<{if in_array('3', explode(',', $user_roles.roles))
 				||  in_array('0', explode(',', $user_roles.roles))
 				|| $user_roles.role==3}>
+				<a href="<{$http_root_www}>factory/customer_price_management"<{if $submenu=='customer_price_management'}> class="current"<{/if}>>
+					<{$lang->customer_price_management}>
+				</a>
+				
+				
 				<a href="<{$http_root_www}>factory/customer_grade"<{if $submenu=='customer_grade'}> class="current"<{/if}>>
 				<{$lang->customer_grade}>
 				</a>
 				
-				<a href="<{$http_root_www}>factory/customer_price_management"<{if $submenu=='customer_price_management'}> class="current"<{/if}>>
-					<{$lang->customer_price_management}>
-				</a>
+				
 				<{/if}>
 			</div>
 		</li>

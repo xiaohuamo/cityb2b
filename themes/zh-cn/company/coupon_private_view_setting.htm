@@ -40,6 +40,11 @@
 	})
 
 </script>
+<style>
+
+	.main-form .input-box span label { width:200px; }
+
+</style>
 </head>
 <body>
 
@@ -55,18 +60,19 @@
 					<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/coupon_private_view_setting" method="post" target="post_frame" enctype="multipart/form-data">
 						<!-- Approved -->
 						<div class="input-box clearfix">
-							<h1>设置访问口令</h1>
-							<p>产品未上线时，交领导或同事审核，可以设置口令。在未上线情况下，只要通过口令，其它人员依然可以访问网站</p>
+							<h1>	 <{if $langStr == 'zh-cn'}> 	设置访问口令 <{else}> set access password  <{/if}> </h1>
+							<p>	 <{if $langStr == 'zh-cn'}> 未上线时，只要使用口令然可以访问网站	 <{else}>  When not published, you can access the website as long as you use the password <{/if}></p>
 							
 						</div>
 
 						<div class="input-box clearfix">
-							<span><label>口令密码</label></span>
-							<label>启用 <input type="checkbox" id='enable-switch'></label>
+							<span><label><{$lang->preview_password}></label></span>
+							<label>	 <{if $langStr == 'zh-cn'}> 	启用 <{else}>  Enable <{/if}> <input type="checkbox" id='enable-switch'></label>
 
 							<span class='pass-edit'>
 								<input type="text" name="coupon_private_view_pass" id='pass' value="<{$loginUser.coupon_private_view_pass}>">
-								<i class='fa fa-bolt fast-pass' ><em>口令可以为6位以上任意字符或数字</em></i> 
+								<i class='fa fa-bolt fast-pass' ><em>	 <{if $langStr == 'zh-cn'}> 口令可以为6位以上任意字符或数字	 <{else}> The password can be any character or number with more than 6 characters
+  <{/if}></em></i> 
 							</span>
 						</div>
 						

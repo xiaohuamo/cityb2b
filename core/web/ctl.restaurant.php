@@ -2434,7 +2434,7 @@ class ctl_restaurant extends cmsPage
 
         $this->setData('restaurant_parant_category_edit', 'submenu_top');
         $this->setData('restaurant_parant_category_edit', 'submenu');
-        $this->setData('index_publish', 'menu');
+        $this->setData('website', 'menu');
 
 
         if ($this->getLangStr() == 'en') {
@@ -3272,14 +3272,18 @@ class ctl_restaurant extends cmsPage
 		}
 
 
-
+		if ($this->getLangStr() == 'en') {
+			$pagename = "Sub Category Edit";
+		}else{
+			$pagename = "子类管理";
+		}
 
 
 		$this->setData('restaurant_edit', 'submenu_top');
 		$this->setData('restaurant_parant_category_edit', 'submenu');
-		$this->setData('index_publish', 'menu');
+		$this->setData('website', 'menu');
 
-		$pagename = "Category Edit";
+
 		$pageTitle=  $pagename." - Business Centre - ". $this->site['pageTitle'];
 
 
@@ -3801,10 +3805,10 @@ class ctl_restaurant extends cmsPage
 		}
 		$this->setData($data, 'data');
 
-		$this->setData('restaurant_menu', 'submenu_top');
+		$this->setData('restaurant_menu_edit', 'submenu_top');
 
 		$this->setData('restaurant_menu_edit', 'submenu');
-		$this->setData('index_publish', 'menu');
+		$this->setData('website', 'menu');
 
 		if ($this->getLangStr() == 'en') {
 			$pagename = "Item management";
@@ -5482,7 +5486,7 @@ class ctl_restaurant extends cmsPage
 	function restaurant_menu_option_category_edit_action(){
 
 		$stock =get2('stock');
-		$this->setData($stock,'stcok');
+		$this->setData($stock,'stock');
 
 		$mdl_restaurant_menu_option_category = $this->loadModel('restaurant_menu_option_category');
 		$exist = $mdl_restaurant_menu_option_category->getByWhere(array('createUserId'=>$this->loginUser['id']));
@@ -5536,7 +5540,7 @@ class ctl_restaurant extends cmsPage
 
 		}else{
 			$this->setData('restaurant_menu_edit', 'submenu');
-			$this->setData('index_publish', 'menu');
+			$this->setData('website', 'menu');
 
 		}
 
@@ -5566,7 +5570,7 @@ class ctl_restaurant extends cmsPage
 
 		// 获得该用户餐厅的菜单分类信息
 		$stock =get2('stock');
-		$this->setData($stock,'stcok');
+		$this->setData($stock,'stock');
 
 		$mdl_restaurant_menu_option_category = $this->loadModel('restaurant_menu_option_category');
 		$pageSql = "select  * from cc_restaurant_menu_option_category where createUserId=".$this->loginUser['id']. " and (length(category_cn_name)>0 or length(category_en_name)>0) order by category_sort_id ";
@@ -5662,7 +5666,7 @@ class ctl_restaurant extends cmsPage
 
 		}else{
 			$this->setData('restaurant_menu_edit', 'submenu');
-			$this->setData('index_publish', 'menu');
+			$this->setData('website', 'menu');
 
 		}
 

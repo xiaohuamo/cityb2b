@@ -41,7 +41,7 @@
 
 			toolbar: 'Basic',
 
-			placeholder : '<p>EXAMPLE:递送说明</p> <p>递送范围：仅限墨尔本周边</p> <p>递送时间：每周一发货</p> <p>递送周期：墨尔本2天内到达</p> <p>特殊说明等等</p>'
+			placeholder : ''
 
 		});
 
@@ -55,7 +55,7 @@
 
 			toolbar: 'Basic',
 
-			placeholder : '<p>EXAMPLE:递送说明</p> <p>递送范围：仅限墨尔本周边</p> <p>递送时间：每周一发货</p> <p>递送周期：墨尔本2天内到达</p> <p>特殊说明等等</p>'
+			placeholder : ''
 
 		});
 
@@ -69,7 +69,7 @@
 
 			toolbar: 'Basic',
 
-			placeholder : '<p>EXAMPLE:自取说明</p> <p>自取地址：墨尔本总部</p> <p>自取时间:每周一到周五 9:00AM - 5:00PM</p> <p>请出示订单邮件或二维码，自取前请联系我们预约</p>'
+			placeholder : ''
 
 		});
 
@@ -83,7 +83,7 @@
 
 			toolbar: 'Basic',
 
-			placeholder : '<p>EXAMPLE:自取说明</p> <p>自取地址：墨尔本总部</p> <p>自取时间:每周一到周五 9:00AM - 5:00PM</p> <p>请出示订单邮件或二维码，自取前请联系我们预约</p>'
+			placeholder : ''
 
 		});
 
@@ -145,19 +145,19 @@
 
 						<div class="input-box multi-select clearfix">
 
-							<h1>配送设置</h1>
+							<h1><{$pagename}></h1>
 
 						</div>
 
 						<div class="input-box multi-select clearfix">
 
-							<span><label>自取</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 	自取 <{else}> Pick up  <{/if}></label></span>
 
 							<select id="pickup_avaliable" name="pickup_enbale" class="ahibw" >
 
-								<option value="1"<{if $loginUser.pickup_avaliable=='1'}> selected<{/if}>>允许客户上门提货</option>
+								<option value="1"<{if $loginUser.pickup_avaliable=='1'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 允许提货	 <{else}>  Allow  to pick up  <{/if}></option>
 
-								<option value="0"<{if $loginUser.pickup_avaliable=='0'}> selected<{/if}>>不允许客户上门提货</option>
+								<option value="0"<{if $loginUser.pickup_avaliable=='0'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 不允许提货	 <{else}> Pickup not allowed  <{/if}></option>
 
 							</select>
 
@@ -165,25 +165,31 @@
 
 						<div class="input-box multi-select clearfix">
 
-							<span><label>配送</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 配送	 <{else}>  Delivery  <{/if}></label></span>
 
 							<select id="deliver_avaliable" name="deliver_enable" class="ahibw">
 
-								<option value="1"<{if $loginUser.deliver_avaliable=='1'}> selected<{/if}>>提供递送服务</option>
+								<option value="1"<{if $loginUser.deliver_avaliable=='1'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 提供递送服务	 <{else}> Provide delivery service  <{/if}></option>
 
-								<option value="0"<{if $loginUser.deliver_avaliable=='0'}> selected<{/if}>>不提供递送服务</option>
+								<option value="0"<{if $loginUser.deliver_avaliable=='0'}> selected<{/if}>> <{if $langStr == 'zh-cn'}> 不提供递送服务	 <{else}> No delivery service  <{/if}></option>
 
 							</select>
 
 						</div>
 
 						<div class="input-box clearfix">
-							<em>订单基础运费： 系统提供 订单 + 产品 的运费计算方式。</em>
+						 <{if $langStr == 'zh-cn'}> 
+						 
+						 <em>运费： 订单 + 产品 的运费计算方式。</em>
+						 <{else}>   
+						  <em> Shipping Fee: Order + Product.</em>
+						 <{/if}>
+						
 						</div>
 
 						<div id="delivery1"  class="input-box clearfix">
 
-							<span><label>基础本地邮费</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 	基础运费 <{else}> base shipping fee  <{/if}></label></span>
 
 							<input  type="number" step='0.01' class="input-text" value="<{$loginUser.flat_rates_to_local_city}>" name="base_local_rate" />
 
@@ -210,22 +216,24 @@
 
 						<div  id="delivery8"  class="input-box clearfix">
 
-							<span><label>起送金额</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 起送金额	 <{else}> Minimum delivery amount  <{/if}></label></span>
 
 							<input type="number" step='1' class="input-text" class="input-text" value="<{$loginUser.amount_for_minimum_delivery}>" name="amount_for_minimum_delivery" />
 							<!-- 小于等于0 不免运费    大于零按金额免运费  -->
-							<em>0 表示无限制</em>
+							
+							<em> <{if $langStr == 'zh-cn'}> 0 表示无限制	 <{else}> 0 means unlimited  <{/if}></em>
 						</div>
 						<div  id="delivery10"  class="input-box clearfix">
 
-							<span><label>每日可接受最大订单数量</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 	每日可接受最大订单数量 <{else}> Maximum number of orders accepted per day  <{/if}></label></span>
 
 							<input type="number" step='1' class="input-text" class="input-text" value="<{$loginUser.max_orders_accept_per_day}>" name="max_orders_accept_per_day" />
-							<!-- 小于等于0 不免运费    大于零按金额免运费  --><em>-1 表示无限制</em>
+							<!-- 小于等于0 不免运费    大于零按金额免运费  --> <em><{if $langStr == 'zh-cn'}> 	-1 表示无限制 <{else}>-1 means unlimited   <{/if}></em>
 						</div>
 						<div  id="delivery5"  class="input-box clearfix">
 
-							<span><label>免运费金额</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 	免运费金额 <{else}>Free shipping amount
+   <{/if}></label></span>
 
 							<input type="number" step='0.01' class="input-text" class="input-text" value="<{$loginUser.amount_for_free_delivery}>" name="amount_for_free_delivery" />
 							<!-- 小于等于0 不免运费    大于零按金额免运费  -->
@@ -233,38 +241,39 @@
 
                        	<div  id="delivery5"  class="input-box clearfix">
 
-							<span><label>导入配送范围邮编</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 导入配送范围邮编	 <{else}> Import delivery area zip code  <{/if}></label></span>
   
 							 <button type="button" class="btn btn-default btn-success" id="ButtonXML">
-                            导入表格</button>
+                             <{if $langStr == 'zh-cn'}> 	导入表格 <{else}> import Data  <{/if}></button>
 							<input type="file" id="inputXMl"  style="display: none;" onchange="importf(this)" value="XML导入" />
 						</div>
 						
 						 <div  id="delivery6"  class="input-box clearfix">
 
-							<span><label>高级运费定制</label></span>
+							<span><label> <{if $langStr == 'zh-cn'}> 高级运费定制	 <{else}> Advanced Shipping fee Customization
+  <{/if}></label></span>
   
 							 <button type="button" class="btn btn-default" onClick='window.location.href="<{$http_root_www}>company/custom_delivery_fee"' >
-                            定制运费</button>
+                             <{if $langStr == 'zh-cn'}> 定制运费	 <{else}> Custom shipping fee   <{/if}></button>
 							
 						</div>
 						
 						
 						<div  id="delivery6"  class="input-box clearfix">
 
-							<span><label>运费说明汇总</label></span><br>
+							<span><label> <{if $langStr == 'zh-cn'}> 运费说明汇总	 <{else}> Summary of shipping instructions  <{/if}></label></span><br>
   <label><{$delivery_fee_desc}></label>
 							
 						</div>
 						
 
-						<{if $isSuplier}>
+						
 							<div class="input-box clearfix">
-								<span><label>统配商家递送日期设置</label></span>
+								<span><label> <{if $langStr == 'zh-cn'}> 配送日常安排	 <{else}> Delivery schedule  <{/if}></label></span>
 								<button type="button" class="btn btn-default btn-success" onClick='window.location.href="<{$http_root_www}>company/dispcenter_schedule"'>
-	                            设置</button>
+	                             <{if $langStr == 'zh-cn'}> 	设置 <{else}> Set  <{/if}></button>
 							</div>
-						<{/if}>
+					
  <script src="<{$SKIN_PATH}>js/xlsx.core.min.js"></script>
     <script src="<{$SKIN_PATH}>js/xlsx.full.min.js"></script>
     <script>
@@ -349,6 +358,8 @@
             });
         }
     </script>
+	
+	 <{if $langStr == 'zh-cn'}> 	
 
 						<div  class="input-box clearfix">
 
@@ -363,7 +374,7 @@
 							<textarea name="delivery_description" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.delivery_description}></textarea>
 
 						</div>
-						
+						 <{else}>   <{/if}>
 						
 						<div  class="input-box clearfix">
 
@@ -378,12 +389,12 @@
 							<textarea name="delivery_description_en" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.delivery_description_en}></textarea>
 
 						</div>
-
+ <{if $langStr == 'zh-cn'}> 	
 						<div  class="input-box clearfix">
 
 							<span>
 
-							<label >用户自取说明</label>
+							<label >自取说明</label>
 
 							</span>
 
@@ -392,6 +403,7 @@
 							<textarea name="pickup_des" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.pickup_des}></textarea>
 
 						</div>
+						 <{else}>   <{/if}>
 						
 						<div  class="input-box clearfix">
 
@@ -407,7 +419,7 @@
 
 						</div>
 
-
+ <{if $langStr == 'zh-cn'}> 	
 						<div  class="input-box clearfix">
 
 							<span>
@@ -420,7 +432,7 @@
 
 							<textarea name="refund_policy" class="input-textarea"  style="width:80%; height:100px;"><{$loginUser.refund_policy}></textarea>
 
-						</div>
+						</div> <{else}>   <{/if}>
 						
 						<div  class="input-box clearfix">
 
@@ -441,7 +453,7 @@
 
 						<div class="input-box input-submit clearfix">
 
-							<button type="submit" style='float:right'>保存修改</button>
+							<button type="submit" style='float:right'><{$lang->save}></button>
 
 						</div>
 					 
