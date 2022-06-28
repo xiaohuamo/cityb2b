@@ -187,8 +187,9 @@
                             <{foreach from=$restaurant_category item=item}>
 								<option value="<{$item.id}>"
                                         <{if $item.id==$category1}> selected<{/if}>>
-                                    <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
-                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}>
+										 <{if $langStr == 'zh-cn'}> 	 <{if $item.category_cn_name}><{$item.category_cn_name}><{/if}>
+                                    <{if $item.category_cn_name && $item.category_en_name}>|<{/if}> <{else}>   <{/if}>
+                                   
                                     <{if $item.category_en_name}><{$item.category_en_name}><{/if}>
 								</option>
                             <{/foreach}>
@@ -670,8 +671,10 @@
         var updateData = {};
 
         updateData['id'] = id;
+		value = $(this).val();
         updateData[update_field_name] = value;
-	//	 alert (updateData[update_field_name]);
+		 alert (updateData[update_field_name]);
+		 alert(update_field_name);
 		if((update_field_name == 'menu_en_name') || (update_field_name == 'menu_cn_name')  || (update_field_name == 'menu_en_desc')  || (update_field_name == 'menu_desc') ) {
 		 
 		  if( (value.indexOf("'") ==-1) &&  value.indexOf("&") ==-1) {
@@ -700,7 +703,7 @@
 
             if (data.status == 200) {
                 $(ajax_result).html(successIcon);
-                //alert('yes');
+                alert(data.msg);
 				if(update_field_name='barcode_number'){
 				  //alert(data.msg + ' ' +id);
 				  if(data.msg) {

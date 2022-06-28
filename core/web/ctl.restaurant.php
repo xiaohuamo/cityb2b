@@ -4910,6 +4910,9 @@ class ctl_restaurant extends cmsPage
 
 			$data=array();
 
+		//	$data['iii']=post('qty');
+			//$this->form_response(200,$data['iii'],'');
+
 			$price = post('price');
 			if($price)$data['price']=$price;
 
@@ -4920,6 +4923,8 @@ class ctl_restaurant extends cmsPage
 
 			$original_price = post('original_price');
 			if($original_price)$data['original_price']=$original_price;
+
+
 
 			$speical_price = post('speical_price');
 			if($speical_price)$data['speical_price']=$speical_price;
@@ -5156,7 +5161,7 @@ class ctl_restaurant extends cmsPage
 				$this->loadModel('user')->update(array('store_update_time' =>time()),$idCreateUser['restaurant_id']);
 
 
-				$this->form_response(200,$msg,'');
+				$this->form_response(200,'','');
 			} catch (Exception $e) {
 				$this->form_response(500, $e->getMessage(),'');
 			}
