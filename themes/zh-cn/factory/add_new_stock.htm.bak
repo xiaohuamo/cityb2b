@@ -1014,7 +1014,7 @@
 			order['product']=product;
 			order['spec']=spec;
 			//alert(order['product']);
-			preview();
+			print();
 	
 	}
 	//single label per page
