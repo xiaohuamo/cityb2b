@@ -263,8 +263,8 @@
 			
 			//order['subtitle'] = 'AAAA1';
 			
-			//order['product']= 'AAAA1';
-			//order['spec']= 'AAAA1';
+			order['product']= 'AAAA1';
+			order['spec']= 'AAAA1';
 			preview();
 	
 	}
