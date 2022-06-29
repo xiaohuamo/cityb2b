@@ -973,27 +973,43 @@
 			var product =$('#select_item_id').val();
 			var spec =$('#select_spec_id').val();
 			var room_area = $("input[name='radiobox']:checked").val();
-			alert(product);
-			alert(spec);
-			alert(room_area);
+			//alert(product);
+			//alert(spec);
+			//alert(room_area);
+			if(!room_area) alert('Please select Room Area');
+			//if(!product) alert('Please select product');
 			
 			var posofkuohao =room_area.indexOf('(');
 			var posofhenggang =room_area.indexOf('-');
-			alert(posofkuohao);
+		//	alert('kuohaoweizhi ' + posofkuohao);
+			//alert('posofhenggang ' + posofhenggang);
 			
 			// 发现第一个
+			
+			if(product.length<=0) {
+			  alert('please choose the product !');
+			  return ;
+			}
+			
+			if(room_area.length<=0) alert('Please select Room Area');
 	
 	       if(posofkuohao ==-1) {
 			   order['subtitle'] = room_area.slice(posofhenggang+1);
+			 //  alert('not find '+ room_area);
+			 //  alert('not find' + room_area.slice(posofhenggang+1,posofkuohao));
+			//alert(room_area.slice(posofhenggang+1,posofkuohao));
 			}else{
+			//alert(room_area);
+			//alert(room_area.slice(posofhenggang+1,posofkuohao));
 			   order['subtitle'] = room_area.slice(posofhenggang+1,posofkuohao);
 			}
 			
-			
+			//alert('title is ' + order['subtitle']);
 			//order['subtitle'] = 'AAAA1';
 			
 			order['product']=product;
 			order['spec']=spec;
+			//alert(order['product']);
 			print();
 	
 	}

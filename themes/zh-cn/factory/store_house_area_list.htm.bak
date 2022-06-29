@@ -263,9 +263,9 @@
 			
 			//order['subtitle'] = 'AAAA1';
 			
-			order['product']= 'AAAA1';
-			order['spec']= 'AAAA1';
-			print();
+			//order['product']= 'AAAA1';
+			//order['spec']= 'AAAA1';
+			preview();
 	
 	}
 	//single label per page

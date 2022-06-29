@@ -621,7 +621,7 @@
                     }
 
 
-                   
+
                     $this->setData('item_stock_alarm', 'submenu');
                 }else{
 
