@@ -151,7 +151,7 @@
 								
 								var area_name;
 
-
+								var ItemNamePrint;
 
 
 								$(function(){
@@ -375,7 +375,7 @@
 											
 											displayName =item_value +' - ' + items[i][4]+ ' - ' + items[i][5]+' - ' + item_name +' - ' + items[i][8];
 											
-											item.append('<option value="'+ item_value  +'">'+ displayName +'</option>');
+											item.append('<option displayName ="'+item_name+'" value="'+ item_value  +'">'+ displayName +'</option>');
 										 }
 										}
 									$('#itemoo').after(item);
@@ -451,6 +451,7 @@
 										$('#shelfLayerDiv').css('display','none');
 										// 清除之前item 货架配置信息
 										currentItemAreaShelfInfo=[];
+										ItemNamePrint = $(obj).find('option:eq('+ obj.selectedIndex +')').attr('displayName');
 										
 										//alert(vv);
 										// check if there is  - ,if has then split to item id and spec id 
@@ -620,7 +621,7 @@
 											}
 												displayName =item_value +' - ' + items[i][4]+ ' - ' + items[i][5]+' - ' + item_name +' - ' + items[i][8];
 										
-											item.append('<option value="'+ item_value  +'">'+ displayName +'</option>');
+											item.append('<option displayName ="'+item_name+'" value="'+ item_value  +'">'+ displayName +'</option>');
 										 }
 										}
 									    $('#itemoo').after(item);
@@ -650,7 +651,7 @@
 								
 									<{foreach from=$item_list item=item}>
 										
-										<option value="<{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}>" >
+										<option displayName ="<{$item.menu_en_name}><{if $item.spec_name}>&nbsp;<{$item.spec_name}><{/if}>" value="<{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}>" >
 											<{$item.id}><{if $item.spec_id}>-<{$item.spec_id}><{/if}>-<{$item.menu_id}>  <{if $item.menu_code}>- <{$item.menu_code}><{/if}>-<br>
 											<{$item.menu_en_name}><{if $item.spec_name}>-<{$item.spec_name}><{/if}>-<{$item.unit_en}>
 											</option>
@@ -970,7 +971,13 @@
 
 	function printlabel(){
 	
-			var product =$('#select_item_id').val();
+		//	var product =$('#select_item_id').val();
+			var product =ItemNamePrint;
+			//alert(product);
+			if(product.length<=0) {
+			  alert('please choose the product !');
+			  return ;
+			}
 			var spec =$('#select_spec_id').val();
 			var room_area = $("input[name='radiobox']:checked").val();
 			//alert(product);
@@ -986,10 +993,7 @@
 			
 			// 发现第一个
 			
-			if(product.length<=0) {
-			  alert('please choose the product !');
-			  return ;
-			}
+			
 			
 			if(room_area.length<=0) alert('Please select Room Area');
 	
@@ -1010,7 +1014,7 @@
 			order['product']=product;
 			order['spec']=spec;
 			//alert(order['product']);
-			print();
+			preview();
 	
 	}
 	//single label per page
@@ -1051,8 +1055,8 @@
 
 	function labelTemplate(order) {
 	
-		var areafontsize ='96px';
-		var productfontsize='36px';
+		var areafontsize ='48px';
+		var productfontsize='72px';
 		
 		
 		if (order.subtitle.length>5 && order.subtitle.length<10){
@@ -1062,15 +1066,19 @@
 				 areafontsize ='48px';
 		}
 		
-		
-		if (order.product.length>15 && order.product.length<18){
-				productfontsize ='32px';
+		if (order.product.length<8){
+				productfontsize ='96px';
+		}else if (order.product.length>=8 && order.product.length<12){
+				productfontsize ='64px';
+		}else if(order.product.length>=12 && order.product.length<18){
+			
+				productfontsize='48px';
 		}else if(order.product.length>=18 && order.product.length<25){
 			
-				productfontsize='24px';
+				productfontsize='36px';
 		}else if(order.product.length>=25){
 				order.product =order.product.substring(0,25);
-				productfontsize='24px';
+				productfontsize='36px';
 		}
 		
 		var html = '';
