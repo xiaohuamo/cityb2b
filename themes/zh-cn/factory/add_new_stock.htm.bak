@@ -1026,7 +1026,8 @@
 			order['product']=product;
 			order['spec']=spec;
 			//alert(order['product']);
-			print();
+			//print();
+			preview();
 	
 	}
 	//single label per page
@@ -1069,6 +1070,7 @@
 	
 		var areafontsize ='72px';
 		var productfontsize='72px';
+		var firstspace=-1;
 		
 		
 		if (order.subtitle.length>5 && order.subtitle.length<10){
@@ -1080,17 +1082,25 @@
 		
 		if (order.product.length<8){
 				productfontsize ='96px';
-		}else if (order.product.length>=8 && order.product.length<12){
-				productfontsize ='64px';
-		}else if(order.product.length>=12 && order.product.length<18){
-			
+		}else if (order.product.length>=8 && order.product.length<16){
+				firstspace =order.product.indexof(' ');
+				if(firstspace<8 && firstspace !=-1) {
+				   order.product.replace(" ","<br>");
+				    productfontsize ='96px';
+				}else{
+				  productfontsize ='72px';
+				}
+				
+		}else if(order.product.length>=16 && order.product.length<24){
+			 order.product.replace(" ","<br>");
+				productfontsize='64px';
+		}else if(order.product.length>=24 && order.product.length<30){
+			 order.product.replace(" ","<br>");
 				productfontsize='48px';
-		}else if(order.product.length>=18 && order.product.length<25){
-			
-				productfontsize='36px';
-		}else if(order.product.length>=25){
-				order.product =order.product.substring(0,25);
-				productfontsize='36px';
+		}else if(order.product.length>=30){
+		 order.product.replace(" ","<br>");
+				order.product =order.product.substring(0,30);
+				productfontsize='48px';
 		}
 		
 		var html = '';
@@ -1101,7 +1111,7 @@
 		html+=	'<td style=" height:144px;font-size:'+ areafontsize +'; width:100%;text-align: centre;">'+order.subtitle+'</td>';
 		html+='</tr>';
 		html+='<tr style="height:36px;font-size:'+ productfontsize +';">';
-		html+=	'<td style="text-align: left;" >'+order.product+'</td>';
+		html+=	'<td style="text-align: center;" >'+order.product+'</td>';
 		
 		html+='</tr>';
 		html+='</table>';
