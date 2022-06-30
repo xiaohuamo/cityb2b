@@ -1634,8 +1634,28 @@ public function get_business_delivery_des ($business_id){
 			
 			return $delivery_desc;
 	 }
-		 
-		 
+
+
+    public function combition_datestr_to_number($custome_date,$hour,$minute){
+
+        if(!$custome_date){
+
+            $custome_date = date('Y-m-d',time());
+        }
+        if(!$hour){
+            $hour='00';
+        }
+        if(!$minute){
+            $minute='00';
+        }
+
+        $datestr =$custome_date. ' '.$hour.":".$minute.":00";
+        $dateNumber = strtotime($datestr);
+
+        return $dateNumber;
+
+
+    }
     // 根据当前商家，在没有searchword的情况下，选择分类后（大类，或大类中类），如果不存在空的记录（待客户直接输入产品形成一个真的产品），给该商家的产品库增加相应大类，中类的空数据。
 	
 	public function addNewEmptyMenuUponCategory($BusinessId,$Category,$sub_category,$insertCount){

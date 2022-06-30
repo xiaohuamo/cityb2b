@@ -5200,6 +5200,144 @@ public function return_items_submit_to_statment_action() {
 
     }
 
+    public function new_schedule_action()
+    {
+        //获取当前管理的客户号码
+        $customer_id =get2('customer_id');
+
+        if(!$customer_id) {
+            $customer_id =$this->current_business['id'];
+
+        }
+        $this->setData($customer_id,'customer_id');
+
+
+        $truck_id = post('truck_id');
+        $this->setData($truck_id,'truck_id');
+
+
+
+        $driver_id = post('driver_id');
+
+
+        $this->setData($driver_id,'driver_id');
+
+
+        $customer_delivery_date = get2('customer_delivery_date');
+        $this->setData($customer_delivery_date,'customer_delivery_date');
+
+        $availableDates = $this->loadModel('freshfood_logistic_customers')->getAvaliableDateOfThisLogisiticCompany($this->current_business['id']);
+
+//var_dump($availableDates);exit;
+        $availableDates = array_map(function($d){
+            return date('Y-m-d',$d['logistic_delivery_date']);
+        }, $availableDates);
+        $this->setData($availableDates, 'availableDates');
+       // var_dump($availableDates);exit;
+
+        $mdl_truck =  $this->loadModel('truck');
+        $all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+
+        //获取可用的driver 信息
+
+
+        $this->setData($all_avaliable_trucks,'all_avaliable_trucks');
+
+        $mdl_staff_roles =  $this->loadModel('staff_roles');
+        $driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
+        $this->setData($driverList,'driverList');
+
+
+
+        $mdl  = $this->loadModel('authrise_manage_other_business_account');
+
+        $authrise_manage_other_business_account = Authorise_Center::getCustmerListsWithBusinessName($this->loginUser['id']);
+        $this->setData($authrise_manage_other_business_account, 'authrise_manage_other_business_account');
+
+
+
+        if($authrise_manage_other_business_account) { //如果该商家可以托管账户
+            // 检查接收的托管的商家是否合法
+
+
+
+            $isAuthoriseCustomer =Authorise_Center::getIsCustomerIdIsAuthorised($this->loginUser['id'],$customer_id);
+
+            //var_dump($isAuthoriseCustomer);exit;
+
+            if($isAuthoriseCustomer) { //如果是授权的customer
+
+                $mdl = $this->loadModel('truck_driver_schedule');
+
+                $list = $mdl->getScheduleList($customer_id,$customer_delivery_date);
+
+                $id = get2('deleteid');
+                if ($id && in_array($id, array_column($list, 'id'))) {
+                    $mdl->delete($id);
+                    $list = array_filter($list, function($s) use ($id){
+                        return $s['id'] !== $id;
+                    });
+                }
+            }else{
+
+                $this->setData(0,'customer_id');
+            }
+        }else{
+
+            $mdl = $this->loadModel('freshfood_disp_suppliers_schedule');
+            $where = [];
+            $where['business_id'] = $customer_id;
+            $where['centre_business_id'] = DispCenter::getDispCenterIdOfSupplier($this->loginUser['id']);
+            $list = $mdl->getList(null, $where);
+
+            $id = get2('deleteid');
+            if ($id && in_array($id, array_column($list, 'id'))) {
+                $mdl->delete($id);
+                $list = array_filter($list, function($s) use ($id){
+                    return $s['id'] !== $id;
+                });
+            }
+        }
+
+
+
+        $this->setData($list[0]['business_name'], 'business_name');
+        $this->setData($list[0]['business_name_en'], 'business_name_en');
+        $this->setData($list, 'data');
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Delivery Schedule Setting";
+        }else{
+            $pagename = "配送日程及开截单时间安排";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
+
+
+        $this->setData('Logistic_centre', 'menu');
+
+        $this->setData('new_schedule', 'submenu');
+        $this->setData('new_schedule', 'submenu_top');
+
+        $this->display('factory/new_schedule');
+    }
+
+    public function getNextFewDaysList_action(){
+
+        $start_date =post('start_date');
+        $days =post('days');
+
+        $nextFewdays =array();
+
+        for($i=0;$i<$start_date;$i++) {
+
+            $newdate = date("Y-m-d",strtotime("+$i day",strtotime($start_date)));
+            $nextFewdays[$i]=$newdate;
+            // $nextFewdays[$i]['logistic_delivery_date'];
+        }
+        echo json_encode($nextFewdays);
+
+    }
     public function get_select_item_history_ajax_action()
     {
         $item_id = trim(get2('item_id'));//Y-m-d
@@ -5214,6 +5352,22 @@ public function return_items_submit_to_statment_action() {
 
 
         echo json_encode($item_stock_history);
+    }
+
+    public function get_delivery_date_schedule_ajax_action()
+    {
+        $customer_delivery_date = trim(get2('customer_delivery_date'));//Y-m-d
+
+
+        //	$date = strtotime($datestr);
+
+        $delivery_date_schedule =$this->loadModel('truck_driver_schedule')->getDeliveryDateSchedule($this->current_business['id'],$customer_delivery_date);
+
+
+        // var_dump($item_stock_history);
+
+
+        echo json_encode($delivery_date_schedule);
     }
 
     public function get_select_item_area_info_ajax_action()

@@ -14418,6 +14418,107 @@ public function custom_delivery_fee_add_action()
 		}
 	}
 
+    public function new_schedule_create_action()
+    {
+
+        //检查是否输入进来的客户与登陆商家是否有代理关系
+        // var_dump($customer_id);exit;
+        $customer_id =post('customer_id');
+
+        if($customer_id != $this->current_business['id']){
+            $this->form_response(500,'no access');
+        }
+
+
+
+
+        $mdl_schedule = $this->loadModel('truck_driver_schedule');
+        $factory_schedule_id =$mdl_schedule->getFactoryNewScheduleId($this->current_business['id']);
+
+        if (is_post())
+        {
+
+            $customer_delivery_date = post('customer_delivery_date');
+            $this->setData($customer_delivery_date,'customer_delivery_date');
+
+            if(!$customer_delivery_date) {
+
+                $this->form_response(500,'please choose the delivery date!');
+          }
+
+
+            $truck_id = post('truck_id');
+            $this->setData($truck_id,'truck_id');
+
+            if(!$truck_id) {
+
+                $this->form_response(500,'please choose the truck!');
+            }
+
+            $driver_id = post('driver_id');
+            if(!$driver_id) {
+
+                $this->form_response(500,'please choose the driver!');
+            }
+
+            $this->setData($driver_id,'driver_id');
+
+            $schedule_start_of_time_hour = post('schedule_start_of_time_hour');
+            $schedule_start_of_time_minute = post('schedule_start_of_time_minute');
+
+            $schedule_start_time= $this->combition_datestr_to_number($customer_delivery_date,$schedule_start_of_time_hour,$schedule_start_of_time_minute);
+
+
+
+
+
+            $schedule_cut_of_time_hour = post('schedule_cut_of_time_hour');
+            $schedule_cut_of_time_minute = post('schedule_cut_of_time_minute');
+
+            $schedule_end_time= $this->combition_datestr_to_number($customer_delivery_date,$schedule_cut_of_time_hour,$schedule_cut_of_time_minute);
+
+
+            $this->setData($schedule_start_time,'shedule_start_time');
+
+
+            $this->setData($schedule_end_time,'schedule_end_time');
+
+
+
+
+
+            $data = [];
+            $data['factory_id'] = $this->current_business['id'];
+            $data['schedule_id'] = $factory_schedule_id;
+            $data['delivery_date'] = strtotime($customer_delivery_date);
+            $data['truck_id'] =$truck_id;
+            $data['driver_id'] = $driver_id;
+            $data['status'] = 1;
+            $data['schedule_start_time'] = $schedule_start_time;
+            $data['schedule_end_time'] = $schedule_end_time;
+            $data['start_time'] = 0;
+            $data['end_time'] = 0;
+            $data['plan_user_id'] = $this->loginUser['id'];
+
+            $data['plan_gen_time'] =time();
+            $data['approved_user_id'] =  $this->loginUser['id'];
+            $data['plan_approved_gen_time'] =  time();
+//var_dump($data);exit;
+            $new_id=$mdl_schedule->insert($data);
+            //将所有的business_name 修改称新的 business_name
+            //$this->setData($customer_id,'customer_id');
+           // $this->form_response(200,'Add successful',HTTP_ROOT_WWW.'factory/new_schedule?customer_delivery_date='.$customer_delivery_date.'&customer_id='.$customer_id.'&truck_id='.$truck_id.'&driver_id='.$driver_id);
+            if(!$new_id){
+
+                $this->form_response(500, 'error happen when generate data!','');
+            }else{
+
+                $this->form_response(200, 'success !');
+            }
+
+        }
+    }
+
 	public function freshx_price_action()
 	{	
 		//ALTER TABLE `cc_restaurant_menu` ADD `freshx_price` DECIMAL(8,2) NOT NULL AFTER `price`;

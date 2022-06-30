@@ -438,6 +438,10 @@
     <address_out_of_vic>非维州地区邮编，暂时不能够支持</address_out_of_vic>
     <out_of_delivery_range>您输入的地址超出商家送货范围，不属于投递范围</out_of_delivery_range>
 	<stock_alarm>库存报警</stock_alarm>
+	<schedule_management>调度管理</schedule_management>
+	<new_schedule>新增调度</new_schedule>
+	<schedule_list>调度查询</schedule_list>
+	
 
 
     <edit>编辑</edit>

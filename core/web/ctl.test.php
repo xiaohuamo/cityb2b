@@ -3469,6 +3469,17 @@ public function xero_get_contacts_action(){
 
 	 }
 
+	 public function test_datecombination_action(){
+		   $custome_date =get2('custome_date');
+		   $hour =get2('hours');
+		   $minute =get2('minute');
+		   $dateNumber =$this->combition_datestr_to_number($custome_date,$hour,$minute);
+
+			var_dump($dateNumber);exit;
+
+
+	 }
+
 	 public function test_data_fresh_action(){
 
 		   $this->data_refresh();

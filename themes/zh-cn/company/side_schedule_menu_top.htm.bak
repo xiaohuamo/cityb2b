@@ -3,8 +3,8 @@
  	<ul class="clearfix">
 
 	   <li><span>
-	   <a href=""<{if $submenu_top=='schedule_management'}> class="current"<{/if}>>
-                   新增调度
+	   <a href="<{$http_root_www}>factory/new_schedule"<{if $submenu_top=='new_schedule'}> class="current"<{/if}>>
+                   <{$lang->new_schedule}>
 				</a>
 	   </span></li>
 

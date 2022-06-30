@@ -8,10 +8,14 @@
 	<a  href="<{$http_root_www}>company/oproute"<{if $submenu=='customer_oproute'}> class="current"<{/if}>>
 			<{$lang->Logistic_route_management}> 
 	</a>
-
-	<a  target=_blank  href="https://my.optimoroute.com/">
-			Optimoroute site
+	<a  href="<{$http_root_www}>company/oproute"<{if $submenu=='schedule_management'}> class="current"<{/if}>>
+			<{$lang->schedule_management}> 
 	</a>
+	
+	<a  href="<{$http_root_www}>company/customer_orders_logistic_query"<{if $submenu=='customer_orders_logistic_query'}> class="current"<{/if}>>
+			<{$lang->manual_route_plan}>
+	</a>
+	
 	<a  href="<{$http_root_www}>company/export_driver_route_local"<{if $submenu=='export_driver_route_local'}> class="current"<{/if}>>
 			<{$lang->Driver_route_sheet}>
 	</a>
@@ -20,13 +24,13 @@
 			导出司机表格(oproute)
 	</a> -->
 	
-	<a  href="<{$http_root_www}>company/customer_orders_logistic_query"<{if $submenu=='customer_orders_logistic_query'}> class="current"<{/if}>>
-			<{$lang->manual_route_plan}>
-	</a>
+	
 	<a  href="<{$http_root_www}>factory/truck_list"<{if $submenu=='trucklist'}> class="current"<{/if}>>
 			<{$lang->Truck_list}> 
 	</a>
-	
+	<a  target=_blank  href="https://my.optimoroute.com/">
+			Optimoroute site
+	</a>
 	<!--
 	<a  href=""<{if $submenu==''}> class="current"<{/if}>>
 			<{$lang->Truck_schedue_histroy}>  

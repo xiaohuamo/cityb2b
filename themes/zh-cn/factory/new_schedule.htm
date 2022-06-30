@@ -1,0 +1,380 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<script type="text/javascript">
+		function myfun(){
+			<{if $customer_id}>
+			  $('#delivery_management_box').css("display",'');
+			   $('#open_end_setting_list').css("display",'');
+			<{/if}>
+		}
+		window.onload = myfun;
+	</script>
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+			<div class="box2">
+			<{include file='company/side_schedule_menu_top.htm'}>
+			<div class="main-form">
+
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/new_schedule_create" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box t clearfix">
+						<h1>
+						
+							<{$pagename}>
+						
+						</h1>
+					</div>
+					<input value='<{$customer_id}>' type="hidden" id = "customer_id" name="customer_id">
+					<input value='<{$customer_delivery_date}>' type="hidden" id = "customer_delivery_date"  name="customer_delivery_date">
+					<input value='<{$truck_id}>' type="hidden" id = "truck_id"  name="truck_id">
+					<input value='<{$driver_id}>' type="hidden" id = "driver_id"  name="driver_id">
+				
+				
+
+					<div id="delivery_management_box" style ="display:none;" class="input-box  clearfix">
+						<label>Choose Date：</label>
+						<select onchange="changeDelivery_date(this)" >
+						<option><{$lang->logistic_choosedate1}></option>
+						<{foreach from=$availableDates item=d}>
+							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
+								<{$d}>
+							</option>
+						<{/foreach}>
+					</select> <a>导入默认车辆配置</a>
+					<br>
+					<label>Choose Truck：</label>
+					<select  onchange="changeTruck(this)" >
+													<option value='0'>Choose Truck</option>
+                                                    <{foreach from=$all_avaliable_trucks item=sitem1}>
+														<option value='<{$sitem1.truck_no}>'
+                                                                <{if $truck_id==$sitem1.truck_no}>selected<{/if}>>
+																	
+                                                            <{$sitem1.truck_no}>-<{$sitem1.truck_name}>- <{$sitem1.plate_number}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+						
+
+						
+							<label>Choose Driver：</label>
+											<select onchange="changeDriver(this)" >
+													<option value='0'>Choose the Driver</option>
+                                                    <{foreach from=$driverList item=sitem1}>
+														<option value='<{$sitem1.id}>'
+                                                                <{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
+                                                            <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<br>
+						<label>Schedule Start Time ：</label>
+						
+
+						<select name='schedule_start_of_time_hour' >
+							<option value=''></option>
+							<{for $time = 0 to 23}>
+								<{if $time < 10}>
+									<option value="0<{$time}>" <{if $time==8}>selected<{/if}> >0<{$time}></option>
+								<{else}>
+									<option value="<{$time}>"><{$time}></option>
+								<{/if}>
+							<{/for}>
+						</select>
+						:
+						<select name='schedule_start_of_time_minute' >
+							<option value="00">00</option>
+							<option value="05">05</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="30">30</option>
+							<option value="35">35</option>
+							<option value="40">40</option>
+							<option value="45">45</option>
+							<option value="50">50</option>
+							<option value="55">55</option>
+						</select>
+
+						
+
+							<label>Schedule End Time ：</label>
+
+						<select name='schedule_cut_of_time_hour' >
+							<option value=''></option>
+							<{for $time = 0 to 23}>
+								<{if $time < 10}>
+									<option value="0<{$time}>">0<{$time}></option>
+								<{else}>
+									<option value="<{$time}>" <{if $time==16}>selected<{/if}> ><{$time}></option>
+								<{/if}>
+							
+							<{/for}>
+						</select>
+						:
+						<select name='schedule_cut_of_time_minute' >
+													
+							<option value="00">00</option>
+							<option value="05">05</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="30">30</option>
+							<option value="35">35</option>
+							<option value="40">40</option>
+							<option value="45">45</option>
+							<option value="50">50</option>
+							<option value="55">55</option>
+							
+								
+						
+						</select>
+
+					<!--	<div  id="business_name"  class="input-box clearfix">
+
+							<span><label>店铺缩写</label></span>
+
+							<input class="input-text" value="<{$business_name}>" name="business_name" />
+						
+							<em>中文限三个字，因为限10个字</em>
+						</div>
+
+						<div  id="business_name_en"  class="input-box clearfix">
+
+							<span><label>店铺英文缩写</label></span>
+
+							<input class="input-text" value="<{$business_name_en}>" name="business_name_en" />
+							
+							<em>英文限制6个字</em>
+						</div>
+						
+						-->
+						<br><br>
+						<button type="submit" class="btn btn-default btn-success" id="">Add</button>
+					</div>
+				</form>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript">
+						
+													//disable submit on enter
+							$(document).on("keypress", "#memberForm,.memberForm", function(event) { return event.keyCode != 13;});
+
+							// this is attached to the end of each form to handle response
+							$('#memberForm,.memberForm').submit(function(){
+								var _form = $(this);
+								_form.find(':submit').attr('disabled', true);
+
+								$('.form_response_alert').remove();
+								_form.before('<p class="form_response_loader"></p>');
+
+								$('#post_frame').unbind('load').load(function(){
+
+									$('.form_response_alert').remove();
+									_form.find(':submit').attr('disabled', false);
+
+									var result = $(this).contents().find('body').html();
+									var data=[];
+									try{
+										data = JSON.parse(result);
+									}catch(err){
+										data['msg'] = result;
+									}
+
+									var further_action_delay=0;
+									//Display message
+									if(data.msg){
+										$('.form_response_loader').remove();
+										if(data.redirect){
+											data.msg=data.msg+" ...";
+										}
+										_form.before('<div class="form_response_alert">'+ data.msg +'</div>');
+										further_action_delay=2000;
+									}
+
+									//Further action
+									if (data.status==200) {
+									
+										getCurrentDateSchedule(customer_delivery_date);
+										
+											
+										$('.form_response_alert').on('click',function(){
+											$(this).remove();
+										}).delay(2000).fadeOut(500);
+									}else{
+										//alert('300');
+										$('.form_response_alert').on('click',function(){
+											$(this).remove();
+										}).delay(2500).fadeOut(500);
+									}
+								});
+							});
+
+						
+						</script> 
+
+				<div class="main-list" name="products_detail" id="products_detail">
+						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Schedule No</th>
+								<th>Truck</th>
+								<th>Driver</th>
+								<th>Status</th>
+								<th>Sche.Start</th>
+								<th>Sche. End</th>
+								<th>Delivery Date</th>
+								<th>Delete</th>
+								
+
+							</tr>
+
+							</thead>
+							<!--class="odd"-->
+							<tbody>
+                           
+								
+                          
+							</tbody>
+						</table>
+					</div>
+				
+			</div>
+</div>
+		</div>
+
+	</div>
+
+</div>
+<script type="text/javascript">
+
+    var customer_delivery_date ='<{$customer_delivery_date}>';
+	
+	
+	function changeDelivery_date(obj){
+	  var value = $(obj).val();
+	  $('#customer_delivery_date').val(value);
+	  customer_delivery_date=value;
+	// alert('customer_delivery_date has been set ' + customer_delivery_date);
+	 getCurrentDateSchedule(customer_delivery_date)
+	  
+	}
+	
+	
+	function changeTruck(obj){
+	  var value = $(obj).val();
+	  $('#truck_id').val(value);
+	 // alert( $('#truck_id').val());
+	  
+	}
+	
+	function changeDriver(obj){
+	  var value = $(obj).val();
+	  $('#driver_id').val(value);
+	  //alert( $('#driver_id').val());
+	  
+	}
+				
+				function getCurrentDateSchedule(customer_delivery_date){
+				
+				//alert('current date is ' +customer_delivery_date);
+				if(!customer_delivery_date){
+				  alert('please choose the delivery date!');
+				  return;
+				}
+				if ($('#schedule_list tbody').length > 0) { 
+										
+											$('#schedule_list tbody').empty();
+										}
+											
+					$.ajax({
+						  url:"/factory/get_delivery_date_schedule_ajax",
+						  data: {customer_delivery_date:customer_delivery_date},
+						  contentType: "application/json",
+						  dataType: "json",
+						  success:function(data){
+								var data1=data;
+								if(data1.length>0){
+								//alert('ddd');
+										
+										if ($('#schedule_list tbody').length > 0) { 
+										
+											$('#schedule_list tbody').empty();
+										}
+								
+										var html = '';
+										for (var i = 0; i< data1.length ; i++) {
+										
+										   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
+											//alert(html);
+											$('#schedule_list tbody').append("<tr><td>"+data1[i]['schedule_id']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['driverName']+"</td> <td>"+data1[i]['status']+"</td>  <td>"+data1[i]['start_hour']+"</td>   <td>"+data1[i]['end_hour']+"</td> <td>"+data1[i]['delivery_date_str']+"</td></tr>");
+											
+										 }
+										//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+									}else{
+									//alert('no record');
+										if ($('#schedule_list tbody').length > 0) { 
+										
+											$('#schedule_list tbody').empty();
+										}
+									
+									}
+								
+									
+								},
+								error:function(data){
+									console.log(data);
+								}
+						  
+						})
+				
+				
+				
+				}
+				
+	
+</script>
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>

@@ -557,7 +557,9 @@
 
     <follow_offical_account>Set wechat notice</follow_offical_account>
     <follow_offical_account_desc>Scan QR code and follow will receving messages from wechat .</follow_offical_account_desc>
-
+	<stock_alarm>Stock Alarm</stock_alarm>
+	<schedule_management>schedule Management</schedule_management>
+	<new_schedule>New_schedule</new_schedule>
 
     <management>Management</management>
 
