@@ -366,10 +366,10 @@
 		//生成默认车辆调度信息
 		var success = generateDefaultSchedule(customer_delivery_date);
 		
-		if(success){
+		
 		
 		 getCurrentDateSchedule(customer_delivery_date);
-		}
+	
 		
 		// 显示调度信息
 		
