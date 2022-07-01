@@ -1635,7 +1635,24 @@ public function get_business_delivery_des ($business_id){
 			return $delivery_desc;
 	 }
 
+    public function combition_datestr_to_number_hour_min($custome_date,$str){
 
+        if(!$custome_date){
+
+            $custome_date = date('Y-m-d',time());
+        }
+        if(!$str){
+            $str='00:00';
+        }
+
+
+        $datestr =$custome_date. ' '.$str;
+        $dateNumber = strtotime($datestr);
+
+        return $dateNumber;
+
+
+    }
     public function combition_datestr_to_number($custome_date,$hour,$minute){
 
         if(!$custome_date){

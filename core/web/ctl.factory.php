@@ -5370,6 +5370,98 @@ public function return_items_submit_to_statment_action() {
         echo json_encode($delivery_date_schedule);
     }
 
+
+    public function generate_default_schedule_action(){
+
+        if(is_post()){
+
+            $customer_delivery_date = trim(post('customer_delivery_date'));//Y-m-d
+            $mdl_schedule =$this->loadModel('truck_driver_schedule');
+
+            $truck_list = $this->loadModel('truck')->getAllTruckOfBusiness($this->current_business['id']);
+
+
+            foreach ($truck_list as $key=>$value) {
+
+
+                $factory_schedule_id =$mdl_schedule->getFactoryNewScheduleId($this->current_business['id']);
+
+                $start_time = $value['start_time'];
+
+
+                $schedule_start_time= $this->combition_datestr_to_number_hour_min($customer_delivery_date,$start_time);
+
+
+
+
+
+                $end_time = $value['end_time'];
+                $schedule_cut_of_time_minute = post('schedule_cut_of_time_minute');
+
+                $schedule_end_time= $this->combition_datestr_to_number_hour_min($customer_delivery_date,$end_time);
+
+
+
+                $data = [];
+                $data['factory_id'] = $this->current_business['id'];
+                $data['schedule_id'] = $factory_schedule_id;
+                $data['delivery_date'] = strtotime($customer_delivery_date);
+                $data['truck_id'] =$value['truck_no'];
+                $data['driver_id'] =$value['current_driver'];
+                $data['status'] = 1;
+                $data['schedule_start_time'] = $schedule_start_time;
+                $data['schedule_end_time'] = $schedule_end_time;
+                $data['start_time'] = 0;
+                $data['end_time'] = 0;
+                $data['plan_user_id'] = $this->loginUser['id'];
+
+                $data['plan_gen_time'] =time();
+                $data['approved_user_id'] =  $this->loginUser['id'];
+                $data['plan_approved_gen_time'] =  time();
+//var_dump($data);exit;
+                $new_id = $mdl_schedule->insert($data);
+                if(!$new_id) {
+
+                    $this->form_response(500,'error happened when generate default schedule info ');
+                }
+
+            }
+
+
+
+
+
+            $this->form_response(200,$customer_delivery_date);
+
+        }
+    }
+
+    public function delete_scheduel_info_action()
+    {
+
+        if(is_post()){
+            $id = trim(post('id'));//Y-m-d
+
+            $mdl_schedule =$this->loadModel('truck_driver_schedule');
+            $sche_rec =$mdl_schedule->get($id);
+            if($sche_rec['factory_id']!=$this->current_business['id']) {
+                $this->form_response(500,'no access');
+            }
+            // 不能删除调度历史
+            $start_time =  time()-3*24*60*60;
+            if($sche_rec['delivery_date']<=$start_time) {
+                $this->form_response(500,'no access for earily data');
+
+            }
+
+            $mdl_schedule->delete($id);
+
+            $this->form_response(200,'');
+
+        }
+
+    }
+
     public function get_select_item_area_info_ajax_action()
     {
         $item_id = trim(get2('item_id'));//Y-m-d

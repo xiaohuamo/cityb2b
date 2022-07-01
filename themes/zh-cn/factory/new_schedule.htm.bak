@@ -75,7 +75,7 @@
 								<{$d}>
 							</option>
 						<{/foreach}>
-					</select> <a>导入默认车辆配置</a>
+					</select>&nbsp;&nbsp;<button type="button" onclick="importDefaultTruckDriverInfoForDeliveryDate();" class="btn btn-default btn-success" id=""><{$lang->getDefaultDriverTruckInfo}></button>
 					<br>
 					<label>Choose Truck：</label>
 					<select  onchange="changeTruck(this)" >
@@ -261,6 +261,7 @@
 								<th>Sche.Start</th>
 								<th>Sche. End</th>
 								<th>Delivery Date</th>
+								<th>Delete</th>
 								
 
 							</tr>
@@ -310,63 +311,169 @@
 	  //alert( $('#driver_id').val());
 	  
 	}
+			
+	function deleteScheduel(id) {
+	
+		
+	 
+	 var updateData = {};
+
+	 updateData['id'] = id;
+	
+		//alert(id);
+	
+		$.ajax({
+			url: "<{$http_root_www}>factory/delete_scheduel_info",
+			type: "POST",
+			data: updateData,
+			
+		}).done(function (data) {
+			try {
+				data = JSON.parse(data);
+			} catch (err) {
+				data['msg'] = data;
+			}
+
+			if (data.status == 200) {
+					$("tr[id=schedule_"+id+"]").remove();
+			   
+			} else if (data.status == 500) {
+				alert(data.msg);
 				
-				function getCurrentDateSchedule(customer_delivery_date){
 				
-				//alert('current date is ' +customer_delivery_date);
-				if(!customer_delivery_date){
-				  alert('please choose the delivery date!');
-				  return;
-				}
-				if ($('#schedule_list tbody').length > 0) { 
-										
-											$('#schedule_list tbody').empty();
-										}
-											
-					$.ajax({
-						  url:"/factory/get_delivery_date_schedule_ajax",
-						  data: {customer_delivery_date:customer_delivery_date},
-						  contentType: "application/json",
-						  dataType: "json",
-						  success:function(data){
-								var data1=data;
-								if(data1.length>0){
-								//alert('ddd');
-										
-										if ($('#schedule_list tbody').length > 0) { 
-										
-											$('#schedule_list tbody').empty();
-										}
+			} else {
+				alert(data.msg);
+				
+			}
+		}).fail(function () {
+			
+			alert(data.msg);
+		});
+				
+	
+	
+	
+	
+	}
+	
+	
+	function importDefaultTruckDriverInfoForDeliveryDate(){
+	
+		if(!customer_delivery_date){
+		  alert('please choose the delivery date!');
+		  return;
+		}
+		//生成默认车辆调度信息
+		var success = generateDefaultSchedule(customer_delivery_date);
+		
+		if(success){
+		
+		 getCurrentDateSchedule(customer_delivery_date);
+		}
+		
+		// 显示调度信息
+		
+		
+	
+	}
+	
+	
+	function generateDefaultSchedule(customer_delivery_date){
+		var updateData = {};
+
+		updateData['customer_delivery_date'] = customer_delivery_date;
+	
+		alert(customer_delivery_date);
+	
+		$.ajax({
+			url: "<{$http_root_www}>factory/generate_default_schedule",
+			type: "POST",
+			data: updateData,
+			
+		}).done(function (data) {
+			try {
+				data = JSON.parse(data);
+			} catch (err) {
+				data['msg'] = data;
+			}
+
+			if (data.status == 200) {
+					return 1;
+			   
+			} else if (data.status == 500) {
+				alert(data.msg);
+					return 0;
+				
+			} else {
+				alert(data.msg);
+				return 0;
+			}
+		}).fail(function () {
+			return 0;
+			alert(data.msg);
+		});
+	
+	
+	
+	}
+	
+	
+	function getCurrentDateSchedule(customer_delivery_date){
+	
+	//alert('current date is ' +customer_delivery_date);
+	if(!customer_delivery_date){
+	  alert('please choose the delivery date!');
+	  return;
+	}
+	if ($('#schedule_list tbody').length > 0) { 
+							
+								$('#schedule_list tbody').empty();
+							}
 								
-										var html = '';
-										for (var i = 0; i< data1.length ; i++) {
-										
-										   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
-											//alert(html);
-											$('#schedule_list tbody').append("<tr><td>"+data1[i]['schedule_id']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['driverName']+"</td> <td>"+data1[i]['status']+"</td>  <td>"+data1[i]['start_hour']+"</td>   <td>"+data1[i]['end_hour']+"</td> <td>"+data1[i]['delivery_date_str']+"</td></tr>");
-											
-										 }
-										//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
-									}else{
-									//alert('no record');
-										if ($('#schedule_list tbody').length > 0) { 
-										
-											$('#schedule_list tbody').empty();
-										}
-									
-									}
+		$.ajax({
+			  url:"/factory/get_delivery_date_schedule_ajax",
+			  data: {customer_delivery_date:customer_delivery_date},
+			  contentType: "application/json",
+			  dataType: "json",
+			  success:function(data){
+					var data1=data;
+					if(data1.length>0){
+					//alert('ddd');
+							
+							if ($('#schedule_list tbody').length > 0) { 
+							
+								$('#schedule_list tbody').empty();
+							}
+					
+							var html = '';
+							for (var i = 0; i< data1.length ; i++) {
+							
+							   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
+								//alert(html);
+								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'><td>"+data1[i]['schedule_id']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['driverName']+"</td> <td>"+data1[i]['status']+"</td>  <td>"+data1[i]['start_hour']+"</td>   <td>"+data1[i]['end_hour']+"</td> <td>"+data1[i]['delivery_date_str']+"</td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td></tr>");
 								
-									
-								},
-								error:function(data){
-									console.log(data);
-								}
-						  
-						})
-				
-				
-				
-				}
+							 }
+							//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+						}else{
+						//alert('no record');
+							if ($('#schedule_list tbody').length > 0) { 
+							
+								$('#schedule_list tbody').empty();
+							}
+						
+						}
+					
+						
+					},
+					error:function(data){
+						console.log(data);
+					}
+			  
+			})
+	
+	
+	
+	}
 				
 	
 </script>
