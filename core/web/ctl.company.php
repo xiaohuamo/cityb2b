@@ -3654,10 +3654,15 @@ class ctl_company extends cmsPage
 	//			$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusinessWithOrderCounts($this->current_business['id'],$customer_delivery_date);
 	//	}else{
 				$all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+
+
 	//	}
-		
-	
+        $mdl_schedule =$this->loadModel('truck_driver_schedule');
+        $schedule_list = $mdl_schedule->getDeliveryDateSchedule($this->current_business['id'],$customer_delivery_date);
+
+       // var_dump($schedule_list);exit;
 		$this->setData($all_avaliable_trucks,'all_avaliable_trucks');
+        $this->setData($schedule_list,'schedule_list');
       //  var_dump($all_avaliable_trucks);exit;
 
 

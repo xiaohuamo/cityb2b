@@ -7107,14 +7107,24 @@ public function return_items_submit_to_statment_action() {
            
             $value = post('value');
 
-            $data['logistic_truck_No'] =$value;
+            // 获取当前的schedule_id是否为当前商家所有
+            $schedule_rec =$this->loadModel('truck_driver_schedule')->get($value);
 
-            $mdl_truck = $this->loadModel('truck');
-            $truckDriverRec = $mdl_truck->getByWhere(array('truck_no'=>$value,'business_id'=>$this->current_business['id']));
-            if($truckDriverRec){
-                $data['logistic_driver_code']=$truckDriverRec['current_driver'];
+            if($schedule_rec['factory_id']!=$this->current_business['id']){
+                $this->form_response(600,'no access');
             }
-            try {
+
+
+
+            // 同时更新 shedule_id ,dirver_id , truck_np
+
+
+
+            $data['logistic_truck_No'] =$schedule_rec['truck_id'];
+            $data['logistic_driver_code'] =$schedule_rec['driver_id'];
+            $data['logistic_schedule_id'] =$schedule_rec['schedule_id'];
+
+        try {
                 $mdl_order->update($data,$id);
 
                 $this->form_response(200,'','');
