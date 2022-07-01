@@ -5306,9 +5306,9 @@ public function return_items_submit_to_statment_action() {
         $this->setData($list, 'data');
 
         if ($this->getLangStr() == 'en') {
-            $pagename = "Delivery Schedule Setting";
+            $pagename = "Truck&Driver Schedule Management";
         }else{
-            $pagename = "配送日程及开截单时间安排";
+            $pagename = "车辆司机调度管理";
         }
         $this->setData($pagename, 'pagename');
         $this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
@@ -7003,10 +7003,10 @@ public function return_items_submit_to_statment_action() {
 
 
 
-        $logistic_truck_No = trim(get2('logistic_truck_No'));
+        $logistic_schedule_id = trim(get2('logistic_schedule_id'));
 
 
-        $this->setData($logistic_truck_No,'logistic_truck_No');
+        $this->setData($logistic_schedule_id,'logistic_schedule_id');
 
 
         $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
@@ -7048,22 +7048,22 @@ public function return_items_submit_to_statment_action() {
             $whereStr.= " and  logistic_delivery_date > $three_days_times";
         }
 
-        if (!empty($logistic_truck_No)) {
+        if (!empty($logistic_schedule_id)) {
 
-            if ($logistic_truck_No != 'all') {
-                $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
+            if ($logistic_schedule_id != 'all') {
+                $whereStr.= " and  logistic_schedule_id = '$logistic_schedule_id' ";
 
             }
         }
 
-        if ($logistic_truck_No =='0' ) {
-            $whereStr.= " and  logistic_truck_No =0 ";
-            // var_dump($logistic_truck_No);exit;
+        if ($logistic_schedule_id =='0' ) {
+            $whereStr.= " and  logistic_schedule_id =0 ";
+            // var_dump($logistic_schedule_id);exit;
         }
 
 
 
-        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
+        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_schedule_id,logistic_stop_No";
 
         // var_dump($pageSql); exit;
         $pageUrl = $this->parseUrl()->set('page');

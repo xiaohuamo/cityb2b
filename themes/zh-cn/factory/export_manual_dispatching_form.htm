@@ -61,18 +61,18 @@
 						<{/foreach}>
 					</select>
 					
-	               <select class='chooselogistic_truck_No' id="driver-serial" name="logistic_truck_No" >
+	                <select class='chooselogistic_truck_No' id="logistic_schedule_id" name="logistic_schedule_id" >
 						<option value="all"  ><{$lang->logistic_choosetruck}></option>
 						<{foreach from=$TuckListOfTheDay item=d}>
-							<{if $d.logistic_truck_No==0}>
-							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-								<{$lang->no_truck_yet}>
+							<{if $d.logistic_schedule_id==0}>
+							<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+								<{$lang->no_truck_yet}>-(<{$d.count}>orders)-(<{$d.boxes}>boxes)
 							</option>
 							
 							<{else}>
-								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
-									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
+								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+									<{if $d.start_hour}><{$d.start_hour}>-<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}>
+									<{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>orders)-(<{$d.boxes}>boxes)
 								</option>
 							<{/if}>
 						<{/foreach}>
