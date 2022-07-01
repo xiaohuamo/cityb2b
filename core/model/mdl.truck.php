@@ -39,18 +39,20 @@ class mdl_truck extends mdl_base
  		    	where o.logistic_delivery_date = ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and (o.status =1 or o.accountPay=1)  
 				group by o.logistic_truck_No order by o.logistic_truck_No"; */
 		//var_dump($sql);exit;
-		$sql="select o.logistic_truck_No ,t.*,ifnull(count(DISTINCT o.orderId),0) as count,concat(u.contactPersonFirstname,' ',u.contactPersonLastname) as driverName,
+		$sql="select o.logistic_schedule_id ,s.*,t.truck_name,from_unixtime(s.schedule_start_time,'%H:%i') as start_hour,t.plate_number,ifnull(count(DISTINCT o.orderId),0) as count,concat(u.contactPersonFirstname,' ',u.contactPersonLastname) as driverName,
 
- ceil(sum(c.customer_buying_quantity/ m.unitQtyPerBox)) as boxes
+ o.boxesNumber as boxes
 
-from cc_order o left join cc_truck t on o.logistic_truck_No = t.truck_no and o.business_userId=t.business_id left join cc_user u on t.current_driver =u.id 
+from cc_order o left join cc_truck t on o.logistic_truck_No = t.truck_no and o.business_userId=t.business_id
+     left join cc_truck_driver_schedule s on o.logistic_schedule_id =s.schedule_id and o.business_userId =s.factory_id 
+    left join cc_user u on t.current_driver =u.id 
 left join cc_wj_customer_coupon c on o.orderId =c.order_id left join cc_restaurant_menu m on c.restaurant_menu_id =m.id 
 
-where o.logistic_delivery_date =  ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and (o.status =1 or o.accountPay=1) group by o.logistic_truck_No order by o.logistic_truck_No";
+where o.logistic_delivery_date =  ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and (o.status =1 or o.accountPay=1) group by o.logistic_schedule_id order by o.logistic_schedule_id";
 
 
         $allTruckList  = $this->getListBySql($sql);
-		//var_dump($allTruckList);exit;
+		//var_dump($sql);exit;
 		return $allTruckList;
 		
 		

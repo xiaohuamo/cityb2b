@@ -441,7 +441,7 @@
 	<schedule_management>调度管理</schedule_management>
 	<new_schedule>新增调度</new_schedule>
 	<schedule_list>调度查询</schedule_list>
-	<getDefaultDriverTruckInfo>获取默认司机车辆配置</getDefaultDriverTruckInfo>
+	<getDefaultDriverTruckInfo>获取默认车辆配置</getDefaultDriverTruckInfo>
 	
 
 

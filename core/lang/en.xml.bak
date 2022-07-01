@@ -561,6 +561,7 @@
 	<schedule_management>schedule Management</schedule_management>
 	<new_schedule>New_schedule</new_schedule>
 	<schedule_list>Schedule List</schedule_list>
+	<getDefaultDriverTruckInfo>Import Default Truck Configuration</getDefaultDriverTruckInfo>
 
     <management>Management</management>
 

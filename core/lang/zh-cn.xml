@@ -82,7 +82,7 @@
 	<choose_account>选择账户</choose_account>
 	<choose_category>选择类别</choose_category>
 	<choose_driver_truck>选择司机-车辆</choose_driver_truck>
-	<no_truck_yet>等待安排车辆</no_truck_yet>
+	<no_truck_yet>等待调度</no_truck_yet>
 	
 	<manu_picking_List>手工配货管理</manu_picking_List>
 	<manu_producing_management>手工生产管理</manu_producing_management>

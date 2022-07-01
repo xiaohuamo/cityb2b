@@ -3721,10 +3721,10 @@ class ctl_company extends cmsPage
 		$ifpaid=trim(get2('ifpaid'));
 	
 		
-		$logistic_truck_No = trim(get2('logistic_truck_No'));
+		$logistic_schedule_id = trim(get2('logistic_schedule_id'));
 	
 		
-		$this->setData($logistic_truck_No,'logistic_truck_No');
+		$this->setData($logistic_schedule_id,'logistic_schedule_id');
 		$this->setData($status,'status');
 		$this->setData($ifpaid,'ifpaid');
 
@@ -3798,16 +3798,16 @@ class ctl_company extends cmsPage
 				$whereStr.= " and  logistic_delivery_date > $three_days_times";
 		}
     	
-	   if (!empty($logistic_truck_No)) {
+	   if (!empty($logistic_schedule_id)) {
 		  
-            if ($logistic_truck_No != 'all') {
-               $whereStr.= " and  logistic_truck_No = '$logistic_truck_No' ";
+            if ($logistic_schedule_id != 'all') {
+               $whereStr.= " and  logistic_schedule_id = '$logistic_schedule_id' ";
 			   
             }
         }
 		
-      if ($logistic_truck_No =='0' ) {
-		       $whereStr.= " and  logistic_truck_No =0 ";
+      if ($logistic_schedule_id =='0' ) {
+		       $whereStr.= " and  $logistic_schedule_id =0 ";
          // var_dump($logistic_truck_No);exit;
         }
 
@@ -3816,7 +3816,7 @@ class ctl_company extends cmsPage
 
       }
 
-        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_truck_No,logistic_stop_No";
+        $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_schedule_id,logistic_stop_No";
       
     // var_dump($pageSql); exit;
             $pageUrl = $this->parseUrl()->set('page');
