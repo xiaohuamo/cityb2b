@@ -383,7 +383,7 @@
 
 		updateData['customer_delivery_date'] = customer_delivery_date;
 	
-		alert(customer_delivery_date);
+		//alert(customer_delivery_date);
 	
 		$.ajax({
 			url: "<{$http_root_www}>factory/generate_default_schedule",
