@@ -166,7 +166,7 @@
 							var vv = $(obj).val(); 
 						
 							if (vv) {
-									window.location.href = "<{$http_root_www}>company/customer_orders_logistic_query?=customer_delivery_date=" + vv;
+									window.location.href = "<{$http_root_www}>company/customer_orders_logistic_query?customer_delivery_date=" + vv;
 							}
 											}
 					</script>

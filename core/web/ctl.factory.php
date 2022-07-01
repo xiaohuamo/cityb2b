@@ -5447,8 +5447,25 @@ public function return_items_submit_to_statment_action() {
             if($sche_rec['factory_id']!=$this->current_business['id']) {
                 $this->form_response(500,'no access');
             }
+
+            //不能删除已经安排到订单的调度
+            $schedule_id = $sche_rec['schedule_id'];
+            $business_id = $this->current_business['id'];
+
+            $sql ="select count(*) as count from cc_order where logistic_schedule_id = $schedule_id and business_userId =$business_id and coupon_status !='d01'";
+
+
+
+           $countRec = $this->loadModel('order')->getListBySql($sql);
+
+           if($countRec[0]['count']>0){
+
+               $this->form_response(500,'There are '.$countRec[0]['count'].' orders under this schedule ,can not delete schedule which assigned the orders.');
+           }
+
+
             // 不能删除调度历史
-            $start_time =  time()-3*24*60*60;
+            $start_time =  time()-5*24*60*60;
             if($sche_rec['delivery_date']<=$start_time) {
                 $this->form_response(500,'no access for earily data');
 
@@ -7110,19 +7127,23 @@ public function return_items_submit_to_statment_action() {
             // 获取当前的schedule_id是否为当前商家所有
             $schedule_rec =$this->loadModel('truck_driver_schedule')->get($value);
 
-            if($schedule_rec['factory_id']!=$this->current_business['id']){
+            if($schedule_rec && $schedule_rec['factory_id']!=$this->current_business['id']){
                 $this->form_response(600,'no access');
             }
 
 
 
             // 同时更新 shedule_id ,dirver_id , truck_np
+            if($value){
+                $data['logistic_truck_No'] =$schedule_rec['truck_id'];
+                $data['logistic_driver_code'] =$schedule_rec['driver_id'];
+                $data['logistic_schedule_id'] =$schedule_rec['schedule_id'];
+            }else{
+                $data['logistic_truck_No'] =0;
+                $data['logistic_driver_code'] =0;
+                $data['logistic_schedule_id'] =0;
+            }
 
-
-
-            $data['logistic_truck_No'] =$schedule_rec['truck_id'];
-            $data['logistic_driver_code'] =$schedule_rec['driver_id'];
-            $data['logistic_schedule_id'] =$schedule_rec['schedule_id'];
 
         try {
                 $mdl_order->update($data,$id);
