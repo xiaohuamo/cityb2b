@@ -205,8 +205,17 @@ class mdl_staff_roles extends mdl_base
             and ( staff.roles like '%,0,%' or staff.roles like '%,1,%'or staff.roles like '%,16,%' )
             ";
 
-         $list= $this->getlistbysql($sql);
-         return $list;
+        $list= $this->getlistbysql($sql);
+        return $list;
+
+    }
+    public function  getAllDriverOfBusinessSchedueld($business_id){
+
+        $sql ="select user.id,user.name,user.contactPersonNickName from cc_user user
+            left join cc_staff_roles staff on user.id =staff.staff_id
+            where user.user_belong_to_user =$business_id  and user.id in (select distinct driver_id from cc_truck_driver_schedule where factory_id =$business_id) ";
+        $list= $this->getlistbysql($sql);
+        return $list;
 
     }
 

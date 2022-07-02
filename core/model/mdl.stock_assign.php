@@ -10,7 +10,7 @@ class mdl_stock_assign extends mdl_base
     /*
      *分配某个item (specid)库存 到
      * */
-    public function assgin_single_item_stock($value,$logistic_truck_No,$operator_user_id){
+    public function assgin_single_item_stock($value,$logistic_schedule_id,$operator_user_id){
 
           $item_id =$value['id'];
           $item_spec_id =$value['guige1_id'];
@@ -23,9 +23,9 @@ class mdl_stock_assign extends mdl_base
 
           $mdl =loadModel('wj_customer_coupon');
           // 锁定当前产品（规格），某个供应商，某个配送日，某个车辆的加工明细 ,将状态设置为 is_producing_done 0->3
-          $this->LockItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No);
+          $this->LockItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_schedule_id);
           // 获得所有的能够分配库存的加工明细信息
-          $item_details =  $this->getItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No);
+          $item_details =  $this->getItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_schedule_id);
         // var_dump($item_details);exit;
 
 
@@ -103,15 +103,15 @@ class mdl_stock_assign extends mdl_base
 
     }
 
-    function LockItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No) {
+    function LockItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_schedule_id) {
         $sql ="update cc_wj_customer_coupon  set is_producing_done =3 
 where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id =$business_id and is_producing_done =0 and assign_stock =0 and order_id in ( select orderId from cc_order where orderId = cc_wj_customer_coupon.order_id and logistic_delivery_date = $delivery_date  )
 
 
 ";
-        if($logistic_truck_No && $logistic_truck_No !='all'){
+        if($logistic_schedule_id && $logistic_schedule_id !='all'){
             $sql ="update cc_wj_customer_coupon  set is_producing_done =3 
-where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id =$business_id and is_producing_done =0 and assign_stock =0 and order_id in ( select orderId from cc_order where orderId = cc_wj_customer_coupon.order_id and logistic_delivery_date = $delivery_date and  logistic_truck_No =$logistic_truck_No )
+where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id =$business_id and is_producing_done =0 and assign_stock =0 and order_id in ( select orderId from cc_order where orderId = cc_wj_customer_coupon.order_id and logistic_delivery_date = $delivery_date and  logistic_schedule_id =$logistic_schedule_id )
 
 
 ";
@@ -125,12 +125,12 @@ where restaurant_menu_id =$item_id and guige1_id =$item_spec_id and  business_id
     }
 
     //获得当前商家，当  $mdl =loadModel('wj_customer_coupon');前日期，当前产品的订单数量信息
-   function    getItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_truck_No) {
+   function    getItemOrderDetail($item_id,$item_spec_id,$business_id,$delivery_date,$logistic_schedule_id) {
         $sql ="SELECT c.id,c.business_id,c.restaurant_menu_id,c.guige1_id,c.guige_des,c.new_customer_buying_quantity FROM cc_wj_customer_coupon c 
     left join cc_order o on c.order_id =o.orderId   where  c.business_id=$business_id and c.restaurant_menu_id =$item_id and c.guige1_id =$item_spec_id and o.logistic_delivery_date =$delivery_date and c.assign_stock =0  and c.is_producing_done=3";
 
-     if($logistic_truck_No && $logistic_truck_No !='all'){
-         $sql .= " and o.logistic_truck_No =$logistic_truck_No ";
+     if($logistic_schedule_id && $logistic_schedule_id !='all'){
+         $sql .= " and o.logistic_schedule_id =$logistic_schedule_id ";
      }
 //var_dump($sql);exit;
        $mdl =loadModel('wj_customer_coupon');

@@ -93,17 +93,17 @@
 						</select>
 						
 						&nbsp;<label id="chooseTruckLable" style='display:none;'><{$lang->choose_driver_truck}></label>
-						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
+						<select class='chooseTruck' id="logistic_schedule_id" name="logistic_schedule_id" style='display:none;'>
 						<option value="all"  >All Drivers&Truck</option>
 						<{foreach from=$TuckListOfTheDay item=d}>
-							<{if $d.logistic_truck_No==0}>
-							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+							<{if $d.logistic_schedule_id==0}>
+							<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
 								<{$lang->no_truck_yet}>
 							</option>
 							
 							<{else}>
-								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+										<{if $d.start_hour}><{$d.start_hour}>&nbsp;<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}>
 									<{$d.truck_name}>-<{$d.plate_number}>
 								</option>
 							<{/if}>
@@ -179,7 +179,7 @@
 							  $('#chooseCateLable').css('display','');
 							  $('#cate_id').css('display','');
 							  $('#chooseTruckLable').css('display','');
-							  $('#logistic_truck_No').css('display','');
+							  $('#logistic_schedule_id').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
 							
@@ -403,7 +403,7 @@ function showPdf(type,item_id,guige_id)
 	var sepratePage=$('#sepratePage').prop('checked');
 	
 	var vcate_id ='<{$cate_id}>';
-	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+	var vlogistic_schedule_id ='<{$logistic_schedule_id}>';
 	 
 	if(type=='selectedItem') {
 	 
@@ -433,7 +433,7 @@ function showPdf(type,item_id,guige_id)
 	}
 	
   
-	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_schedule_id='+vlogistic_schedule_id+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
 	window.open(vUrl);
 }
 
@@ -447,9 +447,9 @@ function assignStock()
 	 alert('Please Choose the delivery date!');
 	}
 	
-	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+	var vlogistic_schedule_id ='<{$logistic_schedule_id}>';
 	
-	if(vlogistic_truck_No =='all' || !vlogistic_truck_No){
+	if(vlogistic_schedule_id =='all' || !vlogistic_schedule_id){
 	
 	var message1_cn ='未选择司机，如果将库存分配至某司机，点击取消按钮后选择司机；如果对所有司机分配，请点击确认按钮！';
 	var message1_en ='No driver is selected, if the inventory is allocated to a driver, click the Cancel button and select the driver; if all drivers are allocated, click the Confirm button!';
@@ -462,7 +462,7 @@ function assignStock()
 		 
 	
 	}
-	//alert(vlogistic_truck_No);
+	//alert(vlogistic_schedule_id);
 	
 	var message2_cn ='重要：本次分配不能取消，是否确认分配当前库存到' + vcustomer_delivery_date +'的订单？';
 	var message2_en='Important: This allocation cannot be canceled. Are you sure to allocate the current inventory to the order on ' + vcustomer_delivery_date +'?';
@@ -479,8 +479,8 @@ function assignStock()
 	
 
 	 
-	var vUrl='<{$http_root_www}>factory_2c/producing_stock_to_dispatching?producing=1&customer_delivery_date='+vcustomer_delivery_date+'&assign_stock=1&logistic_truck_No='+vlogistic_truck_No+'&business_id='+vbusiness_id;
-	//var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
+	var vUrl='<{$http_root_www}>factory_2c/producing_stock_to_dispatching?producing=1&customer_delivery_date='+vcustomer_delivery_date+'&assign_stock=1&logistic_schedule_id='+vlogistic_schedule_id+'&business_id='+vbusiness_id;
+	//var vUrl='<{$http_root_www}>factory_2c/print_single_item_buying_list_pdf?output='+type+'&logistic_schedule_id='+vlogistic_schedule_id+'&cate_id='+vcate_id+'&itemLists='+vItemLists+'&guigeId='+vGuigeId+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&sepratePage='+sepratePage;
 	window.open(vUrl);
 }
 

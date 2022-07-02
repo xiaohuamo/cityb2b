@@ -14,6 +14,18 @@ class mdl_truck extends mdl_base
 		
 		
 	}
+
+    public function getAllTruckOfBusiness1($business_id) {
+
+        $sql =" select t.* ,if(length(contactPersonNickName)>0,u.contactPersonNickName,concat(u.contactPersonFirstname,' ',u.contactPersonLastname)) as driverName  from cc_truck t
+         left join cc_user u on t.current_driver =u.id
+        where business_id =$business_id order by isAvaliable desc ";
+        $allTruckList  = $this->getListBySql($sql);
+        return $allTruckList;
+
+
+    }
+
 	public function getAllTruckOfBusinessWithOrderCounts($business_id,$delivery_date) {
 		
 		$sql =" select t.*,o.count from cc_truck t left join  

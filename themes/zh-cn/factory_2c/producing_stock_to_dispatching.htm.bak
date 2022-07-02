@@ -58,7 +58,7 @@
 
 					<form method="get" action="<{$searchUrl}>">
 						<label><{$lang->search}>:</label>
-						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder="品类/品名/商家 " style="width:250px; margin-right:5px;" />
+						<input type="text" name="sk" id='id_sk' value="<{$sk}>" placeholder=" " style="width:250px; margin-right:5px;" />
 						<input type="hidden" name="producing" id='producing' value="<{$producing}>"   />
 						<br><br>
 

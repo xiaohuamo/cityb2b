@@ -861,7 +861,7 @@
                     return date('Y-m-d',$d['logistic_delivery_date']);
                 }, $availableDates);
                 $this->setData($availableDates, 'availableDates');
-//var_dump($availableDates);exit;
+
 
 
                 $sepratePage =get2('sepratePage');
@@ -933,8 +933,8 @@
 
 
                 //获取当前用户点击的大类
-                $logistic_truck_No = trim(get2('logistic_truck_No'));
-                $this->setData($logistic_truck_No,'logistic_truck_No');
+                $logistic_schedule_id = trim(get2('logistic_schedule_id'));
+                $this->setData($logistic_schedule_id,'logistic_schedule_id');
 
                 $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
                 $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
@@ -977,11 +977,11 @@
                 }else{
                     $whereStr.=" and r.proucing_item =0 ";
                 }
-               // var_dump($logistic_truck_No);exit;
+               // var_dump($logistic_schedule_id);exit;
 
-                if (!empty($logistic_truck_No)) {
-                    if($logistic_truck_No !='all') {
-                        $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+                if (!empty($logistic_schedule_id)) {
+                    if($logistic_schedule_id !='all') {
+                        $whereStr.=" and o.logistic_schedule_id =$logistic_schedule_id ";
                     }
                 }
 
@@ -1043,9 +1043,9 @@
                     $mdl_producing_item_stock = $this->loadModel('producing_item_stock');
                     foreach ($data as $key => $value) {
                         // lock this product all items detials
-                    //    var_dump($logistic_truck_No);
+                    //    var_dump($logistic_schedule_id);
                     //var_dump($value);exit;
-                      $assign_stock_quantity = $mdl_stock_assign->assgin_single_item_stock($value,$logistic_truck_No,$this->loginUser['id']);
+                      $assign_stock_quantity = $mdl_stock_assign->assgin_single_item_stock($value,$logistic_schedule_id,$this->loginUser['id']);
                       $data[$key]['assign_stock_quantity'] = $assign_stock_quantity;
 
                       $new_stock_qty = $value['stock_qty']-$assign_stock_quantity;

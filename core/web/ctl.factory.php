@@ -93,9 +93,10 @@ class ctl_factory extends cmsPage
 
         }
 
+
     public function customer_orders_action($dataFomOtherMethod = [])
     {
-       if ($dataFomOtherMethod['file_path'] && $dataFomOtherMethod['business_id']) {
+        if ($dataFomOtherMethod['file_path'] && $dataFomOtherMethod['business_id']) {
             $filePath = $dataFomOtherMethod['file_path'];
             $this->loginUser['id'] = $dataFomOtherMethod['business_id'];
         }
@@ -103,10 +104,10 @@ class ctl_factory extends cmsPage
         $mdl_wj_customer_coupon = $this->loadModel('wj_customer_coupon');
         $mdl_order = $this->loadModel('order');
         $mdl_user = $this->loadModel('user');
-		
-		
-		//get loginuser's factory userid 
-		$FactoryId= $this->loadModel('user_factory')->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
+
+
+        //get loginuser's factory userid
+        $FactoryId= $this->loadModel('user_factory')->getBusinessId($this->loginUser['id'],$this->loginUser['role']);
 
         $customer_delivery_date = trim(get2('customer_delivery_date'));
 
@@ -203,7 +204,7 @@ class ctl_factory extends cmsPage
                     left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id 
                      left join cc_user_factory f   on o.userId =f.user_id and o.business_userId =f.factory_id ";
         } else {
-           // var_dump('here');exit;
+            // var_dump('here');exit;
             $sql = "SELECT  f.xero_account_number,f.xero_contact_id,f.to_xero, if(f.account_type='COD',0,CAST(f.account_type AS SIGNED)*7 ) as payment_period,
             if(f.account_type='COD','COD',concat(convert(CAST(f.account_type AS SIGNED)*7 ,CHAR),'D')) as disp_accountType ,
        f.nickname,concat(o.first_name,' ',o.last_name) as name,o.*  
@@ -319,17 +320,17 @@ class ctl_factory extends cmsPage
                 $whereStr .= " and l.gen_date<='$et'";
             }
         }
-		// 检查如果当前用户为销售员，则生成查询sql语句。
-		
-		if($this->loginUser['role']==20){
+        // 检查如果当前用户为销售员，则生成查询sql语句。
+
+        if($this->loginUser['role']==20){
             //如果该用户含有销售员角色，则过滤
             $rec =$this->loadModel('staff_roles')->getByWhere(array('staff_id'=>$this->loginUser['id']));
-          //  var_dump($this->loginUser['id']); var_dump($rec);exit;
+            //  var_dump($this->loginUser['id']); var_dump($rec);exit;
             if(substr_count($rec[roles],',5,')>0 || substr_count($rec[roles],',6,')>0 ) {
                 $whereStr .= " and o.userId in (select user_id from cc_user_factory where factory_sales_id =".$this->loginUser['id'].")";
             }
 
-		}
+        }
 
         $sortBy = get2('sortBy');
         if(!$sortBy){
@@ -350,7 +351,7 @@ class ctl_factory extends cmsPage
 
 
         $pageSql = $sql." where ".$whereStr." order by $sortByStr ";
-       // var_dump($pageSql);exit;
+        // var_dump($pageSql);exit;
         if (trim(get2('output')) == 'pdf') {
 
             $where12 = [
@@ -421,25 +422,25 @@ class ctl_factory extends cmsPage
             $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
 
             $data = $mdl_order->getListBySql($page['outSql']);
-			//var_dump($page['outSql']);exit;
-			 foreach ($data as $key => $value) {
-                 $sql="select id,orderId from cc_order where business_userId=".$value['business_userId']. " and userId =".$value['userId']." and coupon_status ='c01' and logistic_delivery_date =".$value['logistic_delivery_date']." order by id  " ;
-				 $dulplicate_order_rec =$mdl_order->getListBySql($sql);
-				 if(count( $dulplicate_order_rec)>1) {
-					 if($dulplicate_order_rec[0]['orderId'] !=$value['orderId']) {
-						  $data[$key]['original_orderId']=$dulplicate_order_rec[0]['orderId'];
-						  $data[$key]['merge']=1;
-					 }else{
-						  $data[$key]['merge']=0;
-						   $data[$key]['original_orderId']=$dulplicate_order_rec[0]['orderId'];
-					 }
-					 
-				 }else{
-					  $data[$key]['merge']=2;
-				 }
-                 $data[$key]['name'] =$this->getCustomerName($value);
+            //var_dump($page['outSql']);exit;
+            foreach ($data as $key => $value) {
+                $sql="select id,orderId from cc_order where business_userId=".$value['business_userId']. " and userId =".$value['userId']." and coupon_status ='c01' and logistic_delivery_date =".$value['logistic_delivery_date']." order by id  " ;
+                $dulplicate_order_rec =$mdl_order->getListBySql($sql);
+                if(count( $dulplicate_order_rec)>1) {
+                    if($dulplicate_order_rec[0]['orderId'] !=$value['orderId']) {
+                        $data[$key]['original_orderId']=$dulplicate_order_rec[0]['orderId'];
+                        $data[$key]['merge']=1;
+                    }else{
+                        $data[$key]['merge']=0;
+                        $data[$key]['original_orderId']=$dulplicate_order_rec[0]['orderId'];
+                    }
 
-               
+                }else{
+                    $data[$key]['merge']=2;
+                }
+                $data[$key]['name'] =$this->getCustomerName($value);
+
+
             }
         }
 
@@ -455,14 +456,107 @@ class ctl_factory extends cmsPage
         $this->setData($this->parseUrl(), 'currentUrl');
 
         $this->setData('Customer Orders - '.$this->site['pageTitle'], 'pageTitle');
-		
-		//date_default_timezone_set(Australia/Sydney);
-		//$this->setData(date_default_timezone_get(), 'currentTimeZone'); 
-		//$this->setData(date('H:i:s'), 'currentTime'); 
-		 
-		 
+
+        //date_default_timezone_set(Australia/Sydney);
+        //$this->setData(date_default_timezone_get(), 'currentTimeZone');
+        //$this->setData(date('H:i:s'), 'currentTime');
+
+
 
         $this->display_pc_mobile('factory/customer_orders', 'factory/customer_orders');
+        return true;
+    }
+
+
+
+
+    public function schedule_list_action()
+    {
+
+
+
+        $startTime = trim(get2('startTime'));
+        $endTime = trim(get2('endTime'));
+
+        $this->setData($startTime, 'startTime');
+        $this->setData($endTime, 'endTime');
+
+
+        $truck_id = get2('truck_id');
+        $this->setData($truck_id,'truck_id');
+
+
+
+        $driver_id = get2('driver_id');
+
+
+        $this->setData($driver_id,'driver_id');
+
+
+        $mdl_truck =  $this->loadModel('truck');
+        $all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness1($this->current_business['id']);
+
+        //获取可用的driver 信息
+
+
+        $this->setData($all_avaliable_trucks,'all_avaliable_trucks');
+
+        $mdl_staff_roles =  $this->loadModel('staff_roles');
+        $driverList = $mdl_staff_roles->getAllDriverOfBusinessSchedueld($this->current_business['id']);
+        $this->setData($driverList,'driverList');
+
+
+
+            if (! empty($startTime)) {
+                $startTime = strtotime($startTime." 00:00:00");
+
+            }
+
+            if (! empty($endTime)) {
+                $endTime = strtotime($endTime." 23:59:59");
+
+            }
+
+
+
+            $mdl_schedule =$this->loadModel('truck_driver_schedule');
+
+        $pageSql = $mdl_schedule->getSqlOfScheduleRecord($this->current_business['id'],$truck_id,$driver_id,$startTime,$endTime);
+
+//var_dump($pageSql);exit;
+
+        $pageUrl = $this->parseUrl()->set('page');
+            $pageSize = 40;
+            $maxPage = 10;
+            $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+            $data = $mdl_schedule->getListBySql($page['outSql']);
+
+
+
+
+        $this->setData($page['pageStr'], 'pager');
+
+        $this->setData($data, 'data');
+
+        $this->setData('Logistic_centre', 'menu');
+
+        $this->setData('new_schedule', 'submenu');
+        $this->setData('schedule_list', 'submenu_top');
+
+        $this->setData(HTTP_ROOT_WWW.'factory/schedule_list', 'searchUrl');
+
+        $this->setData($this->parseUrl(), 'currentUrl');
+
+        $this->setData('Schedule Lists - '.$this->site['pageTitle'], 'pageTitle');
+
+		//date_default_timezone_set(Australia/Sydney);
+		//$this->setData(date_default_timezone_get(), 'currentTimeZone');
+		//$this->setData(date('H:i:s'), 'currentTime');
+
+
+
+        $this->display_pc_mobile('factory/schedule_list', 'factory/schedule_list');
         return true;
     }
 
@@ -7050,10 +7144,19 @@ public function return_items_submit_to_statment_action() {
             $data=array();
 
             $update_field_name = post('update_field_name');
-
             $value = post('value');
 
-            $data['current_driver'] =$value;
+            if($update_field_name =='diverId') {
+                $data['current_driver'] =$value;
+            }
+
+
+            if($update_field_name =='isAvaliable') {
+                $data['isAvaliable'] =$value;
+            }
+
+
+
 
 
             try {

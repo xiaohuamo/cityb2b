@@ -76,6 +76,41 @@ class mdl_truck_driver_schedule extends mdl_base
 
     }
 
+    public function getSqlOfScheduleRecord($factory_id,$truck_id,$driver_id,$startTime,$endTime){
+
+        $sql ="SELECT s.*,from_unixtime(s.delivery_date,'%Y-%m-%d') as delivery_date_str ,
+       from_unixtime(s.schedule_start_time,'%H:%i') as start_hour ,from_unixtime(s.schedule_end_time,' %H:%i') as end_hour ,
+       concat(t.truck_name,'-',t.plate_number) as truck_name,
+       if(length(u.contactPersonNickName)>0,u.contactPersonNickName,concat(u.contactPersonFirstname,' ',u.contactPersonLastname)) as driverName ,
+       u.name,u.displayName,u.person_first_name,u.person_last_name ,if(length(u.displayName)>0,u.displayName,
+           if(length(u.person_first_name)>0,concat(u.person_first_name,' ',u.person_last_name),u.name)) as driverName1 
+        FROM `cc_truck_driver_schedule` s 
+            left join cc_truck t on s.factory_id=t.business_id and s.truck_id =t.truck_no  
+            left join cc_user u on s.driver_id =u.id   where factory_id=$factory_id  ";
+
+        if($truck_id) {
+          $sql .= "  and truck_id =$truck_id ";
+        }
+
+        if($driver_id) {
+            $sql .= "  and driver_id =$driver_id ";
+        }
+
+        if($startTime) {
+            $sql .= "  and delivery_date >=$startTime ";
+        }
+
+        if($endTime) {
+            $sql .= "  and delivery_date <=$endTime ";
+        }
+
+        $sql .= " order by schedule_id desc ";
+
+
+        return $sql;
+
+       }
+
 
 
 }

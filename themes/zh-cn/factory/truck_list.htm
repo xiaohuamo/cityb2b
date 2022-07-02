@@ -90,7 +90,13 @@
 								<td><{$item.made_factory}></td>
 
 								<td><{$item.load_tones}></td>
-								<td>-</td>
+								<td><select id="isAvaliable-<{$item.id}>" name='isAvaliable' data-id='<{$item.id}>'>
+													
+                                                 	<option value='1'     <{if $item.isAvaliable==1}>selected<{/if}>>Avaliable	</option>
+                                                    <option value='0'     <{if $item.isAvaliable==0}>selected<{/if}>>Not Avaliable	</option>
+                                                  
+												</select>
+												<span class='promote-ajax'></span></td>
 								
 								<td><a href="<{$http_root_www}>factory/truck_edit?id=<{$item.id}>">Edit</a></td>
 							
@@ -108,7 +114,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-    $('select[name=diverId]').on('change', function () {
+    $('select[name=diverId],select[name=isAvaliable]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";

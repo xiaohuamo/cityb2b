@@ -1,0 +1,161 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+
+
+	
+
+<body>
+
+
+
+<{include file='header.htm'}>
+
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='factory/side.htm'}>
+
+		<div class="main">
+
+			<div class="box2">
+			<{include file='company/side_schedule_menu_top.htm'}>
+				<div class="search-row" style="padding: 20px 18px">
+
+					<form method="get" action="<{$searchUrl}>">
+						<label>Select Truck</label>
+							<select  name ="truck_id">
+													<option value='0'>Select Truck</option>
+                                                    <{foreach from=$all_avaliable_trucks item=sitem1}>
+														<option value='<{$sitem1.truck_no}>'
+                                                                <{if $truck_id==$sitem1.truck_no}>selected<{/if}>>
+																	
+                                                            <{$sitem1.truck_no}>-<{$sitem1.truck_name}>- <{$sitem1.plate_number}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+						
+
+						
+							&nbsp;&nbsp;<label>Select Driver：</label>
+											<select name ="driver_id" >
+													<option value='0'>Select the Driver</option>
+                                                    <{foreach from=$driverList item=sitem1}>
+														<option value='<{$sitem1.id}>'
+                                                                <{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
+                                                            <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+												<br><br>
+						<label><{$lang->filter}>:</label>
+						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$startTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>to</label>
+						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$endTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						
+					
+						
+
+						<button type="submit"><{$lang->search}></button>
+						
+						<br><br>
+                     
+					
+						
+					</form>
+				</div>
+				
+
+				<div class="main-list">		
+					<{if $data}>				
+						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Delivery Date</th>
+								<th>Schedule Time</th>
+								<th>Driver</th>
+								<th>Truck</th>
+								
+								<th>Status</th>
+								
+								<th>Schedule No</th>
+								
+
+							</tr>
+
+							</thead>
+							<!--class="odd"-->
+						
+                           <tbody>
+							 <{foreach from=$data item=item name='dl'}>		
+								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
+								   <td><{$item.delivery_date_str}></td> 
+								   <td><{$item.start_hour}>-<{$item.end_hour}></td> 
+								   <td><{$item.driverName1}></td> 
+								   <td><{$item.truck_name}></td>
+								 
+								   <td><{$item.driverName1}></td>     
+								   
+								   <td><{$item.schedule_id}></td> 
+							   
+							   </tr>
+                          	<{/foreach}>			
+							</tbody>
+						</table>
+
+						
+
+						<{if $pager}>
+						<div class="pager"><{$pager}></div>
+						<{/if}>				
+						<{else}>				
+						No any data	
+						<{/if}>			
+				</div>	
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<{include file='footer.htm'}>
+
+
+
+</body>
+
+</html>

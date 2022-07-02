@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+	<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+        .main-form .input-box span label {
+            width: 200px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1><{$pagename}>
+						</h1>
+					</div>
+					<form id="memberForm" method="post" target="post_frame" enctype="multipart/form-data">
+						<input type="text" name="id" id="id" value = "<{$id}>"class="input-text" hidden/>
+						<input type="text" name="delivery_date" id="delivery_date" value = "<{$delivery_date}>"class="input-text" hidden/>
+						
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="abn">Schedule Id</label>
+							</span>
+							<label><{$data.schedule_id}></label>
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="">Delivery Date</label>
+							</span>
+							<label><{$data.delivery_date}></label>
+						</div>
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="Driver">Driver</label>
+							</span>
+							<select name ="driver_id" >
+								
+								<{foreach from=$driverList item=sitem1}>
+									<option value='<{$sitem1.id}>'
+											<{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
+										<{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
+
+									</option>
+								<{/foreach}>
+							</select>
+						</div>
+						
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="factory_code">Truck</label>
+							</span>
+					
+							<select name ="truck_id" >
+										
+										<{foreach from=$all_avaliable_trucks item=sitem1}>
+											<option value='<{$sitem1.truck_no}>'
+													<{if $truck_id==$sitem1.truck_no}>selected<{/if}>>
+														
+												<{$sitem1.truck_no}>-<{$sitem1.truck_name}>- <{$sitem1.plate_number}>
+
+											</option>
+										<{/foreach}>
+									</select>
+					</div>
+					
+					
+					<div class="input-box  form-style-green">
+							<span>
+							<label for="status">Status</label>
+							</span>
+							
+							<select name="status" >
+
+					
+								<option value="0" <{if $data.status==0}> selected<{/if}>>Planning</option>
+								<option value="1" <{if $data.status==1}> selected<{/if}>>scheduled</option>
+								<option value="2" <{if $data.status==2}> selected<{/if}>>canceled</option>
+								<option value="3" <{if $data.status==3}> selected<{/if}>>executed</option>
+
+							</select>
+							
+						<!--	<input type="text" name="approved" id="approved" class="input-text" placeholder="" value="<{$user_factory_info.approved}>"> -->
+						</div>
+						
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="schedule_start_time">Schedule Start Time</label>
+							</span>
+						<input type="text" class="Wdate" name ="schedule_start_time" 
+						onfocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm', minDate: '<{<{date('Y-m-d H:i', time())}>}>', maxDate: '<{<{date('Y-m-d H:i', time()+14*24*60*60)}>}>' })" value="<{<{date('Y-m-d H:i', $data.schedule_start_time)}>}>"/>
+						</div>
+						
+						
+						
+						
+					
+						<div class="input-box  form-style-green">
+							<span>
+							<label for="schedule_end_time">Schedule End Time</label>
+							</span>
+						<input type="text" class="Wdate" name ="schedule_end_time" 
+						onfocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm', minDate: '<{<{date('Y-m-d H:i', time())}>}>', maxDate: '<{<{date('Y-m-d H:i', time()+14*24*60*60)}>}>' })" value="<{<{date('Y-m-d H:i', $data.schedule_end_time)}>}>"/>
+						</div>
+						
+                     
+
+						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->save}></button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

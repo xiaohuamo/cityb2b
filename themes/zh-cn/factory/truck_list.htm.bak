@@ -90,9 +90,15 @@
 								<td><{$item.made_factory}></td>
 
 								<td><{$item.load_tones}></td>
-								<td>-</td>
+								<td><select id="status-<{$item.id}>" name='status' data-id='<{$item.id}>'>
+													
+                                                 	<option value='1'     <{if $item.isAvaliable==1}>selected<{/if}>>Avaliable	</option>
+                                                    <option value='0'     <{if $item.isAvaliable==0}>selected<{/if}>>Not Avaliable	</option>
+                                                  
+												</select>
+												<span class='promote-ajax'></span></td>
 								
-								<td><a href="<{$http_root_www}>factory/truck_edit?id=<{$item.id}>">编辑</a></td>
+								<td><a href="<{$http_root_www}>factory/truck_edit?id=<{$item.id}>">Edit</a></td>
 							
 							</tr>
 							<{/foreach}>
