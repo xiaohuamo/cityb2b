@@ -162,7 +162,7 @@
 						})
 						
 						function getnewdataofdeliverydate(obj){
-						alert('here');
+						//alert('here');
 							var vv = $(obj).val(); 
 						
 							if (vv) {
@@ -215,7 +215,7 @@
 						<table cellspacing="0" cellpadding="0" width="100%">
 							<thead>				
 								<tr>			
-									<th><{$lang->logistic_delivery_date}></th>
+									<th>Del.Date</th>
 									<th><{$lang->logistic_schedule_time}></th>
 									<th><{$lang->logistic_arrive_time}></th>
 									<th>Schedule Id </th>
@@ -242,9 +242,9 @@
 									<td>
 									
 									<select id="truck-<{$item.id}>" name='Schedule_id' data-id='<{$item.id}>'>
-													<option value='0'>Choose Schedue </option>
+													<option value='0'>Choose Schedue <{$item.logistic_schedule_id}> </option>
                                                     <{foreach from=$schedule_list item=sitem1}>
-														<option value='<{$sitem1.id}>'
+														<option value='<{$sitem1.schedule_id}>'
                                                                 <{if $item.logistic_schedule_id==$sitem1.schedule_id}>selected<{/if}>>
 																	<{$sitem1.start_hour}>-<{if $sitem1.driverName}><{$sitem1.driverName}>-<{/if}>
                                                             <{$sitem1.truck_id}>-<{$sitem1.truck_name}>-<{$sitem1.schedule_id}>

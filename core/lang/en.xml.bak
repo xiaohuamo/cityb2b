@@ -91,7 +91,7 @@
 	<choose_delivery_date>Choose Delviery Date</choose_delivery_date>
 		<choose_account>Choose Account</choose_account>
 		<choose_category>Choose Category</choose_category>
-	<no_truck_yet>Waiting for arrange truck</no_truck_yet>
+	<no_truck_yet>Waiting for scheduel</no_truck_yet>
 	<choose_driver_truck>Choose Driver-Truck</choose_driver_truck>
 	<defined_items>All Defined Items</defined_items>
 	<pagination>Pagination</pagination>
@@ -1449,7 +1449,7 @@
 	<first_order>First Order</first_order>
 	<not_merged_yet>Not Merged Yet</not_merged_yet>
 	 <delivery_date>Delivery date</delivery_date>
-	<logistic_choosetruck>choose Truck</logistic_choosetruck>
+	<logistic_choosetruck>choose Truck &driver Schedule </logistic_choosetruck>
 	<logistic_checkarea>Check Post Code</logistic_checkarea>
 	<logisitic_customer_buy>customer buy</logisitic_customer_buy>
 	<logisitic_shipped>shipped</logisitic_shipped>

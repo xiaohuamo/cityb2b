@@ -92,17 +92,17 @@
 						</select>
 						
 						&nbsp;<label id="chooseTruckLable" style='display:none;'><{$lang->choose_driver_truck}></label>
-						<select class='chooseTruck' id="logistic_truck_No" name="logistic_truck_No" style='display:none;'>
+						<select class='chooseTruck' id="logistic_schedule_id" name="logistic_schedule_id" style='display:none;'>
 						<option value="all"  >All Drivers&Truck</option>
 						<{foreach from=$TuckListOfTheDay item=d}>
-							<{if $d.logistic_truck_No==0}>
-							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+							<{if $d.logistic_schedule_id==0}>
+							<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
 								<{$lang->no_truck_yet}>
 							</option>
 							
 							<{else}>
-								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+										<{if $d.start_hour}><{$d.start_hour}>&nbsp;<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}>
 									<{$d.truck_name}>-<{$d.plate_number}>
 								</option>
 							<{/if}>
@@ -172,7 +172,7 @@
 							  $('#chooseCateLable').css('display','');
 							  $('#cate_id').css('display','');
 							  $('#chooseTruckLable').css('display','');
-							  $('#logistic_truck_No').css('display','');
+							  $('#logistic_schedule_id').css('display','');
 							  $('#searchbutton').css({ "display": "" });
 							  $('#main_table').css({ "display": "" });
 							
@@ -348,7 +348,7 @@ function showPdf(type)
 	var vSk=$('#id_sk').val();
 	
 	var vcate_id ='<{$cate_id}>';
-	var vlogistic_truck_No ='<{$logistic_truck_No}>';
+	var vlogistic_schedule_id ='<{$logistic_schedule_id}>';
 	var Vproducing ='<{$producing}>';
 	
 
@@ -362,7 +362,7 @@ function showPdf(type)
 	}
 	
    
-	var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?output='+type+'&producing='+Vproducing+'&logistic_truck_No='+vlogistic_truck_No+'&cate_id='+vcate_id+'&printAllBusiness='+printAllBusiness+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&fitInPage='+fitInPage;
+	var vUrl='<{$http_root_www}>factory_2c/factroy_order_summery?output='+type+'&producing='+Vproducing+'&logistic_schedule_id='+vlogistic_schedule_id+'&cate_id='+vcate_id+'&printAllBusiness='+printAllBusiness+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&fitInPage='+fitInPage;
 	window.open(vUrl);
 }
 

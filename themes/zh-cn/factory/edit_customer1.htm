@@ -18,7 +18,7 @@
 
 	<style>
         .main-form .input-box span label {
-            width: 120px;
+            width: 200px;
         }
 	</style>
 
@@ -34,7 +34,7 @@
 			<div class="box2">
 				<div class="main-form">
 					<div class="colCurTit clearfix">
-						<h1>编辑用户
+						<h1><{$pagename}>
 						</h1>
 					</div>
 					<form id="register-form" method="post" enctype="multipart/form-data">
@@ -47,7 +47,7 @@
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="">实体名（ASIC）</label>
+							<label for="">Utility Name （ASIC）</label>
 							</span>
 							<input type="text" name="untity_name" onchange ="checkinput(this,'utlity name (asic)');" id="untity_name" class="input-text" placeholder="" value="<{$user_abn.untity_name}>">
 						</div>
@@ -60,14 +60,14 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="factory_code">Code/简写</label>
+							<label for="factory_code">Customer Code</label>
 							</span>
 							<input type="text" name="factory_code" id="factory_code" onchange ="checkinput(this,'customer code');" class="input-text" placeholder="" required value="<{$user_factory_info.nickname}>">
 						</div>
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="customer_type">客户分类</label>
+							<label for="customer_type">CateGory</label>
 							</span>
 							<select name="customer_type" 0>
 							<option value="0"<{if (!$user_factory_info.customer_type)}> selected<{/if}>>Please Select</option>
@@ -90,14 +90,14 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="tel">电话</label>
+							<label for="tel">Tel</label>
 							</span>
 							<input type="text" name="tel" id="tel" class="input-text" placeholder="" value="<{$user.tel}>">
 						</div>
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="mobile">联系人</label>
+							<label for="mobile">Contact Person</label>
 							</span>
 							<input type="text" name="person_first_name" id="person_first_name" class="input-text" placeholder="First Name" value="<{$user.person_first_name}>">&nbsp;<input type="text" name="person_last_name" id="person_last_name" class="input-text" placeholder=" Last Name" value="<{$user.person_last_name}>">
 						</div>
@@ -112,7 +112,7 @@
 						<{if $loginUser.role !=20}>
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="factory_sales_id">指定销售员</label>
+							<label for="factory_sales_id">Sales Person</label>
 							</span>
 							<select name="factory_sales_id" id='ifpaid'>
 							<option value="<{$loginUser.id}>"<{if ($user_factory_info.factory_sales_id==$loginUser.id || !$user_factory_info.factory_sales_id)}> selected<{/if}>>Company Own</option>
@@ -135,7 +135,7 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="approved">许可/禁止</label>
+							<label for="approved">Approve Status</label>
 							</span>
 							
 							<select name="approved" id='ifpaid'>
@@ -163,16 +163,16 @@
 
 						<div class="input-box   form-style-green">
 							<span>
-							<label for="address">营业时间</label>
+							<label for="address">Trading Hours</label>
 							</span>
 							<label></label>
-							<a href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$userId}>" target="_blank">设置</a>
+							<a href="<{$http_root_www}>factory/business_hour_setting?user_id=<{$userId}>" target="_blank">Set</a>
 						</div>
 
                      
 
 						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
-							<button type="submit">提交</button>
+							<button type="submit"><{$lang->save}></button>
 						</div>
 					</form>
 				</div>

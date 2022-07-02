@@ -40,6 +40,42 @@ class mdl_truck_driver_schedule extends mdl_base
         return $list;
     }
 
+    public function  getTruckAndDriverInfo1($logistic_schedule_id,$factoryId) {
+
+        $where =array(
+
+            'schedule_id'=>$logistic_schedule_id,
+            'factory_id'=>$factoryId
+        );
+
+        $rec = $this->getByWhere($where);
+       // var_dump($rec);exit;
+
+        if($rec){
+
+            $where1 =array(
+                'truck_no'=>$rec['truck_id'],
+                'business_id'=>$factoryId
+            );
+            $rec_truck = loadModel('truck')->getByWhere($where1);
+
+
+
+            if($rec['driver_id']) {
+                $driver = loadModel('user')->get($rec['driver_id']);
+                $driverAndTruckInfo = $driver['contactPersonFirstname'].' '.$rec_truck['truck_name'].'-'.$rec_truck['plate_number'];
+            }else{
+                $driverAndTruckInfo =$rec_truck['truck_name'].'-'.$rec_truck['plate_number'];
+            }
+
+        }else{
+
+            $driverAndTruckInfo ='All';
+        }
+        return $driverAndTruckInfo;
+
+    }
+
 
 
 }

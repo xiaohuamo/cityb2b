@@ -141,17 +141,17 @@
 						<{/foreach}>
 					</select>
 					&nbsp;
-					    <select class='chooselogistic_truck_No' id="logistic_truck_No" name="logistic_truck_No" >
+					    <select class='chooselogistic_schedule_id' id="logistic_schedule_id" name="logistic_schedule_id" >
 						<option value="all"  ><{$lang->logistic_choosetruck}></option>
 						<{foreach from=$TuckListOfTheDay item=d}>
-							<{if $d.logistic_truck_No==0}>
-							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+							<{if $d.logistic_schedule_id==0}>
+							<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
 								<{$lang->no_truck_yet}>
 							</option>
 							
 							<{else}>
-								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
+								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+									<{if $d.start_hour}><{$d.start_hour}>&nbsp;<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -185,7 +185,7 @@
 										var isselect=0;
 										var truckanddriver ='';
 										
-										var selectTruck ='<{$logistic_truck_No}>';
+										var selectTruck ='<{$logistic_schedule_id}>';
 																				
 										if(selectTruck=='all' || selectTruck.length ==0 || !selectTruck) {
 										  html ='<option value="all" selected ><{$lang->logistic_choosetruck}></option>';
@@ -197,29 +197,29 @@
 										for (var i = 0; i< data.length ; i++) {
 										
 											
-										truckNo = data[i]['logistic_truck_No'];
+										truckNo = data[i]['logistic_schedule_id'];
 										
 										if(truckNo ==0) {
 										    if (trukNo ===selectTruck){
-											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}></option>";
+											   html += "<option value="+data[i]['logistic_schedule_id']+" selected  ><{$lang->no_truck_yet}></option>";
 											  
 											}else{
-											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}></option>";
+											    html += "<option value="+data[i]['logistic_schedule_id']+" ><{$lang->no_truck_yet}></option>";
 											}
 										}else{
 										
 										    if(data[i]['driverName']){
 											
-											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
+											   truckanddriver = data[i]['start_hour'] + ' ' + data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'] +"("+data[i]['count']+")";
 											}else{
-												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
+												truckanddriver = data[i]['start_hour'] + ' ' + data[i]['truck_name']+"-"+data[i]['plate_number']+"("+data[i]['count']+")";
 											}
 										
 										   if (trukNo ===selectTruck){
 											 
-											   html += "<option value="+data[i]['logistic_truck_No']+" selected>"+truckanddriver+"</option>";
+											   html += "<option value="+data[i]['logistic_schedule_id']+" selected>"+truckanddriver+"</option>";
 											}else{
-												html += "<option value="+data[i]['logistic_truck_No']+" >"+truckanddriver+"</option>";
+												html += "<option value="+data[i]['logistic_schedule_id']+" >"+truckanddriver+"</option>";
 											}
 										
 										
@@ -228,7 +228,7 @@
 
 
 									}
-										$('.chooselogistic_truck_No').html(html);
+										$('.chooselogistic_schedule_id').html(html);
 									},
 									error:function(data){
 										console.log(data);
@@ -236,7 +236,7 @@
 								})
 							})
 							
-							$('.chooselogistic_truck_No').on('change',function(){
+							$('.chooselogistic_schedule_id').on('change',function(){
 							   $('#printer').css({ "display": "none" });
 								
 							})
@@ -677,6 +677,7 @@
     })
 
 	 
+
 	  $('input[name=onoffswitch_xero]').on('click', function () {
 		 
 		 var orderId = $(this).data('id');

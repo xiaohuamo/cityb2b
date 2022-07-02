@@ -3313,8 +3313,8 @@
         $this->setData($cate_id,'cate_id');
 
         //获取当前用户点击的大类
-        $logistic_truck_No = trim(get2('logistic_truck_No'));
-        $this->setData($logistic_truck_No,'logistic_truck_No');
+        $logistic_schedule_id = trim(get2('logistic_schedule_id'));
+        $this->setData($logistic_schedule_id,'logistic_schedule_id');
 
         $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
         $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
@@ -3348,9 +3348,9 @@
             }
         }
 
-        if (!empty($logistic_truck_No)) {
-            if($logistic_truck_No !='all') {
-                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+        if (!empty($logistic_schedule_id)) {
+            if($logistic_schedule_id !='all') {
+                $whereStr.=" and o.logistic_schedule_id =$logistic_schedule_id ";
             }
         }
 
@@ -3413,7 +3413,7 @@
             //获取打印表单上的分类名称
             $cate_name = $mdl_cate->getCategoryName($cate_id);
 
-            $driverAndTruckInfo = $this->loadModel('truck')->getTruckAndDriverInfo($logistic_truck_No) ;
+            $driverAndTruckInfo = $this->loadModel('truck_driver_schedule')->getTruckAndDriverInfo1($logistic_schedule_id) ;
           //  var_dump($cate_name);exit;
 			
 			if($totalandeverychannelPrint){
@@ -3683,8 +3683,8 @@
 		 
 		 
 		     //获取当前用户点击的大类
-        $logistic_truck_No = trim(get2('logistic_truck_No'));
-        $this->setData($logistic_truck_No,'logistic_truck_No');
+        $logistic_schedule_id = trim(get2('logistic_schedule_id'));
+        $this->setData($logistic_schedule_id,'logistic_schedule_id');
 
         $TuckListOfTheDay =$this->loadModel('truck')->getAllOrdersTruckListwithCount($this->current_business['id'],$customer_delivery_date);
         $this->setData($TuckListOfTheDay,'TuckListOfTheDay');
@@ -3728,9 +3728,9 @@
              $whereStr.=" and r.proucing_item =0 ";
          }
 		 
-		  if (!empty($logistic_truck_No)) {
-            if($logistic_truck_No !='all') {
-                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+		  if (!empty($logistic_schedule_id)) {
+            if($logistic_schedule_id !='all') {
+                $whereStr.=" and o.logistic_schedule_id =$logistic_schedule_id ";
             }
         }
 
@@ -3870,11 +3870,11 @@
 			}
         }
 
-        $logistic_truck_No = trim(get2('logistic_truck_No'));
+        $logistic_schedule_id = trim(get2('logistic_schedule_id'));
 
-        if (!empty($logistic_truck_No)) {
-            if($logistic_truck_No !='all') {
-                $whereStr.=" and o.logistic_truck_No =$logistic_truck_No ";
+        if (!empty($logistic_schedule_id)) {
+            if($logistic_schedule_id !='all') {
+                $whereStr.=" and o.logistic_schedule_id =$logistic_schedule_id ";
             }
         }
 

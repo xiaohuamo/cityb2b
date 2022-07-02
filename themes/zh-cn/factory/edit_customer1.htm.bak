@@ -34,7 +34,7 @@
 			<div class="box2">
 				<div class="main-form">
 					<div class="colCurTit clearfix">
-						<h1>编辑用户
+						<h1><{$pagename}>
 						</h1>
 					</div>
 					<form id="register-form" method="post" enctype="multipart/form-data">
@@ -55,7 +55,7 @@
 							<span>
 							<label for="username">Trading Name</label>
 							</span>
-							<input type="text" name="username" onchange ="checkinput(this,'name');" id="username" class="input-text" placeholder="" required value="<{$user.name}>">
+							<input type="text" name="username" onchange ="checkinput(this,'name');" id="username" class="input-text" placeholder="" required value="<{$user.displayName}>">
 						</div>
 						
 						<div class="input-box  form-style-green">
@@ -83,7 +83,7 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="phone">手机号</label>
+							<label for="phone">Phone</label>
 							</span>
 							<input type="text" name="phone" id="phone" class="input-text" placeholder="" value="<{$user.phone}>">
 						</div>
@@ -156,7 +156,7 @@
 						
 						<div class="input-box  form-style-green">
 							<span>
-							<label for="address">地址</label>
+							<label for="address">Address</label>
 							</span>
 							<input type="text" style="width:80%" name="address" id="address" class="input-text" placeholder="" value="<{$user.googleMap}>">
 						</div>

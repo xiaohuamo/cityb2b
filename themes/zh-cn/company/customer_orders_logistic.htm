@@ -73,17 +73,17 @@
 					
 					
 					
-						<select class='chooselogistic_truck_No' id="logistic_truck_No" name="logistic_truck_No" >
+						<select class='chooselogistic_schedule_id' id="logistic_schedule_id" name="logistic_schedule_id" >
 						<option value="all"  ><{$lang->logistic_choosetruck}></option>
 						<{foreach from=$TuckListOfTheDay item=d}>
-							<{if $d.logistic_truck_No==0}>
-							<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
+							<{if $d.logistic_schedule_id==0}>
+							<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
 								<{$lang->no_truck_yet}>
 							</option>
 							
 							<{else}>
-								<option value="<{$d.logistic_truck_No}>" <{if $d.logistic_truck_No==$logistic_truck_No}>selected<{/if}>>
-									<{if $d.driverName}><{$d.driverName}>-<{/if}>
+								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
+									<{if $d.start_hour}><{$d.start_hour}>&nbsp;<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}>
 									<{$d.truck_name}>-<{$d.plate_number}>
 								</option>
 							<{/if}>
@@ -109,7 +109,7 @@
 										var isselect=0;
 										var truckanddriver ='';
 										
-										var selectTruck ='<{$logistic_truck_No}>';
+										var selectTruck ='<{$logistic_schedule_id}>';
 																				
 										if(selectTruck=='all' || selectTruck.length ==0 || !selectTruck) {
 										  html ='<option value="all" selected ><{$lang->logistic_choosetruck}></option>';
@@ -121,29 +121,29 @@
 										for (var i = 0; i< data.length ; i++) {
 										
 											
-										truckNo = data[i]['logistic_truck_No'];
+										truckNo = data[i]['logistic_schedule_id'];
 										
 										if(truckNo ==0) {
 										    if (trukNo ===selectTruck){
-											   html += "<option value="+data[i]['logistic_truck_No']+" selected  ><{$lang->no_truck_yet}></option>";
+											   html += "<option value="+data[i]['logistic_schedule_id']+" selected  ><{$lang->no_truck_yet}></option>";
 											  
 											}else{
-											    html += "<option value="+data[i]['logistic_truck_No']+" ><{$lang->no_truck_yet}></option>";
+											    html += "<option value="+data[i]['logistic_schedule_id']+" ><{$lang->no_truck_yet}></option>";
 											}
 										}else{
 										
 										    if(data[i]['driverName']){
 											
-											   truckanddriver = data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'];
+											   truckanddriver =data[i]['start_hour'] + ' ' +  data[i]['driverName'] +'-'+data[i]['truck_name']+"-"+data[i]['plate_number'];
 											}else{
-												truckanddriver = data[i]['truck_name']+"-"+data[i]['plate_number'];
+												truckanddriver =data[i]['start_hour'] + ' ' +  data[i]['truck_name']+"-"+data[i]['plate_number'];
 											}
 										
 										   if (trukNo ===selectTruck){
 											 
-											   html += "<option value="+data[i]['logistic_truck_No']+" selected>"+truckanddriver+"</option>";
+											   html += "<option value="+data[i]['logistic_schedule_id']+" selected>"+truckanddriver+"</option>";
 											}else{
-												html += "<option value="+data[i]['logistic_truck_No']+" >"+truckanddriver+"</option>";
+												html += "<option value="+data[i]['logistic_schedule_id']+" >"+truckanddriver+"</option>";
 											}
 										
 										
@@ -152,7 +152,7 @@
 
 
 									}
-										$('.chooselogistic_truck_No').html(html);
+										$('.chooselogistic_schedule_id').html(html);
 									},
 									error:function(data){
 										console.log(data);
@@ -160,7 +160,7 @@
 								})
 							})
 							
-							$('.chooselogistic_truck_No').on('change',function(){
+							$('.chooselogistic_schedule_id').on('change',function(){
 							   $('#printer').css({ "display": "none" });
 								
 							})
@@ -210,7 +210,7 @@
 									<th><{$lang->logistic_delivery_date}></th>
 									<th><{$lang->logistic_sequenceNo}></th>
 									
-									<th><{$lang->logistic_truck_no}></th>
+									<th>Schedule Id</th>
 									<th>stopNum</th>
 									
 									<th><{$lang->order_id}></th>		
@@ -233,13 +233,13 @@
 								   <td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
 									<td><{$item.logistic_sequence_No}></td>
 								  
-										<td><{$item.logistic_truck_No}></td>
+										<td><{$item.logistic_schedule_id}></td>
 									  <td><{$item.logistic_stop_No}></td>
 									
 									  
 									<td>
 										
-										<a target='_blank' href="<{$http_root_www}><{if $loginUser.business_type_factory==1}>factory<{else}>company<{/if}>/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
+										<a target='_blank' href="<{$http_root_www}>factory/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
 									<td>
@@ -392,7 +392,7 @@ function showPdf(type)
 	
 	var vcustomer_delivery_date= $('#customer_delivery_date option:selected').val();
 	
-	var vlogistic_truck_No= $('#logistic_truck_No option:selected').val();
+	var vlogistic_schedule_id= $('#logistic_schedule_id option:selected').val();
 	var vbusiness_id= $('#business_id option:selected').val();
 	
 	var vStatus= $('#status option:selected').val();
@@ -403,7 +403,7 @@ function showPdf(type)
 	var fitInPage=$('#fitInPage').prop('checked');
 	
    
-	var vUrl='<{$http_root_www}>company/customer_orders_logistic?checkID=' + checkID +'&output='+type+'&status='+vStatus+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&logistic_truck_No='+vlogistic_truck_No+'&sk='+vSk+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
+	var vUrl='<{$http_root_www}>company/customer_orders_logistic?checkID=' + checkID +'&output='+type+'&status='+vStatus+'&business_id='+vbusiness_id+'&customer_delivery_date='+vcustomer_delivery_date+'&logistic_schedule_id='+vlogistic_schedule_id+'&sk='+vSk+'&staff='+vStaff+'&customer_delivery_option='+vCustomerDeliveryOption+'&fitInPage='+fitInPage;
 	window.open(vUrl);
 }
 

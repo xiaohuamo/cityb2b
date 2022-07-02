@@ -31,6 +31,11 @@
 			  $('#delivery_management_box').css("display",'');
 			   $('#open_end_setting_list').css("display",'');
 			<{/if}>
+			
+			<{if $customer_delivery_date}>
+			  $('#customer_delivery_date1').val('<{$customer_delivery_date}>')
+			  changeDelivery_date($('#customer_delivery_date1'));
+			<{/if}>
 		}
 		window.onload = myfun;
 	</script>
@@ -68,14 +73,14 @@
 
 					<div id="delivery_management_box" style ="display:none;" class="input-box  clearfix">
 						<label>Choose Date：</label>
-						<select onchange="changeDelivery_date(this)" >
+						<select id= 'customer_delivery_date1' onchange="changeDelivery_date(this)" >
 						<option><{$lang->logistic_choosedate1}></option>
 						<{foreach from=$availableDates item=d}>
 							<option value="<{$d}>" <{if $d==$customer_delivery_date}>selected<{/if}>>
 								<{$d}>
 							</option>
 						<{/foreach}>
-					</select>&nbsp;&nbsp;<button type="button" onclick="importDefaultTruckDriverInfoForDeliveryDate();" class="btn btn-default btn-success" id=""><{$lang->getDefaultDriverTruckInfo}></button>
+							</select>&nbsp;&nbsp;<button type="button" onclick="importDefaultTruckDriverInfoForDeliveryDate();" class="btn btn-default btn-success" id=""><{$lang->getDefaultDriverTruckInfo}></button>
 					<br>
 					<label>Choose Truck：</label>
 					<select  onchange="changeTruck(this)" >
@@ -254,14 +259,15 @@
 						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>Schedule No</th>
-								<th>Truck</th>
-								<th>Driver</th>
-								<th>Status</th>
-								<th>Sche.Start</th>
-								<th>Sche. End</th>
 								<th>Delivery Date</th>
+								<th>Sche.Start</th>
+								<th>Driver</th>
+								<th>Truck</th>
+								<th>Sche. End</th>
+								<th>Status</th>
+								<th>Edit</th>
 								<th>Delete</th>
+								<th>Schedule No</th>
 								
 
 							</tr>
@@ -314,6 +320,9 @@
 			
 	function deleteScheduel(id) {
 	
+	
+	
+	
 	if(!confirm('Do you really want to delete this schedule?')) return;
 		
 	 
@@ -355,6 +364,20 @@
 	
 	
 	
+	}
+	
+	
+	 function generateUrl(id) {
+                return "<{$http_root_www}>factory/schedule_edit?id="
+                    + id;
+            }
+
+            
+	
+	function editScheduel(id) {
+	
+	
+	 window.location.href = generateUrl(id);
 	}
 	
 	
@@ -451,7 +474,7 @@
 							
 							   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
 								//alert(html);
-								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'><td>"+data1[i]['schedule_id']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['driverName']+"</td> <td>"+data1[i]['status']+"</td>  <td>"+data1[i]['start_hour']+"</td>   <td>"+data1[i]['end_hour']+"</td> <td>"+data1[i]['delivery_date_str']+"</td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td></tr>");
+								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['delivery_date_str']+"</td> <td>"+data1[i]['start_hour']+"</td> <td>"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td> <td>"+data1[i]['end_hour']+"</td>     <td>"+data1[i]['status']+"</td>       <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td><td>"+data1[i]['schedule_id']+"</td> </tr>");
 								
 							 }
 							//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");

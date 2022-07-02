@@ -50,8 +50,9 @@
 		<{include file='company/side.htm'}>
 
 		<div class="main">
-			<{include file='factory_2c/manual_picking_top_menu.htm'}>
+
 			<div class="box2">
+						<{include file='factory_2c/manual_picking_top_menu.htm'}>
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">

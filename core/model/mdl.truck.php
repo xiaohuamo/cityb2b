@@ -43,16 +43,17 @@ class mdl_truck extends mdl_base
 
  o.boxesNumber as boxes
 
-from cc_order o left join cc_truck t on o.logistic_truck_No = t.truck_no and o.business_userId=t.business_id
+from cc_order o 
      left join cc_truck_driver_schedule s on o.logistic_schedule_id =s.schedule_id and o.business_userId =s.factory_id 
-    left join cc_user u on t.current_driver =u.id 
+         left join cc_truck t on s.truck_id = t.truck_no and s.factory_id=t.business_id 
+    left join cc_user u on s.driver_id =u.id 
 left join cc_wj_customer_coupon c on o.orderId =c.order_id left join cc_restaurant_menu m on c.restaurant_menu_id =m.id 
 
 where o.logistic_delivery_date =  ".strtotime($delivery_date)."  and o.business_userId=$business_id and o.coupon_status ='c01' and (o.status =1 or o.accountPay=1) group by o.logistic_schedule_id order by o.logistic_schedule_id";
 
 
         $allTruckList  = $this->getListBySql($sql);
-		//var_dump($sql);exit;
+        //var_dump($sql);exit;
 		return $allTruckList;
 		
 		

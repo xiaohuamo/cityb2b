@@ -253,7 +253,7 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 		
 	}
 
-public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
+public function getdriversheetList($factoryId,$dateOfDelivery,$logistic_schedule_id){
 
      $sql ="SELECT o.xero_invoice_id,f.nickname,o.edit_boxesNumber,o.boxesNumber,o.address,o.logistic_stop_No,o.logistic_sequence_No ,o.logistic_delivery_date	,
        o.phone,'' as boxes,o.message_to_business,' ' as signed  from cc_order as o
@@ -261,14 +261,14 @@ public function getdriversheetList($factoryId,$dateOfDelivery,$driverId){
         where  o.business_userId =$factoryId and  (o.coupon_status='c01' or o.coupon_status='b01' )
           and (o.status =1 or o.accountPay=1) 
           and DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d') = '$dateOfDelivery' 
-          and logistic_truck_No = '$driverId' 
+          and logistic_schedule_id = '$logistic_schedule_id' 
         order by logistic_stop_No,f.nickname  ";
      $list = $this->getListBySql($sql);
     // var_dump($sql);exit;
      return $list;
 }
 
-public function get_manual_producing_data($dateSearcch,$factoryId,$driver){
+public function get_manual_producing_data($dateSearcch,$factoryId,$logistic_schedule_id){
      $sql ="SELECT o.orderId,if(length(u.contactPersonFirstname)>0,if(length(u.contactPersonLastname)>0,
     concat(u.contactPersonFirstname,'-',u.contactPersonLastname),u.contactPersonFirstname) ,u.name) as DriverName ,
        concat(t.plate_number,'-',t.truck_name) as truckName, if(length(f.xero_account_number)>0,
@@ -290,10 +290,10 @@ public function get_manual_producing_data($dateSearcch,$factoryId,$driver){
       and (o.coupon_status='c01' or o.coupon_status ='b01') 
       and (o.status =1 or o.accountPay=1) " ;
       
-      if ($driver !='all') {
-        $sql .=  " and o.logistic_truck_No=$driver ";
+      if ($logistic_schedule_id !='all') {
+        $sql .=  " and o.logistic_schedule_id=$logistic_schedule_id ";
       }
-      $sql .= "  order by o.logistic_truck_No,o.city";
+      $sql .= "  order by o.logistic_schedule_id,o.city";
      $data =$this->getListBySql($sql);
 //var_dump($sql);exit;
    /* if($data){

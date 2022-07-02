@@ -128,10 +128,10 @@ class ctl_factory extends cmsPage
 
 
 
-        $logistic_truck_No = trim(get2('logistic_truck_No'));
+        $logistic_schedule_id = trim(get2('logistic_schedule_id'));
 
 
-        $this->setData($logistic_truck_No,'logistic_truck_No');
+        $this->setData($logistic_schedule_id,'logistic_schedule_id');
 
         $mdl_truck=$this->loadModel('truck');
 
@@ -275,9 +275,9 @@ class ctl_factory extends cmsPage
             }
         }
 
-        if (! empty($logistic_truck_No)) {
-            if ($logistic_truck_No != 'all') {
-                $whereStr .= " and o.logistic_truck_No = '$logistic_truck_No' ";
+        if (! empty($logistic_schedule_id)) {
+            if ($logistic_schedule_id != 'all') {
+                $whereStr .= " and o.logistic_schedule_id = '$logistic_schedule_id' ";
             }
         }
 
@@ -2602,7 +2602,100 @@ public function return_items_submit_to_statment_action() {
         return;
     }
 
- public function edit_customer1_action()
+
+    public function schedule_edit_action()
+    {
+        $id = trim(get2('id'));
+        $this->setData($id,'id');
+        if (is_post()) {
+            //var_dump('here');exit;
+                    $id = post('id');
+                    $mdl_schedule =$this->loadModel('truck_driver_schedule');
+                    $schedule_rec =$mdl_schedule->get($id);
+                    if($schedule_rec['factory_id']!=$this->current_business['id']) {
+                        $this->form_response('no access');
+                    }
+
+                    $driver_id =post('driver_id');
+                    $truck_id =post('truck_id');
+                    $status =post('status');
+                    $schedule_start_time_str =post('schedule_start_time');
+                    $schedule_start_time =strtotime($schedule_start_time_str);
+
+                    $schedule_end_time_str =post('schedule_end_time');
+                    $schedule_end_time =strtotime($schedule_end_time_str);
+                    $delivery_date =post('delivery_date');
+
+                    $data=array(
+                        //''=>$,
+                        'driver_id'=>$driver_id,
+                        'truck_id'=>$truck_id,
+                        'status'=>$status,
+                        'schedule_start_time'=>$schedule_start_time,
+                        'schedule_end_time'=>$schedule_end_time
+                    );
+
+                   if($mdl_schedule->update($data,$id)) {
+                       $customer_delivery_date=date('Y-m-d',$delivery_date);
+                       $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/new_schedule?customer_delivery_date=".$customer_delivery_date);
+                     //  $this->sheader(HTTP_ROOT_WWW."factory/new_schedule?delivery_date =".$delivery_date);
+                   }else{
+
+                       $this->form_response(500,'something error !');
+                   }
+                 
+
+
+
+        }else{
+            $mdl_schedule =$this->loadModel('truck_driver_schedule');
+            $schedule_rec =$mdl_schedule->get($id);
+            if($schedule_rec['factory_id']!=$this->current_business['id']) {
+                var_dump('no access');exit;
+            }
+
+
+            $mdl_truck =  $this->loadModel('truck');
+            $all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
+
+            //获取可用的driver 信息
+
+
+            $this->setData($all_avaliable_trucks,'all_avaliable_trucks');
+
+            $mdl_staff_roles =  $this->loadModel('staff_roles');
+            $driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
+            $this->setData($driverList,'driverList');
+
+            $this->setData($schedule_rec,'data');
+
+
+
+
+
+
+        }
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Truck&Driver Schedule Management";
+        }else{
+            $pagename = "车辆司机调度管理";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('Schedule Management - ' . $this->site['pageTitle'], 'pageTitle');
+
+
+        $this->setData('Logistic_centre', 'menu');
+
+        $this->setData('new_schedule', 'submenu');
+        $this->setData('new_schedule', 'submenu_top');
+        $this->display('factory/schedule_edit');
+
+        return;
+    }
+
+
+
+    public function edit_customer1_action()
     {
 		  $userId = trim(get2('user_Id'));
 		  $this->setData($userId,'userId');
@@ -2805,6 +2898,12 @@ public function return_items_submit_to_statment_action() {
 			
 			
 		}
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Customer Edit";
+        }else{
+            $pagename = "客户编辑";
+        }
+        $this->setData($pagename, 'pagename');
         $this->setData('customer_list', 'submenu_top');
         $this->setData('customer_list', 'submenu');
         $this->setData('customer_management', 'menu');
@@ -7160,12 +7259,20 @@ public function return_items_submit_to_statment_action() {
 
     public function create_manunal_dispatching_report_action(){
         $dateOfSearch =get2('date');
-        $driver =get2('driver-serial');
+        $logistic_schedule_id =get2('logistic_schedule_id');
 
-        $driverName =$this->loadModel('truck')->getTruckAndDriverInfo1($driver,$this->current_business['id']);
-      //  var_dump($driver);exit;
+        $mdl_schedule = $this->loadModel('truck_driver_schedule');
+        $schedule_rec =$mdl_schedule->getByWhere(array('factory_id'=>$this->current_business['id'],'schedule_id'=>$logistic_schedule_id));
+        if(!$schedule_rec) {
+            var_dump('no access!');
+        }
+
+       // $driver
+        $driverName =$mdl_schedule->getTruckAndDriverInfo1($logistic_schedule_id,$this->current_business['id']);
+       // var_dump($driverName);exit;
         $mdl_order =$this->loadModel('order');
-        $dispatching_data =$mdl_order->get_manual_producing_data($dateOfSearch,$this->current_business['id'],$driver);
+        $dispatching_data =$mdl_order->get_manual_producing_data($dateOfSearch,$this->current_business['id'],$logistic_schedule_id);
+        //var_dump($dispatching_data);exit;
         $mdl_user_account_info	= $this->loadModel('user_account_info');
          $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
 //var_dump($dispatching_data);exit;
