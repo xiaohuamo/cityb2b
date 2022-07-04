@@ -53,7 +53,7 @@ class mdl_truck extends mdl_base
 		//var_dump($sql);exit;
 		$sql="select o.logistic_schedule_id ,s.*,t.truck_name,from_unixtime(s.schedule_start_time,'%H:%i') as start_hour,t.plate_number,ifnull(count(DISTINCT o.orderId),0) as count,concat(u.contactPersonFirstname,' ',u.contactPersonLastname) as driverName,
 
- o.boxesNumber as boxes
+ sum(o.boxesNumber) as boxes
 
 from cc_order o 
      left join cc_truck_driver_schedule s on o.logistic_schedule_id =s.schedule_id and o.business_userId =s.factory_id 

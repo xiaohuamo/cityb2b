@@ -71,7 +71,7 @@
 													<option value='0'>Select the Driver</option>
                                                     <{foreach from=$driverList item=sitem1}>
 														<option value='<{$sitem1.id}>'
-                                                                <{if $sitem1.id==$driver_id}>selected<{/if}>>
+                                                                <{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
                                                             <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
 														</option>
@@ -105,7 +105,9 @@
 								<th>Schedule Time</th>
 								<th>Driver</th>
 								<th>Truck</th>
+								
 								<th>Status</th>
+								
 								<th>Schedule No</th>
 								
 
