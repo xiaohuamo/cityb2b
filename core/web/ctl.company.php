@@ -13713,8 +13713,20 @@ function get_data($url, $ch) {
 	    			
 	    			$this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
 	    			break;
+                case 'upload_driver':
+                    //Step1
+                    try {
+                        //创建动态司机，车辆标号以对应opti
+                        $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
+                        $opRoute->updateSchedule($date);
+                    } catch (Exception $e) {
+                        $this->sheader(null,$e->getMessage());
+                    }
+
+                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
+                    break;
 	    		case 'syncdown':
-	    			$opRoute->syncRoutesDownOnDeliverDate($date);
+	    			$opRoute->syncRoutesDownOnDeliverDate($date,$this->current_business['id']);
 					
 					if(!$disp) {
 						$this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
@@ -14471,8 +14483,7 @@ public function custom_delivery_fee_add_action()
             $schedule_start_of_time_hour = post('schedule_start_of_time_hour');
             $schedule_start_of_time_minute = post('schedule_start_of_time_minute');
 
-            $schedule_start_time= $this->combition_datestr_to_number($customer_delivery_date,$schedule_start_of_time_hour,$schedule_start_of_time_minute);
-
+            $schedule_start_time= $schedule_start_of_time_hour.':'.$schedule_start_of_time_minute;
 
 
 
@@ -14480,8 +14491,7 @@ public function custom_delivery_fee_add_action()
             $schedule_cut_of_time_hour = post('schedule_cut_of_time_hour');
             $schedule_cut_of_time_minute = post('schedule_cut_of_time_minute');
 
-            $schedule_end_time= $this->combition_datestr_to_number($customer_delivery_date,$schedule_cut_of_time_hour,$schedule_cut_of_time_minute);
-
+            $schedule_end_time=$schedule_cut_of_time_hour.':'.$schedule_cut_of_time_minute;
 
             $this->setData($schedule_start_time,'shedule_start_time');
 
@@ -14499,8 +14509,8 @@ public function custom_delivery_fee_add_action()
             $data['truck_id'] =$truck_id;
             $data['driver_id'] = $driver_id;
             $data['status'] = 1;
-            $data['schedule_start_time'] = $schedule_start_time;
-            $data['schedule_end_time'] = $schedule_end_time;
+            $data['driver_work_start_time'] = $schedule_start_time;
+            $data['driver_work_end_time'] = $schedule_end_time;
             $data['start_time'] = 0;
             $data['end_time'] = 0;
             $data['plan_user_id'] = $this->loginUser['id'];
@@ -14508,6 +14518,26 @@ public function custom_delivery_fee_add_action()
             $data['plan_gen_time'] =time();
             $data['approved_user_id'] =  $this->loginUser['id'];
             $data['plan_approved_gen_time'] =  time();
+
+           //插入更多司机参数
+            $driver_base_rec = $mdl_driver_base_info =$this->loadModel('driver_base_info')->getDriverbaseInfo($this->current_business['id'],$driver_id);
+
+            if($driver_base_rec['driver_id'] && $driver_base_rec['status']==1){ //如果该driver 配置且可用
+
+
+                $data['driver_start_location']=$driver_base_rec['start_location'];
+                $data['driver_start_lat']=$driver_base_rec['start_lat'];
+                $data['driver_start_long']=$driver_base_rec['start_long'];
+                $data['driver_end_location']=$driver_base_rec['end_location'];
+                $data['dirver_end_lat']=$driver_base_rec['end_lat'];
+                $data['driver_end_long']=$driver_base_rec['end_long'];
+
+            }else{
+                continue;
+            }
+
+
+
 //var_dump($data);exit;
             $new_id=$mdl_schedule->insert($data);
             //将所有的business_name 修改称新的 business_name

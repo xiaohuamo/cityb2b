@@ -39,7 +39,7 @@
 						</h1>
 					</div>
 					<form id="memberForm" method="post" target="post_frame" enctype="multipart/form-data">
-						<input type="text" name="id" id="id" value = "<{$data.id}>"class="input-text" hidden/>
+						<input type="text" name="sche_id" id="sche_id" value = "<{$data.id}>"class="input-text" hidden/>
 						<input type="text" name="delivery_date" id="delivery_date" value = "<{$data.delivery_date}>"class="input-text" hidden/>
 						
 						<div class="input-box  form-style-green">
@@ -52,7 +52,7 @@
 							<span>
 							<label for="">Delivery Date</label>
 							</span>
-							<label><{$data.delivery_date}></label>
+							<label> <{date('Y-m-d', $data.delivery_date)}></label>
 						</div>
 						<div class="input-box  form-style-green">
 							<span>
@@ -62,8 +62,8 @@
 								
 								<{foreach from=$driverList item=sitem1}>
 									<option value='<{$sitem1.id}>'
-											<{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
-										<{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
+											<{if $sitem1.id==$data.driver_id}>selected<{/if}>>
+									<{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
 									</option>
 								<{/foreach}>
@@ -79,7 +79,7 @@
 										
 										<{foreach from=$all_avaliable_trucks item=sitem1}>
 											<option value='<{$sitem1.truck_no}>'
-													<{if $truck_id==$sitem1.truck_no}>selected<{/if}>>
+													<{if $data.truck_id==$sitem1.truck_no}>selected<{/if}>>
 														
 												<{$sitem1.truck_no}>-<{$sitem1.truck_name}>- <{$sitem1.plate_number}>
 
@@ -107,7 +107,7 @@
 						<!--	<input type="text" name="approved" id="approved" class="input-text" placeholder="" value="<{$user_factory_info.approved}>"> -->
 						</div>
 						
-						<div class="input-box  form-style-green">
+					<!--	<div class="input-box  form-style-green">
 							<span>
 							<label for="schedule_start_time">Schedule Start Time</label>
 							</span>
@@ -127,7 +127,150 @@
 						onfocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM-dd HH:mm', minDate: '<{<{date('Y-m-d H:i', time())}>}>', maxDate: '<{<{date('Y-m-d H:i', time()+14*24*60*60)}>}>' })" value="<{<{date('Y-m-d H:i', $data.schedule_end_time)}>}>"/>
 						</div>
 						
-                     
+                     -->
+					 
+					 <div class="input-box  form-style-green">
+							<span>
+							<label for="status">Driver Start Time</label>
+							</span>
+							
+						From &nbsp;&nbsp;	<select id ='schedule_start_of_time_hour'  name='schedule_start_of_time_hour' >
+							<option value=''></option>
+							<{for $time = 0 to 23}>
+								<{if $time < 10}>
+									<option value="0<{$time}>" <{if $time==intval($data.start_time_hour)}>selected<{/if}> >0<{$time}></option>
+								<{else}>
+									<option value="<{$time}>"  <{if $time==$data.start_time_hour}>selected<{/if}> ><{$time}></option>
+								<{/if}>
+							<{/for}>
+						</select>
+						:
+						<select id="schedule_start_of_time_minute" name='schedule_start_of_time_minute' >
+							<option value="00" <{if $data.start_time_minute=='00'}>selected<{/if}>>00</option>
+							<option value="05" <{if $data.start_time_minute=='05'}>selected<{/if}>>05</option>
+							<option value="10" <{if $data.start_time_minute=='10'}>selected<{/if}>>10</option>
+							<option value="15" <{if $data.start_time_minute=='15'}>selected<{/if}>>15</option>
+							<option value="20" <{if $data.start_time_minute=='20'}>selected<{/if}>>20</option>
+							<option value="25" <{if $data.start_time_minute=='25'}>selected<{/if}>>25</option>
+							<option value="30" <{if $data.start_time_minute=='30'}>selected<{/if}>>30</option>
+							<option value="35" <{if $data.start_time_minute=='35'}>selected<{/if}>>35</option>
+							<option value="40" <{if $data.start_time_minute=='40'}>selected<{/if}>>40</option>
+							<option value="45" <{if $data.start_time_minute=='45'}>selected<{/if}>>45</option>
+							<option value="50" <{if $data.start_time_minute=='50'}>selected<{/if}>>50</option>
+							<option value="55" <{if $data.start_time_minute=='55'}>selected<{/if}>>55</option>
+						</select>
+
+		     &nbsp;&nbsp;To &nbsp;&nbsp;
+							<select id='schedule_cut_of_time_hour'  name='schedule_cut_of_time_hour' >
+							<option value=''></option>
+								<{for $time = 0 to 23}>
+									<{if $time < 10}>
+										<option value="0<{$time}>" <{if $time==intval($data.end_time_hour)}>selected<{/if}> >0<{$time}></option>
+									<{else}>
+										<option value="<{$time}>"  <{if $time==$data.end_time_hour}>selected<{/if}> ><{$time}></option>
+									<{/if}>
+								<{/for}>
+						</select>
+						:
+						<select id='schedule_cut_of_time_minute' name='schedule_cut_of_time_minute' >
+													
+							<option value="00" <{if $data.end_time_minute=='00'}>selected<{/if}>>00</option>
+							<option value="05" <{if $data.end_time_minute=='05'}>selected<{/if}>>05</option>
+							<option value="10" <{if $data.end_time_minute=='10'}>selected<{/if}>>10</option>
+							<option value="15" <{if $data.end_time_minute=='15'}>selected<{/if}>>15</option>
+							<option value="20" <{if $data.end_time_minute=='20'}>selected<{/if}>>20</option>
+							<option value="25" <{if $data.end_time_minute=='25'}>selected<{/if}>>25</option>
+							<option value="30" <{if $data.end_time_minute=='30'}>selected<{/if}>>30</option>
+							<option value="35" <{if $data.end_time_minute=='35'}>selected<{/if}>>35</option>
+							<option value="40" <{if $data.end_time_minute=='40'}>selected<{/if}>>40</option>
+							<option value="45" <{if $data.end_time_minute=='45'}>selected<{/if}>>45</option>
+							<option value="50" <{if $data.end_time_minute=='50'}>selected<{/if}>>50</option>
+							<option value="55" <{if $data.end_time_minute=='55'}>selected<{/if}>>55</option>
+							
+								
+						
+						</select>
+
+		     	</div>
+					 
+					 
+							<div class="input-box multi-select clearfix">
+								<span><label>Start Localtion</span>
+								
+								
+								<input id="geocomplete"  class="input-text" style="width:45%;" type="text" placeholder="Please enter address"    value="<{$data.driver_start_location}>" name="driver_start_location" size="80" />
+								<input id="find" type="hidden" value="find" />
+							</div>
+							
+							<div   style="left:220px;" class="input-box clearfix " >
+								<div  class="map_canvas" style ='width:50%;height:200px;'></div>		
+							</div>
+							
+							
+							
+							
+							
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&language=en_AU&libraries&libraries=places"></script>
+							<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+							
+							<script>
+							$(function(){
+								$("#geocomplete").geocomplete({
+									map: ".map_canvas",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$data.driver_start_location}>"
+								});
+								
+								$("#find").click(function(){
+									$("#geocomplete").trigger("geocode");
+								});
+								var map = $("#geocomplete").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							</script>			
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>End Localtion</span>
+								
+								
+								<input id="geocomplete_end" style="width:45%;"  class="input-text" type="text" placeholder="Please enter address"    value="<{$data.driver_end_location}>" name="driver_end_location" size="80" />
+								<input id="find_end" type="hidden" value="find_end" />
+							</div>
+							
+							<div   style="left:220px;" class="input-box clearfix " >
+								<div  class="map_canvas_end" style ='width:50%;height:200px;'></div>		
+							</div>
+							<script>
+							$(function(){
+								$("#geocomplete_end").geocomplete({
+									map: ".map_canvas_end",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$data.driver_end_location}>"
+								});
+								
+								$("#find_end").click(function(){
+									$("#geocomplete_end").trigger("geocode");
+								});
+								var map = $("#geocomplete_end").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							
+							
+							</script>		
 
 						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
 							<button type="submit"><{$lang->save}></button>

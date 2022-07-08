@@ -1635,6 +1635,22 @@ public function get_business_delivery_des ($business_id){
 			return $delivery_desc;
 	 }
 
+   public function get_latitude_from_address ($address){
+
+       $location =str_replace(' ','%20',$address);
+       // geocoding api url
+       $url = "https://maps.google.com/maps/api/geocode/json?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&language=en_AU&address='".$location."'";
+       // send api request
+       $geocode = file_get_contents($url);
+       $json = json_decode($geocode);
+       $latlngarr =array();
+       $latlngarr['lat'] = $json->results[0]->geometry->location->lat;
+       $latlngarr['lng'] = $json->results[0]->geometry->location->lng;
+
+       return $latlngarr;
+
+   }
+
     public function combition_datestr_to_number_hour_min($custome_date,$str){
 
         if(!$custome_date){

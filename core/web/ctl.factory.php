@@ -2702,22 +2702,42 @@ public function return_items_submit_to_statment_action() {
         $id = trim(get2('id'));
         $this->setData($id,'id');
         if (is_post()) {
-            //var_dump('here');exit;
-                    $id = post('id');
+
+                    $id = post('sche_id');
+                    //var_dump($id);exit;
                     $mdl_schedule =$this->loadModel('truck_driver_schedule');
                     $schedule_rec =$mdl_schedule->get($id);
                     if($schedule_rec['factory_id']!=$this->current_business['id']) {
+
                         $this->form_response('no access');
                     }
 
                     $driver_id =post('driver_id');
+
                     $truck_id =post('truck_id');
                     $status =post('status');
-                    $schedule_start_time_str =post('schedule_start_time');
-                    $schedule_start_time =strtotime($schedule_start_time_str);
 
-                    $schedule_end_time_str =post('schedule_end_time');
-                    $schedule_end_time =strtotime($schedule_end_time_str);
+
+                    $driver_start_location =post('driver_start_location');
+                    $start_location_lat =array();
+                    $start_location_lat = $this->get_latitude_from_address ($driver_start_location);
+
+
+
+                    $driver_end_location =post('driver_end_location');
+                    $end_location_lat =array();
+                    $end_location_lat = $this->get_latitude_from_address ($driver_end_location);
+
+
+                    $start_of_time_hour =post('schedule_start_of_time_hour');
+                    $start_of_time_minute =post('schedule_start_of_time_minute');
+                    $cut_of_time_hour =post('schedule_cut_of_time_hour');
+                    $cut_of_time_minute =post('schedule_cut_of_time_minute');
+
+                    $driver_work_start_time =$start_of_time_hour.':'.$start_of_time_minute;
+                    $driver_work_end_time =$cut_of_time_hour.':'.$cut_of_time_minute;
+
+
                     $delivery_date =post('delivery_date');
 
                     $data=array(
@@ -2725,10 +2745,15 @@ public function return_items_submit_to_statment_action() {
                         'driver_id'=>$driver_id,
                         'truck_id'=>$truck_id,
                         'status'=>$status,
-                        'schedule_start_time'=>$schedule_start_time,
-                        'schedule_end_time'=>$schedule_end_time
+                        'driver_work_start_time'=>$driver_work_start_time,
+                        'driver_work_end_time'=>$driver_work_end_time,
+                        'driver_start_lat'=>$start_location_lat['lat'],
+                        'driver_start_long'=> $start_location_lat['lng'],
+                        'dirver_end_lat'=>$end_location_lat['lat'],
+                        'driver_end_long'=> $end_location_lat['lng'],
+                        'driver_start_location'=> $driver_start_location,
+                        'driver_end_location'=> $driver_end_location
                     );
-
                    if($mdl_schedule->update($data,$id)) {
                        $customer_delivery_date=date('Y-m-d',$delivery_date);
                        $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/new_schedule?customer_delivery_date=".$customer_delivery_date);
@@ -2761,6 +2786,31 @@ public function return_items_submit_to_statment_action() {
             $driverList = $mdl_staff_roles->getAllDriverOfBusiness($this->current_business['id']);
             $this->setData($driverList,'driverList');
 
+            // 将 driver 的 start end time 分割
+            $start_time =$schedule_rec['driver_work_start_time'];
+            if($start_time) {
+
+                $pos =strpos($start_time,':',0);
+                if($pos){
+                    $schedule_rec['start_time_hour'] =substr($start_time,0,$pos);
+                    // var_dump(  $schedule_rec['start_time_hour']);exit;
+                    $schedule_rec['start_time_minute'] =substr($start_time,$pos+1);
+                    //var_dump(  $schedule_rec['start_time_minute']);exit;
+                }
+            }
+//var_dump( $schedule_rec['truck_no']);exit;
+            $end_time =$schedule_rec['driver_work_end_time'];
+            if($end_time) {
+
+                $pos =strpos($end_time,':',0);
+                if($pos){
+                    $schedule_rec['end_time_hour'] =substr($end_time,0,$pos);
+                    // var_dump(  $schedule_rec['start_time_hour']);exit;
+                    $schedule_rec['end_time_minute'] =substr($end_time,$pos+1);
+                    //  var_dump(  $schedule_rec['end_time_hour']);exit;
+                }
+            }
+//var_dump($schedule_rec);exit;
             $this->setData($schedule_rec,'data');
 
 
@@ -5432,7 +5482,7 @@ public function return_items_submit_to_statment_action() {
         $all_avaliable_trucks = $mdl_truck->getAllTruckOfBusiness($this->current_business['id']);
 
         //获取可用的driver 信息
-
+//var_dump(json_encode($all_avaliable_trucks));exit;
 
         $this->setData($all_avaliable_trucks,'all_avaliable_trucks');
 
@@ -5563,6 +5613,20 @@ public function return_items_submit_to_statment_action() {
         echo json_encode($delivery_date_schedule);
     }
 
+    public function checkIfDriverPlanningScheduleExist($mdl_schedule,$delivery_date,$driverId){
+
+
+       $where =array(
+           'delivery_date'=>strtotime($delivery_date),
+           'driver_id'=>$driverId,
+           'status'=>1
+       );
+
+       $count = $mdl_schedule->getCount($where);
+
+        return $count;
+
+    }
 
     public function generate_default_schedule_action(){
 
@@ -5575,6 +5639,14 @@ public function return_items_submit_to_statment_action() {
 
 
             foreach ($truck_list as $key=>$value) {
+
+
+
+                // 检查当前driver 在当前日期，处于 planning状态的 scheudle 数量，如果大于0 ，则不操作
+                // 任何driver在某一天只有一个planning状态的order .
+                if($this->checkIfDriverPlanningScheduleExist($mdl_schedule,$customer_delivery_date,$value['current_driver'])){
+                    continue;
+                }
 
 
                 $factory_schedule_id =$mdl_schedule->getFactoryNewScheduleId($this->current_business['id']);
@@ -5601,7 +5673,7 @@ public function return_items_submit_to_statment_action() {
                 $data['delivery_date'] = strtotime($customer_delivery_date);
                 $data['truck_id'] =$value['truck_no'];
                 $data['driver_id'] =$value['current_driver'];
-                $data['status'] = 1;
+                $data['status'] = 1;//planning
                 $data['schedule_start_time'] = $schedule_start_time;
                 $data['schedule_end_time'] = $schedule_end_time;
                 $data['start_time'] = 0;
@@ -5611,6 +5683,28 @@ public function return_items_submit_to_statment_action() {
                 $data['plan_gen_time'] =time();
                 $data['approved_user_id'] =  $this->loginUser['id'];
                 $data['plan_approved_gen_time'] =  time();
+
+
+
+                $driver_base_rec = $mdl_driver_base_info =$this->loadModel('driver_base_info')->getDriverbaseInfo($this->current_business['id'],$value['current_driver']);
+
+                if($driver_base_rec['driver_id'] && $driver_base_rec['status']==1){ //如果该driver 配置且可用
+
+                    $data['driver_work_start_time']=$driver_base_rec['default_start_time'];
+                    $data['driver_work_end_time']=$driver_base_rec['default_end_time'];
+                    $data['driver_start_location']=$driver_base_rec['start_location'];
+                    $data['driver_start_lat']=$driver_base_rec['start_lat'];
+                    $data['driver_start_long']=$driver_base_rec['start_long'];
+                    $data['driver_end_location']=$driver_base_rec['end_location'];
+                    $data['dirver_end_lat']=$driver_base_rec['end_lat'];
+                    $data['driver_end_long']=$driver_base_rec['end_long'];
+
+                }else{
+                    continue;
+                }
+
+
+
 //var_dump($data);exit;
                 $new_id = $mdl_schedule->insert($data);
                 if(!$new_id) {
@@ -5658,7 +5752,7 @@ public function return_items_submit_to_statment_action() {
 
 
             // 不能删除调度历史
-            $start_time =  time()-5*24*60*60;
+            $start_time =  time()-10*24*60*60;
             if($sche_rec['delivery_date']<=$start_time) {
                 $this->form_response(500,'no access for earily data');
 
@@ -7173,6 +7267,56 @@ public function return_items_submit_to_statment_action() {
     }
 
 
+    public function update_truck_driver_status_action()
+    {
+        if(is_post()){
+
+            $mdl_driver_base_info = $this->loadModel('driver_base_info');
+            $id = post('id');
+
+            $drvier_rec = $mdl_driver_base_info->getDriverbaseInfo($this->current_business['id'],$id);
+
+
+
+            if(!$drvier_rec){
+                $this->form_response(600,'no access');
+            }
+
+
+
+
+
+            $data=array();
+
+            $update_field_name = post('update_field_name');
+            $value = post('value');
+
+
+
+
+            if($update_field_name =='status') {
+                $data['status'] =$value;
+            }
+
+
+
+
+
+            try {
+                $mdl_driver_base_info->updateByWhere($data,array('driver_id'=>$id));
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
+
+
     public function export_manual_dispatching_form_action()
     {
 
@@ -7723,8 +7867,33 @@ public function return_items_submit_to_statment_action() {
 
 
     }
-	
-	 public  function truck_list_action()
+
+    public  function drivers_list_action()
+    {
+        $id = (int)get2('id');
+
+        $mdl_staff_roles =  $this->loadModel('staff_roles');
+        $driverList = $mdl_staff_roles->getAllDriverOfBusinessWithDriverbaseInfo($this->current_business['id']);
+        //var_dump(json_encode($driverList));exit;
+
+        $this->setData($driverList,'list');
+
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Drivers Info";
+        }else{
+            $pagename = "司机信息";
+        }
+
+        $this->setData($pagename, 'pagename');
+        $this->setData('drivers_list', 'submenu');
+        $this->setData('Logistic_centre', 'menu');
+        $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+        $this->display('factory/drivers_list');
+    }
+
+
+    public  function truck_list_action()
     {
         $id = (int)get2('id');
         $mdl_truck = $this->loadModel('truck');
@@ -7738,7 +7907,15 @@ public function return_items_submit_to_statment_action() {
 		//var_dump($this->currentBusinessId);exit;
         $this->setData($list, 'list');
 
-        $this->setData('Turck List', 'pagename');
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Truck Info";
+        }else{
+            $pagename = "车辆信息";
+        }
+
+        $this->setData($pagename, 'pagename');
+
+
         $this->setData('trucklist', 'submenu');
         $this->setData('Logistic_centre', 'menu');
         $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
@@ -8182,12 +8359,130 @@ public function return_items_submit_to_statment_action() {
 
         } else {
             $this->setData($truck, 'data');
-            $this->setData('Turck Edit', 'pagename');
+
+            if ($this->getLangStr() == 'en') {
+                $pagename = "Truck Edit";
+            }else{
+                $pagename = "车辆编辑";
+            }
+               $this->setData($pagename, 'pagename');
             $this->setData('trucklist', 'submenu');
             $this->setData('Logistic_centre', 'menu');
             $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
 
             $this->display('factory/truck_edit');
+        }
+    }
+
+
+    function driver_edit_action()
+    {
+
+        $mdl_driver_base_info = $this->loadModel('driver_base_info');
+
+
+        $id = (int)get2('id');
+
+
+        $driver =$mdl_driver_base_info->getDriverbaseInfo($this->current_business['id'],$id);
+
+        if(!$driver){
+            var_dump('no record find!');exit;
+        }
+
+
+
+
+        if (is_post()) {
+
+
+
+
+            // start localtion and latitude
+            $start_location1 = trim(post('start_location'));
+
+            $start_location_lat =array();
+            $start_location_lat = $this->get_latitude_from_address ($start_location1);
+
+                // end location and latitude
+            $end_location1 = trim(post('end_location'));
+
+            $end_location_lat =array();
+            $end_location_lat = $this->get_latitude_from_address ($end_location1);
+
+
+            $start_of_time_hour = trim(post('start_of_time_hour'));
+            $start_of_time_minute = trim(post('start_of_time_minute'));
+            $end_of_time_hour = trim(post('end_of_time_hour'));
+            $end_of_time_minute = trim(post('end_of_time_minute'));
+            $status = trim(post('status'));
+//var_dump('status is '.$status);exit;
+
+            $start_of_time =$start_of_time_hour.':'.$start_of_time_minute;
+            $end_of_time =$end_of_time_hour.':'.$end_of_time_minute;
+
+
+
+            $where =array(
+                'driver_id'=>$id
+            );
+
+            $driver_rec = $mdl_driver_base_info->getByWhere($where);
+
+
+
+
+            $data = array(
+                'start_location'=>$start_location1,
+                'start_lat'=>$start_location_lat['lat'],
+                'start_long'=> $start_location_lat['lng'],
+                'end_location'=>$end_location1,
+                'end_lat'=>$end_location_lat['lat'],
+                'end_long'=>$end_location_lat['lng'],
+                'default_start_time'=>$start_of_time,
+                'default_end_time'=>$end_of_time,
+                'status'=>$status
+            );
+//var_dump($where);exit;
+            if($driver_rec) {
+                $where =array(
+                    'driver_id'=>$id
+                );
+
+                if ($mdl_driver_base_info->updateByWhere($data, $where)) {
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'factory/drivers_list');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+
+            }else{
+                $data['driver_id'] = $id;
+                 $mdl_driver_base_info->insert($data) ;
+
+
+                    $this->form_response(200,'driver saved',HTTP_ROOT_WWW.'factory/drivers_list');
+
+            }
+
+
+
+
+        } else {
+            $this->setData($driver, 'data');
+
+            if ($this->getLangStr() == 'en') {
+                $pagename = "Driver Edit";
+            }else{
+                $pagename = "司机设置";
+            }
+
+            $this->setData($pagename, 'pagename');
+            $this->setData('drivers_list', 'submenu');
+            $this->setData('Logistic_centre', 'menu');
+            $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+
+            $this->display('factory/driver_edit');
         }
     }
 

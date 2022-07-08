@@ -43,8 +43,8 @@ class OptimoRoute
 				"customField5" => '',
 			];
             //var_dump($order['logistic_driver_code'] .' 。'. !$auto);exit;
-            if($order['logistic_driver_code']>0 && !$auto){
-                $data["assignedTo"]=["externalId"=>$order['logistic_driver_code']];
+            if($order['logistic_schedule_id']>0 && !$auto){
+                $data["assignedTo"]=["externalId"=>$order['opti_driver_id']];
             }
 
 			try {
@@ -54,6 +54,65 @@ class OptimoRoute
 			}
 		}
 	}
+
+    function getScheduleOnDeliveryDate($dateStr) {
+
+
+        $timestamp = strtotime($dateStr);
+
+        if ($timestamp === false) {
+            throw new Exception("dateStr is not recognized", 1);
+        }
+        $dateTime = new DateTime();
+        $dateTime->setTimestamp($timestamp);
+        $dateTime->setTime(0,0,0);
+        $timestamp = $dateTime->getTimestamp();
+
+
+        $mdl_schedule =loadModel('truck_driver_schedule');
+
+        $factory_id =$this->dispCenterId;
+        $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.status=1 order by s.schedule_id";
+        $list =$mdl_schedule->getListBySql($sql);
+//var_dump($list);exit;
+
+        return $list;
+
+    }
+
+    public function updateSchedule($dateStr)
+    {
+        //  var_dump($auto);exit;
+        //var_dump('here');exit;
+
+        foreach ($this->getScheduleOnDeliveryDate($dateStr) as $schedule) {
+            $data = [
+                "externalId" => $schedule['opti_driver_id'],
+                "date"=> $dateStr,
+                "assignedVehicle"=>$schedule['opti_truck_id'],
+                'workTimeFrom'=>$schedule['driver_work_start_time'],
+                'workTimeTo'=>$schedule['driver_work_end_time'],
+                'vehicleCapacity1'=>intval($schedule['load_boxes']),
+                'startAddress'=>$schedule['driver_start_location'],
+                'startLatitude'=>round($schedule['driver_start_lat'],6),
+                'startLongitude'=>round($schedule['driver_start_long'],6),
+                'endAddress'=>$schedule['driver_end_location'],
+                'endLatitude'=>round($schedule['dirver_end_lat'],6),
+                'endLongitude'=>round($schedule['driver_end_long'],6),
+
+            ];
+
+
+//var_dump($data);exit;
+            try {
+                $response = $this->api->updateDriverParameters($data);
+              //  var_dump($response);exit;
+            } catch (Exception $e) {
+                throw new Exception("Error when upload schedule,then do upload again!:".$e->getMessage(), 1);
+            }
+
+        }
+    }
 
 	public function generateLogisticSequence($dateStr)
 	{
@@ -126,7 +185,7 @@ class OptimoRoute
 		$loginUserId =$this->current_business['id'];
 		
 		
-		$sql ="select f.nickname ,cc_order.* from cc_order left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( status=1 or accountPay =1)  ";
+		$sql ="select f.nickname ,cc_order.*,s.opti_driver_id  from cc_order  left join  cc_truck_driver_schedule s on cc_order.business_userId = s.factory_id and cc_order.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( cc_order.status=1 or accountPay =1)  ";
 		
 		$sql .= " and ( business_userId =$current_user_id  ";
 		$sql .= " or business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id) ";
@@ -140,7 +199,7 @@ class OptimoRoute
 		
 		
 		$ubonusOrderList =$mdl_order->getListBySql($sql);
-		//var_dump($sql);exit;
+		//var_dump($sql);exit;cc
 		$sql ="select * from cc_order_import where logistic_delivery_date =$timestamp and coupon_status='c01' and  status =1   and business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id)";
 	    $ubonusOrderImportList =$mdl_order->getListBySql($sql);
 		
@@ -276,22 +335,42 @@ class OptimoRoute
 		return $mdl_order->getListBySql($sql);
 	}
 
-	public function syncRoutesDownOnDeliverDate($dateStr)
+	public function syncRoutesDownOnDeliverDate($dateStr,$factory_id)
 	{	
 		$mdl_order = loadModel('order');
 		$mdl_order_import = loadModel('order_import');
+        $mdl_schedule =loadModel('truck_driver_schedule');
+
+
+
 
 		$routes = $this->api->getRoutes($dateStr);
 
-       // var_dump($routes);exit;
+       // var_dump(json_encode($routes));exit;
 
 		foreach ($routes->routes as $route) {
 			//driverExternalId
 			//driverSerial
 			//vehicleLabel
 			//vehicleRegistration
-			$trackNo = $route->vehicleLabel;
-			$driverCode = $route->driverSerial;
+            $where1 =array(
+                'factory_id'=>$factory_id,
+                'delivery_date'=>strtotime($dateStr),
+                'opti_driver_id'=>$route->driverExternalId
+            );
+            $schedule_rec = $mdl_schedule->getByWhere($where1);
+           if(!$schedule_rec){
+                var_dump('please set optimoroute driver externalId for d101 ,d102 ... to map the driver.');exit;
+            }else{
+               // var_dump($schedule_rec);exit;
+
+            }
+
+            $trackNo = $schedule_rec['truck_id'];
+            $driverCode = $schedule_rec['driver_id'];
+            $schedule_id = $schedule_rec['schedule_id'];
+			//$trackNo = $route->vehicleLabel;
+			//$driverCode = $route->driverSerial;
 
 			foreach ($route->stops as $stopNo => $stop) {
 				$data = [
@@ -300,6 +379,7 @@ class OptimoRoute
 					'logisitic_schedule_time' =>strtotime($stop->scheduledAtDt),
 					'logistic_arrived_time' =>strtotime($stop->arrivalTimeDt),
 					'logistic_driver_code' => $driverCode,
+                    'logistic_schedule_id'=>$schedule_id
 				];
 				$where = [
 					'orderId' => $stop->orderNo

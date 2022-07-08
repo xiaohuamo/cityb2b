@@ -115,7 +115,7 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'>Save</button>	
+								<button type="submit" style='float:left'><{$lang->save}></button>	
 
 								<a onClick='return confirm("remove it?")' href ="<{$http_root_www}>factory/delete_truck?id=<{$data.id}>" onclick="" style='float:right;color:#f30'>Not Use</a>	
 

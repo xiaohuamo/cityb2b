@@ -1,0 +1,276 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+
+
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/driver_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
+
+						<div class="input-box multi-select clearfix">
+
+							<h1><{$pagename}></h1>
+
+						</div>
+
+						
+
+						<div class="input-box clearfix">	
+
+								<span><label>Id</label></span>	
+
+								<input type="hidden" name="id" class="input-text" value="<{$data.id}>" />	
+					            <label><{$data.id}></label>
+
+							</div>	
+
+
+
+							<div class="input-box clearfix">	
+
+								<span><label>UserName</label></span>	
+
+									 <label><{$data.name}></label>			            
+
+							</div>	
+							
+							<div class="input-box clearfix">	
+
+								<span><label>NickName</label></span>	
+
+								
+								<label><{$data.contactPersonNickName}></label>					            
+
+							</div>	
+							
+							
+							
+
+							
+
+
+							<div class="input-box multi-select clearfix">
+								<span><label>Start Localtion</span>
+								
+								
+								<input id="geocomplete"  class="input-text" style="width:60%;" type="text" placeholder="Please enter address"    value="<{$data.start_location}>" name="start_location" size="80" />
+								<input id="find" type="hidden" value="find" />
+							</div>
+							
+							<div   style="left:220px;" class="input-box clearfix " >
+								<div  class="map_canvas" style ='width:80%;height:250px;'></div>		
+							</div>
+							
+							
+							
+							
+							
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbjX3k87CvBY7S1RH5dEcjCehRwbjXzi4&language=en_AU&libraries&libraries=places"></script>
+							<script src="<{$STATIC_PATH}>geocomplete/jquery.geocomplete.js"></script>
+							
+							<script>
+							$(function(){
+								$("#geocomplete").geocomplete({
+									map: ".map_canvas",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$data.start_location}>"
+								});
+								
+								$("#find").click(function(){
+									$("#geocomplete").trigger("geocode");
+								});
+								var map = $("#geocomplete").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							</script>			
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>End Localtion</span>
+								
+								
+								<input id="geocomplete_end"  class="input-text" type="text" placeholder="Please enter address"    value="<{$data.end_location}>" name="end_location" size="80" />
+								<input id="find_end" type="hidden" value="find_end" />
+							</div>
+							
+							<div   style="left:220px;" class="input-box clearfix " >
+								<div  class="map_canvas_end" style ='width:80%;height:250px;'></div>		
+							</div>
+							<script>
+							$(function(){
+								$("#geocomplete_end").geocomplete({
+									map: ".map_canvas_end",
+									mapOptions: {
+     								 zoom: 5,
+     								 scrollwheel: false,
+    								  mapTypeId: "roadmap"
+ 									   },
+									details: "form",
+									types: ["geocode", "establishment"],
+									location: "<{$data.end_location}>"
+								});
+								
+								$("#find_end").click(function(){
+									$("#geocomplete_end").trigger("geocode");
+								});
+								var map = $("#geocomplete_end").geocomplete("map");
+								map.setZoom(3);
+								
+							});
+							
+							
+							</script>		
+							
+							<div class="input-box multi-select clearfix">
+								<span><label>Start Time</label></span>
+								
+						
+
+									<select name='start_of_time_hour' >
+										<option value=''></option>
+										<{for $time = 0 to 23}>
+											<{if $time < 10}>
+												<option value="0<{$time}>" <{if $time==intval($data.start_time_hour)}>selected<{/if}> >0<{$time}></option>
+											<{else}>
+												<option value="<{$time}>" <{if $time==intval($data.start_time_hour)}>selected<{/if}> ><{$time}></option>
+											<{/if}>
+										<{/for}>
+									</select>
+									:
+									<select name='start_of_time_minute' >
+										<option value="00" <{if intval($data.start_time_minute)==0}>selected<{/if}> >00</option>
+										<option value="05" <{if intval($data.start_time_minute)==5}>selected<{/if}>>05</option>
+										<option value="10" <{if intval($data.start_time_minute)==10}>selected<{/if}>>10</option>
+										<option value="15" <{if intval($data.start_time_minute)==15}>selected<{/if}>>15</option>
+										<option value="20" <{if intval($data.start_time_minute)==20}>selected<{/if}>>20</option>
+										<option value="25" <{if intval($data.start_time_minute)==25}>selected<{/if}>>25</option>
+										<option value="30" <{if intval($data.start_time_minute)==30}>selected<{/if}>>30</option>
+										<option value="35" <{if intval($data.start_time_minute)==35}>selected<{/if}>>35</option>
+										<option value="40" <{if intval($data.start_time_minute)==40}>selected<{/if}>>40</option>
+										<option value="45" <{if intval($data.start_time_minute)==45}>selected<{/if}>>45</option>
+										<option value="50" <{if intval($data.start_time_minute)==50}>selected<{/if}>>50</option>
+										<option value="55" <{if intval($data.start_time_minute)==55}>selected<{/if}>>55</option>
+									</select>
+							</div>
+
+							<div class="input-box multi-select clearfix">
+								<span><label>End Time</label></span>
+								<select name='end_of_time_hour' >
+										<option value=''></option>
+										<{for $time = 0 to 23}>
+											<{if $time < 10}>
+												<option value="0<{$time}>" <{if $time==intval($data.end_time_hour)}>selected<{/if}> >0<{$time}></option>
+											<{else}>
+												<option value="<{$time}>" <{if $time==intval($data.end_time_hour)}>selected<{/if}> ><{$time}></option>
+											<{/if}>
+										<{/for}>
+									</select>
+									:
+									<select name='end_of_time_minute' >
+										<option value="00" <{if intval($data.end_time_minute)==0}>selected<{/if}> >00</option>
+										<option value="05" <{if intval($data.end_time_minute)==5}>selected<{/if}>>05</option>
+										<option value="10" <{if intval($data.end_time_minute)==10}>selected<{/if}>>10</option>
+										<option value="15" <{if intval($data.end_time_minute)==15}>selected<{/if}>>15</option>
+										<option value="20" <{if intval($data.end_time_minute)==20}>selected<{/if}>>20</option>
+										<option value="25" <{if intval($data.end_time_minute)==25}>selected<{/if}>>25</option>
+										<option value="30" <{if intval($data.end_time_minute)==30}>selected<{/if}>>30</option>
+										<option value="35" <{if intval($data.end_time_minute)==35}>selected<{/if}>>35</option>
+										<option value="40" <{if intval($data.end_time_minute)==40}>selected<{/if}>>40</option>
+										<option value="45" <{if intval($data.end_time_minute)==45}>selected<{/if}>>45</option>
+										<option value="50" <{if intval($data.end_time_minute)==50}>selected<{/if}>>50</option>
+										<option value="55" <{if intval($data.end_time_minute)==55}>selected<{/if}>>55</option>
+									</select>
+							</div>
+							
+							
+							<div class="input-box clearfix">	
+								<span><label>Status</label></span>	
+								<select name ="status">
+													
+                                   			<option value='1' <{if $data.status ==1}>selected<{/if}>>Avaliable</option>
+											<option value='0' <{if $data.status ==0}>selected<{/if}> >Not Avaliable</option>
+                                                    
+												</select>
+												            
+
+							</div>	
+							
+
+
+							<div class="input-box input-submit clearfix">		
+
+								<button type="submit" style='float:left'><{$lang->save}></button>	
+
+							
+
+							</div>		
+
+
+							
+
+						</form>	
+</div>
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+					</div>		
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div><{include file='footer.htm'}>
+	
+	
+	
+	</body></html>
+	

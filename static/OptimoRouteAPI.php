@@ -10,8 +10,9 @@ class OptimoRouteAPI {
 
 //	private $apiKey = '7ce379ec24c46957d344883356facb69I9CGMbItfm0';
 	//private $apiKey = '7ce379ec24c46957d344883356facb69I9CGMbItfm0';
-	private $apiKey = '753ecc54caf70d058813b02f94122724FbJG9df844k';
-	
+	//private $apiKey = '753ecc54caf70d058813b02f94122724FbJG9df844k';
+    private $apiKey = 'b2f3cde05ed5779053d11ed80392074f3VUqdS6zbOs';
+
 	private static $apiBaseUrl = 'https://api.optimoroute.com/v1/';
 	private $curlSession;
 	private $reuseSession = false;
@@ -122,8 +123,9 @@ class OptimoRouteAPI {
 	 * @throws \Exception
 	 */
 	public function updateDriverParameters($options) {
-		return $this->makeRequest('update_driver_parameters', 'post', ['planningId' => $planningId]);
+		return $this->makeRequest('update_driver_parameters', 'post',$options);
 	}
+
 
 	/**
 	 * @param string|null $afterTag

@@ -1502,7 +1502,7 @@
     <logistic_selectable>可选</logistic_selectable>
     <logistic_more_shop>更多</logistic_more_shop>
     <logistic_checkarea>区域检查</logistic_checkarea>
-	<logistic_choosetruck>选择调度信息</logistic_choosetruck>
+	<logistic_choosetruck>选择司机车辆调度信息</logistic_choosetruck>
 	<logisitic_customer_buy>客户购买</logisitic_customer_buy>
 	<logisitic_shipped>已送货</logisitic_shipped>
 	<logisitic_cancelled>已取消</logisitic_cancelled>
@@ -1519,6 +1519,8 @@
 	<logistic_delivery_pickup>客户自取</logistic_delivery_pickup>
 	<ordersReport>销售报表</ordersReport>
 	<salesTotal>销售额</salesTotal>
+	<driver_list>司机信息</driver_list>
+	<init_setting>初始设置</init_setting>
 
 	<logistic_packing_slip>装箱单</logistic_packing_slip>
 	<logistic_export_order_details>导出订单详细（购买但并未处理）</logistic_export_order_details>

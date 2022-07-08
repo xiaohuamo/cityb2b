@@ -101,7 +101,7 @@
 											<select onchange="changeDriver(this)" >
 													<option value='0'>Choose the Driver</option>
                                                     <{foreach from=$driverList item=sitem1}>
-														<option value='<{$sitem1.id}>'
+														<option start_time_hour ='<{$sitem1.start_time_hour}>' start_time_minute ='<{$sitem1.start_time_minute}>' end_time_hour ='<{$sitem1.end_time_hour}>' end_time_minute ='<{$sitem1.end_time_minute}>'   value='<{$sitem1.id}>'
                                                                 <{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
                                                             <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
@@ -109,10 +109,10 @@
                                                     <{/foreach}>
 												</select>
 												<br>
-						<label>Schedule Start Time ：</label>
+						<label>Driver Start Time ：</label>
 						
 
-						<select name='schedule_start_of_time_hour' >
+						<select id ='schedule_start_of_time_hour'  name='schedule_start_of_time_hour' >
 							<option value=''></option>
 							<{for $time = 0 to 23}>
 								<{if $time < 10}>
@@ -123,7 +123,7 @@
 							<{/for}>
 						</select>
 						:
-						<select name='schedule_start_of_time_minute' >
+						<select id="schedule_start_of_time_minute" name='schedule_start_of_time_minute' >
 							<option value="00">00</option>
 							<option value="05">05</option>
 							<option value="10">10</option>
@@ -140,9 +140,9 @@
 
 						
 
-							<label>Schedule End Time ：</label>
+							<label>Driver End Time ：</label>
 
-						<select name='schedule_cut_of_time_hour' >
+						<select id='schedule_cut_of_time_hour'  name='schedule_cut_of_time_hour' >
 							<option value=''></option>
 							<{for $time = 0 to 23}>
 								<{if $time < 10}>
@@ -154,7 +154,7 @@
 							<{/for}>
 						</select>
 						:
-						<select name='schedule_cut_of_time_minute' >
+						<select id='schedule_cut_of_time_minute' name='schedule_cut_of_time_minute' >
 													
 							<option value="00">00</option>
 							<option value="05">05</option>
@@ -259,15 +259,19 @@
 						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>Delivery Date</th>
-								<th>Sche.Start</th>
+								<th>Sch. No</th>
+								<th>Del. date</th>
+								
 								<th>Driver</th>
 								<th>Truck</th>
-								<th>Sche. End</th>
-								<th>Status</th>
+								<th>Sch.(start-end)</th>
+								<th>Driver (start-end)</th>
+								<th>Start Location</th>
+								<th>End Location</th>
+								<th>Status</th> <!1-planning ,2scheduled,3running ,4closed ,5done . -!>
 								<th>Edit</th>
 								<th>Delete</th>
-								<th>Schedule No</th>
+								
 								
 
 							</tr>
@@ -315,7 +319,21 @@
 	  var value = $(obj).val();
 	  $('#driver_id').val(value);
 	  //alert( $('#driver_id').val());
-	  
+	  //获取该driver 的 工作时间。
+	 var start_time_hour =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('start_time_hour');
+	  var start_time_minute =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('start_time_minute');
+	   var end_time_hour =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('end_time_hour');
+	    var end_time_minute =$(obj).find('option:eq('+ obj.selectedIndex +')').attr('end_time_minute');
+	 //alert(start_time_hour);
+	 // alert(start_time_minute);
+	 //  alert(end_time_hour);
+	 //   alert(end_time_minute);
+		$('#schedule_start_of_time_hour').val(start_time_hour);
+		$('#schedule_start_of_time_minute').val(start_time_minute);
+		
+		$('#schedule_cut_of_time_hour').val(end_time_hour);
+		$('#schedule_cut_of_time_minute').val(end_time_minute);
+		  
 	}
 			
 	function deleteScheduel(id) {
@@ -474,7 +492,7 @@
 							
 							   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
 								//alert(html);
-								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['delivery_date_str']+"</td> <td>"+data1[i]['start_hour']+"</td> <td>"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td> <td>"+data1[i]['end_hour']+"</td>     <td>"+data1[i]['status']+"</td>       <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td><td>"+data1[i]['schedule_id']+"</td> </tr>");
+								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status_name']+"</td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
 								
 							 }
 							//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");

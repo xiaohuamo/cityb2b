@@ -81,7 +81,7 @@
 						<{/if}> -->
 
 						<button style="padding: 10px 5px;background: #65dfff">
-							<a onclick='return confirm("Simple label print");'href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'><{$lang->print_label_logistic}></a>
+							<a href="<{$http_root_www}>company/labelprint?date=<{$date}>" target='_blank'><{$lang->print_label_logistic}></a>
 						</button>
 						<button style="padding: 10px 5px;background: #FD5001 ">  
 							<a onclick='return confirm("Generate Sequence Number?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=generate_logistic_sequence"><{$lang->generate_sequence_number}></a>

@@ -898,7 +898,10 @@
 	
 	<payWhenPurchase1>Transfer Money</payWhenPurchase1>
 	<payWhenPurchase2>（Devliery after Paid）</payWhenPurchase2>
+	
+	<driver_list>Drivers</driver_list>
 	<no_access>no access </no_access>
+	<init_setting> Setting</init_setting>
 
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
@@ -1449,7 +1452,7 @@
 	<first_order>First Order</first_order>
 	<not_merged_yet>Not Merged Yet</not_merged_yet>
 	 <delivery_date>Delivery date</delivery_date>
-	<logistic_choosetruck>choose Truck &driver Schedule </logistic_choosetruck>
+	<logistic_choosetruck>choose Truck-driver Schedule </logistic_choosetruck>
 	<logistic_checkarea>Check Post Code</logistic_checkarea>
 	<logisitic_customer_buy>customer buy</logisitic_customer_buy>
 	<logisitic_shipped>shipped</logisitic_shipped>

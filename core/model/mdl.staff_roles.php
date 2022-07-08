@@ -199,8 +199,60 @@ class mdl_staff_roles extends mdl_base
 
     public function  getAllDriverOfBusiness($business_id){
 
-        $sql ="select user.id,user.name,user.contactPersonNickName from cc_user user
+        $sql ="select user.id,user.name,user.contactPersonNickName,driver.default_start_time,default_end_time  from cc_user user
+            left join cc_staff_roles staff on user.id =staff.staff_id 
+            left join cc_driver_base_info driver on user.id =driver.driver_id  
+            where user.user_belong_to_user =$business_id and user.role =20 
+            and driver.status =1  and ( staff.roles like '%,0,%' or staff.roles like '%,1,%'or staff.roles like '%,16,%' )
+            ";
+
+        $list= $this->getlistbysql($sql);
+
+        foreach ($list as $key=>$value){
+
+            $start_time =$value['default_start_time'];
+            if($start_time) {
+
+                $pos =strpos($start_time,':',0);
+                if($pos){
+                    $list[$key]['start_time_hour'] =substr($start_time,0,$pos);
+                    // var_dump(  $value['start_time_hour']);exit;
+                    $list[$key]['start_time_minute'] =substr($start_time,$pos+1);
+                    //var_dump(  $value['start_time_minute']);exit;
+                }
+            }
+
+            $end_time =$value['default_end_time'];
+            if($end_time) {
+
+                $pos =strpos($end_time,':',0);
+                if($pos){
+                    $list[$key]['end_time_hour'] =substr($end_time,0,$pos);
+                    // var_dump(  $value['start_time_hour']);exit;
+                    $list[$key]['end_time_minute'] =substr($end_time,$pos+1);
+                    //  var_dump(  $value['end_time_hour']);exit;
+                }
+            }
+
+
+
+
+        }
+        return $list;
+
+    }
+
+    public function  getAllDriverOfBusinessWithDriverbaseInfo($business_id){
+
+        $sql ="select user.id,user.name,user.contactPersonNickName ,
+       if(length(driver.start_location)>2,driver.start_location,(select googleMap from cc_user where id =$business_id)) as start_location,
+        if(length(driver.end_location)>2,driver.end_location,(select googleMap from cc_user where id =$business_id)) as end_location,
+      if(length(driver.default_start_time)>1,driver.default_start_time,'00:00') as default_start_time,
+        if(length(driver.default_end_time)>1,driver.default_end_time,'00:00') as default_end_time,driver.status,driver.driver_id 
+            
+       from cc_user user
             left join cc_staff_roles staff on user.id =staff.staff_id
+            left join cc_driver_base_info driver on user.id =driver.driver_id
             where user.user_belong_to_user =$business_id and user.role =20 
             and ( staff.roles like '%,0,%' or staff.roles like '%,1,%'or staff.roles like '%,16,%' )
             ";
@@ -212,8 +264,8 @@ class mdl_staff_roles extends mdl_base
     public function  getAllDriverOfBusinessSchedueld($business_id){
 
         $sql ="select user.id,user.name,user.contactPersonNickName from cc_user user
-            left join cc_staff_roles staff on user.id =staff.staff_id
-            where user.user_belong_to_user =$business_id  and user.id in (select distinct driver_id from cc_truck_driver_schedule where factory_id =$business_id) ";
+            left join cc_staff_roles staff on user.id =staff.staff_id 
+           where user.user_belong_to_user =$business_id  and user.id in (select distinct driver_id from cc_truck_driver_schedule where factory_id =$business_id) ";
         $list= $this->getlistbysql($sql);
         return $list;
 

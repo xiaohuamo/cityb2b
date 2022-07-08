@@ -24,11 +24,7 @@
 			<div class="box2">
 				<{include file='company/side_business_option_menu.htm'}>
 				
-				<div class="colCurTit">
-					<span class="links">
-						<a class='btn-yellow' href="<{$http_root_www}>factory/truck_edit" class="link2"><i class='fa fa-plus'></i>New</a>
-					</span>
-				</div>
+				
 				<div class="main-form">			
 				<form id="memberForm" class='form-style-green' action="" method="post" target="post_frame" enctype="multipart/form-data">
 
@@ -42,13 +38,13 @@
 						<thead>
 							<tr>
 
-								<th>TruckId</th>
-								<th>Truck_no</th>
+								<th>DriverId</th>
+							
 								<th>Name</th>
-								<th>Current Driver</th>
-								<th>Plate Number</th>
-								<th>Manufactory</th>
-								<th>Load capicity</th>
+								<th>Start Localtion</th>
+								<th>End Localtion</th>
+								<th>Start Time</th>
+								<th>End Time</th>
 								<th>Avaliable</th>
 								<th>Edit</th>
 							</tr>
@@ -61,44 +57,60 @@
 									<{$item.id}>
 									
 								</td>
+								
+								
 								<td>
-									<{$item.truck_no}>
+									<{$item.name}>-<{$item.contactPersonNickName}>
+									
+								</td>
+								
+								<td style="width:200px;word-wrap:break-word;">
+									<{$item.start_location}>
+									
+								</td>
+								
+								<td style="width:200px;word-wrap:break-word;">
+									<{$item.end_location}>
+									
+								</td>
+
+
+								<td>
+									<{$item.default_start_time}>
 									
 								</td>
 								
 								<td>
-									<{$item.truck_name}>
+									<{$item.default_end_time}>
 									
 								</td>
 
-								<td>
-									<select id="diverId-<{$item.id}>" name='diverId' data-id='<{$item.id}>'>
-													<option value='0'>Choose the Driver</option>
-                                                    <{foreach from=$driverList item=sitem1}>
-														<option value='<{$sitem1.id}>'
-                                                                <{if $item.current_driver==$sitem1.id}>selected<{/if}>>
-                                                            <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
-														</option>
-                                                    <{/foreach}>
-												</select>
-												<span class='promote-ajax'></span>
-									
-								</td>
-								<td><{$item.plate_number}> </td>
 
-								<td><{$item.made_factory}></td>
-
-								<td><{$item.load_tones}></td>
-								<td><select id="isAvaliable-<{$item.id}>" name='isAvaliable' data-id='<{$item.id}>'>
+								
+								
+								<td><{if $item.driver_id}><select  id="isAvaliable-<{$item.id}>"  data-id='<{$item.id}>' name='status' >
 													
-                                                 	<option value='1'     <{if $item.isAvaliable==1}>selected<{/if}>>Avaliable	</option>
-                                                    <option value='0'     <{if $item.isAvaliable==0}>selected<{/if}>>Not Avaliable	</option>
+                                                 	<option value='1'     <{if $item.status==1}>selected<{/if}>>Avaliable	</option>
+                                                    <option value='0'     <{if $item.status==0}>selected<{/if}>>Not Avaliable	</option>
                                                   
 												</select>
-												<span class='promote-ajax'></span></td>
+												<span class='promote-ajax'></span><{else}>
+												
+												 <{if $langStr == 'zh-cn'}> 	
+
+													已设置司机角色，<br>但未初始化
+												 <{else}> 
+													Driver role assigned.<br>still need more setting
+												 <{/if}>
+												
+												
+												<{/if}></td>
+												
+												
+												
 								
-								<td><a href="<{$http_root_www}>factory/truck_edit?id=<{$item.id}>">Edit</a></td>
+								<td><a href="<{$http_root_www}>factory/driver_edit?id=<{$item.id}>"><{if $item.driver_id}><{$lang->edit}><{else}>初始设置<{/if}></a></td>
 							
 							</tr>
 							<{/foreach}>
@@ -114,7 +126,7 @@
 <script type="text/javascript">
     var loading = false;
 	
-    $('select[name=diverId],select[name=isAvaliable]').on('change', function () {
+    $('select[name=status]').on('change', function () {
 
         var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
         var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
@@ -132,7 +144,7 @@
 		//alert(id);
         var ajax_result = $(this).next('.promote-ajax');
         $.ajax({
-            url: "<{$http_root_www}>factory/update_truck_driver",
+            url: "<{$http_root_www}>factory/update_truck_driver_status",
             type: "POST",
             data: updateData,
             beforeSend: function () {

@@ -3721,5 +3721,25 @@ public function export_xls_action() {
 		}
 
 
+		// 获取某商家某日的schedule list
+		public function get_factory_schedule_list($factory_id,$delivery_date){
+
+
+
+		}
+
+		//同步某商家的schedulelist to optimoroute .
+		public function sync_driver_info_to_optimo($schedule_list,$delivery_date){
+
+			require_once( DOC_DIR.'static/OptimoRoute.php');
+			$opRoute = new OptimoRoute($this->loginUser['id']);
+
+
+
+		}
+
+
+
+
 	}
  ?>

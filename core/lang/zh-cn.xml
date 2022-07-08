@@ -1519,6 +1519,9 @@
 	<logistic_delivery_pickup>客户自取</logistic_delivery_pickup>
 	<ordersReport>销售报表</ordersReport>
 	<salesTotal>销售额</salesTotal>
+	<driver_list>司机信息</driver_list>
+	<init_setting>初始设置</init_setting>
+	<upload_schedule>上传调度</upload_schedule>
 
 	<logistic_packing_slip>装箱单</logistic_packing_slip>
 	<logistic_export_order_details>导出订单详细（购买但并未处理）</logistic_export_order_details>
