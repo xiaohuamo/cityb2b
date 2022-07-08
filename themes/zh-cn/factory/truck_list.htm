@@ -48,7 +48,8 @@
 								<th>Current Driver</th>
 								<th>Plate Number</th>
 								<th>Manufactory</th>
-								<th>Load capicity</th>
+								<th>Load capicity<br>(weight tones)</th>
+								<th>Load capicity<br>(Boxhes )</th>
 								<th>Avaliable</th>
 								<th>Edit</th>
 							</tr>
@@ -90,6 +91,7 @@
 								<td><{$item.made_factory}></td>
 
 								<td><{$item.load_tones}></td>
+								<td><{$item.load_boxes}></td>
 								<td><select id="isAvaliable-<{$item.id}>" name='isAvaliable' data-id='<{$item.id}>'>
 													
                                                  	<option value='1'     <{if $item.isAvaliable==1}>selected<{/if}>>Avaliable	</option>

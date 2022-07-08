@@ -34,7 +34,7 @@
 
 				<div class="input-box multi-select clearfix">
 
-							<h1>Truck Management</h1>
+							<h1><{$pagename}></h1>
 
 						</div> </form> </div>
 				<div class="main-list">

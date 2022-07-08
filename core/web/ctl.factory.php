@@ -8308,6 +8308,7 @@ public function return_items_submit_to_statment_action() {
 
             $made_factory = trim(post('made_factory'));
             $load_tones = trim(post('load_tones'));
+            $load_boxes = trim(post('load_boxes'));
 
 
             $where =array(
@@ -8328,7 +8329,8 @@ public function return_items_submit_to_statment_action() {
                 'plate_number'=>$plate_number,
                 'made_factory'=>$made_factory,
                 'load_tones'=>$load_tones,
-                'current_driver'=>$current_driver
+                'current_driver'=>$current_driver,
+                'load_boxes'=>$load_boxes,
             );
 
 

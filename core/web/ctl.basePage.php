@@ -396,6 +396,10 @@ public function data_refresh(){
 
 }
 
+//清除某日订单信息全部重排
+
+
+
 public function sendInvoice($fileattr,$mdl_order,$mdl_user,$orderId) {
         //写入invoice数据
         if($fileattr) {

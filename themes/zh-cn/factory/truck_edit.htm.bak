@@ -47,7 +47,11 @@
 						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/truck_edit?id=<{$data.id}>" enctype="multipart/form-data" method="post" target="post_frame">
 
 						
+<div class="input-box multi-select clearfix">
 
+							<h1><{$pagename}></h1>
+
+						</div>
 						
 
 						<div class="input-box clearfix">	
