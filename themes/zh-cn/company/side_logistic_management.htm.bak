@@ -5,9 +5,7 @@
 	</div>
 	<div class='second-level'>
 	
-	<a  href="<{$http_root_www}>company/oproute"<{if $submenu=='customer_oproute'}> class="current"<{/if}>>
-			<{$lang->Logistic_route_management}> 
-	</a>
+	
 	<a  href="<{$http_root_www}>factory/new_schedule"<{if $submenu=='new_schedule'}> class="current"<{/if}>>
 			<{$lang->schedule_management}> 
 	</a>
@@ -16,6 +14,12 @@
 			<{$lang->manual_route_plan}>
 	</a>
 	
+	<a  href="<{$http_root_www}>company/oproute_auto"<{if $submenu=='oproute'}> class="current"<{/if}>>
+			<{$lang->Logistic_route_management}> 
+	</a>
+	
+	
+	
 	<a  href="<{$http_root_www}>company/export_driver_route_local"<{if $submenu=='export_driver_route_local'}> class="current"<{/if}>>
 			<{$lang->Driver_route_sheet}>
 	</a>
@@ -23,14 +27,14 @@
 	<a  href="<{$http_root_www}>company/export_driver_route"<{if $submenu=='export_driver_route'}> class="current"<{/if}>>
 			导出司机表格(oproute)
 	</a> -->
-	
+		<!--
 	
 	<a  href="<{$http_root_www}>factory/truck_list"<{if $submenu=='trucklist'}> class="current"<{/if}>>
 			<{$lang->Truck_list}> 
 	</a>
 	<a  href="<{$http_root_www}>factory/drivers_list"<{if $submenu=='drivers_list'}> class="current"<{/if}>>
 			<{$lang->driver_list}> 
-	</a>
+	</a>-->
 	<a  target=_blank  href="https://my.optimoroute.com/">
 			Optimoroute site
 	</a>

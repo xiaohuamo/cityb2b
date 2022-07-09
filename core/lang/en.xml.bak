@@ -882,6 +882,8 @@
 	<customer_Code>Code</customer_Code>
 	<logistic_number>Logistic SeQuence Number</logistic_number>
 	 <manual_route_plan>Manual Route Plan</manual_route_plan>
+	 <oproute_auto_routing>Auto route planning</oproute_auto_routing>
+	 <oproute_stepbystep_routing>Step by Step route planning</oproute_stepbystep_routing>
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
@@ -902,6 +904,7 @@
 	<driver_list>Drivers</driver_list>
 	<no_access>no access </no_access>
 	<init_setting> Setting</init_setting>
+		<upload_schedule>Upload Schedule</upload_schedule>
 
     <first_name>First name</first_name>
     <last_name>Last name</last_name>
@@ -1273,7 +1276,7 @@
     <mobile_sucess_footer2>Click me->my order</mobile_sucess_footer2>
 	  <is_approve>Choose Approve Status</is_approve>
 	  <Driver_route_sheet>Driver Routes Sheet</Driver_route_sheet>
-	<Logistic_route_management>Routes Management</Logistic_route_management>
+	<Logistic_route_management>opti Routes Planner</Logistic_route_management>
     <order_hint>You can check your order via email or your account on our website !</order_hint>
 
     <homepage_pc_newproduct>newest products</homepage_pc_newproduct>

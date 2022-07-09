@@ -110,7 +110,7 @@
 												
 												
 								
-								<td><a href="<{$http_root_www}>factory/driver_edit?id=<{$item.id}>"><{if $item.driver_id}><{$lang->edit}><{else}>初始设置<{/if}></a></td>
+								<td><a href="<{$http_root_www}>factory/driver_edit?id=<{$item.id}>"><{if $item.driver_id}><{$lang->edit}><{else}><{$lang->init_setting}><{/if}></a></td>
 							
 							</tr>
 							<{/foreach}>

@@ -714,7 +714,7 @@
 	<is_approve>选择审批状态</is_approve>
 	
 	<Driver_route_sheet>司机路程表</Driver_route_sheet>
-	<Logistic_route_management>物流路程管理</Logistic_route_management>
+	<Logistic_route_management>opti 路程规划</Logistic_route_management>
 
     <!-- 11 -->
 
@@ -1497,7 +1497,9 @@
     <afternoon>下午</afternoon>
     <unified_delivery>配送日期</unified_delivery>
 	 <delivery_date>配送日期</delivery_date>
-	 <manual_route_plan>手动路程安排</manual_route_plan>
+	 <manual_route_plan>手工排单</manual_route_plan>
+	<oproute_auto_routing>一键自动排单</oproute_auto_routing>
+	<oproute_stepbystep_routing>单步执行排单</oproute_stepbystep_routing>
     <logistic_selected>已选</logistic_selected>
     <logistic_selectable>可选</logistic_selectable>
     <logistic_more_shop>更多</logistic_more_shop>
@@ -1521,6 +1523,7 @@
 	<salesTotal>销售额</salesTotal>
 	<driver_list>司机信息</driver_list>
 	<init_setting>初始设置</init_setting>
+	<upload_schedule>上传调度</upload_schedule>
 
 	<logistic_packing_slip>装箱单</logistic_packing_slip>
 	<logistic_export_order_details>导出订单详细（购买但并未处理）</logistic_export_order_details>

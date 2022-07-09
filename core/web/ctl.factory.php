@@ -7876,7 +7876,11 @@ public function return_items_submit_to_statment_action() {
         }
 
         $this->setData($pagename, 'pagename');
-        $this->setData('drivers_list', 'submenu');
+
+        $this->setData('drivers_list', 'submenu_top');
+        $this->setData('new_schedule', 'submenu');
+
+
         $this->setData('Logistic_centre', 'menu');
         $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/drivers_list');
@@ -7905,8 +7909,8 @@ public function return_items_submit_to_statment_action() {
 
         $this->setData($pagename, 'pagename');
 
-
-        $this->setData('trucklist', 'submenu');
+        $this->setData('trucklist', 'submenu_top');
+        $this->setData('new_schedule', 'submenu');
         $this->setData('Logistic_centre', 'menu');
         $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
         $this->display('factory/truck_list');

@@ -55,7 +55,9 @@
 
 					<{if $orders}>
 						
-
+						<button style="padding: 10px 5px;background: #43d1af ">
+							<a onclick='return confirm("upload to schedule to OptimoRoute?");'	href="<{$http_root_www}>company/oproute?date=<{$date}>&task=upload_driver"><{$lang->upload_schedule}></a>
+						</button>
 						<button style="padding: 10px 5px;background: #43d1af ">
 							<a onclick='return confirm("upload to OptimoRoute?");'	href="<{$http_root_www}>company/oproute?auto=1&date=<{$date}>&task=syncup"><{$lang->orders_upload}><br><{$lang->assign_all_orders}></a>
 						</button>
