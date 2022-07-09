@@ -381,22 +381,38 @@ public function  setCustomerTrueLogin($userrole){
 public function data_refresh(){
 
     $mdl_autorun_data =$this->loadModel('autorun_data');
-    $result =$mdl_autorun_data->getListBySql('select * from cc_autorun_data where status=0');
+    $result =$mdl_autorun_data->getListBySql('select * from cc_autorun_data where  data_type =100 and  status=0');
     foreach ($result as $key=>$value){
         if($value['data_type']==100){
             $this->auto_send_invoice_to_xero($value['ref_id'],$value['ref_value1'],'updateFromAuto');
+            $mdl_autorun_data->update(array('status'=>1),$value['id']);
             sleep(2);
         }
     }
+    /*
     $where =array(
         'status'=>0,
         'data_type'=>100
     );
     $mdl_autorun_data->updateByWhere(array('status'=>1),$where);
+    */
 
 }
+// 检查某司机，某日的planning schedule 数量
+    public function checkIfDriverPlanningScheduleExist($mdl_schedule,$delivery_date,$driverId){
 
-//清除某日订单信息全部重排
+
+        $where =array(
+            'delivery_date'=>strtotime($delivery_date),
+            'driver_id'=>$driverId,
+            'status'=>1
+        );
+
+        $count = $mdl_schedule->getCount($where);
+
+        return $count;
+
+    }
 
 
 

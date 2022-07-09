@@ -5613,20 +5613,7 @@ public function return_items_submit_to_statment_action() {
         echo json_encode($delivery_date_schedule);
     }
 
-    public function checkIfDriverPlanningScheduleExist($mdl_schedule,$delivery_date,$driverId){
 
-
-       $where =array(
-           'delivery_date'=>strtotime($delivery_date),
-           'driver_id'=>$driverId,
-           'status'=>1
-       );
-
-       $count = $mdl_schedule->getCount($where);
-
-        return $count;
-
-    }
 
     public function generate_default_schedule_action(){
 
@@ -7484,10 +7471,13 @@ public function return_items_submit_to_statment_action() {
                 $data['logistic_truck_No'] =$schedule_rec['truck_id'];
                 $data['logistic_driver_code'] =$schedule_rec['driver_id'];
                 $data['logistic_schedule_id'] =$schedule_rec['schedule_id'];
+                $data['logistic_stop_No'] =0; //一旦切换，则站号设置为0
+
             }else{
                 $data['logistic_truck_No'] =0;
                 $data['logistic_driver_code'] =0;
                 $data['logistic_schedule_id'] =0;
+                $data['logistic_stop_No'] =0;
             }
 
 

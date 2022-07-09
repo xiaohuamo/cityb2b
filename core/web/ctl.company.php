@@ -3748,7 +3748,7 @@ class ctl_company extends cmsPage
 		$this->setData($customer_delivery_date,'customer_delivery_date');
         $this->setData($postcode,'postcode');
 
-        $sql = "SELECT o.boxesNumber as boxes,f.nickname,o.* ,cust.ori_sum from cc_order as o left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
+        $sql = "SELECT o.boxesNumber as boxes,f.nickname,o.* ,s.status as schedule_status ,cust.ori_sum from cc_order as o left join cc_truck_driver_schedule s on o.business_userId =s.factory_id and o.logistic_schedule_id =s.schedule_id  left join cc_user_factory f on o.userId=f.user_id and o.business_userId = f.factory_id  left join (select order_id,business_id,sum(voucher_deal_amount*customer_buying_quantity) as ori_sum from cc_wj_customer_coupon group by order_id,business_id) cust on o.orderId=cust.order_id and cust.business_id =".$this->current_business['id']." left join cc_wj_user_coupon_activity_log as l on o.orderId=l.orderId and o.coupon_status=l.action_id ";
 
         $whereStr.=" (business_userId= ".$this->current_business['id']." or  o.orderId in (select DISTINCT c.order_id from cc_wj_customer_coupon c where business_id = ".$this->current_business['id']."))";
         //var_dump($sql);exit;
@@ -13676,6 +13676,38 @@ function get_data($url, $ch) {
 		
 	}
 
+    public function oproute_reschedule_orders_action() {
+        $mdl_user_account_info	= $this->loadModel('user_account_info');
+        $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
+        /*	if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
+                $this->sheader(null,'您无权限访问该页面');
+            } */
+
+        $disp = get2('disp');
+        $customer_delivery_date = get2('customer_delivery_date');
+        $schedule_id = get2('schedule_id');
+
+
+        require_once( DOC_DIR.'static/OptimoRoute.php');
+        $opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
+
+
+        $auto = get2('auto');
+
+        // 删除所有orders
+        $response = $opRoute->deleteAllOrders($customer_delivery_date);
+       // 上传该调度司机信息
+        $opRoute->updateSchedule($customer_delivery_date,true,$schedule_id);
+        //上传order信息
+        $opRoute->syncOrderOnDate($customer_delivery_date,$auto,$schedule_id);
+        $opRoute->startPlanning($customer_delivery_date);
+        $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
+        // set all driver active status to disable ;
+        $opRoute->updateSchedule($customer_delivery_date,false);
+        $this->sheader(HTTP_ROOT_WWW . 'company/customer_orders_logistic_query?logistic_schedule_id='.$schedule_id.'&customer_delivery_date='.$customer_delivery_date);
+        //?sk=&customer_delivery_date=2022-07-09&logistic_schedule_id=13
+    }
+
 	public function oproute_action(){
 
         $this->loadModel('freshfood_disp_suppliers_schedule');
@@ -13683,7 +13715,7 @@ function get_data($url, $ch) {
         $accountInfo = $mdl_user_account_info->getByWhere(array('userid'=>$this->current_business['id']));
 	/*	if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
 			$this->sheader(null,'您无权限访问该页面');
-		} */ 
+		} */
 		
 		$disp = get2('disp');
 		$customer_delivery_date = get2('customer_delivery_date');
@@ -13691,7 +13723,7 @@ function get_data($url, $ch) {
 		
     	require_once( DOC_DIR.'static/OptimoRoute.php');
     	$opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
-    		
+
     	$date = get2('date');
     	$this->setData($date,'date');
         $auto = get2('auto');
@@ -13706,7 +13738,7 @@ function get_data($url, $ch) {
 	    		case 'syncup':
 	    			//Step1
 	    			try {
-	    				$opRoute->syncOrderOnDate($date,$auto);
+	    				$opRoute->syncOrderOnDate($date,$auto,0);
 	    			} catch (Exception $e) {
 	    				$this->sheader(null,$e->getMessage());
 	    			}
@@ -13718,7 +13750,7 @@ function get_data($url, $ch) {
                     try {
                         //创建动态司机，车辆标号以对应opti
                         $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
-                        $opRoute->updateSchedule($date);
+                        $opRoute->updateSchedule($date,true);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
@@ -13727,7 +13759,8 @@ function get_data($url, $ch) {
                     break;
 	    		case 'syncdown':
 	    			$opRoute->syncRoutesDownOnDeliverDate($date,$this->current_business['id']);
-					
+                    // set all driver active status to disable ;
+                    $opRoute->updateSchedule($date,false);
 					if(!$disp) {
 						$this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
 					}else{
@@ -14454,9 +14487,23 @@ public function custom_delivery_fee_add_action()
 
         if (is_post())
         {
-
             $customer_delivery_date = post('customer_delivery_date');
             $this->setData($customer_delivery_date,'customer_delivery_date');
+
+
+            $driver_id = post('driver_id');
+            if(!$driver_id) {
+
+                $this->form_response(500,'please choose the driver!');
+            }
+            // 检查当前driver 在当前日期，处于 planning状态的 scheudle 数量，如果大于0 ，则不操作
+            // 任何driver在某一天只有一个planning状态的order .
+            if($this->checkIfDriverPlanningScheduleExist($mdl_schedule,$customer_delivery_date,$driver_id)){
+                $this->form_response(500,'one driver can have only one schedule on status of planning !');
+            }
+
+
+
 
             if(!$customer_delivery_date) {
 
@@ -14472,11 +14519,7 @@ public function custom_delivery_fee_add_action()
                 $this->form_response(500,'please choose the truck!');
             }
 
-            $driver_id = post('driver_id');
-            if(!$driver_id) {
 
-                $this->form_response(500,'please choose the driver!');
-            }
 
             $this->setData($driver_id,'driver_id');
 

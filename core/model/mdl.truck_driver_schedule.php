@@ -53,7 +53,7 @@ class mdl_truck_driver_schedule extends mdl_base
     public function getDeliveryDateSchedule($factory_id,$customer_delivery_date){
         $delivery_date = strtotime($customer_delivery_date);
 
-        $sql ="SELECT s.*,ss.name as status_name,from_unixtime(s.delivery_date,'%Y-%m-%d') as delivery_date_str ,from_unixtime(s.schedule_start_time,'%H:%i') as start_hour ,
+        $sql ="SELECT s.*,ss.name as status_name,(select count(*) as count from cc_order where business_userId =$factory_id and logistic_delivery_date = $delivery_date and logistic_schedule_id = s.schedule_id and logistic_stop_No =0 ) as stopNois0Count , from_unixtime(s.delivery_date,'%Y-%m-%d') as delivery_date_str ,from_unixtime(s.schedule_start_time,'%H:%i') as start_hour ,
        from_unixtime(s.schedule_end_time,' %H:%i') as end_hour ,concat(t.truck_name,'-',t.plate_number) as truck_name,
        if(length(u.contactPersonNickName)>0,u.contactPersonNickName,concat(u.contactPersonFirstname,' ',u.contactPersonLastname)) as driverName ,
        u.name,u.displayName,u.person_first_name,u.person_last_name ,if(length(u.displayName)>0,u.displayName,if(length(u.person_first_name)>0,concat(u.person_first_name,' ',u.person_last_name),u.name)) as driverName1

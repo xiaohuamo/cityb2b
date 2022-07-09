@@ -241,10 +241,10 @@
 									
 									<td>
 									
-									<select id="truck-<{$item.id}>" name='Schedule_id' data-id='<{$item.id}>'>
-													<option value='0'>Choose Schedue <{$item.logistic_schedule_id}> </option>
+									<select id="truck-<{$item.id}>" name='Schedule_id' data-schedule_status ='<{$item.schedule_status}>' data-id='<{$item.id}>'>
+													<option value='0'>Choose Schedue  </option>
                                                     <{foreach from=$schedule_list item=sitem1}>
-														<option value='<{$sitem1.schedule_id}>'
+														<option  value='<{$sitem1.id}>'
                                                                 <{if $item.logistic_schedule_id==$sitem1.schedule_id}>selected<{/if}>>
 																	<{$sitem1.start_hour}>-<{if $sitem1.driverName}><{$sitem1.driverName}>-<{/if}>
                                                             <{$sitem1.truck_id}>-<{$sitem1.truck_name}>-<{$sitem1.schedule_id}>
@@ -375,15 +375,49 @@
         var update_field_name = $(this).attr('name');
         var  value = $(this).val();//常规改动直接抓取改动值
         var updateData = {};
+		
+		//area_name =$(this).find('option:eq('+ this.selectedIndex +')').attr('schedule_status');
+		//	alert(area_name);
+		//schedule_status
+		
+		  var ajax_result = $(this).next('.promote-ajax');
+	    var schedule_status = $(this).data('schedule_status');
+		alert(schedule_status);
+		if(schedule_status==2) {
+			if(confirm('Current order has been scheduled ,once changed , all orders for both schedules need to replan the routes? do you want to continue?')){
+			
+			}else{
+				 $(ajax_result).html(errorIcon);
+				return ;
+			}
+
+			
+		}
+		
+		if(schedule_status==3) {
+			alert('Current order has been scheduled and Running  ,not able for change!') ;return ;
+		}
+		
+		if(schedule_status>=4) {
+			alert('Current order has been deliverd ,can not change!');return ;
+		}
 
         updateData['id'] = id;
         updateData['update_field_name'] = update_field_name;
 		updateData['value'] = value;
+		
+		
+		
+		//获取该调度的状态 ，如果该调度status=2 ,可以修改，但是要提示； 如果状态等于3的话，也可以修改，但要提示，如果状态 是4和4以上，则无法修改。
+		
+		
+		
+		
 		//alert(value);
 		//alert(id);
 		//alert(update_field_name);
 		//return;
-        var ajax_result = $(this).next('.promote-ajax');
+      
         $.ajax({
             url: "<{$http_root_www}>factory/update_order_truck_no",
             type: "POST",

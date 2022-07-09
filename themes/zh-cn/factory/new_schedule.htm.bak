@@ -492,7 +492,13 @@
 							
 							   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
 								//alert(html);
-								$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status']+"</td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+								if(data1[i]['status']==2 && data1[i]['stopNois0Count']>0){
+									$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status_name']+" <br><button style='padding: 5px ;    background-color: #FD5001;'>need re routed</button></td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+							
+								}else{
+									$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status_name']+"</td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+							
+								}
 								
 							 }
 							//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");

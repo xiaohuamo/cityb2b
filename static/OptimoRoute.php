@@ -12,13 +12,36 @@ class OptimoRoute
 		$this->dispCenterId = $dispCenterId;
 	}
 
+
+    public function deleteAllOrders($dateStr) {
+
+        $data = [
+            "date"=>$dateStr
+        ];
+
+        try {
+            $response = $this->api->deleteAllOrders($dateStr);
+            return $response;
+        } catch (Exception $e) {
+            throw new Exception("Error happened when delete orders of ".$dateStr.'. '.$e->getMessage(), 1);
+        }
+    }
+
+
+
+    public function startPlanning($date = null, $options = [])
+    {
+        $plan =  $this->api->startPlanning($date, $options);
+    //  var_dump($plan);exit;
+
+    }
 	/**
 	 * 将送货日期当天的订单同步到Optimoroute
 	 */
-	public function syncOrderOnDate($dateStr,$auto)
+	public function syncOrderOnDate($dateStr,$auto,$schedule_id)
 	{
       //  var_dump($auto);exit;
-		foreach ($this->getOrderOnDeliverDate($dateStr) as $order) {
+		foreach ($this->getOrderOnDeliverDate($dateStr,0,$schedule_id) as $order) {
 			$data = [
 				"operation" => "SYNC",
 				"type" => "D",
@@ -55,7 +78,7 @@ class OptimoRoute
 		}
 	}
 
-    function getScheduleOnDeliveryDate($dateStr) {
+    function getScheduleOnDeliveryDate($dateStr,$schedule_id) {
 
 
         $timestamp = strtotime($dateStr);
@@ -72,23 +95,31 @@ class OptimoRoute
         $mdl_schedule =loadModel('truck_driver_schedule');
 
         $factory_id =$this->dispCenterId;
-        $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.status=1 order by s.schedule_id";
-        $list =$mdl_schedule->getListBySql($sql);
+       if($schedule_id){ //该调度且为已调度
+           $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.schedule_id=$schedule_id and s.status=2 order by s.schedule_id";
+
+       }else{
+           $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.status=1 order by s.schedule_id";
+
+       }
+          $list =$mdl_schedule->getListBySql($sql);
 //var_dump($list);exit;
 
         return $list;
 
     }
 
-    public function updateSchedule($dateStr)
+    public function updateSchedule($dateStr,$enabledisable,$schedule_id)
     {
         //  var_dump($auto);exit;
         //var_dump('here');exit;
-
-        foreach ($this->getScheduleOnDeliveryDate($dateStr) as $schedule) {
+        $schedule_list = $this->getScheduleOnDeliveryDate($dateStr,$schedule_id);
+       // var_dump(json_encode($schedule_list));exit;
+        foreach ( $schedule_list as $schedule) {
             $data = [
                 "externalId" => $schedule['opti_driver_id'],
                 "date"=> $dateStr,
+                "enabled"=>$enabledisable,
                 "assignedVehicle"=>$schedule['opti_truck_id'],
                 'workTimeFrom'=>$schedule['driver_work_start_time'],
                 'workTimeTo'=>$schedule['driver_work_end_time'],
@@ -119,7 +150,7 @@ class OptimoRoute
 		$mdl_order = loadModel('order');
 		$mdl_order_import = loadModel('order_import');
 
-		$orders = $this->getOrderOnDeliverDate($dateStr,1); //all today's order 
+		$orders = $this->getOrderOnDeliverDate($dateStr,1,0); //all today's order
 
 		$logistic_sequence_index = 0;
 
@@ -165,7 +196,7 @@ class OptimoRoute
 		}
 	}
 
-	public function getOrderOnDeliverDate($dateStr,$allorder)
+	public function getOrderOnDeliverDate($dateStr,$allorder,$schedule_id)
 	{
 		
 	if(!$allorder) {
@@ -184,9 +215,14 @@ class OptimoRoute
 		$current_user_id =$this->dispCenterId;
 		$loginUserId =$this->current_business['id'];
 		
-		
-		$sql ="select f.nickname ,cc_order.*,s.opti_driver_id  from cc_order  left join  cc_truck_driver_schedule s on cc_order.business_userId = s.factory_id and cc_order.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( cc_order.status=1 or accountPay =1)  ";
-		
+		if(!$schedule_id){
+            $sql ="select f.nickname ,cc_order.*,s.opti_driver_id  from cc_order  left join  cc_truck_driver_schedule s on cc_order.business_userId = s.factory_id and cc_order.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( cc_order.status=1 or accountPay =1)  ";
+
+        }else{
+            $sql ="select f.nickname ,cc_order.*,s.opti_driver_id  from cc_order  left join  cc_truck_driver_schedule s on cc_order.business_userId = s.factory_id and cc_order.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_order.userId =f.user_id and cc_order.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='c01' and ( cc_order.status=1 or accountPay =1)  and s.schedule_id =$schedule_id  ";
+
+        }
+
 		$sql .= " and ( business_userId =$current_user_id  ";
 		$sql .= " or business_userId  in ( select cc_logistic_customers_id from cc_freshfood_logistic_customers where cc_logistic_business_id = $current_user_id) ";
 		$sql .="  or business_userId in  (select customer_id from cc_factory2c_list where factroy_id =$current_user_id )  ";
@@ -346,7 +382,7 @@ class OptimoRoute
 
 		$routes = $this->api->getRoutes($dateStr);
 
-       // var_dump(json_encode($routes));exit;
+      //  var_dump(json_encode($routes));exit;
 
 		foreach ($routes->routes as $route) {
 			//driverExternalId
@@ -358,11 +394,22 @@ class OptimoRoute
                 'delivery_date'=>strtotime($dateStr),
                 'opti_driver_id'=>$route->driverExternalId
             );
+         //   var_dump($where1);exit;
             $schedule_rec = $mdl_schedule->getByWhere($where1);
            if(!$schedule_rec){
                 var_dump('please set optimoroute driver externalId for d101 ,d102 ... to map the driver.');exit;
             }else{
                // var_dump($schedule_rec);exit;
+                //标记该调度为已调度状态；
+               $whereupdate =array(
+                   'factory_id'=>$factory_id,
+                   'schedule_id'=>$schedule_rec['schedule_id']
+               );
+               $schedue_data=array(
+                   'status'=>2
+               );
+
+               $mdl_schedule->updateByWhere($schedue_data,$whereupdate);
 
             }
 
