@@ -478,6 +478,19 @@ class ctl_factory extends cmsPage
         $startTime = trim(get2('startTime'));
         $endTime = trim(get2('endTime'));
 
+
+        if($startTime || $endTime){
+          $scheduleDays = 8;
+        }else{
+          $scheduleDays = trim(get2('scheduleDays'));
+          if(!$scheduleDays) {
+              $scheduleDays=1;
+          }
+        }
+        $this->setData($scheduleDays, 'scheduleDays');
+
+
+
         $this->setData($startTime, 'startTime');
         $this->setData($endTime, 'endTime');
 
@@ -521,7 +534,7 @@ class ctl_factory extends cmsPage
 
             $mdl_schedule =$this->loadModel('truck_driver_schedule');
 
-        $pageSql = $mdl_schedule->getSqlOfScheduleRecord($this->current_business['id'],$truck_id,$driver_id,$startTime,$endTime);
+        $pageSql = $mdl_schedule->getSqlOfScheduleRecord($this->current_business['id'],$truck_id,$driver_id,$startTime,$endTime,$scheduleDays);
 
 //var_dump($pageSql);exit;
 

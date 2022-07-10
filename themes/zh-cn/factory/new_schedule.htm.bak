@@ -459,7 +459,16 @@
 	
 	}
 	
+	function reschedule_route(delivery_date,schedule_id){
+	alert(delivery_date);
+	alert(schedule_id);
+	var url ='<{$http_root_www}>company/oproute_reschedule_orders?customer_delivery_date='+delivery_date+'&schedule_id='+schedule_id;
+	alert(url);
+	//return;
+		window.location.href = url;
+	//http://www.ozsupply.com/company/oproute_reschedule_orders?customer_delivery_date=2022-07-09&schedule_id=13
 	
+	}
 	function getCurrentDateSchedule(customer_delivery_date){
 	
 	//alert('current date is ' +customer_delivery_date);
@@ -488,12 +497,18 @@
 							}
 					
 							var html = '';
+							var dedate='';
+							var scheid='';
+							
 							for (var i = 0; i< data1.length ; i++) {
 							
 							   // html +="<tr><td>"+data1[i]['name']+"</td>  <td>"+data1[i]['stock_date']+"</td>   <td>"+data1[i]['operator_name']+"</td> <td></td> <td></td> <td></td></tr>";
 								//alert(html);
 								if(data1[i]['status']==2 && data1[i]['stopNois0Count']>0){
-									$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status_name']+" <br><button style='padding: 5px ;    background-color: #FD5001;'>need re routed</button></td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+								    dedate=data1[i]['delivery_date_str'];
+									//alert(dedate);
+									scheid=data1[i]['schedule_id'];
+									$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td style='width:150px;word-wrap:break-word;'>"+data1[i]['status_name']+" <br><button onclick =reschedule_route('"+ dedate +"',"+scheid+"); style='padding: 5px ;    background-color: #FD5001;'>need re routed</button></td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");
 							
 								}else{
 									$('#schedule_list tbody').append("<tr id='schedule_"+data1[i]['id']+"'> <td>"+data1[i]['schedule_id']+"</td> <td>"+data1[i]['delivery_date_str']+"</td><td>"+data1[i]['name']+"-"+data1[i]['driverName']+"</td>  <td>"+data1[i]['truck_name']+"</td>   <td>"+data1[i]['start_hour']+"-"+data1[i]['end_hour']+"</td> <td>"+data1[i]['driver_work_start_time']+"-"+data1[i]['driver_work_end_time']+"</td>    <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_start_location']+"</td>   <td style='width:150px;word-wrap:break-word;'>"+data1[i]['driver_end_location']+"</td>  <td>"+data1[i]['status_name']+"</td>      <td><a onclick='editScheduel(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteScheduel(" + data1[i]['id']+");'>Delete</a></td> </tr>");

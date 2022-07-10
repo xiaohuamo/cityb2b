@@ -103,17 +103,18 @@ where factory_id=$factory_id and delivery_date=$delivery_date order by schedule_
 
     }
 
-    public function getSqlOfScheduleRecord($factory_id,$truck_id,$driver_id,$startTime,$endTime){
+    public function getSqlOfScheduleRecord($factory_id,$truck_id,$driver_id,$startTime,$endTime,$scheduleDays){
 
-        $sql ="SELECT s.*,from_unixtime(s.delivery_date,'%Y-%m-%d') as delivery_date_str ,
-       from_unixtime(s.schedule_start_time,'%H:%i') as start_hour ,from_unixtime(s.schedule_end_time,' %H:%i') as end_hour ,
-       concat(t.truck_name,'-',t.plate_number) as truck_name,
+
+        $sql ="select s.*,ss.name as status_name,(select count(*) as count from cc_order where business_userId =$factory_id and logistic_delivery_date = s.delivery_date and logistic_schedule_id = s.schedule_id and logistic_stop_No =0 ) as stopNois0Count , from_unixtime(s.delivery_date,'%Y-%m-%d') as delivery_date_str ,from_unixtime(s.schedule_start_time,'%H:%i') as start_hour ,
+       from_unixtime(s.schedule_end_time,' %H:%i') as end_hour ,concat(t.truck_name,'-',t.plate_number) as truck_name,
        if(length(u.contactPersonNickName)>0,u.contactPersonNickName,concat(u.contactPersonFirstname,' ',u.contactPersonLastname)) as driverName ,
-       u.name,u.displayName,u.person_first_name,u.person_last_name ,if(length(u.displayName)>0,u.displayName,
-           if(length(u.person_first_name)>0,concat(u.person_first_name,' ',u.person_last_name),u.name)) as driverName1 
-        FROM `cc_truck_driver_schedule` s 
-            left join cc_truck t on s.factory_id=t.business_id and s.truck_id =t.truck_no  
-            left join cc_user u on s.driver_id =u.id   where factory_id=$factory_id  ";
+       u.name,u.displayName,u.person_first_name,u.person_last_name ,if(length(u.displayName)>0,u.displayName,if(length(u.person_first_name)>0,concat(u.person_first_name,' ',u.person_last_name),u.name)) as driverName1
+FROM `cc_truck_driver_schedule` s
+    left join cc_truck t on s.factory_id=t.business_id and s.truck_id =t.truck_no  
+    left join cc_user u on s.driver_id =u.id 
+    left join cc_schedule_status ss on s.status=ss.id 
+where factory_id=$factory_id  ";
 
         if($truck_id) {
           $sql .= "  and truck_id =$truck_id ";
@@ -130,10 +131,30 @@ where factory_id=$factory_id and delivery_date=$delivery_date order by schedule_
         if($endTime) {
             $sql .= "  and delivery_date <=$endTime ";
         }
+        if($scheduleDays) {
+          if($scheduleDays==1) { //get todays data
+              $tImeNumber = strtotime(date('Y-m-d',time()));
+             // var_dump($todayTImeNumber);exit;
+              $sql .= "  and delivery_date =".$tImeNumber;
+
+          }
+         if($scheduleDays==2) { //get yesterday data
+             $tImeNumber = strtotime(date('Y-m-d',(time()-60*60*24)));
+             // var_dump($todayTImeNumber);exit;
+             $sql .= "  and delivery_date =".$tImeNumber;
+
+          }
+           if($scheduleDays==7) { //get on week data
+               $tImeNumber = strtotime(date('Y-m-d',(time()-7*60*60*24)));
+               // var_dump($todayTImeNumber);exit;
+               $sql .= "  and delivery_date >=".$tImeNumber;
+            }
+        }
+
 
         $sql .= " order by schedule_id desc ";
 
-
+//var_dump($sql);exit;
         return $sql;
 
        }

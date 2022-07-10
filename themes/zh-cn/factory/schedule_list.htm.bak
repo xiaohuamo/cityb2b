@@ -51,7 +51,27 @@
 				<div class="search-row" style="padding: 20px 18px">
 
 					<form method="get" action="<{$searchUrl}>">
-						<label>Select Truck</label>
+						
+						
+						<select  id ="scheduleDays" name ="scheduleDays">
+								<option value='8'>Choose Date</option>
+								<option value='1' <{if $scheduleDays==1}>selected<{/if}>>Today</option>
+                           		<option value='2'  <{if $scheduleDays==2}>selected<{/if}>>Yesterday</option>
+								<option value='7'  <{if $scheduleDays==7}>selected<{/if}>>One week</option>
+                   		</select>&nbsp;
+												
+						<label>From </label>
+						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$startTime}>" onchange="resetDayschedule();"  onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>To</label>
+						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$endTime}>" onchange="resetDayschedule();" onclick="WdatePicker();" onfocus="WdatePicker();">
+							<br><br>
+					
+						
+			
+					
+						
+                     
+					<label>Select Truck</label>
 							<select  name ="truck_id">
 													<option value='0'>Select Truck</option>
                                                     <{foreach from=$all_avaliable_trucks item=sitem1}>
@@ -71,27 +91,13 @@
 													<option value='0'>Select the Driver</option>
                                                     <{foreach from=$driverList item=sitem1}>
 														<option value='<{$sitem1.id}>'
-                                                                <{if $sitem1.current_driver==$driver_id}>selected<{/if}>>
+                                                                <{if $sitem1.id==$driver_id}>selected<{/if}>>
                                                             <{$sitem1.name}>-<{$sitem1.id}><{if $sitem1.contactPersonNickName}>(<{$sitem1.contactPersonNickName}>)<{/if}>
 
 														</option>
                                                     <{/foreach}>
 												</select>
-												<br><br>
-						<label><{$lang->filter}>:</label>
-						<input type="text" class="input-text" style="width:100px;" id="st" name="startTime" value="<{$startTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
-						<label>to</label>
-						<input type="text" class="input-text" style="width:100px;" id="et" name="endTime" value="<{$endTime}>" onclick="WdatePicker();" onfocus="WdatePicker();">
-						
-					
-						
-
-						<button type="submit"><{$lang->search}></button>
-						
-						<br><br>
-                     
-					
-						
+							<button type="submit"><{$lang->search}></button>
 					</form>
 				</div>
 				
@@ -101,14 +107,20 @@
 						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
 							<thead>
 							<tr>
-								<th>Delivery Date</th>
-								<th>Schedule Time</th>
+								
+								
+								
+								<th>Del. date</th>
+								<th>Sch. No</th>
+								<th>Status</th> <!1-planning ,2scheduled,3running ,4closed ,5done . -!>
+								<th>Action</th>
 								<th>Driver</th>
 								<th>Truck</th>
 								
-								<th>Status</th>
-								
-								<th>Schedule No</th>
+								<th>Sch.(start-end)</th>
+								<th>Driver (start-end)</th>
+								<th>Start Location</th>
+								<th>End Location</th>
 								
 
 							</tr>
@@ -119,14 +131,38 @@
                            <tbody>
 							 <{foreach from=$data item=item name='dl'}>		
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
-								   <td><{$item.delivery_date_str}></td> 
-								   <td><{$item.start_hour}>-<{$item.end_hour}></td> 
-								   <td><{$item.driverName1}></td> 
-								   <td><{$item.truck_name}></td>
-								 
-								   <td><{$item.driverName1}></td>     
+								 <td><{$item.delivery_date_str}></td> 
+									<td>
+									
+									<a href="<{$http_root_www}>company/customer_orders_logistic_query?customer_delivery_date=<{$item.delivery_date_str}>&logistic_schedule_id=<{$item.schedule_id}>" ><{$item.schedule_id}></a>
+									
+									
+									</td> 
+									<td><{$item.status_name}></td> 
+									<{if $item.status==2 && $item.stopNois0Count>0}>
+									 <td>
+									 <button onclick ="reschedule_route('<{$item.delivery_date_str}>',<{$item.schedule_id}>);"  style='padding: 5px ;    background-color: #FD5001;'>need re routed</button>
+									 </td> 
+									<{else}>
+									 <td>-</td> 
+									<{/if}>
+									
+									
+									
+								   <td><{$item.name}>-<{$item.driverName}></td> 
+								   <td><{$item.truck_name}></td> 
 								   
-								   <td><{$item.schedule_id}></td> 
+								   
+								   <td><{$item.start_hour}>-<{$item.end_hour}></td>
+								   <td><{$item.driver_work_start_time}>-<{$item.driver_work_end_time}></td>
+								   
+								    <td style='width:150px;word-wrap:break-word;'><{$item.driver_start_location}></td> 
+								   <td style='width:150px;word-wrap:break-word;'><{$item.driver_end_location}></td> 
+								  
+								 
+								      
+								   
+								  
 							   
 							   </tr>
                           	<{/foreach}>			
@@ -157,5 +193,24 @@
 
 
 </body>
+<script type="text/javascript">
+
+function resetDayschedule(){
+  $('#scheduleDays').val(8);
+}
+
+function reschedule_route(delivery_date,schedule_id){
+	//alert(delivery_date);
+	//alert(schedule_id);
+	var url ='<{$http_root_www}>company/oproute_reschedule_orders?customer_delivery_date='+delivery_date+'&schedule_id='+schedule_id;
+	//alert(url);
+	//return;
+		window.location.href = url;
+	//http://www.ozsupply.com/company/oproute_reschedule_orders?customer_delivery_date=2022-07-09&schedule_id=13
+	
+	}
+</script>
+
+
 
 </html>
