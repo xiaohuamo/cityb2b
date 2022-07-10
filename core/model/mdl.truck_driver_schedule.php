@@ -37,7 +37,7 @@ class mdl_truck_driver_schedule extends mdl_base
         //onle add d101 d102 for status = planning schedules
         $sql ="select * from cc_truck_driver_schedule s where s.factory_id =$factory_id and s.delivery_date =$delivery_date and status =1 order by id ";
         $list = $this->getListBySql($sql);
-        var_dump($sql);exit;
+       // var_dump($sql);exit;
         $driverExternalId =101;
         $truckExternalId =101;
         $data =array();
