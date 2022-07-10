@@ -13904,11 +13904,13 @@ function get_data($url, $ch) {
         if (strtotime($date)) {
             switch (get2('task')) {
                 case 'auto_routing':
-                    $opRoute->generateLogisticSequence($date);
+                  //  $opRoute->generateLogisticSequence($date);
 
 
                     try {
                         //创建动态司机，车辆标号以对应opti
+                        $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
+
                         $opRoute->updateSchedule($customer_delivery_date,false);
                         $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
                         $opRoute->updateSchedule($date,true);
@@ -13924,11 +13926,17 @@ function get_data($url, $ch) {
                         $this->sheader(null,$e->getMessage());
                     }
 
+                    try {
+                        $opRoute->startPlanning($customer_delivery_date);
+                        $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
+                        // set all driver active status to disable ;
+                        $opRoute->updateSchedule($customer_delivery_date,false);
+                    } catch (Exception $e) {
+                        $this->sheader(null,$e->getMessage());
+                    }
 
-                    $opRoute->startPlanning($customer_delivery_date);
-                    $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
-                    // set all driver active status to disable ;
-                    $opRoute->updateSchedule($customer_delivery_date,false);
+
+
 
                     $this->sheader(HTTP_ROOT_WWW . 'company/oproute_auto?date='.$date);
 

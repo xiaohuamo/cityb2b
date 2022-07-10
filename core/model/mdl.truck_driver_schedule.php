@@ -34,7 +34,8 @@ class mdl_truck_driver_schedule extends mdl_base
     public function createTempOptiDriverAndTruckId($factory_id,$date) {
 
         $delivery_date = strtotime($date);
-        $sql ="select * from cc_truck_driver_schedule s where s.factory_id =$factory_id and s.delivery_date =$delivery_date order by id ";
+        //onle add d101 d102 for status = planning schedules
+        $sql ="select * from cc_truck_driver_schedule s where s.factory_id =$factory_id and s.delivery_date =$delivery_date and status =1 order by id ";
         $list = $this->getListBySql($sql);
         $driverExternalId =101;
         $truckExternalId =101;
