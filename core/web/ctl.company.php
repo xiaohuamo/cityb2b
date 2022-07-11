@@ -1713,11 +1713,15 @@ class ctl_company extends cmsPage
     function profile_action()
     {
 
+        $returnLink =trim(get2('returnLink'));
+        $this->setData($returnLink,'returnLink');
+
+
         $mdl_reg = $this->loadModel('reg');
         if (is_post()) {
 
 
-
+            $returnLink =trim(post('returnLink'));
             $nickname = trim(post('nickname'));
 
             $phone = trim(post('phone'));
@@ -1742,9 +1746,20 @@ class ctl_company extends cmsPage
 			
 			$googleMap = trim(post('googleMap'));
             $google_location = trim(post('location')); //12.123123,-123.123123
+
+
+            $start_location_lat =array();
+            $start_location_lat = $this->get_latitude_from_address ($googleMap);
+
+
             $l= explode(',', $google_location);
             $latitude=$l[0];
             $longitude=$l[1];
+
+
+            $latitude=$start_location_lat['lat'];
+            $longitude=$start_location_lat['lng'];
+
 
             $addrNumber = trim(post('street_number'));  //30
             $addrStreet = trim(post('route'));          //jean st
@@ -1799,7 +1814,13 @@ class ctl_company extends cmsPage
 
             $mdl_user = $this->loadModel('user');
             if ($mdl_user->updateUserById($data, $this->loginUser['id'])) {
-                $this->form_response(200, 'Saved',"SELF");
+              //  var_dump($returnLink);exit;
+                if ($returnLink !='newschedule') {
+                    $this->form_response(200, 'Saved',"SELF");
+                }else{
+                    $this->form_response(200, 'Saved',HTTP_ROOT_WWW.'factory/new_schedule');
+                }
+
             } else {
                 $this->form_response_msg("Fail to edit");
             }
@@ -13877,6 +13898,84 @@ function get_data($url, $ch) {
 		$this->display('company/opRouteAdmin');
 	}
 
+    function optimoroute_api_key_action()
+    {
+
+        $mdl_user_account_info = $this->loadModel('user_account_info');
+
+        $user_account_info = $mdl_user_account_info->getByWhere(array( 'userid' => $this->current_business['id']));
+
+        if (is_post()) {
+
+
+
+            //var_dump($id);exit;
+
+            $op_route_key = trim(post('op_route_key'));
+
+
+
+
+
+            $data = array(
+                'op_route_key'=>$op_route_key
+            );
+
+
+            if($user_account_info) {
+
+                if ($mdl_user_account_info->update($data, $user_account_info['id'])) {
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'company/optimoroute_api_key');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+
+            }else{
+                $user =$this->loadModel('user')->get($this->current_business['id']);
+                $data['userid'] = $this->current_business['id'];
+                $data['account_type'] = 1;
+                $data['account_name'] = $user['displayName'];
+                $data['firstname'] = $user['person_first_name'];
+                $data['lastname'] = $user['person_last_name'];
+                $data['createtime'] =time();
+
+
+
+                if ($mdl_user_account_info->insert($data)) {
+
+
+                    $this->form_response(200,'saved',HTTP_ROOT_WWW.'company/optimoroute_api_key');
+                } else {
+                    $this->form_response_msg('something wrong');
+                }
+            }
+
+
+
+
+
+
+        } else {
+            $this->setData($user_account_info, 'data');
+
+            if ($this->getLangStr() == 'en') {
+                $pagename = "API Key";
+            }else{
+                $pagename = "API Key";
+            }
+            $this->setData($pagename, 'pagename');
+            $this->setData('Logistic_centre', 'menu');
+
+            $this->setData('new_schedule', 'submenu');
+            $this->setData('oprouteAPIKey', 'submenu_top');
+            $this->setData('TruckManagement' . $this->site['pageTitle'], 'pageTitle');
+
+            $this->display('company/optimorouteApiKey');
+        }
+    }
+
+
 
     public function oproute_auto_action(){
 
@@ -14776,13 +14875,32 @@ public function custom_delivery_fee_add_action()
 
             if($driver_base_rec['driver_id'] && $driver_base_rec['status']==1){ //如果该driver 配置且可用
 
+                $user =$this->loadModel('user')->get($this->current_business['id']);
 
-                $data['driver_start_location']=$driver_base_rec['start_location'];
-                $data['driver_start_lat']=$driver_base_rec['start_lat'];
-                $data['driver_start_long']=$driver_base_rec['start_long'];
-                $data['driver_end_location']=$driver_base_rec['end_location'];
-                $data['dirver_end_lat']=$driver_base_rec['end_lat'];
-                $data['driver_end_long']=$driver_base_rec['end_long'];
+                if(!$driver_base_rec['start_location']) {
+                    $data['driver_start_location']=$user['googleMap'];
+                    $data['driver_start_lat']=$user['latitude'];
+                    $data['driver_start_long']=$driver_base_rec['longitude'];
+
+                }else{
+                    $data['driver_start_location']=$driver_base_rec['start_location'];
+                    $data['driver_start_lat']=$driver_base_rec['start_lat'];
+                    $data['driver_start_long']=$driver_base_rec['start_long'];
+
+                }
+
+                if(!$driver_base_rec['end_location']) {
+                    $data['driver_end_location']=$user['googleMap'];
+                    $data['dirver_end_lat']=$user['latitude'];
+                    $data['driver_end_long']=$driver_base_rec['longitude'];
+                }else{
+                    $data['driver_end_location']=$driver_base_rec['end_location'];
+                    $data['dirver_end_lat']=$driver_base_rec['end_lat'];
+                    $data['driver_end_long']=$driver_base_rec['end_long'];
+
+                }
+
+
 
             }else{
                 continue;

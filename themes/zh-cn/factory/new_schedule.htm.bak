@@ -68,8 +68,11 @@
 					<input value='<{$customer_delivery_date}>' type="hidden" id = "customer_delivery_date"  name="customer_delivery_date">
 					<input value='<{$truck_id}>' type="hidden" id = "truck_id"  name="truck_id">
 					<input value='<{$driver_id}>' type="hidden" id = "driver_id"  name="driver_id">
+					<input value='<{$link}>' type="hidden" id = "link"  name="link">
 				
+				<{if $loginUser.googleMap && $loginUser.latitude && $loginUser.longitude}>
 				
+			
 
 					<div id="delivery_management_box" style ="display:none;" class="input-box  clearfix">
 						<label>Choose Date：</label>
@@ -195,6 +198,15 @@
 						<br><br>
 						<button type="submit" class="btn btn-default btn-success" id="">Add</button>
 					</div>
+					
+					<{else}>
+						<div class="input-box  clearfix">
+							<label>当前商家无地址或坐标位置，物流调度必须需要一个始发地址，请点击下面链接添加发货地址</label>
+							<br><br>
+						
+						<button type="button" onclick="addBusinessDeptAddressLink();" class="btn btn-default btn-success" id="">添加商家地址</button>
+						</div>
+					<{/if}>
 				</form>
 				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
 					<script type="text/javascript">
@@ -254,7 +266,7 @@
 
 						
 						</script> 
-
+<{if $loginUser.googleMap && $loginUser.latitude && $loginUser.longitude}>
 				<div class="main-list" name="products_detail" id="products_detail">
 						<table id="schedule_list" cellspacing="0" cellpadding="0" width="100%">
 							<thead>
@@ -284,7 +296,7 @@
                           
 							</tbody>
 						</table>
-					</div>
+					</div> <{/if}>
 				
 			</div>
 </div>
@@ -387,7 +399,7 @@
 	
 	 function generateUrl(id) {
                 return "<{$http_root_www}>factory/schedule_edit?id="
-                    + id;
+                    + id +'link=newschedule';
             }
 
             
@@ -460,10 +472,10 @@
 	}
 	
 	function reschedule_route(delivery_date,schedule_id){
-	alert(delivery_date);
-	alert(schedule_id);
+	//alert(delivery_date);
+	//alert(schedule_id);
 	var url ='<{$http_root_www}>company/oproute_reschedule_orders?customer_delivery_date='+delivery_date+'&schedule_id='+schedule_id;
-	alert(url);
+	//alert(url);
 	//return;
 		window.location.href = url;
 	//http://www.ozsupply.com/company/oproute_reschedule_orders?customer_delivery_date=2022-07-09&schedule_id=13
@@ -539,6 +551,20 @@
 	}
 				
 	
+</script>
+
+<script type="text/javascript">
+
+
+
+function addBusinessDeptAddressLink(){
+	
+	var url ='<{$http_root_www}>company/profile?returnLink=newschedule';
+	
+	window.location.href = url;
+	
+	
+	}
 </script>
 
 <{include file='footer.htm'}>

@@ -112,6 +112,7 @@
 								
 								<th>Del. date</th>
 								<th>Sch. No</th>
+								<th>Orders</th>
 								<th>Status</th> <!1-planning ,2scheduled,3running ,4closed ,5done . -!>
 								<th>Action</th>
 								<th>Driver</th>
@@ -119,6 +120,7 @@
 								
 								<th>Sch.(start-end)</th>
 								<th>Driver (start-end)</th>
+								<th>Edit</th>
 								<th>Start Location</th>
 								<th>End Location</th>
 								
@@ -132,14 +134,20 @@
 							 <{foreach from=$data item=item name='dl'}>		
 								<tr<{if $smarty.foreach.dl.index%2==0}> class="odd"<{/if}>>
 								 <td><{$item.delivery_date_str}></td> 
+								   <td>
+									
+									<{$item.schedule_id}>
+									
+									
+									</td> 
 									<td>
 									
-									<a href="<{$http_root_www}>company/customer_orders_logistic_query?customer_delivery_date=<{$item.delivery_date_str}>&logistic_schedule_id=<{$item.schedule_id}>" ><{$item.schedule_id}></a>
+									<a href="<{$http_root_www}>company/customer_orders_logistic_query?customer_delivery_date=<{$item.delivery_date_str}>&logistic_schedule_id=<{$item.schedule_id}>" >Orders</a>
 									
 									
 									</td> 
 									<td><{$item.status_name}></td> 
-									<{if $item.status==2 && $item.stopNois0Count>0}>
+									<{if ($item.status==2 && $item.stopNois0Count>0) || $item.need_re_routing==1}>
 									 <td>
 									 <button onclick ="reschedule_route('<{$item.delivery_date_str}>',<{$item.schedule_id}>);"  style='padding: 5px ;    background-color: #FD5001;'>Data Change need routed</button>
 									 </td> 
@@ -157,6 +165,8 @@
 								   <td><{$item.start_hour}>-<{$item.end_hour}></td>
 								   <td><{$item.driver_work_start_time}>-<{$item.driver_work_end_time}></td>
 								   
+								   
+								    <td><a  onclick="editScheduel('<{$item.id}>');" >Edit</a></td>
 								    <td style='width:150px;word-wrap:break-word;'><{$item.driver_start_location}></td> 
 								   <td style='width:150px;word-wrap:break-word;'><{$item.driver_end_location}></td> 
 								  
@@ -210,6 +220,21 @@ function reschedule_route(delivery_date,schedule_id){
 	//http://www.ozsupply.com/company/oproute_reschedule_orders?customer_delivery_date=2022-07-09&schedule_id=13
 	
 	}
+	
+	
+	 function generateUrl(id) {
+                return "<{$http_root_www}>factory/schedule_edit?id="
+                    + id +'&link=schedule_list&scheduleDays=<{$scheduleDays}>';
+            }
+
+            
+	
+	function editScheduel(id) {
+	
+	
+	 window.location.href = generateUrl(id);
+	}
+	
 </script>
 
 

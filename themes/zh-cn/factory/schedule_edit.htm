@@ -41,7 +41,9 @@
 					<form id="memberForm" method="post" target="post_frame" enctype="multipart/form-data">
 						<input type="text" name="sche_id" id="sche_id" value = "<{$data.id}>"class="input-text" hidden/>
 						<input type="text" name="delivery_date" id="delivery_date" value = "<{$data.delivery_date}>"class="input-text" hidden/>
-						
+							<input value='<{$link}>' type="hidden" id = "link"  name="link">
+								<input value='<{$scheduleDays}>' type="hidden" id = "scheduleDays"  name="scheduleDays">
+							
 						<div class="input-box  form-style-green">
 							<span>
 							<label for="abn">Schedule Id</label>
@@ -93,16 +95,17 @@
 							<span>
 							<label for="status">Status</label>
 							</span>
-							
-							<select name="status" >
+							<label><{$schedule_status_rec.name}></label>
+						<!--	<select name="status" >
 
 					
-								<option value="0" <{if $data.status==0}> selected<{/if}>>Planning</option>
-								<option value="1" <{if $data.status==1}> selected<{/if}>>scheduled</option>
-								<option value="2" <{if $data.status==2}> selected<{/if}>>canceled</option>
-								<option value="3" <{if $data.status==3}> selected<{/if}>>executed</option>
+								<option value="1" <{if $data.status==1}> selected<{/if}>>Planning</option>
+								<option value="2" <{if $data.status==2}> selected<{/if}>>scheduled</option>
+								<option value="3" <{if $data.status==3}> selected<{/if}>>Running</option>
+								<option value="4" <{if $data.status==4}> selected<{/if}>>Job Done</option>
+								<option value="5" <{if $data.status==5}> selected<{/if}>>Job Close</option>
 
-							</select>
+							</select> -->
 							
 						<!--	<input type="text" name="approved" id="approved" class="input-text" placeholder="" value="<{$user_factory_info.approved}>"> -->
 						</div>

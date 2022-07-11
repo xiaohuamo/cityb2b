@@ -113,7 +113,29 @@
                        <em>trading name  </em>
 						</div>
 						
+						<div class="input-box clearfix">
+							<span><label>phone</label></span>
+							<input type="text" name="tel" class="input-text" value="<{$loginUser.tel}>" />
+						</div>
 						
+						<div class="input-box clearfix">
+							<span><label><{$lang->mobile_phone}></label></span>
+                            <input type="text" name="phone" class="input-text" value="<{$loginUser.phone}>" data-varified='<{$loginUser.phone_verified}>'/>
+						</div>
+
+						<br>
+
+
+						<hr><br>
+	                    <div class="input-box clearfix">	
+							<span><label>Email</label></span>		
+							<input type="text" name="email" class="input-text" value="<{$loginUser.email}>" />
+						</div>
+						<div class="input-box clearfix">
+							<span><label><{$lang->information_mailbox}></label></span>
+                            <input style="width: 50%" type="text" name="backupEmail" class="input-text" value="<{$loginUser.backupEmail}>" />
+						 <em>If you do not fill in the same email address as above, the registered email address of some merchants is different from the login email address, so they should be distinguished.</em>
+						</div>
 						
 						
 						

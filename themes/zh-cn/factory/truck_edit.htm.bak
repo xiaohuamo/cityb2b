@@ -106,11 +106,14 @@
 							
 							
 							<div class="input-box multi-select clearfix">
-								<span><label>Load Capicity</label></span>
+								<span><label>Load Capicity(tones)</label></span>
 								<input type="text" class="input-text" value="<{$data.load_tones}>" name="load_tones" />
 							</div>
 
-							
+							<div class="input-box multi-select clearfix">
+								<span><label>Load Capicity(Boxes)</label></span>
+								<input type="text" class="input-text" value="<{$data.load_boxes}>" name="load_boxes" />
+							</div>
 							
 							
 

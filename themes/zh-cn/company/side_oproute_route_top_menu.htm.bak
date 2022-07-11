@@ -13,9 +13,15 @@
 	   <a href="<{$http_root_www}>company/oproute" <{if $submenu_top=='oproute_manual'}> class="current"<{/if}>>  <{$lang->oproute_stepbystep_routing}></a>
 	   </span></li>
 					
-	   
-	  
-		
+	    <li><span>
+			 <a  target=_blank  href="https://my.optimoroute.com/">
+					Optimoroute site
+			</a>
+	   </span></li>
+	 
+		<li><span>
+			 <a    href="<{$http_root_www}>company/optimorouteApiKey" <{if $submenu_top=='oprouteAPIKey'}> class="current"<{/if}>> API Key</a>
+	   </span></li>			
 	  
 	 
 

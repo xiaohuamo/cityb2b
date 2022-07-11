@@ -21,6 +21,7 @@ class OptimoRouteAPI {
 	public function __construct($apiKey=null) {
 		if ($apiKey) {
 			$this->apiKey = $apiKey;
+          //  var_dump($apiKey);exit;
 		}
 	}
 
