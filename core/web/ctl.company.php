@@ -14008,10 +14008,14 @@ function get_data($url, $ch) {
 
                     try {
                         //创建动态司机，车辆标号以对应opti
+
+                        // 这里应该是，先把所有的driver 都 false ,可以试试比如1-20
+                        $opRoute->updateSchedule($customer_delivery_date,false);
+
                         $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
 
-                        $opRoute->updateSchedule($customer_delivery_date,false);
-                        $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
+                       // $opRoute->updateSchedule($customer_delivery_date,false);
+                       // $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
                         $opRoute->updateSchedule($date,true);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
@@ -14029,7 +14033,7 @@ function get_data($url, $ch) {
                         $opRoute->startPlanning($customer_delivery_date);
                         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
                         // set all driver active status to disable ;
-                        $opRoute->updateSchedule($customer_delivery_date,false);
+                       // $opRoute->updateSchedule($customer_delivery_date,false);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
