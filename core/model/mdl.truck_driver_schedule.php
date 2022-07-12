@@ -137,7 +137,7 @@ where factory_id=$factory_id  ";
           if($scheduleDays==1) { //get todays data
               $tImeNumber = strtotime(date('Y-m-d',time()));
              // var_dump($todayTImeNumber);exit;
-              $sql .= "  and delivery_date =".$tImeNumber;
+              $sql .= "  and delivery_date >=".$tImeNumber;
 
           }
          if($scheduleDays==2) { //get yesterday data
