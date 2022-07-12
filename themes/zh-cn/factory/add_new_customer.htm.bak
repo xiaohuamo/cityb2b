@@ -32,6 +32,7 @@
         <{include file='factory/side.htm'}>
 		<div class="main">
 			<div class="box2">
+			<{include file='company/side_customer_list_top.htm'}>
 				<div class="main-form">
 					<div class="colCurTit clearfix">
 						<h1> <{if $langStr == 'zh-cn'}> 新增用户<{else}>New Customer<{/if}>

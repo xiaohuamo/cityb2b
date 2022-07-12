@@ -410,7 +410,7 @@
     }
 
     IconUpdate.prototype.iconUpdating = function () {
-        alert(this.target);
+       // alert(this.target);
         this.target.html('<i style="color:#FD5001 " class="fa fa-spinner fa-spin"></i>');
     }
     IconUpdate.prototype.iconUpdateSuccess = function () {
@@ -432,8 +432,8 @@
         var context = $('.publish_icon_sync_xero[data-id=' + couponId + ']');
     
 	    var xero_account_number =$('#xero_account_number-'+couponId).val().trim();
-	   alert(xero_account_number);
-	   alert(couponId);
+	  // alert(xero_account_number);
+	  // alert(couponId);
 		
 		if(xero_account_number.length<2){
 		  alert('please input xero account number , the number must same with the account Number on xero contact.');

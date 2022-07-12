@@ -122,6 +122,7 @@
         <{include file='factory/side.htm'}>
 		<div class="main">
 			<div class="box2">
+			<{include file='factory_2c/xero_panle_top_menu.htm'}>
 				<div class="colCurTit">
                     Customer List 
 				</div>

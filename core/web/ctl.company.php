@@ -13807,7 +13807,7 @@ function get_data($url, $ch) {
 	    		case 'syncdown':
 	    			$opRoute->syncRoutesDownOnDeliverDate($date,$this->current_business['id']);
                     // set all driver active status to disable ;
-                    $opRoute->updateSchedule($date,false);
+                   // $opRoute->updateSchedule($date,false);
 					if(!$disp) {
 						$this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
 					}else{

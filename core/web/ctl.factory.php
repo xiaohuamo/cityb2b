@@ -3579,6 +3579,8 @@ public function return_items_submit_to_statment_action() {
                 header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
             } else {
                 $username = trim(post('username'));
+                $email = trim(post('email'));
+                //var_dump($email);exit;
                 $mobile = trim(post('mobile'));
                 $abn = str_replace(' ', '', trim(post('abn')));
                 $person_last_name = trim(post('person_last_name'));
@@ -3620,7 +3622,7 @@ public function return_items_submit_to_statment_action() {
                     $this->setData($person_last_name, 'person_last_name');
                     $this->setData($person_first_name, 'person_first_name');
                 } else {
-                    $result = self::add_new_customer($username, $mobile, $address,$nickname,$person_last_name,$person_first_name);
+                    $result = self::add_new_customer($username, $mobile, $address,$nickname,$person_last_name,$person_first_name,$email);
 
                     if($result['success']) {
                         $this->loadModel('wj_abn_application')->insert([
@@ -3706,7 +3708,7 @@ public function return_items_submit_to_statment_action() {
         return;
     }
 
-    public function add_new_customer($username, $mobile = '', $address = [],$nickname,$person_last_name,$person_first_name)
+    public function add_new_customer($username, $mobile = '', $address = [],$nickname,$person_last_name,$person_first_name,$email)
     {
         $mdl_user = $this->loadModel('user');
 
@@ -3730,12 +3732,13 @@ public function return_items_submit_to_statment_action() {
 
         $userObject->setBusinessName($username);
         $userObject->setLegalName($nickname);
+        $userObject->setEmail($email);
 
 
         $userObject->setBusinessMobile($mobile, true);
         $userObject->setAddress($address['address']);
         $userObject->setFullName($person_last_name,$person_first_name);
-
+//var_dump($userObject);exit;
         $mdl_user->begin();
         $mdl_user->addUser(array_merge($userObject->toDBArray(), $address));
 
