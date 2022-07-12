@@ -13730,7 +13730,7 @@ function get_data($url, $ch) {
         $opRoute->startPlanning($customer_delivery_date);
         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
         // set all driver active status to disable ;
-        $opRoute->updateSchedule($customer_delivery_date,false);
+       // $opRoute->updateSchedule($customer_delivery_date,false);
         //?sk=&customer_delivery_date=2022-07-09&logistic_schedule_id=13
         //将 re_route 标志置为0
         $delivery_date = strtotime($customer_delivery_date);
