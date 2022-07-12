@@ -18,9 +18,13 @@
 					Optimoroute site
 			</a>
 	   </span></li>
+	   
+	     <li><span>
+	   <a href="<{$http_root_www}>factory/schedule_list" <{if $submenu_top=='schedule_list'}> class="current"<{/if}>> <{$lang->schedule_list}></a>
+	   </span></li>
 	 
 		<li><span>
-			 <a    href="<{$http_root_www}>company/optimorouteApiKey" <{if $submenu_top=='oprouteAPIKey'}> class="current"<{/if}>> API Key</a>
+			 <a    href="<{$http_root_www}>company/optimoroute_api_key" <{if $submenu_top=='optimoroute_api_key'}> class="current"<{/if}>> API Key</a>
 	   </span></li>			
 	  
 	 
