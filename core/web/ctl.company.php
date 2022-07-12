@@ -13708,7 +13708,7 @@ function get_data($url, $ch) {
         $customer_delivery_date = get2('customer_delivery_date');
         $schedule_id = get2('schedule_id');
 
-
+//var_dump($schedule_id);exit;
         require_once( DOC_DIR.'static/OptimoRoute.php');
         $opRoute = new OptimoRoute($this->current_business['id'], $accountInfo['op_route_key']);
 
@@ -13716,6 +13716,12 @@ function get_data($url, $ch) {
         $auto = get2('auto');
 
         // 删除所有orders
+        if(!$accountInfo) {
+            $maxdrivers =6;
+        }else{
+            $maxdrivers =$accountInfo['maxdrivers'];
+        }
+        $opRoute->setAllDriverDisable($customer_delivery_date,$maxdrivers);
         $response = $opRoute->deleteAllOrders($customer_delivery_date);
        // 上传该调度司机信息
         $opRoute->updateSchedule($customer_delivery_date,true,$schedule_id);
@@ -13725,8 +13731,19 @@ function get_data($url, $ch) {
         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
         // set all driver active status to disable ;
         $opRoute->updateSchedule($customer_delivery_date,false);
-        $this->sheader(HTTP_ROOT_WWW . 'company/customer_orders_logistic_query?logistic_schedule_id='.$schedule_id.'&customer_delivery_date='.$customer_delivery_date);
         //?sk=&customer_delivery_date=2022-07-09&logistic_schedule_id=13
+        //将 re_route 标志置为0
+        $delivery_date = strtotime($customer_delivery_date);
+        $where =array(
+            'delivery_date'=>$delivery_date,
+            'schedule_id'=>$schedule_id
+        );
+        $data=array(
+            'need_re_routing'=>0
+        );
+        $this->loadModel('truck_driver_schedule')->updateByWhere($data,$where);
+        $this->sheader(HTTP_ROOT_WWW . 'company/customer_orders_logistic_query?logistic_schedule_id='.$schedule_id.'&customer_delivery_date='.$customer_delivery_date);
+
     }
 
 	public function oproute_action(){
@@ -13737,7 +13754,12 @@ function get_data($url, $ch) {
 	/*	if (!in_array($this->current_business['id'], DispCenter::getDispCenterList())) {
 			$this->sheader(null,'您无权限访问该页面');
 		} */
-		
+        if(!$accountInfo) {
+            $maxdrivers =6;
+        }else{
+            $maxdrivers =$accountInfo['maxdrivers'];
+        }
+
 		$disp = get2('disp');
 		$customer_delivery_date = get2('customer_delivery_date');
 		$logistic_truck_No = get2('logistic_truck_No');
@@ -13769,10 +13791,13 @@ function get_data($url, $ch) {
 	    			break;
                 case 'upload_driver':
                     //Step1
+                    $opRoute->setAllDriverDisable($customer_delivery_date,$maxdrivers);
                     try {
                         //创建动态司机，车辆标号以对应opti
+                        // 将所有司机disable
+
                         $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
-                        $opRoute->updateSchedule($date,true);
+                        $opRoute->updateSchedule($date,true,0);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
@@ -13912,13 +13937,15 @@ function get_data($url, $ch) {
             //var_dump($id);exit;
 
             $op_route_key = trim(post('op_route_key'));
+            $maxdrivers = trim(post('maxdrivers'));
 
 
 
 
 
             $data = array(
-                'op_route_key'=>$op_route_key
+                'op_route_key'=>$op_route_key,
+                'maxdrivers'=>$maxdrivers
             );
 
 
@@ -13942,6 +13969,7 @@ function get_data($url, $ch) {
 
 
 
+
                 if ($mdl_user_account_info->insert($data)) {
 
 
@@ -13960,9 +13988,9 @@ function get_data($url, $ch) {
             $this->setData($user_account_info, 'data');
 
             if ($this->getLangStr() == 'en') {
-                $pagename = "API Key";
+                $pagename = "API Key & Drivers";
             }else{
-                $pagename = "API Key";
+                $pagename = "API Key & Drivers";
             }
             $this->setData($pagename, 'pagename');
             $this->setData('Logistic_centre', 'menu');
@@ -13994,7 +14022,7 @@ function get_data($url, $ch) {
         $date = get2('date');
         $customer_delivery_date=$date;
         $this->setData($date,'date');
-
+        $auto = get2('auto');
 
 
 
@@ -14005,26 +14033,29 @@ function get_data($url, $ch) {
                 case 'auto_routing':
                   //  $opRoute->generateLogisticSequence($date);
 
-
+                    //车辆调度初始化
                     try {
-                        //创建动态司机，车辆标号以对应opti
+                        // 将所有司机disable
+                        if(!$accountInfo) {
+                            $maxdrivers =6;
+                        }else{
+                            $maxdrivers =$accountInfo['maxdrivers'];
+                        }
+                        $opRoute->setAllDriverDisable($customer_delivery_date,$maxdrivers);
 
-                        // 这里应该是，先把所有的driver 都 false ,可以试试比如1-20
-                        $opRoute->updateSchedule($customer_delivery_date,false);
-
+                        //创建所有调度，并动态生成对应的driver ,truck id
                         $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
-
-                       // $opRoute->updateSchedule($customer_delivery_date,false);
-                       // $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
-                        $opRoute->updateSchedule($date,true);
+                        //打开调度使用的司机 ，并加载司机的所有配置，包括指定车辆，及初始配置参数。
+                         $opRoute->updateSchedule($customer_delivery_date,true,0);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
 
-
+                     //清除orders ,并重新加载order .
                     try {
                         $response = $opRoute->deleteAllOrders($date);
-                        $opRoute->syncOrderOnDate($date,0,0);
+                        // auto 如果为1 ，表示忽略手工安排的订单，如果为0 表示保留手工排单
+                        $opRoute->syncOrderOnDate($date,$auto,0);
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
@@ -14032,8 +14063,7 @@ function get_data($url, $ch) {
                     try {
                         $opRoute->startPlanning($customer_delivery_date);
                         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
-                        // set all driver active status to disable ;
-                       // $opRoute->updateSchedule($customer_delivery_date,false);
+
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
@@ -14045,119 +14075,8 @@ function get_data($url, $ch) {
 
 
                     break;
-                case 'syncup':
-                    //Step1
-                    try {
-                        $response = $opRoute->deleteAllOrders($date);
-                        $opRoute->syncOrderOnDate($date,$auto,0);
-                    } catch (Exception $e) {
-                        $this->sheader(null,$e->getMessage());
-                    }
 
-                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    break;
-                case 'upload_driver':
-                    //Step1
-                    try {
-                        //创建动态司机，车辆标号以对应opti
-                        $this->loadModel('truck_driver_schedule')->createTempOptiDriverAndTruckId($this->current_business['id'],$date);
-                        $opRoute->updateSchedule($date,true);
-                    } catch (Exception $e) {
-                        $this->sheader(null,$e->getMessage());
-                    }
 
-                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    break;
-                case 'syncdown':
-                    $opRoute->syncRoutesDownOnDeliverDate($date,$this->current_business['id']);
-                    // set all driver active status to disable ;
-                    $opRoute->updateSchedule($date,false);
-                    if(!$disp) {
-                        $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    }else{
-                        $this->sheader(HTTP_ROOT_WWW . 'company/customer_orders_logistic_query?logistic_truck_No='.$logistic_truck_No.'&customer_delivery_date='.$date);
-                    }
-
-                    break;
-                case 'notifyuser':
-                    $mdl_system_notification_center = $this->loadModel('system_notification_center');
-                    foreach ($opRoute->getOrderOnDeliverDate($date) as $o) {
-                        $mdl_system_notification_center->notify(SystemNotification::BusinessDelivery, $o['orderId']);
-                    }
-                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    break;
-                case 'approveall':
-                    foreach ($opRoute->getOrderOnDeliverDate($date) as $o) {
-                        $this->_customer_coupon_approving($o['orderId']);
-                    }
-                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    break;
-                case 'freshx_import':
-                    $mdl_order = $this->loadModel('order');
-                    $opRoute->generateLogisticSequence($date);
-                    //25201 下217005 的freshx订单同步
-                    require_once( DOC_DIR.'static/FreshXApi.php');
-                    $fx = new FreshXApi();
-                    $fx->login();
-
-                    foreach ($opRoute->getOrderOnDeliverDate($date) as $order) {
-                        if ($order['address'] == '') {
-                            continue; //订单地址为空不能上传
-                        }
-
-                        if ($order['freshx_order_id'] != 0) {
-                            continue;
-                        }
-
-                        $addr = $order['house_number'] . ' ' . $order['street'];
-                        if ($addr === ' ') {
-                            $addr = $order['address'];
-                        }
-
-                        $data = [
-                            "reference_number" => $order['logistic_sequence_No'],
-                            "delivery_note" => $order['logistic_suppliers_info'],
-                            "delivery_date" => $date,
-                            "customer" => [
-                                "customer_name" =>"LSN-" . $order['logistic_sequence_No'] ." ". $order['first_name'] . " " . $order['last_name'],
-                                "contact_number" => $order['phone'],
-                                "address" => $addr,
-                                "suburb" => $order['city'],
-                                "postcode" => $order['postalcode'],
-                                "state" => $order['state']
-                            ],
-                            "items" => []
-                        ];
-                        $items = $mdl_order->getListBySql('SELECT menu_id, customer_buying_quantity, voucher_original_amount from cc_wj_customer_coupon where order_id=' . $order['orderId'] . ' and business_id = 217005' );
-
-                        if (count($items)>0) {
-                            foreach ($items as $item) {
-                                $data['items'][] = [
-                                    "product_id" => (int)$item['menu_id'],
-                                    "quantity" => (int)$item['customer_buying_quantity'],
-                                    "price" => (float)$item['voucher_original_amount']
-                                ];
-                            }
-                        } else {
-                            $data['items'][] = [
-                                "product_id" => 1090,
-                                "quantity" => 1,
-                                "price" => 0
-                            ];
-                        }
-
-                        $freshxOrderId = $fx->createOrder($data);
-                        $mdl_order->updateByWhere(
-                            [
-                                'freshx_order_id' => $freshxOrderId
-                            ],
-                            [
-                                'orderId' => $order['orderId']
-                            ]
-                        );
-                    }
-                    $this->sheader(HTTP_ROOT_WWW . 'company/oproute?date='.$date);
-                    break;
 
             }
 

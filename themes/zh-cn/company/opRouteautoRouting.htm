@@ -57,7 +57,11 @@
 					<{if $orders}>
 						
 						<button style="padding: 10px 5px;background: #43d1af ">
-							<a onclick='return confirm("start auto route will empty optimoroutes orders ?");'	href="<{$http_root_www}>company/oproute_auto?date=<{$date}>&task=auto_routing"><{$lang->oproute_auto_routing}></a>
+							<a onclick='return confirm("start auto route will empty optimoroutes orders ?");'	href="<{$http_root_www}>company/oproute_auto?date=<{$date}>&task=auto_routing&auto=1"><{$lang->oproute_auto_routing_auto}></a>
+						</button>&nbsp;&nbsp;
+						
+						<button style="padding: 10px 5px;background: #43d1af ">
+							<a onclick='return confirm("start auto route will empty optimoroutes orders ?");'	href="<{$http_root_www}>company/oproute_auto?date=<{$date}>&task=auto_routing"><{$lang->oproute_auto_routing_Manual}></a>
 						</button>
 						
 					<{/if}>

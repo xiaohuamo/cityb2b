@@ -58,7 +58,7 @@
 
 								<span><label>ApiKey</label></span>	
 
-								<input type="text" name="op_route_key" class="input-text" value="<{$data.op_route_key}>" />						            
+								<input type="text" style ="width:80%;" name="op_route_key" class="input-text" value="<{$data.op_route_key}>" />						            
 
 						</div>	
 

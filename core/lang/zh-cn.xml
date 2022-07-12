@@ -1499,6 +1499,8 @@
 	 <delivery_date>配送日期</delivery_date>
 	 <manual_route_plan>手工排单</manual_route_plan>
 	<oproute_auto_routing>一键路程规划</oproute_auto_routing>
+	<oproute_auto_routing_auto>一键路程规划(忽略手工安排)</oproute_auto_routing_auto>
+	<oproute_auto_routing_Manual>一键路程规划(保留手工安排)</oproute_auto_routing_Manual>
 	<oproute_stepbystep_routing>分步路程规划</oproute_stepbystep_routing>
     <logistic_selected>已选</logistic_selected>
     <logistic_selectable>可选</logistic_selectable>

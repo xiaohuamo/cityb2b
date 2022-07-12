@@ -99,7 +99,7 @@ class OptimoRoute
            $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.schedule_id=$schedule_id and s.status=2 order by s.schedule_id";
 
        }else{
-           $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp and s.status=1 order by s.schedule_id";
+           $sql ="select s.*,t.load_boxes from cc_truck_driver_schedule s  left join cc_truck t on s.factory_id =t.business_id and s.truck_id =t.truck_no  where s.factory_id =$factory_id and  s.delivery_date =$timestamp  order by s.schedule_id";
 
        }
           $list =$mdl_schedule->getListBySql($sql);
@@ -107,6 +107,45 @@ class OptimoRoute
 
         return $list;
 
+    }
+
+    public function setAllDriverDisable($dateStr,$driverCount) {
+
+        if(!$driverCount){
+            $driverCount =6;
+        }
+        $driver_id =101;
+        $truck_id=101;
+        $factory_id =$this->dispCenterId;
+        $user = loadModel('user')->get($factory_id);
+        for($i=0;$i<$driverCount;$i++){
+            $data = [
+                "externalId" => 'd'.$driver_id,
+                "date"=> $dateStr,
+                "enabled"=>false,
+                "assignedVehicle"=>'v'.$truck_id,
+                'workTimeFrom'=>'07:00',
+                'workTimeTo'=>'16:00',
+                'vehicleCapacity1'=>100,
+                'startAddress'=>$user['googleMap'],
+                'startLatitude'=>round($user['latitude'],6),
+                'startLongitude'=>round($user['longitude'],6),
+                'endAddress'=>$user['googleMap'],
+                'endLatitude'=>round($user['latitude'],6),
+                'endLongitude'=>round($user['longitude'],6)
+
+            ];
+
+            try {
+                $response = $this->api->updateDriverParameters($data);
+                //  var_dump($response);exit;
+            } catch (Exception $e) {
+              //  throw new Exception("Error when disable all drivers:".$e->getMessage(), 1);
+            }
+
+            $driver_id +=1;
+            $truck_id +=1;
+        }
     }
 
     public function updateSchedule($dateStr,$enabledisable,$schedule_id)

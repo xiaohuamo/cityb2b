@@ -883,7 +883,9 @@
 	<logistic_number>Logistic SeQuence Number</logistic_number>
 	 <manual_route_plan>Manual Route Plan</manual_route_plan>
 	 <oproute_auto_routing>Auto route planning</oproute_auto_routing>
-	 <oproute_stepbystep_routing>Step by Step route planning</oproute_stepbystep_routing>
+	 <oproute_stepbystep_routing>Step by step route planning</oproute_stepbystep_routing>
+	 <oproute_auto_routing_auto>Auto route planning<br>（ignore manual arrangement) </oproute_auto_routing_auto>
+	<oproute_auto_routing_Manual>Auto route planning<br>（keep manual arrangement)</oproute_auto_routing_Manual>
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
