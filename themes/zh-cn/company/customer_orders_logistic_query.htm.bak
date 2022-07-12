@@ -219,6 +219,7 @@
 									<th><{$lang->logistic_schedule_time}></th>
 									<th><{$lang->logistic_arrive_time}></th>
 									<th>Schedule Id </th>
+									<th>Priority </th>
 									<th>Surburb</th>
 									<th>Est boxes</th>
 									<th>stopNum</th>
@@ -260,7 +261,25 @@
 									
 									
 									</td>
+										<td>
 									
+									<select id="Priority-<{$item.id}>" name='logistic_priority'  data-id='<{$item.id}>'>
+													
+										<option  value='Critical' <{if $item.logistic_priority =='Critical'}> selected<{/if}>>Critical</option>   
+										<option  value='High' <{if $item.logistic_priority =='High'}> selected<{/if}>>High</option>                    														
+										<option  value='Medium' <{if $item.logistic_priority =='Medium'}> selected<{/if}>>Medium</option>        
+										<option  value='Low' <{if $item.logistic_priority =='Low'}> selected<{/if}>>Low</option>      
+										
+                                                   
+												</select>
+												<span class='promote-ajax'></span>
+									
+									
+									<!-- <{$item.logistic_truck_No}> -->
+									
+									
+									
+									</td>
 									<td>
 										<{$item.city}>
 										</td>
@@ -382,7 +401,7 @@
 		
 		  var ajax_result = $(this).next('.promote-ajax');
 	    var schedule_status = $(this).data('schedule_status');
-		alert(schedule_status);
+		//alert(schedule_status);
 		if(schedule_status==2) {
 			if(confirm('Current order has been scheduled ,once changed , all orders for both schedules need to replan the routes? do you want to continue?')){
 			

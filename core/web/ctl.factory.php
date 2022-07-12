@@ -7613,6 +7613,51 @@ public function return_items_submit_to_statment_action() {
         }
     }
 
+
+    public function update_order_priority_action()
+    {
+        if(is_post()){
+
+            $mdl_order = $this->loadModel('order');
+
+            $id = post('id');
+
+
+            $orderRec  = $mdl_order->get($id);
+
+            if($orderRec['business_userId'] != $this->current_business['id']){
+                $this->form_response(600,'no access');
+            }
+
+
+            $data=array();
+
+
+            $value = post('value');
+
+
+
+
+
+            // 同时更新 shedule_id ,dirver_id , truck_np
+            if($value){
+                $data['logistic_priority'] =$value;
+             }
+
+
+            try {
+                $mdl_order->update($data,$id);
+
+                $this->form_response(200,'','');
+            } catch (Exception $e) {
+                $this->form_response(500, $e->getMessage(),'');
+            }
+
+        }else{
+            //wrong protocol
+        }
+    }
+
     public function create_manunal_dispatching_report_action(){
         $dateOfSearch =get2('date');
         $logistic_schedule_id =get2('logistic_schedule_id');

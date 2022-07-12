@@ -46,7 +46,7 @@ class OptimoRoute
 				"operation" => "SYNC",
 				"type" => "D",
 				"orderNo" => $order['orderId'],
-
+                "priority"=>substr($order['logistic_priority'],0,1),
                 "load1" => (int)$order['boxesNumber'],
 				"date" => date("Y-m-d",$order['logistic_delivery_date']),
 				"location" => [
