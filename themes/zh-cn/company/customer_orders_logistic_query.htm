@@ -216,17 +216,18 @@
 							<thead>				
 								<tr>			
 									<th>Del.Date</th>
-									<th><{$lang->logistic_schedule_time}></th>
-									<th><{$lang->logistic_arrive_time}></th>
+									<th>Sche Time</th>
+									<th>Arrive Time</th>
 									<th>Schedule Id </th>
+									<th><{$lang->user}></th>	
 									<th>Priority </th>
 									<th>Surburb</th>
 									<th>Est boxes</th>
 									<th>stopNum</th>
-									<th><{$lang->logistic_sequenceNo}></th>
-									<th><{$lang->order_id}></th>		
+									<th>SEQ No</th>
+									<th>Order</th>		
 									
-									<th><{$lang->user}></th>	
+									
 									<th>phone</th>	
 									
 									<th><{$lang->delivery}></th>				
@@ -261,6 +262,7 @@
 									
 									
 									</td>
+									<td><{$item.name}></td>
 										<td>
 									
 									<select id="Priority-<{$item.id}>" name='logistic_priority'  data-id='<{$item.id}>'>
@@ -295,7 +297,7 @@
 									</td>
 									
 								
-									<td><{$item.name}></td>
+									
 									
 									
 									<td><{$item.phone}></td>

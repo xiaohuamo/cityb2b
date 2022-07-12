@@ -219,6 +219,7 @@
 									<th><{$lang->logistic_schedule_time}></th>
 									<th><{$lang->logistic_arrive_time}></th>
 									<th>Schedule Id </th>
+									<th><{$lang->user}></th>	
 									<th>Priority </th>
 									<th>Surburb</th>
 									<th>Est boxes</th>
@@ -226,7 +227,7 @@
 									<th><{$lang->logistic_sequenceNo}></th>
 									<th><{$lang->order_id}></th>		
 									
-									<th><{$lang->user}></th>	
+									
 									<th>phone</th>	
 									
 									<th><{$lang->delivery}></th>				
@@ -261,6 +262,7 @@
 									
 									
 									</td>
+									<td><{$item.name}></td>
 										<td>
 									
 									<select id="Priority-<{$item.id}>" name='logistic_priority'  data-id='<{$item.id}>'>
@@ -295,7 +297,7 @@
 									</td>
 									
 								
-									<td><{$item.name}></td>
+									
 									
 									
 									<td><{$item.phone}></td>
@@ -478,6 +480,79 @@
     });
 	
 	
+	  $('select[name=logistic_priority]').on('change', function () {
+
+        var iconLoading = "<i class='fa fa-fw fa-spinner fa-spin' style='color:#FD5001 '></i>";
+        var successIcon = "<i class='fa fa-fw fa-check ' style='color:green'></i>";
+        var errorIcon = "<i class='fa fa-fw fa-exclamation-triangle' style='color:red'></i>";
+
+        var id = $(this).data('id');
+        var update_field_name = $(this).attr('name');
+        var  value = $(this).val();//常规改动直接抓取改动值
+        var updateData = {};
+		
+		
+		
+		  var ajax_result = $(this).next('.promote-ajax');
+	   
+		
+		
+
+        updateData['id'] = id;
+        updateData['update_field_name'] = update_field_name;
+		updateData['value'] = value;
+		
+		
+		
+		//获取该调度的状态 ，如果该调度status=2 ,可以修改，但是要提示； 如果状态等于3的话，也可以修改，但要提示，如果状态 是4和4以上，则无法修改。
+		
+		
+		
+		
+		//alert(value);
+		//alert(id);
+		//alert(update_field_name);
+		//return;
+      
+        $.ajax({
+            url: "<{$http_root_www}>factory/update_order_priority",
+            type: "POST",
+            data: updateData,
+            beforeSend: function () {
+                $(ajax_result).html(iconLoading);
+            }
+        }).done(function (data) {
+            try {
+                data = JSON.parse(data);
+            } catch (err) {
+                data['msg'] = data;
+            }
+
+            if (data.status == 200) {
+                $(ajax_result).html(successIcon);
+                //alert('yes');
+				if(update_field_name='barcode_number'){
+				  //alert(data.msg + ' ' +id);
+				  if(data.msg) {
+				    $('#image-'+id).html('	<img src="/data/upload/thumbnails/' +data.msg+'"><br><a target="_blank" href="/restaurant/menu_pic?id='+id+'">修改</a>');
+				
+				  }else{
+				  }
+				}
+            } else if (data.status == 500) {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            } else {
+                alert(data.msg);
+                $(ajax_result).html(errorIcon);
+            }
+        }).fail(function () {
+            iconupdate.iconUpdateFail();
+			alert(data.msg);
+        });
+
+
+    });
 	
 	
 	
