@@ -33,8 +33,21 @@ class OptimoRoute
     {
         $plan =  $this->api->startPlanning($date, $options);
     //  var_dump($plan);exit;
+        return $plan;
+    }
+
+    public function get_planning_status($planningId){
+
+        try {
+            $response =  $this->api->getPlanningStatus($planningId);
+            return $response;
+        } catch (Exception $e) {
+            throw new Exception("Error happened when get planning status .".$e->getMessage(), 1);
+        }
+
 
     }
+
 	/**
 	 * 将送货日期当天的订单同步到Optimoroute
 	 */

@@ -14069,8 +14069,18 @@ function get_data($url, $ch) {
                     }
 
                     try {
-                        $opRoute->startPlanning($customer_delivery_date);
+                        $plan = $opRoute->startPlanning($customer_delivery_date);
+
+                        $plansuccess =0;
+                        $count=0; //访问频次
+                        while(!$plansuccess && $count<=10) {
+                            $plansuccess =$opRoute->get_planning_status($plan->planningId);
+                             sleep(2);
+                             $count ++;
+
+                        }
                         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
+
 
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
