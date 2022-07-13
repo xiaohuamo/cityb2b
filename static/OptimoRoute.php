@@ -41,7 +41,11 @@ class OptimoRoute
 	public function syncOrderOnDate($dateStr,$auto,$schedule_id)
 	{
       //  var_dump($auto);exit;
-		foreach ($this->getOrderOnDeliverDate($dateStr,0,$schedule_id) as $order) {
+        $orders = $this->getOrderOnDeliverDate($dateStr,0,$schedule_id) ;
+        if(!$orders){ //if no orders ,return 0
+            var_dump('no orders!');exit;
+        }
+		foreach ($orders as $order) {
 			$data = [
 				"operation" => "SYNC",
 				"type" => "D",
@@ -244,10 +248,7 @@ class OptimoRoute
 		if ($timestamp === false) {
 			throw new Exception("dateStr is not recognized", 1);
 		}
-		$dateTime = new DateTime();
-		$dateTime->setTimestamp($timestamp);
-		$dateTime->setTime(0,0,0);
-		$timestamp = $dateTime->getTimestamp();
+
 
 
 		$mdl_order = loadModel('order');

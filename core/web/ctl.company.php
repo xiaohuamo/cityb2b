@@ -13726,7 +13726,10 @@ function get_data($url, $ch) {
        // 上传该调度司机信息
         $opRoute->updateSchedule($customer_delivery_date,true,$schedule_id);
         //上传order信息
+
         $opRoute->syncOrderOnDate($customer_delivery_date,$auto,$schedule_id);
+
+     //   var_dump($customer_delivery_date.' '.'auto'.$auto.' '.$schedule_id);exit;
         $opRoute->startPlanning($customer_delivery_date);
         $opRoute->syncRoutesDownOnDeliverDate($customer_delivery_date,$this->current_business['id']);
         // set all driver active status to disable ;
@@ -13782,7 +13785,11 @@ function get_data($url, $ch) {
 	    			//Step1
 	    			try {
                         $response = $opRoute->deleteAllOrders($date);
-	    				$opRoute->syncOrderOnDate($date,$auto,0);
+
+
+                        $opRoute->syncOrderOnDate($date,$auto,0);
+
+
 	    			} catch (Exception $e) {
 	    				$this->sheader(null,$e->getMessage());
 	    			}
@@ -14055,7 +14062,8 @@ function get_data($url, $ch) {
                     try {
                         $response = $opRoute->deleteAllOrders($date);
                         // auto 如果为1 ，表示忽略手工安排的订单，如果为0 表示保留手工排单
-                        $opRoute->syncOrderOnDate($date,$auto,0);
+                         $opRoute->syncOrderOnDate($date,$auto,0);
+
                     } catch (Exception $e) {
                         $this->sheader(null,$e->getMessage());
                     }
