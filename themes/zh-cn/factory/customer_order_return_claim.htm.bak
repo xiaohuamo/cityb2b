@@ -234,7 +234,7 @@
 			<{if !$claim_order_rec.is_approved}>		
 
 					<div style="text-align:right;"  class="input-box input-submit clearfix">
-						<a class='link' href="approve_claim('<{$claim_order_rec.id}>');">Approve Claim</a>
+						<a class='link' onclick="approve_claim('<{$claim_order_rec.id}>');">Approve Claim</a>
 
 					</div>
 				<{/if}>

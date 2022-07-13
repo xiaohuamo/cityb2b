@@ -73,32 +73,6 @@
 						<a class='link' href="<{$http_root_www}>factory/customer_orders_return"><{$lang->back_to_list}></a>
 						
                     
-					 <{if $data.sent_to_xero==1}>
-
-						<button class='clearXeroInfo' >Clear Xero Info</button>
-					
-
-					<script type="text/javascript">
-                            $('.clearXeroInfo').on('click', function () {
-                                var context = $(this);
-
-                                if (confirm('will delete all xero info of this order?(after delete ,you can create new invoice on xero)')) {
-                                    $.ajax({
-                                        url: "<{$http_root_www}>factory/delete_xero_info_of_order?id=<{$data.id}>",
-                                        beforeSend: function () {
-                                            context.html("<i style='color:#2bb8aa' class='fa fa-spinner fa-pulse'></i>");
-                                        },
-                                        success: function () {
-                                            context.html("Delete xero info already!");
-                                            context.css('background-color', '#FD5001 ');
-                                        }
-                                    })
-                                }
-                            })
-
-						</script>
-						
-						<{/if}>
 
 					</div>
 
@@ -266,10 +240,10 @@
 		updateData['claim_id'] = claim_id;
 		
 		updateData['value'] = $(this).val();
-		alert(updateData['id']);
-		alert(updateData['updateFieldName']);
-		alert(updateData['value']);
-		alert(updateData['claim_id']);
+		//alert(updateData['id']);
+		//alert(updateData['updateFieldName']);
+		//alert(updateData['value']);
+		//alert(updateData['claim_id']);
 	
 		//return ;
 		
