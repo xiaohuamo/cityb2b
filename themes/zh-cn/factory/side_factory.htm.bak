@@ -242,7 +242,7 @@
 		<a  href="<{$http_root_www}>factory_2c/item_stock_add"<{if $submenu=='item_stock_add'}> class="current"<{/if}>>
 			   <{$lang->stocking_check}>
 		</a>
-		<a  href="<{$http_root_www}>factory_2c/item_stock_add?alarm=1"<{if $submenu=='item_stock_add'}> class="current"<{/if}>>
+		<a  href="<{$http_root_www}>factory_2c/item_stock_add?alarm=1"<{if $submenu=='item_stock_alarm'}> class="current"<{/if}>>
 			   <{$lang->stock_alarm}>
 		</a>
 	<!--	
@@ -360,13 +360,17 @@
 	-->
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
-				<{$lang->producing_platform}> 
+				<{$lang->producing_platform}>  <{$user_roles.roles}>
 		</a>
 	</div>
 	
-	
+	<{if in_array('0', explode(',', $user_roles.roles))
+		||  in_array('1', explode(',', $user_roles.roles))
+		||  in_array('15', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
 	
 	<{include file='company/side_logistic_management.htm'}>
+	<{/if}>
 	
 </li>
 		<{/if}>

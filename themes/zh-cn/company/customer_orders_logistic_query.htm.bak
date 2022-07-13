@@ -291,8 +291,7 @@
 									    <td><{$item.logistic_sequence_No}></td>
 									  
 									<td>
-										<{$item.order_name}>
-										<br>
+										
 										<a target='_blank' href="<{$http_root_www}>factory/customer_order_detail?id=<{$item.orderId}>"><{$item.orderId}></a>
 									</td>
 									
@@ -321,10 +320,7 @@
 							</tbody>		
 						</table>	
 
-						<div>
-							<i class='fa fa-sign-out ' style='color:#58964E'></i>快速兑付按钮	
-							<i class='fa fa-truck fa-flip-horizontal' style="color:#58964E;"></i> 已经发货标识
-						</div>
+						
 
 						<{if $pager}>
 						<div class="pager"><{$pager}></div>

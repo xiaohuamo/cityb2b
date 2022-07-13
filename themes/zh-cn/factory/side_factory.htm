@@ -360,13 +360,17 @@
 	-->
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
-				<{$lang->producing_platform}> 
+				<{$lang->producing_platform}>  
 		</a>
 	</div>
 	
-	
+	<{if in_array('0', explode(',', $user_roles.roles))
+		||  in_array('1', explode(',', $user_roles.roles))
+		||  in_array('15', explode(',', $user_roles.roles))
+		|| 	$user_roles.role==3}>
 	
 	<{include file='company/side_logistic_management.htm'}>
+	<{/if}>
 	
 </li>
 		<{/if}>
