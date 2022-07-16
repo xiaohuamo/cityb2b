@@ -9840,6 +9840,72 @@ function freshfood_edit_action()    {
         $this->display('company/redeem_staff_manage');
     }
 
+//商家邀请成为客户
+
+    public function become_customer_action() {
+        $businessId =get2('businessId');
+
+        $returnUrl = '/company/become_customer?businessId='.$businessId ;
+        $userId =$this->loginUser['id'];
+
+        //如果未登陆则登陆后转向至这里；
+        if(!$this->loginUser){
+             $this->sheader(HTTP_ROOT_WWW."member/login?returnUrl=".urlencode($returnUrl));
+         }
+
+        $mdl_user_factory = $this->loadModel('user_factory')
+        // 获取该客户是否已经是这个商家的供应商；
+        $where =array(
+            'user_id'=>$userId,
+            'factory_id'=>$businessId
+        );
+        $user_factory = $mdl_user_factory->getByWhere($where);
+
+//var_dump($user_factory);exit;
+        if($user_factory){
+            //如果已经是这个供应商的客户，则提示后，跳转至该供应商订货页面；
+
+            $this->sheader(HTTP_ROOT_WWW."supplier/".$businessId);
+        }else{
+            //如果这个客户是某个其它供应商的客户，则复制信息后，跳转至该供应商页面。
+
+            $user_rec =$mdl_user_factory->getLastUserInfo($this->loginUser['id']);
+            if($user_rec){
+               //是
+               // var_dump('find that you are another supplier customer , will create info for you '.$user_rec);exit;
+                $data =array(
+                    'user_id'=>$this->loginUser['id'],
+                    'factory_id'=>$businessId,
+                    'nickname'=>$user_rec['nickname']
+                 );
+                if($mdl_user_factory->insert($data)){
+                    $this->sheader(HTTP_ROOT_WWW."supplier/".$businessId);
+                }else{
+                    var_dump('some error happen when generate customer info . please contact supplier.');
+                }
+            }else{
+                // 不是
+                if ($this->loginUser['displayName']){
+                    $nickname = $this->loginUser['displayName'];
+                }else{
+                    $nickname = $this->loginUser['name'];
+                }
+                $data =array(
+                    'user_id'=>$this->loginUser['id'],
+                    'factory_id'=>$businessId,
+                    'nickname'=>$$nickname
+                );
+                if($mdl_user_factory->insert($data)){
+                    $this->sheader(HTTP_ROOT_WWW."member1/customer_account_edit?returnUrl=".urlencode($returnUrl));
+                }else{
+                    var_dump('some error happen when generate customer info . please contact supplier.');
+                }
+
+            }
+
+        }
+
+    }
 
     function become_redeem_staff_action()
     {
@@ -11337,7 +11403,7 @@ function get_data($url, $ch) {
 						}else{
 							
 							$data['status'] = true;
-							$data['msg'] = '验证成功';
+							$data['msg'] = 'verified Successful ';
 							$data['promotion_amount'] = $promotion_amount;
 							$data['promotion_id'] = $promotionData['id'];
 							$data['promotion_code'] = $pcode;
@@ -11463,8 +11529,8 @@ function get_data($url, $ch) {
         }else{
             $couponList = $mdl_coupons->getCouponList($this->loginUser['id']);
             $this->setData($couponList, 'couponList');
-            
-            $this->setData('index_publish', 'menu');
+
+            $this->setData('website', 'menu');
             $this->setData('promotion_code_manage', 'submenu');
 
             $this->setData('Edit promotion Code - ' . 'Business Centre- ' . $this->site['pageTitle'], 'pageTitle');

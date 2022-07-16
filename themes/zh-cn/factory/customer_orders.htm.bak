@@ -151,7 +151,7 @@
 							
 							<{else}>
 								<option value="<{$d.logistic_schedule_id}>" <{if $d.logistic_schedule_id==$logistic_schedule_id}>selected<{/if}>>
-									<{if $d.start_hour}><{$d.start_hour}>-<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
+									<{if $d.start_hour}><{$d.start_hour}>&nbsp;<{/if}><{if $d.driverName}><{$d.driverName}>-<{/if}><{$d.truck_name}>-<{$d.plate_number}>-(<{$d.count}>)
 								</option>
 							<{/if}>
 						<{/foreach}>
@@ -625,7 +625,7 @@
         var context = $('.publish_icon[data-id=' + orderId + ']');
 		
 		
-		
+		$(this).disabled (true);
 		
 		// if the main order has been sent to xero ,then alert could not combine .
 		

@@ -13,6 +13,15 @@ class mdl_user_factory extends mdl_base
 		 return 0; 
     }
 
+    /* 再该表中，如果一个user_id 在多个供应商订货，该user_id 会有多个记录， 获取最近的一条user_id记录 */
+
+    public function getLastUserInfo($user_id){
+        $sql =" select * from cc_user_factory where user_id = $user_id order by id desc limit 1 ";
+        $rec = $this->getListBySql($sql);
+        return $rec;
+    }
+
+
     public function getUserCodeandName($userId, $factoryId) {
 
         $where =array(

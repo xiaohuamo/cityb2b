@@ -167,10 +167,7 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
     // 将某一个orderid合并到另外一个order 
 	public function merge_order ($merge_id,$original_order) {
 		
-		
-			
-		
-			
+
 			// 将当前要被合并的订单的记录信息进行更改
 			
 			$merge_order  = $this->get($merge_id);
@@ -181,7 +178,7 @@ public function getPostCodeGroupAndCountOfOrder($factory_id,$logistic_delivery_d
 			 'merge_order_id'=>$original_order['orderId'],          //迁移的订单号
 			 'coupon_status'=>'d01' ,                     //将该订单的状态标记为取消状态；
 			 'cn_coupon_status_name'=>'订单合并',
-			 'en_coupon_status_name'=>'order merge'
+			 'en_coupon_status_name'=>'order merged'
 			);
 			
 			
