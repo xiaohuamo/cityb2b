@@ -139,7 +139,7 @@ class ctl_member1 extends cmsPage
 
      function customer_account_edit_action()
     {
-
+        $returnUrl =get2('returnUrl');
         $userId =$this->loginUser['id'];
         if (is_post()) {
 
@@ -200,7 +200,12 @@ class ctl_member1 extends cmsPage
                     $mdl_wj_abn_applicationy->updateByWhere($data_abn,$where);
 
                     //  header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
+                if($returnUrl){
+                    $this->form_response(200, (string)$this->lang->update_success,HTTP_ROOT_WWW.urlencode($returnUrl));
+                }else{
                     $this->form_response(200, (string)$this->lang->update_success,HTTP_ROOT_WWW.'member/index');
+                }
+
                     /*
                      if($result['success']) {
                          $this->loadModel('wj_abn_application')->insert([
