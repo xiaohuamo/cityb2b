@@ -9845,7 +9845,7 @@ function freshfood_edit_action()    {
     public function become_customer_action() {
         $businessId =get2('businessId');
 
-        $returnUrl = '/company/become_customer?businessId='.$businessId ;
+        $returnUrl = 'company/become_customer?businessId='.$businessId ;
         $userId =$this->loginUser['id'];
 
         //如果未登陆则登陆后转向至这里；
