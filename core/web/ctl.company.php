@@ -9853,7 +9853,7 @@ function freshfood_edit_action()    {
              $this->sheader(HTTP_ROOT_WWW."member/login?returnUrl=".urlencode($returnUrl));
          }
 
-        $mdl_user_factory = $this->loadModel('user_factory')
+        $mdl_user_factory = $this->loadModel('user_factory');
         // 获取该客户是否已经是这个商家的供应商；
         $where =array(
             'user_id'=>$userId,
@@ -9870,6 +9870,7 @@ function freshfood_edit_action()    {
             //如果这个客户是某个其它供应商的客户，则复制信息后，跳转至该供应商页面。
 
             $user_rec =$mdl_user_factory->getLastUserInfo($this->loginUser['id']);
+           // var_dump($user_rec);exit;
             if($user_rec){
                //是
                // var_dump('find that you are another supplier customer , will create info for you '.$user_rec);exit;

@@ -18,7 +18,7 @@ class mdl_user_factory extends mdl_base
     public function getLastUserInfo($user_id){
         $sql =" select * from cc_user_factory where user_id = $user_id order by id desc limit 1 ";
         $rec = $this->getListBySql($sql);
-        return $rec;
+        return $rec[0];
     }
 
 
