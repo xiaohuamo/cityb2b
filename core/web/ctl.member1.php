@@ -201,6 +201,7 @@ class ctl_member1 extends cmsPage
 
                     //  header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
                 if($returnUrl){
+                    var_dump(HTTP_ROOT_WWW.urldecode($returnUrl));exit;
                     $this->form_response(200, (string)$this->lang->update_success,HTTP_ROOT_WWW.urldecode($returnUrl));
                 }else{
                     $this->form_response(200, (string)$this->lang->update_success,HTTP_ROOT_WWW.'member/index');
