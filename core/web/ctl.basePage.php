@@ -301,10 +301,11 @@ class cmsPage extends corecms
              if($role==20) {
                  $this->current_business = $this->loadModel('user')->get($this->loginUser['user_belong_to_user']);
 
+
              }else{
                  $this->current_business =$this->loginUser;
              }
-
+             $this->setData( $this->current_business, 'current_business' );
              // 获取该登陆用户的角色
 
              if($this->loginUser) {
@@ -1752,7 +1753,7 @@ public function get_business_delivery_des ($business_id){
 		
 		
 	// 增加相应数量的空记录
-	public function addEmptyMenuUponCategory($BusinessId,$Category,$sub_category,$new_add_count){ 
+	public function addEmptyMenuUponCategory($BusinessId,$Category,$sub_category,$new_add_count){
 	
 		//var_dump($sub_category);exit;
 	      if($sub_category){ // 如果是子类存在，则在相关表取该子类的数量，并生成初始菜单编号

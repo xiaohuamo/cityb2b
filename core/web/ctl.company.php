@@ -9840,6 +9840,40 @@ function freshfood_edit_action()    {
         $this->display('company/redeem_staff_manage');
     }
 
+    public function become_customer_invite_action()
+    {
+        $businessId = get2('businessId');
+        if(!$businessId)$this->sheader(null,'no business id');
+
+
+
+
+
+
+        $url = HTTP_ROOT."company/become_customer?businessId=".$businessId;
+        $qrcode = generateQRCode($url);
+
+        $this->setData($url,'applyUrl');
+        $this->setData($qrcode,'applyqrcode');
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Invite Customer ";
+        }else{
+            $pagename = "邀请客户加入";
+        }
+        $this->setData($pagename, 'pagename');
+
+            //被邀请者View
+
+            $this->setData( 'customer_management', 'menu' );
+            $this->setData( 'become_customer', 'submenu' );
+            $this->setData( 'Invete customer', 'pageTitle' );
+
+            $this->display_pc_mobile('company/become_customer_invite_pc','company/become_customer_invite_mobile');
+
+
+    }
+
 //商家邀请成为客户
 
     public function become_customer_action() {

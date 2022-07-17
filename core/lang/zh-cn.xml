@@ -968,6 +968,8 @@
     <follow_wechat>关注公众号</follow_wechat>
     <follow>关注</follow>
     <followed>已关注</followed>
+	<qrcode>二维码</qrcode>
+	<copy_link_send>复制链接，发送给客户</copy_link_send>
 
     <!-- 38 -->
     <shop_staff>分店员工</shop_staff>
@@ -1502,6 +1504,7 @@
 	<oproute_auto_routing_auto>一键路程规划(忽略手工安排)</oproute_auto_routing_auto>
 	<oproute_auto_routing_Manual>一键路程规划(保留手工安排)</oproute_auto_routing_Manual>
 	<oproute_stepbystep_routing>分步路程规划</oproute_stepbystep_routing>
+	<become_customer>客户邀请链接</become_customer>
     <logistic_selected>已选</logistic_selected>
     <logistic_selectable>可选</logistic_selectable>
     <logistic_more_shop>更多</logistic_more_shop>

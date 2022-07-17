@@ -197,7 +197,17 @@ class ctl_member1 extends cmsPage
                     $where =array(
                         'userId'=>$userId
                     );
-                    $mdl_wj_abn_applicationy->updateByWhere($data_abn,$where);
+                    $abn_rec =$mdl_wj_abn_applicationy->getByWhere($where);
+                    if($abn_rec){
+
+                        $mdl_wj_abn_applicationy->updateByWhere($data_abn,$where);
+
+                    }else{
+                        $data_abn['userId']=$userId;
+                        $mdl_wj_abn_applicationy->insert($data_abn);
+                    }
+
+
 
                     //  header("Location: ".  HTTP_ROOT_WWW."factory/customer_list");
                 if($returnUrl){

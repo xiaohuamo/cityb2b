@@ -888,6 +888,9 @@
 	<oproute_auto_routing_Manual>Auto route planning（keep manual arrangement)</oproute_auto_routing_Manual>
 	<driver>Driver</driver>
 	<stop_number>Stop Number</stop_number>
+	<become_customer>Invite Customer</become_customer>
+	<qrcode>Qr Code</qrcode>
+	<copy_link_send>Copy Link and send to customer</copy_link_send>
 	<Estimate_arrive_time>ETA</Estimate_arrive_time>
 	<sales_statistics>Sales Statistics</sales_statistics>
 	<export_driver_sheet>Export Driver Route sheet</export_driver_sheet>

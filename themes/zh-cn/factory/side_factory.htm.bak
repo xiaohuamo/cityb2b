@@ -164,6 +164,16 @@
 				<{$lang->customer_grade}>
 				</a>
 				
+				<!--
+				<a href="<{$http_root_www}>company/customer_grade"<{if $submenu=='customer_grade'}> class="current"<{/if}>>
+				<{$lang->invite_customer}> //可以显示一个二维码，或可以有黏贴功能，将字符串  https://cityb2b.com/company/become_customer?businessId =xxxxxxx ,发送给要加入的客户即可。
+				目前这个地方 abn 实体名填写有点问题，可能要检测不存在的话要添加。 另外，如果添加实体名，那么客户简码这块要自动填写trading name 即可。 即 修改 user——factory 的 nickname .
+				</a>
+				-->
+				<a href="<{$http_root_www}>company/become_customer_invite?businessId="<{if $submenu=='become_customer'}> class="current"<{/if}>>
+				<{$lang->become_customer}>
+				</a>
+				
 				
 				<{/if}>
 			</div>
@@ -360,7 +370,7 @@
 	-->
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
-				<{$lang->producing_platform}>  <{$user_roles.roles}>
+				<{$lang->producing_platform}>  
 		</a>
 	</div>
 	
