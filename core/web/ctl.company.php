@@ -9869,7 +9869,7 @@ function freshfood_edit_action()    {
             $this->setData( 'become_customer', 'submenu' );
             $this->setData( 'Invete customer', 'pageTitle' );
 
-            $this->display_pc_mobile('company/become_customer_invite_pc','company/become_customer_invite_mobile');
+            $this->display_pc_mobile('company/become_customer_invite_pc','company/become_customer_invite_pc');
 
 
     }
