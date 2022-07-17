@@ -62,9 +62,6 @@
 			<div><h1><{$lang->business_center}></h1></div>
 			<ul class="clearfix">
 			
-				<li style ="padding-top: 5px;    padding-bottom: 5px;" ><a href="<{$http_root_www}>">Home </a></li>
-			
-			
 				<{if in_array('17', explode(',', $user_roles.roles))
 				|| $user_roles.role==3}>
 					<li style ="padding-top: 5px;    padding-bottom: 5px;" ><a href="<{$http_root_www}>company/supplier_menu_name?supplier_menu_name=website"><{$lang->website_centre}></a></li>

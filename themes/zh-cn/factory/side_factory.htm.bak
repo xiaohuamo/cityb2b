@@ -8,17 +8,7 @@
 			</div>
 		</li>
 
-<!--
-		<{if $userId2c}>
-			<li>
-				<div class='top-level'>
-					<i class="fa fa-fw fa-home" ></i>
-					<a href="<{$http_root_www}>factory/login_as_customer2c?user_id=<{$userId2c}>"><strong><{$lang->switch_to_main_pannel}></strong></a> 
-					
-				</div>
-			</li>
-			<{/if}>
--->
+
 //角色为客户服务或客户经理
 		<{if in_array('17', explode(',', $user_roles.roles))
 		|| $user_roles.role==3}>
@@ -170,7 +160,7 @@
 				目前这个地方 abn 实体名填写有点问题，可能要检测不存在的话要添加。 另外，如果添加实体名，那么客户简码这块要自动填写trading name 即可。 即 修改 user——factory 的 nickname .
 				</a>
 				-->
-				<a href="<{$http_root_www}>company/become_customer_invite?businessId="<{if $submenu=='become_customer'}> class="current"<{/if}>>
+				<a href="<{$http_root_www}>company/become_customer_invite?businessId=<{$current_business.id}>"<{if $submenu=='become_customer'}> class="current"<{/if}>>
 				<{$lang->become_customer}>
 				</a>
 				
@@ -232,12 +222,7 @@
 		<a  href="<{$http_root_www}>factory/store_house_list"<{if $submenu=='store_house_list'}> class="current"<{/if}>>
 			   <{$lang->stock_room_management}>
 		</a>
-
-	<!--	<a  href="<{$http_root_www}>factory/store_shelf_info"<{if $submenu=='shelf_info'}> class="current"<{/if}>>
-			   <{$lang->stock_room_shelf}>
-		</a>	-->
-		
-		
+	
 		<a  href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"<{if $submenu=='stock_item_edit'}> class="current"<{/if}>>
 			   <{$lang->item_management}>
 		</a>
@@ -255,14 +240,7 @@
 		<a  href="<{$http_root_www}>factory_2c/item_stock_add?alarm=1"<{if $submenu=='item_stock_alarm'}> class="current"<{/if}>>
 			   <{$lang->stock_alarm}>
 		</a>
-	<!--	
-		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
-			   库存调整
-		</a>
-		<a  href="<{$http_root_www}>factory_2c/producing_item_stock_management"<{if $submenu=='producing_item_stock_management'}> class="current"<{/if}>>
-			   库存报表
-		</a>
-	-->
+	
 			
 	</div>
 	</li>
@@ -291,39 +269,10 @@
 		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
 			<{$lang->manu_picking_List}>
 		</a>
-		
-	<!--	
-		<a  href="<{$http_root_www}>factory_2c/factroy_order_summery"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
-			<{$lang->print_picking_list}>
-		</a>
-		
-		<a  href="<{$http_root_www}>company/customer_orders_logistic"<{if $submenu=='customer_coupon_logistic'}> class="current"<{/if}>>
-			<{$lang->print_packing_slips}>
-		</a>
-		<a  href="<{$http_root_www}>company/print_label_admin" <{if $submenu=='print_label_admin'}> class="current"<{/if}>>
-				 <{$lang->print_label_logistic}>
-		</a>
-		<a  href="<{$http_root_www}>factory_2c/single_item_print_edit"<{if $submenu=='singleItemPrintEdit'}> class="current"<{/if}>>
-				<{$lang->Single_Picking_item_edit}>
-		</a>
-		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
-			   <{$lang->print_item_packing_slips}>
-		</a>
-		-->
+	
 		<a  href="<{$http_root_www}>factory_2c/producing_stock_to_dispatching"<{if $submenu=='producing_stock_to_dispatching'}> class="current"<{/if}>>
 			     <{$lang->dispatching_platform}>
 		</a>
-		
-	<!--	<a target=_blank  href="https://d.cityb2b.com/product/picking" >
-			   <{$lang->dispatching_platform}>
-		</a> --> 
-	<!--	<a  href="<{$http_root_www}>company/import_new_order"<{if $submenu=='import_new_order_xiaochengxu'}> class="current"<{/if}>>
-				导入外部订单
-		</a>  -->
-		
-	<!--	<a  href="<{$http_root_www}>company/dispcenter_add_customer" <{if $submenu=='dispcenter_add_customer'}> class="current"<{/if}>>
-				 <{$lang->add_dispatching_customer}>  
-		</a> -->
 			
 	</div>
 	
@@ -332,42 +281,11 @@
 		<a <{if $menu=='Producing_Centre'}> class="current"<{/if}>><{$lang->Producing_Centre}></a>
 	</div>
 	<div class='second-level'>
-	<!--	<a  href="" <{if $submenu==''}> class="current"<{/if}>>
-		 <{$lang->manager}>
-		</a> -->
-	<!--	<a  href=""<{if $submenu==''}> class="current"<{/if}>>
-				  <{$lang->summer_product_list}>
-		</a>
-		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
-			   <{$lang->print_item_producing_slips}>
-		</a>
-		<a  href=""<{if $submenu==''}> class="current"<{/if}>>
-				<{$lang->Single_Producint_item_edit}>
-		</a>	-->
-		
-		
-		
+	
 		
 		<a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
 			 <{$lang->manu_producing_management}>
 		</a>
-		
-	<!--	<a  href="<{$http_root_www}>factory_2c/factroy_order_summery?producing=1"<{if $submenu=='factroy_order_summery'}> class="current"<{/if}>>
-			 <{$lang->summer_producing_list}>
-		</a>
-		
-		
-		<a  href="<{$http_root_www}>factory_2c/print_single_item_buying_list?producing=1"<{if $submenu=='print_single_item_buying_list'}> class="current"<{/if}>>
-			   <{$lang->single_item_buying_list}>
-		</a>
-		<a  href="<{$http_root_www}>factory_2c/single_producing_item_print_edit"<{if $submenu=='single_producing_item_print_edit'}> class="current"<{/if}>>
-				 <{$lang->producing_item_edit}>
-		</a>
-		<a  href="<{$http_root_www}>factory/export_manual_dispatching_form"<{if $submenu=='export_manual_dispatching_form'}> class="current"<{/if}>>
-				 <{$lang->export_manual_dispatching_form}>
-		</a>
-	
-	-->
 	
 		<a target="_blank"  href="http://m.cityb2b.com/product/login">
 				<{$lang->producing_platform}>  

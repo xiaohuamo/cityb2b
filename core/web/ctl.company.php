@@ -9505,7 +9505,13 @@ function freshfood_edit_action()    {
         $this->display('company/coupons_edit_success');
     }
 
+public function supplier_menu_name_action(){
 
+    $supplier_menu_name =trim(get2('supplier_menu_name'));
+    $this->setData($supplier_menu_name,'supplier_menu_name');
+    $this->display('company/supplier_menu_menu');
+
+}
 
     function business_setting_main_action()
     {
