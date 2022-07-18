@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><{$pageTitle}></title>
+	<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+	<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	 
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+</head>
+<body>
+	<{include file='header.htm'}>
+	
+	<div class="container">
+		
+	<div class="box">
+		
+		<div class="menu3">
+			<ul class="clearfix">
+			
+			 <{if $supplier_menu_name=='website'}>
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>restaurant/restaurant_parant_category_edit?freshfood=1"><{$lang->categ_management}></a>
+					</span>
+				</li>
+			
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>restaurant/restaurant_menu_edit"><{$lang->items_management}></a>
+					</span>
+				</li>
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>company/promotion_code_manage"><{$lang->pormotion_code}></a>
+					</span>
+				</li>
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>company/freshfood_edit?id=8046&step=7#pagename">	<{$lang->website_Publish}></a>
+					</span>
+				</li>
+				<li>
+					<span>
+						<a class ="panel_item"  href="<{$http_root_www}>company/dispcenter_schedule">	<{$lang->setting}></a>
+					</span>
+				</li>
+				
+				
+			<{else if  $supplier_menu_name=='customer_management'}>
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/customer_list"><{$lang->customer_list}></a>
+						</span>
+					</li>
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/group_order_setting"><{$lang->group_order_list}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/customer_price_management"><{$lang->customer_price_management}></a>
+						</span>
+					</li>
+
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/customer_grade"><{$lang->customer_grade}></a>
+						</span>
+					</li>
+			
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>company/become_customer_invite?businessId=<{$current_business.id}>"><{$lang->become_customer}></a>
+						</span>
+					</li>
+					
+			<{else if  $supplier_menu_name=='online_center'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/customer_orders"><{$lang->order_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  target=_blank class ="panel_item"  href="<{$http_root_www}>factory/order_for_customer_new"><{$lang->order_for_customer}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/customer_orders_return"><{$lang->order_management_amend}></a>
+						</span>
+					</li>
+
+					
+				<{else if  $supplier_menu_name=='Store_centre'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/store_house_list"><{$lang->stock_room_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"  href="<{$http_root_www}>restaurant/stock_item_edit?stock=1"><{$lang->item_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/add_new_stock?stock=1"><{$lang->Stock_in}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/add_new_stock?stock=0"><{$lang->stock_out}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory_2c/item_stock_add"><{$lang->stocking_check}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory_2c/item_stock_add?alarm=1"><{$lang->stock_alarm}></a>
+						</span>
+					</li>
+					
+					
+			<{else if  $supplier_menu_name=='dispatching_center'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory_2c/factroy_order_summery"><{$lang->manu_picking_List}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"  href="<{$http_root_www}>factory_2c/producing_stock_to_dispatching"><{$lang->dispatching_platform}></a>
+						</span>
+					</li>
+					
+			<{else if  $supplier_menu_name=='Producing_Centre'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/export_manual_dispatching_form"><{$lang->manu_producing_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"  target="_blank"  href="http://m.cityb2b.com/product/login"><{$lang->producing_platform}></a>
+						</span>
+					</li>
+			
+			<{else if  $supplier_menu_name=='logistic_center'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/new_schedule"><{$lang->schedule_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/customer_orders_logistic_query"><{$lang->manual_route_plan}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/oproute_auto"><{$lang->Logistic_route_management}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/export_driver_route_local"><{$lang->Driver_route_sheet}></a>
+						</span>
+					</li>
+				
+			<{else if  $supplier_menu_name=='account_management'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>factory/add_new_payment"><{$lang->new_transcation}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>factory/transcations?customer_id=all"><{$lang->transcations}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>factory/statement_list?customer_id=all"><{$lang->statement}></a>
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>factory/get_over_due_customer_list"><{$lang->over_due_list}></a>
+						</span>
+					</li>	
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>factory/customer_xero_management"><{$lang->xero_panel}></a>
+						</span>
+					</li>	
+				
+			<{else if  $supplier_menu_name=='selling'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>chart_per_business/selling_weeekly"><{$lang->weekly_selling}></a>
+				
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>chart_per_business/selling_daily"><{$lang->daily_selling}></a>
+						</span>
+					</li>
+					
+				<{else if  $supplier_menu_name=='basic_setting'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"><{$lang->wholeseller_card}></a>
+				
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile"><{$lang->business_info}></a>
+						</span>
+					</li>	
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile_pic"><{$lang->image}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile_pic"><{$lang->image}></a>
+						</span>
+					</li>
+				
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/abn_application"><{$lang->abn_acn}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/business_hour_setting"><{$lang->trading_hours}></a>
+						</span>
+					</li>
+				 <li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>member/changepwd?side=company"><{$lang->password_setting}></a>
+						</span>
+					</li>
+					
+			<{else if  $supplier_menu_name=='staff_management'}>
+					
+				
+					<li>
+						<span>
+							<a class ="panel_item"  href="<{$http_root_www}>company/freshfood_edit?coupon_type=7&restaurant=1"><{$lang->wholeseller_card}></a>
+				
+						</span>
+					</li>
+					
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile"><{$lang->business_info}></a>
+						</span>
+					</li>	
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile_pic"><{$lang->image}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/profile_pic"><{$lang->image}></a>
+						</span>
+					</li>
+				
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/abn_application"><{$lang->abn_acn}></a>
+						</span>
+					</li>
+					<li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>company/business_hour_setting"><{$lang->trading_hours}></a>
+						</span>
+					</li>
+				 <li>
+						<span>
+							<a  class ="panel_item"   href="<{$http_root_www}>member/changepwd?side=company"><{$lang->password_setting}></a>
+						</span>
+					</li>
+	
+					
+		
+			<{/if}>
+				<li class="split"></li>
+			</ul>
+		</div>
+
+	</div>
+</div>
+	</div>
+	
+</body>
+</html>

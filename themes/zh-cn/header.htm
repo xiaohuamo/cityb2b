@@ -18,7 +18,47 @@
 			
 
 			<{if $loginUser}>
-			<!-- -->
+			<span class='tips'>
+					<span>
+							<{$lang->welcome}> <{if $loginUser.nickname}><{$loginUser.nickname}>(<{$loginUser.id}>)<{else}><{$loginUser.name}>(<{$loginUser.id}>)<{/if}>&nbsp;&nbsp;
+					</span>
+
+
+			<!--		<span>
+						<a href="<{$http_root_www}>member/index">
+							<i class="fa fa-user fa-lg" aria-hidden="true" title='个人中心'></i>
+						</a>
+					</span> -->
+
+					<{if $loginUser.role==3}>
+					<span>
+						<a href="<{$http_root_www}>company/index">
+							<i class="fa fa-user fa-lg" aria-hidden="true" title='<{$lang->my_account}>'></i>
+						</a>
+					</span>
+					<{/if}>
+
+					<!--<span>
+						<a href="<{$http_root_www}>member/showcart">
+							<i class="fa fa-shopping-cart  fa-lg" aria-hidden="true" title='购物车'></i>
+							 <{if $loginUser}>
+			                    <b id="msgcount"><{$carts_count}></b>
+			                  <{/if}>
+						</a>
+					</span> -->
+
+					<span>
+						<a href="<{$http_root_www}>message/index">
+							<i class='fa fa-comment  fa-lg' aria-hidden="true" title='<{$lang->message}>'></i>
+							
+						</a>
+					</span>
+
+					<span>
+						<a href="<{$http_root_www}>member/logout"><{$lang->log_out}></a>
+					</span>
+					
+			 </span>
 			<{else}>
 			 <span class="tips">
 			 	<span>

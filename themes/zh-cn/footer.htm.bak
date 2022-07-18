@@ -1,0 +1,77 @@
+
+
+<{if $shop==1}> 
+
+
+<ul class="g-ul fixMenu">
+   
+    <li class="">
+        <a href="<{$http_root_www}>company/mingxing_coupons"><i class="ico3">&nbsp;</i>选货</a>
+    </li>
+
+     <li class=" ">
+        <a href="<{$http_root_www}>store/<{$loginUser.id}>?open_shop=1"><i class="ico2">&nbsp;</i>店铺</a>
+    </li>
+
+     <li class="">
+        <a href="<{$http_root_www}>company/referral_product_program_share"><i class="ico4">&nbsp;</i>分享</a>
+    </li>
+ <li class="">
+        <a href="<{$http_root_www}>referal/referrals?type=user&shop=1"><i class="ico7">&nbsp;</i>进账</a>
+    </li>
+	<li class="">
+        <a href="<{$http_root_www}>member/mingxingdian_index"><i class="ico5">&nbsp;</i>更多</a>
+    </li>
+	
+
+</ul>
+
+
+
+<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>mobile/js/footer.js"></script>
+	<link rel="stylesheet" href="<{$SKIN_PATH}>mobile/css/style.css" />
+
+ <{else}>
+ 
+<div class="p-hide">
+	<!-- 底部 -->
+	<ul class="g-ul fixMenu">
+	    
+	    <li class="  <{if $mobile_menu=='index'}>on<{else}>off<{/if}> ">
+	        <a href="<{$http_root_www}>"><i class="ico1">&nbsp;</i><{$lang->home}></a>
+	    </li>
+
+	   <li class="<{if $mobile_menu=='food'}>on<{else}>off<{/if}>">
+        <a href="<{$http_root_www}>food"><i class="ico2">&nbsp;</i><{$lang->business_type_restaurant}></a>
+       </li>
+
+       <li class=" <{if $mobile_menu=='category'}>on<{else}>off<{/if}>">
+	        <a href="<{$http_root_www}>category/index"><i class="ico3">&nbsp;</i><{$lang->hot_category}></a>
+	    </li>
+
+	  
+	    <li class="">
+        <a href="<{$http_root_www}>member/showcart"><i class="ico8">&nbsp;</i><{$lang->shopping_cart}></a>
+        </li>
+
+
+	  		<li class=" <{if $mobile_menu=='dashboard'}>on<{else}>off<{/if}>">
+	        <a href="<{$http_root_www}>member/index"><i class="ico5">&nbsp;</i><{$lang->my_account}></a>
+	    </li>
+
+	</ul>
+
+</div>
+
+
+<div class="footer">
+	<div class="wrap clearfix">
+		<div class="ftLogo">
+			<div><small>@2014-2022 Cityb2b</small></div>
+		</div>
+		
+	</div>
+</div>
+  <{/if}>
+<script type="text/javascript" src="<{$SKIN_PATH}>ga.js"></script>

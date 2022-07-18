@@ -10,7 +10,7 @@
     <currency_aud>AUD</currency_aud>
 
     <welcome>Hello</welcome>
-    <my_account>Buyer account</my_account>
+    <my_account>My account</my_account>
     <shopping_cart>My Cart</shopping_cart>
     <message>Message</message>
     <account_login>Account Login</account_login>
