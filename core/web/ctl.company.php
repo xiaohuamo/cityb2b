@@ -5133,20 +5133,20 @@ function freshfood_edit_action()    {
         $mdl_coupons = $this->loadModel('coupons');
 		
 		
-		//获取是否为线上餐厅
-        $restaurant =get2('restaurant');
-		if($restaurant) {
+		//获取商家卡片信息
+       // $restaurant =get2('restaurant');
+	//	if($restaurant) {
 			$where00 =array(
-		   'createUserId' => $this->loginUser['id'],
+		   'createUserId' => $this->current_business['id'],
 		   'EvoucherOrrealproduct' =>'restaurant_menu'
 		   );
 		   $restaurant_coupon= $mdl_coupons->getByWhere($where00);
 		   if($restaurant_coupon) {
 			   $id=$restaurant_coupon['id'];
 		   }
-		}else{
-			  $id = (int)get2('id');
-		}
+	//	}else{
+	//		  $id = (int)get2('id');
+	//	}
 
         /**
          * 当前编辑第几步

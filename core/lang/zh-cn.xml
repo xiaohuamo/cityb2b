@@ -988,7 +988,7 @@
     <edit>编辑</edit>
 	<customer_edit>客户编辑</customer_edit>
     <banner_edit>Banner编辑</banner_edit>
-    <store_notice>店铺通知</store_notice>
+    <store_notice>通知</store_notice>
 	<switch_to_mobile>切换至移动端</switch_to_mobile>
     <!-- 40 -->
     <support_customers_pickingup_goods>全局支持自取</support_customers_pickingup_goods>

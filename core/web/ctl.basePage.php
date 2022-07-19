@@ -948,7 +948,7 @@ public function AgentActiveCheck($id,$agentId){
     }
 
     //生产发票
-    public  function order_invoice($orderId,$FileOrBrowser) {
+    public  function order_invoice($orderId,$FileOrBrowser,$notice,$special_info) {
 
 
         $mel_user = $this->loadModel('user');
@@ -985,12 +985,13 @@ public function AgentActiveCheck($id,$agentId){
        // var_dump($user);exit;
 
 
-
+     //   $notice ="Dear  Customer ,The chicken price will increate 2.17% next month,the beef price will update by 2%, and 1 apr will be the public holiday , no delivery ,all delivery has to be send before nighht at 9:00pm";
+     //   $special_info  ="the chicken feet will be $1/kg ,and min order is 20kg .he chicken feet will be $1/kg ,and min order is 20kg .";
 
 
         if($order['business_userId']==319188) {
 
-            $this->loadModel('factory_invoice_dnl');
+              $this->loadModel('factory_invoice_dnl');
             $report = new OrderInvoice($order, $items);
             if($this->current_business['logo']) {
                 $report->logoPath(UPLOAD_PATH . $this->current_business['logo']);
@@ -1006,6 +1007,9 @@ public function AgentActiveCheck($id,$agentId){
             $report->setaccountPayment_period($accountType);
             $report->setUser_Code($user_code_rec);
             $report->setUser($user, $userABN);
+            $report->setNotice($notice);
+           // var_dump($special_info);exit;
+            $report->setSpecial($special_info);
         // var_dump($user);exit;
             $factoryABN['untity_name']='DNL FOOD';
              $report->setFactory($factory, $factoryABN, $factoryAccount);

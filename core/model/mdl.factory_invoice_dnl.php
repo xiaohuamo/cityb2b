@@ -674,6 +674,9 @@ class OrderInvoice
 	
 	public $title;//标题
 
+    public $notice;
+
+    public $special_info;
 
     function __construct($order, $items)
     {
@@ -707,6 +710,18 @@ class OrderInvoice
     {
         $this->user = $user;
         $this->userABN = $userABN;
+    }
+
+    function setNotice($notice)
+    {
+        $this->notice = $notice;
+
+    }
+
+    function setSpecial($special_info)
+    {
+        $this->special_info = $special_info;
+
     }
    function setUser_Code($user_Code)
     {
@@ -775,95 +790,98 @@ class OrderInvoice
         // Arial 12
 
 
-        foreach ($this->items as $item) {
+    foreach ($this->items as $item) {
 
 
-            $itemAmount = $this->calculateAmountWithGst($item['voucher_deal_amount'], $item['customer_buying_quantity'], $item['include_gst']);
-
-
-
-			if ($item['menu_en_name']){
-				$item_name =$item['menu_en_name'];
-			} else{
-				$item_name =$item['bonus_title'];
-			}
-           if($item['guige_des']) {
-               $item_name .=' '.$item['guige_des'];
-
-           }
+        $itemAmount = $this->calculateAmountWithGst($item['voucher_deal_amount'], $item['customer_buying_quantity'], $item['include_gst']);
 
 
 
-
-            $title1 =$item_name;
-            $title_length=strlen($title1);
-            $count =ceil($title_length/45);
-
-            if($count ==1 ){
-                $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
-                $title = mb_substr($title1, 0, 45);
-                $this->pdf->row($title, 0.50, 0, "L", 6);
-                $this->pdf->row($item['customer_buying_quantity'].' ', 0.1, 0, "R", 6);
-                $this->pdf->row($item['unit'], 0.1, 0, "R", 6);
-                $this->pdf->row($item['voucher_deal_amount'].'  ', 0.10, 0, "R", 6);
-                $subtotal = sprintf("%1\$.2f", $item['customer_buying_quantity']*$item['voucher_deal_amount']);
-                $this->pdf->row($subtotal.'  ', 0.10, 0, "R", 6);
-
-             }else{
-                   for($i=0;$i<$count;$i++) {
-                       if ($count==(1+$i)) {
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row('', 0.1, 0, "L", 6);
-                               $this->pdf->row($title, 0.50, 0, 'L', 6);
-
-                        }else{
-                           if($i==0) {
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
-                               $this->pdf->row($title, 0.50, 0, 'L', 6);
-                               $this->pdf->row($item['customer_buying_quantity'].' ', 0.1, 0, "R", 6);
-                               $this->pdf->row($item['unit'], 0.1, 0, "R", 6);
-                               $this->pdf->row($item['voucher_deal_amount'].'  ', 0.10, 0, "R", 6);
-                               $subtotal = sprintf("%1\$.2f", $item['customer_buying_quantity']*$item['voucher_deal_amount']);
-                               $this->pdf->row($subtotal.'  ', 0.10, 0, "R", 6);
-                               $this->pdf->ln(5);
-
-                           }else{
-                               $title = substr($title1, $i*45, 45);
-                               $this->pdf->row('', 0.10, 0, "L", 6);
-                               $this->pdf->row($title, 0.5, 0, 'L', 6);
-                               $this->pdf->row('', 0.40, 0, "L", 6);
-
-                               $this->pdf->ln(5);
-
-                           }
-
-
-                          }
-
-
-                     }
-            }
-
-            $this->pdf->ln(5);
-
-
-            // Background color
-            $this->pdf->SetFillColor(219,215,194);
-
-            // Title
-            $this->pdf->Cell(0,0.2,"",0,1,'L',true);
-            // Line break
-            $this->pdf->Ln(1);
-
-
-            $totalAmount['total_with_gst'] += $itemAmount['total_with_gst'];
-            $totalAmount['total_no_gst'] += $itemAmount['total_no_gst'];
-            $totalAmount['total_gst'] += $itemAmount['total_gst'];
-            $totalAmount['quantity'] += $itemAmount['quantity'];
-
+        if ($item['menu_en_name']){
+            $item_name =$item['menu_en_name'];
+        } else{
+            $item_name =$item['bonus_title'];
+        }
+        if($item['guige_des']) {
+            $item_name .=' '.$item['guige_des'];
 
         }
+
+
+
+
+        $title1 =$item_name;
+        $title_length=strlen($title1);
+        $count =ceil($title_length/45);
+
+        if($count ==1 ){
+            $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+            $title = mb_substr($title1, 0, 45);
+            $this->pdf->row($title, 0.50, 0, "L", 6);
+            $this->pdf->row($item['customer_buying_quantity'].' ', 0.1, 0, "R", 6);
+            $this->pdf->row($item['unit'], 0.1, 0, "R", 6);
+            $this->pdf->row($item['voucher_deal_amount'].'  ', 0.10, 0, "R", 6);
+            $subtotal = sprintf("%1\$.2f", $item['customer_buying_quantity']*$item['voucher_deal_amount']);
+            $this->pdf->row($subtotal.'  ', 0.10, 0, "R", 6);
+
+        }else{
+            for($i=0;$i<$count;$i++) {
+                if ($count==(1+$i)) {
+                    $title = substr($title1, $i*45, 45);
+                    $this->pdf->row('', 0.1, 0, "L", 6);
+                    $this->pdf->row($title, 0.50, 0, 'L', 6);
+
+                }else{
+                    if($i==0) {
+                        $title = substr($title1, $i*45, 45);
+                        $this->pdf->row($item['menu_id'], 0.10, 0, "L", 6);
+                        $this->pdf->row($title, 0.50, 0, 'L', 6);
+                        $this->pdf->row($item['customer_buying_quantity'].' ', 0.1, 0, "R", 6);
+                        $this->pdf->row($item['unit'], 0.1, 0, "R", 6);
+                        $this->pdf->row($item['voucher_deal_amount'].'  ', 0.10, 0, "R", 6);
+                        $subtotal = sprintf("%1\$.2f", $item['customer_buying_quantity']*$item['voucher_deal_amount']);
+                        $this->pdf->row($subtotal.'  ', 0.10, 0, "R", 6);
+                        $this->pdf->ln(5);
+
+                    }else{
+                        $title = substr($title1, $i*45, 45);
+                        $this->pdf->row('', 0.10, 0, "L", 6);
+                        $this->pdf->row($title, 0.5, 0, 'L', 6);
+                        $this->pdf->row('', 0.40, 0, "L", 6);
+
+                        $this->pdf->ln(5);
+
+                    }
+
+
+                }
+
+
+            }
+        }
+
+        $this->pdf->ln(5);
+
+
+        // Background color
+        $this->pdf->SetFillColor(219,215,194);
+
+        // Title
+        $this->pdf->Cell(0,0.2,"",0,1,'L',true);
+        // Line break
+        $this->pdf->Ln(1);
+
+
+        $totalAmount['total_with_gst'] += $itemAmount['total_with_gst'];
+        $totalAmount['total_no_gst'] += $itemAmount['total_no_gst'];
+        $totalAmount['total_gst'] += $itemAmount['total_gst'];
+        $totalAmount['quantity'] += $itemAmount['quantity'];
+
+
+    }
+
+
+
         $this->pdf->setFinished();
 		$totalCountofItemPrintPerPage = 10;
 		if(count($this->items)<=$totalCountofItemPrintPerPage) {
@@ -904,8 +922,26 @@ class OrderInvoice
     	$this->pdf->Cell(50,7,'Boxes     ',0,0,'L');
         $this->pdf->SetFont('Arial','B',12);
         $this->pdf->Cell(30,7,'Total '.$this->displayAmount( $totalAmount['total_with_gst']-$discount_amount).'    ',0,0,'R');
-		$this->pdf->ln(8);
-        $this->pdf->SetFont('Arial','B',9);
+
+        $this->pdf->SetFont('Arial','B',10);
+        if(strlen($this->notice)>0) {
+            $this->pdf->ln(8);
+
+            $notice =$this->notice;
+            $this->pdf->Cell(1);
+            $this->pdf->MultiCell(190,6,'Notice: '.$notice,0,'L',0);
+            $this->pdf->Cell(50);
+        }
+        if(strlen($this->special_info)>0) {
+            $this->pdf->ln();
+
+            $special_info =$this->special_info;
+            $this->pdf->Cell(1);
+            $this->pdf->MultiCell(190,6,'Special: '.$special_info,0,'L',0);
+            $this->pdf->Cell(50);
+        }
+        $this->pdf->ln();
+       // $this->pdf->SetFont('Arial','B',9);
         $reportSubtitle ='NO CLAIMS RECOGNISED UNLESS RECEIVED WITHIN 24 HOURS OF DELIVERY . ';
         $this->pdf->Cell(1);
         $this->pdf->MultiCell(110,6,$reportSubtitle,0,'L',0);

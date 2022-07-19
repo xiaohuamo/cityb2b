@@ -987,7 +987,7 @@
     <name_of_branch_store>Name of branch store</name_of_branch_store>
     <edit>Edit</edit>
     <banner_edit>Banner edit</banner_edit>
-    <store_notice>Store Notice</store_notice>
+    <store_notice>Notice</store_notice>
 	<Migrate>Migrate</Migrate>
     <!-- 40 -->
     <support_customers_pickingup_goods>Support customers picking up goods</support_customers_pickingup_goods>
