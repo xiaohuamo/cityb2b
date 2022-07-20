@@ -1010,9 +1010,14 @@ public function AgentActiveCheck($id,$agentId){
             $report->setaccountPayment_period($accountType);
             $report->setUser_Code($user_code_rec);
             $report->setUser($user, $userABN);
-            $report->setNotice($notice);
+
            // var_dump($special_info);exit;
-            $report->setSpecial($special_info);
+            if($special_info){
+                $report->setSpecial($special_info);
+            }
+            if($notice){
+                $report->setNotice($notice);
+            }
         // var_dump($user);exit;
             $factoryABN['untity_name']='DNL FOOD';
              $report->setFactory($factory, $factoryABN, $factoryAccount);
