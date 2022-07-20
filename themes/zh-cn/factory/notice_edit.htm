@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title><{$pageTitle}></title>
+    <{if $pageKeywords}>
+		<meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+    <{if $pageDescription}>
+		<meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+	<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css"/>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+	<script type="text/javascript" src="<{$SKIN_PATH}>js/help_box.js"></script>
+	<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+	<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+
+	<style>
+        .main-form .input-box span label {
+            width: 200px;
+        }
+	</style>
+
+</head>
+<body>
+
+<{include file='header.htm'}>
+
+<div class="container">
+	<div class="wrap clearfix">
+        <{include file='factory/side.htm'}>
+		<div class="main">
+			<div class="box2">
+				<{include file='company/side_notice_manager_menu_top.htm'}>
+				<div class="main-form">
+					<div class="colCurTit clearfix">
+						<h1><{$pagename}>
+						</h1>
+					</div>
+					<form id="memberForm" method="post" target="post_frame" enctype="multipart/form-data">
+						<input type="text" name="id" id="id" value = "<{$data.id}>"class="input-text" hidden/>
+						
+						
+						<div class="input-box multi-select clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	通知类型 <{else}> Notice Type  <{/if}></label></span>
+
+							<select id="notice_type" name="notice_type" class="ahibw" >
+
+									<option value="0"    selected>Select Notice Type	</option>
+									<option value="Special" <{if $data.notice_type =='Special'}> selected<{/if}>  >Special Info</option>
+									<option value="Notice" <{if $data.notice_type =='Notice'}> selected<{/if}>>Supplier Notice</option>
+							</select>
+
+						</div>
+						
+						
+					
+				   
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	发票显示? <{else}>on Invoice? <{/if}></label></span>
+						
+						<select name="is_send_to_invoice" id='is_send_to_invoice'>
+									
+									<option value="1" <{if $data.is_send_to_invoice =='1'}> selected<{/if}> >Yes</option>
+									<option value="0" <{if $data.is_send_to_invoice =='0'}> selected<{/if}> >No</option>
+								</select>
+				
+					</div>
+					
+					
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	有效时间 <{else}>Avaliable Dates <{/if}></label></span>
+						
+						<label>From</label>
+						<input    type="text" class="input-text" style="width:120px;" id="st" name="invoice_start_date" value="<{date('Y-m-d', $data.invoice_start_date)}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>to</label>
+						<input  type="text" class="input-text" style="width:120px;" id="et" name="invoice_end_date" value="<{date('Y-m-d', $data.invoice_end_date)}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+					
+				
+					</div>
+					
+					
+					
+						<div class="input-box multi-select clearfix">
+
+					
+						<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	信息内容 <{else}>Content <{/if}></label></span>
+						
+						<textarea name="title"   cols="40"   rows="3"   style="width:80%; margin-right:5px;OVERFLOW:   hidden"><{$data.title}></textarea>
+						
+						 <em style="margin-left:220px;"> <{if $langStr == 'zh-cn'}> 	小于200个字符 <{else}> less than 200 characters  <{/if}></em>
+						
+						
+						</div>
+						
+				  <div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	当前状态 <{else}>is Closed? <{/if}></label></span>
+						
+						<{if $data.expired ==1}>
+							<span><{if $langStr == 'zh-cn'}> 	通知已过期 <{else}> Notice expired <{/if}></span>
+						<{else}>
+							<select name="invocie_sending_closed" id='invocie_sending_closed'>
+										
+										<option value="1" <{if $data.invocie_sending_closed =='1'}> selected<{/if}> >Closed</option>
+										<option value="0" <{if $data.invocie_sending_closed =='0'}> selected<{/if}> >NoT Yet Closed</option>
+							</select>
+						<{/if}>
+						
+						
+				
+					</div>
+
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	审核状态 <{else}>Is Approved? <{/if}></label></span>
+						
+						<select name="is_approved" id='is_approved'>
+									
+									<option value="1" <{if $data.is_approved =='1'}> selected<{/if}> >Approved</option>
+									<option value="0" <{if $data.is_approved =='0'}> selected<{/if}> >Not Approved</option>
+								</select>
+				
+					</div>
+					
+					
+
+						<div style=" margin-left:10px; margin-bottom:50px;" class="input-box input-submit clearfix">
+							<button type="submit"><{$lang->save}></button>
+						</div>
+					</form>
+					<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+
+					<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<{include file='footer.htm'}>
+
+</body>
+</html>

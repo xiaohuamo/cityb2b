@@ -984,6 +984,9 @@ public function AgentActiveCheck($id,$agentId){
         $user_code_rec =$mdl_user_factory->getByWhere(array('user_id'=>$order['userId'],'factory_id'=>$order['business_userId']));
        // var_dump($user);exit;
 
+        $mdl_notice = $this->loadModel('notice');
+        $special_info =$mdl_notice->getLastNotice($order['business_userId'],'special');
+        $notice =$mdl_notice->getLastNotice($order['business_userId'],'notice');
 
      //   $notice ="Dear  Customer ,The chicken price will increate 2.17% next month,the beef price will update by 2%, and 1 apr will be the public holiday , no delivery ,all delivery has to be send before nighht at 9:00pm";
      //   $special_info  ="the chicken feet will be $1/kg ,and min order is 20kg .he chicken feet will be $1/kg ,and min order is 20kg .";

@@ -2710,6 +2710,131 @@ public function return_items_submit_to_statment_action() {
     }
 
 
+    public function notice_edit_action()
+    {
+        $id = trim(get2('id'));
+        $this->setData($id,'id');
+
+
+
+
+        if (is_post()) {
+
+                    $id = post('id');
+                    //var_dump($id);exit;
+                    $mdl_notice =$this->loadModel('notice');
+                    $notice_rec =$mdl_notice->get($id);
+                    if($notice_rec['factory_id']!=$this->current_business['id']) {
+
+                        $this->form_response(500,'no access');
+                    }
+
+
+
+
+                    $notice_type = post('notice_type');
+                    if(!$notice_type) {
+
+                        $this->form_response(500,'please choose the notice type!');
+                    }
+
+                    $title = post('title');
+                    if(!$title) {
+
+                        $this->form_response(500,'please input the notice information!');
+                    }
+
+
+                    $is_approved = post('is_approved');
+
+                    $is_send_to_invoice = post('is_send_to_invoice');
+
+
+                    $data = [];
+
+                    if($is_send_to_invoice){
+
+                        $invoice_start_date = post('invoice_start_date');
+                        $invoice_end_date = post('invoice_end_date');
+
+                        $invoice_start_date_number =strtotime($invoice_start_date);
+                        $invoice_end_date_number =strtotime($invoice_end_date);
+
+                        $data['invoice_start_date'] = $invoice_start_date_number;
+                        $data['invoice_end_date'] = $invoice_end_date_number;
+                    }
+
+
+
+
+                    $data['gen_time'] = time();
+
+                    $data['title'] = $title;
+                     $data['is_approved'] = $is_approved;
+                    $data['notice_type'] =$notice_type;
+                    $data['is_send_to_invoice'] = $is_send_to_invoice;
+                    $data['create_userId'] = $this->loginUser['id'];
+
+
+
+
+
+        //var_dump($data);exit;
+                    $new_id=$mdl_notice->update($data,$id);
+                    if(!$new_id){
+
+                        $this->form_response(500, 'error happen when generate data!','');
+                    }else{
+
+                        $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/notice_manager");
+
+                    }
+
+
+
+        }else{
+            $mdl_notice =$this->loadModel('notice');
+            $notice_rec =$mdl_notice->get($id);
+
+
+            $currentTime =time();
+            $expire_time = $notice_rec['invoice_end_date'] +24*60*60;
+            if($currentTime>$expire_time) {
+                $notice_rec['expired'] =1;
+
+            }else{
+                $notice_rec['expired'] =0;
+            }
+
+
+            if($notice_rec['factory_id']!=$this->current_business['id']) {
+                var_dump('no access');exit;
+            }
+
+            $this->setData($notice_rec,'data');
+
+
+
+        }
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Notice Edit";
+        }else{
+            $pagename = "通知编辑";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('Schedule Management - ' . $this->site['pageTitle'], 'pageTitle');
+
+
+        $this->setData('website', 'menu');
+
+        $this->setData('notice_manager', 'submenu');
+        $this->setData('notice_manager', 'submenu_top');
+        $this->display('factory/notice_edit');
+
+        return;
+    }
+
+
     public function schedule_edit_action()
     {
         $id = trim(get2('id'));
@@ -2726,137 +2851,137 @@ public function return_items_submit_to_statment_action() {
 
 
         if (is_post()) {
-                    $need_re_routing =0;
-                    $id = post('sche_id');
-                    //var_dump($id);exit;
-                    $mdl_schedule =$this->loadModel('truck_driver_schedule');
-                    $schedule_rec =$mdl_schedule->get($id);
-                    if($schedule_rec['factory_id']!=$this->current_business['id']) {
+            $need_re_routing =0;
+            $id = post('sche_id');
+            //var_dump($id);exit;
+            $mdl_schedule =$this->loadModel('truck_driver_schedule');
+            $schedule_rec =$mdl_schedule->get($id);
+            if($schedule_rec['factory_id']!=$this->current_business['id']) {
 
-                        $this->form_response(500,'no access');
-                    }
+                $this->form_response(500,'no access');
+            }
 
-                    $link =trim(post('link'));
+            $link =trim(post('link'));
             $scheduleDays =trim(post('scheduleDays'));
 
-                    $driver_id =post('driver_id');
+            $driver_id =post('driver_id');
 
-                    //如果切换了司机，需要修改 cc_order 表 相应 driver_code_id
+            //如果切换了司机，需要修改 cc_order 表 相应 driver_code_id
 
-                    if($schedule_rec['driver_id']!=$driver_id) {
-                        $need_to_update_order_driver =1;
-                    }else{
-                        $need_to_update_order_driver =0;
-                    }
+            if($schedule_rec['driver_id']!=$driver_id) {
+                $need_to_update_order_driver =1;
+            }else{
+                $need_to_update_order_driver =0;
+            }
 
-                    $truck_id =post('truck_id');
-                 //   $status =post('status');
+            $truck_id =post('truck_id');
+            //   $status =post('status');
 
-                    if($schedule_rec['truck_id']!=$truck_id) {
-                      //  $mdl_tt =$this->loadModel('truck');
-                      //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
-                        $need_re_routing =1;
-                        $need_to_update_order_truck=1;
-                    }
+            if($schedule_rec['truck_id']!=$truck_id) {
+                //  $mdl_tt =$this->loadModel('truck');
+                //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
+                $need_re_routing =1;
+                $need_to_update_order_truck=1;
+            }
 
-                    $driver_start_location =post('driver_start_location');
-                    $start_location_lat =array();
-                    $start_location_lat = $this->get_latitude_from_address ($driver_start_location);
+            $driver_start_location =post('driver_start_location');
+            $start_location_lat =array();
+            $start_location_lat = $this->get_latitude_from_address ($driver_start_location);
 
-                        if($schedule_rec['driver_start_location']!=$driver_start_location) {
-                            //  $mdl_tt =$this->loadModel('truck');
-                            //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
-                            $need_re_routing =1;
-                        }
-
-
-                    $driver_end_location =post('driver_end_location');
-                    $end_location_lat =array();
-                    $end_location_lat = $this->get_latitude_from_address ($driver_end_location);
-
-                    if($schedule_rec['driver_end_location']!=$driver_end_location) {
-                        //  $mdl_tt =$this->loadModel('truck');
-                        //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
-                        $need_re_routing =1;
-                    }
+            if($schedule_rec['driver_start_location']!=$driver_start_location) {
+                //  $mdl_tt =$this->loadModel('truck');
+                //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
+                $need_re_routing =1;
+            }
 
 
-                  if(!$driver_end_location) {
+            $driver_end_location =post('driver_end_location');
+            $end_location_lat =array();
+            $end_location_lat = $this->get_latitude_from_address ($driver_end_location);
 
-                        $this->form_response(500,'driver end location can not empty!');
-                    }
-
-                    if(!$driver_start_location) {
-
-                        $this->form_response(500,'driver start location can not empty!');
-                    }
-
-                    $start_of_time_hour =post('schedule_start_of_time_hour');
-                    $start_of_time_minute =post('schedule_start_of_time_minute');
-                    $cut_of_time_hour =post('schedule_cut_of_time_hour');
-                    $cut_of_time_minute =post('schedule_cut_of_time_minute');
-
-                    $driver_work_start_time =$start_of_time_hour.':'.$start_of_time_minute;
-                    $driver_work_end_time =$cut_of_time_hour.':'.$cut_of_time_minute;
+            if($schedule_rec['driver_end_location']!=$driver_end_location) {
+                //  $mdl_tt =$this->loadModel('truck');
+                //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
+                $need_re_routing =1;
+            }
 
 
-                    if($schedule_rec['driver_work_start_time']!=$driver_work_start_time || $schedule_rec['driver_work_end_time']!=$driver_work_end_time) {
-                        //  $mdl_tt =$this->loadModel('truck');
-                        //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
-                        $need_re_routing =1;
-                    }
+            if(!$driver_end_location) {
 
-                    $delivery_date =post('delivery_date');
+                $this->form_response(500,'driver end location can not empty!');
+            }
+
+            if(!$driver_start_location) {
+
+                $this->form_response(500,'driver start location can not empty!');
+            }
+
+            $start_of_time_hour =post('schedule_start_of_time_hour');
+            $start_of_time_minute =post('schedule_start_of_time_minute');
+            $cut_of_time_hour =post('schedule_cut_of_time_hour');
+            $cut_of_time_minute =post('schedule_cut_of_time_minute');
+
+            $driver_work_start_time =$start_of_time_hour.':'.$start_of_time_minute;
+            $driver_work_end_time =$cut_of_time_hour.':'.$cut_of_time_minute;
 
 
-                    $data=array(
-                        //''=>$,
-                        'driver_id'=>$driver_id,
-                        'truck_id'=>$truck_id,
-                        'driver_work_start_time'=>$driver_work_start_time,
-                        'driver_work_end_time'=>$driver_work_end_time,
-                        'driver_start_lat'=>$start_location_lat['lat'],
-                        'driver_start_long'=> $start_location_lat['lng'],
-                        'dirver_end_lat'=>$end_location_lat['lat'],
-                        'driver_end_long'=> $end_location_lat['lng'],
-                        'driver_start_location'=> $driver_start_location,
-                        'driver_end_location'=> $driver_end_location,
-                        'need_re_routing'=>$need_re_routing
+            if($schedule_rec['driver_work_start_time']!=$driver_work_start_time || $schedule_rec['driver_work_end_time']!=$driver_work_end_time) {
+                //  $mdl_tt =$this->loadModel('truck');
+                //  $new_truck =$mdl_tt->getByWhere(array('business_id'))
+                $need_re_routing =1;
+            }
+
+            $delivery_date =post('delivery_date');
+
+
+            $data=array(
+                //''=>$,
+                'driver_id'=>$driver_id,
+                'truck_id'=>$truck_id,
+                'driver_work_start_time'=>$driver_work_start_time,
+                'driver_work_end_time'=>$driver_work_end_time,
+                'driver_start_lat'=>$start_location_lat['lat'],
+                'driver_start_long'=> $start_location_lat['lng'],
+                'dirver_end_lat'=>$end_location_lat['lat'],
+                'driver_end_long'=> $end_location_lat['lng'],
+                'driver_start_location'=> $driver_start_location,
+                'driver_end_location'=> $driver_end_location,
+                'need_re_routing'=>$need_re_routing
+            );
+            if($mdl_schedule->update($data,$id)) {
+                $customer_delivery_date=date('Y-m-d',$delivery_date);
+
+                if($need_to_update_order_driver || $need_to_update_order_truck){
+
+
+                    $dateOfChangeDriverCode=array(
+                        'logistic_driver_code'=>$driver_id,
+                        'logistic_truck_No'=>$truck_id,
                     );
-                   if($mdl_schedule->update($data,$id)) {
-                       $customer_delivery_date=date('Y-m-d',$delivery_date);
-
-                       if($need_to_update_order_driver || $need_to_update_order_truck){
 
 
-                           $dateOfChangeDriverCode=array(
-                               'logistic_driver_code'=>$driver_id,
-                               'logistic_truck_No'=>$truck_id,
-                           );
+                    $whereChangeDriver =array(
+                        'business_userId'=>$this->current_business['id'],
+                        'logistic_schedule_id'=>$schedule_rec['schedule_id'],
+                        'coupon_status'=>'c01'
+                    );
+                    $this->loadModel('order')->updateByWhere($dateOfChangeDriverCode,$whereChangeDriver);
 
+                }
+                // var_dump($link);exit;
+                if($link =='newschedule'){
+                    $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/new_schedule?customer_delivery_date=".$customer_delivery_date);
+                    //
+                }else{
+                    $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/schedule_list?scheduleDays=".$scheduleDays);
+                    //
+                }
+                $this->sheader(HTTP_ROOT_WWW."factory/new_schedule?delivery_date =".$delivery_date);
+            }else{
 
-                           $whereChangeDriver =array(
-                               'business_userId'=>$this->current_business['id'],
-                               'logistic_schedule_id'=>$schedule_rec['schedule_id'],
-                               'coupon_status'=>'c01'
-                           );
-                           $this->loadModel('order')->updateByWhere($dateOfChangeDriverCode,$whereChangeDriver);
+                $this->form_response(500,'something error !');
+            }
 
-                       }
-                      // var_dump($link);exit;
-                        if($link =='newschedule'){
-                            $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/new_schedule?customer_delivery_date=".$customer_delivery_date);
-                            //
-                        }else{
-                            $this->form_response(200,'Save successful!',HTTP_ROOT_WWW."factory/schedule_list?scheduleDays=".$scheduleDays);
-                            //
-                        }
-                          $this->sheader(HTTP_ROOT_WWW."factory/new_schedule?delivery_date =".$delivery_date);
-                   }else{
-
-                       $this->form_response(500,'something error !');
-                   }
-                 
 
 
 
@@ -5539,6 +5664,36 @@ public function return_items_submit_to_statment_action() {
 
 
     }
+    public function notice_manager_action()
+    {
+        //获取当前管理的客户号码
+        $customer_id =get2('customer_id');
+
+        if(!$customer_id) {
+            $customer_id =$this->current_business['id'];
+
+        }
+        $this->setData($customer_id,'customer_id');
+
+
+
+
+        if ($this->getLangStr() == 'en') {
+            $pagename = "Notice Manager";
+        }else{
+            $pagename = "通知管理";
+        }
+        $this->setData($pagename, 'pagename');
+        $this->setData('Delivery Date Setting - ' . $this->site['pageTitle'], 'pageTitle');
+
+
+        $this->setData('website', 'menu');
+
+        $this->setData('notice_manager', 'submenu');
+        $this->setData('notice_manager', 'submenu_top');
+
+        $this->display('factory/notice_manager');
+    }
 
     public function new_schedule_action()
     {
@@ -5710,6 +5865,19 @@ public function return_items_submit_to_statment_action() {
         echo json_encode($delivery_date_schedule);
     }
 
+    public function get_notice_list_action()
+    {
+
+
+
+        //	$date = strtotime($datestr);
+
+        $mdl_notice =$this->loadModel('notice');
+
+        $list = $mdl_notice->get_notice_list($this->current_business['id']);
+        echo json_encode($list);
+    }
+
 
 
     public function generate_default_schedule_action(){
@@ -5827,6 +5995,28 @@ public function return_items_submit_to_statment_action() {
             $this->form_response(200,$customer_delivery_date);
 
         }
+    }
+
+    public function delete_notice_info_action()
+    {
+
+        if(is_post()){
+            $id = trim(post('id'));//Y-m-d
+
+            $mdl_notice =$this->loadModel('notice');
+            $notice_rec =$mdl_notice->get($id);
+            if($notice_rec['factory_id']!=$this->current_business['id']) {
+                $this->form_response(500,'no access');
+            }
+
+
+
+            $mdl_notice->delete($id);
+
+            $this->form_response(200,'');
+
+        }
+
     }
 
     public function delete_scheduel_info_action()

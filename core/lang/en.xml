@@ -988,6 +988,7 @@
     <edit>Edit</edit>
     <banner_edit>Banner edit</banner_edit>
     <store_notice>Notice</store_notice>
+	 <notice_manager>Notice Manager</notice_manager>
 	<Migrate>Migrate</Migrate>
     <!-- 40 -->
     <support_customers_pickingup_goods>Support customers picking up goods</support_customers_pickingup_goods>

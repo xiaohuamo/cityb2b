@@ -65,7 +65,7 @@ FROM `cc_truck_driver_schedule` s
     left join cc_schedule_status ss on s.status=ss.id 
 where factory_id=$factory_id and delivery_date=$delivery_date order by schedule_start_time";
         $list =$this->getListBySql($sql);
-       // var_dump($sql);exit;
+        var_dump($sql);exit;
         return $list;
     }
 

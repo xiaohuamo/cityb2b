@@ -14972,6 +14972,92 @@ public function custom_delivery_fee_add_action()
         }
     }
 
+
+    public function new_notice_create_action()
+    {
+
+        //检查是否输入进来的客户与登陆商家是否有代理关系
+        // var_dump($customer_id);exit;
+        $customer_id =post('customer_id');
+
+        if($customer_id != $this->current_business['id']){
+            $this->form_response(500,'no access');
+        }
+
+
+
+
+        $mdl_notice = $this->loadModel('notice');
+
+
+        if (is_post())
+        {
+
+
+            $notice_type = post('notice_type');
+            if(!$notice_type) {
+
+                $this->form_response(500,'please choose the notice type!');
+            }
+
+            $title = post('title');
+            if(!$title) {
+
+                $this->form_response(500,'please input the notice information!');
+            }
+
+
+
+
+            $is_send_to_invoice = post('is_send_to_invoice');
+            $is_approved = post('is_approved');
+
+
+            $data = [];
+
+            if($is_send_to_invoice){
+
+                $invoice_start_date = post('invoice_start_date');
+                $invoice_end_date = post('invoice_end_date');
+
+                if(!$invoice_start_date || !$invoice_end_date) {
+                    $this->form_response(500,'please input the start and end date  information!');
+
+                }
+
+                $invoice_start_date_number =strtotime($invoice_start_date);
+                $invoice_end_date_number =strtotime($invoice_end_date);
+
+                $data['invoice_start_date'] = $invoice_start_date_number;
+                $data['invoice_end_date'] = $invoice_end_date_number;
+            }
+
+
+
+            $data['factory_id'] = $this->current_business['id'];
+            $data['gen_time'] = time();
+            $data['title'] = $title;
+            $data['notice_type'] =$notice_type;
+            $data['is_send_to_invoice'] = $is_send_to_invoice;
+            $data['create_userId'] = $this->loginUser['id'];
+            $data['is_approved'] =$is_approved;
+
+
+
+
+//var_dump($data);exit;
+            $new_id=$mdl_notice->insert($data);
+                if(!$new_id){
+
+                $this->form_response(500, 'error happen when generate data!','');
+            }else{
+
+                $this->form_response(200, 'success !');
+            }
+
+        }
+    }
+
 	public function freshx_price_action()
 	{	
 		//ALTER TABLE `cc_restaurant_menu` ADD `freshx_price` DECIMAL(8,2) NOT NULL AFTER `price`;

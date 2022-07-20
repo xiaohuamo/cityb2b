@@ -1,0 +1,413 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" /><{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/droplist.js"></script>
+
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+	<style>
+        .main-form .input-box span label {
+            width: 200px;
+        }
+	</style>
+
+</head>
+<script type="text/javascript">
+		function myfun(){
+			<{if $customer_id}>
+			  $('#delivery_management_box').css("display",'');
+			   $('#open_end_setting_list').css("display",'');
+			<{/if}>
+			getCurrentNotice(0);
+			
+		
+		}
+		window.onload = myfun;
+	</script>
+	
+
+<body>
+
+
+<{include file='header.htm'}>
+
+
+<div class="container">
+
+	<div class="wrap clearfix">
+
+		<{include file='company/side.htm'}>
+
+		<div class="main">
+			<div class="box2">
+			<{include file='company/side_notice_manager_menu_top.htm'}>
+			<div class="main-form">
+
+				<form id="memberForm" class='form-style-green' action="<{$http_root_www}>company/new_notice_create" method="post" target="post_frame" enctype="multipart/form-data">
+						<div class="input-box t clearfix">
+						<h1>
+						
+							<{$pagename}>
+						
+						</h1>
+					</div>
+					<input value='<{$customer_id}>' type="hidden" id = "customer_id" name="customer_id">
+					
+				
+					<div class="input-box multi-select clearfix">
+
+							<span><label> <{if $langStr == 'zh-cn'}> 	通知类型 <{else}> Notice Type  <{/if}></label></span>
+
+							<select id="notice_type" name="notice_type" class="ahibw" >
+
+									<option value="0"    selected>Select Notice Type	</option>
+									<option value="Special"  >Special Info</option>
+									<option value="Notice" >Supplier Notice</option>
+							</select>
+
+						</div>
+						
+							<div id="delivery_management_box" style ="display:none;" class="input-box  clearfix">
+					
+				   
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	发票显示? <{else}>on Invoice? <{/if}></label></span>
+						
+						<select name="is_send_to_invoice" id='is_send_to_invoice'>
+									
+									<option value="1" selected >Yes</option>
+									<option value="0" >No</option>
+								</select>
+				
+					</div>
+					
+					
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	有效时间 <{else}>Avaliable Dates <{/if}></label></span>
+						
+						<label>From</label>
+						<input    type="text" class="input-text" style="width:120px;" id="st" name="invoice_start_date" value="<{date('Y-m-d', time())}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+						<label>to</label>
+						<input  type="text" class="input-text" style="width:120px;" id="et" name="invoice_end_date" value="<{date('Y-m-d', (time()+7*24*60*60))}>" onclick="WdatePicker();" onfocus="WdatePicker();">
+					
+				
+					</div>
+					
+					
+					
+						<div class="input-box multi-select clearfix">
+
+					
+					<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	信息内容 <{else}>Content <{/if}></label></span>
+					
+					<textarea name="title"   cols="40"   rows="3"   style="width:80%; margin-right:5px;OVERFLOW:   hidden"></textarea>
+					
+					 <em> <{if $langStr == 'zh-cn'}> 	小于200个字符 <{else}> less than 200 characters  <{/if}></em>
+					
+					
+					</div>
+					
+					<div class="input-box multi-select clearfix">
+						
+							<span><label> <{if $langStr == 'zh-cn'}> 	审核状态 <{else}>Is Approved? <{/if}></label></span>
+						
+						<select name="is_approved" id='is_approved'>
+									
+									<option value="1"  selected>Approved</option>
+									<option value="0"  >Not Approved</option>
+								</select>
+				
+					</div>
+				  
+
+						
+						<button type="submit" class="btn btn-default btn-success" id="">Add</button>
+					</div>
+					
+					
+				</form>
+				<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>
+					<script type="text/javascript">
+						
+													//disable submit on enter
+							$(document).on("keypress", "#memberForm,.memberForm", function(event) { return event.keyCode != 13;});
+
+							// this is attached to the end of each form to handle response
+							$('#memberForm,.memberForm').submit(function(){
+								var _form = $(this);
+								_form.find(':submit').attr('disabled', true);
+
+								$('.form_response_alert').remove();
+								_form.before('<p class="form_response_loader"></p>');
+
+								$('#post_frame').unbind('load').load(function(){
+
+									$('.form_response_alert').remove();
+									_form.find(':submit').attr('disabled', false);
+
+									var result = $(this).contents().find('body').html();
+									var data=[];
+									try{
+										data = JSON.parse(result);
+									}catch(err){
+										data['msg'] = result;
+									}
+
+									var further_action_delay=0;
+									//Display message
+									if(data.msg){
+										$('.form_response_loader').remove();
+										if(data.redirect){
+											data.msg=data.msg+" ...";
+										}
+										_form.before('<div class="form_response_alert">'+ data.msg +'</div>');
+										further_action_delay=2000;
+									}
+
+									//Further action
+									if (data.status==200) {
+									
+										getCurrentNotice(customer_delivery_date);
+										
+											
+										$('.form_response_alert').on('click',function(){
+											$(this).remove();
+										}).delay(2000).fadeOut(500);
+									}else{
+										//alert('300');
+										$('.form_response_alert').on('click',function(){
+											$(this).remove();
+										}).delay(2500).fadeOut(500);
+									}
+								});
+							});
+
+						
+						</script> 
+
+				<div class="main-list" name="products_detail" id="products_detail">
+						<table id="notice_list" cellspacing="0" cellpadding="0" width="100%">
+							<thead>
+							<tr>
+								<th>Id</th>
+								<th>Notice Type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th style ="width:300px;">Content</th>
+								<th>On Invoice?</th>
+								<th>Is Approved</th>
+								<th>Status</th>
+								<th>Create User</th>
+								<th>Create Time</th>
+								<th>Edit</th>
+								<th>Delete</th>
+								
+								
+
+							</tr>
+
+							</thead>
+							<!--class="odd"-->
+							<tbody>
+                           
+								
+                          
+							</tbody>
+						</table>
+					</div> 
+				
+			</div>
+</div>
+		</div>
+
+	</div>
+
+</div>
+<script type="text/javascript">
+
+    var customer_delivery_date ='<{$customer_delivery_date}>';
+	
+	
+
+	
+	
+	
+	
+			
+	function deleteNotice(id) {
+	
+	
+	
+	
+	if(!confirm('Do you really want to delete this notice?')) return;
+		
+	 
+	 var updateData = {};
+
+	 updateData['id'] = id;
+	
+		//alert(id);
+	
+		$.ajax({
+			url: "<{$http_root_www}>factory/delete_notice_info",
+			type: "POST",
+			data: updateData,
+			
+		}).done(function (data) {
+			try {
+				data = JSON.parse(data);
+			} catch (err) {
+				data['msg'] = data;
+			}
+
+			if (data.status == 200) {
+					$("tr[id=notice_"+id+"]").remove();
+			   
+			} else if (data.status == 500) {
+				alert(data.msg);
+				
+				
+			} else {
+				alert(data.msg);
+				
+			}
+		}).fail(function () {
+			
+			alert(data.msg);
+		});
+				
+	
+	
+	
+	
+	}
+	
+	
+	 function generateUrl(id) {
+                return "<{$http_root_www}>factory/notice_edit?id="
+                    + id ;
+            }
+
+            
+	
+	function editNotice(id) {
+	
+	
+	 window.location.href = generateUrl(id);
+	}
+	
+
+	
+	
+	
+	
+
+	function getCurrentNotice(customer_delivery_date){
+	
+	
+	if ($('#notice_list tbody').length > 0) { 
+							
+								$('#notice_list tbody').empty();
+							}
+								
+		$.ajax({
+			  url:"/factory/get_notice_list",
+			  data: {customer_delivery_date:customer_delivery_date},
+			  contentType: "application/json",
+			  dataType: "json",
+			  success:function(data){
+					var data1=data;
+					if(data1.length>0){
+					//alert('ddd');
+							
+							if ($('#notice_list tbody').length > 0) { 
+							
+								$('#notice_list tbody').empty();
+							}
+					
+							var html = '';
+							var dedate='';
+							var scheid='';
+							var running =0;
+							
+							for (var i = 0; i< data1.length ; i++) {
+									
+									running = data1[i]['running'];
+									if(running ==1 ) {
+									
+										$('#notice_list tbody').append("<tr id='notice_"+data1[i]['id']+"'>    <td>"+data1[i]['id']+"</td> <td>"+data1[i]['notice_type']+"</td> <td>"+data1[i]['invoice_start_date_str']+"</td> <td>"+data1[i]['invoice_end_date_str']+"</td><td style='width:300px;word-wrap:break-word;'>"+data1[i]['title']+"</td><td>"+data1[i]['isoninvoice']+"</td>   <td>"+data1[i]['approveStatus']+"</td>  <td style='   background: lightgreen;'>Running</td>"+data1[i]['invocie_sending_closed_str']+"</td>  <td>"+data1[i]['create_userId']+"</td>  <td>"+data1[i]['gen_time']+"</td>       <td><a onclick='editNotice(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteNotice(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+							
+									}else{
+									
+										$('#notice_list tbody').append("<tr id='notice_"+data1[i]['id']+"'>    <td>"+data1[i]['id']+"</td> <td>"+data1[i]['notice_type']+"</td> <td>"+data1[i]['invoice_start_date_str']+"</td> <td>"+data1[i]['invoice_end_date_str']+"</td><td style='width:300px;word-wrap:break-word;'>"+data1[i]['title']+"</td><td>"+data1[i]['isoninvoice']+"</td>   <td>"+data1[i]['approveStatus']+"</td>  <td>"+data1[i]['invocie_sending_closed_str']+"</td>  <td>"+data1[i]['create_userId']+"</td>  <td>"+data1[i]['gen_time']+"</td>       <td><a onclick='editNotice(" + data1[i]['id']+");'>Edit</a></td> <td><a onclick='deleteNotice(" + data1[i]['id']+");'>Delete</a></td> </tr>");
+							
+									}
+								
+							
+								
+							 }
+							//	$('html,body').animate({scrollTop: document.body.scrollHeight},"slow");
+						}else{
+						//alert('no record');
+							if ($('#notice_list tbody').length > 0) { 
+							
+								$('#notice_list tbody').empty();
+							}
+						
+						}
+					
+						
+					},
+					error:function(data){
+						console.log(data);
+					}
+			  
+			})
+	
+	
+	
+	}
+				
+	
+</script>
+
+<script type="text/javascript">
+
+
+
+function addBusinessDeptAddressLink(){
+	
+	var url ='<{$http_root_www}>company/profile?returnLink=newschedule';
+	
+	window.location.href = url;
+	
+	
+	}
+</script>
+
+<{include file='footer.htm'}>
+
+
+</body>
+
+</html>
