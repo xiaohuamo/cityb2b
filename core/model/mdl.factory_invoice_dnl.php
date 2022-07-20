@@ -929,7 +929,7 @@ class OrderInvoice
 
             $notice =$this->notice;
             $this->pdf->Cell(1);
-            $this->pdf->MultiCell(190,6,'Notice: '.$notice,0,'L',0);
+            $this->pdf->MultiCell(190,6,'NOTICE: '.$notice,0,'L',0);
             $this->pdf->Cell(50);
         }
         if(strlen($this->special_info)>0) {
@@ -937,7 +937,7 @@ class OrderInvoice
 
             $special_info =$this->special_info;
             $this->pdf->Cell(1);
-            $this->pdf->MultiCell(190,6,'Special: '.$special_info,0,'L',0);
+            $this->pdf->MultiCell(190,6,'SPECIALS: '.$special_info,0,'L',0);
             $this->pdf->Cell(50);
         }
         $this->pdf->ln();
