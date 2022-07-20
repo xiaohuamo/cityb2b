@@ -3678,6 +3678,7 @@ class ctl_company extends cmsPage
 
 
 	//	}
+
         $mdl_schedule =$this->loadModel('truck_driver_schedule');
         $schedule_list = $mdl_schedule->getDeliveryDateSchedule($this->current_business['id'],$customer_delivery_date);
 
@@ -3838,7 +3839,7 @@ class ctl_company extends cmsPage
       }
 
         $pageSql=$sql . " where " . $whereStr . " order by DATE_FORMAT(from_unixtime(o.logistic_delivery_date),'%Y-%m-%d'),logistic_schedule_id,logistic_stop_No";
-      
+
     // var_dump($pageSql); exit;
             $pageUrl = $this->parseUrl()->set('page');
             $pageSize = 40;
