@@ -54,6 +54,44 @@ class OptimoRoute
 	public function syncOrderOnDate($dateStr,$auto,$schedule_id)
 	{
       //  var_dump($auto);exit;
+     //   $picksList =$this->getPickListOnDeliveryDate($dateStr,0,$schedule_id);
+        if($picksList){
+            foreach ($picksList as $order) {
+                $data = [
+                    "operation" => "SYNC",
+                    "type" => "D",
+                    "orderNo" => $order['orderId'],
+                    "priority"=>substr($order['logistic_priority'],0,1),
+                    "load1" => (int)$order['boxesNumber'],
+                    "date" => date("Y-m-d",$order['logistic_delivery_date']),
+                    "location" => [
+                        "address" => $order['address'],
+                        "acceptPartialMatch"=> true,
+                        "acceptMultipleResults"=>true
+                    ],
+                    "phone" => $order['phone'],
+                    // "email" => $order['email'],
+                    "duration" => 10, //The time in minutes required to unload the goods or perform a task at the given location.
+                    "notes"=> '',
+                    //optimoRoute API 预留自定义字段，需要在optimoRoute后台开启后使用
+                    "customField1" => $order['logistic_sequence_No'], //统配号
+                    "customField2" => $order['logistic_suppliers_info'],
+                    "customField3" => $order['logistic_suppliers_count'],
+                    "customField4" => '',//$order['order_name'], // order name
+                    "customField5" => '',
+                ];
+
+
+                try {
+                    $response = $this->api->syncOrder($data);
+                } catch (Exception $e) {
+                    throw new Exception("Error when upload order ,please check info of address etc of (".$order['orderId']."),then do upload again!:".$e->getMessage(), 1);
+                }
+            }
+        }
+
+
+
         $orders = $this->getOrderOnDeliverDate($dateStr,0,$schedule_id) ;
         if(!$orders){ //if no orders ,return 0
             var_dump('no orders!');exit;
@@ -252,7 +290,55 @@ class OptimoRoute
 		}
 	}
 
-	public function getOrderOnDeliverDate($dateStr,$allorder,$schedule_id)
+   public function getPickListOnDeliveryDate($dateStr,$allorder,$schedule_id)
+    {
+
+        if(!$allorder) {
+            $timestamp = strtotime($dateStr);
+
+            if ($timestamp === false) {
+                throw new Exception("dateStr is not recognized", 1);
+            }
+
+
+
+            $mdl_picking = loadModel('picking');
+            $current_user_id =$this->dispCenterId;
+            $loginUserId =$this->current_business['id'];
+
+            if(!$schedule_id){
+                $sql ="select f.nickname ,cc_picking.*,s.opti_driver_id  from cc_picking  left join  cc_truck_driver_schedule s on cc_picking.business_userId = s.factory_id and cc_picking.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_picking.userId =f.user_id and cc_picking.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='p01'   ";
+
+            }else{
+                $sql ="select f.nickname ,cc_picking.*,s.opti_driver_id  from cc_picking  left join  cc_truck_driver_schedule s on cc_picking.business_userId = s.factory_id and cc_picking.logistic_schedule_id = s.schedule_id  left join cc_user_factory f on cc_picking.userId =f.user_id and cc_picking.business_userId = f.factory_id where logistic_delivery_date =$timestamp and coupon_status='p01'   and s.schedule_id =$schedule_id  ";
+
+            }
+
+            $sql .= " and ( business_userId =$current_user_id  )";
+           // var_dump($sql);exit;
+
+
+
+
+
+            $ubonusOrderList =$mdl_picking->getListBySql($sql);
+
+
+
+
+            foreach ($ubonusOrderList as $key => $value) {
+
+                $ubonusOrderList[$key]['data_source'] = '1'; //data from ubonus
+            }
+
+
+            return $ubonusOrderList;
+
+        }
+    }
+
+
+    public function getOrderOnDeliverDate($dateStr,$allorder,$schedule_id)
 	{
 		
 	if(!$allorder) {

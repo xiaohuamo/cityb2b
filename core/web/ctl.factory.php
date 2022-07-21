@@ -5398,6 +5398,15 @@ public function return_items_submit_to_statment_action() {
                 $this->form_response(600,'please write picking description !');
             }
 
+
+            $picking_address = post('picking_address');
+            if(!$picking_address){
+                $this->form_response(600,'please write picking address !');
+            }
+
+            $first_name = post('first_name');
+
+
             // prepare data
 
             //genrate a order id
@@ -5413,7 +5422,9 @@ public function return_items_submit_to_statment_action() {
                 'createTime'=>time(),
                 'order_name'=>$pick_description,
                 'logistic_sequence_No'=>0,
-                'logistic_delivery_date'=>strtotime($picking_date)
+                'logistic_delivery_date'=>strtotime($picking_date),
+                'address'=>$picking_address,
+                'first_name'=>$first_name
 
            );
 //var_dump($data);exit;
@@ -5958,7 +5969,22 @@ public function return_items_submit_to_statment_action() {
 
 
 
-    public function generate_default_schedule_action(){
+public function get_picking_customer_info_action()
+{
+
+
+    $userId =get2('user_id');
+    //	$date = strtotime($datestr);
+
+    $mdl =$this->loadModel('picking');
+
+    $cusomer_info = $mdl->get_picking_customer_info($this->current_business['id'],$userId);
+    echo json_encode($cusomer_info);
+
+}
+
+
+public function generate_default_schedule_action(){
 
         if(is_post()){
 
@@ -6190,13 +6216,14 @@ public function return_items_submit_to_statment_action() {
             $this->setData($endTime, 'endTime');
             //var_dump('customer id is '.$customer_id. ' and start time is '.$startTime .' and endtime is '. $endTime);exit;
         }
+        //var_dump($customer_id);exit;
         $this->setData($customer_id,'customer_id');
-        $search = trim(get2('search'));
-        $this->setData($search, 'search');
+
+        $pageSql  =$mdl_picking->generatePickingListSql($factoryId,$customer_id,$startTime,$endTime);
 
 
 //var_dump($customer_id);exit;
-        $pageSql = "select * from cc_picking where business_userId=$factoryId order by id desc";
+
        // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
        //  var_dump($pageSql);exit;
         $pageUrl = $this->parseUrl()->set('page');
