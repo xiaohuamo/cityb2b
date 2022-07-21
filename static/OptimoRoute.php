@@ -54,12 +54,15 @@ class OptimoRoute
 	public function syncOrderOnDate($dateStr,$auto,$schedule_id)
 	{
       //  var_dump($auto);exit;
-     //   $picksList =$this->getPickListOnDeliveryDate($dateStr,0,$schedule_id);
+       $picksList =$this->getPickListOnDeliveryDate($dateStr,0,$schedule_id);
         if($picksList){
             foreach ($picksList as $order) {
+                if(!$order['phone']){
+                    $order['phone']='111';
+                }
                 $data = [
                     "operation" => "SYNC",
-                    "type" => "D",
+                    "type" => "P",
                     "orderNo" => $order['orderId'],
                     "priority"=>substr($order['logistic_priority'],0,1),
                     "load1" => (int)$order['boxesNumber'],
@@ -75,8 +78,8 @@ class OptimoRoute
                     "notes"=> '',
                     //optimoRoute API 预留自定义字段，需要在optimoRoute后台开启后使用
                     "customField1" => $order['logistic_sequence_No'], //统配号
-                    "customField2" => $order['logistic_suppliers_info'],
-                    "customField3" => $order['logistic_suppliers_count'],
+                    "customField2" => '0',
+                    "customField3" => '1',
                     "customField4" => '',//$order['order_name'], // order name
                     "customField5" => '',
                 ];
@@ -513,11 +516,9 @@ class OptimoRoute
 	public function syncRoutesDownOnDeliverDate($dateStr,$factory_id)
 	{	
 		$mdl_order = loadModel('order');
+        $mdl_picking = loadModel('picking');
 		$mdl_order_import = loadModel('order_import');
         $mdl_schedule =loadModel('truck_driver_schedule');
-
-
-
 
 		$routes = $this->api->getRoutes($dateStr);
 
@@ -570,7 +571,14 @@ class OptimoRoute
 				$where = [
 					'orderId' => $stop->orderNo
 				];
-				$mdl_order->updateByWhere($data, $where);
+                // if check the first letter of order id is p , then update picking status
+
+                if(substr($stop->orderNo,0,1)=='p'){
+                    $mdl_picking->updateByWhere($data, $where);
+                }else{
+                    $mdl_order->updateByWhere($data, $where);
+                }
+
 				
 				// add cc_order_import 的路程更新
 				$where1 = [
