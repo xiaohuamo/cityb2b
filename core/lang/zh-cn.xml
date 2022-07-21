@@ -37,6 +37,12 @@
     <ubonus_legal_name>Cityb2b</ubonus_legal_name>
 	<confirm_update_delivery_date>确认修改配送日期?</confirm_update_delivery_date>
 	
+	<picking_management>取货管理 </picking_management>
+	<add_picking>新增取货 </add_picking>
+	<picking_list>取货列表 </picking_list>
+		
+		
+	
 	<approved>已审核</approved>
 	
 	<unapproved>未审核</unapproved>

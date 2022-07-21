@@ -5373,6 +5373,84 @@ public function return_items_submit_to_statment_action() {
         $this->setData('customer_management', 'menu');
         $this->display('factory/customer_list_recycle');
     }
+    public function picking_add_action(){
+
+
+
+        if(is_post()){
+
+
+           //接受这几个值，如果没填，需要提示
+
+            $customer_id = post('customer_id');
+            if(!$customer_id){
+                $this->form_response(600,'please choose customer !');
+            }
+
+            $picking_date = post('picking_date');
+            if(!$picking_date){
+                $this->form_response(600,'please choose picking date !');
+            }
+
+
+            $pick_description = post('pick_description');
+            if(!$pick_description){
+                $this->form_response(600,'please write picking description !');
+            }
+
+            // prepare data
+
+            //genrate a order id
+            $orderId ='234324234234234234';
+            // generate a logistic seq number
+            $logistic_sequence_No =34;
+
+
+            $data =array(
+                'orderId'=>'p',
+                'userId'=>$customer_id,
+                'business_userId'=>$this->current_business['id'],
+                'createTime'=>time(),
+                'order_name'=>$pick_description,
+                'logistic_sequence_No'=>0,
+                'logistic_delivery_date'=>strtotime($picking_date)
+
+           );
+//var_dump($data);exit;
+            // insert data
+            $mdl_picking =$this->loadModel('picking');
+
+             if( $new_id = $mdl_picking->insert($data)) {
+               $data =array(
+                   'orderId'=>'p'.$new_id
+               );
+               $mdl_picking->update($data,$new_id);
+               $this->form_response(200,'Saved');
+           }else{
+               $this->form_response(500,'some error ,please contact admin!');
+           }
+
+
+
+        }else{
+
+
+            $mdl_user_factory =$this->loadModel('user_factory');
+
+            $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+
+            $this->setData($factoryList, 'factoryUsers');
+
+            $this->setData('picking_add', 'submenu_top');
+            $this->setData('picking_add', 'submenu');
+            $this->setData('online_center', 'menu');
+            $this->setData('Picking management - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('factory/picking_add');
+
+        }
+
+
+    }
 
     public function add_new_payment_action(){
 
@@ -6078,6 +6156,74 @@ public function return_items_submit_to_statment_action() {
         echo json_encode($item_area_info);
     }
 
+    public function picking_list_action(){
+
+
+
+
+        $mdl_user_factory = $this->loadModel('user_factory');
+        $mdl_picking = $this->loadModel('picking');
+
+        $factoryId =  $this->current_business['id'];
+        $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+        $this->setData($factoryList, 'factoryUsers');
+
+        $this->setData('transcations', 'submenu');
+        $this->setData('account_management', 'menu');
+
+
+        if(is_post()) {
+
+            $customer_id = post('customer_id');
+            $startTime=post('startTime');
+            $endTime=post('endTime');
+            $this->setData($startTime, 'startTime');
+            $this->setData($endTime, 'endTime');
+            $this->setData($customer_id, 'customer_id');
+
+        }else{
+            $customer_id=get2('customer_id');
+            $startTime=get2('startTime');
+            $endTime=get2('endTime');
+
+            $this->setData($startTime, 'startTime');
+            $this->setData($endTime, 'endTime');
+            //var_dump('customer id is '.$customer_id. ' and start time is '.$startTime .' and endtime is '. $endTime);exit;
+        }
+        $this->setData($customer_id,'customer_id');
+        $search = trim(get2('search'));
+        $this->setData($search, 'search');
+
+
+//var_dump($customer_id);exit;
+        $pageSql = "select * from cc_picking where business_userId=$factoryId order by id desc";
+       // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
+       //  var_dump($pageSql);exit;
+        $pageUrl = $this->parseUrl()->set('page');
+        $pageSize = 40;
+        $maxPage = 10;
+        $page = $this->page($pageSql, $pageUrl, $pageSize, $maxPage);
+
+        $data = $mdl_picking->getListBySql($page['outSql']);
+
+
+        if($data) {
+
+            $this->setData($data, 'data');
+        }
+
+
+
+        $this->setData('picking_list', 'submenu_top');
+        $this->setData('picking_add', 'submenu');
+        $this->setData('online_center', 'menu');
+        $this->setData('Picking List - Business Center' . $this->site['pageTitle'], 'pageTitle');
+        $this->setData($page['pageStr'], 'pager');
+        $this->display('factory/picking_list');
+
+
+
+    }
     public function transcations_action(){
 
         $returnPage =get2('returnPage');
@@ -6124,8 +6270,8 @@ public function return_items_submit_to_statment_action() {
 
 //var_dump($customer_id);exit;
         $pageSql = $mdl_statement->getStatementTranscationsSql($factoryId, $customer_id,$search,$startTime,$endTime);
-       // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
-       //  var_dump($pageSql);exit;
+        // $data = $mdl_statement->getStatementTranscations($factoryId, $customer_id,$search,$startTime,$endTime);
+        //  var_dump($pageSql);exit;
         $pageUrl = $this->parseUrl()->set('page');
         $pageSize = 40;
         $maxPage = 10;
@@ -6136,7 +6282,7 @@ public function return_items_submit_to_statment_action() {
 
         if($data) {
             if ($viewPdf){
-               // var_dump($data);exit;
+                // var_dump($data);exit;
                 $result = $this->generate_customer_temp_statement($customer_id, $data, $startTime, $endTime);
 
                 if ($result) {
@@ -6159,7 +6305,6 @@ public function return_items_submit_to_statment_action() {
 
 
     }
-
 
     public function customer_price_management_action() {
         $mdl_user_factory = $this->loadModel('user_factory');

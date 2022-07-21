@@ -2779,7 +2779,7 @@ class ctl_company extends cmsPage
     }
 
     public function test_customer_coupon_approving_action(){
-        $this->_customer_coupon_approving('20220415010709228262');
+        $this->_customer_coupon_approving('20220720094548124661');
 }
     function customer_coupon_approving_action()
     {
@@ -2909,7 +2909,7 @@ class ctl_company extends cmsPage
         if ($order['business_userId'] != $this->loginUser['id'] && (strpos($staff_id, $this->loginUser['id']) == false && $this->loadModel('redeem_staff')->isRedeemStaff($this->loginUser['id']) == false)) {
 
             // $this->sheader(null,'操作员工既不是商家本人，也不是门店员工，也不是兑付员工，尝试非法操作！终止');
-            throw new Exception("操作员工既不是商家本人，也不是门店员工，也不是兑付员工，尝试非法操作！终止", 1);
+            throw new Exception("no access", 1);
         }
 */
         if ($order['coupon_status'] != 'c01') {
@@ -2932,7 +2932,7 @@ class ctl_company extends cmsPage
 				);
 				$mdl_order->update($order_update_data,$order['id']);
 			}
-			
+
 			$mdl_order->begin();
 
 			/**
@@ -3001,8 +3001,12 @@ class ctl_company extends cmsPage
 
             $mdl_statement->insert($data);
 
+
+
+
             //生成Invocie数据
             $fileattr = $this->order_invoice($orderId,'fileCC');
+
             $filenameWithPath =$fileattr['filePath'].$fileattr['fileName'];
             $data_invoice=array(
                 'factory_id'=>$order['business_userId'],

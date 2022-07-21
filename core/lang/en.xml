@@ -27,6 +27,12 @@
 	<logistic_schedule_time1>Orders Logisti schedule</logistic_schedule_time1>
 	<approved>approved</approved>
 	
+	<picking_management>Picking </picking_management>
+	<add_picking>Add Picking </add_picking>
+	<picking_list>Picking List </picking_list>
+	
+	 
+	
 	<unapproved>unapproved</unapproved>
 	
 	<confirm_update_delivery_date>Confirm to update delivery date?</confirm_update_delivery_date>

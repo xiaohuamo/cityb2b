@@ -419,6 +419,8 @@ public function data_refresh(){
 
 public function sendInvoice($fileattr,$mdl_order,$mdl_user,$orderId) {
         //写入invoice数据
+
+
         if($fileattr) {
 
 
@@ -999,7 +1001,7 @@ public function AgentActiveCheck($id,$agentId){
             if($this->current_business['logo']) {
                 $report->logoPath(UPLOAD_PATH . $this->current_business['logo']);
             }
-
+var_dump( $this->current_business['logo']);exit;
             $user['address']=$order['address'];
             $report->setTotalAmount($totalAmount);
             if($user_code_rec['account_type']=='COD') {
