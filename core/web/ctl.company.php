@@ -4826,7 +4826,7 @@ class ctl_company extends cmsPage
             $this->cancel_customer_coupon('cancelByBusiness',$orderId);
         }
 
-        $this->sheader(HTTP_ROOT_WWW.'company/customer_order_detail?id='.$orderId );
+        $this->sheader(HTTP_ROOT_WWW.'factory/customer_order_detail?id='.$orderId );
     }
 
     function update_order_status_paid_action()

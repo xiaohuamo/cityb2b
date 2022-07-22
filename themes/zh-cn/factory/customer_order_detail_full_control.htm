@@ -458,7 +458,11 @@
 										<{/if}>
 									</td>
 								 <td>
+								 <{if $data.coupon_status=='c01'}>
 										<a onclick ="if(confirm('Delete item ?')==false)return; window.location.replace('<{$http_root_www}>factory/order_details_delete?item_id=<{$item.id}>&order_id=<{$data.orderId}>');">delete</a>
+									<{else}>
+									-
+									<{/if}>
 									</td>
 									
 								</tr>
