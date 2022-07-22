@@ -16,10 +16,11 @@
 	
 		<script src="<{$SKIN_PATH}>/js/axios.min.js"></script>
 		<script src="<{$SKIN_PATH}>/js/vue.min.js"></script>
+<script src="<{$SKIN_PATH}>/js/vue-lazyload.js"></script> 
 
-		<!--<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script> -->
+		<!--		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script> -->
 
-		
+	<!--		<script src="https://unpkg.com/vue-lazyload@1.3.3/vue-lazyload.js"></script> -->
 
 		<script>
 		  Vue.use(VueLazyload)
@@ -202,13 +203,13 @@
 
 						</div>
 						<div :class="layout?'':'flexBox3'">
-						<!--
+						
 							<img v-lazy="item2.menu_pic_300"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
 							<img v-lazy="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
-						-->	
+							<!--
 							<img :src="item2.menu_pic_300"  :class="layout?'cartImg2':'cartImgLarge'" @click="clickGoods" v-if="isLargeScreen"/>
 							<img :src="item2.menu_pic"  :class="layout?'cartImg2':'cartImg'" @click="clickGoods" v-else/>
-							
+							-->
 							<div   class="goodInfo2_">
 								<div >{{item2.title}}</div><div class ="f28 pa5-0" v-if="(CheckChinese(this.searchCon) || !isLanguageEn) && (item2.title.toUpperCase() !=item2.title_cn.toUpperCase()) ">{{item2.title_cn}}</div>
 								<div class="flexBox1 pa5-0 " >Code:{{item2.menu_id}}&nbsp;&nbsp;{{item2.unit_en}} </div>
@@ -812,7 +813,7 @@
 
 				// 获得当前客户可以下单的日期列表显示，
 				this.businessDispSchedule=JSON.parse('<{$businessDispSchedule}>');
-                console.log(this.businessDispSchedule);
+            //--    console.log(this.businessDispSchedule);
 			//	this.checkcookievalue();
 			//	console.log('current cookie is :'. getCookie('DispCenterUserSelectedDeliveryDate'));
 
@@ -917,7 +918,7 @@
 					  .then(function (response) {
 					   self.goodsList2 = response.data;
                        self.oldGoodsList2 =response.data;
-					   console.log(self.goodsList2);
+					//--   console.log(self.goodsList2);
 					 })
 					  .catch(function (error) {
 						 console.log(error);
