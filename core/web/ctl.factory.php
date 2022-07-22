@@ -5441,7 +5441,7 @@ public function return_items_submit_to_statment_action() {
             // generate a logistic seq number
 
 
-
+           // var_dump($picking_date);exit;
             $data =array(
                 'createTime'=>time(),
                 'order_name'=>$pick_description,

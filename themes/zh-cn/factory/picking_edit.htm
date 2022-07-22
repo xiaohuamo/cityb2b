@@ -109,7 +109,7 @@
 								<span id="close-customer-select-modal"></span>
 							<span><label><{$lang->select_customer}></label></span>	
 								
-								<select class="customer-select" name="customer_id"  onchange="getCurrentCustomerInfo(this)">
+								<select <{if $data.coupon_status!='p01'}> disabled <{/if}> class="customer-select" name="customer_id"  onchange="getCurrentCustomerInfo(this)">
 									<option value="">
 									</option>
 									<{foreach from=$factoryUsers item=user}>
@@ -161,14 +161,25 @@
 					<div class="input-box clearfix">	
 
 								<span><label>Picking Date</label></span>	
+								
+								<{if $data.coupon_status=='p01'}>
+									<input type="text" class="input-text" style="width:150px;" id="st" name="picking_date" value="<{date('Y-m-d',$data.logistic_delivery_date)}>"   onclick="WdatePicker();" onfocus="WdatePicker();">
 
-								<input type="text" class="input-text" style="width:150px;" id="st" name="picking_date" value="<{date('Y-m-d',$data.logistic_delivery_date)}>"  onChange ="dateChange(this);" onclick="WdatePicker();" onfocus="WdatePicker();">
+								
+								<{else}> 
 
+								<span><{date('Y-m-d',$data.logistic_delivery_date)}></span>
+
+								<{/if}>
+							
+							
+
+								
 					</div>	
 					
 						<div class="input-box clearfix">	
 									<span><label>Schdule </label></span>
-									<select id="logistic_schedule_id" name='logistic_schedule_id' data-schedule_status ='<{$item.schedule_status}>' data-id='<{$item.id}>'>
+									<select <{if $data.coupon_status!='p01'}>disabled  <{/if}> id="logistic_schedule_id" name='logistic_schedule_id' data-schedule_status ='<{$item.schedule_status}>' data-id='<{$item.id}>'>
 													<option value='0'>Choose Schedue  </option>
                                                     <{foreach from=$schedule_list item=sitem1}>
 														<option  value='<{$sitem1.id}>'
@@ -193,11 +204,11 @@
 								<div class="input-box multi-select clearfix">
 
 								<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	提货描述 <{else}>Description <{/if}></label></span>
-								
+									<{if $data.coupon_status=='p01'}>			
 								<textarea name="pick_description"   cols="40"   rows="3"   style="width:80%; margin-right:5px;OVERFLOW:   hidden"><{$data.order_name}></textarea>
 								
 								 <em> <{if $langStr == 'zh-cn'}> 	小于400个字符 <{else}> less than 400 characters  <{/if}></em>
-					
+								<{else}>  <span><{$data.order_name}></span>	<{/if}>
 					
 							 </div>
 							 
@@ -206,24 +217,25 @@
 
 					
 								<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	提货地址 <{else}>address <{/if}></label></span>
-								
+							
+								<{if $data.coupon_status=='p01'}>							
 								<input type="text" class="input-text" style="width:70%" name="picking_address" id="picking_address" value="<{$data.address}>"><br>
 
 								
 								 <em> <{if $langStr == 'zh-cn'}> 	该客户最后下单的送货地址 <{else}> lastest delivery address of select customer  <{/if}></em>
-					
+								<{else}>  <span><{$data.address}></span>	<{/if}>
 					
 							 </div>
 							 
 							 <div   class="input-box multi-select clearfix">
-
-					
 								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	联系人 <{else}>contact person <{/if}></label></span>
+							<{if $data.coupon_status=='p01'}>
+								
 								
 								<input type="text" class="input-text " style="width:70%" name="first_name" id="first_name" value="<{$data.first_name}>">
 
 								
-								
+							<{else}>  <span><{$data.first_name}></span>	<{/if}>
 					
 					
 							 </div>
@@ -241,7 +253,7 @@
 												</select>
 
 								<{else if $data.coupon_status=='d01'}>
-								<span>Cancelled </span>
+									<span>Cancelled </span>
 								<{else}>
 									<span>Picked </span>
 								<{/if}>
@@ -251,11 +263,22 @@
 							 </div>
 							 
 							 <div   class="input-box multi-select clearfix">
+							 <span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	电话 <{else}>Phone <{/if}></label></span>
 
-					
-								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	电话 <{else}>Phone <{/if}></label></span>
+								<{if $data.coupon_status=='p01'}>
+									
+									<input type="text" class="input-text " style="width:70%" name="phone" id="phone" value="<{$data.phone}>">
+									
+								<{else}>  
 								
-								<input type="text" class="input-text " style="width:70%" name="phone" id="phone" value="" ">
+									<span><{$data.first_name}></span>
+
+
+							   <{/if}>
+					
+					
+					
+							
 				
 					
 							 </div>
@@ -266,7 +289,19 @@
 
 							<div class="input-box input-submit clearfix">		
 
-								<button type="submit" style='float:left'>SAVE </button>	
+								<{if $data.coupon_status=='p01'}>
+								
+									<button type="submit" style='float:left'>SAVE </button>	
+								
+								<{else}>  
+								    <button type="button" onclick ='window.location.href="<{$http_root_www}>factory/picking_list" '  style='float:left'>Return </button>	
+								
+
+								<{/if}>
+					
+					
+					
+							
 
 					
 
