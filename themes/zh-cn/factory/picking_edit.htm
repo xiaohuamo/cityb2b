@@ -1,0 +1,329 @@
+<!doctype html><html><head>
+
+<meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{$pageTitle}></title>
+
+<{if $pageKeywords}><meta name="keywords" content="<{$pageKeywords}>" /><{/if}>
+
+<{if $pageDescription}><meta name="description" content="<{$pageDescription}>" />
+
+<{/if}>
+
+<link rel="stylesheet" type="text/css" href="<{$SKIN_PATH}>css/web_global.css" />
+
+<script type="text/javascript" src="<{$SKIN_PATH}>js/jquery-1.8.2.min.js"></script>
+
+<!--[if lt IE 7]><script src="<{$SKIN_PATH}>js/iepng.js"></script><![endif]-->
+<script type="text/javascript" language="javascript" src="<{$STATIC_PATH}>DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 99; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        height: 100%;
+        line-height: 50px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    /* The Close Button */
+    #close-customer-select-modal {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    #close-customer-select-modal:hover,
+    #close-customer-select-modal:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<style>	
+
+.main-form .input-box span label { width:200px; }
+
+</style>
+
+</head>
+
+<body>
+
+	<{include file='header.htm'}>
+
+	<div class="container">	
+
+		<div class="wrap clearfix">	
+
+			<{include file='company/side.htm'}>	
+
+			<div class="main">	
+
+				<div class="box2">	
+				<{include file='company/side_picking_menu_top.htm'}>
+				<div class="colCurTit">
+					<{$lang->add_picking}>
+				 
+				 
+				</div>
+
+
+					<div class="main-form">			
+
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/picking_edit" enctype="multipart/form-data" method="post" target="post_frame">
+
+							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
+							<input type="hidden" name="id" class="input-text" value="<{$data.id}>" />
+							
+
+						<div class="input-box clearfix">	
+							
+
+						
+								<span id="close-customer-select-modal"></span>
+							<span><label><{$lang->select_customer}></label></span>	
+								
+								<select class="customer-select" name="customer_id"  onchange="getCurrentCustomerInfo(this)">
+									<option value="">
+									</option>
+									<{foreach from=$factoryUsers item=user}>
+										<{if $user['approved'] == 1}>
+										<option value="<{$user['id']}>" <{if $customer_id == $user['id']}>selected <{/if}>>
+											<{$user['id']}>-<{$user['code']}>(<{$user['displayName']}>)&nbsp;(<{$user['phone']}>)
+										</option>
+
+										<{/if}>
+									<{/foreach}>
+								</select>
+								<p>&nbsp;</p>
+							
+
+						</div>
+
+						<script>
+
+							var closeCustomerSelect = document.getElementById("close-customer-select-modal");
+
+							// When the user clicks on <span> (x), close the modal
+							closeCustomerSelect.onclick = function() {
+								showCustomerSelectModal(false);
+							}
+
+							// Get the modal
+							function showCustomerSelectModal(show) {
+								var selectCustomerModal = document.getElementById("customer-modal");
+								if(show) {
+									selectCustomerModal.style.display = "block";
+								} else {
+									selectCustomerModal.style.display = "none";
+								}
+							}
+
+							function changeCustomer(select) {
+							//	window.location.href= `<{$http_root_www}>factorypage/order_for_customer?user_id=${select.value}`;
+							
+							}
+
+							$(document).ready(function() {
+								$('.customer-select').select2();
+								<{if !$userId}>
+								showCustomerSelectModal(true);
+								<{/if}>
+							});
+						</script>
+
+					<div class="input-box clearfix">	
+
+								<span><label>Picking Date</label></span>	
+
+								<input type="text" class="input-text" style="width:150px;" id="st" name="picking_date" value="<{date('Y-m-d',$data.logistic_delivery_date)}>"  onChange ="dateChange(this);" onclick="WdatePicker();" onfocus="WdatePicker();">
+
+					</div>	
+					
+						<div class="input-box clearfix">	
+									<span><label>Schdule </label></span>
+									<select id="logistic_schedule_id" name='logistic_schedule_id' data-schedule_status ='<{$item.schedule_status}>' data-id='<{$item.id}>'>
+													<option value='0'>Choose Schedue <{$data.logistic_schedule_id}> </option>
+                                                    <{foreach from=$schedule_list item=sitem1}>
+														<option  value='<{$sitem1.id}>'
+                                                                <{if $data.logistic_schedule_id==$sitem1.schedule_id}>selected<{/if}>>
+																	<{$sitem1.start_hour}>-<{if $sitem1.driverName}><{$sitem1.driverName}>-<{/if}>
+                                                            <{$sitem1.truck_id}>-<{$sitem1.truck_name}>-<{$sitem1.schedule_id}>
+
+														</option>
+                                                    <{/foreach}>
+												</select>
+											
+									
+									
+									<!-- <{$item.logistic_truck_No}> -->
+									
+									
+									
+								</div>	
+
+						<div class="input-box clearfix">	
+
+								<div class="input-box multi-select clearfix">
+
+								<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	提货描述 <{else}>Description <{/if}></label></span>
+								
+								<textarea name="pick_description"   cols="40"   rows="3"   style="width:80%; margin-right:5px;OVERFLOW:   hidden"><{$data.order_name}></textarea>
+								
+								 <em> <{if $langStr == 'zh-cn'}> 	小于400个字符 <{else}> less than 400 characters  <{/if}></em>
+					
+					
+							 </div>
+							 
+
+							<div id = 'address_box'  class="input-box multi-select clearfix">
+
+					
+								<span><label style ="vertical-align: top;"> <{if $langStr == 'zh-cn'}> 	提货地址 <{else}>address <{/if}></label></span>
+								
+								<input type="text" class="input-text" style="width:70%" name="picking_address" id="picking_address" value="<{$data.address}>"><br>
+
+								
+								 <em> <{if $langStr == 'zh-cn'}> 	该客户最后下单的送货地址 <{else}> lastest delivery address of select customer  <{/if}></em>
+					
+					
+							 </div>
+							 
+							 <div   class="input-box multi-select clearfix">
+
+					
+								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	联系人 <{else}>contact person <{/if}></label></span>
+								
+								<input type="text" class="input-text " style="width:70%" name="first_name" id="first_name" value="<{$data.first_name}>">
+
+								
+								
+					
+					
+							 </div>
+							 <div   class="input-box multi-select clearfix">
+
+					
+								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	电话 <{else}>Phone <{/if}></label></span>
+								
+								<input type="text" class="input-text " style="width:70%" name="phone" id="phone" value="" ">
+				
+					
+							 </div>
+				
+
+
+
+
+							<div class="input-box input-submit clearfix">		
+
+								<button type="submit" style='float:left'>SAVE </button>	
+
+					
+
+							</div>		
+
+
+							
+
+						</form>	
+
+						<iframe id="post_frame" name="post_frame" width="0" height="0" frameborder="0" scrolling="no" style="display:none;"></iframe>				
+						<script type="text/javascript" src="<{$SKIN_PATH}>js/form_response.js"></script>
+
+					</div>		
+
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</div><{include file='footer.htm'}>
+	
+	
+	<script type="text/javascript">
+	
+	function  dateChange(obj) {
+	
+		$('#logistic_schedule_id').val(0);
+		$('#logistic_schedule_id').attr("disabled",true);
+	
+	
+	}
+	
+	function getCurrentCustomerInfo(obj){
+	
+	var user_id =$(obj).val();
+	
+	//alert(user_id);
+		$.ajax({
+			  url:"/factory/get_picking_customer_info",
+			  data: {user_id:user_id},
+			  contentType: "application/json",
+			  dataType: "json",
+			  success:function(data){
+					var data1=data;
+					
+					if(data1){
+						
+						$('#picking_address').val(data1.address);
+						$('#first_name').val(data1.first_name);
+						$('#phone').val(data1.phone);
+					//	alert(data1.address);
+					
+					}else{
+					   alert('no order records find for this customer !');
+					
+					}
+					
+					
+					
+						
+						
+					
+						
+					},
+					error:function(data){
+						console.log(data);
+					}
+			  
+			})
+	
+	
+	
+	}
+				
+	
+</script>
+	
+	
+	</body></html>
