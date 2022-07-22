@@ -5458,7 +5458,7 @@ public function return_items_submit_to_statment_action() {
 
             if(  $mdl_picking->update($data,$id)) {
 
-                $this->form_response(200,'Saved');
+                $this->form_response(200,'Saved',HTTP_ROOT_WWW."factory/picking_list");
             }else{
                 $this->form_response(500,'some error ,please contact admin!');
             }
@@ -5553,7 +5553,7 @@ public function return_items_submit_to_statment_action() {
                    'orderId'=>'p'.$new_id
                );
                $mdl_picking->update($data,$new_id);
-               $this->form_response(200,'Saved');
+               $this->form_response(200,'Saved',HTTP_ROOT_WWW."factory/picking_list");
            }else{
                $this->form_response(500,'some error ,please contact admin!');
            }
