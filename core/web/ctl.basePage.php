@@ -1001,7 +1001,7 @@ public function AgentActiveCheck($id,$agentId){
             if($this->current_business['logo']) {
                 $report->logoPath(UPLOAD_PATH . $this->current_business['logo']);
             }
-var_dump( $this->current_business['logo']);exit;
+//var_dump( $this->current_business['logo']);exit;
             $user['address']=$order['address'];
             $report->setTotalAmount($totalAmount);
             if($user_code_rec['account_type']=='COD') {
