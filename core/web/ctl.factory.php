@@ -5374,13 +5374,6 @@ public function return_items_submit_to_statment_action() {
         $this->display('factory/customer_list_recycle');
     }
 
-    public function picking_edit1_action(){
-        if(is_post()){
-            $this->form_response(200,"22222Saved",HTTP_ROOT_WWW."factory/picking_list");
-        }
-
-    }
-
     public function picking_edit_action(){
 
 
