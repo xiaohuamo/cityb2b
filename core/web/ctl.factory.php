@@ -5374,6 +5374,13 @@ public function return_items_submit_to_statment_action() {
         $this->display('factory/customer_list_recycle');
     }
 
+    public function picking_edit1_action(){
+        if(is_post()){
+            $this->form_response(200,"22222Saved",HTTP_ROOT_WWW."factory/picking_list");
+        }
+
+    }
+
     public function picking_edit_action(){
 
 
@@ -5432,7 +5439,7 @@ public function return_items_submit_to_statment_action() {
 
             $first_name = post('first_name');
             $phone = post('phone');
-
+            $coupon_status = post('coupon_status');
 
             // prepare data
 
@@ -5449,7 +5456,8 @@ public function return_items_submit_to_statment_action() {
                 'address'=>$picking_address,
                 'first_name'=>$first_name,
                 'phone'=>$phone,
-                'logistic_schedule_id'=>$logistic_schedule_id
+                'logistic_schedule_id'=>$logistic_schedule_id,
+                'coupon_status'=>$coupon_status
 
             );
 //var_dump($data);exit;
@@ -5457,8 +5465,8 @@ public function return_items_submit_to_statment_action() {
 
 
             if(  $mdl_picking->update($data,$id)) {
-
-                $this->form_response(200,'Saved',HTTP_ROOT_WWW."factory/picking_list");
+              //  $this->sheader(HTTP_ROOT_WWW."factory/picking_list");
+                $this->form_response(200,"Saved",HTTP_ROOT_WWW."factory/picking_list");
             }else{
                 $this->form_response(500,'some error ,please contact admin!');
             }

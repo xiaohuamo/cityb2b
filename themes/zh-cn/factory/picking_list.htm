@@ -206,7 +206,7 @@
 									<td><{date('Y-m-d', $item.createTime)}></td>
 									<td><{date('Y-m-d', $item.logistic_delivery_date)}></td>
 									<td style='width:300px; word-wrap:break-word;'><{$item.order_name}></td>
-									<td><{$item.coupon_status}></td>
+									<td><{if $item.coupon_status =='p01'}>Waiting Pick <{elseif $item.coupon_status =='d01'}>Cancelled <{else}>Picked<{/if}></td>
 									<td style='width:150px; word-wrap:break-word;'><{$item.address}></td>
 									<td><{$item.first_name}></td>
 									<td><a href ="<{$http_root_www}>factory/picking_edit?id=<{$item.id}>" >Edit</a></td>

@@ -96,7 +96,7 @@
 
 					<div class="main-form">			
 
-						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/picking_edit" enctype="multipart/form-data" method="post" target="post_frame">
+						<form id="memberForm" class='form-style-green' action="<{$http_root_www}>factory/picking_edit1" enctype="multipart/form-data" method="post" target="post_frame">
 
 							<input type="hidden" name="customer_id" class="input-text" value="<{$customer_id}>" />
 							<input type="hidden" name="id" class="input-text" value="<{$data.id}>" />
@@ -169,7 +169,7 @@
 						<div class="input-box clearfix">	
 									<span><label>Schdule </label></span>
 									<select id="logistic_schedule_id" name='logistic_schedule_id' data-schedule_status ='<{$item.schedule_status}>' data-id='<{$item.id}>'>
-													<option value='0'>Choose Schedue <{$data.logistic_schedule_id}> </option>
+													<option value='0'>Choose Schedue  </option>
                                                     <{foreach from=$schedule_list item=sitem1}>
 														<option  value='<{$sitem1.id}>'
                                                                 <{if $data.logistic_schedule_id==$sitem1.schedule_id}>selected<{/if}>>
@@ -227,6 +227,29 @@
 					
 					
 							 </div>
+							 
+							 <div   class="input-box multi-select clearfix">
+
+					
+								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	取货状态 <{else}>status <{/if}> <{$data.coupon_status}></label></span>
+								<{if $data.coupon_status=='p01'}>
+								
+								<select  name='coupon_status' >
+													<option value='p01' <{if $data.coupon_status=='p01'}> selected<{/if}> > Waiting Pick up </option>
+                                                    <option value='d01'  <{if $data.coupon_status=='d01'}> selected<{/if}> >Cancelled </option>
+											   <option value='b01'  <{if $data.coupon_status=='b01'}> selected<{/if}> >Picked </option>
+												</select>
+
+								<{else if $data.coupon_status=='d01'}>
+								<span>Cancelled </span>
+								<{else}>
+									<span>Picked </span>
+								<{/if}>
+								
+					
+					
+							 </div>
+							 
 							 <div   class="input-box multi-select clearfix">
 
 					
