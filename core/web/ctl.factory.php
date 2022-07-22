@@ -5373,6 +5373,121 @@ public function return_items_submit_to_statment_action() {
         $this->setData('customer_management', 'menu');
         $this->display('factory/customer_list_recycle');
     }
+
+    public function picking_edit_action(){
+
+
+        if(is_post()){
+            $id =trim(post('id'));
+        }else{
+            $id =get2('id');
+        }
+        $mdl_picking =$this->loadModel('picking');
+        $picking_rec =$mdl_picking->get($id);
+
+        if($picking_rec['business_userId']!=$this->current_business['id']){
+            $this->form_response(600,'no access !');
+        }
+        $this->setData($id,'id');
+        $this->setData($picking_rec,'data');
+        $this->setData($picking_rec['userId'],'customer_id');
+
+        $mdl_schedule =$this->loadModel('truck_driver_schedule');
+        $customer_delivery_date =date('Y-m-d',$picking_rec['logistic_delivery_date']);
+      //  var_dump($customer_delivery_date);exit;
+        $schedule_list = $mdl_schedule->getDeliveryDateSchedule($this->current_business['id'],$customer_delivery_date);
+
+        // var_dump($schedule_list);exit;
+
+        $this->setData($schedule_list,'schedule_list');
+
+        if(is_post()){
+
+
+            //接受这几个值，如果没填，需要提示
+
+            $customer_id = post('customer_id');
+            if(!$customer_id){
+                $this->form_response(600,'please choose customer !');
+            }
+
+            $picking_date = post('picking_date');
+            if(!$picking_date){
+                $this->form_response(600,'please choose picking date !');
+            }
+
+
+            $pick_description = post('pick_description');
+            if(!$pick_description){
+                $this->form_response(600,'please write picking description !');
+            }
+
+
+            $logistic_schedule_id = post('logistic_schedule_id');
+//var_dump($logistic_schedule_id);exit;
+            $picking_address = post('picking_address');
+            if(!$picking_address){
+                $this->form_response(600,'please write picking address !');
+            }
+
+            $first_name = post('first_name');
+            $phone = post('phone');
+
+
+            // prepare data
+
+            //genrate a order id
+            $orderId ='234324234234234234';
+            // generate a logistic seq number
+
+
+
+            $data =array(
+                'createTime'=>time(),
+                'order_name'=>$pick_description,
+                'logistic_delivery_date'=>strtotime($picking_date),
+                'address'=>$picking_address,
+                'first_name'=>$first_name,
+                'phone'=>$phone,
+                'logistic_schedule_id'=>$logistic_schedule_id
+
+            );
+//var_dump($data);exit;
+            // insert data
+
+
+            if(  $mdl_picking->update($data,$id)) {
+
+                $this->form_response(200,'Saved');
+            }else{
+                $this->form_response(500,'some error ,please contact admin!');
+            }
+
+
+
+        }else{
+
+            //get the schedule info for certain picking id
+
+
+
+            $mdl_user_factory =$this->loadModel('user_factory');
+
+            $factoryList = $mdl_user_factory->getUserFactoryList($this->current_business['id'],null,0);
+
+            $this->setData($factoryList, 'factoryUsers');
+
+            $this->setData('picking_add', 'submenu_top');
+            $this->setData('picking_list', 'submenu');
+            $this->setData('online_center', 'menu');
+            $this->setData('Picking management - Business Center' . $this->site['pageTitle'], 'pageTitle');
+            $this->display('factory/picking_edit');
+
+        }
+
+
+    }
+
     public function picking_add_action(){
 
 
@@ -5405,6 +5520,7 @@ public function return_items_submit_to_statment_action() {
             }
 
             $first_name = post('first_name');
+            $phone = post('phone');
 
 
             // prepare data
@@ -5424,7 +5540,8 @@ public function return_items_submit_to_statment_action() {
                 'logistic_sequence_No'=>0,
                 'logistic_delivery_date'=>strtotime($picking_date),
                 'address'=>$picking_address,
-                'first_name'=>$first_name
+                'first_name'=>$first_name,
+                'phone'=>$phone
 
            );
 //var_dump($data);exit;

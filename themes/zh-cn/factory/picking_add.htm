@@ -205,6 +205,15 @@
 					
 					
 							 </div>
+							 <div   class="input-box multi-select clearfix">
+
+					
+								<span><label style ="vertical-align:  top;"> <{if $langStr == 'zh-cn'}> 	电话 <{else}>Phone <{/if}></label></span>
+								
+								<input type="text" class="input-text " style="width:70%" name="phone" id="phone" value="" ">
+				
+					
+							 </div>
 				
 
 
@@ -259,7 +268,7 @@
 						
 						$('#picking_address').val(data1.address);
 						$('#first_name').val(data1.first_name);
-						
+						$('#phone').val(data1.phone);
 					//	alert(data1.address);
 					
 					}else{
