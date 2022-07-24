@@ -1004,6 +1004,13 @@ display: inline-block;
 	width: 100%;
 }
 
+.ma100{
+	width:100%;
+}
+.ma100 img{
+	width: 100%;
+}
+
 .shareMask{
 	position: absolute;
 	width: 100%;

@@ -595,7 +595,8 @@
 
 
                        <{if $business_delivery_info.supportroyalpaypayment=='supportroyalpaypayment'}>
-                          <label  class="list-group-item ">
+                       <div style="display:none;">
+					   <label  class="list-group-item ">
                             <h5 class="list-group-item-heading f28">
                                 <input type="radio" name="payment" value="royalpay" data-text="<{$lang->pay_wechat}>" ><{$lang->pay_wechat}>
                             </h5>
@@ -607,6 +608,7 @@
                                 <{$lang->Alipay}>
                             </h5>
                           </label>
+						  </div>
                         <{/if}>
 <!--
                        <{if $business_delivery_info.supportpaypalpayment=='supportpaypalpayment'}>
@@ -633,8 +635,8 @@
                     <div class='offline-payment-des payment-option-desc f28' style='display:none'>
                       <{$lang->pay_offline_desc}>
                       <br>
-                  <!--    <{$business_delivery_info.offline_pay_des}> -->
-                    </div>
+						<!--<{$business_delivery_info.offline_pay_des}> -->
+                    </div> 
 
                     <div class='paypal-payment-des payment-option-desc f28' style='display:none'>
                       <{$lang->notice_paypal_pay_desc}>
@@ -648,19 +650,16 @@
                       <{$lang->notic_alipay_desc}>
                     </div>
 
-                    <div class='hcash-payment-des payment-option-desc f28' style='display:none'>
-                      <{$lang->notice_hcash_pay_desc}>
-                    </div>
+                   
 
                     <div class='creditcard-payment-des payment-option-desc f28' style='display:none'>
 
 
-    <div class="txt content-image-fullsize" style="display: block; color:red;font-weight: 800;">  <{$lang->notice_creditcard_pay_desc}> <{$lang->credit_card_notice}>
+    <div  style =""class="txt content-image-fullsize" style="display: block; color:red;font-weight: 800;">  <{$lang->notice_creditcard_pay_desc}> <{$lang->credit_card_notice}>
                       <div class='creditcard-payment-des form-group'>
                         <!-- CREDIT CARD FORM STARTS HERE -->
                         <div class="panel panel-default credit-card-box">
-                            <div class="panel-heading display-table" >
-                                <div class="row display-tr" >
+                               <div class="row display-tr" >
                                     <h3 class="panel-title display-td f28" ><{$lang->pay_creditcard}></h3>
                                     <div class="display-td" >
                                         <img class="img-responsive pull-right" src="<{$SKIN_PATH}>images/accepted_card.png">
@@ -1981,12 +1980,12 @@
             function populateAddress(target) {
 			console.log('new address and set default address of user is : ' +'<{$loginUser.address}>');
                if($(target).hasClass('new')){
-                    $('input#displayName').val('<{$loginUser.displayName}>');
-                    $('input#firstname').val('<{$loginUser.person_first_name}>');
-                    $('input#lastname').val('<{$loginUser.person_last_name}>');
-                    $('input#phone').val('<{$loginUser.phone}>');
-                    $('input#email').val('<{$loginUser.email}>');
-                    $('input#address').val('<{$loginUser.address}>');
+                    $('input#displayName').val("<{$loginUser.displayName}>");
+                    $('input#firstname').val("<{$loginUser.person_first_name}>");
+                    $('input#lastname').val("<{$loginUser.person_last_name}>");
+                    $('input#phone').val("<{$loginUser.phone}>");
+                    $('input#email').val("<{$loginUser.email}>");
+                    $('input#address').val("<{$loginUser.address}>");
                     $('input#id_number').val(' ');
 					$('input#Street_number').val(' ');
 					$(".addr_house_number").css('display','none');
@@ -1999,13 +1998,13 @@
 					$(".Street_number").css('display','none');
 
                 }else{
-				console.log('get exist address: ' +$(target).data('address') );
-                   $('input#displayName').val($(target).data('displayname'));
-                    $('input#firstname').val($(target).data('first-name'));
-                    $('input#lastname').val($(target).data('last-name'));
-                    $('input#phone').val($(target).data('phone'));
-                    $('input#email').val($(target).data('email'));
-                    $('input#address').val($(target).data('address'));
+				console.log('get exist address: ' +$(target).data("address") );
+                   $('input#displayName').val($(target).data("displayname"));
+                    $('input#firstname').val($(target).data("first-name"));
+                    $('input#lastname').val($(target).data("last-name"));
+                    $('input#phone').val($(target).data("phone"));
+                    $('input#email').val($(target).data("email"));
+                    $('input#address').val($(target).data("address"));
                     $('input#id_number').val($(target).data('id-number'));
 					//alert($(target).data('street_number'));
 					//$('input#addr_house_number').css("display","");
@@ -2494,6 +2493,7 @@
 
             },
             mounted:function(){
+			//alert('herewe ');
                 this.currentDeliveryAddress='<{$delivery_info.address}>';
                 this.currentDeliveryAddressPhone='<{$delivery_info.phone}>';
                 this.currentDeliveryAddressDisplayName ='<{$delivery_info.displayName}>';

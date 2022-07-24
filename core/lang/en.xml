@@ -910,7 +910,7 @@
 	
 	
 	<payWhenPurchase1>Transfer Money</payWhenPurchase1>
-	<payWhenPurchase2>（Devliery after Paid）</payWhenPurchase2>
+	<payWhenPurchase2>（Order not process before receive payment）</payWhenPurchase2>
 	
 	<driver_list>Drivers</driver_list>
 	<no_access>no access </no_access>

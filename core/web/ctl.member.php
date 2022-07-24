@@ -960,13 +960,10 @@ class ctl_member extends cmsPage
 		/**
 		 * 登录用户的送货地址
 		 */
-		$mdl_wj_user_delivery_info= $this->loadModel('wj_user_delivery_info');
-		$where =array(
-				'userId'=>$this->loginUser['id'],
-				'isDefaultAddress'=>1
-		);
-		$wj_user_delivery_info = $mdl_wj_user_delivery_info->getbyWhere($where);
-		$this->setData( $wj_user_delivery_info, 'delivery_info' );
+        $mdl_wj_user_delivery_info= $this->loadModel('wj_user_delivery_info');
+        $wj_user_delivery_info =$mdl_wj_user_delivery_info->getDeliverUserInfo($this->loginUser['id']);
+       // var_dump($wj_user_delivery_info);exit;
+
 
 		if(!$wj_user_delivery_info){
 			
@@ -983,11 +980,14 @@ class ctl_member extends cmsPage
 					'createTime'=>time()
 			);
 		}
+       // var_dump($wj_user_delivery_info);exit;
+        $this->setData( $wj_user_delivery_info, 'delivery_info' );
 
 		$where =array(
 				'userId'=>$this->loginUser['id'],
 		);
 		$wj_user_delivery_info_list = $mdl_wj_user_delivery_info->getList(null,$where);
+       // var_dump($wj_user_delivery_info_list);exit;
 
      //   foreach ($wj_user_delivery_info_list as $key => $value) {
 

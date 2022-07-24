@@ -67,13 +67,13 @@
 							<div class="f35 col1C1C1C center pa15-0 borderB bold" v-if="isLanguageEn">Contact info</div><div class="f35 col1C1C1C center pa15-0 borderB bold" v-else>联系信息</div>
 							<div class="flexBox2 pa15 borderB relative">
 								<div class="labelW" v-if="isLanguageEn">First Name</div>	<div class="labelW" v-else>联系人 名</div>
-								<input name="contactPersonFirstname" required  id="contactPersonFirstname"  value= "<{$user.contactPersonFirstname}>" placeholder="first name.." class="H30 inputW2" />
-								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+								<input name="contactPersonFirstname"   id="contactPersonFirstname"  value= "<{$user.contactPersonFirstname}>" placeholder="first name.." class="H30 inputW2" />
+								
 							</div>
 							<div class="flexBox2 pa15 borderB relative">
 								<div class="labelW" v-if="isLanguageEn">Last Name</div><div class="labelW" v-else>联系人 姓</div>
-								<input name="contactPersonLastname" required  id="contactPersonLastname" value= "<{$user.contactPersonLastname}>"  placeholder="last name.." class="H30 inputW2"/>
-								<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+								<input name="contactPersonLastname"   id="contactPersonLastname" value= "<{$user.contactPersonLastname}>"  placeholder="last name.." class="H30 inputW2"/>
+								
 							</div>
 							<div class="flexBox2 pa15 borderB">
 								<div class="labelW" v-if="isLanguageEn">Telephone</div><div class="labelW" v-else>座机电话</div>
@@ -89,13 +89,13 @@
 
 						<div class="borR7 ma15 pa15 bgfff flexBox1">
 							<div v-if="isLanguageEn">Mobile</div><div v-else>Phone</div>
-							<input  name="phone" id="phone" value ="<{$user.phone}>" required placeholder="mobile phone number" class="H30 inputW2"/>
+							<input  name="phone" id="phone" value ="<{$user.phone}>"  placeholder="mobile phone number" class="H30 inputW2"/>
 							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
 						</div>
 						<div class="borR7 ma15 pa15 bgfff flexBox1 relative">
 							<div>Email</div>&nbsp;
-							<input name="email" id="email" value ="<{$user.email}>" required placeholder=" email" class="H30 inputW2"/>
-							<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+							<input name="email" id="email" value ="<{$user.email}>"  placeholder=" email" class="H30 inputW2"/>
+							
 							<!--	<div class="f30 colFD5204 yys">已验视</div> -->
 						</div>
 
@@ -126,7 +126,7 @@
 							<div v-if="isLanguageEn">Address</div><div v-else>Address</div>
 							<textarea   name="address" id="address" class="inputW2 col686868 mytextarea" /><{$user.googleMap}>
 							</textarea>
-							<span class="f25 colFD5204 checked"  v-if="isLanguageEn" >must fill</span><span class="f25 colFD5204 checked" v-else>必填</span>
+							
 						</div>
 
 
